@@ -1,0 +1,8 @@
+# Managed by server/scripts/sdk-codegen (passed via --ignore-file-override).
+# Suppresses generator-emitted repo junk that does not belong in api-clients.
+.travis.yml
+.gitlab-ci.yml
+appveyor.yml
+git_push.sh
+.github/
+.github/**
