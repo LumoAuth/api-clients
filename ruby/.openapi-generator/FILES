@@ -53,6 +53,9 @@ docs/CreateTaskRequest.md
 docs/CreateTaskResponse.md
 docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
+docs/ExpandRelationRequest.md
+docs/ExpandRelationResponse.md
+docs/ExpandRelationResponseTree.md
 docs/GetApprovalStatusResponse.md
 docs/GetApprovalStatusResponseApprovedBy.md
 docs/GetCurrentAgentResponse.md
@@ -157,6 +160,9 @@ lib/lumoauth_api_client/models/create_task_request.rb
 lib/lumoauth_api_client/models/create_task_response.rb
 lib/lumoauth_api_client/models/deny_request_request.rb
 lib/lumoauth_api_client/models/deny_request_response.rb
+lib/lumoauth_api_client/models/expand_relation_request.rb
+lib/lumoauth_api_client/models/expand_relation_response.rb
+lib/lumoauth_api_client/models/expand_relation_response_tree.rb
 lib/lumoauth_api_client/models/get_approval_status_response.rb
 lib/lumoauth_api_client/models/get_approval_status_response_approved_by.rb
 lib/lumoauth_api_client/models/get_current_agent_response.rb

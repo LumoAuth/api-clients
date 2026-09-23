@@ -14,6 +14,8 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.ExpandRelationRequest;
+import io.lumoauth.client.model.ExpandRelationResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -61,7 +63,7 @@ public class AuthorizationApiTest {
     /**
      * Check if user has ALL of the specified permissions
      *
-     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      *
      * @throws ApiException if the Api call fails
      */
@@ -74,7 +76,7 @@ public class AuthorizationApiTest {
     /**
      * Check if user has ANY of the specified permissions
      *
-     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      *
      * @throws ApiException if the Api call fails
      */
@@ -87,7 +89,7 @@ public class AuthorizationApiTest {
     /**
      * Check if the authenticated user has a specific permission
      *
-     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456} }
+     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
      *
      * @throws ApiException if the Api call fails
      */
@@ -100,7 +102,7 @@ public class AuthorizationApiTest {
     /**
      * Check multiple permissions at once
      *
-     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      *
      * @throws ApiException if the Api call fails
      */
@@ -156,6 +158,35 @@ public class AuthorizationApiTest {
     @Test
     public void evaluateBatchTest() throws ApiException {
         api.evaluateBatch();
+        // TODO: test validations
+    }
+
+    /**
+     * Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+     *
+     * POST /api/v1/authz/zanzibar/expand Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot; } Response: {   \&quot;tree\&quot;: {     \&quot;type\&quot;: \&quot;union\&quot; | \&quot;intersection\&quot; | \&quot;leaf\&quot;,     \&quot;object\&quot;: \&quot;document:123\&quot;,     \&quot;relation\&quot;: \&quot;viewer\&quot;,     \&quot;children\&quot;: [ ...nested nodes... ],     \&quot;subjects\&quot;: [ \&quot;user:1\&quot;, \&quot;group:2#member\&quot; ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope) — there is no \&quot;self\&quot; variant.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void expandRelationTest() throws ApiException {
+        ExpandRelationRequest expandRelationRequest = null;
+        ExpandRelationResponse response = api.expandRelation(expandRelationRequest);
+        // TODO: test validations
+    }
+
+    /**
+     * Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
+     *
+     * Body: {\&quot;object\&quot;: \&quot;document:123\&quot;, \&quot;relation\&quot;: \&quot;viewer\&quot;} Response: {\&quot;tree\&quot;: {\&quot;type\&quot;, \&quot;object\&quot;, \&quot;relation\&quot;, \&quot;children\&quot;, \&quot;subjects\&quot;}}
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void expandRelationScopedTest() throws ApiException {
+        String orgId = null;
+        ExpandRelationRequest expandRelationRequest = null;
+        ExpandRelationResponse response = api.expandRelationScoped(orgId, expandRelationRequest);
         // TODO: test validations
     }
 

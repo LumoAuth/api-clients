@@ -2,8 +2,9 @@
 > the LumoAuth OpenAPI spec (`api-clients/openapi.json`) by
 > `server/scripts/sdk-codegen/`. It covers the full REST surface with typed
 > models but no framework sugar. An ergonomic, hand-maintained wrapper is
-> the next step — where one already exists (`@lumoauth/sdk` on npm,
-> `lumoauth` on PyPI, `github.com/lumoauth/lumo-auth-go`), prefer it.
+> the next step — where one already exists (`@lumoauth/client` /
+> `@lumoauth/backend` and friends on npm, `lumoauth` on PyPI,
+> `github.com/lumoauth/lumo-auth-go`), prefer it.
 > Do not edit by hand: changes are overwritten on the next regeneration.
 
 # lumoauth_api_client
@@ -346,6 +347,8 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AuthorizationApi* | [**check_relation_scoped**](docs/AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | 
 *LumoAuthApiClient::AuthorizationApi* | [**evaluate**](docs/AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
 *LumoAuthApiClient::AuthorizationApi* | [**evaluate_batch**](docs/AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+*LumoAuthApiClient::AuthorizationApi* | [**expand_relation**](docs/AuthorizationApi.md#expand_relation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+*LumoAuthApiClient::AuthorizationApi* | [**expand_relation_scoped**](docs/AuthorizationApi.md#expand_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
 *LumoAuthApiClient::AuthorizationApi* | [**get_my_attributes**](docs/AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user's current attributes (for debugging/UI)
 *LumoAuthApiClient::AuthorizationApi* | [**get_resource_attributes**](docs/AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
 *LumoAuthApiClient::AuthorizationApi* | [**list_attribute_definitions**](docs/AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
@@ -437,6 +440,9 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::CreateTaskResponse](docs/CreateTaskResponse.md)
  - [LumoAuthApiClient::DenyRequestRequest](docs/DenyRequestRequest.md)
  - [LumoAuthApiClient::DenyRequestResponse](docs/DenyRequestResponse.md)
+ - [LumoAuthApiClient::ExpandRelationRequest](docs/ExpandRelationRequest.md)
+ - [LumoAuthApiClient::ExpandRelationResponse](docs/ExpandRelationResponse.md)
+ - [LumoAuthApiClient::ExpandRelationResponseTree](docs/ExpandRelationResponseTree.md)
  - [LumoAuthApiClient::GetApprovalStatusResponse](docs/GetApprovalStatusResponse.md)
  - [LumoAuthApiClient::GetApprovalStatusResponseApprovedBy](docs/GetApprovalStatusResponseApprovedBy.md)
  - [LumoAuthApiClient::GetCurrentAgentResponse](docs/GetCurrentAgentResponse.md)

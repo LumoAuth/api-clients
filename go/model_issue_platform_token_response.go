@@ -26,6 +26,8 @@ type IssuePlatformTokenResponse struct {
 	ExpiresIn *int32 `json:"expires_in,omitempty"`
 	Scope *string `json:"scope,omitempty"`
 	AgentId *string `json:"agent_id,omitempty"`
+	// RFC 7638 thumbprint of the agent key the token is bound to.
+	CnfJkt NullableString `json:"cnf_jkt,omitempty"`
 }
 
 // NewIssuePlatformTokenResponse instantiates a new IssuePlatformTokenResponse object
@@ -237,6 +239,48 @@ func (o *IssuePlatformTokenResponse) SetAgentId(v string) {
 	o.AgentId = &v
 }
 
+// GetCnfJkt returns the CnfJkt field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *IssuePlatformTokenResponse) GetCnfJkt() string {
+	if o == nil || IsNil(o.CnfJkt.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CnfJkt.Get()
+}
+
+// GetCnfJktOk returns a tuple with the CnfJkt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *IssuePlatformTokenResponse) GetCnfJktOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CnfJkt.Get(), o.CnfJkt.IsSet()
+}
+
+// HasCnfJkt returns a boolean if a field has been set.
+func (o *IssuePlatformTokenResponse) HasCnfJkt() bool {
+	if o != nil && o.CnfJkt.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCnfJkt gets a reference to the given NullableString and assigns it to the CnfJkt field.
+func (o *IssuePlatformTokenResponse) SetCnfJkt(v string) {
+	o.CnfJkt.Set(&v)
+}
+// SetCnfJktNil sets the value for CnfJkt to be an explicit nil
+func (o *IssuePlatformTokenResponse) SetCnfJktNil() {
+	o.CnfJkt.Set(nil)
+}
+
+// UnsetCnfJkt ensures that no value is present for CnfJkt, not even an explicit nil
+func (o *IssuePlatformTokenResponse) UnsetCnfJkt() {
+	o.CnfJkt.Unset()
+}
+
 func (o IssuePlatformTokenResponse) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -264,6 +308,9 @@ func (o IssuePlatformTokenResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AgentId) {
 		toSerialize["agent_id"] = o.AgentId
+	}
+	if o.CnfJkt.IsSet() {
+		toSerialize["cnf_jkt"] = o.CnfJkt.Get()
 	}
 	return toSerialize, nil
 }

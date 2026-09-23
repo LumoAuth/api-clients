@@ -95,6 +95,24 @@ pub enum EvaluateBatchError {
     UnknownValue(serde_json::Value),
 }
 
+/// struct for typed errors of method [`expand_relation`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ExpandRelationError {
+    Status400(),
+    Status403(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`expand_relation_scoped`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum ExpandRelationScopedError {
+    Status400(),
+    Status403(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`get_my_attributes`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -218,7 +236,7 @@ pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_i
     }
 }
 
-/// POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+/// POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 pub async fn check_all_permissions(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckAllPermissionsError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-all", configuration.base_path);
@@ -253,7 +271,7 @@ pub async fn check_all_permissions(configuration: &configuration::Configuration,
     }
 }
 
-/// POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+/// POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 pub async fn check_any_permission(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckAnyPermissionError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-any", configuration.base_path);
@@ -288,7 +306,7 @@ pub async fn check_any_permission(configuration: &configuration::Configuration, 
     }
 }
 
-/// POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+/// POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 pub async fn check_permission(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckPermissionError>> {
 
     let uri_str = format!("{}/api/v1/authz/check", configuration.base_path);
@@ -323,7 +341,7 @@ pub async fn check_permission(configuration: &configuration::Configuration, ) ->
     }
 }
 
-/// POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+/// POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 pub async fn check_permissions_bulk(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckPermissionsBulkError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-bulk", configuration.base_path);
@@ -495,6 +513,105 @@ pub async fn evaluate_batch(configuration: &configuration::Configuration, ) -> R
     } else {
         let content = resp.text().await?;
         let entity: Option<EvaluateBatchError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+pub async fn expand_relation(configuration: &configuration::Configuration, expand_relation_request: models::ExpandRelationRequest) -> Result<models::ExpandRelationResponse, Error<ExpandRelationError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_expand_relation_request = expand_relation_request;
+
+    let uri_str = format!("{}/api/v1/authz/zanzibar/expand", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_expand_relation_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ExpandRelationResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ExpandRelationResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ExpandRelationError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+pub async fn expand_relation_scoped(configuration: &configuration::Configuration, org_id: &str, expand_relation_request: models::ExpandRelationRequest) -> Result<models::ExpandRelationResponse, Error<ExpandRelationScopedError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_expand_relation_request = expand_relation_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/zanzibar/expand", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_expand_relation_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ExpandRelationResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ExpandRelationResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ExpandRelationScopedError> = serde_json::from_str(&content).ok();
         Err(Error::ResponseError(ResponseContent { status, content, entity }))
     }
 }

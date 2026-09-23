@@ -1594,10 +1594,11 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A short-lived core-agent access token accepted by JIT, the token vault, and the authz PDP. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A short-lived, DPoP-bound core-agent access token accepted by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint of the agent key) and must be presented with a DPoP proof from that key. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call issuePlatformTokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest, final ApiCallback _callback) throws ApiException {
@@ -1673,10 +1674,11 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A short-lived core-agent access token accepted by JIT, the token vault, and the authz PDP. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A short-lived, DPoP-bound core-agent access token accepted by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint of the agent key) and must be presented with a DPoP proof from that key. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
      </table>
      */
     public IssuePlatformTokenResponse issuePlatformToken(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest) throws ApiException {
@@ -1695,10 +1697,11 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A short-lived core-agent access token accepted by JIT, the token vault, and the authz PDP. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A short-lived, DPoP-bound core-agent access token accepted by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint of the agent key) and must be presented with a DPoP proof from that key. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<IssuePlatformTokenResponse> issuePlatformTokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest) throws ApiException {
@@ -1719,10 +1722,11 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A short-lived core-agent access token accepted by JIT, the token vault, and the authz PDP. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A short-lived, DPoP-bound core-agent access token accepted by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint of the agent key) and must be presented with a DPoP proof from that key. </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> Invalid exchange request (grant_type / subject_token). </td><td>  -  </td></tr>
-        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied by a conditional access policy. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded (per IP or per agent). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call issuePlatformTokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull IssuePlatformTokenRequest issuePlatformTokenRequest, final ApiCallback<IssuePlatformTokenResponse> _callback) throws ApiException {

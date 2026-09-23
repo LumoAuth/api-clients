@@ -10,6 +10,7 @@
 | **expires_in** | **Integer** |  | [optional] |
 | **scope** | **String** |  | [optional] |
 | **agent_id** | **String** |  | [optional] |
+| **cnf_jkt** | **String** | RFC 7638 thumbprint of the agent key the token is bound to. | [optional] |
 
 ## Example
 
@@ -19,10 +20,11 @@ require 'lumoauth_api_client'
 instance = LumoAuthApiClient::IssuePlatformTokenResponse.new(
   access_token: null,
   issued_token_type: urn:ietf:params:oauth:token-type:access_token,
-  token_type: Bearer,
-  expires_in: 900,
+  token_type: DPoP,
+  expires_in: 300,
   scope: null,
-  agent_id: agt_ab12cd34
+  agent_id: agt_ab12cd34,
+  cnf_jkt: null
 )
 ```
 

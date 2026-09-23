@@ -69,6 +69,9 @@ Sources/LumoAuthAPIClient/Models/CreateTaskRequest.swift
 Sources/LumoAuthAPIClient/Models/CreateTaskResponse.swift
 Sources/LumoAuthAPIClient/Models/DenyRequestRequest.swift
 Sources/LumoAuthAPIClient/Models/DenyRequestResponse.swift
+Sources/LumoAuthAPIClient/Models/ExpandRelationRequest.swift
+Sources/LumoAuthAPIClient/Models/ExpandRelationResponse.swift
+Sources/LumoAuthAPIClient/Models/ExpandRelationResponseTree.swift
 Sources/LumoAuthAPIClient/Models/GetApprovalStatusResponse.swift
 Sources/LumoAuthAPIClient/Models/GetApprovalStatusResponseApprovedBy.swift
 Sources/LumoAuthAPIClient/Models/GetCurrentAgentResponse.swift
@@ -157,6 +160,9 @@ docs/CreateTaskRequest.md
 docs/CreateTaskResponse.md
 docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
+docs/ExpandRelationRequest.md
+docs/ExpandRelationResponse.md
+docs/ExpandRelationResponseTree.md
 docs/GetApprovalStatusResponse.md
 docs/GetApprovalStatusResponseApprovedBy.md
 docs/GetCurrentAgentResponse.md

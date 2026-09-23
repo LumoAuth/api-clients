@@ -72,7 +72,8 @@ Body: {
 	POST /api/v1/authz/check-all
 Body: {
   "permissions": ["document.edit", "document.publish"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -89,7 +90,8 @@ Body: {
 	POST /api/v1/authz/check-any
 Body: {
   "permissions": ["document.edit", "document.view"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -106,8 +108,14 @@ Body: {
 	POST /api/v1/authz/check
 Body: {
   "permission": "document.edit",
-  "context": {"document_id": 123, "owner_id": 456}
+  "context": {"document_id": 123, "owner_id": 456},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — defaults to the caller
 }
+
+All four check endpoints accept the optional `subject`. Naming a subject
+other than the caller requires the `authz.check` permission or the
+`authz:check` scope (403 `insufficient_permissions` otherwise) — see
+ThirdPartySubjectGuard.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiCheckPermissionRequest
@@ -123,7 +131,8 @@ Body: {
 	POST /api/v1/authz/check-bulk
 Body: {
   "permissions": ["document.edit", "document.delete"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -204,6 +213,53 @@ Response: {"evaluations": [{"decision": ...}, ...]} preserving order.
 
 	// EvaluateBatchExecute executes the request
 	EvaluateBatchExecute(r ApiEvaluateBatchRequest) (*http.Response, error)
+
+	/*
+	ExpandRelation Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+
+	POST /api/v1/authz/zanzibar/expand
+Body: {
+  "object": "document:123",
+  "relation": "viewer"
+}
+Response: {
+  "tree": {
+    "type": "union" | "intersection" | "leaf",
+    "object": "document:123",
+    "relation": "viewer",
+    "children": [ ...nested nodes... ],
+    "subjects": [ "user:1", "group:2#member" ]
+  }
+}
+
+Expansion always reveals other subjects, so it requires the oracle
+privilege (`authz.check` permission or `authz:check` scope) — there is
+no "self" variant.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiExpandRelationRequest
+	*/
+	ExpandRelation(ctx context.Context) ApiExpandRelationRequest
+
+	// ExpandRelationExecute executes the request
+	//  @return ExpandRelationResponse
+	ExpandRelationExecute(r ApiExpandRelationRequest) (*ExpandRelationResponse, *http.Response, error)
+
+	/*
+	ExpandRelationScoped Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+
+	Body: {"object": "document:123", "relation": "viewer"}
+Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiExpandRelationScopedRequest
+	*/
+	ExpandRelationScoped(ctx context.Context, orgId string) ApiExpandRelationScopedRequest
+
+	// ExpandRelationScopedExecute executes the request
+	//  @return ExpandRelationResponse
+	ExpandRelationScopedExecute(r ApiExpandRelationScopedRequest) (*ExpandRelationResponse, *http.Response, error)
 
 	/*
 	GetMyAttributes Get user's current attributes (for debugging/UI)
@@ -544,7 +600,8 @@ CheckAllPermissions Check if user has ALL of the specified permissions
 POST /api/v1/authz/check-all
 Body: {
   "permissions": ["document.edit", "document.publish"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -650,7 +707,8 @@ CheckAnyPermission Check if user has ANY of the specified permissions
 POST /api/v1/authz/check-any
 Body: {
   "permissions": ["document.edit", "document.view"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -756,8 +814,14 @@ CheckPermission Check if the authenticated user has a specific permission
 POST /api/v1/authz/check
 Body: {
   "permission": "document.edit",
-  "context": {"document_id": 123, "owner_id": 456}
+  "context": {"document_id": 123, "owner_id": 456},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — defaults to the caller
 }
+
+All four check endpoints accept the optional `subject`. Naming a subject
+other than the caller requires the `authz.check` permission or the
+`authz:check` scope (403 `insufficient_permissions` otherwise) — see
+ThirdPartySubjectGuard.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCheckPermissionRequest
@@ -862,7 +926,8 @@ CheckPermissionsBulk Check multiple permissions at once
 POST /api/v1/authz/check-bulk
 Body: {
   "permissions": ["document.edit", "document.delete"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -1381,6 +1446,276 @@ func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest
 	}
 
 	return localVarHTTPResponse, nil
+}
+
+type ApiExpandRelationRequest struct {
+	ctx context.Context
+	ApiService AuthorizationAPI
+	expandRelationRequest *ExpandRelationRequest
+}
+
+func (r ApiExpandRelationRequest) ExpandRelationRequest(expandRelationRequest ExpandRelationRequest) ApiExpandRelationRequest {
+	r.expandRelationRequest = &expandRelationRequest
+	return r
+}
+
+func (r ApiExpandRelationRequest) Execute() (*ExpandRelationResponse, *http.Response, error) {
+	return r.ApiService.ExpandRelationExecute(r)
+}
+
+/*
+ExpandRelation Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+
+POST /api/v1/authz/zanzibar/expand
+Body: {
+  "object": "document:123",
+  "relation": "viewer"
+}
+Response: {
+  "tree": {
+    "type": "union" | "intersection" | "leaf",
+    "object": "document:123",
+    "relation": "viewer",
+    "children": [ ...nested nodes... ],
+    "subjects": [ "user:1", "group:2#member" ]
+  }
+}
+
+Expansion always reveals other subjects, so it requires the oracle
+privilege (`authz.check` permission or `authz:check` scope) — there is
+no "self" variant.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiExpandRelationRequest
+*/
+func (a *AuthorizationAPIService) ExpandRelation(ctx context.Context) ApiExpandRelationRequest {
+	return ApiExpandRelationRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return ExpandRelationResponse
+func (a *AuthorizationAPIService) ExpandRelationExecute(r ApiExpandRelationRequest) (*ExpandRelationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExpandRelationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.ExpandRelation")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/v1/authz/zanzibar/expand"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.expandRelationRequest == nil {
+		return localVarReturnValue, nil, reportError("expandRelationRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.expandRelationRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiExpandRelationScopedRequest struct {
+	ctx context.Context
+	ApiService AuthorizationAPI
+	orgId string
+	expandRelationRequest *ExpandRelationRequest
+}
+
+func (r ApiExpandRelationScopedRequest) ExpandRelationRequest(expandRelationRequest ExpandRelationRequest) ApiExpandRelationScopedRequest {
+	r.expandRelationRequest = &expandRelationRequest
+	return r
+}
+
+func (r ApiExpandRelationScopedRequest) Execute() (*ExpandRelationResponse, *http.Response, error) {
+	return r.ApiService.ExpandRelationScopedExecute(r)
+}
+
+/*
+ExpandRelationScoped Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+
+Body: {"object": "document:123", "relation": "viewer"}
+Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiExpandRelationScopedRequest
+*/
+func (a *AuthorizationAPIService) ExpandRelationScoped(ctx context.Context, orgId string) ApiExpandRelationScopedRequest {
+	return ApiExpandRelationScopedRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return ExpandRelationResponse
+func (a *AuthorizationAPIService) ExpandRelationScopedExecute(r ApiExpandRelationScopedRequest) (*ExpandRelationResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ExpandRelationResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.ExpandRelationScoped")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/zanzibar/expand"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.expandRelationRequest == nil {
+		return localVarReturnValue, nil, reportError("expandRelationRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.expandRelationRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetMyAttributesRequest struct {

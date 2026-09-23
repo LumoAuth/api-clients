@@ -14,6 +14,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**check_relation_scoped**](AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check |  |
 | [**evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation. |
 | [**evaluate_batch**](AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations. |
+| [**expand_relation**](AuthorizationApi.md#expand_relation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites. |
+| [**expand_relation_scoped**](AuthorizationApi.md#expand_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope). |
 | [**get_my_attributes**](AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI) |
 | [**get_resource_attributes**](AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes |
 | [**list_attribute_definitions**](AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions |
@@ -174,7 +176,7 @@ nil (empty response body)
 
 Check if user has ALL of the specified permissions
 
-POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
 ### Examples
 
@@ -244,7 +246,7 @@ nil (empty response body)
 
 Check if user has ANY of the specified permissions
 
-POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
 ### Examples
 
@@ -314,7 +316,7 @@ nil (empty response body)
 
 Check if the authenticated user has a specific permission
 
-POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
 ### Examples
 
@@ -384,7 +386,7 @@ nil (empty response body)
 
 Check multiple permissions at once
 
-POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
 ### Examples
 
@@ -727,6 +729,156 @@ nil (empty response body)
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+
+## expand_relation
+
+> <ExpandRelationResponse> expand_relation(expand_relation_request)
+
+Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+
+POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AuthorizationApi.new
+expand_relation_request = LumoAuthApiClient::ExpandRelationRequest.new({object: 'document:123', relation: 'viewer'}) # ExpandRelationRequest | 
+
+begin
+  # Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+  result = api_instance.expand_relation(expand_relation_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AuthorizationApi->expand_relation: #{e}"
+end
+```
+
+#### Using the expand_relation_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ExpandRelationResponse>, Integer, Hash)> expand_relation_with_http_info(expand_relation_request)
+
+```ruby
+begin
+  # Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+  data, status_code, headers = api_instance.expand_relation_with_http_info(expand_relation_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ExpandRelationResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AuthorizationApi->expand_relation_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **expand_relation_request** | [**ExpandRelationRequest**](ExpandRelationRequest.md) |  |  |
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## expand_relation_scoped
+
+> <ExpandRelationResponse> expand_relation_scoped(org_id, expand_relation_request)
+
+Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+
+Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AuthorizationApi.new
+org_id = 'org_id_example' # String | 
+expand_relation_request = LumoAuthApiClient::ExpandRelationRequest.new({object: 'document:123', relation: 'viewer'}) # ExpandRelationRequest | 
+
+begin
+  # Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+  result = api_instance.expand_relation_scoped(org_id, expand_relation_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AuthorizationApi->expand_relation_scoped: #{e}"
+end
+```
+
+#### Using the expand_relation_scoped_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<ExpandRelationResponse>, Integer, Hash)> expand_relation_scoped_with_http_info(org_id, expand_relation_request)
+
+```ruby
+begin
+  # Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+  data, status_code, headers = api_instance.expand_relation_scoped_with_http_info(org_id, expand_relation_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <ExpandRelationResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AuthorizationApi->expand_relation_scoped_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **expand_relation_request** | [**ExpandRelationRequest**](ExpandRelationRequest.md) |  |  |
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## get_my_attributes

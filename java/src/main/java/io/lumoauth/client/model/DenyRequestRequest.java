@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * DenyRequestRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-08-14T09:16:07.770312-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class DenyRequestRequest {
   public static final String SERIALIZED_NAME_REASON = "reason";
   @SerializedName(SERIALIZED_NAME_REASON)

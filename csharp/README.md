@@ -2,8 +2,9 @@
 > the LumoAuth OpenAPI spec (`api-clients/openapi.json`) by
 > `server/scripts/sdk-codegen/`. It covers the full REST surface with typed
 > models but no framework sugar. An ergonomic, hand-maintained wrapper is
-> the next step — where one already exists (`@lumoauth/sdk` on npm,
-> `lumoauth` on PyPI, `github.com/lumoauth/lumo-auth-go`), prefer it.
+> the next step — where one already exists (`@lumoauth/client` /
+> `@lumoauth/backend` and friends on npm, `lumoauth` on PyPI,
+> `github.com/lumoauth/lumo-auth-go`), prefer it.
 > Do not edit by hand: changes are overwritten on the next regeneration.
 
 # LumoAuth.ApiClient - the C# library for the LumoAuth API
@@ -402,6 +403,8 @@ Class | Method | HTTP request | Description
 *AuthorizationApi* | [**CheckRelationScoped**](docs/AuthorizationApi.md#checkrelationscoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | 
 *AuthorizationApi* | [**Evaluate**](docs/AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
 *AuthorizationApi* | [**EvaluateBatch**](docs/AuthorizationApi.md#evaluatebatch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+*AuthorizationApi* | [**ExpandRelation**](docs/AuthorizationApi.md#expandrelation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+*AuthorizationApi* | [**ExpandRelationScoped**](docs/AuthorizationApi.md#expandrelationscoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
 *AuthorizationApi* | [**GetMyAttributes**](docs/AuthorizationApi.md#getmyattributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user's current attributes (for debugging/UI)
 *AuthorizationApi* | [**GetResourceAttributes**](docs/AuthorizationApi.md#getresourceattributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
 *AuthorizationApi* | [**ListAttributeDefinitions**](docs/AuthorizationApi.md#listattributedefinitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
@@ -494,6 +497,9 @@ Class | Method | HTTP request | Description
  - [Model.CreateTaskResponse](docs/CreateTaskResponse.md)
  - [Model.DenyRequestRequest](docs/DenyRequestRequest.md)
  - [Model.DenyRequestResponse](docs/DenyRequestResponse.md)
+ - [Model.ExpandRelationRequest](docs/ExpandRelationRequest.md)
+ - [Model.ExpandRelationResponse](docs/ExpandRelationResponse.md)
+ - [Model.ExpandRelationResponseTree](docs/ExpandRelationResponseTree.md)
  - [Model.GetApprovalStatusResponse](docs/GetApprovalStatusResponse.md)
  - [Model.GetApprovalStatusResponseApprovedBy](docs/GetApprovalStatusResponseApprovedBy.md)
  - [Model.GetCurrentAgentResponse](docs/GetCurrentAgentResponse.md)

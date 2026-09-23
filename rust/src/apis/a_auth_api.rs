@@ -110,6 +110,7 @@ pub enum IssuePlatformTokenError {
     Status400(),
     Status401(),
     Status403(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 

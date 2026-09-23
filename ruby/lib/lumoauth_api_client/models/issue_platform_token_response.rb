@@ -27,6 +27,9 @@ module LumoAuthApiClient
 
     attr_accessor :agent_id
 
+    # RFC 7638 thumbprint of the agent key the token is bound to.
+    attr_accessor :cnf_jkt
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -35,7 +38,8 @@ module LumoAuthApiClient
         :'token_type' => :'token_type',
         :'expires_in' => :'expires_in',
         :'scope' => :'scope',
-        :'agent_id' => :'agent_id'
+        :'agent_id' => :'agent_id',
+        :'cnf_jkt' => :'cnf_jkt'
       }
     end
 
@@ -57,13 +61,15 @@ module LumoAuthApiClient
         :'token_type' => :'String',
         :'expires_in' => :'Integer',
         :'scope' => :'String',
-        :'agent_id' => :'String'
+        :'agent_id' => :'String',
+        :'cnf_jkt' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'cnf_jkt'
       ])
     end
 
@@ -106,6 +112,10 @@ module LumoAuthApiClient
       if attributes.key?(:'agent_id')
         self.agent_id = attributes[:'agent_id']
       end
+
+      if attributes.key?(:'cnf_jkt')
+        self.cnf_jkt = attributes[:'cnf_jkt']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -133,7 +143,8 @@ module LumoAuthApiClient
           token_type == o.token_type &&
           expires_in == o.expires_in &&
           scope == o.scope &&
-          agent_id == o.agent_id
+          agent_id == o.agent_id &&
+          cnf_jkt == o.cnf_jkt
     end
 
     # @see the `==` method
@@ -145,7 +156,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [access_token, issued_token_type, token_type, expires_in, scope, agent_id].hash
+      [access_token, issued_token_type, token_type, expires_in, scope, agent_id, cnf_jkt].hash
     end
 
     # Builds the object from hash

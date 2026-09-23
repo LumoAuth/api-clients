@@ -56,5 +56,11 @@ export interface IssuePlatformTokenResponse {
      * @memberof IssuePlatformTokenResponse
      */
     'agent_id'?: string;
+    /**
+     * RFC 7638 thumbprint of the agent key the token is bound to.
+     * @type {string}
+     * @memberof IssuePlatformTokenResponse
+     */
+    'cnf_jkt'?: string | null;
 }
 

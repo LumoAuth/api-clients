@@ -25,6 +25,9 @@ pub struct IssuePlatformTokenResponse {
     pub scope: Option<String>,
     #[serde(rename = "agent_id", skip_serializing_if = "Option::is_none")]
     pub agent_id: Option<String>,
+    /// RFC 7638 thumbprint of the agent key the token is bound to.
+    #[serde(rename = "cnf_jkt", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub cnf_jkt: Option<Option<String>>,
 }
 
 impl IssuePlatformTokenResponse {
@@ -36,6 +39,7 @@ impl IssuePlatformTokenResponse {
             expires_in: None,
             scope: None,
             agent_id: None,
+            cnf_jkt: None,
         }
     }
 }

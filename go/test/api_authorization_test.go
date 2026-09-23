@@ -138,6 +138,32 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test AuthorizationAPIService ExpandRelation", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.AuthorizationAPI.ExpandRelation(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test AuthorizationAPIService ExpandRelationScoped", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AuthorizationAPI.ExpandRelationScoped(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AuthorizationAPIService GetMyAttributes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -20,6 +20,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -83,6 +84,14 @@ public class IssuePlatformTokenResponseTest {
     @Test
     public void agentIdTest() {
         // TODO: test agentId
+    }
+
+    /**
+     * Test the property 'cnfJkt'
+     */
+    @Test
+    public void cnfJktTest() {
+        // TODO: test cnfJkt
     }
 
 }

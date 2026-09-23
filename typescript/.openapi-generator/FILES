@@ -81,6 +81,9 @@ docs/CreateTaskRequest.md
 docs/CreateTaskResponse.md
 docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
+docs/ExpandRelationRequest.md
+docs/ExpandRelationResponse.md
+docs/ExpandRelationResponseTree.md
 docs/GetApprovalStatusResponse.md
 docs/GetApprovalStatusResponseApprovedBy.md
 docs/GetCurrentAgentResponse.md
@@ -155,6 +158,9 @@ models/create-task-request.ts
 models/create-task-response.ts
 models/deny-request-request.ts
 models/deny-request-response.ts
+models/expand-relation-request.ts
+models/expand-relation-response-tree.ts
+models/expand-relation-response.ts
 models/get-approval-status-response-approved-by.ts
 models/get-approval-status-response.ts
 models/get-current-agent-response-identity.ts

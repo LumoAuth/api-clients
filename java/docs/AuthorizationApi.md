@@ -14,6 +14,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**checkRelationScoped**](AuthorizationApi.md#checkRelationScoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check |  |
 | [**evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation. |
 | [**evaluateBatch**](AuthorizationApi.md#evaluateBatch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations. |
+| [**expandRelation**](AuthorizationApi.md#expandRelation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites. |
+| [**expandRelationScoped**](AuthorizationApi.md#expandRelationScoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope). |
 | [**getMyAttributes**](AuthorizationApi.md#getMyAttributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI) |
 | [**getResourceAttributes**](AuthorizationApi.md#getResourceAttributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes |
 | [**listAttributeDefinitions**](AuthorizationApi.md#listAttributeDefinitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions |
@@ -172,7 +174,7 @@ null (empty response body)
 
 Check if user has ALL of the specified permissions
 
-POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
 
 ### Example
 ```java
@@ -240,7 +242,7 @@ null (empty response body)
 
 Check if user has ANY of the specified permissions
 
-POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
 
 ### Example
 ```java
@@ -308,7 +310,7 @@ null (empty response body)
 
 Check if the authenticated user has a specific permission
 
-POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456} }
+POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
 
 ### Example
 ```java
@@ -376,7 +378,7 @@ null (empty response body)
 
 Check multiple permissions at once
 
-POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
 
 ### Example
 ```java
@@ -711,6 +713,158 @@ null (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **0** |  |  -  |
+
+<a id="expandRelation"></a>
+# **expandRelation**
+> ExpandRelationResponse expandRelation(expandRelationRequest)
+
+Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+
+POST /api/v1/authz/zanzibar/expand Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot; } Response: {   \&quot;tree\&quot;: {     \&quot;type\&quot;: \&quot;union\&quot; | \&quot;intersection\&quot; | \&quot;leaf\&quot;,     \&quot;object\&quot;: \&quot;document:123\&quot;,     \&quot;relation\&quot;: \&quot;viewer\&quot;,     \&quot;children\&quot;: [ ...nested nodes... ],     \&quot;subjects\&quot;: [ \&quot;user:1\&quot;, \&quot;group:2#member\&quot; ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope) — there is no \&quot;self\&quot; variant.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AuthorizationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    ExpandRelationRequest expandRelationRequest = new ExpandRelationRequest(); // ExpandRelationRequest | 
+    try {
+      ExpandRelationResponse result = apiInstance.expandRelation(expandRelationRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AuthorizationApi#expandRelation");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **expandRelationRequest** | [**ExpandRelationRequest**](ExpandRelationRequest.md)|  | |
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The userset tree for object#relation. |  -  |
+| **400** | Missing object/relation or malformed object identifier. |  -  |
+| **403** | insufficient_permissions — expand requires the authz.check permission or the authz:check scope. |  -  |
+
+<a id="expandRelationScoped"></a>
+# **expandRelationScoped**
+> ExpandRelationResponse expandRelationScoped(orgId, expandRelationRequest)
+
+Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
+
+Body: {\&quot;object\&quot;: \&quot;document:123\&quot;, \&quot;relation\&quot;: \&quot;viewer\&quot;} Response: {\&quot;tree\&quot;: {\&quot;type\&quot;, \&quot;object\&quot;, \&quot;relation\&quot;, \&quot;children\&quot;, \&quot;subjects\&quot;}}
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AuthorizationApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AuthorizationApi apiInstance = new AuthorizationApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    ExpandRelationRequest expandRelationRequest = new ExpandRelationRequest(); // ExpandRelationRequest | 
+    try {
+      ExpandRelationResponse result = apiInstance.expandRelationScoped(orgId, expandRelationRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AuthorizationApi#expandRelationScoped");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **expandRelationRequest** | [**ExpandRelationRequest**](ExpandRelationRequest.md)|  | |
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | The userset tree for object#relation. |  -  |
+| **400** | Missing object/relation or malformed object identifier. |  -  |
+| **403** | insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization. |  -  |
 
 <a id="getMyAttributes"></a>
 # **getMyAttributes**

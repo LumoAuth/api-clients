@@ -3096,6 +3096,7 @@ class AAuthApi:
             '400': None,
             '401': None,
             '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3169,6 +3170,7 @@ class AAuthApi:
             '400': None,
             '401': None,
             '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3242,6 +3244,7 @@ class AAuthApi:
             '400': None,
             '401': None,
             '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,

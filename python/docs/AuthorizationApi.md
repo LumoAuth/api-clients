@@ -14,6 +14,8 @@ Method | HTTP request | Description
 [**check_relation_scoped**](AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | 
 [**evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
 [**evaluate_batch**](AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+[**expand_relation**](AuthorizationApi.md#expand_relation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+[**expand_relation_scoped**](AuthorizationApi.md#expand_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
 [**get_my_attributes**](AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI)
 [**get_resource_attributes**](AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
 [**list_attribute_definitions**](AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
@@ -209,7 +211,8 @@ Check if user has ALL of the specified permissions
 POST /api/v1/authz/check-all
 Body: {
   "permissions": ["document.edit", "document.publish"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
 ### Example
@@ -291,7 +294,8 @@ Check if user has ANY of the specified permissions
 POST /api/v1/authz/check-any
 Body: {
   "permissions": ["document.edit", "document.view"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
 ### Example
@@ -373,8 +377,14 @@ Check if the authenticated user has a specific permission
 POST /api/v1/authz/check
 Body: {
   "permission": "document.edit",
-  "context": {"document_id": 123, "owner_id": 456}
+  "context": {"document_id": 123, "owner_id": 456},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — defaults to the caller
 }
+
+All four check endpoints accept the optional `subject`. Naming a subject
+other than the caller requires the `authz.check` permission or the
+`authz:check` scope (403 `insufficient_permissions` otherwise) — see
+ThirdPartySubjectGuard.
 
 ### Example
 
@@ -455,7 +465,8 @@ Check multiple permissions at once
 POST /api/v1/authz/check-bulk
 Body: {
   "permissions": ["document.edit", "document.delete"],
-  "context": {"document_id": 123}
+  "context": {"document_id": 123},
+  "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
 }
 
 ### Example
@@ -857,6 +868,202 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **0** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **expand_relation**
+> ExpandRelationResponse expand_relation(expand_relation_request)
+
+Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+
+POST /api/v1/authz/zanzibar/expand
+Body: {
+  "object": "document:123",
+  "relation": "viewer"
+}
+Response: {
+  "tree": {
+    "type": "union" | "intersection" | "leaf",
+    "object": "document:123",
+    "relation": "viewer",
+    "children": [ ...nested nodes... ],
+    "subjects": [ "user:1", "group:2#member" ]
+  }
+}
+
+Expansion always reveals other subjects, so it requires the oracle
+privilege (`authz.check` permission or `authz:check` scope) — there is
+no "self" variant.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.expand_relation_request import ExpandRelationRequest
+from lumoauth_api_client.models.expand_relation_response import ExpandRelationResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    expand_relation_request = lumoauth_api_client.ExpandRelationRequest() # ExpandRelationRequest | 
+
+    try:
+        # Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+        api_response = api_instance.expand_relation(expand_relation_request)
+        print("The response of AuthorizationApi->expand_relation:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthorizationApi->expand_relation: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **expand_relation_request** | [**ExpandRelationRequest**](ExpandRelationRequest.md)|  | 
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The userset tree for object#relation. |  -  |
+**400** | Missing object/relation or malformed object identifier. |  -  |
+**403** | insufficient_permissions — expand requires the authz.check permission or the authz:check scope. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **expand_relation_scoped**
+> ExpandRelationResponse expand_relation_scoped(org_id, expand_relation_request)
+
+Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+
+Body: {"object": "document:123", "relation": "viewer"}
+Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.expand_relation_request import ExpandRelationRequest
+from lumoauth_api_client.models.expand_relation_response import ExpandRelationResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.AuthorizationApi(api_client)
+    org_id = 'org_id_example' # str | 
+    expand_relation_request = lumoauth_api_client.ExpandRelationRequest() # ExpandRelationRequest | 
+
+    try:
+        # Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+        api_response = api_instance.expand_relation_scoped(org_id, expand_relation_request)
+        print("The response of AuthorizationApi->expand_relation_scoped:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AuthorizationApi->expand_relation_scoped: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **expand_relation_request** | [**ExpandRelationRequest**](ExpandRelationRequest.md)|  | 
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The userset tree for object#relation. |  -  |
+**400** | Missing object/relation or malformed object identifier. |  -  |
+**403** | insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

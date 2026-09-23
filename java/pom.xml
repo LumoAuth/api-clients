@@ -9,8 +9,8 @@
     <url>https://github.com/lumoauth/api-clients</url>
     <description>Generated LumoAuth API client (raw HTTP client + typed models)</description>
     <scm>
-        <connection>scm:git:git@github.com:LumoAuth/sdks.git</connection>
-        <developerConnection>scm:git:git@github.com:LumoAuth/sdks.git</developerConnection>
+        <connection>scm:git:git@github.com:LumoAuth/api-clients.git</connection>
+        <developerConnection>scm:git:git@github.com:LumoAuth/api-clients.git</developerConnection>
         <url>https://github.com/lumoauth/api-clients</url>
     </scm>
 

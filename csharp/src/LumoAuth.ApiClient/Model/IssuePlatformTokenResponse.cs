@@ -42,7 +42,8 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="expiresIn">expiresIn.</param>
         /// <param name="scope">scope.</param>
         /// <param name="agentId">agentId.</param>
-        public IssuePlatformTokenResponse(string accessToken = default, string issuedTokenType = default, string tokenType = default, int expiresIn = default, string scope = default, string agentId = default)
+        /// <param name="cnfJkt">RFC 7638 thumbprint of the agent key the token is bound to..</param>
+        public IssuePlatformTokenResponse(string accessToken = default, string issuedTokenType = default, string tokenType = default, int expiresIn = default, string scope = default, string agentId = default, string cnfJkt = default)
         {
             this.AccessToken = accessToken;
             this.IssuedTokenType = issuedTokenType;
@@ -50,6 +51,7 @@ namespace LumoAuth.ApiClient.Model
             this.ExpiresIn = expiresIn;
             this.Scope = scope;
             this.AgentId = agentId;
+            this.CnfJkt = cnfJkt;
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets TokenType
         /// </summary>
         /*
-        <example>Bearer</example>
+        <example>DPoP</example>
         */
         [DataMember(Name = "token_type", EmitDefaultValue = false)]
         public string TokenType { get; set; }
@@ -80,7 +82,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets ExpiresIn
         /// </summary>
         /*
-        <example>900</example>
+        <example>300</example>
         */
         [DataMember(Name = "expires_in", EmitDefaultValue = false)]
         public int ExpiresIn { get; set; }
@@ -101,6 +103,13 @@ namespace LumoAuth.ApiClient.Model
         public string AgentId { get; set; }
 
         /// <summary>
+        /// RFC 7638 thumbprint of the agent key the token is bound to.
+        /// </summary>
+        /// <value>RFC 7638 thumbprint of the agent key the token is bound to.</value>
+        [DataMember(Name = "cnf_jkt", EmitDefaultValue = true)]
+        public string CnfJkt { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -114,6 +123,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Scope: ").Append(Scope).Append("\n");
             sb.Append("  AgentId: ").Append(AgentId).Append("\n");
+            sb.Append("  CnfJkt: ").Append(CnfJkt).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

@@ -108,5 +108,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'AgentId'
         }
+
+        /// <summary>
+        /// Test the property 'CnfJkt'
+        /// </summary>
+        [Fact]
+        public void CnfJktTest()
+        {
+            // TODO unit test for the property 'CnfJkt'
+        }
     }
 }

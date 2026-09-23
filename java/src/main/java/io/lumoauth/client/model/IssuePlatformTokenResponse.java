@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * IssuePlatformTokenResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-08-14T09:16:07.770312-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class IssuePlatformTokenResponse {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "access_token";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -79,6 +80,11 @@ public class IssuePlatformTokenResponse {
   @SerializedName(SERIALIZED_NAME_AGENT_ID)
   @javax.annotation.Nullable
   private String agentId;
+
+  public static final String SERIALIZED_NAME_CNF_JKT = "cnf_jkt";
+  @SerializedName(SERIALIZED_NAME_CNF_JKT)
+  @javax.annotation.Nullable
+  private String cnfJkt;
 
   public IssuePlatformTokenResponse() {
   }
@@ -197,6 +203,25 @@ public class IssuePlatformTokenResponse {
   }
 
 
+  public IssuePlatformTokenResponse cnfJkt(@javax.annotation.Nullable String cnfJkt) {
+    this.cnfJkt = cnfJkt;
+    return this;
+  }
+
+  /**
+   * RFC 7638 thumbprint of the agent key the token is bound to.
+   * @return cnfJkt
+   */
+  @javax.annotation.Nullable
+  public String getCnfJkt() {
+    return cnfJkt;
+  }
+
+  public void setCnfJkt(@javax.annotation.Nullable String cnfJkt) {
+    this.cnfJkt = cnfJkt;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -212,12 +237,24 @@ public class IssuePlatformTokenResponse {
         Objects.equals(this.tokenType, issuePlatformTokenResponse.tokenType) &&
         Objects.equals(this.expiresIn, issuePlatformTokenResponse.expiresIn) &&
         Objects.equals(this.scope, issuePlatformTokenResponse.scope) &&
-        Objects.equals(this.agentId, issuePlatformTokenResponse.agentId);
+        Objects.equals(this.agentId, issuePlatformTokenResponse.agentId) &&
+        Objects.equals(this.cnfJkt, issuePlatformTokenResponse.cnfJkt);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessToken, issuedTokenType, tokenType, expiresIn, scope, agentId);
+    return Objects.hash(accessToken, issuedTokenType, tokenType, expiresIn, scope, agentId, cnfJkt);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -230,6 +267,7 @@ public class IssuePlatformTokenResponse {
     sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
     sb.append("    scope: ").append(toIndentedString(scope)).append("\n");
     sb.append("    agentId: ").append(toIndentedString(agentId)).append("\n");
+    sb.append("    cnfJkt: ").append(toIndentedString(cnfJkt)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -251,7 +289,7 @@ public class IssuePlatformTokenResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("access_token", "issued_token_type", "token_type", "expires_in", "scope", "agent_id"));
+    openapiFields = new HashSet<String>(Arrays.asList("access_token", "issued_token_type", "token_type", "expires_in", "scope", "agent_id", "cnf_jkt"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -292,6 +330,9 @@ public class IssuePlatformTokenResponse {
       }
       if ((jsonObj.get("agent_id") != null && !jsonObj.get("agent_id").isJsonNull()) && !jsonObj.get("agent_id").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `agent_id` to be a primitive type in the JSON string but got `%s`", jsonObj.get("agent_id").toString()));
+      }
+      if ((jsonObj.get("cnf_jkt") != null && !jsonObj.get("cnf_jkt").isJsonNull()) && !jsonObj.get("cnf_jkt").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `cnf_jkt` to be a primitive type in the JSON string but got `%s`", jsonObj.get("cnf_jkt").toString()));
       }
   }
 

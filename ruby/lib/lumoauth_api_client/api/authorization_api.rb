@@ -142,7 +142,7 @@ module LumoAuthApiClient
     end
 
     # Check if user has ALL of the specified permissions
-    # POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+    # POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def check_all_permissions(opts = {})
@@ -151,7 +151,7 @@ module LumoAuthApiClient
     end
 
     # Check if user has ALL of the specified permissions
-    # POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+    # POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def check_all_permissions_with_http_info(opts = {})
@@ -197,7 +197,7 @@ module LumoAuthApiClient
     end
 
     # Check if user has ANY of the specified permissions
-    # POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+    # POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def check_any_permission(opts = {})
@@ -206,7 +206,7 @@ module LumoAuthApiClient
     end
 
     # Check if user has ANY of the specified permissions
-    # POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+    # POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def check_any_permission_with_http_info(opts = {})
@@ -252,7 +252,7 @@ module LumoAuthApiClient
     end
 
     # Check if the authenticated user has a specific permission
-    # POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+    # POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def check_permission(opts = {})
@@ -261,7 +261,7 @@ module LumoAuthApiClient
     end
 
     # Check if the authenticated user has a specific permission
-    # POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456} }
+    # POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def check_permission_with_http_info(opts = {})
@@ -307,7 +307,7 @@ module LumoAuthApiClient
     end
 
     # Check multiple permissions at once
-    # POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+    # POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [nil]
     def check_permissions_bulk(opts = {})
@@ -316,7 +316,7 @@ module LumoAuthApiClient
     end
 
     # Check multiple permissions at once
-    # POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+    # POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
     def check_permissions_bulk_with_http_info(opts = {})
@@ -579,6 +579,148 @@ module LumoAuthApiClient
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AuthorizationApi#evaluate_batch\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+    # POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+    # @param expand_relation_request [ExpandRelationRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [ExpandRelationResponse]
+    def expand_relation(expand_relation_request, opts = {})
+      data, _status_code, _headers = expand_relation_with_http_info(expand_relation_request, opts)
+      data
+    end
+
+    # Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+    # POST /api/v1/authz/zanzibar/expand Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot; } Response: {   \&quot;tree\&quot;: {     \&quot;type\&quot;: \&quot;union\&quot; | \&quot;intersection\&quot; | \&quot;leaf\&quot;,     \&quot;object\&quot;: \&quot;document:123\&quot;,     \&quot;relation\&quot;: \&quot;viewer\&quot;,     \&quot;children\&quot;: [ ...nested nodes... ],     \&quot;subjects\&quot;: [ \&quot;user:1\&quot;, \&quot;group:2#member\&quot; ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope) — there is no \&quot;self\&quot; variant.
+    # @param expand_relation_request [ExpandRelationRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ExpandRelationResponse, Integer, Hash)>] ExpandRelationResponse data, response status code and response headers
+    def expand_relation_with_http_info(expand_relation_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AuthorizationApi.expand_relation ...'
+      end
+      # verify the required parameter 'expand_relation_request' is set
+      if @api_client.config.client_side_validation && expand_relation_request.nil?
+        fail ArgumentError, "Missing the required parameter 'expand_relation_request' when calling AuthorizationApi.expand_relation"
+      end
+      # resource path
+      local_var_path = '/api/v1/authz/zanzibar/expand'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(expand_relation_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ExpandRelationResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AuthorizationApi.expand_relation",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AuthorizationApi#expand_relation\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+    # Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+    # @param org_id [String] 
+    # @param expand_relation_request [ExpandRelationRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [ExpandRelationResponse]
+    def expand_relation_scoped(org_id, expand_relation_request, opts = {})
+      data, _status_code, _headers = expand_relation_scoped_with_http_info(org_id, expand_relation_request, opts)
+      data
+    end
+
+    # Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
+    # Body: {\&quot;object\&quot;: \&quot;document:123\&quot;, \&quot;relation\&quot;: \&quot;viewer\&quot;} Response: {\&quot;tree\&quot;: {\&quot;type\&quot;, \&quot;object\&quot;, \&quot;relation\&quot;, \&quot;children\&quot;, \&quot;subjects\&quot;}}
+    # @param org_id [String] 
+    # @param expand_relation_request [ExpandRelationRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ExpandRelationResponse, Integer, Hash)>] ExpandRelationResponse data, response status code and response headers
+    def expand_relation_scoped_with_http_info(org_id, expand_relation_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AuthorizationApi.expand_relation_scoped ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AuthorizationApi.expand_relation_scoped"
+      end
+      # verify the required parameter 'expand_relation_request' is set
+      if @api_client.config.client_side_validation && expand_relation_request.nil?
+        fail ArgumentError, "Missing the required parameter 'expand_relation_request' when calling AuthorizationApi.expand_relation_scoped"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/zanzibar/expand'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(expand_relation_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ExpandRelationResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AuthorizationApi.expand_relation_scoped",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AuthorizationApi#expand_relation_scoped\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

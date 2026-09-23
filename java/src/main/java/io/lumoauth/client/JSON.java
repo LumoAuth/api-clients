@@ -126,6 +126,9 @@ public class JSON {
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.CreateTaskResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.DenyRequestRequest.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.DenyRequestResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ExpandRelationRequest.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ExpandRelationResponse.CustomTypeAdapterFactory());
+        gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.ExpandRelationResponseTree.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.GetApprovalStatusResponse.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.GetApprovalStatusResponseApprovedBy.CustomTypeAdapterFactory());
         gsonBuilder.registerTypeAdapterFactory(new io.lumoauth.client.model.GetCurrentAgentResponse.CustomTypeAdapterFactory());

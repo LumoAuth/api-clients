@@ -52,6 +52,9 @@ docs/CreateTaskRequest.md
 docs/CreateTaskResponse.md
 docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
+docs/ExpandRelationRequest.md
+docs/ExpandRelationResponse.md
+docs/ExpandRelationResponseTree.md
 docs/GetApprovalStatusResponse.md
 docs/GetApprovalStatusResponseApprovedBy.md
 docs/GetCurrentAgentResponse.md
@@ -178,6 +181,9 @@ src/main/java/io/lumoauth/client/model/CreateTaskRequest.java
 src/main/java/io/lumoauth/client/model/CreateTaskResponse.java
 src/main/java/io/lumoauth/client/model/DenyRequestRequest.java
 src/main/java/io/lumoauth/client/model/DenyRequestResponse.java
+src/main/java/io/lumoauth/client/model/ExpandRelationRequest.java
+src/main/java/io/lumoauth/client/model/ExpandRelationResponse.java
+src/main/java/io/lumoauth/client/model/ExpandRelationResponseTree.java
 src/main/java/io/lumoauth/client/model/GetApprovalStatusResponse.java
 src/main/java/io/lumoauth/client/model/GetApprovalStatusResponseApprovedBy.java
 src/main/java/io/lumoauth/client/model/GetCurrentAgentResponse.java
@@ -270,6 +276,9 @@ src/test/java/io/lumoauth/client/model/CreateTaskRequestTest.java
 src/test/java/io/lumoauth/client/model/CreateTaskResponseTest.java
 src/test/java/io/lumoauth/client/model/DenyRequestRequestTest.java
 src/test/java/io/lumoauth/client/model/DenyRequestResponseTest.java
+src/test/java/io/lumoauth/client/model/ExpandRelationRequestTest.java
+src/test/java/io/lumoauth/client/model/ExpandRelationResponseTest.java
+src/test/java/io/lumoauth/client/model/ExpandRelationResponseTreeTest.java
 src/test/java/io/lumoauth/client/model/GetApprovalStatusResponseApprovedByTest.java
 src/test/java/io/lumoauth/client/model/GetApprovalStatusResponseTest.java
 src/test/java/io/lumoauth/client/model/GetCurrentAgentResponseIdentityTest.java

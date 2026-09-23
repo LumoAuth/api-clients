@@ -1170,10 +1170,11 @@ catch (ApiException e)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** | A short-lived core-agent access token accepted by JIT, the token vault, and the authz PDP. |  -  |
+| **200** | A short-lived, DPoP-bound core-agent access token accepted by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint of the agent key) and must be presented with a DPoP proof from that key. |  -  |
 | **400** | Invalid exchange request (grant_type / subject_token). |  -  |
-| **401** | The AAuth token is invalid, expired, or revoked. |  -  |
+| **401** | The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed. |  -  |
 | **403** | Denied by a conditional access policy. |  -  |
+| **429** | Rate limit exceeded (per IP or per agent). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **expires_in** | **int** |  | [optional] 
 **scope** | **str** |  | [optional] 
 **agent_id** | **str** |  | [optional] 
+**cnf_jkt** | **str** | RFC 7638 thumbprint of the agent key the token is bound to. | [optional] 
 
 ## Example
 

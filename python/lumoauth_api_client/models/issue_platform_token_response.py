@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,7 +33,8 @@ class IssuePlatformTokenResponse(BaseModel):
     expires_in: Optional[StrictInt] = None
     scope: Optional[StrictStr] = None
     agent_id: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["access_token", "issued_token_type", "token_type", "expires_in", "scope", "agent_id"]
+    cnf_jkt: Optional[StrictStr] = Field(default=None, description="RFC 7638 thumbprint of the agent key the token is bound to.")
+    __properties: ClassVar[List[str]] = ["access_token", "issued_token_type", "token_type", "expires_in", "scope", "agent_id", "cnf_jkt"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +75,11 @@ class IssuePlatformTokenResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if cnf_jkt (nullable) is None
+        # and model_fields_set contains the field
+        if self.cnf_jkt is None and "cnf_jkt" in self.model_fields_set:
+            _dict['cnf_jkt'] = None
+
         return _dict
 
     @classmethod
@@ -91,7 +97,8 @@ class IssuePlatformTokenResponse(BaseModel):
             "token_type": obj.get("token_type"),
             "expires_in": obj.get("expires_in"),
             "scope": obj.get("scope"),
-            "agent_id": obj.get("agent_id")
+            "agent_id": obj.get("agent_id"),
+            "cnf_jkt": obj.get("cnf_jkt")
         })
         return _obj
 

@@ -51,6 +51,9 @@ docs/CreateTaskRequest.md
 docs/CreateTaskResponse.md
 docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
+docs/ExpandRelationRequest.md
+docs/ExpandRelationResponse.md
+docs/ExpandRelationResponseTree.md
 docs/GetApprovalStatusResponse.md
 docs/GetApprovalStatusResponseApprovedBy.md
 docs/GetCurrentAgentResponse.md
@@ -152,6 +155,9 @@ src/LumoAuth.ApiClient.Test/Model/CreateTaskRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/CreateTaskResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/DenyRequestRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/DenyRequestResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/ExpandRelationRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/ExpandRelationResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/ExpandRelationResponseTreeTests.cs
 src/LumoAuth.ApiClient.Test/Model/GetApprovalStatusResponseApprovedByTests.cs
 src/LumoAuth.ApiClient.Test/Model/GetApprovalStatusResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/GetCurrentAgentResponseIdentityTests.cs
@@ -263,6 +269,9 @@ src/LumoAuth.ApiClient/Model/CreateTaskRequest.cs
 src/LumoAuth.ApiClient/Model/CreateTaskResponse.cs
 src/LumoAuth.ApiClient/Model/DenyRequestRequest.cs
 src/LumoAuth.ApiClient/Model/DenyRequestResponse.cs
+src/LumoAuth.ApiClient/Model/ExpandRelationRequest.cs
+src/LumoAuth.ApiClient/Model/ExpandRelationResponse.cs
+src/LumoAuth.ApiClient/Model/ExpandRelationResponseTree.cs
 src/LumoAuth.ApiClient/Model/GetApprovalStatusResponse.cs
 src/LumoAuth.ApiClient/Model/GetApprovalStatusResponseApprovedBy.cs
 src/LumoAuth.ApiClient/Model/GetCurrentAgentResponse.cs

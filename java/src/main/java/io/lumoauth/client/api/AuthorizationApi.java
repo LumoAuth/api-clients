@@ -27,6 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.ExpandRelationRequest;
+import io.lumoauth.client.model.ExpandRelationResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -378,7 +380,7 @@ public class AuthorizationApi {
 
     /**
      * Check if user has ALL of the specified permissions
-     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -393,7 +395,7 @@ public class AuthorizationApi {
 
     /**
      * Check if user has ALL of the specified permissions
-     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -410,7 +412,7 @@ public class AuthorizationApi {
 
     /**
      * Check if user has ALL of the specified permissions (asynchronously)
-     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -490,7 +492,7 @@ public class AuthorizationApi {
 
     /**
      * Check if user has ANY of the specified permissions
-     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -505,7 +507,7 @@ public class AuthorizationApi {
 
     /**
      * Check if user has ANY of the specified permissions
-     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -522,7 +524,7 @@ public class AuthorizationApi {
 
     /**
      * Check if user has ANY of the specified permissions (asynchronously)
-     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -602,7 +604,7 @@ public class AuthorizationApi {
 
     /**
      * Check if the authenticated user has a specific permission
-     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456} }
+     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -617,7 +619,7 @@ public class AuthorizationApi {
 
     /**
      * Check if the authenticated user has a specific permission
-     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456} }
+     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -634,7 +636,7 @@ public class AuthorizationApi {
 
     /**
      * Check if the authenticated user has a specific permission (asynchronously)
-     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456} }
+     * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -714,7 +716,7 @@ public class AuthorizationApi {
 
     /**
      * Check multiple permissions at once
-     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -729,7 +731,7 @@ public class AuthorizationApi {
 
     /**
      * Check multiple permissions at once
-     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -746,7 +748,7 @@ public class AuthorizationApi {
 
     /**
      * Check multiple permissions at once (asynchronously)
-     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123} }
+     * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1219,6 +1221,286 @@ public class AuthorizationApi {
 
         okhttp3.Call localVarCall = evaluateBatchValidateBeforeCall(_callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for expandRelation
+     * @param expandRelationRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call expandRelationCall(@javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = expandRelationRequest;
+
+        // create path and map variables
+        String localVarPath = "/api/v1/authz/zanzibar/expand";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call expandRelationValidateBeforeCall(@javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'expandRelationRequest' is set
+        if (expandRelationRequest == null) {
+            throw new ApiException("Missing the required parameter 'expandRelationRequest' when calling expandRelation(Async)");
+        }
+
+        return expandRelationCall(expandRelationRequest, _callback);
+
+    }
+
+    /**
+     * Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+     * POST /api/v1/authz/zanzibar/expand Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot; } Response: {   \&quot;tree\&quot;: {     \&quot;type\&quot;: \&quot;union\&quot; | \&quot;intersection\&quot; | \&quot;leaf\&quot;,     \&quot;object\&quot;: \&quot;document:123\&quot;,     \&quot;relation\&quot;: \&quot;viewer\&quot;,     \&quot;children\&quot;: [ ...nested nodes... ],     \&quot;subjects\&quot;: [ \&quot;user:1\&quot;, \&quot;group:2#member\&quot; ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope) — there is no \&quot;self\&quot; variant.
+     * @param expandRelationRequest  (required)
+     * @return ExpandRelationResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ExpandRelationResponse expandRelation(@javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest) throws ApiException {
+        ApiResponse<ExpandRelationResponse> localVarResp = expandRelationWithHttpInfo(expandRelationRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+     * POST /api/v1/authz/zanzibar/expand Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot; } Response: {   \&quot;tree\&quot;: {     \&quot;type\&quot;: \&quot;union\&quot; | \&quot;intersection\&quot; | \&quot;leaf\&quot;,     \&quot;object\&quot;: \&quot;document:123\&quot;,     \&quot;relation\&quot;: \&quot;viewer\&quot;,     \&quot;children\&quot;: [ ...nested nodes... ],     \&quot;subjects\&quot;: [ \&quot;user:1\&quot;, \&quot;group:2#member\&quot; ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope) — there is no \&quot;self\&quot; variant.
+     * @param expandRelationRequest  (required)
+     * @return ApiResponse&lt;ExpandRelationResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<ExpandRelationResponse> expandRelationWithHttpInfo(@javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest) throws ApiException {
+        okhttp3.Call localVarCall = expandRelationValidateBeforeCall(expandRelationRequest, null);
+        Type localVarReturnType = new TypeToken<ExpandRelationResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites. (asynchronously)
+     * POST /api/v1/authz/zanzibar/expand Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot; } Response: {   \&quot;tree\&quot;: {     \&quot;type\&quot;: \&quot;union\&quot; | \&quot;intersection\&quot; | \&quot;leaf\&quot;,     \&quot;object\&quot;: \&quot;document:123\&quot;,     \&quot;relation\&quot;: \&quot;viewer\&quot;,     \&quot;children\&quot;: [ ...nested nodes... ],     \&quot;subjects\&quot;: [ \&quot;user:1\&quot;, \&quot;group:2#member\&quot; ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope) — there is no \&quot;self\&quot; variant.
+     * @param expandRelationRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call expandRelationAsync(@javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest, final ApiCallback<ExpandRelationResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = expandRelationValidateBeforeCall(expandRelationRequest, _callback);
+        Type localVarReturnType = new TypeToken<ExpandRelationResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for expandRelationScoped
+     * @param orgId  (required)
+     * @param expandRelationRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call expandRelationScopedCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = expandRelationRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/zanzibar/expand"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call expandRelationScopedValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling expandRelationScoped(Async)");
+        }
+
+        // verify the required parameter 'expandRelationRequest' is set
+        if (expandRelationRequest == null) {
+            throw new ApiException("Missing the required parameter 'expandRelationRequest' when calling expandRelationScoped(Async)");
+        }
+
+        return expandRelationScopedCall(orgId, expandRelationRequest, _callback);
+
+    }
+
+    /**
+     * Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
+     * Body: {\&quot;object\&quot;: \&quot;document:123\&quot;, \&quot;relation\&quot;: \&quot;viewer\&quot;} Response: {\&quot;tree\&quot;: {\&quot;type\&quot;, \&quot;object\&quot;, \&quot;relation\&quot;, \&quot;children\&quot;, \&quot;subjects\&quot;}}
+     * @param orgId  (required)
+     * @param expandRelationRequest  (required)
+     * @return ExpandRelationResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ExpandRelationResponse expandRelationScoped(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest) throws ApiException {
+        ApiResponse<ExpandRelationResponse> localVarResp = expandRelationScopedWithHttpInfo(orgId, expandRelationRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
+     * Body: {\&quot;object\&quot;: \&quot;document:123\&quot;, \&quot;relation\&quot;: \&quot;viewer\&quot;} Response: {\&quot;tree\&quot;: {\&quot;type\&quot;, \&quot;object\&quot;, \&quot;relation\&quot;, \&quot;children\&quot;, \&quot;subjects\&quot;}}
+     * @param orgId  (required)
+     * @param expandRelationRequest  (required)
+     * @return ApiResponse&lt;ExpandRelationResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<ExpandRelationResponse> expandRelationScopedWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest) throws ApiException {
+        okhttp3.Call localVarCall = expandRelationScopedValidateBeforeCall(orgId, expandRelationRequest, null);
+        Type localVarReturnType = new TypeToken<ExpandRelationResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope). (asynchronously)
+     * Body: {\&quot;object\&quot;: \&quot;document:123\&quot;, \&quot;relation\&quot;: \&quot;viewer\&quot;} Response: {\&quot;tree\&quot;: {\&quot;type\&quot;, \&quot;object\&quot;, \&quot;relation\&quot;, \&quot;children\&quot;, \&quot;subjects\&quot;}}
+     * @param orgId  (required)
+     * @param expandRelationRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> The userset tree for object#relation. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing object/relation or malformed object identifier. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call expandRelationScopedAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull ExpandRelationRequest expandRelationRequest, final ApiCallback<ExpandRelationResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = expandRelationScopedValidateBeforeCall(orgId, expandRelationRequest, _callback);
+        Type localVarReturnType = new TypeToken<ExpandRelationResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**

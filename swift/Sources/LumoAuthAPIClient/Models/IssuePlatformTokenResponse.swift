@@ -18,14 +18,17 @@ public struct IssuePlatformTokenResponse: Codable, JSONEncodable, Hashable {
     public var expiresIn: Int?
     public var scope: String?
     public var agentId: String?
+    /** RFC 7638 thumbprint of the agent key the token is bound to. */
+    public var cnfJkt: String?
 
-    public init(accessToken: String? = nil, issuedTokenType: String? = nil, tokenType: String? = nil, expiresIn: Int? = nil, scope: String? = nil, agentId: String? = nil) {
+    public init(accessToken: String? = nil, issuedTokenType: String? = nil, tokenType: String? = nil, expiresIn: Int? = nil, scope: String? = nil, agentId: String? = nil, cnfJkt: String? = nil) {
         self.accessToken = accessToken
         self.issuedTokenType = issuedTokenType
         self.tokenType = tokenType
         self.expiresIn = expiresIn
         self.scope = scope
         self.agentId = agentId
+        self.cnfJkt = cnfJkt
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -35,6 +38,7 @@ public struct IssuePlatformTokenResponse: Codable, JSONEncodable, Hashable {
         case expiresIn = "expires_in"
         case scope
         case agentId = "agent_id"
+        case cnfJkt = "cnf_jkt"
     }
 
     // Encodable protocol methods
@@ -47,6 +51,7 @@ public struct IssuePlatformTokenResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(expiresIn, forKey: .expiresIn)
         try container.encodeIfPresent(scope, forKey: .scope)
         try container.encodeIfPresent(agentId, forKey: .agentId)
+        try container.encodeIfPresent(cnfJkt, forKey: .cnfJkt)
     }
 }
 

@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **expires_in** | **number** |  | [optional] [default to undefined]
 **scope** | **string** |  | [optional] [default to undefined]
 **agent_id** | **string** |  | [optional] [default to undefined]
+**cnf_jkt** | **string** | RFC 7638 thumbprint of the agent key the token is bound to. | [optional] [default to undefined]
 
 ## Example
 
@@ -24,6 +25,7 @@ const instance: IssuePlatformTokenResponse = {
     expires_in,
     scope,
     agent_id,
+    cnf_jkt,
 };
 ```
 

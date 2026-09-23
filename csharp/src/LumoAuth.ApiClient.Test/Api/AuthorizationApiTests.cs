@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -153,6 +155,31 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //instance.EvaluateBatch();
+        }
+
+        /// <summary>
+        /// Test ExpandRelation
+        /// </summary>
+        [Fact]
+        public void ExpandRelationTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //ExpandRelationRequest expandRelationRequest = null;
+            //var response = instance.ExpandRelation(expandRelationRequest);
+            //Assert.IsType<ExpandRelationResponse>(response);
+        }
+
+        /// <summary>
+        /// Test ExpandRelationScoped
+        /// </summary>
+        [Fact]
+        public void ExpandRelationScopedTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //ExpandRelationRequest expandRelationRequest = null;
+            //var response = instance.ExpandRelationScoped(orgId, expandRelationRequest);
+            //Assert.IsType<ExpandRelationResponse>(response);
         }
 
         /// <summary>

@@ -571,7 +571,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "A short-lived core-agent access token accepted by JIT, the token vault, and the authz PDP.",
+                        "description": "A short-lived, DPoP-bound core-agent access token accepted by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint of the agent key) and must be presented with a DPoP proof from that key.",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -584,10 +584,13 @@
                         "description": "Invalid exchange request (grant_type / subject_token)."
                     },
                     "401": {
-                        "description": "The AAuth token is invalid, expired, or revoked."
+                        "description": "The AAuth token is invalid, expired, or revoked, or the RFC 9421 request signature is missing/invalid/replayed."
                     },
                     "403": {
                         "description": "Denied by a conditional access policy."
+                    },
+                    "429": {
+                        "description": "Rate limit exceeded (per IP or per agent)."
                     }
                 },
                 "x-symfony-route": "aauth_agent_platform_token",
@@ -8207,7 +8210,7 @@
                     "Authorization"
                 ],
                 "summary": "Check if the authenticated user has a specific permission",
-                "description": "POST /api/v1/authz/check\nBody: {\n  \"permission\": \"document.edit\",\n  \"context\": {\"document_id\": 123, \"owner_id\": 456}\n}",
+                "description": "POST /api/v1/authz/check\nBody: {\n  \"permission\": \"document.edit\",\n  \"context\": {\"document_id\": 123, \"owner_id\": 456},\n  \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller\n}\n\nAll four check endpoints accept the optional `subject`. Naming a subject\nother than the caller requires the `authz.check` permission or the\n`authz:check` scope (403 `insufficient_permissions` otherwise) — see\nThirdPartySubjectGuard.",
                 "operationId": "checkPermission",
                 "responses": {
                     "default": {
@@ -8223,7 +8226,7 @@
                     "Authorization"
                 ],
                 "summary": "Check multiple permissions at once",
-                "description": "POST /api/v1/authz/check-bulk\nBody: {\n  \"permissions\": [\"document.edit\", \"document.delete\"],\n  \"context\": {\"document_id\": 123}\n}",
+                "description": "POST /api/v1/authz/check-bulk\nBody: {\n  \"permissions\": [\"document.edit\", \"document.delete\"],\n  \"context\": {\"document_id\": 123},\n  \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check\n}",
                 "operationId": "checkPermissionsBulk",
                 "responses": {
                     "default": {
@@ -8239,7 +8242,7 @@
                     "Authorization"
                 ],
                 "summary": "Check if user has ANY of the specified permissions",
-                "description": "POST /api/v1/authz/check-any\nBody: {\n  \"permissions\": [\"document.edit\", \"document.view\"],\n  \"context\": {\"document_id\": 123}\n}",
+                "description": "POST /api/v1/authz/check-any\nBody: {\n  \"permissions\": [\"document.edit\", \"document.view\"],\n  \"context\": {\"document_id\": 123},\n  \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check\n}",
                 "operationId": "checkAnyPermission",
                 "responses": {
                     "default": {
@@ -8255,7 +8258,7 @@
                     "Authorization"
                 ],
                 "summary": "Check if user has ALL of the specified permissions",
-                "description": "POST /api/v1/authz/check-all\nBody: {\n  \"permissions\": [\"document.edit\", \"document.publish\"],\n  \"context\": {\"document_id\": 123}\n}",
+                "description": "POST /api/v1/authz/check-all\nBody: {\n  \"permissions\": [\"document.edit\", \"document.publish\"],\n  \"context\": {\"document_id\": 123},\n  \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check\n}",
                 "operationId": "checkAllPermissions",
                 "responses": {
                     "default": {
@@ -8279,6 +8282,45 @@
                     }
                 },
                 "x-symfony-route": "api_authz_zanzibar_check"
+            }
+        },
+        "/api/v1/authz/zanzibar/expand": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Zanzibar-style userset expansion: every subject that satisfies\n`object#relation`, as a tree that mirrors the namespace rewrites.",
+                "description": "POST /api/v1/authz/zanzibar/expand\nBody: {\n  \"object\": \"document:123\",\n  \"relation\": \"viewer\"\n}\nResponse: {\n  \"tree\": {\n    \"type\": \"union\" | \"intersection\" | \"leaf\",\n    \"object\": \"document:123\",\n    \"relation\": \"viewer\",\n    \"children\": [ ...nested nodes... ],\n    \"subjects\": [ \"user:1\", \"group:2#member\" ]\n  }\n}\n\nExpansion always reveals other subjects, so it requires the oracle\nprivilege (`authz.check` permission or `authz:check` scope) — there is\nno \"self\" variant.",
+                "operationId": "expandRelation",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExpandRelationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The userset tree for object#relation.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExpandRelationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing object/relation or malformed object identifier."
+                    },
+                    "403": {
+                        "description": "insufficient_permissions — expand requires the authz.check permission or the authz:check scope."
+                    }
+                },
+                "x-symfony-route": "api_authz_zanzibar_expand"
             }
         },
         "/api/v1/authz/permissions": {
@@ -9956,6 +9998,55 @@
                 },
                 "x-symfony-route": "api_zanzibar_check_scoped"
             }
+        },
+        "/orgs/{orgId}/api/v1/zanzibar/expand": {
+            "post": {
+                "tags": [
+                    "Authorization"
+                ],
+                "summary": "Zanzibar Expand: the userset tree of every subject satisfying\n`object#relation`. Always reveals other subjects, so it requires the\noracle privilege (`authz.check` permission or `authz:check` scope).",
+                "description": "Body: {\"object\": \"document:123\", \"relation\": \"viewer\"}\nResponse: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}",
+                "operationId": "expandRelationScoped",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ExpandRelationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The userset tree for object#relation.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ExpandRelationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Missing object/relation or malformed object identifier."
+                    },
+                    "403": {
+                        "description": "insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization."
+                    }
+                },
+                "x-symfony-route": "api_zanzibar_expand_scoped"
+            }
         }
     },
     "components": {
@@ -10188,11 +10279,11 @@
                     },
                     "token_type": {
                         "type": "string",
-                        "example": "Bearer"
+                        "example": "DPoP"
                     },
                     "expires_in": {
                         "type": "integer",
-                        "example": 900
+                        "example": 300
                     },
                     "scope": {
                         "type": "string"
@@ -10200,6 +10291,11 @@
                     "agent_id": {
                         "type": "string",
                         "example": "agt_ab12cd34"
+                    },
+                    "cnf_jkt": {
+                        "description": "RFC 7638 thumbprint of the agent key the token is bound to.",
+                        "type": "string",
+                        "nullable": true
                     }
                 },
                 "type": "object"
@@ -10798,6 +10894,72 @@
                     },
                     "approved_by": {
                         "$ref": "#/components/schemas/GetApprovalStatusResponseApprovedBy"
+                    }
+                },
+                "type": "object"
+            },
+            "ExpandRelationRequest": {
+                "required": [
+                    "object",
+                    "relation"
+                ],
+                "properties": {
+                    "object": {
+                        "description": "Resource as namespace:id",
+                        "type": "string",
+                        "example": "document:123"
+                    },
+                    "relation": {
+                        "type": "string",
+                        "example": "viewer"
+                    }
+                },
+                "type": "object"
+            },
+            "ExpandRelationResponseTree": {
+                "description": "Userset tree node. Leaves carry subjects; union/intersection nodes carry children of the same shape.",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "union",
+                            "intersection",
+                            "leaf"
+                        ]
+                    },
+                    "object": {
+                        "type": "string",
+                        "example": "document:123"
+                    },
+                    "relation": {
+                        "type": "string",
+                        "example": "viewer"
+                    },
+                    "children": {
+                        "description": "Nested nodes (same shape); empty for leaves.",
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "subjects": {
+                        "description": "Direct subjects; usersets are listed as-is.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "example": [
+                            "user:1",
+                            "group:2#member"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "ExpandRelationResponse": {
+                "properties": {
+                    "tree": {
+                        "$ref": "#/components/schemas/ExpandRelationResponseTree"
                     }
                 },
                 "type": "object"

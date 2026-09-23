@@ -49,6 +49,9 @@ docs/CreateTaskRequest.md
 docs/CreateTaskResponse.md
 docs/DenyRequestRequest.md
 docs/DenyRequestResponse.md
+docs/ExpandRelationRequest.md
+docs/ExpandRelationResponse.md
+docs/ExpandRelationResponseTree.md
 docs/GetApprovalStatusResponse.md
 docs/GetApprovalStatusResponseApprovedBy.md
 docs/GetCurrentAgentResponse.md
@@ -156,6 +159,9 @@ lumoauth_api_client/models/create_task_request.py
 lumoauth_api_client/models/create_task_response.py
 lumoauth_api_client/models/deny_request_request.py
 lumoauth_api_client/models/deny_request_response.py
+lumoauth_api_client/models/expand_relation_request.py
+lumoauth_api_client/models/expand_relation_response.py
+lumoauth_api_client/models/expand_relation_response_tree.py
 lumoauth_api_client/models/get_approval_status_response.py
 lumoauth_api_client/models/get_approval_status_response_approved_by.py
 lumoauth_api_client/models/get_current_agent_response.py

@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **ExpiresIn** | Pointer to **int32** |  | [optional] 
 **Scope** | Pointer to **string** |  | [optional] 
 **AgentId** | Pointer to **string** |  | [optional] 
+**CnfJkt** | Pointer to **NullableString** | RFC 7638 thumbprint of the agent key the token is bound to. | [optional] 
 
 ## Methods
 
@@ -180,6 +181,41 @@ SetAgentId sets AgentId field to given value.
 
 HasAgentId returns a boolean if a field has been set.
 
+### GetCnfJkt
+
+`func (o *IssuePlatformTokenResponse) GetCnfJkt() string`
+
+GetCnfJkt returns the CnfJkt field if non-nil, zero value otherwise.
+
+### GetCnfJktOk
+
+`func (o *IssuePlatformTokenResponse) GetCnfJktOk() (*string, bool)`
+
+GetCnfJktOk returns a tuple with the CnfJkt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCnfJkt
+
+`func (o *IssuePlatformTokenResponse) SetCnfJkt(v string)`
+
+SetCnfJkt sets CnfJkt field to given value.
+
+### HasCnfJkt
+
+`func (o *IssuePlatformTokenResponse) HasCnfJkt() bool`
+
+HasCnfJkt returns a boolean if a field has been set.
+
+### SetCnfJktNil
+
+`func (o *IssuePlatformTokenResponse) SetCnfJktNil(b bool)`
+
+ SetCnfJktNil sets the value for CnfJkt to be an explicit nil
+
+### UnsetCnfJkt
+`func (o *IssuePlatformTokenResponse) UnsetCnfJkt()`
+
+UnsetCnfJkt ensures that no value is present for CnfJkt, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

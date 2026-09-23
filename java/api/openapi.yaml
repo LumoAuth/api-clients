@@ -513,14 +513,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IssuePlatformTokenResponse"
-          description: "A short-lived core-agent access token accepted by JIT, the\
-            \ token vault, and the authz PDP."
+          description: "A short-lived, DPoP-bound core-agent access token accepted\
+            \ by JIT, the token vault, and the authz PDP. It carries cnf.jkt (thumbprint\
+            \ of the agent key) and must be presented with a DPoP proof from that\
+            \ key."
         "400":
           description: Invalid exchange request (grant_type / subject_token).
         "401":
-          description: "The AAuth token is invalid, expired, or revoked."
+          description: "The AAuth token is invalid, expired, or revoked, or the RFC\
+            \ 9421 request signature is missing/invalid/replayed."
         "403":
           description: Denied by a conditional access policy.
+        "429":
+          description: Rate limit exceeded (per IP or per agent).
       security:
       - AAuthSigned: []
       tags:
@@ -6807,8 +6812,14 @@ paths:
         POST /api/v1/authz/check
         Body: {
           "permission": "document.edit",
-          "context": {"document_id": 123, "owner_id": 456}
+          "context": {"document_id": 123, "owner_id": 456},
+          "subject": {"type": "user", "id": "<uuid>"}   // optional — defaults to the caller
         }
+
+        All four check endpoints accept the optional `subject`. Naming a subject
+        other than the caller requires the `authz.check` permission or the
+        `authz:check` scope (403 `insufficient_permissions` otherwise) — see
+        ThirdPartySubjectGuard.
       operationId: checkPermission
       responses:
         default:
@@ -6825,7 +6836,8 @@ paths:
         POST /api/v1/authz/check-bulk
         Body: {
           "permissions": ["document.edit", "document.delete"],
-          "context": {"document_id": 123}
+          "context": {"document_id": 123},
+          "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkPermissionsBulk
       responses:
@@ -6843,7 +6855,8 @@ paths:
         POST /api/v1/authz/check-any
         Body: {
           "permissions": ["document.edit", "document.view"],
-          "context": {"document_id": 123}
+          "context": {"document_id": 123},
+          "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkAnyPermission
       responses:
@@ -6861,7 +6874,8 @@ paths:
         POST /api/v1/authz/check-all
         Body: {
           "permissions": ["document.edit", "document.publish"],
-          "context": {"document_id": 123}
+          "context": {"document_id": 123},
+          "subject": {"type": "user", "id": "<uuid>"}   // optional — see /check
         }
       operationId: checkAllPermissions
       responses:
@@ -6890,6 +6904,55 @@ paths:
       tags:
       - Authorization
       x-symfony-route: api_authz_zanzibar_check
+      x-accepts:
+      - application/json
+  /api/v1/authz/zanzibar/expand:
+    post:
+      description: |-
+        POST /api/v1/authz/zanzibar/expand
+        Body: {
+          "object": "document:123",
+          "relation": "viewer"
+        }
+        Response: {
+          "tree": {
+            "type": "union" | "intersection" | "leaf",
+            "object": "document:123",
+            "relation": "viewer",
+            "children": [ ...nested nodes... ],
+            "subjects": [ "user:1", "group:2#member" ]
+          }
+        }
+
+        Expansion always reveals other subjects, so it requires the oracle
+        privilege (`authz.check` permission or `authz:check` scope) — there is
+        no "self" variant.
+      operationId: expandRelation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpandRelationRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpandRelationResponse"
+          description: The userset tree for object#relation.
+        "400":
+          description: Missing object/relation or malformed object identifier.
+        "403":
+          description: insufficient_permissions — expand requires the authz.check
+            permission or the authz:check scope.
+      summary: |-
+        Zanzibar-style userset expansion: every subject that satisfies
+        `object#relation`, as a tree that mirrors the namespace rewrites.
+      tags:
+      - Authorization
+      x-symfony-route: api_authz_zanzibar_expand
+      x-content-type: application/json
       x-accepts:
       - application/json
   /api/v1/authz/permissions:
@@ -8274,6 +8337,48 @@ paths:
       x-symfony-route: api_zanzibar_check_scoped
       x-accepts:
       - application/json
+  /orgs/{orgId}/api/v1/zanzibar/expand:
+    post:
+      description: |-
+        Body: {"object": "document:123", "relation": "viewer"}
+        Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
+      operationId: expandRelationScoped
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpandRelationRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExpandRelationResponse"
+          description: The userset tree for object#relation.
+        "400":
+          description: Missing object/relation or malformed object identifier.
+        "403":
+          description: insufficient_permissions — expand requires the authz.check
+            permission or the authz:check scope; or the token is for another organization.
+      summary: |-
+        Zanzibar Expand: the userset tree of every subject satisfying
+        `object#relation`. Always reveals other subjects, so it requires the
+        oracle privilege (`authz.check` permission or `authz:check` scope).
+      tags:
+      - Authorization
+      x-symfony-route: api_zanzibar_expand_scoped
+      x-content-type: application/json
+      x-accepts:
+      - application/json
 components:
   schemas:
     IssueAgentTokenRequest:
@@ -8472,8 +8577,9 @@ components:
         agent_id: agt_ab12cd34
         issued_token_type: urn:ietf:params:oauth:token-type:access_token
         scope: scope
-        token_type: Bearer
-        expires_in: 900
+        cnf_jkt: cnf_jkt
+        token_type: DPoP
+        expires_in: 300
       properties:
         access_token:
           type: string
@@ -8481,15 +8587,19 @@ components:
           example: urn:ietf:params:oauth:token-type:access_token
           type: string
         token_type:
-          example: Bearer
+          example: DPoP
           type: string
         expires_in:
-          example: 900
+          example: 300
           type: integer
         scope:
           type: string
         agent_id:
           example: agt_ab12cd34
+          type: string
+        cnf_jkt:
+          description: RFC 7638 thumbprint of the agent key the token is bound to.
+          nullable: true
           type: string
       type: object
     IssueResourceTokenRequest:
@@ -9070,6 +9180,78 @@ components:
           type: string
         approved_by:
           $ref: "#/components/schemas/GetApprovalStatusResponseApprovedBy"
+      type: object
+    ExpandRelationRequest:
+      example:
+        object: document:123
+        relation: viewer
+      properties:
+        object:
+          description: Resource as namespace:id
+          example: document:123
+          type: string
+        relation:
+          example: viewer
+          type: string
+      required:
+      - object
+      - relation
+      type: object
+    ExpandRelationResponseTree:
+      description: Userset tree node. Leaves carry subjects; union/intersection nodes
+        carry children of the same shape.
+      example:
+        children:
+        - "{}"
+        - "{}"
+        subjects:
+        - user:1
+        - group:2#member
+        type: union
+        object: document:123
+        relation: viewer
+      properties:
+        type:
+          enum:
+          - union
+          - intersection
+          - leaf
+          type: string
+        object:
+          example: document:123
+          type: string
+        relation:
+          example: viewer
+          type: string
+        children:
+          description: Nested nodes (same shape); empty for leaves.
+          items:
+            type: object
+          type: array
+        subjects:
+          description: Direct subjects; usersets are listed as-is.
+          example:
+          - user:1
+          - group:2#member
+          items:
+            type: string
+          type: array
+      type: object
+    ExpandRelationResponse:
+      example:
+        tree:
+          children:
+          - "{}"
+          - "{}"
+          subjects:
+          - user:1
+          - group:2#member
+          type: union
+          object: document:123
+          relation: viewer
+      properties:
+        tree:
+          $ref: "#/components/schemas/ExpandRelationResponseTree"
       type: object
     CreateTaskRequest:
       example:

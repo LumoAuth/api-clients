@@ -14,6 +14,8 @@ Method | HTTP request | Description
 [**CheckRelationScoped**](AuthorizationAPI.md#CheckRelationScoped) | **Post** /orgs/{orgId}/api/v1/zanzibar/check | 
 [**Evaluate**](AuthorizationAPI.md#Evaluate) | **Post** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
 [**EvaluateBatch**](AuthorizationAPI.md#EvaluateBatch) | **Post** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+[**ExpandRelation**](AuthorizationAPI.md#ExpandRelation) | **Post** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
+[**ExpandRelationScoped**](AuthorizationAPI.md#ExpandRelationScoped) | **Post** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
 [**GetMyAttributes**](AuthorizationAPI.md#GetMyAttributes) | **Get** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI)
 [**GetResourceAttributes**](AuthorizationAPI.md#GetResourceAttributes) | **Get** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
 [**ListAttributeDefinitions**](AuthorizationAPI.md#ListAttributeDefinitions) | **Get** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
@@ -632,6 +634,144 @@ Other parameters are passed through a pointer to a apiEvaluateBatchRequest struc
 
 - **Content-Type**: Not defined
 - **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ExpandRelation
+
+> ExpandRelationResponse ExpandRelation(ctx).ExpandRelationRequest(expandRelationRequest).Execute()
+
+Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	expandRelationRequest := *openapiclient.NewExpandRelationRequest("document:123", "viewer") // ExpandRelationRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthorizationAPI.ExpandRelation(context.Background()).ExpandRelationRequest(expandRelationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.ExpandRelation``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExpandRelation`: ExpandRelationResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.ExpandRelation`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExpandRelationRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **expandRelationRequest** | [**ExpandRelationRequest**](ExpandRelationRequest.md) |  | 
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ExpandRelationScoped
+
+> ExpandRelationResponse ExpandRelationScoped(ctx, orgId).ExpandRelationRequest(expandRelationRequest).Execute()
+
+Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	expandRelationRequest := *openapiclient.NewExpandRelationRequest("document:123", "viewer") // ExpandRelationRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AuthorizationAPI.ExpandRelationScoped(context.Background(), orgId).ExpandRelationRequest(expandRelationRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.ExpandRelationScoped``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ExpandRelationScoped`: ExpandRelationResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.ExpandRelationScoped`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiExpandRelationScopedRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **expandRelationRequest** | [**ExpandRelationRequest**](ExpandRelationRequest.md) |  | 
+
+### Return type
+
+[**ExpandRelationResponse**](ExpandRelationResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

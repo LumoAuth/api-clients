@@ -85,6 +85,9 @@ __all__ = [
     "CreateTaskResponse",
     "DenyRequestRequest",
     "DenyRequestResponse",
+    "ExpandRelationRequest",
+    "ExpandRelationResponse",
+    "ExpandRelationResponseTree",
     "GetApprovalStatusResponse",
     "GetApprovalStatusResponseApprovedBy",
     "GetCurrentAgentResponse",
@@ -193,6 +196,9 @@ from lumoauth_api_client.models.create_task_request import CreateTaskRequest as 
 from lumoauth_api_client.models.create_task_response import CreateTaskResponse as CreateTaskResponse
 from lumoauth_api_client.models.deny_request_request import DenyRequestRequest as DenyRequestRequest
 from lumoauth_api_client.models.deny_request_response import DenyRequestResponse as DenyRequestResponse
+from lumoauth_api_client.models.expand_relation_request import ExpandRelationRequest as ExpandRelationRequest
+from lumoauth_api_client.models.expand_relation_response import ExpandRelationResponse as ExpandRelationResponse
+from lumoauth_api_client.models.expand_relation_response_tree import ExpandRelationResponseTree as ExpandRelationResponseTree
 from lumoauth_api_client.models.get_approval_status_response import GetApprovalStatusResponse as GetApprovalStatusResponse
 from lumoauth_api_client.models.get_approval_status_response_approved_by import GetApprovalStatusResponseApprovedBy as GetApprovalStatusResponseApprovedBy
 from lumoauth_api_client.models.get_current_agent_response import GetCurrentAgentResponse as GetCurrentAgentResponse

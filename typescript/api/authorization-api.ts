@@ -21,6 +21,10 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { ExpandRelationRequest } from '../models';
+// @ts-ignore
+import type { ExpandRelationResponse } from '../models';
 /**
  * AuthorizationApi - axios parameter creator
  * @export
@@ -110,7 +114,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check if user has ALL of the specified permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -147,7 +151,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check if user has ANY of the specified permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -184,7 +188,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+         * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
          * @summary Check if the authenticated user has a specific permission
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -221,7 +225,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check multiple permissions at once
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -402,6 +406,96 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+         * @summary Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+         * @param {ExpandRelationRequest} expandRelationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        expandRelation: async (expandRelationRequest: ExpandRelationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'expandRelationRequest' is not null or undefined
+            assertParamExists('expandRelation', 'expandRelationRequest', expandRelationRequest)
+            const localVarPath = `/api/v1/authz/zanzibar/expand`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(expandRelationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+         * @summary Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+         * @param {string} orgId 
+         * @param {ExpandRelationRequest} expandRelationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        expandRelationScoped: async (orgId: string, expandRelationRequest: ExpandRelationRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('expandRelationScoped', 'orgId', orgId)
+            // verify required parameter 'expandRelationRequest' is not null or undefined
+            assertParamExists('expandRelationScoped', 'expandRelationRequest', expandRelationRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/zanzibar/expand`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(expandRelationRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -715,7 +809,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check if user has ALL of the specified permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -727,7 +821,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check if user has ANY of the specified permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -739,7 +833,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+         * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
          * @summary Check if the authenticated user has a specific permission
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -751,7 +845,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check multiple permissions at once
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -808,6 +902,33 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateBatch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.evaluateBatch']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+         * @summary Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+         * @param {ExpandRelationRequest} expandRelationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async expandRelation(expandRelationRequest: ExpandRelationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExpandRelationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.expandRelation(expandRelationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.expandRelation']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+         * @summary Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+         * @param {string} orgId 
+         * @param {ExpandRelationRequest} expandRelationRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async expandRelationScoped(orgId: string, expandRelationRequest: ExpandRelationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExpandRelationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.expandRelationScoped(orgId, expandRelationRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.expandRelationScoped']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -925,7 +1046,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
             return localVarFp.checkAbacBulk(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check if user has ALL of the specified permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -934,7 +1055,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
             return localVarFp.checkAllPermissions(options).then((request) => request(axios, basePath));
         },
         /**
-         * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check if user has ANY of the specified permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -943,7 +1064,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
             return localVarFp.checkAnyPermission(options).then((request) => request(axios, basePath));
         },
         /**
-         * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+         * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
          * @summary Check if the authenticated user has a specific permission
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -952,7 +1073,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
             return localVarFp.checkPermission(options).then((request) => request(axios, basePath));
         },
         /**
-         * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+         * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
          * @summary Check multiple permissions at once
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -995,6 +1116,26 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
          */
         evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.evaluateBatch(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+         * @summary Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+         * @param {AuthorizationApiExpandRelationRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        expandRelation(requestParameters: AuthorizationApiExpandRelationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExpandRelationResponse> {
+            return localVarFp.expandRelation(requestParameters.expandRelationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+         * @summary Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+         * @param {AuthorizationApiExpandRelationScopedRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        expandRelationScoped(requestParameters: AuthorizationApiExpandRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExpandRelationResponse> {
+            return localVarFp.expandRelationScoped(requestParameters.orgId, requestParameters.expandRelationRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * GET /api/v1/abac/my-attributes
@@ -1085,7 +1226,7 @@ export interface AuthorizationApiInterface {
     checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+     * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check if user has ALL of the specified permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1094,7 +1235,7 @@ export interface AuthorizationApiInterface {
     checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+     * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check if user has ANY of the specified permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1103,7 +1244,7 @@ export interface AuthorizationApiInterface {
     checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+     * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
      * @summary Check if the authenticated user has a specific permission
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1112,7 +1253,7 @@ export interface AuthorizationApiInterface {
     checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+     * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check multiple permissions at once
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1155,6 +1296,26 @@ export interface AuthorizationApiInterface {
      * @memberof AuthorizationApiInterface
      */
     evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+     * @summary Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+     * @param {AuthorizationApiExpandRelationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthorizationApiInterface
+     */
+    expandRelation(requestParameters: AuthorizationApiExpandRelationRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExpandRelationResponse>;
+
+    /**
+     * Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+     * @summary Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+     * @param {AuthorizationApiExpandRelationScopedRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthorizationApiInterface
+     */
+    expandRelationScoped(requestParameters: AuthorizationApiExpandRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<ExpandRelationResponse>;
 
     /**
      * GET /api/v1/abac/my-attributes
@@ -1257,6 +1418,41 @@ export interface AuthorizationApiCheckRelationScopedRequest {
      * @memberof AuthorizationApiCheckRelationScoped
      */
     readonly orgId: string
+}
+
+/**
+ * Request parameters for expandRelation operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiExpandRelationRequest
+ */
+export interface AuthorizationApiExpandRelationRequest {
+    /**
+     * 
+     * @type {ExpandRelationRequest}
+     * @memberof AuthorizationApiExpandRelation
+     */
+    readonly expandRelationRequest: ExpandRelationRequest
+}
+
+/**
+ * Request parameters for expandRelationScoped operation in AuthorizationApi.
+ * @export
+ * @interface AuthorizationApiExpandRelationScopedRequest
+ */
+export interface AuthorizationApiExpandRelationScopedRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AuthorizationApiExpandRelationScoped
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {ExpandRelationRequest}
+     * @memberof AuthorizationApiExpandRelationScoped
+     */
+    readonly expandRelationRequest: ExpandRelationRequest
 }
 
 /**
@@ -1410,7 +1606,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
     }
 
     /**
-     * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123} }
+     * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check if user has ALL of the specified permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1421,7 +1617,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
     }
 
     /**
-     * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123} }
+     * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check if user has ANY of the specified permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1432,7 +1628,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
     }
 
     /**
-     * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456} }
+     * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
      * @summary Check if the authenticated user has a specific permission
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1443,7 +1639,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
     }
 
     /**
-     * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123} }
+     * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
      * @summary Check multiple permissions at once
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1495,6 +1691,30 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
      */
     public evaluateBatch(options?: RawAxiosRequestConfig) {
         return AuthorizationApiFp(this.configuration).evaluateBatch(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
+     * @summary Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
+     * @param {AuthorizationApiExpandRelationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthorizationApi
+     */
+    public expandRelation(requestParameters: AuthorizationApiExpandRelationRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).expandRelation(requestParameters.expandRelationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Body: {\"object\": \"document:123\", \"relation\": \"viewer\"} Response: {\"tree\": {\"type\", \"object\", \"relation\", \"children\", \"subjects\"}}
+     * @summary Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
+     * @param {AuthorizationApiExpandRelationScopedRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthorizationApi
+     */
+    public expandRelationScoped(requestParameters: AuthorizationApiExpandRelationScopedRequest, options?: RawAxiosRequestConfig) {
+        return AuthorizationApiFp(this.configuration).expandRelationScoped(requestParameters.orgId, requestParameters.expandRelationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
