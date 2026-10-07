@@ -1,0 +1,481 @@
+# AdminPermissionsApi
+
+All URIs are relative to *https://app.lumoauth.dev*
+
+|Method | HTTP request | Description|
+|------------- | ------------- | -------------|
+|[**adminPermissionsCreate**](#adminpermissionscreate) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant|
+|[**adminPermissionsDelete**](#adminpermissionsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission|
+|[**adminPermissionsGet**](#adminpermissionsget) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission|
+|[**adminPermissionsList**](#adminpermissionslist) | **GET** /orgs/{orgId}/api/v1/admin/permissions | List all available permissions for the tenant|
+|[**adminPermissionsUpdate**](#adminpermissionsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Update a permission|
+|[**adminPermissionsUsage**](#adminpermissionsusage) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage | Get permission usage (roles assigned to this permission)|
+|[**adminScopesCreate**](#adminscopescreate) | **POST** /orgs/{orgId}/api/v1/admin/scopes | Create a custom OAuth scope|
+|[**adminScopesDelete**](#adminscopesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/scopes/{scopeId} | Delete a custom OAuth scope|
+|[**adminScopesList**](#adminscopeslist) | **GET** /orgs/{orgId}/api/v1/admin/scopes | List OAuth scopes|
+
+# **adminPermissionsCreate**
+> AdminPermissionsCreateResponse adminPermissionsCreate()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminPermissionsCreate(
+    orgId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminPermissionsCreateResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Created permission |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminPermissionsDelete**
+> MessageResponse adminPermissionsDelete()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let permissionId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminPermissionsDelete(
+    orgId,
+    permissionId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **permissionId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**MessageResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Deleted |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminPermissionsGet**
+> AdminPermissionsGetResponse adminPermissionsGet()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let permissionId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminPermissionsGet(
+    orgId,
+    permissionId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **permissionId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminPermissionsGetResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Permission |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminPermissionsList**
+> AdminPermissionsListResponse adminPermissionsList()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminPermissionsList(
+    orgId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminPermissionsListResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Permissions |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminPermissionsUpdate**
+> AdminPermissionsCreateResponse adminPermissionsUpdate()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let permissionId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminPermissionsUpdate(
+    orgId,
+    permissionId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **permissionId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminPermissionsCreateResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Updated permission |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminPermissionsUsage**
+> AdminPermissionsUsageResponse adminPermissionsUsage()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let permissionId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminPermissionsUsage(
+    orgId,
+    permissionId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **permissionId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminPermissionsUsageResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Usage |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminScopesCreate**
+> AdminScopesCreateResponse adminScopesCreate()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminScopesCreate(
+    orgId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminScopesCreateResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**201** | Created scope |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminScopesDelete**
+> MessageResponse adminScopesDelete()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let scopeId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminScopesDelete(
+    orgId,
+    scopeId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+| **scopeId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**MessageResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Deleted |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminScopesList**
+> AdminScopesListResponse adminScopesList()
+
+
+### Example
+
+```typescript
+import {
+    AdminPermissionsApi,
+    Configuration
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminPermissionsApi(configuration);
+
+let orgId: string; // (default to undefined)
+
+const { status, data } = await apiInstance.adminScopesList(
+    orgId
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminScopesListResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Scopes |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+

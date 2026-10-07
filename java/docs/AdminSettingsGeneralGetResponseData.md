@@ -1,0 +1,17 @@
+
+
+# AdminSettingsGeneralGetResponseData
+
+Defaults (displayName, timezone, locale) are filled in, then the raw settings dictionary is merged over them: any stored key (display_name, security, email, audit_log_retention_days, audit_log_auto_delete, agent_governance, ...) is returned as-is; secret-looking keys are redacted.
+
+## Properties
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**name** | **String** |  |  [optional] |
+|**displayName** | **String** |  |  [optional] |
+|**timezone** | **String** |  |  [optional] |
+|**locale** | **String** |  |  [optional] |
+
+
+

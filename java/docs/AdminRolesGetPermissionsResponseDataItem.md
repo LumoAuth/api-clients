@@ -1,0 +1,16 @@
+
+
+# AdminRolesGetPermissionsResponseDataItem
+
+
+## Properties
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**id** | **Integer** |  |  [optional] |
+|**name** | **String** |  |  [optional] |
+|**slug** | **String** |  |  [optional] |
+|**description** | **String** |  |  [optional] |
+
+
+

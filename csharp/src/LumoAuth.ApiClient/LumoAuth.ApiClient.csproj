@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo><!-- setting GenerateAssemblyInfo to false causes this bug https://github.com/dotnet/project-system/issues/3934 -->
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>LumoAuth.ApiClient</AssemblyName>
+    <PackageId>LumoAuth.ApiClient</PackageId>
+    <OutputType>Library</OutputType>
+    <Authors>LumoAuth</Authors>
+    <Company>LumoAuth LLC</Company>
+    <AssemblyTitle>OpenAPI Library</AssemblyTitle>
+    <Description>Generated LumoAuth API client (raw HTTP client + typed models)</Description>
+    <Copyright>Copyright (c) 2026 LumoAuth LLC</Copyright>
+    <RootNamespace>LumoAuth.ApiClient</RootNamespace>
+    <Version>0.1.0</Version>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\LumoAuth.ApiClient.xml</DocumentationFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/lumoauth/api-clients.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Minor update</PackageReleaseNotes>
+    <PackageTags>lumoauth auth oauth oidc agents mcp</PackageTags>
+    <Nullable>annotations</Nullable>
+    <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JsonSubTypes" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Polly" Version="8.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
