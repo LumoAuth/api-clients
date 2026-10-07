@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **status** | **string** |  | [optional] [default to undefined]
 **scopes_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **require_pkce** | **boolean** |  | [optional] [default to undefined]
+**require_dpop** | **boolean** |  | [optional] [default to undefined]
 **token_lifetime** | **number** |  | [optional] [default to undefined]
 **created_at** | **string** |  | [optional] [default to undefined]
 **updated_at** | **string** |  | [optional] [default to undefined]
@@ -38,6 +39,7 @@ const instance: GetServerResponse = {
     status,
     scopes_supported,
     require_pkce,
+    require_dpop,
     token_lifetime,
     created_at,
     updated_at,

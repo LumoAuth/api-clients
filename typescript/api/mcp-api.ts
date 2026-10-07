@@ -22,9 +22,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { GetProtectedResourceMetadataRoot200Response } from '../models';
+// @ts-ignore
+import type { GetServerChallengeResponse } from '../models';
+// @ts-ignore
 import type { GetServerResponse } from '../models';
 // @ts-ignore
 import type { ListServersResponse } from '../models';
+// @ts-ignore
+import type { ProtectedResourceMetadata } from '../models';
 /**
  * McpApi - axios parameter creator
  * @export
@@ -32,8 +38,8 @@ import type { ListServersResponse } from '../models';
 export const McpApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
-         * @summary OAuth 2.0 Protected Resource Metadata (RFC 9728)
+         * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
+         * @summary MCP server protected resource metadata (RFC 9728)
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
@@ -70,8 +76,8 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
-         * @summary Root-level Protected Resource Metadata
+         * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
+         * @summary Organization-level protected resource metadata (RFC 9728)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -149,8 +155,8 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-         * @summary Simulated MCP Server 401 challenge endpoint.
+         * Test endpoint that behaves like the MCP server\'s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
+         * @summary Simulated MCP server authorization challenge
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
@@ -232,8 +238,8 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
-         * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-         * @summary Simulated MCP Server 401 challenge endpoint.
+         * Identical to GET; the HTTP method is only recorded in the audit trail.
+         * @summary Simulated MCP server authorization challenge (POST)
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
@@ -284,27 +290,27 @@ export const McpApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = McpApiAxiosParamCreator(configuration)
     return {
         /**
-         * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
-         * @summary OAuth 2.0 Protected Resource Metadata (RFC 9728)
+         * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
+         * @summary MCP server protected resource metadata (RFC 9728)
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProtectedResourceMetadata(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getProtectedResourceMetadata(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProtectedResourceMetadata>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProtectedResourceMetadata(orgId, serverId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['McpApi.getProtectedResourceMetadata']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
-         * @summary Root-level Protected Resource Metadata
+         * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
+         * @summary Organization-level protected resource metadata (RFC 9728)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProtectedResourceMetadataRoot(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getProtectedResourceMetadataRoot(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetProtectedResourceMetadataRoot200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProtectedResourceMetadataRoot(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['McpApi.getProtectedResourceMetadataRoot']?.[localVarOperationServerIndex]?.url;
@@ -325,14 +331,14 @@ export const McpApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-         * @summary Simulated MCP Server 401 challenge endpoint.
+         * Test endpoint that behaves like the MCP server\'s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
+         * @summary Simulated MCP server authorization challenge
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getServerChallenge(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getServerChallenge(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetServerChallengeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getServerChallenge(orgId, serverId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['McpApi.getServerChallenge']?.[localVarOperationServerIndex]?.url;
@@ -352,14 +358,14 @@ export const McpApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-         * @summary Simulated MCP Server 401 challenge endpoint.
+         * Identical to GET; the HTTP method is only recorded in the audit trail.
+         * @summary Simulated MCP server authorization challenge (POST)
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postServerChallenge(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postServerChallenge(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetServerChallengeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postServerChallenge(orgId, serverId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['McpApi.postServerChallenge']?.[localVarOperationServerIndex]?.url;
@@ -376,23 +382,23 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
     const localVarFp = McpApiFp(configuration)
     return {
         /**
-         * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
-         * @summary OAuth 2.0 Protected Resource Metadata (RFC 9728)
+         * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
+         * @summary MCP server protected resource metadata (RFC 9728)
          * @param {McpApiGetProtectedResourceMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProtectedResourceMetadata(requestParameters: McpApiGetProtectedResourceMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getProtectedResourceMetadata(requestParameters: McpApiGetProtectedResourceMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProtectedResourceMetadata> {
             return localVarFp.getProtectedResourceMetadata(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
-         * @summary Root-level Protected Resource Metadata
+         * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
+         * @summary Organization-level protected resource metadata (RFC 9728)
          * @param {McpApiGetProtectedResourceMetadataRootRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProtectedResourceMetadataRoot(requestParameters: McpApiGetProtectedResourceMetadataRootRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getProtectedResourceMetadataRoot(requestParameters: McpApiGetProtectedResourceMetadataRootRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetProtectedResourceMetadataRoot200Response> {
             return localVarFp.getProtectedResourceMetadataRoot(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -406,13 +412,13 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.getServer(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(axios, basePath));
         },
         /**
-         * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-         * @summary Simulated MCP Server 401 challenge endpoint.
+         * Test endpoint that behaves like the MCP server\'s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
+         * @summary Simulated MCP server authorization challenge
          * @param {McpApiGetServerChallengeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getServerChallenge(requestParameters: McpApiGetServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getServerChallenge(requestParameters: McpApiGetServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetServerChallengeResponse> {
             return localVarFp.getServerChallenge(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -426,13 +432,13 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.listServers(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-         * @summary Simulated MCP Server 401 challenge endpoint.
+         * Identical to GET; the HTTP method is only recorded in the audit trail.
+         * @summary Simulated MCP server authorization challenge (POST)
          * @param {McpApiPostServerChallengeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postServerChallenge(requestParameters: McpApiPostServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postServerChallenge(requestParameters: McpApiPostServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetServerChallengeResponse> {
             return localVarFp.postServerChallenge(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(axios, basePath));
         },
     };
@@ -445,24 +451,24 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
  */
 export interface McpApiInterface {
     /**
-     * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
-     * @summary OAuth 2.0 Protected Resource Metadata (RFC 9728)
+     * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
+     * @summary MCP server protected resource metadata (RFC 9728)
      * @param {McpApiGetProtectedResourceMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApiInterface
      */
-    getProtectedResourceMetadata(requestParameters: McpApiGetProtectedResourceMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getProtectedResourceMetadata(requestParameters: McpApiGetProtectedResourceMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<ProtectedResourceMetadata>;
 
     /**
-     * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
-     * @summary Root-level Protected Resource Metadata
+     * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
+     * @summary Organization-level protected resource metadata (RFC 9728)
      * @param {McpApiGetProtectedResourceMetadataRootRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApiInterface
      */
-    getProtectedResourceMetadataRoot(requestParameters: McpApiGetProtectedResourceMetadataRootRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getProtectedResourceMetadataRoot(requestParameters: McpApiGetProtectedResourceMetadataRootRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetProtectedResourceMetadataRoot200Response>;
 
     /**
      * Management endpoint — requires tenant admin authentication.
@@ -475,14 +481,14 @@ export interface McpApiInterface {
     getServer(requestParameters: McpApiGetServerRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetServerResponse>;
 
     /**
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-     * @summary Simulated MCP Server 401 challenge endpoint.
+     * Test endpoint that behaves like the MCP server\'s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
+     * @summary Simulated MCP server authorization challenge
      * @param {McpApiGetServerChallengeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApiInterface
      */
-    getServerChallenge(requestParameters: McpApiGetServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getServerChallenge(requestParameters: McpApiGetServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetServerChallengeResponse>;
 
     /**
      * Management endpoint — requires tenant admin authentication.
@@ -495,14 +501,14 @@ export interface McpApiInterface {
     listServers(requestParameters: McpApiListServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListServersResponse>;
 
     /**
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-     * @summary Simulated MCP Server 401 challenge endpoint.
+     * Identical to GET; the HTTP method is only recorded in the audit trail.
+     * @summary Simulated MCP server authorization challenge (POST)
      * @param {McpApiPostServerChallengeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof McpApiInterface
      */
-    postServerChallenge(requestParameters: McpApiPostServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    postServerChallenge(requestParameters: McpApiPostServerChallengeRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetServerChallengeResponse>;
 
 }
 
@@ -626,8 +632,8 @@ export interface McpApiPostServerChallengeRequest {
  */
 export class McpApi extends BaseAPI implements McpApiInterface {
     /**
-     * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
-     * @summary OAuth 2.0 Protected Resource Metadata (RFC 9728)
+     * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
+     * @summary MCP server protected resource metadata (RFC 9728)
      * @param {McpApiGetProtectedResourceMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -638,8 +644,8 @@ export class McpApi extends BaseAPI implements McpApiInterface {
     }
 
     /**
-     * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
-     * @summary Root-level Protected Resource Metadata
+     * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
+     * @summary Organization-level protected resource metadata (RFC 9728)
      * @param {McpApiGetProtectedResourceMetadataRootRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -662,8 +668,8 @@ export class McpApi extends BaseAPI implements McpApiInterface {
     }
 
     /**
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-     * @summary Simulated MCP Server 401 challenge endpoint.
+     * Test endpoint that behaves like the MCP server\'s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
+     * @summary Simulated MCP server authorization challenge
      * @param {McpApiGetServerChallengeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -686,8 +692,8 @@ export class McpApi extends BaseAPI implements McpApiInterface {
     }
 
     /**
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-     * @summary Simulated MCP Server 401 challenge endpoint.
+     * Identical to GET; the HTTP method is only recorded in the audit trail.
+     * @summary Simulated MCP server authorization challenge (POST)
      * @param {McpApiPostServerChallengeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

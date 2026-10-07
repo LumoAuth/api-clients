@@ -27,8 +27,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.GetProtectedResourceMetadataRoot200Response;
+import io.lumoauth.client.model.GetServerChallengeResponse;
 import io.lumoauth.client.model.GetServerResponse;
 import io.lumoauth.client.model.ListServersResponse;
+import io.lumoauth.client.model.ProtectedResourceMetadata;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -84,7 +87,9 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getProtectedResourceMetadataCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -115,6 +120,7 @@ public class McpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -149,44 +155,51 @@ public class McpApi {
     }
 
     /**
-     * OAuth 2.0 Protected Resource Metadata (RFC 9728)
-     * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+     * MCP server protected resource metadata (RFC 9728)
+     * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @param serverId  (required)
+     * @return ProtectedResourceMetadata
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
      </table>
      */
-    public void getProtectedResourceMetadata(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
-        getProtectedResourceMetadataWithHttpInfo(orgId, serverId);
+    public ProtectedResourceMetadata getProtectedResourceMetadata(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+        ApiResponse<ProtectedResourceMetadata> localVarResp = getProtectedResourceMetadataWithHttpInfo(orgId, serverId);
+        return localVarResp.getData();
     }
 
     /**
-     * OAuth 2.0 Protected Resource Metadata (RFC 9728)
-     * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+     * MCP server protected resource metadata (RFC 9728)
+     * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @param serverId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;ProtectedResourceMetadata&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getProtectedResourceMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+    public ApiResponse<ProtectedResourceMetadata> getProtectedResourceMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
         okhttp3.Call localVarCall = getProtectedResourceMetadataValidateBeforeCall(orgId, serverId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<ProtectedResourceMetadata>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * OAuth 2.0 Protected Resource Metadata (RFC 9728) (asynchronously)
-     * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+     * MCP server protected resource metadata (RFC 9728) (asynchronously)
+     * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @param serverId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -196,13 +209,16 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> not_applicable — the MCP server does not require authorization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProtectedResourceMetadataAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getProtectedResourceMetadataAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<ProtectedResourceMetadata> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getProtectedResourceMetadataValidateBeforeCall(orgId, serverId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<ProtectedResourceMetadata>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -215,7 +231,8 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or no protected MCP servers configured. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getProtectedResourceMetadataRootCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -245,6 +262,7 @@ public class McpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -274,42 +292,47 @@ public class McpApi {
     }
 
     /**
-     * Root-level Protected Resource Metadata
-     * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+     * Organization-level protected resource metadata (RFC 9728)
+     * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
+     * @return GetProtectedResourceMetadataRoot200Response
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or no protected MCP servers configured. </td><td>  -  </td></tr>
      </table>
      */
-    public void getProtectedResourceMetadataRoot(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getProtectedResourceMetadataRootWithHttpInfo(orgId);
+    public GetProtectedResourceMetadataRoot200Response getProtectedResourceMetadataRoot(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<GetProtectedResourceMetadataRoot200Response> localVarResp = getProtectedResourceMetadataRootWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Root-level Protected Resource Metadata
-     * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+     * Organization-level protected resource metadata (RFC 9728)
+     * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;GetProtectedResourceMetadataRoot200Response&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or no protected MCP servers configured. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getProtectedResourceMetadataRootWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<GetProtectedResourceMetadataRoot200Response> getProtectedResourceMetadataRootWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getProtectedResourceMetadataRootValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<GetProtectedResourceMetadataRoot200Response>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Root-level Protected Resource Metadata (asynchronously)
-     * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+     * Organization-level protected resource metadata (RFC 9728) (asynchronously)
+     * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -318,13 +341,15 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or no protected MCP servers configured. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProtectedResourceMetadataRootAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getProtectedResourceMetadataRootAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<GetProtectedResourceMetadataRoot200Response> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getProtectedResourceMetadataRootValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<GetProtectedResourceMetadataRoot200Response>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -483,7 +508,11 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getServerChallengeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -514,6 +543,7 @@ public class McpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -548,44 +578,55 @@ public class McpApi {
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint.
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Simulated MCP server authorization challenge
+     * Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
      * @param orgId  (required)
      * @param serverId  (required)
+     * @return GetServerChallengeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
-    public void getServerChallenge(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
-        getServerChallengeWithHttpInfo(orgId, serverId);
+    public GetServerChallengeResponse getServerChallenge(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+        ApiResponse<GetServerChallengeResponse> localVarResp = getServerChallengeWithHttpInfo(orgId, serverId);
+        return localVarResp.getData();
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint.
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Simulated MCP server authorization challenge
+     * Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
      * @param orgId  (required)
      * @param serverId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;GetServerChallengeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getServerChallengeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+    public ApiResponse<GetServerChallengeResponse> getServerChallengeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
         okhttp3.Call localVarCall = getServerChallengeValidateBeforeCall(orgId, serverId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<GetServerChallengeResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint. (asynchronously)
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Simulated MCP server authorization challenge (asynchronously)
+     * Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
      * @param orgId  (required)
      * @param serverId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -595,13 +636,18 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getServerChallengeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getServerChallengeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<GetServerChallengeResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getServerChallengeValidateBeforeCall(orgId, serverId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<GetServerChallengeResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -750,7 +796,11 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call postServerChallengeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -781,6 +831,7 @@ public class McpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -815,44 +866,55 @@ public class McpApi {
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint.
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Simulated MCP server authorization challenge (POST)
+     * Identical to GET; the HTTP method is only recorded in the audit trail.
      * @param orgId  (required)
      * @param serverId  (required)
+     * @return GetServerChallengeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
-    public void postServerChallenge(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
-        postServerChallengeWithHttpInfo(orgId, serverId);
+    public GetServerChallengeResponse postServerChallenge(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+        ApiResponse<GetServerChallengeResponse> localVarResp = postServerChallengeWithHttpInfo(orgId, serverId);
+        return localVarResp.getData();
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint.
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Simulated MCP server authorization challenge (POST)
+     * Identical to GET; the HTTP method is only recorded in the audit trail.
      * @param orgId  (required)
      * @param serverId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;GetServerChallengeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> postServerChallengeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+    public ApiResponse<GetServerChallengeResponse> postServerChallengeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
         okhttp3.Call localVarCall = postServerChallengeValidateBeforeCall(orgId, serverId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<GetServerChallengeResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint. (asynchronously)
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Simulated MCP server authorization challenge (POST) (asynchronously)
+     * Identical to GET; the HTTP method is only recorded in the audit trail.
      * @param orgId  (required)
      * @param serverId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -862,13 +924,18 @@ public class McpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The access token is valid for this MCP server. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). </td><td>  * WWW-Authenticate -  <br>  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call postServerChallengeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call postServerChallengeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<GetServerChallengeResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = postServerChallengeValidateBeforeCall(orgId, serverId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<GetServerChallengeResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

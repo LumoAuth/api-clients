@@ -26,6 +26,10 @@ import type { AskRequest } from '../models';
 // @ts-ignore
 import type { AskResponse } from '../models';
 // @ts-ignore
+import type { AttestRequest } from '../models';
+// @ts-ignore
+import type { AttestResponse } from '../models';
+// @ts-ignore
 import type { AuthorizeMcpRequest } from '../models';
 // @ts-ignore
 import type { AuthorizeMcpResponse } from '../models';
@@ -39,6 +43,12 @@ import type { CreateApprovalResponse202 } from '../models';
 import type { GetApprovalStatusResponse } from '../models';
 // @ts-ignore
 import type { GetCurrentAgentResponse } from '../models';
+// @ts-ignore
+import type { RegisterAgentResponse } from '../models';
+// @ts-ignore
+import type { SignedAgentCard } from '../models';
+// @ts-ignore
+import type { VerifyAgentCardResponse } from '../models';
 /**
  * AgentsApi - axios parameter creator
  * @export
@@ -93,17 +103,21 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent\'s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+         * @summary Workload attestation: exchange a cloud OIDC token for an agent access token
          * @param {string} orgId 
          * @param {string} agentId 
+         * @param {AttestRequest} attestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attest: async (orgId: string, agentId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        attest: async (orgId: string, agentId: string, attestRequest: AttestRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('attest', 'orgId', orgId)
             // verify required parameter 'agentId' is not null or undefined
             assertParamExists('attest', 'agentId', agentId)
+            // verify required parameter 'attestRequest' is not null or undefined
+            assertParamExists('attest', 'attestRequest', attestRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/agents/{agentId}/attest`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
                 .replace(`{${"agentId"}}`, encodeURIComponent(String(agentId)));
@@ -127,9 +141,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(attestRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -230,7 +247,8 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
+         * @summary Signed A2A agent card
          * @param {string} orgId 
          * @param {string} agentId 
          * @param {*} [options] Override http request option.
@@ -353,6 +371,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
         },
         /**
          * 
+         * @summary Register (or re-register) an agent
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -392,14 +411,18 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * 
+         * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
+         * @summary Verify a signed A2A agent card
          * @param {string} orgId 
+         * @param {{ [key: string]: any; }} requestBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verifyAgentCard: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        verifyAgentCard: async (orgId: string, requestBody: { [key: string]: any; }, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('verifyAgentCard', 'orgId', orgId)
+            // verify required parameter 'requestBody' is not null or undefined
+            assertParamExists('verifyAgentCard', 'requestBody', requestBody)
             const localVarPath = `/orgs/{orgId}/api/v1/agents/agent-card/verify`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -422,9 +445,12 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -456,14 +482,16 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent\'s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+         * @summary Workload attestation: exchange a cloud OIDC token for an agent access token
          * @param {string} orgId 
          * @param {string} agentId 
+         * @param {AttestRequest} attestRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async attest(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.attest(orgId, agentId, options);
+        async attest(orgId: string, agentId: string, attestRequest: AttestRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AttestResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.attest(orgId, agentId, attestRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.attest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -496,13 +524,14 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
+         * @summary Signed A2A agent card
          * @param {string} orgId 
          * @param {string} agentId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAgentCard(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAgentCard(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignedAgentCard>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAgentCard(orgId, agentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.getAgentCard']?.[localVarOperationServerIndex]?.url;
@@ -536,24 +565,27 @@ export const AgentsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Register (or re-register) an agent
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerAgent(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async registerAgent(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterAgentResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerAgent(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.registerAgent']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
+         * @summary Verify a signed A2A agent card
          * @param {string} orgId 
+         * @param {{ [key: string]: any; }} requestBody 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async verifyAgentCard(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.verifyAgentCard(orgId, options);
+        async verifyAgentCard(orgId: string, requestBody: { [key: string]: any; }, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<VerifyAgentCardResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.verifyAgentCard(orgId, requestBody, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AgentsApi.verifyAgentCard']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -579,13 +611,14 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.ask(requestParameters.orgId, requestParameters.askRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent\'s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+         * @summary Workload attestation: exchange a cloud OIDC token for an agent access token
          * @param {AgentsApiAttestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        attest(requestParameters: AgentsApiAttestRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.attest(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(axios, basePath));
+        attest(requestParameters: AgentsApiAttestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AttestResponse> {
+            return localVarFp.attest(requestParameters.orgId, requestParameters.agentId, requestParameters.attestRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
@@ -607,12 +640,13 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.createApproval(requestParameters.orgId, requestParameters.createApprovalRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
+         * @summary Signed A2A agent card
          * @param {AgentsApiGetAgentCardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAgentCard(requestParameters: AgentsApiGetAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAgentCard(requestParameters: AgentsApiGetAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<SignedAgentCard> {
             return localVarFp.getAgentCard(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -636,21 +670,23 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
         },
         /**
          * 
+         * @summary Register (or re-register) an agent
          * @param {AgentsApiRegisterAgentRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterAgentResponse> {
             return localVarFp.registerAgent(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
+         * @summary Verify a signed A2A agent card
          * @param {AgentsApiVerifyAgentCardRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        verifyAgentCard(requestParameters: AgentsApiVerifyAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.verifyAgentCard(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        verifyAgentCard(requestParameters: AgentsApiVerifyAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyAgentCardResponse> {
+            return localVarFp.verifyAgentCard(requestParameters.orgId, requestParameters.requestBody, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -672,13 +708,14 @@ export interface AgentsApiInterface {
     ask(requestParameters: AgentsApiAskRequest, options?: RawAxiosRequestConfig): AxiosPromise<AskResponse>;
 
     /**
-     * 
+     * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent\'s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+     * @summary Workload attestation: exchange a cloud OIDC token for an agent access token
      * @param {AgentsApiAttestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApiInterface
      */
-    attest(requestParameters: AgentsApiAttestRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    attest(requestParameters: AgentsApiAttestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AttestResponse>;
 
     /**
      * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
@@ -700,13 +737,14 @@ export interface AgentsApiInterface {
     createApproval(requestParameters: AgentsApiCreateApprovalRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateApprovalResponse>;
 
     /**
-     * 
+     * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
+     * @summary Signed A2A agent card
      * @param {AgentsApiGetAgentCardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApiInterface
      */
-    getAgentCard(requestParameters: AgentsApiGetAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getAgentCard(requestParameters: AgentsApiGetAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<SignedAgentCard>;
 
     /**
      * 
@@ -729,21 +767,23 @@ export interface AgentsApiInterface {
 
     /**
      * 
+     * @summary Register (or re-register) an agent
      * @param {AgentsApiRegisterAgentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApiInterface
      */
-    registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    registerAgent(requestParameters: AgentsApiRegisterAgentRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterAgentResponse>;
 
     /**
-     * 
+     * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
+     * @summary Verify a signed A2A agent card
      * @param {AgentsApiVerifyAgentCardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApiInterface
      */
-    verifyAgentCard(requestParameters: AgentsApiVerifyAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    verifyAgentCard(requestParameters: AgentsApiVerifyAgentCardRequest, options?: RawAxiosRequestConfig): AxiosPromise<VerifyAgentCardResponse>;
 
 }
 
@@ -787,6 +827,13 @@ export interface AgentsApiAttestRequest {
      * @memberof AgentsApiAttest
      */
     readonly agentId: string
+
+    /**
+     * 
+     * @type {AttestRequest}
+     * @memberof AgentsApiAttest
+     */
+    readonly attestRequest: AttestRequest
 }
 
 /**
@@ -913,6 +960,13 @@ export interface AgentsApiVerifyAgentCardRequest {
      * @memberof AgentsApiVerifyAgentCard
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AgentsApiVerifyAgentCard
+     */
+    readonly requestBody: { [key: string]: any; }
 }
 
 /**
@@ -935,14 +989,15 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
     }
 
     /**
-     * 
+     * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent\'s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+     * @summary Workload attestation: exchange a cloud OIDC token for an agent access token
      * @param {AgentsApiAttestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public attest(requestParameters: AgentsApiAttestRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).attest(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).attest(requestParameters.orgId, requestParameters.agentId, requestParameters.attestRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -969,7 +1024,8 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
     }
 
     /**
-     * 
+     * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
+     * @summary Signed A2A agent card
      * @param {AgentsApiGetAgentCardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1004,6 +1060,7 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
 
     /**
      * 
+     * @summary Register (or re-register) an agent
      * @param {AgentsApiRegisterAgentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1014,14 +1071,15 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
     }
 
     /**
-     * 
+     * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
+     * @summary Verify a signed A2A agent card
      * @param {AgentsApiVerifyAgentCardRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AgentsApi
      */
     public verifyAgentCard(requestParameters: AgentsApiVerifyAgentCardRequest, options?: RawAxiosRequestConfig) {
-        return AgentsApiFp(this.configuration).verifyAgentCard(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AgentsApiFp(this.configuration).verifyAgentCard(requestParameters.orgId, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

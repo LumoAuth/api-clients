@@ -21,6 +21,34 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminClientTokensRevokeAllResponse } from '../models';
+// @ts-ignore
+import type { AdminSessionsCountResponse } from '../models';
+// @ts-ignore
+import type { AdminSessionsListResponse } from '../models';
+// @ts-ignore
+import type { AdminSessionsRevokeAllRequest } from '../models';
+// @ts-ignore
+import type { AdminSessionsRevokeAllResponse } from '../models';
+// @ts-ignore
+import type { AdminSessionsRevokeResponse } from '../models';
+// @ts-ignore
+import type { AdminSessionsStatsResponse } from '../models';
+// @ts-ignore
+import type { AdminTokensListResponse } from '../models';
+// @ts-ignore
+import type { AdminTokensRevokeResponse } from '../models';
+// @ts-ignore
+import type { AdminUserSessionsListResponse } from '../models';
+// @ts-ignore
+import type { AdminUserSessionsRevokeAllResponse } from '../models';
+// @ts-ignore
+import type { AdminUserSessionsRevokePostResponse } from '../models';
+// @ts-ignore
+import type { AdminUserTokensRevokeAllResponse } from '../models';
+// @ts-ignore
+import type { AdminUserTokensRevokePostResponse } from '../models';
 /**
  * AdminSessionsApi - axios parameter creator
  * @export
@@ -29,7 +57,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
     return {
         /**
          * 
-         * @summary Revoke all tokens for a client
+         * @summary Revoke all tokens of a client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -74,7 +102,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Revoke all tokens for a client via POST
+         * @summary Revoke all tokens of a client (POST alias)
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -119,7 +147,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get active session count for the tenant
+         * @summary Active session count
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -159,8 +187,8 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary List active sessions for the tenant
+         * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+         * @summary List active sessions
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -201,7 +229,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Revoke a specific session
+         * @summary Revoke a session
          * @param {string} orgId 
          * @param {string} sessionId 
          * @param {*} [options] Override http request option.
@@ -245,15 +273,18 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary Revoke all tenant sessions via POST
+         * Signs out all users. Requires `confirm: true` in the body.
+         * @summary Revoke every session in the tenant
          * @param {string} orgId 
+         * @param {AdminSessionsRevokeAllRequest} adminSessionsRevokeAllRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSessionsRevokeAll: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminSessionsRevokeAll: async (orgId: string, adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminSessionsRevokeAll', 'orgId', orgId)
+            // verify required parameter 'adminSessionsRevokeAllRequest' is not null or undefined
+            assertParamExists('adminSessionsRevokeAll', 'adminSessionsRevokeAllRequest', adminSessionsRevokeAllRequest)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/sessions/revoke-all`
                 .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -276,9 +307,12 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminSessionsRevokeAllRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -287,7 +321,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get session statistics for the tenant
+         * @summary Session statistics
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -327,8 +361,8 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary List access tokens for the tenant
+         * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
+         * @summary List access tokens
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -413,8 +447,8 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary Get sessions for a specific user
+         * All active sessions of one user (UUID or email), returned as a single page.
+         * @summary List a user\'s active sessions
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -459,7 +493,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Revoke all sessions for a user
+         * @summary Revoke all sessions of a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -504,7 +538,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Revoke all sessions for a user via POST
+         * @summary Revoke all sessions of a user (POST alias)
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -549,7 +583,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Revoke all tokens for a user
+         * @summary Revoke all tokens of a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -594,7 +628,7 @@ export const AdminSessionsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Revoke all tokens for a user via POST
+         * @summary Revoke all tokens of a user (POST alias)
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -649,13 +683,13 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Revoke all tokens for a client
+         * @summary Revoke all tokens of a client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminClientTokensRevokeAll(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminClientTokensRevokeAll(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminClientTokensRevokeAllResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminClientTokensRevokeAll(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminClientTokensRevokeAll']?.[localVarOperationServerIndex]?.url;
@@ -663,13 +697,13 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Revoke all tokens for a client via POST
+         * @summary Revoke all tokens of a client (POST alias)
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminClientTokensRevokePost(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminClientTokensRevokePost(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUserTokensRevokePostResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminClientTokensRevokePost(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminClientTokensRevokePost']?.[localVarOperationServerIndex]?.url;
@@ -677,25 +711,25 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get active session count for the tenant
+         * @summary Active session count
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSessionsCount(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSessionsCount(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSessionsCountResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSessionsCount(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminSessionsCount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List active sessions for the tenant
+         * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+         * @summary List active sessions
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSessionsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSessionsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSessionsListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSessionsList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminSessionsList']?.[localVarOperationServerIndex]?.url;
@@ -703,52 +737,53 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Revoke a specific session
+         * @summary Revoke a session
          * @param {string} orgId 
          * @param {string} sessionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSessionsRevoke(orgId: string, sessionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSessionsRevoke(orgId: string, sessionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSessionsRevokeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSessionsRevoke(orgId, sessionId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminSessionsRevoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Revoke all tenant sessions via POST
+         * Signs out all users. Requires `confirm: true` in the body.
+         * @summary Revoke every session in the tenant
          * @param {string} orgId 
+         * @param {AdminSessionsRevokeAllRequest} adminSessionsRevokeAllRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSessionsRevokeAll(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminSessionsRevokeAll(orgId, options);
+        async adminSessionsRevokeAll(orgId: string, adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSessionsRevokeAllResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminSessionsRevokeAll']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Get session statistics for the tenant
+         * @summary Session statistics
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSessionsStats(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSessionsStats(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSessionsStatsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSessionsStats(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminSessionsStats']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List access tokens for the tenant
+         * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
+         * @summary List access tokens
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminTokensList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminTokensList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminTokensListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminTokensList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminTokensList']?.[localVarOperationServerIndex]?.url;
@@ -762,21 +797,21 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminTokensRevoke(orgId: string, tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminTokensRevoke(orgId: string, tokenId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminTokensRevokeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminTokensRevoke(orgId, tokenId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminTokensRevoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Get sessions for a specific user
+         * All active sessions of one user (UUID or email), returned as a single page.
+         * @summary List a user\'s active sessions
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminUserSessionsList(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminUserSessionsList(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUserSessionsListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserSessionsList(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminUserSessionsList']?.[localVarOperationServerIndex]?.url;
@@ -784,13 +819,13 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Revoke all sessions for a user
+         * @summary Revoke all sessions of a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminUserSessionsRevokeAll(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminUserSessionsRevokeAll(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUserSessionsRevokeAllResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserSessionsRevokeAll(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminUserSessionsRevokeAll']?.[localVarOperationServerIndex]?.url;
@@ -798,13 +833,13 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Revoke all sessions for a user via POST
+         * @summary Revoke all sessions of a user (POST alias)
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminUserSessionsRevokePost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminUserSessionsRevokePost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUserSessionsRevokePostResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserSessionsRevokePost(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminUserSessionsRevokePost']?.[localVarOperationServerIndex]?.url;
@@ -812,13 +847,13 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Revoke all tokens for a user
+         * @summary Revoke all tokens of a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminUserTokensRevokeAll(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminUserTokensRevokeAll(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUserTokensRevokeAllResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserTokensRevokeAll(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminUserTokensRevokeAll']?.[localVarOperationServerIndex]?.url;
@@ -826,13 +861,13 @@ export const AdminSessionsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Revoke all tokens for a user via POST
+         * @summary Revoke all tokens of a user (POST alias)
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminUserTokensRevokePost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminUserTokensRevokePost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminUserTokensRevokePostResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminUserTokensRevokePost(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSessionsApi.adminUserTokensRevokePost']?.[localVarOperationServerIndex]?.url;
@@ -850,82 +885,82 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
     return {
         /**
          * 
-         * @summary Revoke all tokens for a client
+         * @summary Revoke all tokens of a client
          * @param {AdminSessionsApiAdminClientTokensRevokeAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminClientTokensRevokeAll(requestParameters: AdminSessionsApiAdminClientTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminClientTokensRevokeAll(requestParameters: AdminSessionsApiAdminClientTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientTokensRevokeAllResponse> {
             return localVarFp.adminClientTokensRevokeAll(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Revoke all tokens for a client via POST
+         * @summary Revoke all tokens of a client (POST alias)
          * @param {AdminSessionsApiAdminClientTokensRevokePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminClientTokensRevokePost(requestParameters: AdminSessionsApiAdminClientTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminClientTokensRevokePost(requestParameters: AdminSessionsApiAdminClientTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokePostResponse> {
             return localVarFp.adminClientTokensRevokePost(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get active session count for the tenant
+         * @summary Active session count
          * @param {AdminSessionsApiAdminSessionsCountRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSessionsCount(requestParameters: AdminSessionsApiAdminSessionsCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSessionsCount(requestParameters: AdminSessionsApiAdminSessionsCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsCountResponse> {
             return localVarFp.adminSessionsCount(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List active sessions for the tenant
+         * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+         * @summary List active sessions
          * @param {AdminSessionsApiAdminSessionsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSessionsList(requestParameters: AdminSessionsApiAdminSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSessionsList(requestParameters: AdminSessionsApiAdminSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsListResponse> {
             return localVarFp.adminSessionsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Revoke a specific session
+         * @summary Revoke a session
          * @param {AdminSessionsApiAdminSessionsRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSessionsRevoke(requestParameters: AdminSessionsApiAdminSessionsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSessionsRevoke(requestParameters: AdminSessionsApiAdminSessionsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsRevokeResponse> {
             return localVarFp.adminSessionsRevoke(requestParameters.orgId, requestParameters.sessionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Revoke all tenant sessions via POST
+         * Signs out all users. Requires `confirm: true` in the body.
+         * @summary Revoke every session in the tenant
          * @param {AdminSessionsApiAdminSessionsRevokeAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSessionsRevokeAll(requestParameters: AdminSessionsApiAdminSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.adminSessionsRevokeAll(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        adminSessionsRevokeAll(requestParameters: AdminSessionsApiAdminSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsRevokeAllResponse> {
+            return localVarFp.adminSessionsRevokeAll(requestParameters.orgId, requestParameters.adminSessionsRevokeAllRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get session statistics for the tenant
+         * @summary Session statistics
          * @param {AdminSessionsApiAdminSessionsStatsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSessionsStats(requestParameters: AdminSessionsApiAdminSessionsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSessionsStats(requestParameters: AdminSessionsApiAdminSessionsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsStatsResponse> {
             return localVarFp.adminSessionsStats(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List access tokens for the tenant
+         * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
+         * @summary List access tokens
          * @param {AdminSessionsApiAdminTokensListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminTokensList(requestParameters: AdminSessionsApiAdminTokensListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminTokensList(requestParameters: AdminSessionsApiAdminTokensListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTokensListResponse> {
             return localVarFp.adminTokensList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -935,57 +970,57 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminTokensRevoke(requestParameters: AdminSessionsApiAdminTokensRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminTokensRevoke(requestParameters: AdminSessionsApiAdminTokensRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTokensRevokeResponse> {
             return localVarFp.adminTokensRevoke(requestParameters.orgId, requestParameters.tokenId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Get sessions for a specific user
+         * All active sessions of one user (UUID or email), returned as a single page.
+         * @summary List a user\'s active sessions
          * @param {AdminSessionsApiAdminUserSessionsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserSessionsList(requestParameters: AdminSessionsApiAdminUserSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminUserSessionsList(requestParameters: AdminSessionsApiAdminUserSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsListResponse> {
             return localVarFp.adminUserSessionsList(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Revoke all sessions for a user
+         * @summary Revoke all sessions of a user
          * @param {AdminSessionsApiAdminUserSessionsRevokeAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserSessionsRevokeAll(requestParameters: AdminSessionsApiAdminUserSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminUserSessionsRevokeAll(requestParameters: AdminSessionsApiAdminUserSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsRevokeAllResponse> {
             return localVarFp.adminUserSessionsRevokeAll(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Revoke all sessions for a user via POST
+         * @summary Revoke all sessions of a user (POST alias)
          * @param {AdminSessionsApiAdminUserSessionsRevokePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserSessionsRevokePost(requestParameters: AdminSessionsApiAdminUserSessionsRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminUserSessionsRevokePost(requestParameters: AdminSessionsApiAdminUserSessionsRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsRevokePostResponse> {
             return localVarFp.adminUserSessionsRevokePost(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Revoke all tokens for a user
+         * @summary Revoke all tokens of a user
          * @param {AdminSessionsApiAdminUserTokensRevokeAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserTokensRevokeAll(requestParameters: AdminSessionsApiAdminUserTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminUserTokensRevokeAll(requestParameters: AdminSessionsApiAdminUserTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokeAllResponse> {
             return localVarFp.adminUserTokensRevokeAll(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Revoke all tokens for a user via POST
+         * @summary Revoke all tokens of a user (POST alias)
          * @param {AdminSessionsApiAdminUserTokensRevokePostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminUserTokensRevokePost(requestParameters: AdminSessionsApiAdminUserTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminUserTokensRevokePost(requestParameters: AdminSessionsApiAdminUserTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokePostResponse> {
             return localVarFp.adminUserTokensRevokePost(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
     };
@@ -999,83 +1034,83 @@ export const AdminSessionsApiFactory = function (configuration?: Configuration, 
 export interface AdminSessionsApiInterface {
     /**
      * 
-     * @summary Revoke all tokens for a client
+     * @summary Revoke all tokens of a client
      * @param {AdminSessionsApiAdminClientTokensRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminClientTokensRevokeAll(requestParameters: AdminSessionsApiAdminClientTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminClientTokensRevokeAll(requestParameters: AdminSessionsApiAdminClientTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientTokensRevokeAllResponse>;
 
     /**
      * 
-     * @summary Revoke all tokens for a client via POST
+     * @summary Revoke all tokens of a client (POST alias)
      * @param {AdminSessionsApiAdminClientTokensRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminClientTokensRevokePost(requestParameters: AdminSessionsApiAdminClientTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminClientTokensRevokePost(requestParameters: AdminSessionsApiAdminClientTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokePostResponse>;
 
     /**
      * 
-     * @summary Get active session count for the tenant
+     * @summary Active session count
      * @param {AdminSessionsApiAdminSessionsCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminSessionsCount(requestParameters: AdminSessionsApiAdminSessionsCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSessionsCount(requestParameters: AdminSessionsApiAdminSessionsCountRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsCountResponse>;
 
     /**
-     * 
-     * @summary List active sessions for the tenant
+     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+     * @summary List active sessions
      * @param {AdminSessionsApiAdminSessionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminSessionsList(requestParameters: AdminSessionsApiAdminSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSessionsList(requestParameters: AdminSessionsApiAdminSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsListResponse>;
 
     /**
      * 
-     * @summary Revoke a specific session
+     * @summary Revoke a session
      * @param {AdminSessionsApiAdminSessionsRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminSessionsRevoke(requestParameters: AdminSessionsApiAdminSessionsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSessionsRevoke(requestParameters: AdminSessionsApiAdminSessionsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsRevokeResponse>;
 
     /**
-     * 
-     * @summary Revoke all tenant sessions via POST
+     * Signs out all users. Requires `confirm: true` in the body.
+     * @summary Revoke every session in the tenant
      * @param {AdminSessionsApiAdminSessionsRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminSessionsRevokeAll(requestParameters: AdminSessionsApiAdminSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSessionsRevokeAll(requestParameters: AdminSessionsApiAdminSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsRevokeAllResponse>;
 
     /**
      * 
-     * @summary Get session statistics for the tenant
+     * @summary Session statistics
      * @param {AdminSessionsApiAdminSessionsStatsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminSessionsStats(requestParameters: AdminSessionsApiAdminSessionsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSessionsStats(requestParameters: AdminSessionsApiAdminSessionsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSessionsStatsResponse>;
 
     /**
-     * 
-     * @summary List access tokens for the tenant
+     * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
+     * @summary List access tokens
      * @param {AdminSessionsApiAdminTokensListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminTokensList(requestParameters: AdminSessionsApiAdminTokensListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminTokensList(requestParameters: AdminSessionsApiAdminTokensListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTokensListResponse>;
 
     /**
      * 
@@ -1085,57 +1120,57 @@ export interface AdminSessionsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminTokensRevoke(requestParameters: AdminSessionsApiAdminTokensRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminTokensRevoke(requestParameters: AdminSessionsApiAdminTokensRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTokensRevokeResponse>;
 
     /**
-     * 
-     * @summary Get sessions for a specific user
+     * All active sessions of one user (UUID or email), returned as a single page.
+     * @summary List a user\'s active sessions
      * @param {AdminSessionsApiAdminUserSessionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminUserSessionsList(requestParameters: AdminSessionsApiAdminUserSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminUserSessionsList(requestParameters: AdminSessionsApiAdminUserSessionsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsListResponse>;
 
     /**
      * 
-     * @summary Revoke all sessions for a user
+     * @summary Revoke all sessions of a user
      * @param {AdminSessionsApiAdminUserSessionsRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminUserSessionsRevokeAll(requestParameters: AdminSessionsApiAdminUserSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminUserSessionsRevokeAll(requestParameters: AdminSessionsApiAdminUserSessionsRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsRevokeAllResponse>;
 
     /**
      * 
-     * @summary Revoke all sessions for a user via POST
+     * @summary Revoke all sessions of a user (POST alias)
      * @param {AdminSessionsApiAdminUserSessionsRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminUserSessionsRevokePost(requestParameters: AdminSessionsApiAdminUserSessionsRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminUserSessionsRevokePost(requestParameters: AdminSessionsApiAdminUserSessionsRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserSessionsRevokePostResponse>;
 
     /**
      * 
-     * @summary Revoke all tokens for a user
+     * @summary Revoke all tokens of a user
      * @param {AdminSessionsApiAdminUserTokensRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminUserTokensRevokeAll(requestParameters: AdminSessionsApiAdminUserTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminUserTokensRevokeAll(requestParameters: AdminSessionsApiAdminUserTokensRevokeAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokeAllResponse>;
 
     /**
      * 
-     * @summary Revoke all tokens for a user via POST
+     * @summary Revoke all tokens of a user (POST alias)
      * @param {AdminSessionsApiAdminUserTokensRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApiInterface
      */
-    adminUserTokensRevokePost(requestParameters: AdminSessionsApiAdminUserTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminUserTokensRevokePost(requestParameters: AdminSessionsApiAdminUserTokensRevokePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminUserTokensRevokePostResponse>;
 
 }
 
@@ -1242,6 +1277,13 @@ export interface AdminSessionsApiAdminSessionsRevokeAllRequest {
      * @memberof AdminSessionsApiAdminSessionsRevokeAll
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminSessionsRevokeAllRequest}
+     * @memberof AdminSessionsApiAdminSessionsRevokeAll
+     */
+    readonly adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest
 }
 
 /**
@@ -1407,7 +1449,7 @@ export interface AdminSessionsApiAdminUserTokensRevokePostRequest {
 export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterface {
     /**
      * 
-     * @summary Revoke all tokens for a client
+     * @summary Revoke all tokens of a client
      * @param {AdminSessionsApiAdminClientTokensRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1419,7 +1461,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Revoke all tokens for a client via POST
+     * @summary Revoke all tokens of a client (POST alias)
      * @param {AdminSessionsApiAdminClientTokensRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1431,7 +1473,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Get active session count for the tenant
+     * @summary Active session count
      * @param {AdminSessionsApiAdminSessionsCountRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1442,8 +1484,8 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * 
-     * @summary List active sessions for the tenant
+     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+     * @summary List active sessions
      * @param {AdminSessionsApiAdminSessionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1455,7 +1497,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Revoke a specific session
+     * @summary Revoke a session
      * @param {AdminSessionsApiAdminSessionsRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1466,20 +1508,20 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * 
-     * @summary Revoke all tenant sessions via POST
+     * Signs out all users. Requires `confirm: true` in the body.
+     * @summary Revoke every session in the tenant
      * @param {AdminSessionsApiAdminSessionsRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSessionsApi
      */
     public adminSessionsRevokeAll(requestParameters: AdminSessionsApiAdminSessionsRevokeAllRequest, options?: RawAxiosRequestConfig) {
-        return AdminSessionsApiFp(this.configuration).adminSessionsRevokeAll(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSessionsApiFp(this.configuration).adminSessionsRevokeAll(requestParameters.orgId, requestParameters.adminSessionsRevokeAllRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get session statistics for the tenant
+     * @summary Session statistics
      * @param {AdminSessionsApiAdminSessionsStatsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1490,8 +1532,8 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * 
-     * @summary List access tokens for the tenant
+     * Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
+     * @summary List access tokens
      * @param {AdminSessionsApiAdminTokensListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1514,8 +1556,8 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
     }
 
     /**
-     * 
-     * @summary Get sessions for a specific user
+     * All active sessions of one user (UUID or email), returned as a single page.
+     * @summary List a user\'s active sessions
      * @param {AdminSessionsApiAdminUserSessionsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1527,7 +1569,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Revoke all sessions for a user
+     * @summary Revoke all sessions of a user
      * @param {AdminSessionsApiAdminUserSessionsRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1539,7 +1581,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Revoke all sessions for a user via POST
+     * @summary Revoke all sessions of a user (POST alias)
      * @param {AdminSessionsApiAdminUserSessionsRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1551,7 +1593,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Revoke all tokens for a user
+     * @summary Revoke all tokens of a user
      * @param {AdminSessionsApiAdminUserTokensRevokeAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1563,7 +1605,7 @@ export class AdminSessionsApi extends BaseAPI implements AdminSessionsApiInterfa
 
     /**
      * 
-     * @summary Revoke all tokens for a user via POST
+     * @summary Revoke all tokens of a user (POST alias)
      * @param {AdminSessionsApiAdminUserTokensRevokePostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

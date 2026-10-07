@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **status** | Option<**String**> |  | [optional]
 **scopes_supported** | Option<**Vec<String>**> |  | [optional]
 **require_pkce** | Option<**bool**> |  | [optional]
+**require_dpop** | Option<**bool**> |  | [optional]
 **token_lifetime** | Option<**i32**> |  | [optional]
 **created_at** | Option<**String**> |  | [optional]
 **updated_at** | Option<**String**> |  | [optional]

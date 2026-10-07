@@ -4,29 +4,31 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminWebhooksCreate**](AdminWebhooksApi.md#adminwebhookscreate) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a new webhook |
+| [**AdminWebhooksCreate**](AdminWebhooksApi.md#adminwebhookscreate) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a webhook |
 | [**AdminWebhooksDelete**](AdminWebhooksApi.md#adminwebhooksdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Delete a webhook |
-| [**AdminWebhooksDeliveriesList**](AdminWebhooksApi.md#adminwebhooksdeliverieslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent delivery attempts for a webhook. |
-| [**AdminWebhooksDeliveryReplay**](AdminWebhooksApi.md#adminwebhooksdeliveryreplay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage |
-| [**AdminWebhooksDeliveryShow**](AdminWebhooksApi.md#adminwebhooksdeliveryshow) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis. |
-| [**AdminWebhooksEvents**](AdminWebhooksApi.md#adminwebhooksevents) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | Get available webhook event types |
-| [**AdminWebhooksGet**](AdminWebhooksApi.md#adminwebhooksget) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a single webhook by ID |
-| [**AdminWebhooksList**](AdminWebhooksApi.md#adminwebhookslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List all webhooks in the tenant |
-| [**AdminWebhooksRotateSecret**](AdminWebhooksApi.md#adminwebhooksrotatesecret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate webhook secret |
-| [**AdminWebhooksTest**](AdminWebhooksApi.md#adminwebhookstest) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Test a webhook by sending a test payload |
-| [**AdminWebhooksTunnelStart**](AdminWebhooksApi.md#adminwebhookstunnelstart) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start |  |
-| [**AdminWebhooksTunnelStop**](AdminWebhooksApi.md#adminwebhookstunnelstop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop |  |
-| [**AdminWebhooksTunnelStream**](AdminWebhooksApi.md#adminwebhookstunnelstream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream |  |
-| [**AdminWebhooksWebhooksDisable**](AdminWebhooksApi.md#adminwebhookswebhooksdisable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable webhook |
-| [**AdminWebhooksWebhooksEnable**](AdminWebhooksApi.md#adminwebhookswebhooksenable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable webhook |
-| [**PatchAdminWebhooksUpdate**](AdminWebhooksApi.md#patchadminwebhooksupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook |
-| [**PutAdminWebhooksUpdate**](AdminWebhooksApi.md#putadminwebhooksupdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook |
+| [**AdminWebhooksDeliveriesList**](AdminWebhooksApi.md#adminwebhooksdeliverieslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent deliveries |
+| [**AdminWebhooksDeliveryReplay**](AdminWebhooksApi.md#adminwebhooksdeliveryreplay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Replay a delivery |
+| [**AdminWebhooksDeliveryShow**](AdminWebhooksApi.md#adminwebhooksdeliveryshow) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a delivery |
+| [**AdminWebhooksEvents**](AdminWebhooksApi.md#adminwebhooksevents) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | List available webhook event types |
+| [**AdminWebhooksGet**](AdminWebhooksApi.md#adminwebhooksget) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a webhook |
+| [**AdminWebhooksList**](AdminWebhooksApi.md#adminwebhookslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List webhooks |
+| [**AdminWebhooksRotateSecret**](AdminWebhooksApi.md#adminwebhooksrotatesecret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate the signing secret |
+| [**AdminWebhooksTest**](AdminWebhooksApi.md#adminwebhookstest) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Send a test delivery |
+| [**AdminWebhooksTunnelStart**](AdminWebhooksApi.md#adminwebhookstunnelstart) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | Start a webhook tunnel |
+| [**AdminWebhooksTunnelStop**](AdminWebhooksApi.md#adminwebhookstunnelstop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | Stop a webhook tunnel |
+| [**AdminWebhooksTunnelStream**](AdminWebhooksApi.md#adminwebhookstunnelstream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | Stream tunnel deliveries (SSE) |
+| [**AdminWebhooksWebhooksDisable**](AdminWebhooksApi.md#adminwebhookswebhooksdisable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable a webhook |
+| [**AdminWebhooksWebhooksEnable**](AdminWebhooksApi.md#adminwebhookswebhooksenable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook |
+| [**PatchAdminWebhooksUpdate**](AdminWebhooksApi.md#patchadminwebhooksupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook |
+| [**PutAdminWebhooksUpdate**](AdminWebhooksApi.md#putadminwebhooksupdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook |
 
 <a id="adminwebhookscreate"></a>
 # **AdminWebhooksCreate**
-> void AdminWebhooksCreate (string orgId)
+> AdminWebhooksCreateResponse AdminWebhooksCreate (string orgId)
 
-Create a new webhook
+Create a webhook
+
+The signing secret is generated server-side and returned once in this response only.
 
 ### Example
 ```csharp
@@ -60,8 +62,9 @@ namespace Example
 
             try
             {
-                // Create a new webhook
-                apiInstance.AdminWebhooksCreate(orgId);
+                // Create a webhook
+                AdminWebhooksCreateResponse result = apiInstance.AdminWebhooksCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -80,8 +83,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a new webhook
-    apiInstance.AdminWebhooksCreateWithHttpInfo(orgId);
+    // Create a webhook
+    ApiResponse<AdminWebhooksCreateResponse> response = apiInstance.AdminWebhooksCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -99,7 +105,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksCreateResponse**](AdminWebhooksCreateResponse.md)
 
 ### Authorization
 
@@ -108,19 +114,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Webhook created; the secret is shown once |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksdelete"></a>
 # **AdminWebhooksDelete**
-> void AdminWebhooksDelete (string orgId, string webhookId)
+> MessageResponse AdminWebhooksDelete (string orgId, string webhookId)
 
 Delete a webhook
 
@@ -158,7 +164,8 @@ namespace Example
             try
             {
                 // Delete a webhook
-                apiInstance.AdminWebhooksDelete(orgId, webhookId);
+                MessageResponse result = apiInstance.AdminWebhooksDelete(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -178,7 +185,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a webhook
-    apiInstance.AdminWebhooksDeleteWithHttpInfo(orgId, webhookId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminWebhooksDeleteWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -197,7 +207,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -206,23 +216,24 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook deleted |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksdeliverieslist"></a>
 # **AdminWebhooksDeliveriesList**
-> void AdminWebhooksDeliveriesList (string orgId, string webhookId)
+> AdminWebhooksDeliveriesListResponse AdminWebhooksDeliveriesList (string orgId, string webhookId)
 
-List recent delivery attempts for a webhook.
+List recent deliveries
 
-Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
 ### Example
 ```csharp
@@ -257,8 +268,9 @@ namespace Example
 
             try
             {
-                // List recent delivery attempts for a webhook.
-                apiInstance.AdminWebhooksDeliveriesList(orgId, webhookId);
+                // List recent deliveries
+                AdminWebhooksDeliveriesListResponse result = apiInstance.AdminWebhooksDeliveriesList(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -277,8 +289,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List recent delivery attempts for a webhook.
-    apiInstance.AdminWebhooksDeliveriesListWithHttpInfo(orgId, webhookId);
+    // List recent deliveries
+    ApiResponse<AdminWebhooksDeliveriesListResponse> response = apiInstance.AdminWebhooksDeliveriesListWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -297,7 +312,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksDeliveriesListResponse**](AdminWebhooksDeliveriesListResponse.md)
 
 ### Authorization
 
@@ -306,23 +321,24 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deliveries |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksdeliveryreplay"></a>
 # **AdminWebhooksDeliveryReplay**
-> void AdminWebhooksDeliveryReplay (string orgId, string webhookId, string deliveryId)
+> AdminWebhooksDeliveryReplayResponse AdminWebhooksDeliveryReplay (string orgId, string webhookId, string deliveryId)
 
-Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+Replay a delivery
 
-Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
 ### Example
 ```csharp
@@ -358,8 +374,9 @@ namespace Example
 
             try
             {
-                // Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-                apiInstance.AdminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+                // Replay a delivery
+                AdminWebhooksDeliveryReplayResponse result = apiInstance.AdminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -378,8 +395,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-    apiInstance.AdminWebhooksDeliveryReplayWithHttpInfo(orgId, webhookId, deliveryId);
+    // Replay a delivery
+    ApiResponse<AdminWebhooksDeliveryReplayResponse> response = apiInstance.AdminWebhooksDeliveryReplayWithHttpInfo(orgId, webhookId, deliveryId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -399,7 +419,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksDeliveryReplayResponse**](AdminWebhooksDeliveryReplayResponse.md)
 
 ### Authorization
 
@@ -408,21 +428,24 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Delivery re-enqueued |  -  |
+| **404** | Webhook or delivery not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksdeliveryshow"></a>
 # **AdminWebhooksDeliveryShow**
-> void AdminWebhooksDeliveryShow (string orgId, string webhookId, string deliveryId)
+> AdminWebhooksDeliveryShowResponse AdminWebhooksDeliveryShow (string orgId, string webhookId, string deliveryId)
 
-Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+Get a delivery
+
+A single delivery including the event payload and the per-attempt history.
 
 ### Example
 ```csharp
@@ -458,8 +481,9 @@ namespace Example
 
             try
             {
-                // Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
-                apiInstance.AdminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+                // Get a delivery
+                AdminWebhooksDeliveryShowResponse result = apiInstance.AdminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -478,8 +502,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
-    apiInstance.AdminWebhooksDeliveryShowWithHttpInfo(orgId, webhookId, deliveryId);
+    // Get a delivery
+    ApiResponse<AdminWebhooksDeliveryShowResponse> response = apiInstance.AdminWebhooksDeliveryShowWithHttpInfo(orgId, webhookId, deliveryId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -499,7 +526,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksDeliveryShowResponse**](AdminWebhooksDeliveryShowResponse.md)
 
 ### Authorization
 
@@ -508,21 +535,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Delivery with payload and attempts |  -  |
+| **404** | Webhook or delivery not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksevents"></a>
 # **AdminWebhooksEvents**
-> void AdminWebhooksEvents (string orgId)
+> AdminWebhooksEventsResponse AdminWebhooksEvents (string orgId)
 
-Get available webhook event types
+List available webhook event types
 
 ### Example
 ```csharp
@@ -556,8 +584,9 @@ namespace Example
 
             try
             {
-                // Get available webhook event types
-                apiInstance.AdminWebhooksEvents(orgId);
+                // List available webhook event types
+                AdminWebhooksEventsResponse result = apiInstance.AdminWebhooksEvents(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -576,8 +605,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get available webhook event types
-    apiInstance.AdminWebhooksEventsWithHttpInfo(orgId);
+    // List available webhook event types
+    ApiResponse<AdminWebhooksEventsResponse> response = apiInstance.AdminWebhooksEventsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -595,7 +627,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksEventsResponse**](AdminWebhooksEventsResponse.md)
 
 ### Authorization
 
@@ -604,21 +636,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Event types keyed by name, with a human-readable description |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksget"></a>
 # **AdminWebhooksGet**
-> void AdminWebhooksGet (string orgId, string webhookId)
+> AdminWebhooksGetResponse AdminWebhooksGet (string orgId, string webhookId)
 
-Get a single webhook by ID
+Get a webhook
 
 ### Example
 ```csharp
@@ -653,8 +685,9 @@ namespace Example
 
             try
             {
-                // Get a single webhook by ID
-                apiInstance.AdminWebhooksGet(orgId, webhookId);
+                // Get a webhook
+                AdminWebhooksGetResponse result = apiInstance.AdminWebhooksGet(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -673,8 +706,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single webhook by ID
-    apiInstance.AdminWebhooksGetWithHttpInfo(orgId, webhookId);
+    // Get a webhook
+    ApiResponse<AdminWebhooksGetResponse> response = apiInstance.AdminWebhooksGetWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -693,7 +729,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksGetResponse**](AdminWebhooksGetResponse.md)
 
 ### Authorization
 
@@ -702,21 +738,24 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookslist"></a>
 # **AdminWebhooksList**
-> void AdminWebhooksList (string orgId)
+> AdminWebhooksListResponse AdminWebhooksList (string orgId)
 
-List all webhooks in the tenant
+List webhooks
+
+Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 ```csharp
@@ -750,8 +789,9 @@ namespace Example
 
             try
             {
-                // List all webhooks in the tenant
-                apiInstance.AdminWebhooksList(orgId);
+                // List webhooks
+                AdminWebhooksListResponse result = apiInstance.AdminWebhooksList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -770,8 +810,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all webhooks in the tenant
-    apiInstance.AdminWebhooksListWithHttpInfo(orgId);
+    // List webhooks
+    ApiResponse<AdminWebhooksListResponse> response = apiInstance.AdminWebhooksListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -789,7 +832,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksListResponse**](AdminWebhooksListResponse.md)
 
 ### Authorization
 
@@ -798,21 +841,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhooks |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhooksrotatesecret"></a>
 # **AdminWebhooksRotateSecret**
-> void AdminWebhooksRotateSecret (string orgId, string webhookId)
+> AdminWebhooksRotateSecretResponse AdminWebhooksRotateSecret (string orgId, string webhookId)
 
-Rotate webhook secret
+Rotate the signing secret
+
+Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
 ### Example
 ```csharp
@@ -847,8 +892,9 @@ namespace Example
 
             try
             {
-                // Rotate webhook secret
-                apiInstance.AdminWebhooksRotateSecret(orgId, webhookId);
+                // Rotate the signing secret
+                AdminWebhooksRotateSecretResponse result = apiInstance.AdminWebhooksRotateSecret(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -867,8 +913,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Rotate webhook secret
-    apiInstance.AdminWebhooksRotateSecretWithHttpInfo(orgId, webhookId);
+    // Rotate the signing secret
+    ApiResponse<AdminWebhooksRotateSecretResponse> response = apiInstance.AdminWebhooksRotateSecretWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -887,7 +936,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksRotateSecretResponse**](AdminWebhooksRotateSecretResponse.md)
 
 ### Authorization
 
@@ -896,21 +945,24 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Secret rotated; the new secret is shown once |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookstest"></a>
 # **AdminWebhooksTest**
-> void AdminWebhooksTest (string orgId, string webhookId)
+> AdminWebhooksTestResponse AdminWebhooksTest (string orgId, string webhookId)
 
-Test a webhook by sending a test payload
+Send a test delivery
+
+POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
 ### Example
 ```csharp
@@ -945,8 +997,9 @@ namespace Example
 
             try
             {
-                // Test a webhook by sending a test payload
-                apiInstance.AdminWebhooksTest(orgId, webhookId);
+                // Send a test delivery
+                AdminWebhooksTestResponse result = apiInstance.AdminWebhooksTest(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -965,8 +1018,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Test a webhook by sending a test payload
-    apiInstance.AdminWebhooksTestWithHttpInfo(orgId, webhookId);
+    // Send a test delivery
+    ApiResponse<AdminWebhooksTestResponse> response = apiInstance.AdminWebhooksTestWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -985,7 +1041,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksTestResponse**](AdminWebhooksTestResponse.md)
 
 ### Authorization
 
@@ -994,21 +1050,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Test result |  -  |
+| **404** | Webhook not found |  -  |
+| **502** | Failed to deliver test webhook |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookstunnelstart"></a>
 # **AdminWebhooksTunnelStart**
-> void AdminWebhooksTunnelStart (string orgId)
+> AdminWebhooksTunnelStartResponse AdminWebhooksTunnelStart (string orgId)
 
+Start a webhook tunnel
 
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
 ### Example
 ```csharp
@@ -1042,7 +1102,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminWebhooksTunnelStart(orgId);
+                // Start a webhook tunnel
+                AdminWebhooksTunnelStartResponse result = apiInstance.AdminWebhooksTunnelStart(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1061,7 +1123,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminWebhooksTunnelStartWithHttpInfo(orgId);
+    // Start a webhook tunnel
+    ApiResponse<AdminWebhooksTunnelStartResponse> response = apiInstance.AdminWebhooksTunnelStartWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1079,7 +1145,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksTunnelStartResponse**](AdminWebhooksTunnelStartResponse.md)
 
 ### Authorization
 
@@ -1088,21 +1154,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tunnel started |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookstunnelstop"></a>
 # **AdminWebhooksTunnelStop**
-> void AdminWebhooksTunnelStop (string orgId, string webhookId)
+> MessageResponse AdminWebhooksTunnelStop (string orgId, string webhookId)
 
+Stop a webhook tunnel
 
+Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
 ### Example
 ```csharp
@@ -1137,7 +1205,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminWebhooksTunnelStop(orgId, webhookId);
+                // Stop a webhook tunnel
+                MessageResponse result = apiInstance.AdminWebhooksTunnelStop(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1156,7 +1226,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminWebhooksTunnelStopWithHttpInfo(orgId, webhookId);
+    // Stop a webhook tunnel
+    ApiResponse<MessageResponse> response = apiInstance.AdminWebhooksTunnelStopWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1175,7 +1249,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -1184,21 +1258,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tunnel closed |  -  |
+| **400** | Not a tunnel webhook |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookstunnelstream"></a>
 # **AdminWebhooksTunnelStream**
-> void AdminWebhooksTunnelStream (string orgId, string webhookId)
+> string AdminWebhooksTunnelStream (string orgId, string webhookId)
 
+Stream tunnel deliveries (SSE)
 
+Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
 ### Example
 ```csharp
@@ -1233,7 +1311,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminWebhooksTunnelStream(orgId, webhookId);
+                // Stream tunnel deliveries (SSE)
+                string result = apiInstance.AdminWebhooksTunnelStream(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1252,7 +1332,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminWebhooksTunnelStreamWithHttpInfo(orgId, webhookId);
+    // Stream tunnel deliveries (SSE)
+    ApiResponse<string> response = apiInstance.AdminWebhooksTunnelStreamWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1271,7 +1355,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -1280,21 +1364,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/event-stream
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+| **400** | Not a tunnel webhook |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookswebhooksdisable"></a>
 # **AdminWebhooksWebhooksDisable**
-> void AdminWebhooksWebhooksDisable (string orgId, string webhookId)
+> AdminWebhooksWebhooksDisableResponse AdminWebhooksWebhooksDisable (string orgId, string webhookId)
 
-Disable webhook
+Disable a webhook
 
 ### Example
 ```csharp
@@ -1329,8 +1415,9 @@ namespace Example
 
             try
             {
-                // Disable webhook
-                apiInstance.AdminWebhooksWebhooksDisable(orgId, webhookId);
+                // Disable a webhook
+                AdminWebhooksWebhooksDisableResponse result = apiInstance.AdminWebhooksWebhooksDisable(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1349,8 +1436,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Disable webhook
-    apiInstance.AdminWebhooksWebhooksDisableWithHttpInfo(orgId, webhookId);
+    // Disable a webhook
+    ApiResponse<AdminWebhooksWebhooksDisableResponse> response = apiInstance.AdminWebhooksWebhooksDisableWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1369,7 +1459,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksWebhooksDisableResponse**](AdminWebhooksWebhooksDisableResponse.md)
 
 ### Authorization
 
@@ -1378,21 +1468,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook disabled |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminwebhookswebhooksenable"></a>
 # **AdminWebhooksWebhooksEnable**
-> void AdminWebhooksWebhooksEnable (string orgId, string webhookId)
+> AdminWebhooksWebhooksEnableResponse AdminWebhooksWebhooksEnable (string orgId, string webhookId)
 
-Enable webhook
+Enable a webhook
 
 ### Example
 ```csharp
@@ -1427,8 +1518,9 @@ namespace Example
 
             try
             {
-                // Enable webhook
-                apiInstance.AdminWebhooksWebhooksEnable(orgId, webhookId);
+                // Enable a webhook
+                AdminWebhooksWebhooksEnableResponse result = apiInstance.AdminWebhooksWebhooksEnable(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1447,8 +1539,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Enable webhook
-    apiInstance.AdminWebhooksWebhooksEnableWithHttpInfo(orgId, webhookId);
+    // Enable a webhook
+    ApiResponse<AdminWebhooksWebhooksEnableResponse> response = apiInstance.AdminWebhooksWebhooksEnableWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1467,7 +1562,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminWebhooksWebhooksEnableResponse**](AdminWebhooksWebhooksEnableResponse.md)
 
 ### Authorization
 
@@ -1476,21 +1571,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook enabled |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminwebhooksupdate"></a>
 # **PatchAdminWebhooksUpdate**
-> void PatchAdminWebhooksUpdate (string orgId, string webhookId)
+> PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate (string orgId, string webhookId)
 
-Update an existing webhook
+Partially update a webhook
 
 ### Example
 ```csharp
@@ -1525,8 +1621,9 @@ namespace Example
 
             try
             {
-                // Update an existing webhook
-                apiInstance.PatchAdminWebhooksUpdate(orgId, webhookId);
+                // Partially update a webhook
+                PutAdminWebhooksUpdateResponse result = apiInstance.PatchAdminWebhooksUpdate(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1545,8 +1642,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update an existing webhook
-    apiInstance.PatchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    // Partially update a webhook
+    ApiResponse<PutAdminWebhooksUpdateResponse> response = apiInstance.PatchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1565,7 +1665,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1574,21 +1674,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminwebhooksupdate"></a>
 # **PutAdminWebhooksUpdate**
-> void PutAdminWebhooksUpdate (string orgId, string webhookId)
+> PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate (string orgId, string webhookId)
 
-Update an existing webhook
+Update a webhook
 
 ### Example
 ```csharp
@@ -1623,8 +1724,9 @@ namespace Example
 
             try
             {
-                // Update an existing webhook
-                apiInstance.PutAdminWebhooksUpdate(orgId, webhookId);
+                // Update a webhook
+                PutAdminWebhooksUpdateResponse result = apiInstance.PutAdminWebhooksUpdate(orgId, webhookId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1643,8 +1745,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update an existing webhook
-    apiInstance.PutAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    // Update a webhook
+    ApiResponse<PutAdminWebhooksUpdateResponse> response = apiInstance.PutAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1663,7 +1768,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1672,13 +1777,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+| **404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,77 +29,86 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// 
+        /// OAuth 2.0 authorization server metadata (RFC 8414)
+        /// </summary>
+        /// <remarks>
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AuthorizationServerMetadata</returns>
+        AuthorizationServerMetadata GetAuthorizationServerMetadata(string orgId);
+
+        /// <summary>
+        /// OAuth 2.0 authorization server metadata (RFC 8414)
+        /// </summary>
+        /// <remarks>
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AuthorizationServerMetadata</returns>
+        ApiResponse<AuthorizationServerMetadata> GetAuthorizationServerMetadataWithHttpInfo(string orgId);
+        /// <summary>
+        /// JSON Web Key Set (RFC 7517)
+        /// </summary>
+        /// <remarks>
+        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>JsonWebKeySet</returns>
+        JsonWebKeySet GetJwks(string orgId);
+
+        /// <summary>
+        /// JSON Web Key Set (RFC 7517)
+        /// </summary>
+        /// <remarks>
+        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of JsonWebKeySet</returns>
+        ApiResponse<JsonWebKeySet> GetJwksWithHttpInfo(string orgId);
+        /// <summary>
+        /// OpenID Provider configuration (OIDC Discovery 1.0)
+        /// </summary>
+        /// <remarks>
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>OpenIdConfiguration</returns>
+        OpenIdConfiguration GetOpenidConfiguration(string orgId);
+
+        /// <summary>
+        /// OpenID Provider configuration (OIDC Discovery 1.0)
+        /// </summary>
+        /// <remarks>
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of OpenIdConfiguration</returns>
+        ApiResponse<OpenIdConfiguration> GetOpenidConfigurationWithHttpInfo(string orgId);
+        /// <summary>
+        /// SSF transmitter configuration metadata
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetAuthorizationServerMetadata(string orgId);
+        /// <returns>GetSsfConfigurationResponse</returns>
+        GetSsfConfigurationResponse GetSsfConfiguration(string orgId);
 
         /// <summary>
-        /// 
+        /// SSF transmitter configuration metadata
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetAuthorizationServerMetadataWithHttpInfo(string orgId);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetJwks(string orgId);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetJwksWithHttpInfo(string orgId);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetOpenidConfiguration(string orgId);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetOpenidConfigurationWithHttpInfo(string orgId);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetSsfConfiguration(string orgId);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetSsfConfigurationWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of GetSsfConfigurationResponse</returns>
+        ApiResponse<GetSsfConfigurationResponse> GetSsfConfigurationWithHttpInfo(string orgId);
         #endregion Synchronous Operations
     }
 
@@ -109,76 +119,76 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// 
+        /// OAuth 2.0 authorization server metadata (RFC 8414)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetAuthorizationServerMetadataAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AuthorizationServerMetadata</returns>
+        System.Threading.Tasks.Task<AuthorizationServerMetadata> GetAuthorizationServerMetadataAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// OAuth 2.0 authorization server metadata (RFC 8414)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetAuthorizationServerMetadataWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AuthorizationServerMetadata)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AuthorizationServerMetadata>> GetAuthorizationServerMetadataWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// JSON Web Key Set (RFC 7517)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetJwksAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of JsonWebKeySet</returns>
+        System.Threading.Tasks.Task<JsonWebKeySet> GetJwksAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// JSON Web Key Set (RFC 7517)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetJwksWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (JsonWebKeySet)</returns>
+        System.Threading.Tasks.Task<ApiResponse<JsonWebKeySet>> GetJwksWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// OpenID Provider configuration (OIDC Discovery 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetOpenidConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of OpenIdConfiguration</returns>
+        System.Threading.Tasks.Task<OpenIdConfiguration> GetOpenidConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// OpenID Provider configuration (OIDC Discovery 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetOpenidConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (OpenIdConfiguration)</returns>
+        System.Threading.Tasks.Task<ApiResponse<OpenIdConfiguration>> GetOpenidConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// SSF transmitter configuration metadata
         /// </summary>
         /// <remarks>
         /// 
@@ -186,11 +196,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetSsfConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of GetSsfConfigurationResponse</returns>
+        System.Threading.Tasks.Task<GetSsfConfigurationResponse> GetSsfConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// SSF transmitter configuration metadata
         /// </summary>
         /// <remarks>
         /// 
@@ -198,8 +208,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetSsfConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (GetSsfConfigurationResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetSsfConfigurationResponse>> GetSsfConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -414,23 +424,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.0 authorization server metadata (RFC 8414) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetAuthorizationServerMetadata(string orgId)
+        /// <returns>AuthorizationServerMetadata</returns>
+        public AuthorizationServerMetadata GetAuthorizationServerMetadata(string orgId)
         {
-            GetAuthorizationServerMetadataWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AuthorizationServerMetadata> localVarResponse = GetAuthorizationServerMetadataWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.0 authorization server metadata (RFC 8414) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetAuthorizationServerMetadataWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AuthorizationServerMetadata</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AuthorizationServerMetadata> GetAuthorizationServerMetadataWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -443,6 +454,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -455,7 +467,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/.well-known/oauth-authorization-server", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AuthorizationServerMetadata>("/orgs/{orgId}/api/v1/.well-known/oauth-authorization-server", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -467,25 +479,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.0 authorization server metadata (RFC 8414) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetAuthorizationServerMetadataAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AuthorizationServerMetadata</returns>
+        public async System.Threading.Tasks.Task<AuthorizationServerMetadata> GetAuthorizationServerMetadataAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetAuthorizationServerMetadataWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AuthorizationServerMetadata> localVarResponse = await GetAuthorizationServerMetadataWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.0 authorization server metadata (RFC 8414) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetAuthorizationServerMetadataWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AuthorizationServerMetadata)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AuthorizationServerMetadata>> GetAuthorizationServerMetadataWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -499,6 +512,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -513,7 +527,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/.well-known/oauth-authorization-server", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AuthorizationServerMetadata>("/orgs/{orgId}/api/v1/.well-known/oauth-authorization-server", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -525,23 +539,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetJwks(string orgId)
+        /// <returns>JsonWebKeySet</returns>
+        public JsonWebKeySet GetJwks(string orgId)
         {
-            GetJwksWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<JsonWebKeySet> localVarResponse = GetJwksWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetJwksWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of JsonWebKeySet</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<JsonWebKeySet> GetJwksWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -554,6 +569,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -566,7 +582,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/.well-known/jwks.json", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<JsonWebKeySet>("/orgs/{orgId}/api/v1/.well-known/jwks.json", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -578,25 +594,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetJwksAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of JsonWebKeySet</returns>
+        public async System.Threading.Tasks.Task<JsonWebKeySet> GetJwksAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetJwksWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<JsonWebKeySet> localVarResponse = await GetJwksWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// JSON Web Key Set (RFC 7517) Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetJwksWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (JsonWebKeySet)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<JsonWebKeySet>> GetJwksWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -610,6 +627,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -624,7 +642,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/.well-known/jwks.json", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<JsonWebKeySet>("/orgs/{orgId}/api/v1/.well-known/jwks.json", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -636,23 +654,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OpenID Provider configuration (OIDC Discovery 1.0) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetOpenidConfiguration(string orgId)
+        /// <returns>OpenIdConfiguration</returns>
+        public OpenIdConfiguration GetOpenidConfiguration(string orgId)
         {
-            GetOpenidConfigurationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<OpenIdConfiguration> localVarResponse = GetOpenidConfigurationWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OpenID Provider configuration (OIDC Discovery 1.0) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetOpenidConfigurationWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of OpenIdConfiguration</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<OpenIdConfiguration> GetOpenidConfigurationWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -665,6 +684,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -677,7 +697,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/.well-known/openid-configuration", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<OpenIdConfiguration>("/orgs/{orgId}/api/v1/.well-known/openid-configuration", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -689,25 +709,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OpenID Provider configuration (OIDC Discovery 1.0) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetOpenidConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of OpenIdConfiguration</returns>
+        public async System.Threading.Tasks.Task<OpenIdConfiguration> GetOpenidConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetOpenidConfigurationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<OpenIdConfiguration> localVarResponse = await GetOpenidConfigurationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OpenID Provider configuration (OIDC Discovery 1.0) Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetOpenidConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (OpenIdConfiguration)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<OpenIdConfiguration>> GetOpenidConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -721,6 +742,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -735,7 +757,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/.well-known/openid-configuration", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<OpenIdConfiguration>("/orgs/{orgId}/api/v1/.well-known/openid-configuration", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -747,23 +769,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// SSF transmitter configuration metadata 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetSsfConfiguration(string orgId)
+        /// <returns>GetSsfConfigurationResponse</returns>
+        public GetSsfConfigurationResponse GetSsfConfiguration(string orgId)
         {
-            GetSsfConfigurationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<GetSsfConfigurationResponse> localVarResponse = GetSsfConfigurationWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// SSF transmitter configuration metadata 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetSsfConfigurationWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of GetSsfConfigurationResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<GetSsfConfigurationResponse> GetSsfConfigurationWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -776,6 +799,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -788,7 +812,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/.well-known/ssf-configuration", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<GetSsfConfigurationResponse>("/orgs/{orgId}/api/v1/.well-known/ssf-configuration", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -800,25 +824,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// SSF transmitter configuration metadata 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetSsfConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of GetSsfConfigurationResponse</returns>
+        public async System.Threading.Tasks.Task<GetSsfConfigurationResponse> GetSsfConfigurationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetSsfConfigurationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<GetSsfConfigurationResponse> localVarResponse = await GetSsfConfigurationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// SSF transmitter configuration metadata 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetSsfConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (GetSsfConfigurationResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<GetSsfConfigurationResponse>> GetSsfConfigurationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -832,6 +857,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -846,7 +872,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/.well-known/ssf-configuration", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<GetSsfConfigurationResponse>("/orgs/{orgId}/api/v1/.well-known/ssf-configuration", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

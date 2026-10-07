@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 
 # **admin_roles_add_permissions**
-> admin_roles_add_permissions(org_id, role_id)
+> MessageResponse admin_roles_add_permissions(org_id, role_id)
 
 Add permission(s) to a role
 
@@ -31,6 +31,7 @@ Add permission(s) to a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -65,7 +66,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Add permission(s) to a role
-        api_instance.admin_roles_add_permissions(org_id, role_id)
+        api_response = api_instance.admin_roles_add_permissions(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_add_permissions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_add_permissions: %s\n" % e)
 ```
@@ -82,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -91,18 +94,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Added; message reports how many permissions were added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_add_user**
-> admin_roles_add_user(org_id, role_id)
+> MessageResponse admin_roles_add_user(org_id, role_id)
 
 Assign a user to a role
 
@@ -113,6 +116,7 @@ Assign a user to a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -147,7 +151,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Assign a user to a role
-        api_instance.admin_roles_add_user(org_id, role_id)
+        api_response = api_instance.admin_roles_add_user(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_add_user:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_add_user: %s\n" % e)
 ```
@@ -164,7 +170,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -173,18 +179,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Assigned |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_create**
-> admin_roles_create(org_id)
+> AdminRolesCreateResponse admin_roles_create(org_id)
 
 Create a new role
 
@@ -195,6 +201,7 @@ Create a new role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -228,7 +235,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Create a new role
-        api_instance.admin_roles_create(org_id)
+        api_response = api_instance.admin_roles_create(org_id)
+        print("The response of AdminRolesApi->admin_roles_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_create: %s\n" % e)
 ```
@@ -244,7 +253,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -253,18 +262,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_delete**
-> admin_roles_delete(org_id, role_id)
+> MessageResponse admin_roles_delete(org_id, role_id)
 
 Delete a role
 
@@ -275,6 +284,7 @@ Delete a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -309,7 +319,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete a role
-        api_instance.admin_roles_delete(org_id, role_id)
+        api_response = api_instance.admin_roles_delete(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_delete: %s\n" % e)
 ```
@@ -326,7 +338,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -335,18 +347,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_get**
-> admin_roles_get(org_id, role_id)
+> AdminRolesGetResponse admin_roles_get(org_id, role_id)
 
 Get a single role by ID or slug
 
@@ -357,6 +369,7 @@ Get a single role by ID or slug
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_get_response import AdminRolesGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -391,7 +404,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get a single role by ID or slug
-        api_instance.admin_roles_get(org_id, role_id)
+        api_response = api_instance.admin_roles_get(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_get: %s\n" % e)
 ```
@@ -408,7 +423,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetResponse**](AdminRolesGetResponse.md)
 
 ### Authorization
 
@@ -417,18 +432,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_get_permissions**
-> admin_roles_get_permissions(org_id, role_id)
+> AdminRolesGetPermissionsResponse admin_roles_get_permissions(org_id, role_id)
 
 Get role permissions
 
@@ -439,6 +454,7 @@ Get role permissions
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -473,7 +489,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get role permissions
-        api_instance.admin_roles_get_permissions(org_id, role_id)
+        api_response = api_instance.admin_roles_get_permissions(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_get_permissions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_get_permissions: %s\n" % e)
 ```
@@ -490,7 +508,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -499,18 +517,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Role permissions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_get_users**
-> admin_roles_get_users(org_id, role_id)
+> AdminRolesGetUsersResponse admin_roles_get_users(org_id, role_id)
 
 Get users assigned to a role
 
@@ -521,6 +539,7 @@ Get users assigned to a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_get_users_response import AdminRolesGetUsersResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -555,7 +574,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get users assigned to a role
-        api_instance.admin_roles_get_users(org_id, role_id)
+        api_response = api_instance.admin_roles_get_users(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_get_users:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_get_users: %s\n" % e)
 ```
@@ -572,7 +593,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetUsersResponse**](AdminRolesGetUsersResponse.md)
 
 ### Authorization
 
@@ -581,18 +602,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Role users |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_list**
-> admin_roles_list(org_id)
+> AdminRolesListResponse admin_roles_list(org_id)
 
 List all roles in the tenant
 
@@ -603,6 +624,7 @@ List all roles in the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_list_response import AdminRolesListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -636,7 +658,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # List all roles in the tenant
-        api_instance.admin_roles_list(org_id)
+        api_response = api_instance.admin_roles_list(org_id)
+        print("The response of AdminRolesApi->admin_roles_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_list: %s\n" % e)
 ```
@@ -652,7 +676,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesListResponse**](AdminRolesListResponse.md)
 
 ### Authorization
 
@@ -661,18 +685,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_remove_permission**
-> admin_roles_remove_permission(org_id, role_id, permission_id)
+> MessageResponse admin_roles_remove_permission(org_id, role_id, permission_id)
 
 Remove a permission from a role
 
@@ -683,6 +707,7 @@ Remove a permission from a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -718,7 +743,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Remove a permission from a role
-        api_instance.admin_roles_remove_permission(org_id, role_id, permission_id)
+        api_response = api_instance.admin_roles_remove_permission(org_id, role_id, permission_id)
+        print("The response of AdminRolesApi->admin_roles_remove_permission:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_remove_permission: %s\n" % e)
 ```
@@ -736,7 +763,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -745,18 +772,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_remove_user**
-> admin_roles_remove_user(org_id, role_id, user_id)
+> MessageResponse admin_roles_remove_user(org_id, role_id, user_id)
 
 Remove a user from a role
 
@@ -767,6 +794,7 @@ Remove a user from a role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -802,7 +830,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Remove a user from a role
-        api_instance.admin_roles_remove_user(org_id, role_id, user_id)
+        api_response = api_instance.admin_roles_remove_user(org_id, role_id, user_id)
+        print("The response of AdminRolesApi->admin_roles_remove_user:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_remove_user: %s\n" % e)
 ```
@@ -820,7 +850,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -829,18 +859,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_roles_update_permissions**
-> admin_roles_update_permissions(org_id, role_id)
+> AdminRolesCreateResponse admin_roles_update_permissions(org_id, role_id)
 
 Update role permissions (replaces all)
 
@@ -851,6 +881,7 @@ Update role permissions (replaces all)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -885,7 +916,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update role permissions (replaces all)
-        api_instance.admin_roles_update_permissions(org_id, role_id)
+        api_response = api_instance.admin_roles_update_permissions(org_id, role_id)
+        print("The response of AdminRolesApi->admin_roles_update_permissions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->admin_roles_update_permissions: %s\n" % e)
 ```
@@ -902,7 +935,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -911,18 +944,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_roles_update**
-> patch_admin_roles_update(org_id, role_id)
+> AdminRolesCreateResponse patch_admin_roles_update(org_id, role_id)
 
 Update an existing role
 
@@ -933,6 +966,7 @@ Update an existing role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -967,7 +1001,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update an existing role
-        api_instance.patch_admin_roles_update(org_id, role_id)
+        api_response = api_instance.patch_admin_roles_update(org_id, role_id)
+        print("The response of AdminRolesApi->patch_admin_roles_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->patch_admin_roles_update: %s\n" % e)
 ```
@@ -984,7 +1020,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -993,18 +1029,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_roles_update**
-> put_admin_roles_update(org_id, role_id)
+> AdminRolesCreateResponse put_admin_roles_update(org_id, role_id)
 
 Update an existing role
 
@@ -1015,6 +1051,7 @@ Update an existing role
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1049,7 +1086,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update an existing role
-        api_instance.put_admin_roles_update(org_id, role_id)
+        api_response = api_instance.put_admin_roles_update(org_id, role_id)
+        print("The response of AdminRolesApi->put_admin_roles_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminRolesApi->put_admin_roles_update: %s\n" % e)
 ```
@@ -1066,7 +1105,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1075,13 +1114,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

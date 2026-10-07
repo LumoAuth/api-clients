@@ -19,17 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # OAuth 2.1 / OIDC authorization endpoint
+    # Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def authorize(org_id, opts = {})
-      authorize_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = authorize_with_http_info(org_id, opts)
+      data
     end
 
+    # OAuth 2.1 / OIDC authorization endpoint
+    # Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def authorize_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.authorize ...'
@@ -46,6 +50,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -54,7 +60,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -76,17 +82,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # CIBA backchannel authentication request
+    # OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [BackchannelAuthorizeResponse]
     def backchannel_authorize(org_id, opts = {})
-      backchannel_authorize_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = backchannel_authorize_with_http_info(org_id, opts)
+      data
     end
 
+    # CIBA backchannel authentication request
+    # OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(BackchannelAuthorizeResponse, Integer, Hash)>] BackchannelAuthorizeResponse data, response status code and response headers
     def backchannel_authorize_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.backchannel_authorize ...'
@@ -103,6 +113,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -111,7 +123,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'BackchannelAuthorizeResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ClientAuth']
@@ -133,21 +145,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
-    # The device makes a request to the authorization server's device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+    # Device authorization request (RFC 8628)
+    # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [DeviceAuthorizationResponse]
     def device_authorization(org_id, opts = {})
-      device_authorization_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = device_authorization_with_http_info(org_id, opts)
+      data
     end
 
-    # Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
-    # The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+    # Device authorization request (RFC 8628)
+    # Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(DeviceAuthorizationResponse, Integer, Hash)>] DeviceAuthorizationResponse data, response status code and response headers
     def device_authorization_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.device_authorization ...'
@@ -164,6 +176,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -172,7 +186,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'DeviceAuthorizationResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ClientAuth']
@@ -194,21 +208,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Client Configuration Endpoint per OIDC spec Section 4
+    # Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+    # Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [RegisteredClientMetadata]
     def get_client_configuration(org_id, client_id, opts = {})
-      get_client_configuration_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = get_client_configuration_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Client Configuration Endpoint per OIDC spec Section 4
+    # Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+    # Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(RegisteredClientMetadata, Integer, Hash)>] RegisteredClientMetadata data, response status code and response headers
     def get_client_configuration_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.get_client_configuration ...'
@@ -229,6 +245,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -237,7 +255,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'RegisteredClientMetadata'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -259,21 +277,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Device Verification Page (RFC 8628 Section 3.3)
-    # This endpoint displays the user verification page where users enter their user_code to authorize the device.
+    # Device verification page (RFC 8628 §3.3)
+    # Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def get_device_verification(org_id, opts = {})
-      get_device_verification_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_device_verification_with_http_info(org_id, opts)
+      data
     end
 
-    # Device Verification Page (RFC 8628 Section 3.3)
-    # This endpoint displays the user verification page where users enter their user_code to authorize the device.
+    # Device verification page (RFC 8628 §3.3)
+    # Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def get_device_verification_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.get_device_verification ...'
@@ -290,6 +308,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -298,7 +318,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -320,17 +340,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Organization selector page
+    # Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def get_org_selection(org_id, opts = {})
-      get_org_selection_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_org_selection_with_http_info(org_id, opts)
+      data
     end
 
+    # Organization selector page
+    # Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def get_org_selection_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.get_org_selection ...'
@@ -347,6 +371,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -355,7 +381,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -377,21 +403,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # RFC 7662 - Token Introspection Endpoint
-    # Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+    # Token introspection (RFC 7662)
+    # Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [IntrospectResponse]
     def introspect(org_id, opts = {})
-      introspect_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = introspect_with_http_info(org_id, opts)
+      data
     end
 
-    # RFC 7662 - Token Introspection Endpoint
-    # Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+    # Token introspection (RFC 7662)
+    # Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(IntrospectResponse, Integer, Hash)>] IntrospectResponse data, response status code and response headers
     def introspect_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.introspect ...'
@@ -408,6 +434,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -416,7 +444,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'IntrospectResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ClientAuth']
@@ -438,17 +466,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Pushed authorization request (RFC 9126)
+    # Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [ParResponse]
     def par(org_id, opts = {})
-      par_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = par_with_http_info(org_id, opts)
+      data
     end
 
+    # Pushed authorization request (RFC 9126)
+    # Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(ParResponse, Integer, Hash)>] ParResponse data, response status code and response headers
     def par_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.par ...'
@@ -465,6 +497,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -473,7 +507,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'ParResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ClientAuth']
@@ -495,6 +529,8 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Passkey login entry point
+    # Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [nil]
@@ -503,6 +539,8 @@ module LumoAuthApiClient
       nil
     end
 
+    # Passkey login entry point
+    # Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
@@ -552,19 +590,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Client Registration Endpoint per OIDC spec Section 3
+    # Dynamic client registration (RFC 7591 / OIDC DCR)
+    # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [RegisterClientResponse]
     def register_client(org_id, opts = {})
-      register_client_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = register_client_with_http_info(org_id, opts)
+      data
     end
 
-    # Client Registration Endpoint per OIDC spec Section 3
+    # Dynamic client registration (RFC 7591 / OIDC DCR)
+    # Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(RegisterClientResponse, Integer, Hash)>] RegisterClientResponse data, response status code and response headers
     def register_client_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.register_client ...'
@@ -581,6 +621,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -589,7 +631,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'RegisterClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -611,21 +653,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # RFC 7009 - Token Revocation Endpoint
-    # Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+    # Token revocation (RFC 7009)
+    # Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [Object]
     def revoke(org_id, opts = {})
-      revoke_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = revoke_with_http_info(org_id, opts)
+      data
     end
 
-    # RFC 7009 - Token Revocation Endpoint
-    # Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+    # Token revocation (RFC 7009)
+    # Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def revoke_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.revoke ...'
@@ -642,6 +684,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -650,7 +694,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'Object'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ClientAuth']
@@ -672,7 +716,8 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Handle social login callback from provider.
+    # Social / enterprise identity-provider callback
+    # Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
     # @param org_id [String] 
     # @param provider [String] 
     # @param [Hash] opts the optional parameters
@@ -682,7 +727,8 @@ module LumoAuthApiClient
       nil
     end
 
-    # Handle social login callback from provider.
+    # Social / enterprise identity-provider callback
+    # Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
     # @param org_id [String] 
     # @param provider [String] 
     # @param [Hash] opts the optional parameters
@@ -737,7 +783,8 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Handle social login callback from provider.
+    # Social / enterprise identity-provider callback (form_post)
+    # Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
     # @param org_id [String] 
     # @param provider [String] 
     # @param [Hash] opts the optional parameters
@@ -747,7 +794,8 @@ module LumoAuthApiClient
       nil
     end
 
-    # Handle social login callback from provider.
+    # Social / enterprise identity-provider callback (form_post)
+    # Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
     # @param org_id [String] 
     # @param provider [String] 
     # @param [Hash] opts the optional parameters
@@ -802,8 +850,8 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Initiate social login flow.
-    # Redirects to the external provider's authorization endpoint.
+    # Start social / enterprise identity-provider login
+    # Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
     # @param org_id [String] 
     # @param provider [String] 
     # @param [Hash] opts the optional parameters
@@ -813,8 +861,8 @@ module LumoAuthApiClient
       nil
     end
 
-    # Initiate social login flow.
-    # Redirects to the external provider&#39;s authorization endpoint.
+    # Start social / enterprise identity-provider login
+    # Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
     # @param org_id [String] 
     # @param provider [String] 
     # @param [Hash] opts the optional parameters
@@ -869,17 +917,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # OAuth 2.1 / OIDC authorization endpoint (form submission)
+    # Same as GET; also receives the consent form submission. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def submit_authorization(org_id, opts = {})
-      submit_authorization_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = submit_authorization_with_http_info(org_id, opts)
+      data
     end
 
+    # OAuth 2.1 / OIDC authorization endpoint (form submission)
+    # Same as GET; also receives the consent form submission. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def submit_authorization_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.submit_authorization ...'
@@ -896,6 +948,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -904,7 +958,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -926,21 +980,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Device Verification Page (RFC 8628 Section 3.3)
-    # This endpoint displays the user verification page where users enter their user_code to authorize the device.
+    # Submit device verification
+    # Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def submit_device_verification(org_id, opts = {})
-      submit_device_verification_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = submit_device_verification_with_http_info(org_id, opts)
+      data
     end
 
-    # Device Verification Page (RFC 8628 Section 3.3)
-    # This endpoint displays the user verification page where users enter their user_code to authorize the device.
+    # Submit device verification
+    # Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def submit_device_verification_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.submit_device_verification ...'
@@ -957,6 +1011,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -965,7 +1021,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -987,6 +1043,8 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Hosted login form submission
+    # Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [nil]
@@ -995,6 +1053,8 @@ module LumoAuthApiClient
       nil
     end
 
+    # Hosted login form submission
+    # Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
@@ -1044,21 +1104,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # JSON credential login, for applications that render their own sign-in form.
-    # The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
+    # Programmatic (JSON) login for the authorization flow
+    # Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [SubmitLoginJsonResponse]
     def submit_login_json(org_id, opts = {})
-      submit_login_json_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = submit_login_json_with_http_info(org_id, opts)
+      data
     end
 
-    # JSON credential login, for applications that render their own sign-in form.
-    # The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+    # Programmatic (JSON) login for the authorization flow
+    # Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(SubmitLoginJsonResponse, Integer, Hash)>] SubmitLoginJsonResponse data, response status code and response headers
     def submit_login_json_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.submit_login_json ...'
@@ -1075,6 +1135,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -1083,7 +1145,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'SubmitLoginJsonResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1105,17 +1167,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Submit organization selection
+    # Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def submit_org_selection(org_id, opts = {})
-      submit_org_selection_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = submit_org_selection_with_http_info(org_id, opts)
+      data
     end
 
+    # Submit organization selection
+    # Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def submit_org_selection_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.submit_org_selection ...'
@@ -1132,6 +1198,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -1140,7 +1208,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -1162,19 +1230,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # OAuth 2.1 Token Endpoint
+    # OAuth 2.1 token endpoint
+    # Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [TokenResponse]
     def token(org_id, opts = {})
-      token_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = token_with_http_info(org_id, opts)
+      data
     end
 
-    # OAuth 2.1 Token Endpoint
+    # OAuth 2.1 token endpoint
+    # Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(TokenResponse, Integer, Hash)>] TokenResponse data, response status code and response headers
     def token_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OAuthApi.token ...'
@@ -1191,6 +1261,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -1199,7 +1271,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'TokenResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ClientAuth']

@@ -24,7 +24,9 @@ import (
 type OAuthAPI interface {
 
 	/*
-	Authorize Method for Authorize
+	Authorize OAuth 2.1 / OIDC authorization endpoint
+
+	Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,10 +35,13 @@ type OAuthAPI interface {
 	Authorize(ctx context.Context, orgId string) ApiAuthorizeRequest
 
 	// AuthorizeExecute executes the request
-	AuthorizeExecute(r ApiAuthorizeRequest) (*http.Response, error)
+	//  @return string
+	AuthorizeExecute(r ApiAuthorizeRequest) (string, *http.Response, error)
 
 	/*
-	BackchannelAuthorize Method for BackchannelAuthorize
+	BackchannelAuthorize CIBA backchannel authentication request
+
+	OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -45,28 +50,13 @@ type OAuthAPI interface {
 	BackchannelAuthorize(ctx context.Context, orgId string) ApiBackchannelAuthorizeRequest
 
 	// BackchannelAuthorizeExecute executes the request
-	BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeRequest) (*http.Response, error)
+	//  @return BackchannelAuthorizeResponse
+	BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeRequest) (*BackchannelAuthorizeResponse, *http.Response, error)
 
 	/*
-	DeviceAuthorization Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+	DeviceAuthorization Device authorization request (RFC 8628)
 
-	The device makes a request to the authorization server's device
-authorization endpoint, including the client identifier, and
-MAY also include a scope parameter.
-
-Request:
-- POST /oauth/device_authorization
-- Content-Type: application/x-www-form-urlencoded
-- client_id (REQUIRED)
-- scope (OPTIONAL)
-
-Response (Section 3.2):
-- device_code: High-entropy code for device polling
-- user_code: Short code for user to enter
-- verification_uri: URL where user should enter the code
-- verification_uri_complete: URL with user_code embedded (optional)
-- expires_in: Lifetime of device_code and user_code
-- interval: Minimum polling interval in seconds
+	Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -75,10 +65,13 @@ Response (Section 3.2):
 	DeviceAuthorization(ctx context.Context, orgId string) ApiDeviceAuthorizationRequest
 
 	// DeviceAuthorizationExecute executes the request
-	DeviceAuthorizationExecute(r ApiDeviceAuthorizationRequest) (*http.Response, error)
+	//  @return DeviceAuthorizationResponse
+	DeviceAuthorizationExecute(r ApiDeviceAuthorizationRequest) (*DeviceAuthorizationResponse, *http.Response, error)
 
 	/*
-	GetClientConfiguration Client Configuration Endpoint per OIDC spec Section 4
+	GetClientConfiguration Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+
+	Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -88,13 +81,13 @@ Response (Section 3.2):
 	GetClientConfiguration(ctx context.Context, orgId string, clientId string) ApiGetClientConfigurationRequest
 
 	// GetClientConfigurationExecute executes the request
-	GetClientConfigurationExecute(r ApiGetClientConfigurationRequest) (*http.Response, error)
+	//  @return RegisteredClientMetadata
+	GetClientConfigurationExecute(r ApiGetClientConfigurationRequest) (*RegisteredClientMetadata, *http.Response, error)
 
 	/*
-	GetDeviceVerification Device Verification Page (RFC 8628 Section 3.3)
+	GetDeviceVerification Device verification page (RFC 8628 §3.3)
 
-	This endpoint displays the user verification page where users
-enter their user_code to authorize the device.
+	Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -103,10 +96,13 @@ enter their user_code to authorize the device.
 	GetDeviceVerification(ctx context.Context, orgId string) ApiGetDeviceVerificationRequest
 
 	// GetDeviceVerificationExecute executes the request
-	GetDeviceVerificationExecute(r ApiGetDeviceVerificationRequest) (*http.Response, error)
+	//  @return string
+	GetDeviceVerificationExecute(r ApiGetDeviceVerificationRequest) (string, *http.Response, error)
 
 	/*
-	GetOrgSelection Method for GetOrgSelection
+	GetOrgSelection Organization selector page
+
+	Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -115,13 +111,13 @@ enter their user_code to authorize the device.
 	GetOrgSelection(ctx context.Context, orgId string) ApiGetOrgSelectionRequest
 
 	// GetOrgSelectionExecute executes the request
-	GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (*http.Response, error)
+	//  @return string
+	GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (string, *http.Response, error)
 
 	/*
-	Introspect RFC 7662 - Token Introspection Endpoint
+	Introspect Token introspection (RFC 7662)
 
-	Allows resource servers to query the authorization server
-to determine the active state and meta-information about a token.
+	Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -130,10 +126,13 @@ to determine the active state and meta-information about a token.
 	Introspect(ctx context.Context, orgId string) ApiIntrospectRequest
 
 	// IntrospectExecute executes the request
-	IntrospectExecute(r ApiIntrospectRequest) (*http.Response, error)
+	//  @return IntrospectResponse
+	IntrospectExecute(r ApiIntrospectRequest) (*IntrospectResponse, *http.Response, error)
 
 	/*
-	Par Method for Par
+	Par Pushed authorization request (RFC 9126)
+
+	Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -142,10 +141,13 @@ to determine the active state and meta-information about a token.
 	Par(ctx context.Context, orgId string) ApiParRequest
 
 	// ParExecute executes the request
-	ParExecute(r ApiParRequest) (*http.Response, error)
+	//  @return ParResponse
+	ParExecute(r ApiParRequest) (*ParResponse, *http.Response, error)
 
 	/*
-	PasskeyLogin Method for PasskeyLogin
+	PasskeyLogin Passkey login entry point
+
+	Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -157,7 +159,9 @@ to determine the active state and meta-information about a token.
 	PasskeyLoginExecute(r ApiPasskeyLoginRequest) (*http.Response, error)
 
 	/*
-	RegisterClient Client Registration Endpoint per OIDC spec Section 3
+	RegisterClient Dynamic client registration (RFC 7591 / OIDC DCR)
+
+	Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -166,13 +170,13 @@ to determine the active state and meta-information about a token.
 	RegisterClient(ctx context.Context, orgId string) ApiRegisterClientRequest
 
 	// RegisterClientExecute executes the request
-	RegisterClientExecute(r ApiRegisterClientRequest) (*http.Response, error)
+	//  @return RegisterClientResponse
+	RegisterClientExecute(r ApiRegisterClientRequest) (*RegisterClientResponse, *http.Response, error)
 
 	/*
-	Revoke RFC 7009 - Token Revocation Endpoint
+	Revoke Token revocation (RFC 7009)
 
-	Allows clients to notify the authorization server that
-a previously obtained token is no longer needed.
+	Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -181,10 +185,13 @@ a previously obtained token is no longer needed.
 	Revoke(ctx context.Context, orgId string) ApiRevokeRequest
 
 	// RevokeExecute executes the request
-	RevokeExecute(r ApiRevokeRequest) (*http.Response, error)
+	//  @return map[string]interface{}
+	RevokeExecute(r ApiRevokeRequest) (map[string]interface{}, *http.Response, error)
 
 	/*
-	SocialCallback Handle social login callback from provider.
+	SocialCallback Social / enterprise identity-provider callback
+
+	Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -197,7 +204,9 @@ a previously obtained token is no longer needed.
 	SocialCallbackExecute(r ApiSocialCallbackRequest) (*http.Response, error)
 
 	/*
-	SocialCallbackPost Handle social login callback from provider.
+	SocialCallbackPost Social / enterprise identity-provider callback (form_post)
+
+	Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -210,9 +219,9 @@ a previously obtained token is no longer needed.
 	SocialCallbackPostExecute(r ApiSocialCallbackPostRequest) (*http.Response, error)
 
 	/*
-	SocialLogin Initiate social login flow.
+	SocialLogin Start social / enterprise identity-provider login
 
-	Redirects to the external provider's authorization endpoint.
+	Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -225,7 +234,9 @@ a previously obtained token is no longer needed.
 	SocialLoginExecute(r ApiSocialLoginRequest) (*http.Response, error)
 
 	/*
-	SubmitAuthorization Method for SubmitAuthorization
+	SubmitAuthorization OAuth 2.1 / OIDC authorization endpoint (form submission)
+
+	Same as GET; also receives the consent form submission. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -234,13 +245,13 @@ a previously obtained token is no longer needed.
 	SubmitAuthorization(ctx context.Context, orgId string) ApiSubmitAuthorizationRequest
 
 	// SubmitAuthorizationExecute executes the request
-	SubmitAuthorizationExecute(r ApiSubmitAuthorizationRequest) (*http.Response, error)
+	//  @return string
+	SubmitAuthorizationExecute(r ApiSubmitAuthorizationRequest) (string, *http.Response, error)
 
 	/*
-	SubmitDeviceVerification Device Verification Page (RFC 8628 Section 3.3)
+	SubmitDeviceVerification Submit device verification
 
-	This endpoint displays the user verification page where users
-enter their user_code to authorize the device.
+	Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -249,10 +260,13 @@ enter their user_code to authorize the device.
 	SubmitDeviceVerification(ctx context.Context, orgId string) ApiSubmitDeviceVerificationRequest
 
 	// SubmitDeviceVerificationExecute executes the request
-	SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerificationRequest) (*http.Response, error)
+	//  @return string
+	SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerificationRequest) (string, *http.Response, error)
 
 	/*
-	SubmitLogin Method for SubmitLogin
+	SubmitLogin Hosted login form submission
+
+	Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -264,25 +278,9 @@ enter their user_code to authorize the device.
 	SubmitLoginExecute(r ApiSubmitLoginRequest) (*http.Response, error)
 
 	/*
-	SubmitLoginJson JSON credential login, for applications that render their own sign-in form.
+	SubmitLoginJson Programmatic (JSON) login for the authorization flow
 
-	The form-post sibling below (`/login/submit`) does the same authentication
-but answers with a 302, which a fetch()-driven UI cannot act on. This
-returns the outcome as data so an embedded form can decide what to show —
-an MFA prompt, a field error, or continue the OAuth flow.
-
-It deliberately does NOT mint tokens. On success it establishes the
-end-user session, exactly as the hosted login page does; the caller then
-continues to /oauth/authorize, which now issues a code without presenting
-a login screen. Keeping code issuance in one place means this endpoint
-cannot become a second, weaker way to obtain tokens.
-
-Responses:
-  200 {"status":"complete"}          — signed in, continue to /authorize
-  200 {"status":"mfa_required"}      — challenge the second factor
-  401 {"status":"invalid_credentials"}
-  403 {"status":"blocked"|"inactive"}
-  429 {"status":"rate_limited"}
+	Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -291,10 +289,13 @@ Responses:
 	SubmitLoginJson(ctx context.Context, orgId string) ApiSubmitLoginJsonRequest
 
 	// SubmitLoginJsonExecute executes the request
-	SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*http.Response, error)
+	//  @return SubmitLoginJsonResponse
+	SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*SubmitLoginJsonResponse, *http.Response, error)
 
 	/*
-	SubmitOrgSelection Method for SubmitOrgSelection
+	SubmitOrgSelection Submit organization selection
+
+	Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -303,10 +304,13 @@ Responses:
 	SubmitOrgSelection(ctx context.Context, orgId string) ApiSubmitOrgSelectionRequest
 
 	// SubmitOrgSelectionExecute executes the request
-	SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionRequest) (*http.Response, error)
+	//  @return string
+	SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionRequest) (string, *http.Response, error)
 
 	/*
-	Token OAuth 2.1 Token Endpoint
+	Token OAuth 2.1 token endpoint
+
+	Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -315,7 +319,8 @@ Responses:
 	Token(ctx context.Context, orgId string) ApiTokenRequest
 
 	// TokenExecute executes the request
-	TokenExecute(r ApiTokenRequest) (*http.Response, error)
+	//  @return TokenResponse
+	TokenExecute(r ApiTokenRequest) (*TokenResponse, *http.Response, error)
 }
 
 // OAuthAPIService OAuthAPI service
@@ -327,12 +332,14 @@ type ApiAuthorizeRequest struct {
 	orgId string
 }
 
-func (r ApiAuthorizeRequest) Execute() (*http.Response, error) {
+func (r ApiAuthorizeRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.AuthorizeExecute(r)
 }
 
 /*
-Authorize Method for Authorize
+Authorize OAuth 2.1 / OIDC authorization endpoint
+
+Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -347,16 +354,18 @@ func (a *OAuthAPIService) Authorize(ctx context.Context, orgId string) ApiAuthor
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) AuthorizeExecute(r ApiAuthorizeRequest) (*http.Response, error) {
+//  @return string
+func (a *OAuthAPIService) AuthorizeExecute(r ApiAuthorizeRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.Authorize")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/authorize"
@@ -376,7 +385,7 @@ func (a *OAuthAPIService) AuthorizeExecute(r ApiAuthorizeRequest) (*http.Respons
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -385,19 +394,19 @@ func (a *OAuthAPIService) AuthorizeExecute(r ApiAuthorizeRequest) (*http.Respons
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -405,10 +414,30 @@ func (a *OAuthAPIService) AuthorizeExecute(r ApiAuthorizeRequest) (*http.Respons
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiBackchannelAuthorizeRequest struct {
@@ -417,12 +446,14 @@ type ApiBackchannelAuthorizeRequest struct {
 	orgId string
 }
 
-func (r ApiBackchannelAuthorizeRequest) Execute() (*http.Response, error) {
+func (r ApiBackchannelAuthorizeRequest) Execute() (*BackchannelAuthorizeResponse, *http.Response, error) {
 	return r.ApiService.BackchannelAuthorizeExecute(r)
 }
 
 /*
-BackchannelAuthorize Method for BackchannelAuthorize
+BackchannelAuthorize CIBA backchannel authentication request
+
+OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -437,16 +468,18 @@ func (a *OAuthAPIService) BackchannelAuthorize(ctx context.Context, orgId string
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeRequest) (*http.Response, error) {
+//  @return BackchannelAuthorizeResponse
+func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeRequest) (*BackchannelAuthorizeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *BackchannelAuthorizeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.BackchannelAuthorize")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/bc-authorize"
@@ -466,7 +499,7 @@ func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -475,19 +508,19 @@ func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -495,10 +528,19 @@ func (a *OAuthAPIService) BackchannelAuthorizeExecute(r ApiBackchannelAuthorizeR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiDeviceAuthorizationRequest struct {
@@ -507,30 +549,14 @@ type ApiDeviceAuthorizationRequest struct {
 	orgId string
 }
 
-func (r ApiDeviceAuthorizationRequest) Execute() (*http.Response, error) {
+func (r ApiDeviceAuthorizationRequest) Execute() (*DeviceAuthorizationResponse, *http.Response, error) {
 	return r.ApiService.DeviceAuthorizationExecute(r)
 }
 
 /*
-DeviceAuthorization Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+DeviceAuthorization Device authorization request (RFC 8628)
 
-The device makes a request to the authorization server's device
-authorization endpoint, including the client identifier, and
-MAY also include a scope parameter.
-
-Request:
-- POST /oauth/device_authorization
-- Content-Type: application/x-www-form-urlencoded
-- client_id (REQUIRED)
-- scope (OPTIONAL)
-
-Response (Section 3.2):
-- device_code: High-entropy code for device polling
-- user_code: Short code for user to enter
-- verification_uri: URL where user should enter the code
-- verification_uri_complete: URL with user_code embedded (optional)
-- expires_in: Lifetime of device_code and user_code
-- interval: Minimum polling interval in seconds
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -545,16 +571,18 @@ func (a *OAuthAPIService) DeviceAuthorization(ctx context.Context, orgId string)
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationRequest) (*http.Response, error) {
+//  @return DeviceAuthorizationResponse
+func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationRequest) (*DeviceAuthorizationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *DeviceAuthorizationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.DeviceAuthorization")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/device_authorization"
@@ -574,7 +602,7 @@ func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -583,19 +611,19 @@ func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -603,10 +631,19 @@ func (a *OAuthAPIService) DeviceAuthorizationExecute(r ApiDeviceAuthorizationReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetClientConfigurationRequest struct {
@@ -616,12 +653,14 @@ type ApiGetClientConfigurationRequest struct {
 	clientId string
 }
 
-func (r ApiGetClientConfigurationRequest) Execute() (*http.Response, error) {
+func (r ApiGetClientConfigurationRequest) Execute() (*RegisteredClientMetadata, *http.Response, error) {
 	return r.ApiService.GetClientConfigurationExecute(r)
 }
 
 /*
-GetClientConfiguration Client Configuration Endpoint per OIDC spec Section 4
+GetClientConfiguration Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+
+Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -638,16 +677,18 @@ func (a *OAuthAPIService) GetClientConfiguration(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) GetClientConfigurationExecute(r ApiGetClientConfigurationRequest) (*http.Response, error) {
+//  @return RegisteredClientMetadata
+func (a *OAuthAPIService) GetClientConfigurationExecute(r ApiGetClientConfigurationRequest) (*RegisteredClientMetadata, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *RegisteredClientMetadata
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.GetClientConfiguration")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/connect/register/{clientId}"
@@ -668,7 +709,7 @@ func (a *OAuthAPIService) GetClientConfigurationExecute(r ApiGetClientConfigurat
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -691,19 +732,19 @@ func (a *OAuthAPIService) GetClientConfigurationExecute(r ApiGetClientConfigurat
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -711,10 +752,19 @@ func (a *OAuthAPIService) GetClientConfigurationExecute(r ApiGetClientConfigurat
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetDeviceVerificationRequest struct {
@@ -723,15 +773,14 @@ type ApiGetDeviceVerificationRequest struct {
 	orgId string
 }
 
-func (r ApiGetDeviceVerificationRequest) Execute() (*http.Response, error) {
+func (r ApiGetDeviceVerificationRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.GetDeviceVerificationExecute(r)
 }
 
 /*
-GetDeviceVerification Device Verification Page (RFC 8628 Section 3.3)
+GetDeviceVerification Device verification page (RFC 8628 §3.3)
 
-This endpoint displays the user verification page where users
-enter their user_code to authorize the device.
+Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -746,16 +795,18 @@ func (a *OAuthAPIService) GetDeviceVerification(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) GetDeviceVerificationExecute(r ApiGetDeviceVerificationRequest) (*http.Response, error) {
+//  @return string
+func (a *OAuthAPIService) GetDeviceVerificationExecute(r ApiGetDeviceVerificationRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.GetDeviceVerification")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/device"
@@ -775,7 +826,7 @@ func (a *OAuthAPIService) GetDeviceVerificationExecute(r ApiGetDeviceVerificatio
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -784,19 +835,19 @@ func (a *OAuthAPIService) GetDeviceVerificationExecute(r ApiGetDeviceVerificatio
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -804,10 +855,29 @@ func (a *OAuthAPIService) GetDeviceVerificationExecute(r ApiGetDeviceVerificatio
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetOrgSelectionRequest struct {
@@ -816,12 +886,14 @@ type ApiGetOrgSelectionRequest struct {
 	orgId string
 }
 
-func (r ApiGetOrgSelectionRequest) Execute() (*http.Response, error) {
+func (r ApiGetOrgSelectionRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.GetOrgSelectionExecute(r)
 }
 
 /*
-GetOrgSelection Method for GetOrgSelection
+GetOrgSelection Organization selector page
+
+Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -836,16 +908,18 @@ func (a *OAuthAPIService) GetOrgSelection(ctx context.Context, orgId string) Api
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (*http.Response, error) {
+//  @return string
+func (a *OAuthAPIService) GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.GetOrgSelection")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/org-select"
@@ -865,7 +939,7 @@ func (a *OAuthAPIService) GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (*
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -874,19 +948,19 @@ func (a *OAuthAPIService) GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (*
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -894,10 +968,19 @@ func (a *OAuthAPIService) GetOrgSelectionExecute(r ApiGetOrgSelectionRequest) (*
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiIntrospectRequest struct {
@@ -906,15 +989,14 @@ type ApiIntrospectRequest struct {
 	orgId string
 }
 
-func (r ApiIntrospectRequest) Execute() (*http.Response, error) {
+func (r ApiIntrospectRequest) Execute() (*IntrospectResponse, *http.Response, error) {
 	return r.ApiService.IntrospectExecute(r)
 }
 
 /*
-Introspect RFC 7662 - Token Introspection Endpoint
+Introspect Token introspection (RFC 7662)
 
-Allows resource servers to query the authorization server
-to determine the active state and meta-information about a token.
+Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -929,16 +1011,18 @@ func (a *OAuthAPIService) Introspect(ctx context.Context, orgId string) ApiIntro
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*http.Response, error) {
+//  @return IntrospectResponse
+func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*IntrospectResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *IntrospectResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.Introspect")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/introspect"
@@ -958,7 +1042,7 @@ func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*http.Respo
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -967,19 +1051,19 @@ func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*http.Respo
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -987,10 +1071,19 @@ func (a *OAuthAPIService) IntrospectExecute(r ApiIntrospectRequest) (*http.Respo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiParRequest struct {
@@ -999,12 +1092,14 @@ type ApiParRequest struct {
 	orgId string
 }
 
-func (r ApiParRequest) Execute() (*http.Response, error) {
+func (r ApiParRequest) Execute() (*ParResponse, *http.Response, error) {
 	return r.ApiService.ParExecute(r)
 }
 
 /*
-Par Method for Par
+Par Pushed authorization request (RFC 9126)
+
+Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1019,16 +1114,18 @@ func (a *OAuthAPIService) Par(ctx context.Context, orgId string) ApiParRequest {
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*http.Response, error) {
+//  @return ParResponse
+func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*ParResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ParResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.Par")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/par"
@@ -1048,7 +1145,7 @@ func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*http.Response, error) {
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1057,19 +1154,19 @@ func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*http.Response, error) {
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1077,10 +1174,19 @@ func (a *OAuthAPIService) ParExecute(r ApiParRequest) (*http.Response, error) {
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPasskeyLoginRequest struct {
@@ -1094,7 +1200,9 @@ func (r ApiPasskeyLoginRequest) Execute() (*http.Response, error) {
 }
 
 /*
-PasskeyLogin Method for PasskeyLogin
+PasskeyLogin Passkey login entry point
+
+Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1179,12 +1287,14 @@ type ApiRegisterClientRequest struct {
 	orgId string
 }
 
-func (r ApiRegisterClientRequest) Execute() (*http.Response, error) {
+func (r ApiRegisterClientRequest) Execute() (*RegisterClientResponse, *http.Response, error) {
 	return r.ApiService.RegisterClientExecute(r)
 }
 
 /*
-RegisterClient Client Registration Endpoint per OIDC spec Section 3
+RegisterClient Dynamic client registration (RFC 7591 / OIDC DCR)
+
+Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1199,16 +1309,18 @@ func (a *OAuthAPIService) RegisterClient(ctx context.Context, orgId string) ApiR
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*http.Response, error) {
+//  @return RegisterClientResponse
+func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*RegisterClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *RegisterClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.RegisterClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/connect/register"
@@ -1228,7 +1340,7 @@ func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*ht
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1251,19 +1363,19 @@ func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*ht
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1271,10 +1383,19 @@ func (a *OAuthAPIService) RegisterClientExecute(r ApiRegisterClientRequest) (*ht
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiRevokeRequest struct {
@@ -1283,15 +1404,14 @@ type ApiRevokeRequest struct {
 	orgId string
 }
 
-func (r ApiRevokeRequest) Execute() (*http.Response, error) {
+func (r ApiRevokeRequest) Execute() (map[string]interface{}, *http.Response, error) {
 	return r.ApiService.RevokeExecute(r)
 }
 
 /*
-Revoke RFC 7009 - Token Revocation Endpoint
+Revoke Token revocation (RFC 7009)
 
-Allows clients to notify the authorization server that
-a previously obtained token is no longer needed.
+Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1306,16 +1426,18 @@ func (a *OAuthAPIService) Revoke(ctx context.Context, orgId string) ApiRevokeReq
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (*http.Response, error) {
+//  @return map[string]interface{}
+func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.Revoke")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/revoke"
@@ -1335,7 +1457,7 @@ func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (*http.Response, err
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1344,19 +1466,19 @@ func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (*http.Response, err
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1364,10 +1486,19 @@ func (a *OAuthAPIService) RevokeExecute(r ApiRevokeRequest) (*http.Response, err
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSocialCallbackRequest struct {
@@ -1382,7 +1513,9 @@ func (r ApiSocialCallbackRequest) Execute() (*http.Response, error) {
 }
 
 /*
-SocialCallback Handle social login callback from provider.
+SocialCallback Social / enterprise identity-provider callback
+
+Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1476,7 +1609,9 @@ func (r ApiSocialCallbackPostRequest) Execute() (*http.Response, error) {
 }
 
 /*
-SocialCallbackPost Handle social login callback from provider.
+SocialCallbackPost Social / enterprise identity-provider callback (form_post)
+
+Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1570,9 +1705,9 @@ func (r ApiSocialLoginRequest) Execute() (*http.Response, error) {
 }
 
 /*
-SocialLogin Initiate social login flow.
+SocialLogin Start social / enterprise identity-provider login
 
-Redirects to the external provider's authorization endpoint.
+Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1660,12 +1795,14 @@ type ApiSubmitAuthorizationRequest struct {
 	orgId string
 }
 
-func (r ApiSubmitAuthorizationRequest) Execute() (*http.Response, error) {
+func (r ApiSubmitAuthorizationRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.SubmitAuthorizationExecute(r)
 }
 
 /*
-SubmitAuthorization Method for SubmitAuthorization
+SubmitAuthorization OAuth 2.1 / OIDC authorization endpoint (form submission)
+
+Same as GET; also receives the consent form submission. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1680,16 +1817,18 @@ func (a *OAuthAPIService) SubmitAuthorization(ctx context.Context, orgId string)
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) SubmitAuthorizationExecute(r ApiSubmitAuthorizationRequest) (*http.Response, error) {
+//  @return string
+func (a *OAuthAPIService) SubmitAuthorizationExecute(r ApiSubmitAuthorizationRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.SubmitAuthorization")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/authorize"
@@ -1709,7 +1848,7 @@ func (a *OAuthAPIService) SubmitAuthorizationExecute(r ApiSubmitAuthorizationReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1718,19 +1857,19 @@ func (a *OAuthAPIService) SubmitAuthorizationExecute(r ApiSubmitAuthorizationReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1738,10 +1877,30 @@ func (a *OAuthAPIService) SubmitAuthorizationExecute(r ApiSubmitAuthorizationReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSubmitDeviceVerificationRequest struct {
@@ -1750,15 +1909,14 @@ type ApiSubmitDeviceVerificationRequest struct {
 	orgId string
 }
 
-func (r ApiSubmitDeviceVerificationRequest) Execute() (*http.Response, error) {
+func (r ApiSubmitDeviceVerificationRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.SubmitDeviceVerificationExecute(r)
 }
 
 /*
-SubmitDeviceVerification Device Verification Page (RFC 8628 Section 3.3)
+SubmitDeviceVerification Submit device verification
 
-This endpoint displays the user verification page where users
-enter their user_code to authorize the device.
+Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1773,16 +1931,18 @@ func (a *OAuthAPIService) SubmitDeviceVerification(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerificationRequest) (*http.Response, error) {
+//  @return string
+func (a *OAuthAPIService) SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerificationRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.SubmitDeviceVerification")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/device"
@@ -1802,7 +1962,7 @@ func (a *OAuthAPIService) SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerif
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1811,19 +1971,19 @@ func (a *OAuthAPIService) SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerif
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1831,10 +1991,29 @@ func (a *OAuthAPIService) SubmitDeviceVerificationExecute(r ApiSubmitDeviceVerif
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		if localVarHTTPResponse.StatusCode == 429 {
+			var v string
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSubmitLoginRequest struct {
@@ -1848,7 +2027,9 @@ func (r ApiSubmitLoginRequest) Execute() (*http.Response, error) {
 }
 
 /*
-SubmitLogin Method for SubmitLogin
+SubmitLogin Hosted login form submission
+
+Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1933,30 +2114,14 @@ type ApiSubmitLoginJsonRequest struct {
 	orgId string
 }
 
-func (r ApiSubmitLoginJsonRequest) Execute() (*http.Response, error) {
+func (r ApiSubmitLoginJsonRequest) Execute() (*SubmitLoginJsonResponse, *http.Response, error) {
 	return r.ApiService.SubmitLoginJsonExecute(r)
 }
 
 /*
-SubmitLoginJson JSON credential login, for applications that render their own sign-in form.
+SubmitLoginJson Programmatic (JSON) login for the authorization flow
 
-The form-post sibling below (`/login/submit`) does the same authentication
-but answers with a 302, which a fetch()-driven UI cannot act on. This
-returns the outcome as data so an embedded form can decide what to show —
-an MFA prompt, a field error, or continue the OAuth flow.
-
-It deliberately does NOT mint tokens. On success it establishes the
-end-user session, exactly as the hosted login page does; the caller then
-continues to /oauth/authorize, which now issues a code without presenting
-a login screen. Keeping code issuance in one place means this endpoint
-cannot become a second, weaker way to obtain tokens.
-
-Responses:
-  200 {"status":"complete"}          — signed in, continue to /authorize
-  200 {"status":"mfa_required"}      — challenge the second factor
-  401 {"status":"invalid_credentials"}
-  403 {"status":"blocked"|"inactive"}
-  429 {"status":"rate_limited"}
+Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1971,16 +2136,18 @@ func (a *OAuthAPIService) SubmitLoginJson(ctx context.Context, orgId string) Api
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*http.Response, error) {
+//  @return SubmitLoginJsonResponse
+func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*SubmitLoginJsonResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SubmitLoginJsonResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.SubmitLoginJson")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/login/json"
@@ -2000,7 +2167,7 @@ func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2009,19 +2176,19 @@ func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2029,10 +2196,19 @@ func (a *OAuthAPIService) SubmitLoginJsonExecute(r ApiSubmitLoginJsonRequest) (*
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSubmitOrgSelectionRequest struct {
@@ -2041,12 +2217,14 @@ type ApiSubmitOrgSelectionRequest struct {
 	orgId string
 }
 
-func (r ApiSubmitOrgSelectionRequest) Execute() (*http.Response, error) {
+func (r ApiSubmitOrgSelectionRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.SubmitOrgSelectionExecute(r)
 }
 
 /*
-SubmitOrgSelection Method for SubmitOrgSelection
+SubmitOrgSelection Submit organization selection
+
+Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2061,16 +2239,18 @@ func (a *OAuthAPIService) SubmitOrgSelection(ctx context.Context, orgId string) 
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionRequest) (*http.Response, error) {
+//  @return string
+func (a *OAuthAPIService) SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.SubmitOrgSelection")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/org-select"
@@ -2090,7 +2270,7 @@ func (a *OAuthAPIService) SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2099,19 +2279,19 @@ func (a *OAuthAPIService) SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2119,10 +2299,19 @@ func (a *OAuthAPIService) SubmitOrgSelectionExecute(r ApiSubmitOrgSelectionReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiTokenRequest struct {
@@ -2131,12 +2320,14 @@ type ApiTokenRequest struct {
 	orgId string
 }
 
-func (r ApiTokenRequest) Execute() (*http.Response, error) {
+func (r ApiTokenRequest) Execute() (*TokenResponse, *http.Response, error) {
 	return r.ApiService.TokenExecute(r)
 }
 
 /*
-Token OAuth 2.1 Token Endpoint
+Token OAuth 2.1 token endpoint
+
+Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2151,16 +2342,18 @@ func (a *OAuthAPIService) Token(ctx context.Context, orgId string) ApiTokenReque
 }
 
 // Execute executes the request
-func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*http.Response, error) {
+//  @return TokenResponse
+func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*TokenResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *TokenResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OAuthAPIService.Token")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/token"
@@ -2180,7 +2373,7 @@ func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*http.Response, error
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2189,19 +2382,19 @@ func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*http.Response, error
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2209,8 +2402,17 @@ func (a *OAuthAPIService) TokenExecute(r ApiTokenRequest) (*http.Response, error
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

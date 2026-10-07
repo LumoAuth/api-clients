@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacAttributesCreateError {
-    DefaultResponse(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +27,8 @@ pub enum AbacAttributesCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacAttributesDeleteError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +36,7 @@ pub enum AbacAttributesDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacAttributesGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +44,6 @@ pub enum AbacAttributesGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacAttributesListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +51,8 @@ pub enum AbacAttributesListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacPoliciesCreateError {
-    DefaultResponse(),
+    Status400(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +60,8 @@ pub enum AbacPoliciesCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacPoliciesDeleteError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +69,7 @@ pub enum AbacPoliciesDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacPoliciesGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +77,6 @@ pub enum AbacPoliciesGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacPoliciesListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +84,8 @@ pub enum AbacPoliciesListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AbacPoliciesToggleError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +93,8 @@ pub enum AbacPoliciesToggleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAbacAttributesUpdateError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +102,8 @@ pub enum PatchAbacAttributesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAbacPoliciesUpdateError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +111,8 @@ pub enum PatchAbacPoliciesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAbacAttributesUpdateError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,12 +120,13 @@ pub enum PutAbacAttributesUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAbacPoliciesUpdateError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn abac_attributes_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AbacAttributesCreateError>> {
+pub async fn abac_attributes_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacAttributesCreateResponse, Error<AbacAttributesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -146,9 +152,20 @@ pub async fn abac_attributes_create(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacAttributesCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacAttributesCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacAttributesCreateError> = serde_json::from_str(&content).ok();
@@ -156,7 +173,7 @@ pub async fn abac_attributes_create(configuration: &configuration::Configuration
     }
 }
 
-pub async fn abac_attributes_delete(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<AbacAttributesDeleteError>> {
+pub async fn abac_attributes_delete(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::MessageResponse, Error<AbacAttributesDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -183,9 +200,20 @@ pub async fn abac_attributes_delete(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacAttributesDeleteError> = serde_json::from_str(&content).ok();
@@ -193,7 +221,7 @@ pub async fn abac_attributes_delete(configuration: &configuration::Configuration
     }
 }
 
-pub async fn abac_attributes_get(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<AbacAttributesGetError>> {
+pub async fn abac_attributes_get(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::AbacAttributesGetResponse, Error<AbacAttributesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -220,9 +248,20 @@ pub async fn abac_attributes_get(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacAttributesGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacAttributesGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacAttributesGetError> = serde_json::from_str(&content).ok();
@@ -230,7 +269,7 @@ pub async fn abac_attributes_get(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn abac_attributes_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AbacAttributesListError>> {
+pub async fn abac_attributes_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacAttributesListResponse, Error<AbacAttributesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -256,9 +295,20 @@ pub async fn abac_attributes_list(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacAttributesListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacAttributesListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacAttributesListError> = serde_json::from_str(&content).ok();
@@ -266,7 +316,7 @@ pub async fn abac_attributes_list(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn abac_policies_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AbacPoliciesCreateError>> {
+pub async fn abac_policies_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacPoliciesCreateResponse, Error<AbacPoliciesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -292,9 +342,20 @@ pub async fn abac_policies_create(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacPoliciesCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacPoliciesCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacPoliciesCreateError> = serde_json::from_str(&content).ok();
@@ -302,7 +363,7 @@ pub async fn abac_policies_create(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn abac_policies_delete(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<AbacPoliciesDeleteError>> {
+pub async fn abac_policies_delete(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::MessageResponse, Error<AbacPoliciesDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -329,9 +390,20 @@ pub async fn abac_policies_delete(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacPoliciesDeleteError> = serde_json::from_str(&content).ok();
@@ -339,7 +411,7 @@ pub async fn abac_policies_delete(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn abac_policies_get(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<AbacPoliciesGetError>> {
+pub async fn abac_policies_get(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::AbacPoliciesGetResponse, Error<AbacPoliciesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -366,9 +438,20 @@ pub async fn abac_policies_get(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacPoliciesGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacPoliciesGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacPoliciesGetError> = serde_json::from_str(&content).ok();
@@ -376,7 +459,7 @@ pub async fn abac_policies_get(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn abac_policies_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AbacPoliciesListError>> {
+pub async fn abac_policies_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AbacPoliciesListResponse, Error<AbacPoliciesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -402,9 +485,20 @@ pub async fn abac_policies_list(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacPoliciesListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacPoliciesListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacPoliciesListError> = serde_json::from_str(&content).ok();
@@ -412,7 +506,7 @@ pub async fn abac_policies_list(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn abac_policies_toggle(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<AbacPoliciesToggleError>> {
+pub async fn abac_policies_toggle(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::AbacPoliciesToggleResponse, Error<AbacPoliciesToggleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -439,9 +533,20 @@ pub async fn abac_policies_toggle(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AbacPoliciesToggleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AbacPoliciesToggleResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AbacPoliciesToggleError> = serde_json::from_str(&content).ok();
@@ -449,7 +554,7 @@ pub async fn abac_policies_toggle(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn patch_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<PatchAbacAttributesUpdateError>> {
+pub async fn patch_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacAttributesUpdateResponse, Error<PatchAbacAttributesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -476,9 +581,20 @@ pub async fn patch_abac_attributes_update(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAbacAttributesUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAbacAttributesUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAbacAttributesUpdateError> = serde_json::from_str(&content).ok();
@@ -486,7 +602,7 @@ pub async fn patch_abac_attributes_update(configuration: &configuration::Configu
     }
 }
 
-pub async fn patch_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<PatchAbacPoliciesUpdateError>> {
+pub async fn patch_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacPoliciesUpdateResponse, Error<PatchAbacPoliciesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -513,9 +629,20 @@ pub async fn patch_abac_policies_update(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAbacPoliciesUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAbacPoliciesUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAbacPoliciesUpdateError> = serde_json::from_str(&content).ok();
@@ -523,7 +650,7 @@ pub async fn patch_abac_policies_update(configuration: &configuration::Configura
     }
 }
 
-pub async fn put_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<PutAbacAttributesUpdateError>> {
+pub async fn put_abac_attributes_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacAttributesUpdateResponse, Error<PutAbacAttributesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -550,9 +677,20 @@ pub async fn put_abac_attributes_update(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAbacAttributesUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAbacAttributesUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAbacAttributesUpdateError> = serde_json::from_str(&content).ok();
@@ -560,7 +698,7 @@ pub async fn put_abac_attributes_update(configuration: &configuration::Configura
     }
 }
 
-pub async fn put_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<(), Error<PutAbacPoliciesUpdateError>> {
+pub async fn put_abac_policies_update(configuration: &configuration::Configuration, org_id: &str, id: &str) -> Result<models::PutAbacPoliciesUpdateResponse, Error<PutAbacPoliciesUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_id = id;
@@ -587,9 +725,20 @@ pub async fn put_abac_policies_update(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAbacPoliciesUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAbacPoliciesUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAbacPoliciesUpdateError> = serde_json::from_str(&content).ok();

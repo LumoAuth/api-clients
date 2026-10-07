@@ -14,6 +14,12 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminGroupsCreateResponse;
+import io.lumoauth.client.model.AdminGroupsGetMembersResponse;
+import io.lumoauth.client.model.AdminGroupsGetResponse;
+import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
+import io.lumoauth.client.model.AdminGroupsListResponse;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +37,7 @@ public class AdminGroupsApiTest {
     private final AdminGroupsApi api = new AdminGroupsApi();
 
     /**
-     * Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     * Add member(s) to group
      *
      * @throws ApiException if the Api call fails
      */
@@ -39,7 +45,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsAddMembersTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsAddMembers(orgId, groupId);
+        AdminGroupsCreateResponse response = api.adminGroupsAddMembers(orgId, groupId);
         // TODO: test validations
     }
 
@@ -52,7 +58,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsAddRoleTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsAddRole(orgId, groupId);
+        MessageResponse response = api.adminGroupsAddRole(orgId, groupId);
         // TODO: test validations
     }
 
@@ -64,7 +70,7 @@ public class AdminGroupsApiTest {
     @Test
     public void adminGroupsCreateTest() throws ApiException {
         String orgId = null;
-        api.adminGroupsCreate(orgId);
+        AdminGroupsCreateResponse response = api.adminGroupsCreate(orgId);
         // TODO: test validations
     }
 
@@ -77,7 +83,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsDeleteTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsDelete(orgId, groupId);
+        MessageResponse response = api.adminGroupsDelete(orgId, groupId);
         // TODO: test validations
     }
 
@@ -90,7 +96,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsGetTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsGet(orgId, groupId);
+        AdminGroupsGetResponse response = api.adminGroupsGet(orgId, groupId);
         // TODO: test validations
     }
 
@@ -103,7 +109,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsGetMembersTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsGetMembers(orgId, groupId);
+        AdminGroupsGetMembersResponse response = api.adminGroupsGetMembers(orgId, groupId);
         // TODO: test validations
     }
 
@@ -116,7 +122,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsGroupsGetRolesTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsGroupsGetRoles(orgId, groupId);
+        AdminGroupsGroupsGetRolesResponse response = api.adminGroupsGroupsGetRoles(orgId, groupId);
         // TODO: test validations
     }
 
@@ -128,12 +134,12 @@ public class AdminGroupsApiTest {
     @Test
     public void adminGroupsListTest() throws ApiException {
         String orgId = null;
-        api.adminGroupsList(orgId);
+        AdminGroupsListResponse response = api.adminGroupsList(orgId);
         // TODO: test validations
     }
 
     /**
-     * Remove member from group — userId is a UUID or email
+     * Remove member from group
      *
      * @throws ApiException if the Api call fails
      */
@@ -142,7 +148,7 @@ public class AdminGroupsApiTest {
         String orgId = null;
         String groupId = null;
         String userId = null;
-        api.adminGroupsRemoveMember(orgId, groupId, userId);
+        MessageResponse response = api.adminGroupsRemoveMember(orgId, groupId, userId);
         // TODO: test validations
     }
 
@@ -156,7 +162,7 @@ public class AdminGroupsApiTest {
         String orgId = null;
         String groupId = null;
         String roleId = null;
-        api.adminGroupsRemoveRole(orgId, groupId, roleId);
+        MessageResponse response = api.adminGroupsRemoveRole(orgId, groupId, roleId);
         // TODO: test validations
     }
 
@@ -169,7 +175,7 @@ public class AdminGroupsApiTest {
     public void adminGroupsUpdateRolesTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.adminGroupsUpdateRoles(orgId, groupId);
+        AdminGroupsCreateResponse response = api.adminGroupsUpdateRoles(orgId, groupId);
         // TODO: test validations
     }
 
@@ -182,7 +188,7 @@ public class AdminGroupsApiTest {
     public void patchAdminGroupsUpdateTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.patchAdminGroupsUpdate(orgId, groupId);
+        AdminGroupsCreateResponse response = api.patchAdminGroupsUpdate(orgId, groupId);
         // TODO: test validations
     }
 
@@ -195,7 +201,7 @@ public class AdminGroupsApiTest {
     public void putAdminGroupsUpdateTest() throws ApiException {
         String orgId = null;
         String groupId = null;
-        api.putAdminGroupsUpdate(orgId, groupId);
+        AdminGroupsCreateResponse response = api.putAdminGroupsUpdate(orgId, groupId);
         // TODO: test validations
     }
 

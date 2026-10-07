@@ -4,30 +4,34 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**authorize**](OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | 
-[**backchannel_authorize**](OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | 
-[**device_authorization**](OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
-[**get_client_configuration**](OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Client Configuration Endpoint per OIDC spec Section 4
-[**get_device_verification**](OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device Verification Page (RFC 8628 Section 3.3)
-[**get_org_selection**](OAuthApi.md#get_org_selection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | 
-[**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | RFC 7662 - Token Introspection Endpoint
-[**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | 
-[**passkey_login**](OAuthApi.md#passkey_login) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | 
-[**register_client**](OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Client Registration Endpoint per OIDC spec Section 3
-[**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | RFC 7009 - Token Revocation Endpoint
-[**social_callback**](OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Handle social login callback from provider.
-[**social_callback_post**](OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Handle social login callback from provider.
-[**social_login**](OAuthApi.md#social_login) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Initiate social login flow.
-[**submit_authorization**](OAuthApi.md#submit_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | 
-[**submit_device_verification**](OAuthApi.md#submit_device_verification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Device Verification Page (RFC 8628 Section 3.3)
-[**submit_login**](OAuthApi.md#submit_login) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | 
-[**submit_login_json**](OAuthApi.md#submit_login_json) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | JSON credential login, for applications that render their own sign-in form.
-[**submit_org_selection**](OAuthApi.md#submit_org_selection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | 
-[**token**](OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 Token Endpoint
+[**authorize**](OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
+[**backchannel_authorize**](OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+[**device_authorization**](OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
+[**get_client_configuration**](OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+[**get_device_verification**](OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
+[**get_org_selection**](OAuthApi.md#get_org_selection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
+[**introspect**](OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
+[**par**](OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
+[**passkey_login**](OAuthApi.md#passkey_login) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
+[**register_client**](OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+[**revoke**](OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
+[**social_callback**](OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
+[**social_callback_post**](OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
+[**social_login**](OAuthApi.md#social_login) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
+[**submit_authorization**](OAuthApi.md#submit_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
+[**submit_device_verification**](OAuthApi.md#submit_device_verification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
+[**submit_login**](OAuthApi.md#submit_login) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
+[**submit_login_json**](OAuthApi.md#submit_login_json) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
+[**submit_org_selection**](OAuthApi.md#submit_org_selection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
+[**token**](OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
 
 
 # **authorize**
-> authorize(org_id)
+> str authorize(org_id)
+
+OAuth 2.1 / OIDC authorization endpoint
+
+Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
 
 ### Example
 
@@ -51,7 +55,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.authorize(org_id)
+        # OAuth 2.1 / OIDC authorization endpoint
+        api_response = api_instance.authorize(org_id)
+        print("The response of OAuthApi->authorize:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->authorize: %s\n" % e)
 ```
@@ -67,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -76,18 +83,26 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). |  -  |
+**303** | Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. |  * Location -  <br>  |
+**302** | Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. |  * Location -  <br>  |
+**400** | HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). |  -  |
+**429** | too_many_requests (JSON). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **backchannel_authorize**
-> backchannel_authorize(org_id)
+> BackchannelAuthorizeResponse backchannel_authorize(org_id)
+
+CIBA backchannel authentication request
+
+OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
 
 ### Example
 
@@ -95,6 +110,7 @@ No authorization required
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.backchannel_authorize_response import BackchannelAuthorizeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -122,7 +138,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.backchannel_authorize(org_id)
+        # CIBA backchannel authentication request
+        api_response = api_instance.backchannel_authorize(org_id)
+        print("The response of OAuthApi->backchannel_authorize:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->backchannel_authorize: %s\n" % e)
 ```
@@ -138,7 +157,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**BackchannelAuthorizeResponse**](BackchannelAuthorizeResponse.md)
 
 ### Authorization
 
@@ -147,38 +166,26 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). |  -  |
+**400** | invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. |  -  |
+**401** | invalid_client — client authentication failed. |  -  |
+**403** | unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. |  -  |
+**429** | too_many_requests, or slow_down when the target user already has too many pending requests. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **device_authorization**
-> device_authorization(org_id)
+> DeviceAuthorizationResponse device_authorization(org_id)
 
-Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+Device authorization request (RFC 8628)
 
-The device makes a request to the authorization server's device
-authorization endpoint, including the client identifier, and
-MAY also include a scope parameter.
-
-Request:
-- POST /oauth/device_authorization
-- Content-Type: application/x-www-form-urlencoded
-- client_id (REQUIRED)
-- scope (OPTIONAL)
-
-Response (Section 3.2):
-- device_code: High-entropy code for device polling
-- user_code: Short code for user to enter
-- verification_uri: URL where user should enter the code
-- verification_uri_complete: URL with user_code embedded (optional)
-- expires_in: Lifetime of device_code and user_code
-- interval: Minimum polling interval in seconds
+Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
 
 ### Example
 
@@ -186,6 +193,7 @@ Response (Section 3.2):
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.device_authorization_response import DeviceAuthorizationResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -213,8 +221,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
-        api_instance.device_authorization(org_id)
+        # Device authorization request (RFC 8628)
+        api_response = api_instance.device_authorization(org_id)
+        print("The response of OAuthApi->device_authorization:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->device_authorization: %s\n" % e)
 ```
@@ -230,7 +240,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**DeviceAuthorizationResponse**](DeviceAuthorizationResponse.md)
 
 ### Authorization
 
@@ -239,20 +249,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Device authorization response (RFC 8628 §3.2). |  -  |
+**400** | invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. |  -  |
+**401** | invalid_client — a confidential client failed to authenticate. |  -  |
+**429** | too_many_requests — rate limit exceeded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_client_configuration**
-> get_client_configuration(org_id, client_id)
+> RegisteredClientMetadata get_client_configuration(org_id, client_id)
 
-Client Configuration Endpoint per OIDC spec Section 4
+Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+
+Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
 
 ### Example
 
@@ -261,6 +276,7 @@ Client Configuration Endpoint per OIDC spec Section 4
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.registered_client_metadata import RegisteredClientMetadata
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -294,8 +310,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Client Configuration Endpoint per OIDC spec Section 4
-        api_instance.get_client_configuration(org_id, client_id)
+        # Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+        api_response = api_instance.get_client_configuration(org_id, client_id)
+        print("The response of OAuthApi->get_client_configuration:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->get_client_configuration: %s\n" % e)
 ```
@@ -312,7 +330,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**RegisteredClientMetadata**](RegisteredClientMetadata.md)
 
 ### Authorization
 
@@ -321,23 +339,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Registered client metadata (OIDC Dynamic Client Registration §4.3). Never includes client_secret or registration_access_token; optional members are omitted when empty or at their default. Sent with Cache-Control: no-store. |  -  |
+**401** | invalid_token — registration access token missing, invalid, for another client, or presented at a different issuer than the registration (WWW-Authenticate: Bearer). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_device_verification**
-> get_device_verification(org_id)
+> str get_device_verification(org_id)
 
-Device Verification Page (RFC 8628 Section 3.3)
+Device verification page (RFC 8628 §3.3)
 
-This endpoint displays the user verification page where users
-enter their user_code to authorize the device.
+Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
 
 ### Example
 
@@ -361,8 +379,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Device Verification Page (RFC 8628 Section 3.3)
-        api_instance.get_device_verification(org_id)
+        # Device verification page (RFC 8628 §3.3)
+        api_response = api_instance.get_device_verification(org_id)
+        print("The response of OAuthApi->get_device_verification:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->get_device_verification: %s\n" % e)
 ```
@@ -378,7 +398,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -387,18 +407,24 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
+**302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
+**429** | HTML error page — too many attempts. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_org_selection**
-> get_org_selection(org_id)
+> str get_org_selection(org_id)
+
+Organization selector page
+
+Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
 
 ### Example
 
@@ -422,7 +448,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.get_org_selection(org_id)
+        # Organization selector page
+        api_response = api_instance.get_org_selection(org_id)
+        print("The response of OAuthApi->get_org_selection:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->get_org_selection: %s\n" % e)
 ```
@@ -438,7 +467,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -447,23 +476,24 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | HTML organization selector page. |  -  |
+**302** | Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. |  * Location -  <br>  |
+**404** | Unknown organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **introspect**
-> introspect(org_id)
+> IntrospectResponse introspect(org_id)
 
-RFC 7662 - Token Introspection Endpoint
+Token introspection (RFC 7662)
 
-Allows resource servers to query the authorization server
-to determine the active state and meta-information about a token.
+Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
 
 ### Example
 
@@ -471,6 +501,7 @@ to determine the active state and meta-information about a token.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.introspect_response import IntrospectResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -498,8 +529,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # RFC 7662 - Token Introspection Endpoint
-        api_instance.introspect(org_id)
+        # Token introspection (RFC 7662)
+        api_response = api_instance.introspect(org_id)
+        print("The response of OAuthApi->introspect:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->introspect: %s\n" % e)
 ```
@@ -515,7 +548,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**IntrospectResponse**](IntrospectResponse.md)
 
 ### Authorization
 
@@ -524,18 +557,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. |  -  |
+**400** | invalid_request — token parameter missing. |  -  |
+**401** | invalid_client — client authentication failed. |  -  |
+**429** | Rate limit exceeded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **par**
-> par(org_id)
+> ParResponse par(org_id)
+
+Pushed authorization request (RFC 9126)
+
+Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
 
 ### Example
 
@@ -543,6 +583,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.par_response import ParResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -570,7 +611,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.par(org_id)
+        # Pushed authorization request (RFC 9126)
+        api_response = api_instance.par(org_id)
+        print("The response of OAuthApi->par:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->par: %s\n" % e)
 ```
@@ -586,7 +630,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ParResponse**](ParResponse.md)
 
 ### Authorization
 
@@ -595,18 +639,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Pushed authorization request created (RFC 9126 §2.2). |  -  |
+**400** | invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. |  -  |
+**401** | invalid_client — client authentication failed. |  -  |
+**429** | too_many_requests — rate limit exceeded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **passkey_login**
 > passkey_login(org_id)
+
+Passkey login entry point
+
+Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 
 ### Example
 
@@ -630,6 +681,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
+        # Passkey login entry point
         api_instance.passkey_login(org_id)
     except Exception as e:
         print("Exception when calling OAuthApi->passkey_login: %s\n" % e)
@@ -661,14 +713,16 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**302** | Redirect to the hosted login page. |  * Location -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **register_client**
-> register_client(org_id)
+> RegisterClientResponse register_client(org_id)
 
-Client Registration Endpoint per OIDC spec Section 3
+Dynamic client registration (RFC 7591 / OIDC DCR)
+
+Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 
 ### Example
 
@@ -677,6 +731,7 @@ Client Registration Endpoint per OIDC spec Section 3
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.register_client_response import RegisterClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -709,8 +764,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Client Registration Endpoint per OIDC spec Section 3
-        api_instance.register_client(org_id)
+        # Dynamic client registration (RFC 7591 / OIDC DCR)
+        api_response = api_instance.register_client(org_id)
+        print("The response of OAuthApi->register_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->register_client: %s\n" % e)
 ```
@@ -726,7 +783,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**RegisterClientResponse**](RegisterClientResponse.md)
 
 ### Authorization
 
@@ -735,23 +792,26 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. |  -  |
+**400** | invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. |  -  |
+**401** | access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). |  -  |
+**403** | access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. |  -  |
+**429** | too_many_requests — rate limit exceeded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **revoke**
-> revoke(org_id)
+> object revoke(org_id)
 
-RFC 7009 - Token Revocation Endpoint
+Token revocation (RFC 7009)
 
-Allows clients to notify the authorization server that
-a previously obtained token is no longer needed.
+Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
 
 ### Example
 
@@ -786,8 +846,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # RFC 7009 - Token Revocation Endpoint
-        api_instance.revoke(org_id)
+        # Token revocation (RFC 7009)
+        api_response = api_instance.revoke(org_id)
+        print("The response of OAuthApi->revoke:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->revoke: %s\n" % e)
 ```
@@ -803,7 +865,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**object**
 
 ### Authorization
 
@@ -812,20 +874,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). |  -  |
+**400** | invalid_request (token parameter missing) or unsupported_token_type. |  -  |
+**401** | invalid_client — client authentication failed. |  -  |
+**429** | too_many_requests — rate limit exceeded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **social_callback**
 > social_callback(org_id, provider)
 
-Handle social login callback from provider.
+Social / enterprise identity-provider callback
+
+Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 
 ### Example
 
@@ -850,7 +917,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     provider = 'provider_example' # str | 
 
     try:
-        # Handle social login callback from provider.
+        # Social / enterprise identity-provider callback
         api_instance.social_callback(org_id, provider)
     except Exception as e:
         print("Exception when calling OAuthApi->social_callback: %s\n" % e)
@@ -883,14 +950,16 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**302** | Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. |  * Location -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **social_callback_post**
 > social_callback_post(org_id, provider)
 
-Handle social login callback from provider.
+Social / enterprise identity-provider callback (form_post)
+
+Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 
 ### Example
 
@@ -915,7 +984,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     provider = 'provider_example' # str | 
 
     try:
-        # Handle social login callback from provider.
+        # Social / enterprise identity-provider callback (form_post)
         api_instance.social_callback_post(org_id, provider)
     except Exception as e:
         print("Exception when calling OAuthApi->social_callback_post: %s\n" % e)
@@ -948,16 +1017,16 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**302** | Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. |  * Location -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **social_login**
 > social_login(org_id, provider)
 
-Initiate social login flow.
+Start social / enterprise identity-provider login
 
-Redirects to the external provider's authorization endpoint.
+Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 
 ### Example
 
@@ -982,7 +1051,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     provider = 'provider_example' # str | 
 
     try:
-        # Initiate social login flow.
+        # Start social / enterprise identity-provider login
         api_instance.social_login(org_id, provider)
     except Exception as e:
         print("Exception when calling OAuthApi->social_login: %s\n" % e)
@@ -1015,12 +1084,16 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**302** | Redirect to the external provider&#39;s authorization endpoint — or back to the hosted login page when the organization, provider or redirect target is invalid. |  * Location -  <br>  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_authorization**
-> submit_authorization(org_id)
+> str submit_authorization(org_id)
+
+OAuth 2.1 / OIDC authorization endpoint (form submission)
+
+Same as GET; also receives the consent form submission. Not a JSON API.
 
 ### Example
 
@@ -1044,7 +1117,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.submit_authorization(org_id)
+        # OAuth 2.1 / OIDC authorization endpoint (form submission)
+        api_response = api_instance.submit_authorization(org_id)
+        print("The response of OAuthApi->submit_authorization:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->submit_authorization: %s\n" % e)
 ```
@@ -1060,7 +1136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -1069,23 +1145,26 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). |  -  |
+**303** | Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. |  * Location -  <br>  |
+**302** | Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. |  * Location -  <br>  |
+**400** | HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). |  -  |
+**429** | too_many_requests (JSON). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_device_verification**
-> submit_device_verification(org_id)
+> str submit_device_verification(org_id)
 
-Device Verification Page (RFC 8628 Section 3.3)
+Submit device verification
 
-This endpoint displays the user verification page where users
-enter their user_code to authorize the device.
+Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
 
 ### Example
 
@@ -1109,8 +1188,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Device Verification Page (RFC 8628 Section 3.3)
-        api_instance.submit_device_verification(org_id)
+        # Submit device verification
+        api_response = api_instance.submit_device_verification(org_id)
+        print("The response of OAuthApi->submit_device_verification:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->submit_device_verification: %s\n" % e)
 ```
@@ -1126,7 +1207,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -1135,18 +1216,24 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. |  -  |
+**302** | Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. |  * Location -  <br>  |
+**429** | HTML error page — too many attempts. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_login**
 > submit_login(org_id)
+
+Hosted login form submission
+
+Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 
 ### Example
 
@@ -1170,6 +1257,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
+        # Hosted login form submission
         api_instance.submit_login(org_id)
     except Exception as e:
         print("Exception when calling OAuthApi->submit_login: %s\n" % e)
@@ -1201,38 +1289,24 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**302** | Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. |  * Location -  <br>  |
+**404** | Unknown or inactive organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_login_json**
-> submit_login_json(org_id)
+> SubmitLoginJsonResponse submit_login_json(org_id)
 
-JSON credential login, for applications that render their own sign-in form.
+Programmatic (JSON) login for the authorization flow
 
-The form-post sibling below (`/login/submit`) does the same authentication
-but answers with a 302, which a fetch()-driven UI cannot act on. This
-returns the outcome as data so an embedded form can decide what to show —
-an MFA prompt, a field error, or continue the OAuth flow.
-
-It deliberately does NOT mint tokens. On success it establishes the
-end-user session, exactly as the hosted login page does; the caller then
-continues to /oauth/authorize, which now issues a code without presenting
-a login screen. Keeping code issuance in one place means this endpoint
-cannot become a second, weaker way to obtain tokens.
-
-Responses:
-  200 {"status":"complete"}          — signed in, continue to /authorize
-  200 {"status":"mfa_required"}      — challenge the second factor
-  401 {"status":"invalid_credentials"}
-  403 {"status":"blocked"|"inactive"}
-  429 {"status":"rate_limited"}
+Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
 ### Example
 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.submit_login_json_response import SubmitLoginJsonResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1250,8 +1324,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # JSON credential login, for applications that render their own sign-in form.
-        api_instance.submit_login_json(org_id)
+        # Programmatic (JSON) login for the authorization flow
+        api_response = api_instance.submit_login_json(org_id)
+        print("The response of OAuthApi->submit_login_json:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->submit_login_json: %s\n" % e)
 ```
@@ -1267,7 +1343,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**SubmitLoginJsonResponse**](SubmitLoginJsonResponse.md)
 
 ### Authorization
 
@@ -1276,18 +1352,27 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). |  -  |
+**400** | {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. |  -  |
+**401** | {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. |  -  |
+**403** | {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. |  -  |
+**404** | {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. |  -  |
+**429** | {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_org_selection**
-> submit_org_selection(org_id)
+> str submit_org_selection(org_id)
+
+Submit organization selection
+
+Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
 
 ### Example
 
@@ -1311,7 +1396,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.submit_org_selection(org_id)
+        # Submit organization selection
+        api_response = api_instance.submit_org_selection(org_id)
+        print("The response of OAuthApi->submit_org_selection:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->submit_org_selection: %s\n" % e)
 ```
@@ -1327,7 +1415,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -1336,20 +1424,24 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | HTML organization selector page. |  -  |
+**302** | Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. |  * Location -  <br>  |
+**404** | Unknown organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **token**
-> token(org_id)
+> TokenResponse token(org_id)
 
-OAuth 2.1 Token Endpoint
+OAuth 2.1 token endpoint
+
+Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
 
 ### Example
 
@@ -1357,6 +1449,7 @@ OAuth 2.1 Token Endpoint
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.token_response import TokenResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1384,8 +1477,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # OAuth 2.1 Token Endpoint
-        api_instance.token(org_id)
+        # OAuth 2.1 token endpoint
+        api_response = api_instance.token(org_id)
+        print("The response of OAuthApi->token:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling OAuthApi->token: %s\n" % e)
 ```
@@ -1401,7 +1496,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**TokenResponse**](TokenResponse.md)
 
 ### Authorization
 
@@ -1410,13 +1505,16 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. |  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  |
+**400** | invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). |  -  |
+**401** | invalid_client — client authentication failed. |  -  |
+**429** | too_many_requests — rate limit exceeded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

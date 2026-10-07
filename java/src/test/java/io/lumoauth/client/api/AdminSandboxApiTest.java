@@ -14,6 +14,10 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminSandboxListResponse;
+import io.lumoauth.client.model.AdminSandboxSpawnRequest;
+import io.lumoauth.client.model.AdminSandboxSpawnResponse;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +35,7 @@ public class AdminSandboxApiTest {
     private final AdminSandboxApi api = new AdminSandboxApi();
 
     /**
-     * POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     * Destroy a sandbox tenant
      *
      * @throws ApiException if the Api call fails
      */
@@ -39,31 +43,32 @@ public class AdminSandboxApiTest {
     public void adminSandboxDestroyTest() throws ApiException {
         String orgId = null;
         String sandboxSlug = null;
-        api.adminSandboxDestroy(orgId, sandboxSlug);
+        MessageResponse response = api.adminSandboxDestroy(orgId, sandboxSlug);
         // TODO: test validations
     }
 
     /**
-     * GET / Lists the caller&#39;s active sandbox tenants (their own only).
+     * List the caller&#39;s sandbox tenants
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSandboxListTest() throws ApiException {
         String orgId = null;
-        api.adminSandboxList(orgId);
+        AdminSandboxListResponse response = api.adminSandboxList(orgId);
         // TODO: test validations
     }
 
     /**
-     * POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+     * Spawn a sandbox tenant
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSandboxSpawnTest() throws ApiException {
         String orgId = null;
-        api.adminSandboxSpawn(orgId);
+        AdminSandboxSpawnRequest adminSandboxSpawnRequest = null;
+        AdminSandboxSpawnResponse response = api.adminSandboxSpawn(orgId, adminSandboxSpawnRequest);
         // TODO: test validations
     }
 

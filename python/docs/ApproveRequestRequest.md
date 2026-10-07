@@ -6,7 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ttl** | **int** | Optional TTL override in seconds. | [optional] 
-**notes** | **str** | Optional reviewer notes. | [optional] 
+**notes** | **str** | Optional reviewer notes (internal; never shown to the agent). | [optional] 
+**agent_message** | **str** | Optional message the agent MAY read on the status endpoint / callback. | [optional] 
 
 ## Example
 

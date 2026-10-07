@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**get_connection_token**](TokenVaultApi.md#get_connection_token) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection. |
-| [**list_connections**](TokenVaultApi.md#list_connections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the connections this agent may use, with grant status. No secrets. |
+| [**get_connection_token**](TokenVaultApi.md#get_connection_token) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection |
+| [**list_connections**](TokenVaultApi.md#list_connections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the outbound connections this agent may use |
 
 
 ## get_connection_token
 
-> get_connection_token(org_id, connection_id)
+> <GetConnectionTokenResponse> get_connection_token(org_id, connection_id, opts)
 
-Fetch a live third-party access token for a connection.
+Fetch a live third-party access token for a connection
 
-POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
 ### Examples
 
@@ -35,10 +35,14 @@ end
 api_instance = LumoAuthApiClient::TokenVaultApi.new
 org_id = 'org_id_example' # String | 
 connection_id = 'connection_id_example' # String | 
+opts = {
+  get_connection_token_request: LumoAuthApiClient::GetConnectionTokenRequest.new # GetConnectionTokenRequest | 
+}
 
 begin
-  # Fetch a live third-party access token for a connection.
-  api_instance.get_connection_token(org_id, connection_id)
+  # Fetch a live third-party access token for a connection
+  result = api_instance.get_connection_token(org_id, connection_id, opts)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling TokenVaultApi->get_connection_token: #{e}"
 end
@@ -46,17 +50,17 @@ end
 
 #### Using the get_connection_token_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_connection_token_with_http_info(org_id, connection_id)
+> <Array(<GetConnectionTokenResponse>, Integer, Hash)> get_connection_token_with_http_info(org_id, connection_id, opts)
 
 ```ruby
 begin
-  # Fetch a live third-party access token for a connection.
-  data, status_code, headers = api_instance.get_connection_token_with_http_info(org_id, connection_id)
+  # Fetch a live third-party access token for a connection
+  data, status_code, headers = api_instance.get_connection_token_with_http_info(org_id, connection_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <GetConnectionTokenResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling TokenVaultApi->get_connection_token_with_http_info: #{e}"
 end
@@ -68,10 +72,11 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **connection_id** | **String** |  |  |
+| **get_connection_token_request** | [**GetConnectionTokenRequest**](GetConnectionTokenRequest.md) |  | [optional] |
 
 ### Return type
 
-nil (empty response body)
+[**GetConnectionTokenResponse**](GetConnectionTokenResponse.md)
 
 ### Authorization
 
@@ -79,17 +84,17 @@ nil (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## list_connections
 
-> list_connections(org_id)
+> <ListConnectionsResponse> list_connections(org_id)
 
-List the connections this agent may use, with grant status. No secrets.
+List the outbound connections this agent may use
 
-GET /orgs/{orgId}/api/v1/agents/me/connections
+Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
 ### Examples
 
@@ -111,8 +116,9 @@ api_instance = LumoAuthApiClient::TokenVaultApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List the connections this agent may use, with grant status. No secrets.
-  api_instance.list_connections(org_id)
+  # List the outbound connections this agent may use
+  result = api_instance.list_connections(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling TokenVaultApi->list_connections: #{e}"
 end
@@ -120,17 +126,17 @@ end
 
 #### Using the list_connections_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> list_connections_with_http_info(org_id)
+> <Array(<ListConnectionsResponse>, Integer, Hash)> list_connections_with_http_info(org_id)
 
 ```ruby
 begin
-  # List the connections this agent may use, with grant status. No secrets.
+  # List the outbound connections this agent may use
   data, status_code, headers = api_instance.list_connections_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <ListConnectionsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling TokenVaultApi->list_connections_with_http_info: #{e}"
 end
@@ -144,7 +150,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**ListConnectionsResponse**](ListConnectionsResponse.md)
 
 ### Authorization
 
@@ -153,5 +159,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

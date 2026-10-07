@@ -4,26 +4,26 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**abacAttributesCreate**](AdminAbacApi.md#abacAttributesCreate) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create a new attribute definition |
+| [**abacAttributesCreate**](AdminAbacApi.md#abacAttributesCreate) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create an attribute definition |
 | [**abacAttributesDelete**](AdminAbacApi.md#abacAttributesDelete) | **DELETE** /orgs/{orgId}/api/v1/abac/attributes/{id} | Delete an attribute definition |
-| [**abacAttributesGet**](AdminAbacApi.md#abacAttributesGet) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get a single attribute definition |
-| [**abacAttributesList**](AdminAbacApi.md#abacAttributesList) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List all attribute definitions |
-| [**abacPoliciesCreate**](AdminAbacApi.md#abacPoliciesCreate) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create a new ABAC policy |
+| [**abacAttributesGet**](AdminAbacApi.md#abacAttributesGet) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get an attribute definition |
+| [**abacAttributesList**](AdminAbacApi.md#abacAttributesList) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List attribute definitions |
+| [**abacPoliciesCreate**](AdminAbacApi.md#abacPoliciesCreate) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create an ABAC policy |
 | [**abacPoliciesDelete**](AdminAbacApi.md#abacPoliciesDelete) | **DELETE** /orgs/{orgId}/api/v1/abac/policies/{id} | Delete an ABAC policy |
-| [**abacPoliciesGet**](AdminAbacApi.md#abacPoliciesGet) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get a single ABAC policy |
-| [**abacPoliciesList**](AdminAbacApi.md#abacPoliciesList) | **GET** /orgs/{orgId}/api/v1/abac/policies | List all ABAC policies |
-| [**abacPoliciesToggle**](AdminAbacApi.md#abacPoliciesToggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle policy active status |
-| [**patchAbacAttributesUpdate**](AdminAbacApi.md#patchAbacAttributesUpdate) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition |
-| [**patchAbacPoliciesUpdate**](AdminAbacApi.md#patchAbacPoliciesUpdate) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy |
+| [**abacPoliciesGet**](AdminAbacApi.md#abacPoliciesGet) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get an ABAC policy |
+| [**abacPoliciesList**](AdminAbacApi.md#abacPoliciesList) | **GET** /orgs/{orgId}/api/v1/abac/policies | List ABAC policies |
+| [**abacPoliciesToggle**](AdminAbacApi.md#abacPoliciesToggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle a policy between active and inactive |
+| [**patchAbacAttributesUpdate**](AdminAbacApi.md#patchAbacAttributesUpdate) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Partially update an attribute definition |
+| [**patchAbacPoliciesUpdate**](AdminAbacApi.md#patchAbacPoliciesUpdate) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Partially update an ABAC policy |
 | [**putAbacAttributesUpdate**](AdminAbacApi.md#putAbacAttributesUpdate) | **PUT** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition |
 | [**putAbacPoliciesUpdate**](AdminAbacApi.md#putAbacPoliciesUpdate) | **PUT** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy |
 
 
 <a id="abacAttributesCreate"></a>
 # **abacAttributesCreate**
-> abacAttributesCreate(orgId)
+> AbacAttributesCreateResponse abacAttributesCreate(orgId)
 
-Create a new attribute definition
+Create an attribute definition
 
 ### Example
 ```java
@@ -53,7 +53,8 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.abacAttributesCreate(orgId);
+      AbacAttributesCreateResponse result = apiInstance.abacAttributesCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacAttributesCreate");
       System.err.println("Status code: " + e.getCode());
@@ -73,7 +74,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacAttributesCreateResponse**](AbacAttributesCreateResponse.md)
 
 ### Authorization
 
@@ -82,16 +83,17 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created |  -  |
+| **409** | An attribute with this slug already exists |  -  |
 
 <a id="abacAttributesDelete"></a>
 # **abacAttributesDelete**
-> abacAttributesDelete(orgId, id)
+> MessageResponse abacAttributesDelete(orgId, id)
 
 Delete an attribute definition
 
@@ -124,7 +126,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.abacAttributesDelete(orgId, id);
+      MessageResponse result = apiInstance.abacAttributesDelete(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacAttributesDelete");
       System.err.println("Status code: " + e.getCode());
@@ -145,7 +148,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -154,18 +157,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **403** | System attribute definitions cannot be deleted |  -  |
+| **404** | Attribute definition not found |  -  |
 
 <a id="abacAttributesGet"></a>
 # **abacAttributesGet**
-> abacAttributesGet(orgId, id)
+> AbacAttributesGetResponse abacAttributesGet(orgId, id)
 
-Get a single attribute definition
+Get an attribute definition
 
 ### Example
 ```java
@@ -196,7 +201,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.abacAttributesGet(orgId, id);
+      AbacAttributesGetResponse result = apiInstance.abacAttributesGet(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacAttributesGet");
       System.err.println("Status code: " + e.getCode());
@@ -217,7 +223,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacAttributesGetResponse**](AbacAttributesGetResponse.md)
 
 ### Authorization
 
@@ -226,18 +232,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Attribute definition |  -  |
+| **404** | Attribute definition not found |  -  |
 
 <a id="abacAttributesList"></a>
 # **abacAttributesList**
-> abacAttributesList(orgId)
+> AbacAttributesListResponse abacAttributesList(orgId)
 
-List all attribute definitions
+List attribute definitions
 
 ### Example
 ```java
@@ -267,7 +274,8 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.abacAttributesList(orgId);
+      AbacAttributesListResponse result = apiInstance.abacAttributesList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacAttributesList");
       System.err.println("Status code: " + e.getCode());
@@ -287,7 +295,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacAttributesListResponse**](AbacAttributesListResponse.md)
 
 ### Authorization
 
@@ -296,18 +304,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Paginated attribute definitions |  -  |
 
 <a id="abacPoliciesCreate"></a>
 # **abacPoliciesCreate**
-> abacPoliciesCreate(orgId)
+> AbacPoliciesCreateResponse abacPoliciesCreate(orgId)
 
-Create a new ABAC policy
+Create an ABAC policy
 
 ### Example
 ```java
@@ -337,7 +345,8 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.abacPoliciesCreate(orgId);
+      AbacPoliciesCreateResponse result = apiInstance.abacPoliciesCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesCreate");
       System.err.println("Status code: " + e.getCode());
@@ -357,7 +366,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacPoliciesCreateResponse**](AbacPoliciesCreateResponse.md)
 
 ### Authorization
 
@@ -366,16 +375,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created |  -  |
+| **400** | Invalid effect or policy conditions |  -  |
+| **409** | A policy with this slug already exists |  -  |
 
 <a id="abacPoliciesDelete"></a>
 # **abacPoliciesDelete**
-> abacPoliciesDelete(orgId, id)
+> MessageResponse abacPoliciesDelete(orgId, id)
 
 Delete an ABAC policy
 
@@ -408,7 +419,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.abacPoliciesDelete(orgId, id);
+      MessageResponse result = apiInstance.abacPoliciesDelete(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesDelete");
       System.err.println("Status code: " + e.getCode());
@@ -429,7 +441,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -438,18 +450,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **403** | System policies cannot be deleted |  -  |
+| **404** | Policy not found |  -  |
 
 <a id="abacPoliciesGet"></a>
 # **abacPoliciesGet**
-> abacPoliciesGet(orgId, id)
+> AbacPoliciesGetResponse abacPoliciesGet(orgId, id)
 
-Get a single ABAC policy
+Get an ABAC policy
 
 ### Example
 ```java
@@ -480,7 +494,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.abacPoliciesGet(orgId, id);
+      AbacPoliciesGetResponse result = apiInstance.abacPoliciesGet(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesGet");
       System.err.println("Status code: " + e.getCode());
@@ -501,7 +516,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacPoliciesGetResponse**](AbacPoliciesGetResponse.md)
 
 ### Authorization
 
@@ -510,18 +525,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Policy |  -  |
+| **404** | Policy not found |  -  |
 
 <a id="abacPoliciesList"></a>
 # **abacPoliciesList**
-> abacPoliciesList(orgId)
+> AbacPoliciesListResponse abacPoliciesList(orgId)
 
-List all ABAC policies
+List ABAC policies
 
 ### Example
 ```java
@@ -551,7 +567,8 @@ public class Example {
     AdminAbacApi apiInstance = new AdminAbacApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.abacPoliciesList(orgId);
+      AbacPoliciesListResponse result = apiInstance.abacPoliciesList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesList");
       System.err.println("Status code: " + e.getCode());
@@ -571,7 +588,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacPoliciesListResponse**](AbacPoliciesListResponse.md)
 
 ### Authorization
 
@@ -580,18 +597,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Paginated policies |  -  |
 
 <a id="abacPoliciesToggle"></a>
 # **abacPoliciesToggle**
-> abacPoliciesToggle(orgId, id)
+> AbacPoliciesToggleResponse abacPoliciesToggle(orgId, id)
 
-Toggle policy active status
+Toggle a policy between active and inactive
 
 ### Example
 ```java
@@ -622,7 +639,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.abacPoliciesToggle(orgId, id);
+      AbacPoliciesToggleResponse result = apiInstance.abacPoliciesToggle(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#abacPoliciesToggle");
       System.err.println("Status code: " + e.getCode());
@@ -643,7 +661,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AbacPoliciesToggleResponse**](AbacPoliciesToggleResponse.md)
 
 ### Authorization
 
@@ -652,18 +670,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Toggled policy |  -  |
+| **403** | System policies cannot be modified |  -  |
+| **404** | Policy not found |  -  |
 
 <a id="patchAbacAttributesUpdate"></a>
 # **patchAbacAttributesUpdate**
-> patchAbacAttributesUpdate(orgId, id)
+> PutAbacAttributesUpdateResponse patchAbacAttributesUpdate(orgId, id)
 
-Update an attribute definition
+Partially update an attribute definition
 
 ### Example
 ```java
@@ -694,7 +714,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.patchAbacAttributesUpdate(orgId, id);
+      PutAbacAttributesUpdateResponse result = apiInstance.patchAbacAttributesUpdate(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#patchAbacAttributesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -715,7 +736,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -724,18 +745,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System attribute definitions cannot be modified |  -  |
+| **404** | Attribute definition not found |  -  |
 
 <a id="patchAbacPoliciesUpdate"></a>
 # **patchAbacPoliciesUpdate**
-> patchAbacPoliciesUpdate(orgId, id)
+> PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate(orgId, id)
 
-Update an ABAC policy
+Partially update an ABAC policy
 
 ### Example
 ```java
@@ -766,7 +789,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.patchAbacPoliciesUpdate(orgId, id);
+      PutAbacPoliciesUpdateResponse result = apiInstance.patchAbacPoliciesUpdate(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#patchAbacPoliciesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -787,7 +811,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -796,16 +820,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System policies cannot be modified |  -  |
+| **404** | Policy not found |  -  |
 
 <a id="putAbacAttributesUpdate"></a>
 # **putAbacAttributesUpdate**
-> putAbacAttributesUpdate(orgId, id)
+> PutAbacAttributesUpdateResponse putAbacAttributesUpdate(orgId, id)
 
 Update an attribute definition
 
@@ -838,7 +864,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.putAbacAttributesUpdate(orgId, id);
+      PutAbacAttributesUpdateResponse result = apiInstance.putAbacAttributesUpdate(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#putAbacAttributesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -859,7 +886,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -868,16 +895,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System attribute definitions cannot be modified |  -  |
+| **404** | Attribute definition not found |  -  |
 
 <a id="putAbacPoliciesUpdate"></a>
 # **putAbacPoliciesUpdate**
-> putAbacPoliciesUpdate(orgId, id)
+> PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate(orgId, id)
 
 Update an ABAC policy
 
@@ -910,7 +939,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String id = "id_example"; // String | 
     try {
-      apiInstance.putAbacPoliciesUpdate(orgId, id);
+      PutAbacPoliciesUpdateResponse result = apiInstance.putAbacPoliciesUpdate(orgId, id);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAbacApi#putAbacPoliciesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -931,7 +961,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -940,10 +970,12 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System policies cannot be modified |  -  |
+| **404** | Policy not found |  -  |
 

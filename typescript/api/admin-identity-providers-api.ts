@@ -21,6 +21,18 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminSocialProvidersAvailableResponse } from '../models';
+// @ts-ignore
+import type { AdminSocialProvidersCallbackUrlsResponse } from '../models';
+// @ts-ignore
+import type { AdminSocialProvidersCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminSocialProvidersGetResponse } from '../models';
+// @ts-ignore
+import type { AdminSocialProvidersListResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
 /**
  * AdminIdentityProvidersApi - axios parameter creator
  * @export
@@ -29,7 +41,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
     return {
         /**
          * 
-         * @summary Get available social login provider types
+         * @summary List the available social login provider types
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -70,7 +82,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Get callback URLs for all configured providers
+         * @summary Get the OAuth callback URL of every configured provider
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -111,7 +123,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Create a new social login provider
+         * @summary Create a social login provider
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -287,7 +299,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Get a single social login provider (by ID or by provider name)
+         * @summary Get a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
          * @param {*} [options] Override http request option.
@@ -332,7 +344,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary List all configured social login providers
+         * @summary List social login providers
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -373,7 +385,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Get available social login provider types
+         * @summary List the available social login provider types
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -414,7 +426,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+         * @summary Update a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
          * @param {*} [options] Override http request option.
@@ -459,7 +471,7 @@ export const AdminIdentityProvidersApiAxiosParamCreator = function (configuratio
         },
         /**
          * 
-         * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+         * @summary Create or replace a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
          * @param {*} [options] Override http request option.
@@ -514,12 +526,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
     return {
         /**
          * 
-         * @summary Get available social login provider types
+         * @summary List the available social login provider types
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersAvailable(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersAvailable(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersAvailableResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersAvailable(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersAvailable']?.[localVarOperationServerIndex]?.url;
@@ -527,12 +539,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Get callback URLs for all configured providers
+         * @summary Get the OAuth callback URL of every configured provider
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersCallbackUrls(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersCallbackUrls(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCallbackUrlsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersCallbackUrls(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersCallbackUrls']?.[localVarOperationServerIndex]?.url;
@@ -540,12 +552,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Create a new social login provider
+         * @summary Create a social login provider
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersCreate']?.[localVarOperationServerIndex]?.url;
@@ -559,7 +571,7 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersDelete(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersDelete(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersDelete(orgId, providerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersDelete']?.[localVarOperationServerIndex]?.url;
@@ -573,7 +585,7 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersDisable(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersDisable(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersDisable(orgId, providerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersDisable']?.[localVarOperationServerIndex]?.url;
@@ -587,7 +599,7 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersEnable(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersEnable(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersEnable(orgId, providerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersEnable']?.[localVarOperationServerIndex]?.url;
@@ -595,13 +607,13 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Get a single social login provider (by ID or by provider name)
+         * @summary Get a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersGet(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersGet(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersGet(orgId, providerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersGet']?.[localVarOperationServerIndex]?.url;
@@ -609,12 +621,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary List all configured social login providers
+         * @summary List social login providers
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersList']?.[localVarOperationServerIndex]?.url;
@@ -622,12 +634,12 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Get available social login provider types
+         * @summary List the available social login provider types
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSocialProvidersTypes(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSocialProvidersTypes(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersAvailableResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSocialProvidersTypes(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.adminSocialProvidersTypes']?.[localVarOperationServerIndex]?.url;
@@ -635,13 +647,13 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+         * @summary Update a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSocialProvidersUpdate(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSocialProvidersUpdate(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSocialProvidersUpdate(orgId, providerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.patchAdminSocialProvidersUpdate']?.[localVarOperationServerIndex]?.url;
@@ -649,13 +661,13 @@ export const AdminIdentityProvidersApiFp = function(configuration?: Configuratio
         },
         /**
          * 
-         * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+         * @summary Create or replace a social login provider
          * @param {string} orgId 
          * @param {string} providerId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSocialProvidersUpdate(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSocialProvidersUpdate(orgId: string, providerId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSocialProvidersCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSocialProvidersUpdate(orgId, providerId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminIdentityProvidersApi.putAdminSocialProvidersUpdate']?.[localVarOperationServerIndex]?.url;
@@ -673,32 +685,32 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
     return {
         /**
          * 
-         * @summary Get available social login provider types
+         * @summary List the available social login provider types
          * @param {AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersAvailable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersAvailable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersAvailableResponse> {
             return localVarFp.adminSocialProvidersAvailable(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get callback URLs for all configured providers
+         * @summary Get the OAuth callback URL of every configured provider
          * @param {AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersCallbackUrls(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersCallbackUrls(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCallbackUrlsResponse> {
             return localVarFp.adminSocialProvidersCallbackUrls(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Create a new social login provider
+         * @summary Create a social login provider
          * @param {AdminIdentityProvidersApiAdminSocialProvidersCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersCreate(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersCreate(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
             return localVarFp.adminSocialProvidersCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -708,7 +720,7 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersDelete(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersDelete(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminSocialProvidersDelete(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -718,7 +730,7 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersDisable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersDisable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
             return localVarFp.adminSocialProvidersDisable(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -728,57 +740,57 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersEnable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersEnable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
             return localVarFp.adminSocialProvidersEnable(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single social login provider (by ID or by provider name)
+         * @summary Get a social login provider
          * @param {AdminIdentityProvidersApiAdminSocialProvidersGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersGet(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersGet(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersGetResponse> {
             return localVarFp.adminSocialProvidersGet(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary List all configured social login providers
+         * @summary List social login providers
          * @param {AdminIdentityProvidersApiAdminSocialProvidersListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersList(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersList(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersListResponse> {
             return localVarFp.adminSocialProvidersList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get available social login provider types
+         * @summary List the available social login provider types
          * @param {AdminIdentityProvidersApiAdminSocialProvidersTypesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSocialProvidersTypes(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersTypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSocialProvidersTypes(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersTypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersAvailableResponse> {
             return localVarFp.adminSocialProvidersTypes(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+         * @summary Update a social login provider
          * @param {AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
             return localVarFp.patchAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+         * @summary Create or replace a social login provider
          * @param {AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse> {
             return localVarFp.putAdminSocialProvidersUpdate(requestParameters.orgId, requestParameters.providerId, options).then((request) => request(axios, basePath));
         },
     };
@@ -792,33 +804,33 @@ export const AdminIdentityProvidersApiFactory = function (configuration?: Config
 export interface AdminIdentityProvidersApiInterface {
     /**
      * 
-     * @summary Get available social login provider types
+     * @summary List the available social login provider types
      * @param {AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersAvailable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersAvailable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersAvailableResponse>;
 
     /**
      * 
-     * @summary Get callback URLs for all configured providers
+     * @summary Get the OAuth callback URL of every configured provider
      * @param {AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersCallbackUrls(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersCallbackUrls(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCallbackUrlsResponse>;
 
     /**
      * 
-     * @summary Create a new social login provider
+     * @summary Create a social login provider
      * @param {AdminIdentityProvidersApiAdminSocialProvidersCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersCreate(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersCreate(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse>;
 
     /**
      * 
@@ -828,7 +840,7 @@ export interface AdminIdentityProvidersApiInterface {
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersDelete(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersDelete(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -838,7 +850,7 @@ export interface AdminIdentityProvidersApiInterface {
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersDisable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersDisable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse>;
 
     /**
      * 
@@ -848,57 +860,57 @@ export interface AdminIdentityProvidersApiInterface {
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersEnable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersEnable(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse>;
 
     /**
      * 
-     * @summary Get a single social login provider (by ID or by provider name)
+     * @summary Get a social login provider
      * @param {AdminIdentityProvidersApiAdminSocialProvidersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersGet(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersGet(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersGetResponse>;
 
     /**
      * 
-     * @summary List all configured social login providers
+     * @summary List social login providers
      * @param {AdminIdentityProvidersApiAdminSocialProvidersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersList(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersList(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersListResponse>;
 
     /**
      * 
-     * @summary Get available social login provider types
+     * @summary List the available social login provider types
      * @param {AdminIdentityProvidersApiAdminSocialProvidersTypesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    adminSocialProvidersTypes(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersTypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSocialProvidersTypes(requestParameters: AdminIdentityProvidersApiAdminSocialProvidersTypesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersAvailableResponse>;
 
     /**
      * 
-     * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+     * @summary Update a social login provider
      * @param {AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    patchAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse>;
 
     /**
      * 
-     * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+     * @summary Create or replace a social login provider
      * @param {AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminIdentityProvidersApiInterface
      */
-    putAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSocialProvidersUpdate(requestParameters: AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSocialProvidersCreateResponse>;
 
 }
 
@@ -1107,7 +1119,7 @@ export interface AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest {
 export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityProvidersApiInterface {
     /**
      * 
-     * @summary Get available social login provider types
+     * @summary List the available social login provider types
      * @param {AdminIdentityProvidersApiAdminSocialProvidersAvailableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1119,7 +1131,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary Get callback URLs for all configured providers
+     * @summary Get the OAuth callback URL of every configured provider
      * @param {AdminIdentityProvidersApiAdminSocialProvidersCallbackUrlsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1131,7 +1143,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary Create a new social login provider
+     * @summary Create a social login provider
      * @param {AdminIdentityProvidersApiAdminSocialProvidersCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1179,7 +1191,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary Get a single social login provider (by ID or by provider name)
+     * @summary Get a social login provider
      * @param {AdminIdentityProvidersApiAdminSocialProvidersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1191,7 +1203,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary List all configured social login providers
+     * @summary List social login providers
      * @param {AdminIdentityProvidersApiAdminSocialProvidersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1203,7 +1215,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary Get available social login provider types
+     * @summary List the available social login provider types
      * @param {AdminIdentityProvidersApiAdminSocialProvidersTypesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1215,7 +1227,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+     * @summary Update a social login provider
      * @param {AdminIdentityProvidersApiPatchAdminSocialProvidersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1227,7 +1239,7 @@ export class AdminIdentityProvidersApi extends BaseAPI implements AdminIdentityP
 
     /**
      * 
-     * @summary Upsert (create or update) a social login provider via PUT; update via PATCH
+     * @summary Create or replace a social login provider
      * @param {AdminIdentityProvidersApiPutAdminSocialProvidersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

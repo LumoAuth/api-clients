@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_stream_config**](SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
-[**delete_stream_config**](SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | 
-[**get_stream_config**](SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
-[**verify_stream**](SsfApi.md#verify_stream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+[**create_stream_config**](SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream
+[**delete_stream_config**](SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream
+[**get_stream_config**](SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s)
+[**verify_stream**](SsfApi.md#verify_stream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event
 
 
 # **create_stream_config**
-> create_stream_config(org_id)
+> SsfStream create_stream_config(org_id)
 
-Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+Create an SSF stream
 
 ### Example
 
@@ -22,6 +22,7 @@ Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.ssf_stream import SsfStream
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -54,8 +55,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
-        api_instance.create_stream_config(org_id)
+        # Create an SSF stream
+        api_response = api_instance.create_stream_config(org_id)
+        print("The response of SsfApi->create_stream_config:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling SsfApi->create_stream_config: %s\n" % e)
 ```
@@ -71,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**SsfStream**](SsfStream.md)
 
 ### Authorization
 
@@ -80,18 +83,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Stream configuration |  -  |
+**400** | Unsupported delivery method or missing field |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_stream_config**
-> delete_stream_config(org_id)
+> delete_stream_config(stream_id, org_id)
+
+Delete an SSF stream
 
 ### Example
 
@@ -129,10 +135,12 @@ configuration = lumoauth_api_client.Configuration(
 with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.SsfApi(api_client)
+    stream_id = 'stream_id_example' # str | 
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.delete_stream_config(org_id)
+        # Delete an SSF stream
+        api_instance.delete_stream_config(stream_id, org_id)
     except Exception as e:
         print("Exception when calling SsfApi->delete_stream_config: %s\n" % e)
 ```
@@ -144,6 +152,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **stream_id** | **str**|  | 
  **org_id** | **str**|  | 
 
 ### Return type
@@ -163,14 +172,16 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**204** | Stream deleted |  -  |
+**400** | Missing stream_id |  -  |
+**404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_stream_config**
-> get_stream_config(org_id)
+> GetStreamConfig200Response get_stream_config(org_id, stream_id=stream_id)
 
-Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+Read SSF stream configuration(s)
 
 ### Example
 
@@ -179,6 +190,7 @@ Read stream configuration(s). `?stream_id=` returns a single config, otherwise a
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_stream_config200_response import GetStreamConfig200Response
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -209,10 +221,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.SsfApi(api_client)
     org_id = 'org_id_example' # str | 
+    stream_id = 'stream_id_example' # str |  (optional)
 
     try:
-        # Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
-        api_instance.get_stream_config(org_id)
+        # Read SSF stream configuration(s)
+        api_response = api_instance.get_stream_config(org_id, stream_id=stream_id)
+        print("The response of SsfApi->get_stream_config:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling SsfApi->get_stream_config: %s\n" % e)
 ```
@@ -225,10 +240,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **stream_id** | **str**|  | [optional] 
 
 ### Return type
 
-void (empty response body)
+[**GetStreamConfig200Response**](GetStreamConfig200Response.md)
 
 ### Authorization
 
@@ -237,20 +253,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | A single stream (with stream_id) or all of the tenant&#39;s streams |  -  |
+**404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **verify_stream**
 > verify_stream(org_id)
 
-SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+Request a stream verification event
 
 ### Example
 
@@ -291,7 +308,7 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+        # Request a stream verification event
         api_instance.verify_stream(org_id)
     except Exception as e:
         print("Exception when calling SsfApi->verify_stream: %s\n" % e)
@@ -323,7 +340,10 @@ void (empty response body)
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**204** | Verification event queued |  -  |
+**400** | Missing stream_id |  -  |
+**404** | Stream not found |  -  |
+**409** | Stream is not enabled |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

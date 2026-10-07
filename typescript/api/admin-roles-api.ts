@@ -21,6 +21,18 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminRolesCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminRolesGetPermissionsResponse } from '../models';
+// @ts-ignore
+import type { AdminRolesGetResponse } from '../models';
+// @ts-ignore
+import type { AdminRolesGetUsersResponse } from '../models';
+// @ts-ignore
+import type { AdminRolesListResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
 /**
  * AdminRolesApi - axios parameter creator
  * @export
@@ -630,7 +642,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesAddPermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesAddPermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesAddPermissions(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesAddPermissions']?.[localVarOperationServerIndex]?.url;
@@ -644,7 +656,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesAddUser(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesAddUser(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesAddUser(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesAddUser']?.[localVarOperationServerIndex]?.url;
@@ -657,7 +669,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesCreate']?.[localVarOperationServerIndex]?.url;
@@ -671,7 +683,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesDelete(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesDelete(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesDelete(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesDelete']?.[localVarOperationServerIndex]?.url;
@@ -685,7 +697,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesGet(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesGet(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesGet(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesGet']?.[localVarOperationServerIndex]?.url;
@@ -699,7 +711,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesGetPermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesGetPermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesGetPermissionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesGetPermissions(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesGetPermissions']?.[localVarOperationServerIndex]?.url;
@@ -713,7 +725,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesGetUsers(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesGetUsers(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesGetUsersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesGetUsers(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesGetUsers']?.[localVarOperationServerIndex]?.url;
@@ -726,7 +738,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesList']?.[localVarOperationServerIndex]?.url;
@@ -741,7 +753,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesRemovePermission(orgId: string, roleId: string, permissionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesRemovePermission(orgId: string, roleId: string, permissionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesRemovePermission(orgId, roleId, permissionId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesRemovePermission']?.[localVarOperationServerIndex]?.url;
@@ -756,7 +768,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesRemoveUser(orgId: string, roleId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesRemoveUser(orgId: string, roleId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesRemoveUser(orgId, roleId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesRemoveUser']?.[localVarOperationServerIndex]?.url;
@@ -770,7 +782,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminRolesUpdatePermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminRolesUpdatePermissions(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminRolesUpdatePermissions(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.adminRolesUpdatePermissions']?.[localVarOperationServerIndex]?.url;
@@ -784,7 +796,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminRolesUpdate(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminRolesUpdate(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminRolesUpdate(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.patchAdminRolesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -798,7 +810,7 @@ export const AdminRolesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminRolesUpdate(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminRolesUpdate(orgId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminRolesUpdate(orgId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminRolesApi.putAdminRolesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -821,7 +833,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesAddPermissions(requestParameters: AdminRolesApiAdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesAddPermissions(requestParameters: AdminRolesApiAdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminRolesAddPermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -831,7 +843,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminRolesAddUser(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -841,7 +853,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesCreate(requestParameters: AdminRolesApiAdminRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesCreate(requestParameters: AdminRolesApiAdminRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
             return localVarFp.adminRolesCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -851,7 +863,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesDelete(requestParameters: AdminRolesApiAdminRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesDelete(requestParameters: AdminRolesApiAdminRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminRolesDelete(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -861,7 +873,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesGet(requestParameters: AdminRolesApiAdminRolesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesGet(requestParameters: AdminRolesApiAdminRolesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetResponse> {
             return localVarFp.adminRolesGet(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -871,7 +883,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesGetPermissions(requestParameters: AdminRolesApiAdminRolesGetPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesGetPermissions(requestParameters: AdminRolesApiAdminRolesGetPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetPermissionsResponse> {
             return localVarFp.adminRolesGetPermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -881,7 +893,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesGetUsers(requestParameters: AdminRolesApiAdminRolesGetUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesGetUsers(requestParameters: AdminRolesApiAdminRolesGetUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetUsersResponse> {
             return localVarFp.adminRolesGetUsers(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -891,7 +903,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesList(requestParameters: AdminRolesApiAdminRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesList(requestParameters: AdminRolesApiAdminRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesListResponse> {
             return localVarFp.adminRolesList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -901,7 +913,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesRemovePermission(requestParameters: AdminRolesApiAdminRolesRemovePermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesRemovePermission(requestParameters: AdminRolesApiAdminRolesRemovePermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminRolesRemovePermission(requestParameters.orgId, requestParameters.roleId, requestParameters.permissionId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -911,7 +923,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesRemoveUser(requestParameters: AdminRolesApiAdminRolesRemoveUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesRemoveUser(requestParameters: AdminRolesApiAdminRolesRemoveUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminRolesRemoveUser(requestParameters.orgId, requestParameters.roleId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -921,7 +933,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminRolesUpdatePermissions(requestParameters: AdminRolesApiAdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminRolesUpdatePermissions(requestParameters: AdminRolesApiAdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
             return localVarFp.adminRolesUpdatePermissions(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -931,7 +943,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminRolesUpdate(requestParameters: AdminRolesApiPatchAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminRolesUpdate(requestParameters: AdminRolesApiPatchAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
             return localVarFp.patchAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -941,7 +953,7 @@ export const AdminRolesApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminRolesUpdate(requestParameters: AdminRolesApiPutAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminRolesUpdate(requestParameters: AdminRolesApiPutAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse> {
             return localVarFp.putAdminRolesUpdate(requestParameters.orgId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
     };
@@ -961,7 +973,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesAddPermissions(requestParameters: AdminRolesApiAdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesAddPermissions(requestParameters: AdminRolesApiAdminRolesAddPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -971,7 +983,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesAddUser(requestParameters: AdminRolesApiAdminRolesAddUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -981,7 +993,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesCreate(requestParameters: AdminRolesApiAdminRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesCreate(requestParameters: AdminRolesApiAdminRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse>;
 
     /**
      * 
@@ -991,7 +1003,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesDelete(requestParameters: AdminRolesApiAdminRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesDelete(requestParameters: AdminRolesApiAdminRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -1001,7 +1013,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesGet(requestParameters: AdminRolesApiAdminRolesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesGet(requestParameters: AdminRolesApiAdminRolesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetResponse>;
 
     /**
      * 
@@ -1011,7 +1023,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesGetPermissions(requestParameters: AdminRolesApiAdminRolesGetPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesGetPermissions(requestParameters: AdminRolesApiAdminRolesGetPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetPermissionsResponse>;
 
     /**
      * 
@@ -1021,7 +1033,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesGetUsers(requestParameters: AdminRolesApiAdminRolesGetUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesGetUsers(requestParameters: AdminRolesApiAdminRolesGetUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetUsersResponse>;
 
     /**
      * 
@@ -1031,7 +1043,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesList(requestParameters: AdminRolesApiAdminRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesList(requestParameters: AdminRolesApiAdminRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesListResponse>;
 
     /**
      * 
@@ -1041,7 +1053,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesRemovePermission(requestParameters: AdminRolesApiAdminRolesRemovePermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesRemovePermission(requestParameters: AdminRolesApiAdminRolesRemovePermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -1051,7 +1063,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesRemoveUser(requestParameters: AdminRolesApiAdminRolesRemoveUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesRemoveUser(requestParameters: AdminRolesApiAdminRolesRemoveUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -1061,7 +1073,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    adminRolesUpdatePermissions(requestParameters: AdminRolesApiAdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminRolesUpdatePermissions(requestParameters: AdminRolesApiAdminRolesUpdatePermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse>;
 
     /**
      * 
@@ -1071,7 +1083,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    patchAdminRolesUpdate(requestParameters: AdminRolesApiPatchAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminRolesUpdate(requestParameters: AdminRolesApiPatchAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse>;
 
     /**
      * 
@@ -1081,7 +1093,7 @@ export interface AdminRolesApiInterface {
      * @throws {RequiredError}
      * @memberof AdminRolesApiInterface
      */
-    putAdminRolesUpdate(requestParameters: AdminRolesApiPutAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminRolesUpdate(requestParameters: AdminRolesApiPutAdminRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesCreateResponse>;
 
 }
 

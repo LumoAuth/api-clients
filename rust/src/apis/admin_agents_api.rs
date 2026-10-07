@@ -469,7 +469,7 @@ pub async fn admin_agents_deactivate(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_agents_delete(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<models::MessageResponse, Error<AdminAgentsDeleteError>> {
+pub async fn admin_agents_delete(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<models::AdminAgentsDeleteResponse, Error<AdminAgentsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_agent_id = agent_id;
@@ -507,8 +507,8 @@ pub async fn admin_agents_delete(configuration: &configuration::Configuration, o
         let content = resp.text().await?;
         match content_type {
             ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
-            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
-            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAgentsDeleteResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAgentsDeleteResponse`")))),
         }
     } else {
         let content = resp.text().await?;

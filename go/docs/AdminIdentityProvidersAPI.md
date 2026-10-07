@@ -4,25 +4,25 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminSocialProvidersAvailable**](AdminIdentityProvidersAPI.md#AdminSocialProvidersAvailable) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types
-[**AdminSocialProvidersCallbackUrls**](AdminIdentityProvidersAPI.md#AdminSocialProvidersCallbackUrls) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers
-[**AdminSocialProvidersCreate**](AdminIdentityProvidersAPI.md#AdminSocialProvidersCreate) | **Post** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider
+[**AdminSocialProvidersAvailable**](AdminIdentityProvidersAPI.md#AdminSocialProvidersAvailable) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types
+[**AdminSocialProvidersCallbackUrls**](AdminIdentityProvidersAPI.md#AdminSocialProvidersCallbackUrls) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider
+[**AdminSocialProvidersCreate**](AdminIdentityProvidersAPI.md#AdminSocialProvidersCreate) | **Post** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider
 [**AdminSocialProvidersDelete**](AdminIdentityProvidersAPI.md#AdminSocialProvidersDelete) | **Delete** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider
 [**AdminSocialProvidersDisable**](AdminIdentityProvidersAPI.md#AdminSocialProvidersDisable) | **Post** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider
 [**AdminSocialProvidersEnable**](AdminIdentityProvidersAPI.md#AdminSocialProvidersEnable) | **Post** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider
-[**AdminSocialProvidersGet**](AdminIdentityProvidersAPI.md#AdminSocialProvidersGet) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name)
-[**AdminSocialProvidersList**](AdminIdentityProvidersAPI.md#AdminSocialProvidersList) | **Get** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers
-[**AdminSocialProvidersTypes**](AdminIdentityProvidersAPI.md#AdminSocialProvidersTypes) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types
-[**PatchAdminSocialProvidersUpdate**](AdminIdentityProvidersAPI.md#PatchAdminSocialProvidersUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
-[**PutAdminSocialProvidersUpdate**](AdminIdentityProvidersAPI.md#PutAdminSocialProvidersUpdate) | **Put** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
+[**AdminSocialProvidersGet**](AdminIdentityProvidersAPI.md#AdminSocialProvidersGet) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider
+[**AdminSocialProvidersList**](AdminIdentityProvidersAPI.md#AdminSocialProvidersList) | **Get** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers
+[**AdminSocialProvidersTypes**](AdminIdentityProvidersAPI.md#AdminSocialProvidersTypes) | **Get** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types
+[**PatchAdminSocialProvidersUpdate**](AdminIdentityProvidersAPI.md#PatchAdminSocialProvidersUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider
+[**PutAdminSocialProvidersUpdate**](AdminIdentityProvidersAPI.md#PutAdminSocialProvidersUpdate) | **Put** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider
 
 
 
 ## AdminSocialProvidersAvailable
 
-> AdminSocialProvidersAvailable(ctx, orgId).Execute()
+> AdminSocialProvidersAvailableResponse AdminSocialProvidersAvailable(ctx, orgId).Execute()
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 
@@ -41,11 +41,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersAvailable(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersAvailable(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersAvailable``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersAvailable`: AdminSocialProvidersAvailableResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersAvailable`: %v\n", resp)
 }
 ```
 
@@ -68,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -77,7 +79,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -86,9 +88,9 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersCallbackUrls
 
-> AdminSocialProvidersCallbackUrls(ctx, orgId).Execute()
+> AdminSocialProvidersCallbackUrlsResponse AdminSocialProvidersCallbackUrls(ctx, orgId).Execute()
 
-Get callback URLs for all configured providers
+Get the OAuth callback URL of every configured provider
 
 ### Example
 
@@ -107,11 +109,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCallbackUrls(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCallbackUrls(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersCallbackUrls``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersCallbackUrls`: AdminSocialProvidersCallbackUrlsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersCallbackUrls`: %v\n", resp)
 }
 ```
 
@@ -134,7 +138,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersCallbackUrlsResponse**](AdminSocialProvidersCallbackUrlsResponse.md)
 
 ### Authorization
 
@@ -143,7 +147,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -152,9 +156,9 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersCreate
 
-> AdminSocialProvidersCreate(ctx, orgId).Execute()
+> AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(ctx, orgId).Execute()
 
-Create a new social login provider
+Create a social login provider
 
 ### Example
 
@@ -173,11 +177,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersCreate`: AdminSocialProvidersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersCreate`: %v\n", resp)
 }
 ```
 
@@ -200,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -209,7 +215,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -218,7 +224,7 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersDelete
 
-> AdminSocialProvidersDelete(ctx, orgId, providerId).Execute()
+> MessageResponse AdminSocialProvidersDelete(ctx, orgId, providerId).Execute()
 
 Delete a social login provider
 
@@ -240,11 +246,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDelete(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDelete(context.Background(), orgId, providerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersDelete`: %v\n", resp)
 }
 ```
 
@@ -269,7 +277,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -278,7 +286,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -287,7 +295,7 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersDisable
 
-> AdminSocialProvidersDisable(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersCreateResponse AdminSocialProvidersDisable(ctx, orgId, providerId).Execute()
 
 Disable a social login provider
 
@@ -309,11 +317,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDisable(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDisable(context.Background(), orgId, providerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersDisable``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersDisable`: AdminSocialProvidersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersDisable`: %v\n", resp)
 }
 ```
 
@@ -338,7 +348,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -347,7 +357,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -356,7 +366,7 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersEnable
 
-> AdminSocialProvidersEnable(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersCreateResponse AdminSocialProvidersEnable(ctx, orgId, providerId).Execute()
 
 Enable a social login provider
 
@@ -378,11 +388,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersEnable(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersEnable(context.Background(), orgId, providerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersEnable``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersEnable`: AdminSocialProvidersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersEnable`: %v\n", resp)
 }
 ```
 
@@ -407,7 +419,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -416,7 +428,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -425,9 +437,9 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersGet
 
-> AdminSocialProvidersGet(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersGetResponse AdminSocialProvidersGet(ctx, orgId, providerId).Execute()
 
-Get a single social login provider (by ID or by provider name)
+Get a social login provider
 
 ### Example
 
@@ -447,11 +459,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersGet(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersGet(context.Background(), orgId, providerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersGet`: AdminSocialProvidersGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersGet`: %v\n", resp)
 }
 ```
 
@@ -476,7 +490,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersGetResponse**](AdminSocialProvidersGetResponse.md)
 
 ### Authorization
 
@@ -485,7 +499,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -494,9 +508,9 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersList
 
-> AdminSocialProvidersList(ctx, orgId).Execute()
+> AdminSocialProvidersListResponse AdminSocialProvidersList(ctx, orgId).Execute()
 
-List all configured social login providers
+List social login providers
 
 ### Example
 
@@ -515,11 +529,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersList`: AdminSocialProvidersListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersList`: %v\n", resp)
 }
 ```
 
@@ -542,7 +558,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersListResponse**](AdminSocialProvidersListResponse.md)
 
 ### Authorization
 
@@ -551,7 +567,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -560,9 +576,9 @@ Name | Type | Description  | Notes
 
 ## AdminSocialProvidersTypes
 
-> AdminSocialProvidersTypes(ctx, orgId).Execute()
+> AdminSocialProvidersAvailableResponse AdminSocialProvidersTypes(ctx, orgId).Execute()
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 
@@ -581,11 +597,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersTypes(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersTypes(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.AdminSocialProvidersTypes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSocialProvidersTypes`: AdminSocialProvidersAvailableResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.AdminSocialProvidersTypes`: %v\n", resp)
 }
 ```
 
@@ -608,7 +626,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -617,7 +635,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -626,9 +644,9 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSocialProvidersUpdate
 
-> PatchAdminSocialProvidersUpdate(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(ctx, orgId, providerId).Execute()
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Update a social login provider
 
 ### Example
 
@@ -648,11 +666,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSocialProvidersUpdate`: AdminSocialProvidersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate`: %v\n", resp)
 }
 ```
 
@@ -677,7 +697,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -686,7 +706,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -695,9 +715,9 @@ Name | Type | Description  | Notes
 
 ## PutAdminSocialProvidersUpdate
 
-> PutAdminSocialProvidersUpdate(ctx, orgId, providerId).Execute()
+> AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(ctx, orgId, providerId).Execute()
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Create or replace a social login provider
 
 ### Example
 
@@ -717,11 +737,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
+	resp, r, err := apiClient.AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSocialProvidersUpdate`: AdminSocialProvidersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate`: %v\n", resp)
 }
 ```
 
@@ -746,7 +768,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -755,7 +777,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

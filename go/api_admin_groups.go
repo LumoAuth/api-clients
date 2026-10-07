@@ -24,7 +24,7 @@ import (
 type AdminGroupsAPI interface {
 
 	/*
-	AdminGroupsAddMembers Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+	AdminGroupsAddMembers Add member(s) to group
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -34,7 +34,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsAddMembers(ctx context.Context, orgId string, groupId string) ApiAdminGroupsAddMembersRequest
 
 	// AdminGroupsAddMembersExecute executes the request
-	AdminGroupsAddMembersExecute(r ApiAdminGroupsAddMembersRequest) (*http.Response, error)
+	//  @return AdminGroupsCreateResponse
+	AdminGroupsAddMembersExecute(r ApiAdminGroupsAddMembersRequest) (*AdminGroupsCreateResponse, *http.Response, error)
 
 	/*
 	AdminGroupsAddRole Add a single role to a group
@@ -47,7 +48,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsAddRole(ctx context.Context, orgId string, groupId string) ApiAdminGroupsAddRoleRequest
 
 	// AdminGroupsAddRoleExecute executes the request
-	AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRoleRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRoleRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminGroupsCreate Create a new group
@@ -59,7 +61,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsCreate(ctx context.Context, orgId string) ApiAdminGroupsCreateRequest
 
 	// AdminGroupsCreateExecute executes the request
-	AdminGroupsCreateExecute(r ApiAdminGroupsCreateRequest) (*http.Response, error)
+	//  @return AdminGroupsCreateResponse
+	AdminGroupsCreateExecute(r ApiAdminGroupsCreateRequest) (*AdminGroupsCreateResponse, *http.Response, error)
 
 	/*
 	AdminGroupsDelete Delete a group
@@ -72,7 +75,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsDelete(ctx context.Context, orgId string, groupId string) ApiAdminGroupsDeleteRequest
 
 	// AdminGroupsDeleteExecute executes the request
-	AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminGroupsGet Get a single group by ID or slug
@@ -85,7 +89,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsGet(ctx context.Context, orgId string, groupId string) ApiAdminGroupsGetRequest
 
 	// AdminGroupsGetExecute executes the request
-	AdminGroupsGetExecute(r ApiAdminGroupsGetRequest) (*http.Response, error)
+	//  @return AdminGroupsGetResponse
+	AdminGroupsGetExecute(r ApiAdminGroupsGetRequest) (*AdminGroupsGetResponse, *http.Response, error)
 
 	/*
 	AdminGroupsGetMembers Get group members
@@ -98,7 +103,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsGetMembers(ctx context.Context, orgId string, groupId string) ApiAdminGroupsGetMembersRequest
 
 	// AdminGroupsGetMembersExecute executes the request
-	AdminGroupsGetMembersExecute(r ApiAdminGroupsGetMembersRequest) (*http.Response, error)
+	//  @return AdminGroupsGetMembersResponse
+	AdminGroupsGetMembersExecute(r ApiAdminGroupsGetMembersRequest) (*AdminGroupsGetMembersResponse, *http.Response, error)
 
 	/*
 	AdminGroupsGroupsGetRoles Get group roles
@@ -111,7 +117,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsGroupsGetRoles(ctx context.Context, orgId string, groupId string) ApiAdminGroupsGroupsGetRolesRequest
 
 	// AdminGroupsGroupsGetRolesExecute executes the request
-	AdminGroupsGroupsGetRolesExecute(r ApiAdminGroupsGroupsGetRolesRequest) (*http.Response, error)
+	//  @return AdminGroupsGroupsGetRolesResponse
+	AdminGroupsGroupsGetRolesExecute(r ApiAdminGroupsGroupsGetRolesRequest) (*AdminGroupsGroupsGetRolesResponse, *http.Response, error)
 
 	/*
 	AdminGroupsList List all groups in the tenant
@@ -123,10 +130,11 @@ type AdminGroupsAPI interface {
 	AdminGroupsList(ctx context.Context, orgId string) ApiAdminGroupsListRequest
 
 	// AdminGroupsListExecute executes the request
-	AdminGroupsListExecute(r ApiAdminGroupsListRequest) (*http.Response, error)
+	//  @return AdminGroupsListResponse
+	AdminGroupsListExecute(r ApiAdminGroupsListRequest) (*AdminGroupsListResponse, *http.Response, error)
 
 	/*
-	AdminGroupsRemoveMember Remove member from group — userId is a UUID or email
+	AdminGroupsRemoveMember Remove member from group
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -137,7 +145,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsRemoveMember(ctx context.Context, orgId string, groupId string, userId string) ApiAdminGroupsRemoveMemberRequest
 
 	// AdminGroupsRemoveMemberExecute executes the request
-	AdminGroupsRemoveMemberExecute(r ApiAdminGroupsRemoveMemberRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminGroupsRemoveMemberExecute(r ApiAdminGroupsRemoveMemberRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminGroupsRemoveRole Remove a role from a group
@@ -151,7 +160,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsRemoveRole(ctx context.Context, orgId string, groupId string, roleId string) ApiAdminGroupsRemoveRoleRequest
 
 	// AdminGroupsRemoveRoleExecute executes the request
-	AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRemoveRoleRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRemoveRoleRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminGroupsUpdateRoles Update group roles (replaces all existing roles)
@@ -164,7 +174,8 @@ type AdminGroupsAPI interface {
 	AdminGroupsUpdateRoles(ctx context.Context, orgId string, groupId string) ApiAdminGroupsUpdateRolesRequest
 
 	// AdminGroupsUpdateRolesExecute executes the request
-	AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUpdateRolesRequest) (*http.Response, error)
+	//  @return AdminGroupsCreateResponse
+	AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUpdateRolesRequest) (*AdminGroupsCreateResponse, *http.Response, error)
 
 	/*
 	PatchAdminGroupsUpdate Update an existing group
@@ -177,7 +188,8 @@ type AdminGroupsAPI interface {
 	PatchAdminGroupsUpdate(ctx context.Context, orgId string, groupId string) ApiPatchAdminGroupsUpdateRequest
 
 	// PatchAdminGroupsUpdateExecute executes the request
-	PatchAdminGroupsUpdateExecute(r ApiPatchAdminGroupsUpdateRequest) (*http.Response, error)
+	//  @return AdminGroupsCreateResponse
+	PatchAdminGroupsUpdateExecute(r ApiPatchAdminGroupsUpdateRequest) (*AdminGroupsCreateResponse, *http.Response, error)
 
 	/*
 	PutAdminGroupsUpdate Update an existing group
@@ -190,7 +202,8 @@ type AdminGroupsAPI interface {
 	PutAdminGroupsUpdate(ctx context.Context, orgId string, groupId string) ApiPutAdminGroupsUpdateRequest
 
 	// PutAdminGroupsUpdateExecute executes the request
-	PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsUpdateRequest) (*http.Response, error)
+	//  @return AdminGroupsCreateResponse
+	PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsUpdateRequest) (*AdminGroupsCreateResponse, *http.Response, error)
 }
 
 // AdminGroupsAPIService AdminGroupsAPI service
@@ -203,12 +216,12 @@ type ApiAdminGroupsAddMembersRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsAddMembersRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsAddMembersRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsAddMembersExecute(r)
 }
 
 /*
-AdminGroupsAddMembers Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+AdminGroupsAddMembers Add member(s) to group
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -225,16 +238,18 @@ func (a *AdminGroupsAPIService) AdminGroupsAddMembers(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAddMembersRequest) (*http.Response, error) {
+//  @return AdminGroupsCreateResponse
+func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAddMembersRequest) (*AdminGroupsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsAddMembers")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members"
@@ -255,7 +270,7 @@ func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAdd
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -278,19 +293,19 @@ func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAdd
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -298,10 +313,19 @@ func (a *AdminGroupsAPIService) AdminGroupsAddMembersExecute(r ApiAdminGroupsAdd
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsAddRoleRequest struct {
@@ -311,7 +335,7 @@ type ApiAdminGroupsAddRoleRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsAddRoleRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsAddRoleRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsAddRoleExecute(r)
 }
 
@@ -333,16 +357,18 @@ func (a *AdminGroupsAPIService) AdminGroupsAddRole(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRoleRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRoleRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsAddRole")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
@@ -363,7 +389,7 @@ func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRol
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -386,19 +412,19 @@ func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRol
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -406,10 +432,19 @@ func (a *AdminGroupsAPIService) AdminGroupsAddRoleExecute(r ApiAdminGroupsAddRol
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsCreateRequest struct {
@@ -418,7 +453,7 @@ type ApiAdminGroupsCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAdminGroupsCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsCreateRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsCreateExecute(r)
 }
 
@@ -438,16 +473,18 @@ func (a *AdminGroupsAPIService) AdminGroupsCreate(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateRequest) (*http.Response, error) {
+//  @return AdminGroupsCreateResponse
+func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateRequest) (*AdminGroupsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups"
@@ -467,7 +504,7 @@ func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -490,19 +527,19 @@ func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -510,10 +547,19 @@ func (a *AdminGroupsAPIService) AdminGroupsCreateExecute(r ApiAdminGroupsCreateR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsDeleteRequest struct {
@@ -523,7 +569,7 @@ type ApiAdminGroupsDeleteRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsDeleteExecute(r)
 }
 
@@ -545,16 +591,18 @@ func (a *AdminGroupsAPIService) AdminGroupsDelete(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminGroupsAPIService) AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
@@ -575,7 +623,7 @@ func (a *AdminGroupsAPIService) AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -598,19 +646,19 @@ func (a *AdminGroupsAPIService) AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -618,10 +666,19 @@ func (a *AdminGroupsAPIService) AdminGroupsDeleteExecute(r ApiAdminGroupsDeleteR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsGetRequest struct {
@@ -631,7 +688,7 @@ type ApiAdminGroupsGetRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsGetRequest) Execute() (*AdminGroupsGetResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsGetExecute(r)
 }
 
@@ -653,16 +710,18 @@ func (a *AdminGroupsAPIService) AdminGroupsGet(ctx context.Context, orgId string
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsGetExecute(r ApiAdminGroupsGetRequest) (*http.Response, error) {
+//  @return AdminGroupsGetResponse
+func (a *AdminGroupsAPIService) AdminGroupsGetExecute(r ApiAdminGroupsGetRequest) (*AdminGroupsGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
@@ -683,7 +742,7 @@ func (a *AdminGroupsAPIService) AdminGroupsGetExecute(r ApiAdminGroupsGetRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -706,19 +765,19 @@ func (a *AdminGroupsAPIService) AdminGroupsGetExecute(r ApiAdminGroupsGetRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -726,10 +785,19 @@ func (a *AdminGroupsAPIService) AdminGroupsGetExecute(r ApiAdminGroupsGetRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsGetMembersRequest struct {
@@ -739,7 +807,7 @@ type ApiAdminGroupsGetMembersRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsGetMembersRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsGetMembersRequest) Execute() (*AdminGroupsGetMembersResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsGetMembersExecute(r)
 }
 
@@ -761,16 +829,18 @@ func (a *AdminGroupsAPIService) AdminGroupsGetMembers(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsGetMembersExecute(r ApiAdminGroupsGetMembersRequest) (*http.Response, error) {
+//  @return AdminGroupsGetMembersResponse
+func (a *AdminGroupsAPIService) AdminGroupsGetMembersExecute(r ApiAdminGroupsGetMembersRequest) (*AdminGroupsGetMembersResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsGetMembersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsGetMembers")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members"
@@ -791,7 +861,7 @@ func (a *AdminGroupsAPIService) AdminGroupsGetMembersExecute(r ApiAdminGroupsGet
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -814,19 +884,19 @@ func (a *AdminGroupsAPIService) AdminGroupsGetMembersExecute(r ApiAdminGroupsGet
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -834,10 +904,19 @@ func (a *AdminGroupsAPIService) AdminGroupsGetMembersExecute(r ApiAdminGroupsGet
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsGroupsGetRolesRequest struct {
@@ -847,7 +926,7 @@ type ApiAdminGroupsGroupsGetRolesRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsGroupsGetRolesRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsGroupsGetRolesRequest) Execute() (*AdminGroupsGroupsGetRolesResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsGroupsGetRolesExecute(r)
 }
 
@@ -869,16 +948,18 @@ func (a *AdminGroupsAPIService) AdminGroupsGroupsGetRoles(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsGroupsGetRolesExecute(r ApiAdminGroupsGroupsGetRolesRequest) (*http.Response, error) {
+//  @return AdminGroupsGroupsGetRolesResponse
+func (a *AdminGroupsAPIService) AdminGroupsGroupsGetRolesExecute(r ApiAdminGroupsGroupsGetRolesRequest) (*AdminGroupsGroupsGetRolesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsGroupsGetRolesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsGroupsGetRoles")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
@@ -899,7 +980,7 @@ func (a *AdminGroupsAPIService) AdminGroupsGroupsGetRolesExecute(r ApiAdminGroup
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -922,19 +1003,19 @@ func (a *AdminGroupsAPIService) AdminGroupsGroupsGetRolesExecute(r ApiAdminGroup
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -942,10 +1023,19 @@ func (a *AdminGroupsAPIService) AdminGroupsGroupsGetRolesExecute(r ApiAdminGroup
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsListRequest struct {
@@ -954,7 +1044,7 @@ type ApiAdminGroupsListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminGroupsListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsListRequest) Execute() (*AdminGroupsListResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsListExecute(r)
 }
 
@@ -974,16 +1064,18 @@ func (a *AdminGroupsAPIService) AdminGroupsList(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsListExecute(r ApiAdminGroupsListRequest) (*http.Response, error) {
+//  @return AdminGroupsListResponse
+func (a *AdminGroupsAPIService) AdminGroupsListExecute(r ApiAdminGroupsListRequest) (*AdminGroupsListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups"
@@ -1003,7 +1095,7 @@ func (a *AdminGroupsAPIService) AdminGroupsListExecute(r ApiAdminGroupsListReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1026,19 +1118,19 @@ func (a *AdminGroupsAPIService) AdminGroupsListExecute(r ApiAdminGroupsListReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1046,10 +1138,19 @@ func (a *AdminGroupsAPIService) AdminGroupsListExecute(r ApiAdminGroupsListReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsRemoveMemberRequest struct {
@@ -1060,12 +1161,12 @@ type ApiAdminGroupsRemoveMemberRequest struct {
 	userId string
 }
 
-func (r ApiAdminGroupsRemoveMemberRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsRemoveMemberRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsRemoveMemberExecute(r)
 }
 
 /*
-AdminGroupsRemoveMember Remove member from group — userId is a UUID or email
+AdminGroupsRemoveMember Remove member from group
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1084,16 +1185,18 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveMember(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsRemoveMemberExecute(r ApiAdminGroupsRemoveMemberRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminGroupsAPIService) AdminGroupsRemoveMemberExecute(r ApiAdminGroupsRemoveMemberRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsRemoveMember")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId}"
@@ -1115,7 +1218,7 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveMemberExecute(r ApiAdminGroupsR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1138,19 +1241,19 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveMemberExecute(r ApiAdminGroupsR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1158,10 +1261,19 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveMemberExecute(r ApiAdminGroupsR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsRemoveRoleRequest struct {
@@ -1172,7 +1284,7 @@ type ApiAdminGroupsRemoveRoleRequest struct {
 	roleId string
 }
 
-func (r ApiAdminGroupsRemoveRoleRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsRemoveRoleRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsRemoveRoleExecute(r)
 }
 
@@ -1196,16 +1308,18 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveRole(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRemoveRoleRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminGroupsAPIService) AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRemoveRoleRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsRemoveRole")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId}"
@@ -1227,7 +1341,7 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRem
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1250,19 +1364,19 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRem
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1270,10 +1384,19 @@ func (a *AdminGroupsAPIService) AdminGroupsRemoveRoleExecute(r ApiAdminGroupsRem
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminGroupsUpdateRolesRequest struct {
@@ -1283,7 +1406,7 @@ type ApiAdminGroupsUpdateRolesRequest struct {
 	groupId string
 }
 
-func (r ApiAdminGroupsUpdateRolesRequest) Execute() (*http.Response, error) {
+func (r ApiAdminGroupsUpdateRolesRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminGroupsUpdateRolesExecute(r)
 }
 
@@ -1305,16 +1428,18 @@ func (a *AdminGroupsAPIService) AdminGroupsUpdateRoles(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUpdateRolesRequest) (*http.Response, error) {
+//  @return AdminGroupsCreateResponse
+func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUpdateRolesRequest) (*AdminGroupsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.AdminGroupsUpdateRoles")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
@@ -1335,7 +1460,7 @@ func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUp
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1358,19 +1483,19 @@ func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUp
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1378,10 +1503,19 @@ func (a *AdminGroupsAPIService) AdminGroupsUpdateRolesExecute(r ApiAdminGroupsUp
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminGroupsUpdateRequest struct {
@@ -1391,7 +1525,7 @@ type ApiPatchAdminGroupsUpdateRequest struct {
 	groupId string
 }
 
-func (r ApiPatchAdminGroupsUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminGroupsUpdateRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminGroupsUpdateExecute(r)
 }
 
@@ -1413,16 +1547,18 @@ func (a *AdminGroupsAPIService) PatchAdminGroupsUpdate(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGroupsUpdateRequest) (*http.Response, error) {
+//  @return AdminGroupsCreateResponse
+func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGroupsUpdateRequest) (*AdminGroupsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.PatchAdminGroupsUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
@@ -1443,7 +1579,7 @@ func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGro
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1466,19 +1602,19 @@ func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGro
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1486,10 +1622,19 @@ func (a *AdminGroupsAPIService) PatchAdminGroupsUpdateExecute(r ApiPatchAdminGro
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminGroupsUpdateRequest struct {
@@ -1499,7 +1644,7 @@ type ApiPutAdminGroupsUpdateRequest struct {
 	groupId string
 }
 
-func (r ApiPutAdminGroupsUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminGroupsUpdateRequest) Execute() (*AdminGroupsCreateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminGroupsUpdateExecute(r)
 }
 
@@ -1521,16 +1666,18 @@ func (a *AdminGroupsAPIService) PutAdminGroupsUpdate(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsUpdateRequest) (*http.Response, error) {
+//  @return AdminGroupsCreateResponse
+func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsUpdateRequest) (*AdminGroupsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminGroupsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminGroupsAPIService.PutAdminGroupsUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
@@ -1551,7 +1698,7 @@ func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsU
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1574,19 +1721,19 @@ func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsU
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1594,8 +1741,17 @@ func (a *AdminGroupsAPIService) PutAdminGroupsUpdateExecute(r ApiPutAdminGroupsU
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -21,6 +21,14 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminMcpServersCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminMcpServersGetResponse } from '../models';
+// @ts-ignore
+import type { AdminMcpServersListResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
 /**
  * AdminMcpApi - axios parameter creator
  * @export
@@ -28,8 +36,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const AdminMcpApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
-         * @summary POST /api/v1/admin/mcp/servers
+         * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization\'s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+         * @summary Register an MCP server
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -70,6 +78,7 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Delete an MCP server
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
@@ -114,6 +123,7 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary Get an MCP server
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
@@ -158,6 +168,7 @@ export const AdminMcpApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @summary List MCP servers
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -207,13 +218,13 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminMcpApiAxiosParamCreator(configuration)
     return {
         /**
-         * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
-         * @summary POST /api/v1/admin/mcp/servers
+         * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization\'s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+         * @summary Register an MCP server
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminMcpServersCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminMcpServersCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersCreate']?.[localVarOperationServerIndex]?.url;
@@ -221,12 +232,13 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete an MCP server
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminMcpServersDelete(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminMcpServersDelete(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersDelete(orgId, serverId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersDelete']?.[localVarOperationServerIndex]?.url;
@@ -234,12 +246,13 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get an MCP server
          * @param {string} orgId 
          * @param {string} serverId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminMcpServersGet(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminMcpServersGet(orgId: string, serverId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersGet(orgId, serverId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersGet']?.[localVarOperationServerIndex]?.url;
@@ -247,11 +260,12 @@ export const AdminMcpApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List MCP servers
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminMcpServersList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminMcpServersList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminMcpServersListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminMcpServersList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminMcpApi.adminMcpServersList']?.[localVarOperationServerIndex]?.url;
@@ -268,40 +282,43 @@ export const AdminMcpApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AdminMcpApiFp(configuration)
     return {
         /**
-         * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
-         * @summary POST /api/v1/admin/mcp/servers
+         * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization\'s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+         * @summary Register an MCP server
          * @param {AdminMcpApiAdminMcpServersCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminMcpServersCreate(requestParameters: AdminMcpApiAdminMcpServersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminMcpServersCreate(requestParameters: AdminMcpApiAdminMcpServersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse> {
             return localVarFp.adminMcpServersCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Delete an MCP server
          * @param {AdminMcpApiAdminMcpServersDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminMcpServersDelete(requestParameters: AdminMcpApiAdminMcpServersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminMcpServersDelete(requestParameters: AdminMcpApiAdminMcpServersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminMcpServersDelete(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Get an MCP server
          * @param {AdminMcpApiAdminMcpServersGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminMcpServersGet(requestParameters: AdminMcpApiAdminMcpServersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminMcpServersGet(requestParameters: AdminMcpApiAdminMcpServersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGetResponse> {
             return localVarFp.adminMcpServersGet(requestParameters.orgId, requestParameters.serverId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List MCP servers
          * @param {AdminMcpApiAdminMcpServersListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersListResponse> {
             return localVarFp.adminMcpServersList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -314,41 +331,44 @@ export const AdminMcpApiFactory = function (configuration?: Configuration, baseP
  */
 export interface AdminMcpApiInterface {
     /**
-     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
-     * @summary POST /api/v1/admin/mcp/servers
+     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization\'s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+     * @summary Register an MCP server
      * @param {AdminMcpApiAdminMcpServersCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminMcpApiInterface
      */
-    adminMcpServersCreate(requestParameters: AdminMcpApiAdminMcpServersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminMcpServersCreate(requestParameters: AdminMcpApiAdminMcpServersCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersCreateResponse>;
 
     /**
      * 
+     * @summary Delete an MCP server
      * @param {AdminMcpApiAdminMcpServersDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminMcpApiInterface
      */
-    adminMcpServersDelete(requestParameters: AdminMcpApiAdminMcpServersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminMcpServersDelete(requestParameters: AdminMcpApiAdminMcpServersDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary Get an MCP server
      * @param {AdminMcpApiAdminMcpServersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminMcpApiInterface
      */
-    adminMcpServersGet(requestParameters: AdminMcpApiAdminMcpServersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminMcpServersGet(requestParameters: AdminMcpApiAdminMcpServersGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersGetResponse>;
 
     /**
      * 
+     * @summary List MCP servers
      * @param {AdminMcpApiAdminMcpServersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminMcpApiInterface
      */
-    adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminMcpServersList(requestParameters: AdminMcpApiAdminMcpServersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminMcpServersListResponse>;
 
 }
 
@@ -430,8 +450,8 @@ export interface AdminMcpApiAdminMcpServersListRequest {
  */
 export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
     /**
-     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
-     * @summary POST /api/v1/admin/mcp/servers
+     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization\'s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+     * @summary Register an MCP server
      * @param {AdminMcpApiAdminMcpServersCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -443,6 +463,7 @@ export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
 
     /**
      * 
+     * @summary Delete an MCP server
      * @param {AdminMcpApiAdminMcpServersDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -454,6 +475,7 @@ export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
 
     /**
      * 
+     * @summary Get an MCP server
      * @param {AdminMcpApiAdminMcpServersGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -465,6 +487,7 @@ export class AdminMcpApi extends BaseAPI implements AdminMcpApiInterface {
 
     /**
      * 
+     * @summary List MCP servers
      * @param {AdminMcpApiAdminMcpServersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

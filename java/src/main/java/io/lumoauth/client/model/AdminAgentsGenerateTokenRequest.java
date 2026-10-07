@@ -50,20 +50,39 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsGenerateTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAgentsGenerateTokenRequest {
+  public static final String SERIALIZED_NAME_EXPIRES_IN = "expiresIn";
+  @SerializedName(SERIALIZED_NAME_EXPIRES_IN)
+  @javax.annotation.Nullable
+  private Integer expiresIn;
+
   public static final String SERIALIZED_NAME_SCOPES = "scopes";
   @SerializedName(SERIALIZED_NAME_SCOPES)
   @javax.annotation.Nullable
   private List<String> scopes = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_TTL = "ttl";
-  @SerializedName(SERIALIZED_NAME_TTL)
-  @javax.annotation.Nullable
-  private Integer ttl;
-
   public AdminAgentsGenerateTokenRequest() {
   }
+
+  public AdminAgentsGenerateTokenRequest expiresIn(@javax.annotation.Nullable Integer expiresIn) {
+    this.expiresIn = expiresIn;
+    return this;
+  }
+
+  /**
+   * Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+   * @return expiresIn
+   */
+  @javax.annotation.Nullable
+  public Integer getExpiresIn() {
+    return expiresIn;
+  }
+
+  public void setExpiresIn(@javax.annotation.Nullable Integer expiresIn) {
+    this.expiresIn = expiresIn;
+  }
+
 
   public AdminAgentsGenerateTokenRequest scopes(@javax.annotation.Nullable List<String> scopes) {
     this.scopes = scopes;
@@ -79,7 +98,7 @@ public class AdminAgentsGenerateTokenRequest {
   }
 
   /**
-   * Optional scopes to embed in the token.
+   * Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
    * @return scopes
    */
   @javax.annotation.Nullable
@@ -89,25 +108,6 @@ public class AdminAgentsGenerateTokenRequest {
 
   public void setScopes(@javax.annotation.Nullable List<String> scopes) {
     this.scopes = scopes;
-  }
-
-
-  public AdminAgentsGenerateTokenRequest ttl(@javax.annotation.Nullable Integer ttl) {
-    this.ttl = ttl;
-    return this;
-  }
-
-  /**
-   * Optional token lifetime in seconds.
-   * @return ttl
-   */
-  @javax.annotation.Nullable
-  public Integer getTtl() {
-    return ttl;
-  }
-
-  public void setTtl(@javax.annotation.Nullable Integer ttl) {
-    this.ttl = ttl;
   }
 
 
@@ -121,21 +121,21 @@ public class AdminAgentsGenerateTokenRequest {
       return false;
     }
     AdminAgentsGenerateTokenRequest adminAgentsGenerateTokenRequest = (AdminAgentsGenerateTokenRequest) o;
-    return Objects.equals(this.scopes, adminAgentsGenerateTokenRequest.scopes) &&
-        Objects.equals(this.ttl, adminAgentsGenerateTokenRequest.ttl);
+    return Objects.equals(this.expiresIn, adminAgentsGenerateTokenRequest.expiresIn) &&
+        Objects.equals(this.scopes, adminAgentsGenerateTokenRequest.scopes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(scopes, ttl);
+    return Objects.hash(expiresIn, scopes);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class AdminAgentsGenerateTokenRequest {\n");
+    sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
-    sb.append("    ttl: ").append(toIndentedString(ttl)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -157,7 +157,7 @@ public class AdminAgentsGenerateTokenRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("scopes", "ttl"));
+    openapiFields = new HashSet<String>(Arrays.asList("expiresIn", "scopes"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

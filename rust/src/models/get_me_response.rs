@@ -28,7 +28,7 @@ pub struct GetMeResponse {
     #[serde(rename = "capabilities", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
     pub capabilities: Option<Option<Vec<String>>>,
     #[serde(rename = "tenant", skip_serializing_if = "Option::is_none")]
-    pub tenant: Option<Box<models::GetMeResponseTenant>>,
+    pub tenant: Option<Box<models::GroupRef>>,
 }
 
 impl GetMeResponse {

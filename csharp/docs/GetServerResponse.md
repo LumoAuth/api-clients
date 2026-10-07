@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **Status** | **string** |  | [optional] 
 **ScopesSupported** | **List&lt;string&gt;** |  | [optional] 
 **RequirePkce** | **bool** |  | [optional] 
+**RequireDpop** | **bool** |  | [optional] 
 **TokenLifetime** | **int** |  | [optional] 
 **CreatedAt** | **DateTime** |  | [optional] 
 **UpdatedAt** | **DateTime** |  | [optional] 

@@ -15,17 +15,17 @@ require 'time'
 
 module LumoAuthApiClient
   class AdminAgentsGenerateTokenRequest
-    # Optional scopes to embed in the token.
-    attr_accessor :scopes
+    # Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+    attr_accessor :expires_in
 
-    # Optional token lifetime in seconds.
-    attr_accessor :ttl
+    # Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
+    attr_accessor :scopes
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'scopes' => :'scopes',
-        :'ttl' => :'ttl'
+        :'expires_in' => :'expiresIn',
+        :'scopes' => :'scopes'
       }
     end
 
@@ -42,8 +42,8 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'scopes' => :'Array<String>',
-        :'ttl' => :'Integer'
+        :'expires_in' => :'Integer',
+        :'scopes' => :'Array<String>'
       }
     end
 
@@ -69,14 +69,14 @@ module LumoAuthApiClient
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'expires_in')
+        self.expires_in = attributes[:'expires_in']
+      end
+
       if attributes.key?(:'scopes')
         if (value = attributes[:'scopes']).is_a?(Array)
           self.scopes = value
         end
-      end
-
-      if attributes.key?(:'ttl')
-        self.ttl = attributes[:'ttl']
       end
     end
 
@@ -100,8 +100,8 @@ module LumoAuthApiClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          scopes == o.scopes &&
-          ttl == o.ttl
+          expires_in == o.expires_in &&
+          scopes == o.scopes
     end
 
     # @see the `==` method
@@ -113,7 +113,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [scopes, ttl].hash
+      [expires_in, scopes].hash
     end
 
     # Builds the object from hash

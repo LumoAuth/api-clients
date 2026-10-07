@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**admin_analytics_dashboard**](AdminSettingsApi.md#admin_analytics_dashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 [**admin_analytics_logins**](AdminSettingsApi.md#admin_analytics_logins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 [**admin_analytics_users**](AdminSettingsApi.md#admin_analytics_users) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information
+[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
 [**admin_settings_all**](AdminSettingsApi.md#admin_settings_all) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 [**admin_settings_auth_get**](AdminSettingsApi.md#admin_settings_auth_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 [**admin_settings_authentication_get**](AdminSettingsApi.md#admin_settings_authentication_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**admin_settings_general_get**](AdminSettingsApi.md#admin_settings_general_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 [**admin_settings_scim_get**](AdminSettingsApi.md#admin_settings_scim_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 [**admin_settings_security_get**](AdminSettingsApi.md#admin_settings_security_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information
-[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
+[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**patch_admin_settings_auth_update**](AdminSettingsApi.md#patch_admin_settings_auth_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**patch_admin_settings_authentication_update**](AdminSettingsApi.md#patch_admin_settings_authentication_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**patch_admin_settings_branding_update**](AdminSettingsApi.md#patch_admin_settings_branding_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -25,8 +25,8 @@ Method | HTTP request | Description
 [**patch_admin_settings_general_update**](AdminSettingsApi.md#patch_admin_settings_general_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**patch_admin_settings_scim_update**](AdminSettingsApi.md#patch_admin_settings_scim_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**patch_admin_settings_security_update**](AdminSettingsApi.md#patch_admin_settings_security_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
-[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**put_admin_settings_auth_update**](AdminSettingsApi.md#put_admin_settings_auth_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**put_admin_settings_authentication_update**](AdminSettingsApi.md#put_admin_settings_authentication_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**put_admin_settings_branding_update**](AdminSettingsApi.md#put_admin_settings_branding_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -34,11 +34,11 @@ Method | HTTP request | Description
 [**put_admin_settings_general_update**](AdminSettingsApi.md#put_admin_settings_general_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**put_admin_settings_scim_update**](AdminSettingsApi.md#put_admin_settings_scim_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**put_admin_settings_security_update**](AdminSettingsApi.md#put_admin_settings_security_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
+[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
 
 
 # **admin_analytics_dashboard**
-> admin_analytics_dashboard(org_id)
+> AdminAnalyticsDashboardResponse admin_analytics_dashboard(org_id)
 
 Get dashboard analytics
 
@@ -49,6 +49,7 @@ Get dashboard analytics
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_analytics_dashboard_response import AdminAnalyticsDashboardResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -82,7 +83,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get dashboard analytics
-        api_instance.admin_analytics_dashboard(org_id)
+        api_response = api_instance.admin_analytics_dashboard(org_id)
+        print("The response of AdminSettingsApi->admin_analytics_dashboard:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_analytics_dashboard: %s\n" % e)
 ```
@@ -98,7 +101,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAnalyticsDashboardResponse**](AdminAnalyticsDashboardResponse.md)
 
 ### Authorization
 
@@ -107,18 +110,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Dashboard counters |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_analytics_logins**
-> admin_analytics_logins(org_id)
+> AdminAnalyticsLoginsResponse admin_analytics_logins(org_id, days=days)
 
 Get login analytics
 
@@ -129,6 +132,7 @@ Get login analytics
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_analytics_logins_response import AdminAnalyticsLoginsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -159,10 +163,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    days = 30 # int | Window in days (1-90, default 30). (optional) (default to 30)
 
     try:
         # Get login analytics
-        api_instance.admin_analytics_logins(org_id)
+        api_response = api_instance.admin_analytics_logins(org_id, days=days)
+        print("The response of AdminSettingsApi->admin_analytics_logins:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_analytics_logins: %s\n" % e)
 ```
@@ -175,10 +182,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **days** | **int**| Window in days (1-90, default 30). | [optional] [default to 30]
 
 ### Return type
 
-void (empty response body)
+[**AdminAnalyticsLoginsResponse**](AdminAnalyticsLoginsResponse.md)
 
 ### Authorization
 
@@ -187,18 +195,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Daily login attempts |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_analytics_users**
-> admin_analytics_users(org_id)
+> AdminAnalyticsUsersResponse admin_analytics_users(org_id, days=days)
 
 Get user growth analytics
 
@@ -209,6 +217,7 @@ Get user growth analytics
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_analytics_users_response import AdminAnalyticsUsersResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -239,10 +248,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSettingsApi(api_client)
     org_id = 'org_id_example' # str | 
+    days = 30 # int | Window in days (1-90, default 30). (optional) (default to 30)
 
     try:
         # Get user growth analytics
-        api_instance.admin_analytics_users(org_id)
+        api_response = api_instance.admin_analytics_users(org_id, days=days)
+        print("The response of AdminSettingsApi->admin_analytics_users:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_analytics_users: %s\n" % e)
 ```
@@ -255,10 +267,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **days** | **int**| Window in days (1-90, default 30). | [optional] [default to 30]
 
 ### Return type
 
-void (empty response body)
+[**AdminAnalyticsUsersResponse**](AdminAnalyticsUsersResponse.md)
 
 ### Authorization
 
@@ -267,20 +280,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Daily registrations and user breakdowns |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_organization_get**
-> admin_organization_get(org_id)
+> AdminTenantGetResponse admin_organization_get(org_id)
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 
@@ -289,6 +302,7 @@ Get tenant information
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_tenant_get_response import AdminTenantGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -321,8 +335,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get tenant information
-        api_instance.admin_organization_get(org_id)
+        # Get organization (tenant) profile
+        api_response = api_instance.admin_organization_get(org_id)
+        print("The response of AdminSettingsApi->admin_organization_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_organization_get: %s\n" % e)
 ```
@@ -338,7 +354,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -347,18 +363,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_all**
-> admin_settings_all(org_id)
+> AdminSettingsAllResponse admin_settings_all(org_id)
 
 Get all settings (combined)
 
@@ -369,6 +385,7 @@ Get all settings (combined)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_all_response import AdminSettingsAllResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -402,7 +419,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get all settings (combined)
-        api_instance.admin_settings_all(org_id)
+        api_response = api_instance.admin_settings_all(org_id)
+        print("The response of AdminSettingsApi->admin_settings_all:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_all: %s\n" % e)
 ```
@@ -418,7 +437,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsAllResponse**](AdminSettingsAllResponse.md)
 
 ### Authorization
 
@@ -427,18 +446,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Combined settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_auth_get**
-> admin_settings_auth_get(org_id)
+> AdminSettingsAuthenticationGetResponse admin_settings_auth_get(org_id)
 
 Get authentication settings
 
@@ -449,6 +468,7 @@ Get authentication settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_authentication_get_response import AdminSettingsAuthenticationGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -482,7 +502,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get authentication settings
-        api_instance.admin_settings_auth_get(org_id)
+        api_response = api_instance.admin_settings_auth_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_auth_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_auth_get: %s\n" % e)
 ```
@@ -498,7 +520,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -507,18 +529,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_authentication_get**
-> admin_settings_authentication_get(org_id)
+> AdminSettingsAuthenticationGetResponse admin_settings_authentication_get(org_id)
 
 Get authentication settings (alias for settings/auth)
 
@@ -529,6 +551,7 @@ Get authentication settings (alias for settings/auth)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_authentication_get_response import AdminSettingsAuthenticationGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -562,7 +585,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get authentication settings (alias for settings/auth)
-        api_instance.admin_settings_authentication_get(org_id)
+        api_response = api_instance.admin_settings_authentication_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_authentication_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_authentication_get: %s\n" % e)
 ```
@@ -578,7 +603,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -587,18 +612,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_branding_get**
-> admin_settings_branding_get(org_id)
+> AdminSettingsBrandingGetResponse admin_settings_branding_get(org_id)
 
 Get branding/login page settings
 
@@ -609,6 +634,7 @@ Get branding/login page settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_branding_get_response import AdminSettingsBrandingGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -642,7 +668,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get branding/login page settings
-        api_instance.admin_settings_branding_get(org_id)
+        api_response = api_instance.admin_settings_branding_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_branding_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_branding_get: %s\n" % e)
 ```
@@ -658,7 +686,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsBrandingGetResponse**](AdminSettingsBrandingGetResponse.md)
 
 ### Authorization
 
@@ -667,18 +695,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_email_get**
-> admin_settings_email_get(org_id)
+> AdminSettingsEmailGetResponse admin_settings_email_get(org_id)
 
 Get email settings
 
@@ -689,6 +717,7 @@ Get email settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_email_get_response import AdminSettingsEmailGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -722,7 +751,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get email settings
-        api_instance.admin_settings_email_get(org_id)
+        api_response = api_instance.admin_settings_email_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_email_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_email_get: %s\n" % e)
 ```
@@ -738,7 +769,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsEmailGetResponse**](AdminSettingsEmailGetResponse.md)
 
 ### Authorization
 
@@ -747,18 +778,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_general_get**
-> admin_settings_general_get(org_id)
+> AdminSettingsGeneralGetResponse admin_settings_general_get(org_id)
 
 Get general settings
 
@@ -769,6 +800,7 @@ Get general settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_general_get_response import AdminSettingsGeneralGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -802,7 +834,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get general settings
-        api_instance.admin_settings_general_get(org_id)
+        api_response = api_instance.admin_settings_general_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_general_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_general_get: %s\n" % e)
 ```
@@ -818,7 +852,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsGeneralGetResponse**](AdminSettingsGeneralGetResponse.md)
 
 ### Authorization
 
@@ -827,18 +861,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | General settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_scim_get**
-> admin_settings_scim_get(org_id)
+> AdminSettingsScimGetResponse admin_settings_scim_get(org_id)
 
 Get SCIM settings
 
@@ -849,6 +883,7 @@ Get SCIM settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_scim_get_response import AdminSettingsScimGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -882,7 +917,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get SCIM settings
-        api_instance.admin_settings_scim_get(org_id)
+        api_response = api_instance.admin_settings_scim_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_scim_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_scim_get: %s\n" % e)
 ```
@@ -898,7 +935,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsScimGetResponse**](AdminSettingsScimGetResponse.md)
 
 ### Authorization
 
@@ -907,18 +944,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_settings_security_get**
-> admin_settings_security_get(org_id)
+> AdminSettingsSecurityGetResponse admin_settings_security_get(org_id)
 
 Get security settings
 
@@ -929,6 +966,7 @@ Get security settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_settings_security_get_response import AdminSettingsSecurityGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -962,7 +1000,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get security settings
-        api_instance.admin_settings_security_get(org_id)
+        api_response = api_instance.admin_settings_security_get(org_id)
+        print("The response of AdminSettingsApi->admin_settings_security_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_settings_security_get: %s\n" % e)
 ```
@@ -978,7 +1018,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsSecurityGetResponse**](AdminSettingsSecurityGetResponse.md)
 
 ### Authorization
 
@@ -987,20 +1027,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_tenant_get**
-> admin_tenant_get(org_id)
+> AdminTenantGetResponse admin_tenant_get(org_id)
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 
@@ -1009,6 +1049,7 @@ Get tenant information
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_tenant_get_response import AdminTenantGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1041,8 +1082,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get tenant information
-        api_instance.admin_tenant_get(org_id)
+        # Get organization (tenant) profile
+        api_response = api_instance.admin_tenant_get(org_id)
+        print("The response of AdminSettingsApi->admin_tenant_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->admin_tenant_get: %s\n" % e)
 ```
@@ -1058,7 +1101,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -1067,20 +1110,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_organization_update**
-> patch_admin_organization_update(org_id)
+> PutAdminTenantUpdateResponse patch_admin_organization_update(org_id)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -1089,6 +1132,7 @@ Update tenant settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1121,8 +1165,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Update tenant settings
-        api_instance.patch_admin_organization_update(org_id)
+        # Update organization (tenant) name and settings
+        api_response = api_instance.patch_admin_organization_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_organization_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_organization_update: %s\n" % e)
 ```
@@ -1138,7 +1184,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1147,18 +1193,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_auth_update**
-> patch_admin_settings_auth_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_auth_update(org_id)
 
 Update authentication settings
 
@@ -1169,6 +1215,7 @@ Update authentication settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1202,7 +1249,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update authentication settings
-        api_instance.patch_admin_settings_auth_update(org_id)
+        api_response = api_instance.patch_admin_settings_auth_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_auth_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_auth_update: %s\n" % e)
 ```
@@ -1218,7 +1267,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1227,18 +1276,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_authentication_update**
-> patch_admin_settings_authentication_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_authentication_update(org_id)
 
 Update authentication settings (alias for settings/auth)
 
@@ -1249,6 +1298,7 @@ Update authentication settings (alias for settings/auth)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1282,7 +1332,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update authentication settings (alias for settings/auth)
-        api_instance.patch_admin_settings_authentication_update(org_id)
+        api_response = api_instance.patch_admin_settings_authentication_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_authentication_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_authentication_update: %s\n" % e)
 ```
@@ -1298,7 +1350,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1307,18 +1359,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_branding_update**
-> patch_admin_settings_branding_update(org_id)
+> PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id)
 
 Update branding/login page settings
 
@@ -1329,6 +1381,7 @@ Update branding/login page settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1362,7 +1415,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update branding/login page settings
-        api_instance.patch_admin_settings_branding_update(org_id)
+        api_response = api_instance.patch_admin_settings_branding_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_branding_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_branding_update: %s\n" % e)
 ```
@@ -1378,7 +1433,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1387,18 +1442,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_email_update**
-> patch_admin_settings_email_update(org_id)
+> PutAdminSettingsEmailUpdateResponse patch_admin_settings_email_update(org_id)
 
 Update email settings
 
@@ -1409,6 +1464,7 @@ Update email settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_email_update_response import PutAdminSettingsEmailUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1442,7 +1498,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update email settings
-        api_instance.patch_admin_settings_email_update(org_id)
+        api_response = api_instance.patch_admin_settings_email_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_email_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_email_update: %s\n" % e)
 ```
@@ -1458,7 +1516,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1467,18 +1525,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_general_update**
-> patch_admin_settings_general_update(org_id)
+> PutAdminSettingsGeneralUpdateResponse patch_admin_settings_general_update(org_id)
 
 Update general settings
 
@@ -1489,6 +1547,7 @@ Update general settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1522,7 +1581,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update general settings
-        api_instance.patch_admin_settings_general_update(org_id)
+        api_response = api_instance.patch_admin_settings_general_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_general_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_general_update: %s\n" % e)
 ```
@@ -1538,7 +1599,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1547,18 +1608,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated general settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_scim_update**
-> patch_admin_settings_scim_update(org_id)
+> PutAdminSettingsScimUpdateResponse patch_admin_settings_scim_update(org_id)
 
 Update SCIM settings
 
@@ -1569,6 +1630,7 @@ Update SCIM settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1602,7 +1664,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update SCIM settings
-        api_instance.patch_admin_settings_scim_update(org_id)
+        api_response = api_instance.patch_admin_settings_scim_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_scim_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_scim_update: %s\n" % e)
 ```
@@ -1618,7 +1682,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -1627,18 +1691,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_settings_security_update**
-> patch_admin_settings_security_update(org_id)
+> PutAdminSettingsSecurityUpdateResponse patch_admin_settings_security_update(org_id)
 
 Update security settings
 
@@ -1649,6 +1713,7 @@ Update security settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1682,7 +1747,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update security settings
-        api_instance.patch_admin_settings_security_update(org_id)
+        api_response = api_instance.patch_admin_settings_security_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_settings_security_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_settings_security_update: %s\n" % e)
 ```
@@ -1698,7 +1765,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -1707,20 +1774,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_tenant_update**
-> patch_admin_tenant_update(org_id)
+> PutAdminTenantUpdateResponse patch_admin_tenant_update(org_id)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -1729,6 +1796,7 @@ Update tenant settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1761,8 +1829,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Update tenant settings
-        api_instance.patch_admin_tenant_update(org_id)
+        # Update organization (tenant) name and settings
+        api_response = api_instance.patch_admin_tenant_update(org_id)
+        print("The response of AdminSettingsApi->patch_admin_tenant_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->patch_admin_tenant_update: %s\n" % e)
 ```
@@ -1778,7 +1848,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1787,20 +1857,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_organization_update**
-> put_admin_organization_update(org_id)
+> PutAdminTenantUpdateResponse put_admin_organization_update(org_id)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -1809,6 +1879,7 @@ Update tenant settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1841,8 +1912,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Update tenant settings
-        api_instance.put_admin_organization_update(org_id)
+        # Update organization (tenant) name and settings
+        api_response = api_instance.put_admin_organization_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_organization_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_organization_update: %s\n" % e)
 ```
@@ -1858,7 +1931,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1867,18 +1940,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_auth_update**
-> put_admin_settings_auth_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_auth_update(org_id)
 
 Update authentication settings
 
@@ -1889,6 +1962,7 @@ Update authentication settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1922,7 +1996,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update authentication settings
-        api_instance.put_admin_settings_auth_update(org_id)
+        api_response = api_instance.put_admin_settings_auth_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_auth_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_auth_update: %s\n" % e)
 ```
@@ -1938,7 +2014,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1947,18 +2023,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_authentication_update**
-> put_admin_settings_authentication_update(org_id)
+> PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_authentication_update(org_id)
 
 Update authentication settings (alias for settings/auth)
 
@@ -1969,6 +2045,7 @@ Update authentication settings (alias for settings/auth)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2002,7 +2079,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update authentication settings (alias for settings/auth)
-        api_instance.put_admin_settings_authentication_update(org_id)
+        api_response = api_instance.put_admin_settings_authentication_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_authentication_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_authentication_update: %s\n" % e)
 ```
@@ -2018,7 +2097,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -2027,18 +2106,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_branding_update**
-> put_admin_settings_branding_update(org_id)
+> PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id)
 
 Update branding/login page settings
 
@@ -2049,6 +2128,7 @@ Update branding/login page settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2082,7 +2162,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update branding/login page settings
-        api_instance.put_admin_settings_branding_update(org_id)
+        api_response = api_instance.put_admin_settings_branding_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_branding_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_branding_update: %s\n" % e)
 ```
@@ -2098,7 +2180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -2107,18 +2189,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_email_update**
-> put_admin_settings_email_update(org_id)
+> PutAdminSettingsEmailUpdateResponse put_admin_settings_email_update(org_id)
 
 Update email settings
 
@@ -2129,6 +2211,7 @@ Update email settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_email_update_response import PutAdminSettingsEmailUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2162,7 +2245,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update email settings
-        api_instance.put_admin_settings_email_update(org_id)
+        api_response = api_instance.put_admin_settings_email_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_email_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_email_update: %s\n" % e)
 ```
@@ -2178,7 +2263,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -2187,18 +2272,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_general_update**
-> put_admin_settings_general_update(org_id)
+> PutAdminSettingsGeneralUpdateResponse put_admin_settings_general_update(org_id)
 
 Update general settings
 
@@ -2209,6 +2294,7 @@ Update general settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2242,7 +2328,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update general settings
-        api_instance.put_admin_settings_general_update(org_id)
+        api_response = api_instance.put_admin_settings_general_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_general_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_general_update: %s\n" % e)
 ```
@@ -2258,7 +2346,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -2267,18 +2355,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated general settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_scim_update**
-> put_admin_settings_scim_update(org_id)
+> PutAdminSettingsScimUpdateResponse put_admin_settings_scim_update(org_id)
 
 Update SCIM settings
 
@@ -2289,6 +2377,7 @@ Update SCIM settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2322,7 +2411,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update SCIM settings
-        api_instance.put_admin_settings_scim_update(org_id)
+        api_response = api_instance.put_admin_settings_scim_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_scim_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_scim_update: %s\n" % e)
 ```
@@ -2338,7 +2429,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -2347,18 +2438,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_settings_security_update**
-> put_admin_settings_security_update(org_id)
+> PutAdminSettingsSecurityUpdateResponse put_admin_settings_security_update(org_id)
 
 Update security settings
 
@@ -2369,6 +2460,7 @@ Update security settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2402,7 +2494,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update security settings
-        api_instance.put_admin_settings_security_update(org_id)
+        api_response = api_instance.put_admin_settings_security_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_settings_security_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_settings_security_update: %s\n" % e)
 ```
@@ -2418,7 +2512,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -2427,20 +2521,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_tenant_update**
-> put_admin_tenant_update(org_id)
+> PutAdminTenantUpdateResponse put_admin_tenant_update(org_id)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -2449,6 +2543,7 @@ Update tenant settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -2481,8 +2576,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Update tenant settings
-        api_instance.put_admin_tenant_update(org_id)
+        # Update organization (tenant) name and settings
+        api_response = api_instance.put_admin_tenant_update(org_id)
+        print("The response of AdminSettingsApi->put_admin_tenant_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSettingsApi->put_admin_tenant_update: %s\n" % e)
 ```
@@ -2498,7 +2595,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -2507,13 +2604,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

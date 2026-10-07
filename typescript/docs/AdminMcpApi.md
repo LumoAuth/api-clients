@@ -4,15 +4,15 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminMcpServersCreate**](#adminmcpserverscreate) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | POST /api/v1/admin/mcp/servers|
-|[**adminMcpServersDelete**](#adminmcpserversdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | |
-|[**adminMcpServersGet**](#adminmcpserversget) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | |
-|[**adminMcpServersList**](#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | |
+|[**adminMcpServersCreate**](#adminmcpserverscreate) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server|
+|[**adminMcpServersDelete**](#adminmcpserversdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server|
+|[**adminMcpServersGet**](#adminmcpserversget) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server|
+|[**adminMcpServersList**](#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers|
 
 # **adminMcpServersCreate**
-> adminMcpServersCreate()
+> AdminMcpServersCreateResponse adminMcpServersCreate()
 
-Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
+Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization\'s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
 ### Example
 
@@ -41,7 +41,7 @@ const { status, data } = await apiInstance.adminMcpServersCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminMcpServersCreateResponse**
 
 ### Authorization
 
@@ -50,18 +50,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | MCP server created |  -  |
+|**409** | An MCP server with this resource_uri already exists |  -  |
+|**422** | validation_error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminMcpServersDelete**
-> adminMcpServersDelete()
+> MessageResponse adminMcpServersDelete()
 
 
 ### Example
@@ -94,7 +96,7 @@ const { status, data } = await apiInstance.adminMcpServersDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -103,18 +105,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | MCP server deleted |  -  |
+|**404** | MCP server not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminMcpServersGet**
-> adminMcpServersGet()
+> AdminMcpServersGetResponse adminMcpServersGet()
 
 
 ### Example
@@ -147,7 +150,7 @@ const { status, data } = await apiInstance.adminMcpServersGet(
 
 ### Return type
 
-void (empty response body)
+**AdminMcpServersGetResponse**
 
 ### Authorization
 
@@ -156,18 +159,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | MCP server |  -  |
+|**404** | MCP server not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminMcpServersList**
-> adminMcpServersList()
+> AdminMcpServersListResponse adminMcpServersList()
 
 
 ### Example
@@ -197,7 +201,7 @@ const { status, data } = await apiInstance.adminMcpServersList(
 
 ### Return type
 
-void (empty response body)
+**AdminMcpServersListResponse**
 
 ### Authorization
 
@@ -206,13 +210,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | MCP servers |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

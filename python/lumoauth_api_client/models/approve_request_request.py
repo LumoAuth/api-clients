@@ -28,8 +28,9 @@ class ApproveRequestRequest(BaseModel):
     ApproveRequestRequest
     """ # noqa: E501
     ttl: Optional[StrictInt] = Field(default=None, description="Optional TTL override in seconds.")
-    notes: Optional[StrictStr] = Field(default=None, description="Optional reviewer notes.")
-    __properties: ClassVar[List[str]] = ["ttl", "notes"]
+    notes: Optional[StrictStr] = Field(default=None, description="Optional reviewer notes (internal; never shown to the agent).")
+    agent_message: Optional[StrictStr] = Field(default=None, description="Optional message the agent MAY read on the status endpoint / callback.")
+    __properties: ClassVar[List[str]] = ["ttl", "notes", "agent_message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -83,7 +84,8 @@ class ApproveRequestRequest(BaseModel):
 
         _obj = cls.model_validate({
             "ttl": obj.get("ttl"),
-            "notes": obj.get("notes")
+            "notes": obj.get("notes"),
+            "agent_message": obj.get("agent_message")
         })
         return _obj
 

@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,67 +29,67 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersAvailable(string orgId);
+        /// <returns>AdminSocialProvidersAvailableResponse</returns>
+        AdminSocialProvidersAvailableResponse AdminSocialProvidersAvailable(string orgId);
 
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersAvailableWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSocialProvidersAvailableResponse</returns>
+        ApiResponse<AdminSocialProvidersAvailableResponse> AdminSocialProvidersAvailableWithHttpInfo(string orgId);
         /// <summary>
-        /// Get callback URLs for all configured providers
+        /// Get the OAuth callback URL of every configured provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersCallbackUrls(string orgId);
+        /// <returns>AdminSocialProvidersCallbackUrlsResponse</returns>
+        AdminSocialProvidersCallbackUrlsResponse AdminSocialProvidersCallbackUrls(string orgId);
 
         /// <summary>
-        /// Get callback URLs for all configured providers
+        /// Get the OAuth callback URL of every configured provider
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersCallbackUrlsWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSocialProvidersCallbackUrlsResponse</returns>
+        ApiResponse<AdminSocialProvidersCallbackUrlsResponse> AdminSocialProvidersCallbackUrlsWithHttpInfo(string orgId);
         /// <summary>
-        /// Create a new social login provider
+        /// Create a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersCreate(string orgId);
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(string orgId);
 
         /// <summary>
-        /// Create a new social login provider
+        /// Create a social login provider
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersCreateWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateWithHttpInfo(string orgId);
         /// <summary>
         /// Delete a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersDelete(string orgId, string providerId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminSocialProvidersDelete(string orgId, string providerId);
 
         /// <summary>
         /// Delete a social login provider
@@ -99,16 +100,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersDeleteWithHttpInfo(string orgId, string providerId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminSocialProvidersDeleteWithHttpInfo(string orgId, string providerId);
         /// <summary>
         /// Disable a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersDisable(string orgId, string providerId);
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        AdminSocialProvidersCreateResponse AdminSocialProvidersDisable(string orgId, string providerId);
 
         /// <summary>
         /// Disable a social login provider
@@ -119,16 +120,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersDisableWithHttpInfo(string orgId, string providerId);
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersDisableWithHttpInfo(string orgId, string providerId);
         /// <summary>
         /// Enable a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersEnable(string orgId, string providerId);
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        AdminSocialProvidersCreateResponse AdminSocialProvidersEnable(string orgId, string providerId);
 
         /// <summary>
         /// Enable a social login provider
@@ -139,19 +140,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersEnableWithHttpInfo(string orgId, string providerId);
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersEnableWithHttpInfo(string orgId, string providerId);
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name)
+        /// Get a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersGet(string orgId, string providerId);
+        /// <returns>AdminSocialProvidersGetResponse</returns>
+        AdminSocialProvidersGetResponse AdminSocialProvidersGet(string orgId, string providerId);
 
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name)
+        /// Get a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -159,75 +160,55 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersGetWithHttpInfo(string orgId, string providerId);
+        /// <returns>ApiResponse of AdminSocialProvidersGetResponse</returns>
+        ApiResponse<AdminSocialProvidersGetResponse> AdminSocialProvidersGetWithHttpInfo(string orgId, string providerId);
         /// <summary>
-        /// List all configured social login providers
+        /// List social login providers
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersList(string orgId);
+        /// <returns>AdminSocialProvidersListResponse</returns>
+        AdminSocialProvidersListResponse AdminSocialProvidersList(string orgId);
 
         /// <summary>
-        /// List all configured social login providers
+        /// List social login providers
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSocialProvidersListResponse</returns>
+        ApiResponse<AdminSocialProvidersListResponse> AdminSocialProvidersListWithHttpInfo(string orgId);
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSocialProvidersTypes(string orgId);
+        /// <returns>AdminSocialProvidersAvailableResponse</returns>
+        AdminSocialProvidersAvailableResponse AdminSocialProvidersTypes(string orgId);
 
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSocialProvidersTypesWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSocialProvidersAvailableResponse</returns>
+        ApiResponse<AdminSocialProvidersAvailableResponse> AdminSocialProvidersTypesWithHttpInfo(string orgId);
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
+        /// Update a social login provider
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        void PatchAdminSocialProvidersUpdate(string orgId, string providerId);
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(string orgId, string providerId);
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId);
-        /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="providerId"></param>
-        /// <returns></returns>
-        void PutAdminSocialProvidersUpdate(string orgId, string providerId);
-
-        /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
+        /// Update a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -235,8 +216,28 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId);
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        ApiResponse<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId);
+        /// <summary>
+        /// Create or replace a social login provider
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="providerId"></param>
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(string orgId, string providerId);
+
+        /// <summary>
+        /// Create or replace a social login provider
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="providerId"></param>
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        ApiResponse<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId);
         #endregion Synchronous Operations
     }
 
@@ -247,7 +248,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <remarks>
         /// 
@@ -255,11 +256,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersAvailableAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersAvailableResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersAvailableResponse> AdminSocialProvidersAvailableAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <remarks>
         /// 
@@ -267,10 +268,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersAvailableWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersAvailableResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersAvailableResponse>> AdminSocialProvidersAvailableWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get callback URLs for all configured providers
+        /// Get the OAuth callback URL of every configured provider
         /// </summary>
         /// <remarks>
         /// 
@@ -278,11 +279,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersCallbackUrlsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersCallbackUrlsResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersCallbackUrlsResponse> AdminSocialProvidersCallbackUrlsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get callback URLs for all configured providers
+        /// Get the OAuth callback URL of every configured provider
         /// </summary>
         /// <remarks>
         /// 
@@ -290,10 +291,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersCallbackUrlsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCallbackUrlsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCallbackUrlsResponse>> AdminSocialProvidersCallbackUrlsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Create a new social login provider
+        /// Create a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -301,11 +302,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a new social login provider
+        /// Create a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -313,8 +314,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a social login provider
         /// </summary>
@@ -325,8 +326,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersDeleteAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminSocialProvidersDeleteAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a social login provider
@@ -338,8 +339,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersDeleteWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminSocialProvidersDeleteWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Disable a social login provider
         /// </summary>
@@ -350,8 +351,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersDisableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersDisableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Disable a social login provider
@@ -363,8 +364,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersDisableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersDisableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Enable a social login provider
         /// </summary>
@@ -375,8 +376,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersEnableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersEnableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Enable a social login provider
@@ -388,10 +389,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersEnableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersEnableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name)
+        /// Get a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -400,11 +401,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersGetAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersGetResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersGetResponse> AdminSocialProvidersGetAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name)
+        /// Get a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -413,10 +414,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersGetWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersGetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersGetResponse>> AdminSocialProvidersGetWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all configured social login providers
+        /// List social login providers
         /// </summary>
         /// <remarks>
         /// 
@@ -424,11 +425,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersListResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersListResponse> AdminSocialProvidersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all configured social login providers
+        /// List social login providers
         /// </summary>
         /// <remarks>
         /// 
@@ -436,10 +437,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersListResponse>> AdminSocialProvidersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <remarks>
         /// 
@@ -447,11 +448,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSocialProvidersTypesAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersAvailableResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersAvailableResponse> AdminSocialProvidersTypesAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get available social login provider types
+        /// List the available social login provider types
         /// </summary>
         /// <remarks>
         /// 
@@ -459,10 +460,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSocialProvidersTypesWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersAvailableResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersAvailableResponse>> AdminSocialProvidersTypesWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
+        /// Update a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -471,11 +472,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
+        /// Update a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -484,10 +485,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
+        /// Create or replace a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -496,11 +497,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH
+        /// Create or replace a social login provider
         /// </summary>
         /// <remarks>
         /// 
@@ -509,8 +510,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSocialProvidersCreateResponse>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -725,23 +726,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersAvailable(string orgId)
+        /// <returns>AdminSocialProvidersAvailableResponse</returns>
+        public AdminSocialProvidersAvailableResponse AdminSocialProvidersAvailable(string orgId)
         {
-            AdminSocialProvidersAvailableWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse> localVarResponse = AdminSocialProvidersAvailableWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersAvailableWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSocialProvidersAvailableResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse> AdminSocialProvidersAvailableWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -754,6 +756,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -777,7 +780,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/social-providers/available", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSocialProvidersAvailableResponse>("/orgs/{orgId}/api/v1/admin/social-providers/available", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -789,25 +792,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersAvailableAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersAvailableResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersAvailableResponse> AdminSocialProvidersAvailableAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersAvailableWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse> localVarResponse = await AdminSocialProvidersAvailableWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersAvailableWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersAvailableResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse>> AdminSocialProvidersAvailableWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -821,6 +825,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -846,7 +851,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/available", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSocialProvidersAvailableResponse>("/orgs/{orgId}/api/v1/admin/social-providers/available", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -858,23 +863,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get callback URLs for all configured providers 
+        /// Get the OAuth callback URL of every configured provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersCallbackUrls(string orgId)
+        /// <returns>AdminSocialProvidersCallbackUrlsResponse</returns>
+        public AdminSocialProvidersCallbackUrlsResponse AdminSocialProvidersCallbackUrls(string orgId)
         {
-            AdminSocialProvidersCallbackUrlsWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCallbackUrlsResponse> localVarResponse = AdminSocialProvidersCallbackUrlsWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get callback URLs for all configured providers 
+        /// Get the OAuth callback URL of every configured provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersCallbackUrlsWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSocialProvidersCallbackUrlsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCallbackUrlsResponse> AdminSocialProvidersCallbackUrlsWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -887,6 +893,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -910,7 +917,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/social-providers/callback-urls", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSocialProvidersCallbackUrlsResponse>("/orgs/{orgId}/api/v1/admin/social-providers/callback-urls", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -922,25 +929,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get callback URLs for all configured providers 
+        /// Get the OAuth callback URL of every configured provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersCallbackUrlsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersCallbackUrlsResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCallbackUrlsResponse> AdminSocialProvidersCallbackUrlsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersCallbackUrlsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCallbackUrlsResponse> localVarResponse = await AdminSocialProvidersCallbackUrlsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get callback URLs for all configured providers 
+        /// Get the OAuth callback URL of every configured provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersCallbackUrlsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCallbackUrlsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCallbackUrlsResponse>> AdminSocialProvidersCallbackUrlsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -954,6 +962,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -979,7 +988,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/callback-urls", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSocialProvidersCallbackUrlsResponse>("/orgs/{orgId}/api/v1/admin/social-providers/callback-urls", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -991,23 +1000,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new social login provider 
+        /// Create a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersCreate(string orgId)
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        public AdminSocialProvidersCreateResponse AdminSocialProvidersCreate(string orgId)
         {
-            AdminSocialProvidersCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = AdminSocialProvidersCreateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new social login provider 
+        /// Create a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersCreateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1020,6 +1030,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1043,7 +1054,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1055,25 +1066,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new social login provider 
+        /// Create a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await AdminSocialProvidersCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new social login provider 
+        /// Create a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1087,6 +1099,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1112,7 +1125,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1129,10 +1142,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersDelete(string orgId, string providerId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminSocialProvidersDelete(string orgId, string providerId)
         {
-            AdminSocialProvidersDeleteWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminSocialProvidersDeleteWithHttpInfo(orgId, providerId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1141,8 +1155,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersDeleteWithHttpInfo(string orgId, string providerId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminSocialProvidersDeleteWithHttpInfo(string orgId, string providerId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1159,6 +1173,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1183,7 +1198,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1201,10 +1216,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersDeleteAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminSocialProvidersDeleteAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersDeleteWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminSocialProvidersDeleteWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1214,8 +1230,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersDeleteWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminSocialProvidersDeleteWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1233,6 +1249,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1259,7 +1276,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1276,10 +1293,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersDisable(string orgId, string providerId)
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        public AdminSocialProvidersCreateResponse AdminSocialProvidersDisable(string orgId, string providerId)
         {
-            AdminSocialProvidersDisableWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = AdminSocialProvidersDisableWithHttpInfo(orgId, providerId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1288,8 +1306,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersDisableWithHttpInfo(string orgId, string providerId)
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersDisableWithHttpInfo(string orgId, string providerId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1306,6 +1324,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1330,7 +1349,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1348,10 +1367,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersDisableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersDisableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersDisableWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await AdminSocialProvidersDisableWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1361,8 +1381,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersDisableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersDisableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1380,6 +1400,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1406,7 +1427,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1423,10 +1444,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersEnable(string orgId, string providerId)
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        public AdminSocialProvidersCreateResponse AdminSocialProvidersEnable(string orgId, string providerId)
         {
-            AdminSocialProvidersEnableWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = AdminSocialProvidersEnableWithHttpInfo(orgId, providerId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1435,8 +1457,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersEnableWithHttpInfo(string orgId, string providerId)
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> AdminSocialProvidersEnableWithHttpInfo(string orgId, string providerId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1453,6 +1475,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1477,7 +1500,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1495,10 +1518,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersEnableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> AdminSocialProvidersEnableAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersEnableWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await AdminSocialProvidersEnableWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1508,8 +1532,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersEnableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> AdminSocialProvidersEnableWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1527,6 +1551,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1553,7 +1578,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1565,25 +1590,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name) 
+        /// Get a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersGet(string orgId, string providerId)
+        /// <returns>AdminSocialProvidersGetResponse</returns>
+        public AdminSocialProvidersGetResponse AdminSocialProvidersGet(string orgId, string providerId)
         {
-            AdminSocialProvidersGetWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersGetResponse> localVarResponse = AdminSocialProvidersGetWithHttpInfo(orgId, providerId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name) 
+        /// Get a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersGetWithHttpInfo(string orgId, string providerId)
+        /// <returns>ApiResponse of AdminSocialProvidersGetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersGetResponse> AdminSocialProvidersGetWithHttpInfo(string orgId, string providerId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1600,6 +1626,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1624,7 +1651,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSocialProvidersGetResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1636,27 +1663,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name) 
+        /// Get a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersGetAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersGetResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersGetResponse> AdminSocialProvidersGetAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersGetWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersGetResponse> localVarResponse = await AdminSocialProvidersGetWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single social login provider (by ID or by provider name) 
+        /// Get a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersGetWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersGetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersGetResponse>> AdminSocialProvidersGetWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1674,6 +1702,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1700,7 +1729,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSocialProvidersGetResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1712,23 +1741,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all configured social login providers 
+        /// List social login providers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersList(string orgId)
+        /// <returns>AdminSocialProvidersListResponse</returns>
+        public AdminSocialProvidersListResponse AdminSocialProvidersList(string orgId)
         {
-            AdminSocialProvidersListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersListResponse> localVarResponse = AdminSocialProvidersListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all configured social login providers 
+        /// List social login providers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSocialProvidersListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersListResponse> AdminSocialProvidersListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1741,6 +1771,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1764,7 +1795,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSocialProvidersListResponse>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1776,25 +1807,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all configured social login providers 
+        /// List social login providers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersListResponse> AdminSocialProvidersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersListResponse> localVarResponse = await AdminSocialProvidersListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all configured social login providers 
+        /// List social login providers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersListResponse>> AdminSocialProvidersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1808,6 +1840,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1833,7 +1866,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSocialProvidersListResponse>("/orgs/{orgId}/api/v1/admin/social-providers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1845,23 +1878,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSocialProvidersTypes(string orgId)
+        /// <returns>AdminSocialProvidersAvailableResponse</returns>
+        public AdminSocialProvidersAvailableResponse AdminSocialProvidersTypes(string orgId)
         {
-            AdminSocialProvidersTypesWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse> localVarResponse = AdminSocialProvidersTypesWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSocialProvidersTypesWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSocialProvidersAvailableResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse> AdminSocialProvidersTypesWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1874,6 +1908,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1897,7 +1932,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/social-providers/types", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSocialProvidersAvailableResponse>("/orgs/{orgId}/api/v1/admin/social-providers/types", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1909,25 +1944,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSocialProvidersTypesAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersAvailableResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersAvailableResponse> AdminSocialProvidersTypesAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSocialProvidersTypesWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse> localVarResponse = await AdminSocialProvidersTypesWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get available social login provider types 
+        /// List the available social login provider types 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSocialProvidersTypesWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersAvailableResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersAvailableResponse>> AdminSocialProvidersTypesWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1941,6 +1977,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1966,7 +2003,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/types", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSocialProvidersAvailableResponse>("/orgs/{orgId}/api/v1/admin/social-providers/types", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1978,25 +2015,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Update a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        public void PatchAdminSocialProvidersUpdate(string orgId, string providerId)
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        public AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate(string orgId, string providerId)
         {
-            PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Update a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId)
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2013,6 +2051,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2037,7 +2076,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2049,27 +2088,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Update a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PatchAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PatchAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await PatchAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Update a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> PatchAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2087,6 +2127,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2113,7 +2154,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2125,25 +2166,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Create or replace a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns></returns>
-        public void PutAdminSocialProvidersUpdate(string orgId, string providerId)
+        /// <returns>AdminSocialProvidersCreateResponse</returns>
+        public AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate(string orgId, string providerId)
         {
-            PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Create or replace a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId)
+        /// <returns>ApiResponse of AdminSocialProvidersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateWithHttpInfo(string orgId, string providerId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2160,6 +2202,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2184,7 +2227,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2196,27 +2239,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Create or replace a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSocialProvidersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSocialProvidersCreateResponse> PutAdminSocialProvidersUpdateAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PutAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse> localVarResponse = await PutAdminSocialProvidersUpdateWithHttpInfoAsync(orgId, providerId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Upsert (create or update) a social login provider via PUT; update via PATCH 
+        /// Create or replace a social login provider 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="providerId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSocialProvidersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSocialProvidersCreateResponse>> PutAdminSocialProvidersUpdateWithHttpInfoAsync(string orgId, string providerId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2234,6 +2278,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2260,7 +2305,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<AdminSocialProvidersCreateResponse>("/orgs/{orgId}/api/v1/admin/social-providers/{providerId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

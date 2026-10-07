@@ -4,18 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminEmailTemplatesDelete**](AdminEmailApi.md#adminemailtemplatesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**AdminEmailTemplatesGet**](AdminEmailApi.md#adminemailtemplatesget) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**AdminEmailTemplatesList**](AdminEmailApi.md#adminemailtemplateslist) | **GET** /orgs/{orgId}/api/v1/admin/email-templates |  |
-| [**AdminEmailTemplatesPreview**](AdminEmailApi.md#adminemailtemplatespreview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview |  |
-| [**AdminEmailTemplatesUpsert**](AdminEmailApi.md#adminemailtemplatesupsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**AdminEmailTemplatesVariables**](AdminEmailApi.md#adminemailtemplatesvariables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables |  |
+| [**AdminEmailTemplatesDelete**](AdminEmailApi.md#adminemailtemplatesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Remove the custom email template so the built-in default is used |
+| [**AdminEmailTemplatesGet**](AdminEmailApi.md#adminemailtemplatesget) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Get an email template (custom or built-in default) |
+| [**AdminEmailTemplatesList**](AdminEmailApi.md#adminemailtemplateslist) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | List every email template type with its current (custom or built-in) template |
+| [**AdminEmailTemplatesPreview**](AdminEmailApi.md#adminemailtemplatespreview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | Render an email template with sample data |
+| [**AdminEmailTemplatesUpsert**](AdminEmailApi.md#adminemailtemplatesupsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Create or replace the custom email template for a type |
+| [**AdminEmailTemplatesVariables**](AdminEmailApi.md#adminemailtemplatesvariables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | List the placeholders available to an email template type |
 
 <a id="adminemailtemplatesdelete"></a>
 # **AdminEmailTemplatesDelete**
-> void AdminEmailTemplatesDelete (string orgId, string type)
+> MessageResponse AdminEmailTemplatesDelete (string orgId, string type)
 
-
+Remove the custom email template so the built-in default is used
 
 ### Example
 ```csharp
@@ -50,7 +50,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminEmailTemplatesDelete(orgId, type);
+                // Remove the custom email template so the built-in default is used
+                MessageResponse result = apiInstance.AdminEmailTemplatesDelete(orgId, type);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -69,7 +71,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+    // Remove the custom email template so the built-in default is used
+    ApiResponse<MessageResponse> response = apiInstance.AdminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -88,7 +94,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -97,21 +103,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Reverted to default |  -  |
+| **404** | Unknown template type, or no custom template exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminemailtemplatesget"></a>
 # **AdminEmailTemplatesGet**
-> void AdminEmailTemplatesGet (string orgId, string type)
+> EmailTemplate AdminEmailTemplatesGet (string orgId, string type)
 
-
+Get an email template (custom or built-in default)
 
 ### Example
 ```csharp
@@ -146,7 +153,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminEmailTemplatesGet(orgId, type);
+                // Get an email template (custom or built-in default)
+                EmailTemplate result = apiInstance.AdminEmailTemplatesGet(orgId, type);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -165,7 +174,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminEmailTemplatesGetWithHttpInfo(orgId, type);
+    // Get an email template (custom or built-in default)
+    ApiResponse<EmailTemplate> response = apiInstance.AdminEmailTemplatesGetWithHttpInfo(orgId, type);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -184,7 +197,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -193,21 +206,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Template including body_html |  -  |
+| **404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminemailtemplateslist"></a>
 # **AdminEmailTemplatesList**
-> void AdminEmailTemplatesList (string orgId)
+> AdminEmailTemplatesListResponse AdminEmailTemplatesList (string orgId)
 
-
+List every email template type with its current (custom or built-in) template
 
 ### Example
 ```csharp
@@ -241,7 +255,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminEmailTemplatesList(orgId);
+                // List every email template type with its current (custom or built-in) template
+                AdminEmailTemplatesListResponse result = apiInstance.AdminEmailTemplatesList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -260,7 +276,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminEmailTemplatesListWithHttpInfo(orgId);
+    // List every email template type with its current (custom or built-in) template
+    ApiResponse<AdminEmailTemplatesListResponse> response = apiInstance.AdminEmailTemplatesListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -278,7 +298,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminEmailTemplatesListResponse**](AdminEmailTemplatesListResponse.md)
 
 ### Authorization
 
@@ -287,21 +307,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Templates without body_html; &#x60;email_templates&#x60; duplicates &#x60;data&#x60; |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminemailtemplatespreview"></a>
 # **AdminEmailTemplatesPreview**
-> void AdminEmailTemplatesPreview (string orgId, string type)
+> AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview (string orgId, string type)
 
-
+Render an email template with sample data
 
 ### Example
 ```csharp
@@ -336,7 +356,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminEmailTemplatesPreview(orgId, type);
+                // Render an email template with sample data
+                AdminEmailTemplatesPreviewResponse result = apiInstance.AdminEmailTemplatesPreview(orgId, type);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -355,7 +377,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminEmailTemplatesPreviewWithHttpInfo(orgId, type);
+    // Render an email template with sample data
+    ApiResponse<AdminEmailTemplatesPreviewResponse> response = apiInstance.AdminEmailTemplatesPreviewWithHttpInfo(orgId, type);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -374,7 +400,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminEmailTemplatesPreviewResponse**](AdminEmailTemplatesPreviewResponse.md)
 
 ### Authorization
 
@@ -383,21 +409,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Rendered preview |  -  |
+| **404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminemailtemplatesupsert"></a>
 # **AdminEmailTemplatesUpsert**
-> void AdminEmailTemplatesUpsert (string orgId, string type)
+> EmailTemplate AdminEmailTemplatesUpsert (string orgId, string type)
 
-
+Create or replace the custom email template for a type
 
 ### Example
 ```csharp
@@ -432,7 +459,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminEmailTemplatesUpsert(orgId, type);
+                // Create or replace the custom email template for a type
+                EmailTemplate result = apiInstance.AdminEmailTemplatesUpsert(orgId, type);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -451,7 +480,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminEmailTemplatesUpsertWithHttpInfo(orgId, type);
+    // Create or replace the custom email template for a type
+    ApiResponse<EmailTemplate> response = apiInstance.AdminEmailTemplatesUpsertWithHttpInfo(orgId, type);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -470,7 +503,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -479,21 +512,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Saved template including body_html |  -  |
+| **404** | Unknown template type |  -  |
+| **422** | Validation failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminemailtemplatesvariables"></a>
 # **AdminEmailTemplatesVariables**
-> void AdminEmailTemplatesVariables (string orgId, string type)
+> AdminEmailTemplatesVariablesResponse AdminEmailTemplatesVariables (string orgId, string type)
 
-
+List the placeholders available to an email template type
 
 ### Example
 ```csharp
@@ -528,7 +563,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminEmailTemplatesVariables(orgId, type);
+                // List the placeholders available to an email template type
+                AdminEmailTemplatesVariablesResponse result = apiInstance.AdminEmailTemplatesVariables(orgId, type);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -547,7 +584,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminEmailTemplatesVariablesWithHttpInfo(orgId, type);
+    // List the placeholders available to an email template type
+    ApiResponse<AdminEmailTemplatesVariablesResponse> response = apiInstance.AdminEmailTemplatesVariablesWithHttpInfo(orgId, type);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -566,7 +607,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminEmailTemplatesVariablesResponse**](AdminEmailTemplatesVariablesResponse.md)
 
 ### Authorization
 
@@ -575,13 +616,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Placeholder to description map |  -  |
+| **404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

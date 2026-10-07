@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,9 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string connectionId = null;
-            //instance.GetConnectionToken(orgId, connectionId);
+            //GetConnectionTokenRequest? getConnectionTokenRequest = null;
+            //var response = instance.GetConnectionToken(orgId, connectionId, getConnectionTokenRequest);
+            //Assert.IsType<GetConnectionTokenResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +76,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.ListConnections(orgId);
+            //var response = instance.ListConnections(orgId);
+            //Assert.IsType<ListConnectionsResponse>(response);
         }
     }
 }

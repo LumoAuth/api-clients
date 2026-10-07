@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSandboxDestroyError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +27,6 @@ pub enum AdminSandboxDestroyError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSandboxListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,12 +34,12 @@ pub enum AdminSandboxListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSandboxSpawnError {
-    DefaultResponse(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_sandbox_destroy(configuration: &configuration::Configuration, org_id: &str, sandbox_slug: &str) -> Result<(), Error<AdminSandboxDestroyError>> {
+pub async fn admin_sandbox_destroy(configuration: &configuration::Configuration, org_id: &str, sandbox_slug: &str) -> Result<models::MessageResponse, Error<AdminSandboxDestroyError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_sandbox_slug = sandbox_slug;
@@ -67,9 +66,20 @@ pub async fn admin_sandbox_destroy(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSandboxDestroyError> = serde_json::from_str(&content).ok();
@@ -77,7 +87,7 @@ pub async fn admin_sandbox_destroy(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_sandbox_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSandboxListError>> {
+pub async fn admin_sandbox_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSandboxListResponse, Error<AdminSandboxListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -103,9 +113,20 @@ pub async fn admin_sandbox_list(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSandboxListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSandboxListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSandboxListError> = serde_json::from_str(&content).ok();
@@ -113,9 +134,10 @@ pub async fn admin_sandbox_list(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn admin_sandbox_spawn(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSandboxSpawnError>> {
+pub async fn admin_sandbox_spawn(configuration: &configuration::Configuration, org_id: &str, admin_sandbox_spawn_request: Option<models::AdminSandboxSpawnRequest>) -> Result<models::AdminSandboxSpawnResponse, Error<AdminSandboxSpawnError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_sandbox_spawn_request = admin_sandbox_spawn_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/sandbox/spawn", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -134,14 +156,26 @@ pub async fn admin_sandbox_spawn(configuration: &configuration::Configuration, o
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_sandbox_spawn_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSandboxSpawnResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSandboxSpawnResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSandboxSpawnError> = serde_json::from_str(&content).ok();

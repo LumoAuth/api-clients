@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsAddMembersError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum AdminGroupsAddMembersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsAddRoleError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,6 @@ pub enum AdminGroupsAddRoleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsCreateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +40,6 @@ pub enum AdminGroupsCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsDeleteError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +47,6 @@ pub enum AdminGroupsDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +54,6 @@ pub enum AdminGroupsGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsGetMembersError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +61,6 @@ pub enum AdminGroupsGetMembersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsGroupsGetRolesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +68,6 @@ pub enum AdminGroupsGroupsGetRolesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +75,6 @@ pub enum AdminGroupsListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsRemoveMemberError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +82,6 @@ pub enum AdminGroupsRemoveMemberError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsRemoveRoleError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +89,6 @@ pub enum AdminGroupsRemoveRoleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminGroupsUpdateRolesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +96,6 @@ pub enum AdminGroupsUpdateRolesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminGroupsUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,12 +103,11 @@ pub enum PatchAdminGroupsUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminGroupsUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_groups_add_members(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsAddMembersError>> {
+pub async fn admin_groups_add_members(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsAddMembersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -147,9 +134,20 @@ pub async fn admin_groups_add_members(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsAddMembersError> = serde_json::from_str(&content).ok();
@@ -157,7 +155,7 @@ pub async fn admin_groups_add_members(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_groups_add_role(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsAddRoleError>> {
+pub async fn admin_groups_add_role(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::MessageResponse, Error<AdminGroupsAddRoleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -184,9 +182,20 @@ pub async fn admin_groups_add_role(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsAddRoleError> = serde_json::from_str(&content).ok();
@@ -194,7 +203,7 @@ pub async fn admin_groups_add_role(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_groups_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminGroupsCreateError>> {
+pub async fn admin_groups_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -220,9 +229,20 @@ pub async fn admin_groups_create(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsCreateError> = serde_json::from_str(&content).ok();
@@ -230,7 +250,7 @@ pub async fn admin_groups_create(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_groups_delete(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsDeleteError>> {
+pub async fn admin_groups_delete(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::MessageResponse, Error<AdminGroupsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -257,9 +277,20 @@ pub async fn admin_groups_delete(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsDeleteError> = serde_json::from_str(&content).ok();
@@ -267,7 +298,7 @@ pub async fn admin_groups_delete(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_groups_get(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsGetError>> {
+pub async fn admin_groups_get(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsGetResponse, Error<AdminGroupsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -294,9 +325,20 @@ pub async fn admin_groups_get(configuration: &configuration::Configuration, org_
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsGetError> = serde_json::from_str(&content).ok();
@@ -304,7 +346,7 @@ pub async fn admin_groups_get(configuration: &configuration::Configuration, org_
     }
 }
 
-pub async fn admin_groups_get_members(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsGetMembersError>> {
+pub async fn admin_groups_get_members(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsGetMembersResponse, Error<AdminGroupsGetMembersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -331,9 +373,20 @@ pub async fn admin_groups_get_members(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsGetMembersResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsGetMembersResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsGetMembersError> = serde_json::from_str(&content).ok();
@@ -341,7 +394,7 @@ pub async fn admin_groups_get_members(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_groups_groups_get_roles(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsGroupsGetRolesError>> {
+pub async fn admin_groups_groups_get_roles(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsGroupsGetRolesResponse, Error<AdminGroupsGroupsGetRolesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -368,9 +421,20 @@ pub async fn admin_groups_groups_get_roles(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsGroupsGetRolesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsGroupsGetRolesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsGroupsGetRolesError> = serde_json::from_str(&content).ok();
@@ -378,7 +442,7 @@ pub async fn admin_groups_groups_get_roles(configuration: &configuration::Config
     }
 }
 
-pub async fn admin_groups_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminGroupsListError>> {
+pub async fn admin_groups_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminGroupsListResponse, Error<AdminGroupsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -404,9 +468,20 @@ pub async fn admin_groups_list(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsListError> = serde_json::from_str(&content).ok();
@@ -414,7 +489,7 @@ pub async fn admin_groups_list(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn admin_groups_remove_member(configuration: &configuration::Configuration, org_id: &str, group_id: &str, user_id: &str) -> Result<(), Error<AdminGroupsRemoveMemberError>> {
+pub async fn admin_groups_remove_member(configuration: &configuration::Configuration, org_id: &str, group_id: &str, user_id: &str) -> Result<models::MessageResponse, Error<AdminGroupsRemoveMemberError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -442,9 +517,20 @@ pub async fn admin_groups_remove_member(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsRemoveMemberError> = serde_json::from_str(&content).ok();
@@ -452,7 +538,7 @@ pub async fn admin_groups_remove_member(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_groups_remove_role(configuration: &configuration::Configuration, org_id: &str, group_id: &str, role_id: &str) -> Result<(), Error<AdminGroupsRemoveRoleError>> {
+pub async fn admin_groups_remove_role(configuration: &configuration::Configuration, org_id: &str, group_id: &str, role_id: &str) -> Result<models::MessageResponse, Error<AdminGroupsRemoveRoleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -480,9 +566,20 @@ pub async fn admin_groups_remove_role(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsRemoveRoleError> = serde_json::from_str(&content).ok();
@@ -490,7 +587,7 @@ pub async fn admin_groups_remove_role(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_groups_update_roles(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<AdminGroupsUpdateRolesError>> {
+pub async fn admin_groups_update_roles(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<AdminGroupsUpdateRolesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -517,9 +614,20 @@ pub async fn admin_groups_update_roles(configuration: &configuration::Configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminGroupsUpdateRolesError> = serde_json::from_str(&content).ok();
@@ -527,7 +635,7 @@ pub async fn admin_groups_update_roles(configuration: &configuration::Configurat
     }
 }
 
-pub async fn patch_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<PatchAdminGroupsUpdateError>> {
+pub async fn patch_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<PatchAdminGroupsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -554,9 +662,20 @@ pub async fn patch_admin_groups_update(configuration: &configuration::Configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminGroupsUpdateError> = serde_json::from_str(&content).ok();
@@ -564,7 +683,7 @@ pub async fn patch_admin_groups_update(configuration: &configuration::Configurat
     }
 }
 
-pub async fn put_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<(), Error<PutAdminGroupsUpdateError>> {
+pub async fn put_admin_groups_update(configuration: &configuration::Configuration, org_id: &str, group_id: &str) -> Result<models::AdminGroupsCreateResponse, Error<PutAdminGroupsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_group_id = group_id;
@@ -591,9 +710,20 @@ pub async fn put_admin_groups_update(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminGroupsUpdateError> = serde_json::from_str(&content).ok();

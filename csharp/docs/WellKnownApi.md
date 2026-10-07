@@ -4,16 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**GetAuthorizationServerMetadata**](WellKnownApi.md#getauthorizationservermetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-authorization-server |  |
-| [**GetJwks**](WellKnownApi.md#getjwks) | **GET** /orgs/{orgId}/api/v1/.well-known/jwks.json |  |
-| [**GetOpenidConfiguration**](WellKnownApi.md#getopenidconfiguration) | **GET** /orgs/{orgId}/api/v1/.well-known/openid-configuration |  |
-| [**GetSsfConfiguration**](WellKnownApi.md#getssfconfiguration) | **GET** /orgs/{orgId}/api/v1/.well-known/ssf-configuration |  |
+| [**GetAuthorizationServerMetadata**](WellKnownApi.md#getauthorizationservermetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-authorization-server | OAuth 2.0 authorization server metadata (RFC 8414) |
+| [**GetJwks**](WellKnownApi.md#getjwks) | **GET** /orgs/{orgId}/api/v1/.well-known/jwks.json | JSON Web Key Set (RFC 7517) |
+| [**GetOpenidConfiguration**](WellKnownApi.md#getopenidconfiguration) | **GET** /orgs/{orgId}/api/v1/.well-known/openid-configuration | OpenID Provider configuration (OIDC Discovery 1.0) |
+| [**GetSsfConfiguration**](WellKnownApi.md#getssfconfiguration) | **GET** /orgs/{orgId}/api/v1/.well-known/ssf-configuration | SSF transmitter configuration metadata |
 
 <a id="getauthorizationservermetadata"></a>
 # **GetAuthorizationServerMetadata**
-> void GetAuthorizationServerMetadata (string orgId)
+> AuthorizationServerMetadata GetAuthorizationServerMetadata (string orgId)
 
+OAuth 2.0 authorization server metadata (RFC 8414)
 
+Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
 ### Example
 ```csharp
@@ -40,7 +42,9 @@ namespace Example
 
             try
             {
-                apiInstance.GetAuthorizationServerMetadata(orgId);
+                // OAuth 2.0 authorization server metadata (RFC 8414)
+                AuthorizationServerMetadata result = apiInstance.GetAuthorizationServerMetadata(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -59,7 +63,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.GetAuthorizationServerMetadataWithHttpInfo(orgId);
+    // OAuth 2.0 authorization server metadata (RFC 8414)
+    ApiResponse<AuthorizationServerMetadata> response = apiInstance.GetAuthorizationServerMetadataWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -77,7 +85,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AuthorizationServerMetadata**](AuthorizationServerMetadata.md)
 
 ### Authorization
 
@@ -86,21 +94,24 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). |  -  |
+| **404** | invalid_tenant — unknown or inactive organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getjwks"></a>
 # **GetJwks**
-> void GetJwks (string orgId)
+> JsonWebKeySet GetJwks (string orgId)
 
+JSON Web Key Set (RFC 7517)
 
+Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 ```csharp
@@ -127,7 +138,9 @@ namespace Example
 
             try
             {
-                apiInstance.GetJwks(orgId);
+                // JSON Web Key Set (RFC 7517)
+                JsonWebKeySet result = apiInstance.GetJwks(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -146,7 +159,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.GetJwksWithHttpInfo(orgId);
+    // JSON Web Key Set (RFC 7517)
+    ApiResponse<JsonWebKeySet> response = apiInstance.GetJwksWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -164,7 +181,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**JsonWebKeySet**](JsonWebKeySet.md)
 
 ### Authorization
 
@@ -173,21 +190,24 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | JWK Set. Each key is an RSA (n, e) or EC (crv, x, y) public JWK with kid, use&#x3D;sig and alg. |  -  |
+| **404** | invalid_tenant — unknown or inactive organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getopenidconfiguration"></a>
 # **GetOpenidConfiguration**
-> void GetOpenidConfiguration (string orgId)
+> OpenIdConfiguration GetOpenidConfiguration (string orgId)
 
+OpenID Provider configuration (OIDC Discovery 1.0)
 
+Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
 ### Example
 ```csharp
@@ -214,7 +234,9 @@ namespace Example
 
             try
             {
-                apiInstance.GetOpenidConfiguration(orgId);
+                // OpenID Provider configuration (OIDC Discovery 1.0)
+                OpenIdConfiguration result = apiInstance.GetOpenidConfiguration(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -233,7 +255,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.GetOpenidConfigurationWithHttpInfo(orgId);
+    // OpenID Provider configuration (OIDC Discovery 1.0)
+    ApiResponse<OpenIdConfiguration> response = apiInstance.GetOpenidConfigurationWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -251,7 +277,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**OpenIdConfiguration**](OpenIdConfiguration.md)
 
 ### Authorization
 
@@ -260,21 +286,22 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). |  -  |
+| **404** | invalid_tenant — unknown or inactive organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getssfconfiguration"></a>
 # **GetSsfConfiguration**
-> void GetSsfConfiguration (string orgId)
+> GetSsfConfigurationResponse GetSsfConfiguration (string orgId)
 
-
+SSF transmitter configuration metadata
 
 ### Example
 ```csharp
@@ -301,7 +328,9 @@ namespace Example
 
             try
             {
-                apiInstance.GetSsfConfiguration(orgId);
+                // SSF transmitter configuration metadata
+                GetSsfConfigurationResponse result = apiInstance.GetSsfConfiguration(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -320,7 +349,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.GetSsfConfigurationWithHttpInfo(orgId);
+    // SSF transmitter configuration metadata
+    ApiResponse<GetSsfConfigurationResponse> response = apiInstance.GetSsfConfigurationWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -338,7 +371,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetSsfConfigurationResponse**](GetSsfConfigurationResponse.md)
 
 ### Authorization
 
@@ -347,13 +380,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Transmitter configuration |  -  |
+| **404** | Tenant not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

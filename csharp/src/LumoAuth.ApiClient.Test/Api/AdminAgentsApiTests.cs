@@ -142,7 +142,7 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string agentId = null;
             //var response = instance.AdminAgentsDelete(orgId, agentId);
-            //Assert.IsType<MessageResponse>(response);
+            //Assert.IsType<AdminAgentsDeleteResponse>(response);
         }
 
         /// <summary>

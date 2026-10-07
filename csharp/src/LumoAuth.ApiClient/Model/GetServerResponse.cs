@@ -47,11 +47,12 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="status">status.</param>
         /// <param name="scopesSupported">scopesSupported.</param>
         /// <param name="requirePkce">requirePkce.</param>
+        /// <param name="requireDpop">requireDpop.</param>
         /// <param name="tokenLifetime">tokenLifetime.</param>
         /// <param name="createdAt">createdAt.</param>
         /// <param name="updatedAt">updatedAt.</param>
         /// <param name="discovery">discovery.</param>
-        public GetServerResponse(int id = default, string serverId = default, string name = default, string description = default, string resourceUri = default, string endpointUrl = default, string transport = default, string authMode = default, string status = default, List<string> scopesSupported = default, bool requirePkce = default, int tokenLifetime = default, DateTime createdAt = default, DateTime updatedAt = default, GetServerResponseDiscovery discovery = default)
+        public GetServerResponse(int id = default, string serverId = default, string name = default, string description = default, string resourceUri = default, string endpointUrl = default, string transport = default, string authMode = default, string status = default, List<string> scopesSupported = default, bool requirePkce = default, bool requireDpop = default, int tokenLifetime = default, DateTime createdAt = default, DateTime updatedAt = default, GetServerResponseDiscovery discovery = default)
         {
             this.Id = id;
             this.ServerId = serverId;
@@ -64,6 +65,7 @@ namespace LumoAuth.ApiClient.Model
             this.Status = status;
             this.ScopesSupported = scopesSupported;
             this.RequirePkce = requirePkce;
+            this.RequireDpop = requireDpop;
             this.TokenLifetime = tokenLifetime;
             this.CreatedAt = createdAt;
             this.UpdatedAt = updatedAt;
@@ -137,6 +139,12 @@ namespace LumoAuth.ApiClient.Model
         public bool RequirePkce { get; set; }
 
         /// <summary>
+        /// Gets or Sets RequireDpop
+        /// </summary>
+        [DataMember(Name = "require_dpop", EmitDefaultValue = true)]
+        public bool RequireDpop { get; set; }
+
+        /// <summary>
         /// Gets or Sets TokenLifetime
         /// </summary>
         [DataMember(Name = "token_lifetime", EmitDefaultValue = false)]
@@ -179,6 +187,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  ScopesSupported: ").Append(ScopesSupported).Append("\n");
             sb.Append("  RequirePkce: ").Append(RequirePkce).Append("\n");
+            sb.Append("  RequireDpop: ").Append(RequireDpop).Append("\n");
             sb.Append("  TokenLifetime: ").Append(TokenLifetime).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
             sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");

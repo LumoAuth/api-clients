@@ -20,7 +20,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminrolesaddpermissions"></a>
 # **AdminRolesAddPermissions**
-> void AdminRolesAddPermissions (string orgId, string roleId)
+> MessageResponse AdminRolesAddPermissions (string orgId, string roleId)
 
 Add permission(s) to a role
 
@@ -58,7 +58,8 @@ namespace Example
             try
             {
                 // Add permission(s) to a role
-                apiInstance.AdminRolesAddPermissions(orgId, roleId);
+                MessageResponse result = apiInstance.AdminRolesAddPermissions(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -78,7 +79,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add permission(s) to a role
-    apiInstance.AdminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -97,7 +101,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -106,19 +110,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Added; message reports how many permissions were added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesadduser"></a>
 # **AdminRolesAddUser**
-> void AdminRolesAddUser (string orgId, string roleId)
+> MessageResponse AdminRolesAddUser (string orgId, string roleId)
 
 Assign a user to a role
 
@@ -156,7 +160,8 @@ namespace Example
             try
             {
                 // Assign a user to a role
-                apiInstance.AdminRolesAddUser(orgId, roleId);
+                MessageResponse result = apiInstance.AdminRolesAddUser(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -176,7 +181,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Assign a user to a role
-    apiInstance.AdminRolesAddUserWithHttpInfo(orgId, roleId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesAddUserWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -195,7 +203,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -204,19 +212,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Assigned |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolescreate"></a>
 # **AdminRolesCreate**
-> void AdminRolesCreate (string orgId)
+> AdminRolesCreateResponse AdminRolesCreate (string orgId)
 
 Create a new role
 
@@ -253,7 +261,8 @@ namespace Example
             try
             {
                 // Create a new role
-                apiInstance.AdminRolesCreate(orgId);
+                AdminRolesCreateResponse result = apiInstance.AdminRolesCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -273,7 +282,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new role
-    apiInstance.AdminRolesCreateWithHttpInfo(orgId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.AdminRolesCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -291,7 +303,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -300,19 +312,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesdelete"></a>
 # **AdminRolesDelete**
-> void AdminRolesDelete (string orgId, string roleId)
+> MessageResponse AdminRolesDelete (string orgId, string roleId)
 
 Delete a role
 
@@ -350,7 +362,8 @@ namespace Example
             try
             {
                 // Delete a role
-                apiInstance.AdminRolesDelete(orgId, roleId);
+                MessageResponse result = apiInstance.AdminRolesDelete(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -370,7 +383,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a role
-    apiInstance.AdminRolesDeleteWithHttpInfo(orgId, roleId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesDeleteWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -389,7 +405,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -398,19 +414,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesget"></a>
 # **AdminRolesGet**
-> void AdminRolesGet (string orgId, string roleId)
+> AdminRolesGetResponse AdminRolesGet (string orgId, string roleId)
 
 Get a single role by ID or slug
 
@@ -448,7 +464,8 @@ namespace Example
             try
             {
                 // Get a single role by ID or slug
-                apiInstance.AdminRolesGet(orgId, roleId);
+                AdminRolesGetResponse result = apiInstance.AdminRolesGet(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -468,7 +485,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get a single role by ID or slug
-    apiInstance.AdminRolesGetWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesGetResponse> response = apiInstance.AdminRolesGetWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -487,7 +507,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetResponse**](AdminRolesGetResponse.md)
 
 ### Authorization
 
@@ -496,19 +516,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesgetpermissions"></a>
 # **AdminRolesGetPermissions**
-> void AdminRolesGetPermissions (string orgId, string roleId)
+> AdminRolesGetPermissionsResponse AdminRolesGetPermissions (string orgId, string roleId)
 
 Get role permissions
 
@@ -546,7 +566,8 @@ namespace Example
             try
             {
                 // Get role permissions
-                apiInstance.AdminRolesGetPermissions(orgId, roleId);
+                AdminRolesGetPermissionsResponse result = apiInstance.AdminRolesGetPermissions(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -566,7 +587,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get role permissions
-    apiInstance.AdminRolesGetPermissionsWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesGetPermissionsResponse> response = apiInstance.AdminRolesGetPermissionsWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -585,7 +609,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -594,19 +618,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role permissions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesgetusers"></a>
 # **AdminRolesGetUsers**
-> void AdminRolesGetUsers (string orgId, string roleId)
+> AdminRolesGetUsersResponse AdminRolesGetUsers (string orgId, string roleId)
 
 Get users assigned to a role
 
@@ -644,7 +668,8 @@ namespace Example
             try
             {
                 // Get users assigned to a role
-                apiInstance.AdminRolesGetUsers(orgId, roleId);
+                AdminRolesGetUsersResponse result = apiInstance.AdminRolesGetUsers(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -664,7 +689,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get users assigned to a role
-    apiInstance.AdminRolesGetUsersWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesGetUsersResponse> response = apiInstance.AdminRolesGetUsersWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -683,7 +711,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetUsersResponse**](AdminRolesGetUsersResponse.md)
 
 ### Authorization
 
@@ -692,19 +720,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role users |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminroleslist"></a>
 # **AdminRolesList**
-> void AdminRolesList (string orgId)
+> AdminRolesListResponse AdminRolesList (string orgId)
 
 List all roles in the tenant
 
@@ -741,7 +769,8 @@ namespace Example
             try
             {
                 // List all roles in the tenant
-                apiInstance.AdminRolesList(orgId);
+                AdminRolesListResponse result = apiInstance.AdminRolesList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -761,7 +790,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List all roles in the tenant
-    apiInstance.AdminRolesListWithHttpInfo(orgId);
+    ApiResponse<AdminRolesListResponse> response = apiInstance.AdminRolesListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -779,7 +811,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesListResponse**](AdminRolesListResponse.md)
 
 ### Authorization
 
@@ -788,19 +820,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesremovepermission"></a>
 # **AdminRolesRemovePermission**
-> void AdminRolesRemovePermission (string orgId, string roleId, string permissionId)
+> MessageResponse AdminRolesRemovePermission (string orgId, string roleId, string permissionId)
 
 Remove a permission from a role
 
@@ -839,7 +871,8 @@ namespace Example
             try
             {
                 // Remove a permission from a role
-                apiInstance.AdminRolesRemovePermission(orgId, roleId, permissionId);
+                MessageResponse result = apiInstance.AdminRolesRemovePermission(orgId, roleId, permissionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -859,7 +892,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Remove a permission from a role
-    apiInstance.AdminRolesRemovePermissionWithHttpInfo(orgId, roleId, permissionId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesRemovePermissionWithHttpInfo(orgId, roleId, permissionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -879,7 +915,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -888,19 +924,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesremoveuser"></a>
 # **AdminRolesRemoveUser**
-> void AdminRolesRemoveUser (string orgId, string roleId, string userId)
+> MessageResponse AdminRolesRemoveUser (string orgId, string roleId, string userId)
 
 Remove a user from a role
 
@@ -939,7 +975,8 @@ namespace Example
             try
             {
                 // Remove a user from a role
-                apiInstance.AdminRolesRemoveUser(orgId, roleId, userId);
+                MessageResponse result = apiInstance.AdminRolesRemoveUser(orgId, roleId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -959,7 +996,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Remove a user from a role
-    apiInstance.AdminRolesRemoveUserWithHttpInfo(orgId, roleId, userId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminRolesRemoveUserWithHttpInfo(orgId, roleId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -979,7 +1019,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -988,19 +1028,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminrolesupdatepermissions"></a>
 # **AdminRolesUpdatePermissions**
-> void AdminRolesUpdatePermissions (string orgId, string roleId)
+> AdminRolesCreateResponse AdminRolesUpdatePermissions (string orgId, string roleId)
 
 Update role permissions (replaces all)
 
@@ -1038,7 +1078,8 @@ namespace Example
             try
             {
                 // Update role permissions (replaces all)
-                apiInstance.AdminRolesUpdatePermissions(orgId, roleId);
+                AdminRolesCreateResponse result = apiInstance.AdminRolesUpdatePermissions(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1058,7 +1099,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update role permissions (replaces all)
-    apiInstance.AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1077,7 +1121,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1086,19 +1130,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminrolesupdate"></a>
 # **PatchAdminRolesUpdate**
-> void PatchAdminRolesUpdate (string orgId, string roleId)
+> AdminRolesCreateResponse PatchAdminRolesUpdate (string orgId, string roleId)
 
 Update an existing role
 
@@ -1136,7 +1180,8 @@ namespace Example
             try
             {
                 // Update an existing role
-                apiInstance.PatchAdminRolesUpdate(orgId, roleId);
+                AdminRolesCreateResponse result = apiInstance.PatchAdminRolesUpdate(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1156,7 +1201,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing role
-    apiInstance.PatchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.PatchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1175,7 +1223,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1184,19 +1232,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminrolesupdate"></a>
 # **PutAdminRolesUpdate**
-> void PutAdminRolesUpdate (string orgId, string roleId)
+> AdminRolesCreateResponse PutAdminRolesUpdate (string orgId, string roleId)
 
 Update an existing role
 
@@ -1234,7 +1282,8 @@ namespace Example
             try
             {
                 // Update an existing role
-                apiInstance.PutAdminRolesUpdate(orgId, roleId);
+                AdminRolesCreateResponse result = apiInstance.PutAdminRolesUpdate(orgId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1254,7 +1303,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing role
-    apiInstance.PutAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    ApiResponse<AdminRolesCreateResponse> response = apiInstance.PutAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1273,7 +1325,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1282,13 +1334,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

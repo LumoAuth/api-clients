@@ -4,20 +4,20 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminAuditLogsActions**](AdminAuditLogsApi.md#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant |
-| [**AdminAuditLogsExport**](AdminAuditLogsApi.md#adminauditlogsexport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON |
-| [**AdminAuditLogsGet**](AdminAuditLogsApi.md#adminauditlogsget) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry |
-| [**AdminAuditLogsList**](AdminAuditLogsApi.md#adminauditlogslist) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant |
+| [**AdminAuditLogsActions**](AdminAuditLogsApi.md#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant |
+| [**AdminAuditLogsExport**](AdminAuditLogsApi.md#adminauditlogsexport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON |
+| [**AdminAuditLogsGet**](AdminAuditLogsApi.md#adminauditlogsget) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry |
+| [**AdminAuditLogsList**](AdminAuditLogsApi.md#adminauditlogslist) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries |
 | [**AdminAuditLogsRetention**](AdminAuditLogsApi.md#adminauditlogsretention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings |
-| [**AdminAuditLogsStats**](AdminAuditLogsApi.md#adminauditlogsstats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics |
+| [**AdminAuditLogsStats**](AdminAuditLogsApi.md#adminauditlogsstats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days) |
 | [**PatchAdminAuditLogsRetentionUpdate**](AdminAuditLogsApi.md#patchadminauditlogsretentionupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings |
 | [**PutAdminAuditLogsRetentionUpdate**](AdminAuditLogsApi.md#putadminauditlogsretentionupdate) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings |
 
 <a id="adminauditlogsactions"></a>
 # **AdminAuditLogsActions**
-> void AdminAuditLogsActions (string orgId)
+> AdminAuditLogsActionsResponse AdminAuditLogsActions (string orgId)
 
-List available audit action types for this tenant
+List the distinct audit action types recorded for the tenant
 
 ### Example
 ```csharp
@@ -51,8 +51,9 @@ namespace Example
 
             try
             {
-                // List available audit action types for this tenant
-                apiInstance.AdminAuditLogsActions(orgId);
+                // List the distinct audit action types recorded for the tenant
+                AdminAuditLogsActionsResponse result = apiInstance.AdminAuditLogsActions(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -71,8 +72,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List available audit action types for this tenant
-    apiInstance.AdminAuditLogsActionsWithHttpInfo(orgId);
+    // List the distinct audit action types recorded for the tenant
+    ApiResponse<AdminAuditLogsActionsResponse> response = apiInstance.AdminAuditLogsActionsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -90,7 +94,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsActionsResponse**](AdminAuditLogsActionsResponse.md)
 
 ### Authorization
 
@@ -99,21 +103,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Action names |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminauditlogsexport"></a>
 # **AdminAuditLogsExport**
-> void AdminAuditLogsExport (string orgId)
+> string AdminAuditLogsExport (string orgId)
 
-Export audit logs as CSV or JSON
+Export audit logs as CSV (default) or JSON
 
 ### Example
 ```csharp
@@ -147,8 +151,9 @@ namespace Example
 
             try
             {
-                // Export audit logs as CSV or JSON
-                apiInstance.AdminAuditLogsExport(orgId);
+                // Export audit logs as CSV (default) or JSON
+                string result = apiInstance.AdminAuditLogsExport(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -167,8 +172,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Export audit logs as CSV or JSON
-    apiInstance.AdminAuditLogsExportWithHttpInfo(orgId);
+    // Export audit logs as CSV (default) or JSON
+    ApiResponse<string> response = apiInstance.AdminAuditLogsExportWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -186,7 +194,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -195,21 +203,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/csv, application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminauditlogsget"></a>
 # **AdminAuditLogsGet**
-> void AdminAuditLogsGet (string orgId, string logId)
+> AdminAuditLogsGetResponse AdminAuditLogsGet (string orgId, string logId)
 
-Get a single audit log entry
+Get an audit log entry
 
 ### Example
 ```csharp
@@ -244,8 +252,9 @@ namespace Example
 
             try
             {
-                // Get a single audit log entry
-                apiInstance.AdminAuditLogsGet(orgId, logId);
+                // Get an audit log entry
+                AdminAuditLogsGetResponse result = apiInstance.AdminAuditLogsGet(orgId, logId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -264,8 +273,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single audit log entry
-    apiInstance.AdminAuditLogsGetWithHttpInfo(orgId, logId);
+    // Get an audit log entry
+    ApiResponse<AdminAuditLogsGetResponse> response = apiInstance.AdminAuditLogsGetWithHttpInfo(orgId, logId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -284,7 +296,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsGetResponse**](AdminAuditLogsGetResponse.md)
 
 ### Authorization
 
@@ -293,21 +305,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Audit log entry (detailed) |  -  |
+| **404** | Audit log not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminauditlogslist"></a>
 # **AdminAuditLogsList**
-> void AdminAuditLogsList (string orgId)
+> AdminAuditLogsListResponse AdminAuditLogsList (string orgId)
 
-List audit logs for the tenant
+List audit log entries
 
 ### Example
 ```csharp
@@ -341,8 +354,9 @@ namespace Example
 
             try
             {
-                // List audit logs for the tenant
-                apiInstance.AdminAuditLogsList(orgId);
+                // List audit log entries
+                AdminAuditLogsListResponse result = apiInstance.AdminAuditLogsList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -361,8 +375,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List audit logs for the tenant
-    apiInstance.AdminAuditLogsListWithHttpInfo(orgId);
+    // List audit log entries
+    ApiResponse<AdminAuditLogsListResponse> response = apiInstance.AdminAuditLogsListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -380,7 +397,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsListResponse**](AdminAuditLogsListResponse.md)
 
 ### Authorization
 
@@ -389,19 +406,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Audit log entries (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminauditlogsretention"></a>
 # **AdminAuditLogsRetention**
-> void AdminAuditLogsRetention (string orgId)
+> AdminAuditLogsRetentionResponse AdminAuditLogsRetention (string orgId)
 
 Get audit log retention settings
 
@@ -438,7 +455,8 @@ namespace Example
             try
             {
                 // Get audit log retention settings
-                apiInstance.AdminAuditLogsRetention(orgId);
+                AdminAuditLogsRetentionResponse result = apiInstance.AdminAuditLogsRetention(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -458,7 +476,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get audit log retention settings
-    apiInstance.AdminAuditLogsRetentionWithHttpInfo(orgId);
+    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.AdminAuditLogsRetentionWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -476,7 +497,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -485,21 +506,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminauditlogsstats"></a>
 # **AdminAuditLogsStats**
-> void AdminAuditLogsStats (string orgId)
+> AdminAuditLogsStatsResponse AdminAuditLogsStats (string orgId)
 
-Get audit log statistics
+Audit log statistics for a period (default: last 30 days)
 
 ### Example
 ```csharp
@@ -533,8 +554,9 @@ namespace Example
 
             try
             {
-                // Get audit log statistics
-                apiInstance.AdminAuditLogsStats(orgId);
+                // Audit log statistics for a period (default: last 30 days)
+                AdminAuditLogsStatsResponse result = apiInstance.AdminAuditLogsStats(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -553,8 +575,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get audit log statistics
-    apiInstance.AdminAuditLogsStatsWithHttpInfo(orgId);
+    // Audit log statistics for a period (default: last 30 days)
+    ApiResponse<AdminAuditLogsStatsResponse> response = apiInstance.AdminAuditLogsStatsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -572,7 +597,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsStatsResponse**](AdminAuditLogsStatsResponse.md)
 
 ### Authorization
 
@@ -581,19 +606,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Statistics |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminauditlogsretentionupdate"></a>
 # **PatchAdminAuditLogsRetentionUpdate**
-> void PatchAdminAuditLogsRetentionUpdate (string orgId)
+> AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate (string orgId)
 
 Update audit log retention settings
 
@@ -630,7 +655,8 @@ namespace Example
             try
             {
                 // Update audit log retention settings
-                apiInstance.PatchAdminAuditLogsRetentionUpdate(orgId);
+                AdminAuditLogsRetentionResponse result = apiInstance.PatchAdminAuditLogsRetentionUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -650,7 +676,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update audit log retention settings
-    apiInstance.PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -668,7 +697,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -677,19 +706,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminauditlogsretentionupdate"></a>
 # **PutAdminAuditLogsRetentionUpdate**
-> void PutAdminAuditLogsRetentionUpdate (string orgId)
+> AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate (string orgId)
 
 Update audit log retention settings
 
@@ -726,7 +755,8 @@ namespace Example
             try
             {
                 // Update audit log retention settings
-                apiInstance.PutAdminAuditLogsRetentionUpdate(orgId);
+                AdminAuditLogsRetentionResponse result = apiInstance.PutAdminAuditLogsRetentionUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -746,7 +776,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update audit log retention settings
-    apiInstance.PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    ApiResponse<AdminAuditLogsRetentionResponse> response = apiInstance.PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -764,7 +797,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -773,13 +806,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

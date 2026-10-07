@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**admin_analytics_dashboard**](AdminSettingsApi.md#admin_analytics_dashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 [**admin_analytics_logins**](AdminSettingsApi.md#admin_analytics_logins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 [**admin_analytics_users**](AdminSettingsApi.md#admin_analytics_users) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information
+[**admin_organization_get**](AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
 [**admin_settings_all**](AdminSettingsApi.md#admin_settings_all) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 [**admin_settings_auth_get**](AdminSettingsApi.md#admin_settings_auth_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 [**admin_settings_authentication_get**](AdminSettingsApi.md#admin_settings_authentication_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**admin_settings_general_get**](AdminSettingsApi.md#admin_settings_general_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 [**admin_settings_scim_get**](AdminSettingsApi.md#admin_settings_scim_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 [**admin_settings_security_get**](AdminSettingsApi.md#admin_settings_security_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information
-[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**admin_tenant_get**](AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
+[**patch_admin_organization_update**](AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**patch_admin_settings_auth_update**](AdminSettingsApi.md#patch_admin_settings_auth_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**patch_admin_settings_authentication_update**](AdminSettingsApi.md#patch_admin_settings_authentication_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**patch_admin_settings_branding_update**](AdminSettingsApi.md#patch_admin_settings_branding_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -25,8 +25,8 @@ Method | HTTP request | Description
 [**patch_admin_settings_general_update**](AdminSettingsApi.md#patch_admin_settings_general_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**patch_admin_settings_scim_update**](AdminSettingsApi.md#patch_admin_settings_scim_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**patch_admin_settings_security_update**](AdminSettingsApi.md#patch_admin_settings_security_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
-[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**patch_admin_tenant_update**](AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+[**put_admin_organization_update**](AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**put_admin_settings_auth_update**](AdminSettingsApi.md#put_admin_settings_auth_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**put_admin_settings_authentication_update**](AdminSettingsApi.md#put_admin_settings_authentication_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**put_admin_settings_branding_update**](AdminSettingsApi.md#put_admin_settings_branding_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -34,13 +34,13 @@ Method | HTTP request | Description
 [**put_admin_settings_general_update**](AdminSettingsApi.md#put_admin_settings_general_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**put_admin_settings_scim_update**](AdminSettingsApi.md#put_admin_settings_scim_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**put_admin_settings_security_update**](AdminSettingsApi.md#put_admin_settings_security_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
+[**put_admin_tenant_update**](AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
 
 
 
 ## admin_analytics_dashboard
 
-> admin_analytics_dashboard(org_id)
+> models::AdminAnalyticsDashboardResponse admin_analytics_dashboard(org_id)
 Get dashboard analytics
 
 ### Parameters
@@ -52,7 +52,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAnalyticsDashboardResponse**](AdminAnalyticsDashboardResponse.md)
 
 ### Authorization
 
@@ -61,14 +61,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_analytics_logins
 
-> admin_analytics_logins(org_id)
+> models::AdminAnalyticsLoginsResponse admin_analytics_logins(org_id, days)
 Get login analytics
 
 ### Parameters
@@ -77,10 +77,11 @@ Get login analytics
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**days** | Option<**i32**> | Window in days (1-90, default 30). |  |[default to 30]
 
 ### Return type
 
- (empty response body)
+[**models::AdminAnalyticsLoginsResponse**](AdminAnalyticsLoginsResponse.md)
 
 ### Authorization
 
@@ -89,14 +90,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_analytics_users
 
-> admin_analytics_users(org_id)
+> models::AdminAnalyticsUsersResponse admin_analytics_users(org_id, days)
 Get user growth analytics
 
 ### Parameters
@@ -105,10 +106,11 @@ Get user growth analytics
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **org_id** | **String** |  | [required] |
+**days** | Option<**i32**> | Window in days (1-90, default 30). |  |[default to 30]
 
 ### Return type
 
- (empty response body)
+[**models::AdminAnalyticsUsersResponse**](AdminAnalyticsUsersResponse.md)
 
 ### Authorization
 
@@ -117,15 +119,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_organization_get
 
-> admin_organization_get(org_id)
-Get tenant information
+> models::AdminTenantGetResponse admin_organization_get(org_id)
+Get organization (tenant) profile
 
 ### Parameters
 
@@ -136,7 +138,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -145,14 +147,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_all
 
-> admin_settings_all(org_id)
+> models::AdminSettingsAllResponse admin_settings_all(org_id)
 Get all settings (combined)
 
 ### Parameters
@@ -164,7 +166,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsAllResponse**](AdminSettingsAllResponse.md)
 
 ### Authorization
 
@@ -173,14 +175,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_auth_get
 
-> admin_settings_auth_get(org_id)
+> models::AdminSettingsAuthenticationGetResponse admin_settings_auth_get(org_id)
 Get authentication settings
 
 ### Parameters
@@ -192,7 +194,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -201,14 +203,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_authentication_get
 
-> admin_settings_authentication_get(org_id)
+> models::AdminSettingsAuthenticationGetResponse admin_settings_authentication_get(org_id)
 Get authentication settings (alias for settings/auth)
 
 ### Parameters
@@ -220,7 +222,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -229,14 +231,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_branding_get
 
-> admin_settings_branding_get(org_id)
+> models::AdminSettingsBrandingGetResponse admin_settings_branding_get(org_id)
 Get branding/login page settings
 
 ### Parameters
@@ -248,7 +250,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsBrandingGetResponse**](AdminSettingsBrandingGetResponse.md)
 
 ### Authorization
 
@@ -257,14 +259,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_email_get
 
-> admin_settings_email_get(org_id)
+> models::AdminSettingsEmailGetResponse admin_settings_email_get(org_id)
 Get email settings
 
 ### Parameters
@@ -276,7 +278,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsEmailGetResponse**](AdminSettingsEmailGetResponse.md)
 
 ### Authorization
 
@@ -285,14 +287,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_general_get
 
-> admin_settings_general_get(org_id)
+> models::AdminSettingsGeneralGetResponse admin_settings_general_get(org_id)
 Get general settings
 
 ### Parameters
@@ -304,7 +306,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsGeneralGetResponse**](AdminSettingsGeneralGetResponse.md)
 
 ### Authorization
 
@@ -313,14 +315,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_scim_get
 
-> admin_settings_scim_get(org_id)
+> models::AdminSettingsScimGetResponse admin_settings_scim_get(org_id)
 Get SCIM settings
 
 ### Parameters
@@ -332,7 +334,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsScimGetResponse**](AdminSettingsScimGetResponse.md)
 
 ### Authorization
 
@@ -341,14 +343,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_settings_security_get
 
-> admin_settings_security_get(org_id)
+> models::AdminSettingsSecurityGetResponse admin_settings_security_get(org_id)
 Get security settings
 
 ### Parameters
@@ -360,7 +362,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSettingsSecurityGetResponse**](AdminSettingsSecurityGetResponse.md)
 
 ### Authorization
 
@@ -369,15 +371,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_tenant_get
 
-> admin_tenant_get(org_id)
-Get tenant information
+> models::AdminTenantGetResponse admin_tenant_get(org_id)
+Get organization (tenant) profile
 
 ### Parameters
 
@@ -388,7 +390,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -397,15 +399,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_organization_update
 
-> patch_admin_organization_update(org_id)
-Update tenant settings
+> models::PutAdminTenantUpdateResponse patch_admin_organization_update(org_id)
+Update organization (tenant) name and settings
 
 ### Parameters
 
@@ -416,7 +418,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -425,14 +427,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_auth_update
 
-> patch_admin_settings_auth_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_auth_update(org_id)
 Update authentication settings
 
 ### Parameters
@@ -444,7 +446,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -453,14 +455,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_authentication_update
 
-> patch_admin_settings_authentication_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse patch_admin_settings_authentication_update(org_id)
 Update authentication settings (alias for settings/auth)
 
 ### Parameters
@@ -472,7 +474,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -481,14 +483,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_branding_update
 
-> patch_admin_settings_branding_update(org_id)
+> models::PutAdminSettingsBrandingUpdateResponse patch_admin_settings_branding_update(org_id)
 Update branding/login page settings
 
 ### Parameters
@@ -500,7 +502,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -509,14 +511,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_email_update
 
-> patch_admin_settings_email_update(org_id)
+> models::PutAdminSettingsEmailUpdateResponse patch_admin_settings_email_update(org_id)
 Update email settings
 
 ### Parameters
@@ -528,7 +530,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -537,14 +539,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_general_update
 
-> patch_admin_settings_general_update(org_id)
+> models::PutAdminSettingsGeneralUpdateResponse patch_admin_settings_general_update(org_id)
 Update general settings
 
 ### Parameters
@@ -556,7 +558,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -565,14 +567,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_scim_update
 
-> patch_admin_settings_scim_update(org_id)
+> models::PutAdminSettingsScimUpdateResponse patch_admin_settings_scim_update(org_id)
 Update SCIM settings
 
 ### Parameters
@@ -584,7 +586,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -593,14 +595,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_settings_security_update
 
-> patch_admin_settings_security_update(org_id)
+> models::PutAdminSettingsSecurityUpdateResponse patch_admin_settings_security_update(org_id)
 Update security settings
 
 ### Parameters
@@ -612,7 +614,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -621,15 +623,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_tenant_update
 
-> patch_admin_tenant_update(org_id)
-Update tenant settings
+> models::PutAdminTenantUpdateResponse patch_admin_tenant_update(org_id)
+Update organization (tenant) name and settings
 
 ### Parameters
 
@@ -640,7 +642,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -649,15 +651,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_organization_update
 
-> put_admin_organization_update(org_id)
-Update tenant settings
+> models::PutAdminTenantUpdateResponse put_admin_organization_update(org_id)
+Update organization (tenant) name and settings
 
 ### Parameters
 
@@ -668,7 +670,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -677,14 +679,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_auth_update
 
-> put_admin_settings_auth_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_auth_update(org_id)
 Update authentication settings
 
 ### Parameters
@@ -696,7 +698,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -705,14 +707,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_authentication_update
 
-> put_admin_settings_authentication_update(org_id)
+> models::PutAdminSettingsAuthenticationUpdateResponse put_admin_settings_authentication_update(org_id)
 Update authentication settings (alias for settings/auth)
 
 ### Parameters
@@ -724,7 +726,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -733,14 +735,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_branding_update
 
-> put_admin_settings_branding_update(org_id)
+> models::PutAdminSettingsBrandingUpdateResponse put_admin_settings_branding_update(org_id)
 Update branding/login page settings
 
 ### Parameters
@@ -752,7 +754,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -761,14 +763,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_email_update
 
-> put_admin_settings_email_update(org_id)
+> models::PutAdminSettingsEmailUpdateResponse put_admin_settings_email_update(org_id)
 Update email settings
 
 ### Parameters
@@ -780,7 +782,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -789,14 +791,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_general_update
 
-> put_admin_settings_general_update(org_id)
+> models::PutAdminSettingsGeneralUpdateResponse put_admin_settings_general_update(org_id)
 Update general settings
 
 ### Parameters
@@ -808,7 +810,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -817,14 +819,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_scim_update
 
-> put_admin_settings_scim_update(org_id)
+> models::PutAdminSettingsScimUpdateResponse put_admin_settings_scim_update(org_id)
 Update SCIM settings
 
 ### Parameters
@@ -836,7 +838,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -845,14 +847,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_settings_security_update
 
-> put_admin_settings_security_update(org_id)
+> models::PutAdminSettingsSecurityUpdateResponse put_admin_settings_security_update(org_id)
 Update security settings
 
 ### Parameters
@@ -864,7 +866,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -873,15 +875,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_tenant_update
 
-> put_admin_tenant_update(org_id)
-Update tenant settings
+> models::PutAdminTenantUpdateResponse put_admin_tenant_update(org_id)
+Update organization (tenant) name and settings
 
 ### Parameters
 
@@ -892,7 +894,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -901,7 +903,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

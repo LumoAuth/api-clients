@@ -19,19 +19,19 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Get available social login provider types
+    # List the available social login provider types
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersAvailableResponse]
     def admin_social_providers_available(org_id, opts = {})
-      admin_social_providers_available_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_available_with_http_info(org_id, opts)
+      data
     end
 
-    # Get available social login provider types
+    # List the available social login provider types
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersAvailableResponse, Integer, Hash)>] AdminSocialProvidersAvailableResponse data, response status code and response headers
     def admin_social_providers_available_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_available ...'
@@ -48,6 +48,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +58,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersAvailableResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -78,19 +80,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get callback URLs for all configured providers
+    # Get the OAuth callback URL of every configured provider
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersCallbackUrlsResponse]
     def admin_social_providers_callback_urls(org_id, opts = {})
-      admin_social_providers_callback_urls_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_callback_urls_with_http_info(org_id, opts)
+      data
     end
 
-    # Get callback URLs for all configured providers
+    # Get the OAuth callback URL of every configured provider
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersCallbackUrlsResponse, Integer, Hash)>] AdminSocialProvidersCallbackUrlsResponse data, response status code and response headers
     def admin_social_providers_callback_urls_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_callback_urls ...'
@@ -107,6 +109,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -115,7 +119,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersCallbackUrlsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -137,19 +141,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Create a new social login provider
+    # Create a social login provider
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersCreateResponse]
     def admin_social_providers_create(org_id, opts = {})
-      admin_social_providers_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_create_with_http_info(org_id, opts)
+      data
     end
 
-    # Create a new social login provider
+    # Create a social login provider
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
     def admin_social_providers_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_create ...'
@@ -166,6 +170,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -174,7 +180,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -200,17 +206,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_social_providers_delete(org_id, provider_id, opts = {})
-      admin_social_providers_delete_with_http_info(org_id, provider_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_delete_with_http_info(org_id, provider_id, opts)
+      data
     end
 
     # Delete a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_social_providers_delete_with_http_info(org_id, provider_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_delete ...'
@@ -231,6 +237,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -239,7 +247,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -265,17 +273,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersCreateResponse]
     def admin_social_providers_disable(org_id, provider_id, opts = {})
-      admin_social_providers_disable_with_http_info(org_id, provider_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_disable_with_http_info(org_id, provider_id, opts)
+      data
     end
 
     # Disable a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
     def admin_social_providers_disable_with_http_info(org_id, provider_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_disable ...'
@@ -296,6 +304,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -304,7 +314,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -330,17 +340,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersCreateResponse]
     def admin_social_providers_enable(org_id, provider_id, opts = {})
-      admin_social_providers_enable_with_http_info(org_id, provider_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_enable_with_http_info(org_id, provider_id, opts)
+      data
     end
 
     # Enable a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
     def admin_social_providers_enable_with_http_info(org_id, provider_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_enable ...'
@@ -361,6 +371,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -369,7 +381,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -391,21 +403,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single social login provider (by ID or by provider name)
+    # Get a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersGetResponse]
     def admin_social_providers_get(org_id, provider_id, opts = {})
-      admin_social_providers_get_with_http_info(org_id, provider_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_get_with_http_info(org_id, provider_id, opts)
+      data
     end
 
-    # Get a single social login provider (by ID or by provider name)
+    # Get a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersGetResponse, Integer, Hash)>] AdminSocialProvidersGetResponse data, response status code and response headers
     def admin_social_providers_get_with_http_info(org_id, provider_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_get ...'
@@ -426,6 +438,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -434,7 +448,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -456,19 +470,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all configured social login providers
+    # List social login providers
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersListResponse]
     def admin_social_providers_list(org_id, opts = {})
-      admin_social_providers_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List all configured social login providers
+    # List social login providers
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersListResponse, Integer, Hash)>] AdminSocialProvidersListResponse data, response status code and response headers
     def admin_social_providers_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_list ...'
@@ -485,6 +499,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -493,7 +509,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -515,19 +531,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get available social login provider types
+    # List the available social login provider types
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersAvailableResponse]
     def admin_social_providers_types(org_id, opts = {})
-      admin_social_providers_types_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_social_providers_types_with_http_info(org_id, opts)
+      data
     end
 
-    # Get available social login provider types
+    # List the available social login provider types
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersAvailableResponse, Integer, Hash)>] AdminSocialProvidersAvailableResponse data, response status code and response headers
     def admin_social_providers_types_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.admin_social_providers_types ...'
@@ -544,6 +560,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -552,7 +570,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersAvailableResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -574,21 +592,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Upsert (create or update) a social login provider via PUT; update via PATCH
+    # Update a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersCreateResponse]
     def patch_admin_social_providers_update(org_id, provider_id, opts = {})
-      patch_admin_social_providers_update_with_http_info(org_id, provider_id, opts)
-      nil
+      data, _status_code, _headers = patch_admin_social_providers_update_with_http_info(org_id, provider_id, opts)
+      data
     end
 
-    # Upsert (create or update) a social login provider via PUT; update via PATCH
+    # Update a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
     def patch_admin_social_providers_update_with_http_info(org_id, provider_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.patch_admin_social_providers_update ...'
@@ -609,6 +627,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -617,7 +637,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -639,21 +659,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Upsert (create or update) a social login provider via PUT; update via PATCH
+    # Create or replace a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSocialProvidersCreateResponse]
     def put_admin_social_providers_update(org_id, provider_id, opts = {})
-      put_admin_social_providers_update_with_http_info(org_id, provider_id, opts)
-      nil
+      data, _status_code, _headers = put_admin_social_providers_update_with_http_info(org_id, provider_id, opts)
+      data
     end
 
-    # Upsert (create or update) a social login provider via PUT; update via PATCH
+    # Create or replace a social login provider
     # @param org_id [String] 
     # @param provider_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSocialProvidersCreateResponse, Integer, Hash)>] AdminSocialProvidersCreateResponse data, response status code and response headers
     def put_admin_social_providers_update_with_http_info(org_id, provider_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminIdentityProvidersApi.put_admin_social_providers_update ...'
@@ -674,6 +694,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -682,7 +704,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSocialProvidersCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

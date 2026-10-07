@@ -4,21 +4,21 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**get_protected_resource_metadata**](McpApi.md#get_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728) |
-| [**get_protected_resource_metadata_root**](McpApi.md#get_protected_resource_metadata_root) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata |
+| [**get_protected_resource_metadata**](McpApi.md#get_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728) |
+| [**get_protected_resource_metadata_root**](McpApi.md#get_protected_resource_metadata_root) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728) |
 | [**get_server**](McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server. |
-| [**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint. |
+| [**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge |
 | [**list_servers**](McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant. |
-| [**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint. |
+| [**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST) |
 
 
 ## get_protected_resource_metadata
 
-> get_protected_resource_metadata(org_id, server_id)
+> <ProtectedResourceMetadata> get_protected_resource_metadata(org_id, server_id)
 
-OAuth 2.0 Protected Resource Metadata (RFC 9728)
+MCP server protected resource metadata (RFC 9728)
 
-Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
 ### Examples
 
@@ -31,8 +31,9 @@ org_id = 'org_id_example' # String |
 server_id = 'server_id_example' # String | 
 
 begin
-  # OAuth 2.0 Protected Resource Metadata (RFC 9728)
-  api_instance.get_protected_resource_metadata(org_id, server_id)
+  # MCP server protected resource metadata (RFC 9728)
+  result = api_instance.get_protected_resource_metadata(org_id, server_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->get_protected_resource_metadata: #{e}"
 end
@@ -40,17 +41,17 @@ end
 
 #### Using the get_protected_resource_metadata_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_protected_resource_metadata_with_http_info(org_id, server_id)
+> <Array(<ProtectedResourceMetadata>, Integer, Hash)> get_protected_resource_metadata_with_http_info(org_id, server_id)
 
 ```ruby
 begin
-  # OAuth 2.0 Protected Resource Metadata (RFC 9728)
+  # MCP server protected resource metadata (RFC 9728)
   data, status_code, headers = api_instance.get_protected_resource_metadata_with_http_info(org_id, server_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <ProtectedResourceMetadata>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->get_protected_resource_metadata_with_http_info: #{e}"
 end
@@ -65,7 +66,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**ProtectedResourceMetadata**](ProtectedResourceMetadata.md)
 
 ### Authorization
 
@@ -74,16 +75,16 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## get_protected_resource_metadata_root
 
-> get_protected_resource_metadata_root(org_id)
+> <GetProtectedResourceMetadataRoot200Response> get_protected_resource_metadata_root(org_id)
 
-Root-level Protected Resource Metadata
+Organization-level protected resource metadata (RFC 9728)
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
 ### Examples
 
@@ -95,8 +96,9 @@ api_instance = LumoAuthApiClient::McpApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Root-level Protected Resource Metadata
-  api_instance.get_protected_resource_metadata_root(org_id)
+  # Organization-level protected resource metadata (RFC 9728)
+  result = api_instance.get_protected_resource_metadata_root(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->get_protected_resource_metadata_root: #{e}"
 end
@@ -104,17 +106,17 @@ end
 
 #### Using the get_protected_resource_metadata_root_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_protected_resource_metadata_root_with_http_info(org_id)
+> <Array(<GetProtectedResourceMetadataRoot200Response>, Integer, Hash)> get_protected_resource_metadata_root_with_http_info(org_id)
 
 ```ruby
 begin
-  # Root-level Protected Resource Metadata
+  # Organization-level protected resource metadata (RFC 9728)
   data, status_code, headers = api_instance.get_protected_resource_metadata_root_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <GetProtectedResourceMetadataRoot200Response>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->get_protected_resource_metadata_root_with_http_info: #{e}"
 end
@@ -128,7 +130,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**GetProtectedResourceMetadataRoot200Response**](GetProtectedResourceMetadataRoot200Response.md)
 
 ### Authorization
 
@@ -137,7 +139,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## get_server
@@ -218,11 +220,11 @@ end
 
 ## get_server_challenge
 
-> get_server_challenge(org_id, server_id)
+> <GetServerChallengeResponse> get_server_challenge(org_id, server_id)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 ### Examples
 
@@ -240,8 +242,9 @@ org_id = 'org_id_example' # String |
 server_id = 'server_id_example' # String | 
 
 begin
-  # Simulated MCP Server 401 challenge endpoint.
-  api_instance.get_server_challenge(org_id, server_id)
+  # Simulated MCP server authorization challenge
+  result = api_instance.get_server_challenge(org_id, server_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->get_server_challenge: #{e}"
 end
@@ -249,17 +252,17 @@ end
 
 #### Using the get_server_challenge_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_server_challenge_with_http_info(org_id, server_id)
+> <Array(<GetServerChallengeResponse>, Integer, Hash)> get_server_challenge_with_http_info(org_id, server_id)
 
 ```ruby
 begin
-  # Simulated MCP Server 401 challenge endpoint.
+  # Simulated MCP server authorization challenge
   data, status_code, headers = api_instance.get_server_challenge_with_http_info(org_id, server_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <GetServerChallengeResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->get_server_challenge_with_http_info: #{e}"
 end
@@ -274,7 +277,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -283,7 +286,7 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## list_servers
@@ -362,11 +365,11 @@ end
 
 ## post_server_challenge
 
-> post_server_challenge(org_id, server_id)
+> <GetServerChallengeResponse> post_server_challenge(org_id, server_id)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge (POST)
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
 ### Examples
 
@@ -384,8 +387,9 @@ org_id = 'org_id_example' # String |
 server_id = 'server_id_example' # String | 
 
 begin
-  # Simulated MCP Server 401 challenge endpoint.
-  api_instance.post_server_challenge(org_id, server_id)
+  # Simulated MCP server authorization challenge (POST)
+  result = api_instance.post_server_challenge(org_id, server_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->post_server_challenge: #{e}"
 end
@@ -393,17 +397,17 @@ end
 
 #### Using the post_server_challenge_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> post_server_challenge_with_http_info(org_id, server_id)
+> <Array(<GetServerChallengeResponse>, Integer, Hash)> post_server_challenge_with_http_info(org_id, server_id)
 
 ```ruby
 begin
-  # Simulated MCP Server 401 challenge endpoint.
+  # Simulated MCP server authorization challenge (POST)
   data, status_code, headers = api_instance.post_server_challenge_with_http_info(org_id, server_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <GetServerChallengeResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling McpApi->post_server_challenge_with_http_info: #{e}"
 end
@@ -418,7 +422,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -427,5 +431,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

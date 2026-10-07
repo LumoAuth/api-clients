@@ -36,18 +36,17 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminAgentsGenerateTokenResponse" /> class.
         /// </summary>
-        /// <param name="data">The issued token and its metadata (access_token, expires_in, ...)..</param>
-        public AdminAgentsGenerateTokenResponse(Object data = default)
+        /// <param name="data">data.</param>
+        public AdminAgentsGenerateTokenResponse(AdminAgentsGenerateTokenResponseData data = default)
         {
             this.Data = data;
         }
 
         /// <summary>
-        /// The issued token and its metadata (access_token, expires_in, ...).
+        /// Gets or Sets Data
         /// </summary>
-        /// <value>The issued token and its metadata (access_token, expires_in, ...).</value>
         [DataMember(Name = "data", EmitDefaultValue = false)]
-        public Object Data { get; set; }
+        public AdminAgentsGenerateTokenResponseData Data { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

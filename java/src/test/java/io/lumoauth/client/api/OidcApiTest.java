@@ -14,6 +14,7 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.UserinfoResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,60 +32,72 @@ public class OidcApiTest {
     private final OidcApi api = new OidcApi();
 
     /**
+     * OP session-check iframe (OIDC Session Management 1.0)
+     *
+     * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void checkSessionTest() throws ApiException {
         String orgId = null;
-        api.checkSession(orgId);
+        String response = api.checkSession(orgId);
         // TODO: test validations
     }
 
     /**
+     * RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+     *
+     * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void logoutTest() throws ApiException {
         String orgId = null;
-        api.logout(orgId);
+        String response = api.logout(orgId);
         // TODO: test validations
     }
 
     /**
+     * RP-initiated logout (confirmation submission)
+     *
+     * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void logoutPostTest() throws ApiException {
         String orgId = null;
-        api.logoutPost(orgId);
+        String response = api.logoutPost(orgId);
         // TODO: test validations
     }
 
     /**
-     * OIDC UserInfo Endpoint
+     * OpenID Connect UserInfo endpoint
      *
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void userinfoTest() throws ApiException {
         String orgId = null;
-        api.userinfo(orgId);
+        UserinfoResponse response = api.userinfo(orgId);
         // TODO: test validations
     }
 
     /**
-     * OIDC UserInfo Endpoint
+     * OpenID Connect UserInfo endpoint (POST)
      *
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * Identical to GET.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void userinfoPostTest() throws ApiException {
         String orgId = null;
-        api.userinfoPost(orgId);
+        UserinfoResponse response = api.userinfoPost(orgId);
         // TODO: test validations
     }
 

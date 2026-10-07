@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CreateClient(orgId);
+            //var response = instance.CreateClient(orgId);
+            //Assert.IsType<CreateClientResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.DeleteClient(orgId, clientId);
+            //var response = instance.DeleteClient(orgId, clientId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.DisableClient(orgId, clientId);
+            //var response = instance.DisableClient(orgId, clientId);
+            //Assert.IsType<UpdateClientResponse>(response);
         }
 
         /// <summary>
@@ -96,7 +101,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.EnableClient(orgId, clientId);
+            //var response = instance.EnableClient(orgId, clientId);
+            //Assert.IsType<UpdateClientResponse>(response);
         }
 
         /// <summary>
@@ -108,7 +114,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.GetClient(orgId, clientId);
+            //var response = instance.GetClient(orgId, clientId);
+            //Assert.IsType<GetClientResponse>(response);
         }
 
         /// <summary>
@@ -120,7 +127,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.ListClientScopes(orgId, clientId);
+            //var response = instance.ListClientScopes(orgId, clientId);
+            //Assert.IsType<ListClientScopesResponse>(response);
         }
 
         /// <summary>
@@ -131,7 +139,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.ListClients(orgId);
+            //var response = instance.ListClients(orgId);
+            //Assert.IsType<ListClientsResponse>(response);
         }
 
         /// <summary>
@@ -143,7 +152,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.PatchClient(orgId, clientId);
+            //var response = instance.PatchClient(orgId, clientId);
+            //Assert.IsType<UpdateClientResponse>(response);
         }
 
         /// <summary>
@@ -155,7 +165,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.RotateClientSecret(orgId, clientId);
+            //var response = instance.RotateClientSecret(orgId, clientId);
+            //Assert.IsType<RotateClientSecretResponse>(response);
         }
 
         /// <summary>
@@ -167,7 +178,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.SetClientScopes(orgId, clientId);
+            //var response = instance.SetClientScopes(orgId, clientId);
+            //Assert.IsType<SetClientScopesResponse>(response);
         }
 
         /// <summary>
@@ -179,7 +191,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.UpdateClient(orgId, clientId);
+            //var response = instance.UpdateClient(orgId, clientId);
+            //Assert.IsType<UpdateClientResponse>(response);
         }
     }
 }

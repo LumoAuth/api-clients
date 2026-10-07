@@ -23,12 +23,13 @@ public struct GetServerResponse: Codable, JSONEncodable, Hashable {
     public var status: String?
     public var scopesSupported: [String]?
     public var requirePkce: Bool?
+    public var requireDpop: Bool?
     public var tokenLifetime: Int?
     public var createdAt: Date?
     public var updatedAt: Date?
     public var discovery: GetServerResponseDiscovery?
 
-    public init(id: Int? = nil, serverId: String? = nil, name: String? = nil, description: String? = nil, resourceUri: String? = nil, endpointUrl: String? = nil, transport: String? = nil, authMode: String? = nil, status: String? = nil, scopesSupported: [String]? = nil, requirePkce: Bool? = nil, tokenLifetime: Int? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, discovery: GetServerResponseDiscovery? = nil) {
+    public init(id: Int? = nil, serverId: String? = nil, name: String? = nil, description: String? = nil, resourceUri: String? = nil, endpointUrl: String? = nil, transport: String? = nil, authMode: String? = nil, status: String? = nil, scopesSupported: [String]? = nil, requirePkce: Bool? = nil, requireDpop: Bool? = nil, tokenLifetime: Int? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, discovery: GetServerResponseDiscovery? = nil) {
         self.id = id
         self.serverId = serverId
         self.name = name
@@ -40,6 +41,7 @@ public struct GetServerResponse: Codable, JSONEncodable, Hashable {
         self.status = status
         self.scopesSupported = scopesSupported
         self.requirePkce = requirePkce
+        self.requireDpop = requireDpop
         self.tokenLifetime = tokenLifetime
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -58,6 +60,7 @@ public struct GetServerResponse: Codable, JSONEncodable, Hashable {
         case status
         case scopesSupported = "scopes_supported"
         case requirePkce = "require_pkce"
+        case requireDpop = "require_dpop"
         case tokenLifetime = "token_lifetime"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
@@ -79,6 +82,7 @@ public struct GetServerResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(status, forKey: .status)
         try container.encodeIfPresent(scopesSupported, forKey: .scopesSupported)
         try container.encodeIfPresent(requirePkce, forKey: .requirePkce)
+        try container.encodeIfPresent(requireDpop, forKey: .requireDpop)
         try container.encodeIfPresent(tokenLifetime, forKey: .tokenLifetime)
         try container.encodeIfPresent(createdAt, forKey: .createdAt)
         try container.encodeIfPresent(updatedAt, forKey: .updatedAt)

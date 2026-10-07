@@ -27,6 +27,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminSandboxListResponse;
+import io.lumoauth.client.model.AdminSandboxSpawnRequest;
+import io.lumoauth.client.model.AdminSandboxSpawnResponse;
+import io.lumoauth.client.model.MessageResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -82,7 +86,8 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandbox destroyed </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Sandbox not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSandboxDestroyCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug, final ApiCallback _callback) throws ApiException {
@@ -113,6 +118,7 @@ public class AdminSandboxApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -147,43 +153,48 @@ public class AdminSandboxApi {
     }
 
     /**
-     * POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     * Destroy a sandbox tenant
      * 
      * @param orgId  (required)
      * @param sandboxSlug  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandbox destroyed </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Sandbox not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSandboxDestroy(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug) throws ApiException {
-        adminSandboxDestroyWithHttpInfo(orgId, sandboxSlug);
+    public MessageResponse adminSandboxDestroy(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminSandboxDestroyWithHttpInfo(orgId, sandboxSlug);
+        return localVarResp.getData();
     }
 
     /**
-     * POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     * Destroy a sandbox tenant
      * 
      * @param orgId  (required)
      * @param sandboxSlug  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandbox destroyed </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Sandbox not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSandboxDestroyWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug) throws ApiException {
+    public ApiResponse<MessageResponse> adminSandboxDestroyWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug) throws ApiException {
         okhttp3.Call localVarCall = adminSandboxDestroyValidateBeforeCall(orgId, sandboxSlug, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. (asynchronously)
+     * Destroy a sandbox tenant (asynchronously)
      * 
      * @param orgId  (required)
      * @param sandboxSlug  (required)
@@ -194,13 +205,15 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandbox destroyed </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Sandbox not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSandboxDestroyAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSandboxDestroyAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sandboxSlug, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSandboxDestroyValidateBeforeCall(orgId, sandboxSlug, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -213,7 +226,7 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandboxes </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSandboxListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -243,6 +256,7 @@ public class AdminSandboxApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -272,41 +286,44 @@ public class AdminSandboxApi {
     }
 
     /**
-     * GET / Lists the caller&#39;s active sandbox tenants (their own only).
+     * List the caller&#39;s sandbox tenants
      * 
      * @param orgId  (required)
+     * @return AdminSandboxListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandboxes </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSandboxList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSandboxListWithHttpInfo(orgId);
+    public AdminSandboxListResponse adminSandboxList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSandboxListResponse> localVarResp = adminSandboxListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * GET / Lists the caller&#39;s active sandbox tenants (their own only).
+     * List the caller&#39;s sandbox tenants
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSandboxListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandboxes </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSandboxListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSandboxListResponse> adminSandboxListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSandboxListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSandboxListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * GET / Lists the caller&#39;s active sandbox tenants (their own only). (asynchronously)
+     * List the caller&#39;s sandbox tenants (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -316,18 +333,20 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sandboxes </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSandboxListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSandboxListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSandboxListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSandboxListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSandboxListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for adminSandboxSpawn
      * @param orgId  (required)
+     * @param adminSandboxSpawnRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -335,10 +354,11 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSandboxSpawnCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminSandboxSpawnCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable AdminSandboxSpawnRequest adminSandboxSpawnRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -352,7 +372,7 @@ public class AdminSandboxApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminSandboxSpawnRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/sandbox/spawn"
@@ -365,6 +385,7 @@ public class AdminSandboxApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -372,6 +393,7 @@ public class AdminSandboxApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -383,54 +405,62 @@ public class AdminSandboxApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminSandboxSpawnValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminSandboxSpawnValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable AdminSandboxSpawnRequest adminSandboxSpawnRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminSandboxSpawn(Async)");
         }
 
-        return adminSandboxSpawnCall(orgId, _callback);
+        return adminSandboxSpawnCall(orgId, adminSandboxSpawnRequest, _callback);
 
     }
 
     /**
-     * POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+     * Spawn a sandbox tenant
      * 
      * @param orgId  (required)
+     * @param adminSandboxSpawnRequest  (optional)
+     * @return AdminSandboxSpawnResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSandboxSpawn(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSandboxSpawnWithHttpInfo(orgId);
+    public AdminSandboxSpawnResponse adminSandboxSpawn(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable AdminSandboxSpawnRequest adminSandboxSpawnRequest) throws ApiException {
+        ApiResponse<AdminSandboxSpawnResponse> localVarResp = adminSandboxSpawnWithHttpInfo(orgId, adminSandboxSpawnRequest);
+        return localVarResp.getData();
     }
 
     /**
-     * POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+     * Spawn a sandbox tenant
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param adminSandboxSpawnRequest  (optional)
+     * @return ApiResponse&lt;AdminSandboxSpawnResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSandboxSpawnWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminSandboxSpawnValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<AdminSandboxSpawnResponse> adminSandboxSpawnWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable AdminSandboxSpawnRequest adminSandboxSpawnRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminSandboxSpawnValidateBeforeCall(orgId, adminSandboxSpawnRequest, null);
+        Type localVarReturnType = new TypeToken<AdminSandboxSpawnResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} (asynchronously)
+     * Spawn a sandbox tenant (asynchronously)
      * 
      * @param orgId  (required)
+     * @param adminSandboxSpawnRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -438,13 +468,15 @@ public class AdminSandboxApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Sandbox created </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Per-owner active-sandbox cap reached </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSandboxSpawnAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSandboxSpawnAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable AdminSandboxSpawnRequest adminSandboxSpawnRequest, final ApiCallback<AdminSandboxSpawnResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminSandboxSpawnValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = adminSandboxSpawnValidateBeforeCall(orgId, adminSandboxSpawnRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminSandboxSpawnResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

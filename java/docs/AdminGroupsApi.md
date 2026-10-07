@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminGroupsAddMembers**](AdminGroupsApi.md#adminGroupsAddMembers) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]} |
+| [**adminGroupsAddMembers**](AdminGroupsApi.md#adminGroupsAddMembers) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group |
 | [**adminGroupsAddRole**](AdminGroupsApi.md#adminGroupsAddRole) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group |
 | [**adminGroupsCreate**](AdminGroupsApi.md#adminGroupsCreate) | **POST** /orgs/{orgId}/api/v1/admin/groups | Create a new group |
 | [**adminGroupsDelete**](AdminGroupsApi.md#adminGroupsDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group |
@@ -12,7 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminGroupsGetMembers**](AdminGroupsApi.md#adminGroupsGetMembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**adminGroupsGroupsGetRoles**](AdminGroupsApi.md#adminGroupsGroupsGetRoles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
 | [**adminGroupsList**](AdminGroupsApi.md#adminGroupsList) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
-| [**adminGroupsRemoveMember**](AdminGroupsApi.md#adminGroupsRemoveMember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email |
+| [**adminGroupsRemoveMember**](AdminGroupsApi.md#adminGroupsRemoveMember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**adminGroupsRemoveRole**](AdminGroupsApi.md#adminGroupsRemoveRole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**adminGroupsUpdateRoles**](AdminGroupsApi.md#adminGroupsUpdateRoles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
 | [**patchAdminGroupsUpdate**](AdminGroupsApi.md#patchAdminGroupsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group |
@@ -21,9 +21,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminGroupsAddMembers"></a>
 # **adminGroupsAddMembers**
-> adminGroupsAddMembers(orgId, groupId)
+> AdminGroupsCreateResponse adminGroupsAddMembers(orgId, groupId)
 
-Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+Add member(s) to group
 
 ### Example
 ```java
@@ -54,7 +54,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsAddMembers(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.adminGroupsAddMembers(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsAddMembers");
       System.err.println("Status code: " + e.getCode());
@@ -75,7 +76,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -84,16 +85,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group; message reports how many members were added |  -  |
 
 <a id="adminGroupsAddRole"></a>
 # **adminGroupsAddRole**
-> adminGroupsAddRole(orgId, groupId)
+> MessageResponse adminGroupsAddRole(orgId, groupId)
 
 Add a single role to a group
 
@@ -126,7 +127,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsAddRole(orgId, groupId);
+      MessageResponse result = apiInstance.adminGroupsAddRole(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsAddRole");
       System.err.println("Status code: " + e.getCode());
@@ -147,7 +149,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -156,16 +158,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Added |  -  |
 
 <a id="adminGroupsCreate"></a>
 # **adminGroupsCreate**
-> adminGroupsCreate(orgId)
+> AdminGroupsCreateResponse adminGroupsCreate(orgId)
 
 Create a new group
 
@@ -197,7 +199,8 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminGroupsCreate(orgId);
+      AdminGroupsCreateResponse result = apiInstance.adminGroupsCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsCreate");
       System.err.println("Status code: " + e.getCode());
@@ -217,7 +220,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -226,16 +229,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created group |  -  |
 
 <a id="adminGroupsDelete"></a>
 # **adminGroupsDelete**
-> adminGroupsDelete(orgId, groupId)
+> MessageResponse adminGroupsDelete(orgId, groupId)
 
 Delete a group
 
@@ -268,7 +271,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsDelete(orgId, groupId);
+      MessageResponse result = apiInstance.adminGroupsDelete(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsDelete");
       System.err.println("Status code: " + e.getCode());
@@ -289,7 +293,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -298,16 +302,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 <a id="adminGroupsGet"></a>
 # **adminGroupsGet**
-> adminGroupsGet(orgId, groupId)
+> AdminGroupsGetResponse adminGroupsGet(orgId, groupId)
 
 Get a single group by ID or slug
 
@@ -340,7 +344,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsGet(orgId, groupId);
+      AdminGroupsGetResponse result = apiInstance.adminGroupsGet(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsGet");
       System.err.println("Status code: " + e.getCode());
@@ -361,7 +366,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsGetResponse**](AdminGroupsGetResponse.md)
 
 ### Authorization
 
@@ -370,16 +375,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Group |  -  |
 
 <a id="adminGroupsGetMembers"></a>
 # **adminGroupsGetMembers**
-> adminGroupsGetMembers(orgId, groupId)
+> AdminGroupsGetMembersResponse adminGroupsGetMembers(orgId, groupId)
 
 Get group members
 
@@ -412,7 +417,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsGetMembers(orgId, groupId);
+      AdminGroupsGetMembersResponse result = apiInstance.adminGroupsGetMembers(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsGetMembers");
       System.err.println("Status code: " + e.getCode());
@@ -433,7 +439,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsGetMembersResponse**](AdminGroupsGetMembersResponse.md)
 
 ### Authorization
 
@@ -442,16 +448,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Group members |  -  |
 
 <a id="adminGroupsGroupsGetRoles"></a>
 # **adminGroupsGroupsGetRoles**
-> adminGroupsGroupsGetRoles(orgId, groupId)
+> AdminGroupsGroupsGetRolesResponse adminGroupsGroupsGetRoles(orgId, groupId)
 
 Get group roles
 
@@ -484,7 +490,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsGroupsGetRoles(orgId, groupId);
+      AdminGroupsGroupsGetRolesResponse result = apiInstance.adminGroupsGroupsGetRoles(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsGroupsGetRoles");
       System.err.println("Status code: " + e.getCode());
@@ -505,7 +512,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -514,16 +521,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Group roles |  -  |
 
 <a id="adminGroupsList"></a>
 # **adminGroupsList**
-> adminGroupsList(orgId)
+> AdminGroupsListResponse adminGroupsList(orgId)
 
 List all groups in the tenant
 
@@ -555,7 +562,8 @@ public class Example {
     AdminGroupsApi apiInstance = new AdminGroupsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminGroupsList(orgId);
+      AdminGroupsListResponse result = apiInstance.adminGroupsList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsList");
       System.err.println("Status code: " + e.getCode());
@@ -575,7 +583,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsListResponse**](AdminGroupsListResponse.md)
 
 ### Authorization
 
@@ -584,18 +592,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Groups |  -  |
 
 <a id="adminGroupsRemoveMember"></a>
 # **adminGroupsRemoveMember**
-> adminGroupsRemoveMember(orgId, groupId, userId)
+> MessageResponse adminGroupsRemoveMember(orgId, groupId, userId)
 
-Remove member from group — userId is a UUID or email
+Remove member from group
 
 ### Example
 ```java
@@ -627,7 +635,8 @@ public class Example {
     String groupId = "groupId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminGroupsRemoveMember(orgId, groupId, userId);
+      MessageResponse result = apiInstance.adminGroupsRemoveMember(orgId, groupId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsRemoveMember");
       System.err.println("Status code: " + e.getCode());
@@ -649,7 +658,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -658,16 +667,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 <a id="adminGroupsRemoveRole"></a>
 # **adminGroupsRemoveRole**
-> adminGroupsRemoveRole(orgId, groupId, roleId)
+> MessageResponse adminGroupsRemoveRole(orgId, groupId, roleId)
 
 Remove a role from a group
 
@@ -701,7 +710,8 @@ public class Example {
     String groupId = "groupId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminGroupsRemoveRole(orgId, groupId, roleId);
+      MessageResponse result = apiInstance.adminGroupsRemoveRole(orgId, groupId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsRemoveRole");
       System.err.println("Status code: " + e.getCode());
@@ -723,7 +733,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -732,16 +742,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 <a id="adminGroupsUpdateRoles"></a>
 # **adminGroupsUpdateRoles**
-> adminGroupsUpdateRoles(orgId, groupId)
+> AdminGroupsCreateResponse adminGroupsUpdateRoles(orgId, groupId)
 
 Update group roles (replaces all existing roles)
 
@@ -774,7 +784,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.adminGroupsUpdateRoles(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.adminGroupsUpdateRoles(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#adminGroupsUpdateRoles");
       System.err.println("Status code: " + e.getCode());
@@ -795,7 +806,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -804,16 +815,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group |  -  |
 
 <a id="patchAdminGroupsUpdate"></a>
 # **patchAdminGroupsUpdate**
-> patchAdminGroupsUpdate(orgId, groupId)
+> AdminGroupsCreateResponse patchAdminGroupsUpdate(orgId, groupId)
 
 Update an existing group
 
@@ -846,7 +857,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.patchAdminGroupsUpdate(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.patchAdminGroupsUpdate(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#patchAdminGroupsUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -867,7 +879,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -876,16 +888,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group |  -  |
 
 <a id="putAdminGroupsUpdate"></a>
 # **putAdminGroupsUpdate**
-> putAdminGroupsUpdate(orgId, groupId)
+> AdminGroupsCreateResponse putAdminGroupsUpdate(orgId, groupId)
 
 Update an existing group
 
@@ -918,7 +930,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String groupId = "groupId_example"; // String | 
     try {
-      apiInstance.putAdminGroupsUpdate(orgId, groupId);
+      AdminGroupsCreateResponse result = apiInstance.putAdminGroupsUpdate(orgId, groupId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminGroupsApi#putAdminGroupsUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -939,7 +952,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -948,10 +961,10 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group |  -  |
 

@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_mcp_servers_create**](AdminMcpApi.md#admin_mcp_servers_create) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | POST /api/v1/admin/mcp/servers
-[**admin_mcp_servers_delete**](AdminMcpApi.md#admin_mcp_servers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | 
-[**admin_mcp_servers_get**](AdminMcpApi.md#admin_mcp_servers_get) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | 
-[**admin_mcp_servers_list**](AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | 
+[**admin_mcp_servers_create**](AdminMcpApi.md#admin_mcp_servers_create) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server
+[**admin_mcp_servers_delete**](AdminMcpApi.md#admin_mcp_servers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server
+[**admin_mcp_servers_get**](AdminMcpApi.md#admin_mcp_servers_get) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server
+[**admin_mcp_servers_list**](AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
 
 
 # **admin_mcp_servers_create**
-> admin_mcp_servers_create(org_id)
+> AdminMcpServersCreateResponse admin_mcp_servers_create(org_id)
 
-POST /api/v1/admin/mcp/servers
+Register an MCP server
 
 Body:
 name (required) — display name
@@ -24,6 +24,11 @@ scopes_supported (optional) — array OR space/comma-separated string
 transport (optional) — defaults to "http_streamable"
 auth_mode (optional) — defaults to "oauth"
 token_lifetime (optional, default 3600) — clamped to [60, 86400]
+allowed_client_ids (optional) — array of this organization's OAuth client ids;
+    unknown ids are a 422 (never persisted as policy)
+require_pkce (optional, default true)
+require_resource_param (optional, default true)
+require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
 ### Example
 
@@ -32,6 +37,7 @@ token_lifetime (optional, default 3600) — clamped to [60, 86400]
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -64,8 +70,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # POST /api/v1/admin/mcp/servers
-        api_instance.admin_mcp_servers_create(org_id)
+        # Register an MCP server
+        api_response = api_instance.admin_mcp_servers_create(org_id)
+        print("The response of AdminMcpApi->admin_mcp_servers_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminMcpApi->admin_mcp_servers_create: %s\n" % e)
 ```
@@ -81,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
 
 ### Authorization
 
@@ -90,18 +98,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | MCP server created |  -  |
+**409** | An MCP server with this resource_uri already exists |  -  |
+**422** | validation_error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_mcp_servers_delete**
-> admin_mcp_servers_delete(org_id, server_id)
+> MessageResponse admin_mcp_servers_delete(org_id, server_id)
+
+Delete an MCP server
 
 ### Example
 
@@ -110,6 +122,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -143,7 +156,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     server_id = 'server_id_example' # str | 
 
     try:
-        api_instance.admin_mcp_servers_delete(org_id, server_id)
+        # Delete an MCP server
+        api_response = api_instance.admin_mcp_servers_delete(org_id, server_id)
+        print("The response of AdminMcpApi->admin_mcp_servers_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminMcpApi->admin_mcp_servers_delete: %s\n" % e)
 ```
@@ -160,7 +176,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -169,18 +185,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | MCP server deleted |  -  |
+**404** | MCP server not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_mcp_servers_get**
-> admin_mcp_servers_get(org_id, server_id)
+> AdminMcpServersGetResponse admin_mcp_servers_get(org_id, server_id)
+
+Get an MCP server
 
 ### Example
 
@@ -189,6 +208,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_mcp_servers_get_response import AdminMcpServersGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -222,7 +242,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     server_id = 'server_id_example' # str | 
 
     try:
-        api_instance.admin_mcp_servers_get(org_id, server_id)
+        # Get an MCP server
+        api_response = api_instance.admin_mcp_servers_get(org_id, server_id)
+        print("The response of AdminMcpApi->admin_mcp_servers_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminMcpApi->admin_mcp_servers_get: %s\n" % e)
 ```
@@ -239,7 +262,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminMcpServersGetResponse**](AdminMcpServersGetResponse.md)
 
 ### Authorization
 
@@ -248,18 +271,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | MCP server |  -  |
+**404** | MCP server not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_mcp_servers_list**
-> admin_mcp_servers_list(org_id)
+> AdminMcpServersListResponse admin_mcp_servers_list(org_id)
+
+List MCP servers
 
 ### Example
 
@@ -268,6 +294,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_mcp_servers_list_response import AdminMcpServersListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -300,7 +327,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.admin_mcp_servers_list(org_id)
+        # List MCP servers
+        api_response = api_instance.admin_mcp_servers_list(org_id)
+        print("The response of AdminMcpApi->admin_mcp_servers_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminMcpApi->admin_mcp_servers_list: %s\n" % e)
 ```
@@ -316,7 +346,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminMcpServersListResponse**](AdminMcpServersListResponse.md)
 
 ### Authorization
 
@@ -325,13 +355,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | MCP servers |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

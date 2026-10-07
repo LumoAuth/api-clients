@@ -27,7 +27,7 @@ type GetMeResponse struct {
 	MfaEnabled NullableBool `json:"mfa_enabled,omitempty"`
 	Roles []string `json:"roles,omitempty"`
 	Capabilities []string `json:"capabilities,omitempty"`
-	Tenant *GetMeResponseTenant `json:"tenant,omitempty"`
+	Tenant *GroupRef `json:"tenant,omitempty"`
 }
 
 // NewGetMeResponse instantiates a new GetMeResponse object
@@ -304,9 +304,9 @@ func (o *GetMeResponse) SetCapabilities(v []string) {
 }
 
 // GetTenant returns the Tenant field value if set, zero value otherwise.
-func (o *GetMeResponse) GetTenant() GetMeResponseTenant {
+func (o *GetMeResponse) GetTenant() GroupRef {
 	if o == nil || IsNil(o.Tenant) {
-		var ret GetMeResponseTenant
+		var ret GroupRef
 		return ret
 	}
 	return *o.Tenant
@@ -314,7 +314,7 @@ func (o *GetMeResponse) GetTenant() GetMeResponseTenant {
 
 // GetTenantOk returns a tuple with the Tenant field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetMeResponse) GetTenantOk() (*GetMeResponseTenant, bool) {
+func (o *GetMeResponse) GetTenantOk() (*GroupRef, bool) {
 	if o == nil || IsNil(o.Tenant) {
 		return nil, false
 	}
@@ -330,8 +330,8 @@ func (o *GetMeResponse) HasTenant() bool {
 	return false
 }
 
-// SetTenant gets a reference to the given GetMeResponseTenant and assigns it to the Tenant field.
-func (o *GetMeResponse) SetTenant(v GetMeResponseTenant) {
+// SetTenant gets a reference to the given GroupRef and assigns it to the Tenant field.
+func (o *GetMeResponse) SetTenant(v GroupRef) {
 	o.Tenant = &v
 }
 

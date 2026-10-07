@@ -19,7 +19,8 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProtectedResourceMetadataError {
-    DefaultResponse(),
+    Status400(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +28,7 @@ pub enum GetProtectedResourceMetadataError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetProtectedResourceMetadataRootError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -44,7 +45,10 @@ pub enum GetServerError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetServerChallengeError {
-    DefaultResponse(),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -61,13 +65,16 @@ pub enum ListServersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PostServerChallengeError {
-    DefaultResponse(),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
 
-/// Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
-pub async fn get_protected_resource_metadata(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<(), Error<GetProtectedResourceMetadataError>> {
+/// Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
+pub async fn get_protected_resource_metadata(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<models::ProtectedResourceMetadata, Error<GetProtectedResourceMetadataError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_server_id = server_id;
@@ -83,9 +90,20 @@ pub async fn get_protected_resource_metadata(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ProtectedResourceMetadata`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ProtectedResourceMetadata`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetProtectedResourceMetadataError> = serde_json::from_str(&content).ok();
@@ -93,8 +111,8 @@ pub async fn get_protected_resource_metadata(configuration: &configuration::Conf
     }
 }
 
-/// Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
-pub async fn get_protected_resource_metadata_root(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetProtectedResourceMetadataRootError>> {
+/// Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
+pub async fn get_protected_resource_metadata_root(configuration: &configuration::Configuration, org_id: &str) -> Result<models::GetProtectedResourceMetadataRoot200Response, Error<GetProtectedResourceMetadataRootError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -109,9 +127,20 @@ pub async fn get_protected_resource_metadata_root(configuration: &configuration:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetProtectedResourceMetadataRoot200Response`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetProtectedResourceMetadataRoot200Response`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetProtectedResourceMetadataRootError> = serde_json::from_str(&content).ok();
@@ -168,8 +197,8 @@ pub async fn get_server(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-/// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-pub async fn get_server_challenge(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<(), Error<GetServerChallengeError>> {
+/// Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
+pub async fn get_server_challenge(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<models::GetServerChallengeResponse, Error<GetServerChallengeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_server_id = server_id;
@@ -188,9 +217,20 @@ pub async fn get_server_challenge(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetServerChallengeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetServerChallengeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetServerChallengeError> = serde_json::from_str(&content).ok();
@@ -246,8 +286,8 @@ pub async fn list_servers(configuration: &configuration::Configuration, org_id: 
     }
 }
 
-/// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
-pub async fn post_server_challenge(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<(), Error<PostServerChallengeError>> {
+/// Identical to GET; the HTTP method is only recorded in the audit trail.
+pub async fn post_server_challenge(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<models::GetServerChallengeResponse, Error<PostServerChallengeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_server_id = server_id;
@@ -266,9 +306,20 @@ pub async fn post_server_challenge(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetServerChallengeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetServerChallengeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PostServerChallengeError> = serde_json::from_str(&content).ok();

@@ -14,6 +14,24 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminAnalyticsDashboardResponse;
+import io.lumoauth.client.model.AdminAnalyticsLoginsResponse;
+import io.lumoauth.client.model.AdminAnalyticsUsersResponse;
+import io.lumoauth.client.model.AdminSettingsAllResponse;
+import io.lumoauth.client.model.AdminSettingsAuthenticationGetResponse;
+import io.lumoauth.client.model.AdminSettingsBrandingGetResponse;
+import io.lumoauth.client.model.AdminSettingsEmailGetResponse;
+import io.lumoauth.client.model.AdminSettingsGeneralGetResponse;
+import io.lumoauth.client.model.AdminSettingsScimGetResponse;
+import io.lumoauth.client.model.AdminSettingsSecurityGetResponse;
+import io.lumoauth.client.model.AdminTenantGetResponse;
+import io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsEmailUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsScimUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateResponse;
+import io.lumoauth.client.model.PutAdminTenantUpdateResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +56,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminAnalyticsDashboardTest() throws ApiException {
         String orgId = null;
-        api.adminAnalyticsDashboard(orgId);
+        AdminAnalyticsDashboardResponse response = api.adminAnalyticsDashboard(orgId);
         // TODO: test validations
     }
 
@@ -50,7 +68,8 @@ public class AdminSettingsApiTest {
     @Test
     public void adminAnalyticsLoginsTest() throws ApiException {
         String orgId = null;
-        api.adminAnalyticsLogins(orgId);
+        Integer days = null;
+        AdminAnalyticsLoginsResponse response = api.adminAnalyticsLogins(orgId, days);
         // TODO: test validations
     }
 
@@ -62,19 +81,20 @@ public class AdminSettingsApiTest {
     @Test
     public void adminAnalyticsUsersTest() throws ApiException {
         String orgId = null;
-        api.adminAnalyticsUsers(orgId);
+        Integer days = null;
+        AdminAnalyticsUsersResponse response = api.adminAnalyticsUsers(orgId, days);
         // TODO: test validations
     }
 
     /**
-     * Get tenant information
+     * Get organization (tenant) profile
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrganizationGetTest() throws ApiException {
         String orgId = null;
-        api.adminOrganizationGet(orgId);
+        AdminTenantGetResponse response = api.adminOrganizationGet(orgId);
         // TODO: test validations
     }
 
@@ -86,7 +106,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsAllTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsAll(orgId);
+        AdminSettingsAllResponse response = api.adminSettingsAll(orgId);
         // TODO: test validations
     }
 
@@ -98,7 +118,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsAuthGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsAuthGet(orgId);
+        AdminSettingsAuthenticationGetResponse response = api.adminSettingsAuthGet(orgId);
         // TODO: test validations
     }
 
@@ -110,7 +130,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsAuthenticationGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsAuthenticationGet(orgId);
+        AdminSettingsAuthenticationGetResponse response = api.adminSettingsAuthenticationGet(orgId);
         // TODO: test validations
     }
 
@@ -122,7 +142,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsBrandingGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsBrandingGet(orgId);
+        AdminSettingsBrandingGetResponse response = api.adminSettingsBrandingGet(orgId);
         // TODO: test validations
     }
 
@@ -134,7 +154,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsEmailGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsEmailGet(orgId);
+        AdminSettingsEmailGetResponse response = api.adminSettingsEmailGet(orgId);
         // TODO: test validations
     }
 
@@ -146,7 +166,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsGeneralGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsGeneralGet(orgId);
+        AdminSettingsGeneralGetResponse response = api.adminSettingsGeneralGet(orgId);
         // TODO: test validations
     }
 
@@ -158,7 +178,7 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsScimGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsScimGet(orgId);
+        AdminSettingsScimGetResponse response = api.adminSettingsScimGet(orgId);
         // TODO: test validations
     }
 
@@ -170,31 +190,31 @@ public class AdminSettingsApiTest {
     @Test
     public void adminSettingsSecurityGetTest() throws ApiException {
         String orgId = null;
-        api.adminSettingsSecurityGet(orgId);
+        AdminSettingsSecurityGetResponse response = api.adminSettingsSecurityGet(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get tenant information
+     * Get organization (tenant) profile
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminTenantGetTest() throws ApiException {
         String orgId = null;
-        api.adminTenantGet(orgId);
+        AdminTenantGetResponse response = api.adminTenantGet(orgId);
         // TODO: test validations
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminOrganizationUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminOrganizationUpdate(orgId);
+        PutAdminTenantUpdateResponse response = api.patchAdminOrganizationUpdate(orgId);
         // TODO: test validations
     }
 
@@ -206,7 +226,7 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsAuthUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsAuthUpdate(orgId);
+        PutAdminSettingsAuthenticationUpdateResponse response = api.patchAdminSettingsAuthUpdate(orgId);
         // TODO: test validations
     }
 
@@ -218,7 +238,7 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsAuthenticationUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsAuthenticationUpdate(orgId);
+        PutAdminSettingsAuthenticationUpdateResponse response = api.patchAdminSettingsAuthenticationUpdate(orgId);
         // TODO: test validations
     }
 
@@ -230,7 +250,7 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsBrandingUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsBrandingUpdate(orgId);
+        PutAdminSettingsBrandingUpdateResponse response = api.patchAdminSettingsBrandingUpdate(orgId);
         // TODO: test validations
     }
 
@@ -242,7 +262,7 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsEmailUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsEmailUpdate(orgId);
+        PutAdminSettingsEmailUpdateResponse response = api.patchAdminSettingsEmailUpdate(orgId);
         // TODO: test validations
     }
 
@@ -254,7 +274,7 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsGeneralUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsGeneralUpdate(orgId);
+        PutAdminSettingsGeneralUpdateResponse response = api.patchAdminSettingsGeneralUpdate(orgId);
         // TODO: test validations
     }
 
@@ -266,7 +286,7 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsScimUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsScimUpdate(orgId);
+        PutAdminSettingsScimUpdateResponse response = api.patchAdminSettingsScimUpdate(orgId);
         // TODO: test validations
     }
 
@@ -278,31 +298,31 @@ public class AdminSettingsApiTest {
     @Test
     public void patchAdminSettingsSecurityUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminSettingsSecurityUpdate(orgId);
+        PutAdminSettingsSecurityUpdateResponse response = api.patchAdminSettingsSecurityUpdate(orgId);
         // TODO: test validations
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminTenantUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminTenantUpdate(orgId);
+        PutAdminTenantUpdateResponse response = api.patchAdminTenantUpdate(orgId);
         // TODO: test validations
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminOrganizationUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminOrganizationUpdate(orgId);
+        PutAdminTenantUpdateResponse response = api.putAdminOrganizationUpdate(orgId);
         // TODO: test validations
     }
 
@@ -314,7 +334,7 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsAuthUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsAuthUpdate(orgId);
+        PutAdminSettingsAuthenticationUpdateResponse response = api.putAdminSettingsAuthUpdate(orgId);
         // TODO: test validations
     }
 
@@ -326,7 +346,7 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsAuthenticationUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsAuthenticationUpdate(orgId);
+        PutAdminSettingsAuthenticationUpdateResponse response = api.putAdminSettingsAuthenticationUpdate(orgId);
         // TODO: test validations
     }
 
@@ -338,7 +358,7 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsBrandingUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsBrandingUpdate(orgId);
+        PutAdminSettingsBrandingUpdateResponse response = api.putAdminSettingsBrandingUpdate(orgId);
         // TODO: test validations
     }
 
@@ -350,7 +370,7 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsEmailUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsEmailUpdate(orgId);
+        PutAdminSettingsEmailUpdateResponse response = api.putAdminSettingsEmailUpdate(orgId);
         // TODO: test validations
     }
 
@@ -362,7 +382,7 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsGeneralUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsGeneralUpdate(orgId);
+        PutAdminSettingsGeneralUpdateResponse response = api.putAdminSettingsGeneralUpdate(orgId);
         // TODO: test validations
     }
 
@@ -374,7 +394,7 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsScimUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsScimUpdate(orgId);
+        PutAdminSettingsScimUpdateResponse response = api.putAdminSettingsScimUpdate(orgId);
         // TODO: test validations
     }
 
@@ -386,19 +406,19 @@ public class AdminSettingsApiTest {
     @Test
     public void putAdminSettingsSecurityUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminSettingsSecurityUpdate(orgId);
+        PutAdminSettingsSecurityUpdateResponse response = api.putAdminSettingsSecurityUpdate(orgId);
         // TODO: test validations
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminTenantUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminTenantUpdate(orgId);
+        PutAdminTenantUpdateResponse response = api.putAdminTenantUpdate(orgId);
         // TODO: test validations
     }
 

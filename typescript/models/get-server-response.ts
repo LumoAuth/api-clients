@@ -91,6 +91,12 @@ export interface GetServerResponse {
     'require_pkce'?: boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof GetServerResponse
+     */
+    'require_dpop'?: boolean;
+    /**
+     * 
      * @type {number}
      * @memberof GetServerResponse
      */

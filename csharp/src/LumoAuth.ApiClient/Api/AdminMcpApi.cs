@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,57 +29,37 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers
+        /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminMcpServersCreate(string orgId);
+        /// <returns>AdminMcpServersCreateResponse</returns>
+        AdminMcpServersCreateResponse AdminMcpServersCreate(string orgId);
 
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers
+        /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminMcpServersCreateWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
+        ApiResponse<AdminMcpServersCreateResponse> AdminMcpServersCreateWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Delete an MCP server
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        void AdminMcpServersDelete(string orgId, string serverId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminMcpServersDelete(string orgId, string serverId);
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminMcpServersDeleteWithHttpInfo(string orgId, string serverId);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="serverId"></param>
-        /// <returns></returns>
-        void AdminMcpServersGet(string orgId, string serverId);
-
-        /// <summary>
-        /// 
+        /// Delete an MCP server
         /// </summary>
         /// <remarks>
         /// 
@@ -86,26 +67,46 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminMcpServersGetWithHttpInfo(string orgId, string serverId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminMcpServersDeleteWithHttpInfo(string orgId, string serverId);
         /// <summary>
-        /// 
+        /// Get an MCP server
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminMcpServersList(string orgId);
+        /// <param name="serverId"></param>
+        /// <returns>AdminMcpServersGetResponse</returns>
+        AdminMcpServersGetResponse AdminMcpServersGet(string orgId, string serverId);
 
         /// <summary>
-        /// 
+        /// Get an MCP server
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminMcpServersListWithHttpInfo(string orgId);
+        /// <param name="serverId"></param>
+        /// <returns>ApiResponse of AdminMcpServersGetResponse</returns>
+        ApiResponse<AdminMcpServersGetResponse> AdminMcpServersGetWithHttpInfo(string orgId, string serverId);
+        /// <summary>
+        /// List MCP servers
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AdminMcpServersListResponse</returns>
+        AdminMcpServersListResponse AdminMcpServersList(string orgId);
+
+        /// <summary>
+        /// List MCP servers
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminMcpServersListResponse</returns>
+        ApiResponse<AdminMcpServersListResponse> AdminMcpServersListWithHttpInfo(string orgId);
         #endregion Synchronous Operations
     }
 
@@ -116,30 +117,30 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers
+        /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminMcpServersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminMcpServersCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersCreateResponse> AdminMcpServersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers
+        /// Register an MCP server
         /// </summary>
         /// <remarks>
-        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersCreateResponse>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Delete an MCP server
         /// </summary>
         /// <remarks>
         /// 
@@ -148,11 +149,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminMcpServersDeleteAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminMcpServersDeleteAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Delete an MCP server
         /// </summary>
         /// <remarks>
         /// 
@@ -161,10 +162,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminMcpServersDeleteWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminMcpServersDeleteWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Get an MCP server
         /// </summary>
         /// <remarks>
         /// 
@@ -173,11 +174,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminMcpServersGetAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminMcpServersGetResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersGetResponse> AdminMcpServersGetAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Get an MCP server
         /// </summary>
         /// <remarks>
         /// 
@@ -186,10 +187,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminMcpServersGetWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminMcpServersGetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersGetResponse>> AdminMcpServersGetWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// List MCP servers
         /// </summary>
         /// <remarks>
         /// 
@@ -197,11 +198,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminMcpServersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminMcpServersListResponse</returns>
+        System.Threading.Tasks.Task<AdminMcpServersListResponse> AdminMcpServersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// List MCP servers
         /// </summary>
         /// <remarks>
         /// 
@@ -209,8 +210,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminMcpServersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminMcpServersListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminMcpServersListResponse>> AdminMcpServersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -425,23 +426,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Register an MCP server Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminMcpServersCreate(string orgId)
+        /// <returns>AdminMcpServersCreateResponse</returns>
+        public AdminMcpServersCreateResponse AdminMcpServersCreate(string orgId)
         {
-            AdminMcpServersCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = AdminMcpServersCreateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Register an MCP server Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminMcpServersCreateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminMcpServersCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> AdminMcpServersCreateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -454,6 +456,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -477,7 +480,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminMcpServersCreateResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -489,25 +492,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Register an MCP server Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminMcpServersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminMcpServersCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersCreateResponse> AdminMcpServersCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminMcpServersCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse> localVarResponse = await AdminMcpServersCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// POST /api/v1/admin/mcp/servers Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        /// Register an MCP server Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminMcpServersCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersCreateResponse>> AdminMcpServersCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -521,6 +525,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -546,7 +551,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminMcpServersCreateResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -558,25 +563,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Delete an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        public void AdminMcpServersDelete(string orgId, string serverId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminMcpServersDelete(string orgId, string serverId)
         {
-            AdminMcpServersDeleteWithHttpInfo(orgId, serverId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminMcpServersDeleteWithHttpInfo(orgId, serverId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Delete an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminMcpServersDeleteWithHttpInfo(string orgId, string serverId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminMcpServersDeleteWithHttpInfo(string orgId, string serverId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -593,6 +599,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -617,7 +624,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -629,27 +636,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Delete an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminMcpServersDeleteAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminMcpServersDeleteAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminMcpServersDeleteWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminMcpServersDeleteWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Delete an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminMcpServersDeleteWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminMcpServersDeleteWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -667,6 +675,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -693,7 +702,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -705,25 +714,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Get an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        public void AdminMcpServersGet(string orgId, string serverId)
+        /// <returns>AdminMcpServersGetResponse</returns>
+        public AdminMcpServersGetResponse AdminMcpServersGet(string orgId, string serverId)
         {
-            AdminMcpServersGetWithHttpInfo(orgId, serverId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGetResponse> localVarResponse = AdminMcpServersGetWithHttpInfo(orgId, serverId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Get an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminMcpServersGetWithHttpInfo(string orgId, string serverId)
+        /// <returns>ApiResponse of AdminMcpServersGetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGetResponse> AdminMcpServersGetWithHttpInfo(string orgId, string serverId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -740,6 +750,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -764,7 +775,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminMcpServersGetResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -776,27 +787,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Get an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminMcpServersGetAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminMcpServersGetResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersGetResponse> AdminMcpServersGetAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminMcpServersGetWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGetResponse> localVarResponse = await AdminMcpServersGetWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Get an MCP server 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminMcpServersGetWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminMcpServersGetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersGetResponse>> AdminMcpServersGetWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -814,6 +826,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -840,7 +853,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminMcpServersGetResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -852,23 +865,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// List MCP servers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminMcpServersList(string orgId)
+        /// <returns>AdminMcpServersListResponse</returns>
+        public AdminMcpServersListResponse AdminMcpServersList(string orgId)
         {
-            AdminMcpServersListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersListResponse> localVarResponse = AdminMcpServersListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// List MCP servers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminMcpServersListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminMcpServersListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersListResponse> AdminMcpServersListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -881,6 +895,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -904,7 +919,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminMcpServersListResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -916,25 +931,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// List MCP servers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminMcpServersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminMcpServersListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminMcpServersListResponse> AdminMcpServersListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminMcpServersListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersListResponse> localVarResponse = await AdminMcpServersListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// List MCP servers 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminMcpServersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminMcpServersListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminMcpServersListResponse>> AdminMcpServersListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -948,6 +964,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -973,7 +990,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminMcpServersListResponse>("/orgs/{orgId}/api/v1/admin/mcp/servers", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

@@ -69,7 +69,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="roles">roles.</param>
         /// <param name="capabilities">capabilities.</param>
         /// <param name="tenant">tenant.</param>
-        public GetMeResponse(SubjectTypeEnum? subjectType = default, string id = default, string email = default, string name = default, bool? mfaEnabled = default, List<string> roles = default, List<string> capabilities = default, GetMeResponseTenant tenant = default)
+        public GetMeResponse(SubjectTypeEnum? subjectType = default, string id = default, string email = default, string name = default, bool? mfaEnabled = default, List<string> roles = default, List<string> capabilities = default, GroupRef tenant = default)
         {
             this.SubjectType = subjectType;
             this.Id = id;
@@ -121,7 +121,7 @@ namespace LumoAuth.ApiClient.Model
         /// Gets or Sets Tenant
         /// </summary>
         [DataMember(Name = "tenant", EmitDefaultValue = false)]
-        public GetMeResponseTenant Tenant { get; set; }
+        public GroupRef Tenant { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object

@@ -4,22 +4,22 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**abacAttributesCreate**](#abacattributescreate) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create a new attribute definition|
+|[**abacAttributesCreate**](#abacattributescreate) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create an attribute definition|
 |[**abacAttributesDelete**](#abacattributesdelete) | **DELETE** /orgs/{orgId}/api/v1/abac/attributes/{id} | Delete an attribute definition|
-|[**abacAttributesGet**](#abacattributesget) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get a single attribute definition|
-|[**abacAttributesList**](#abacattributeslist) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List all attribute definitions|
-|[**abacPoliciesCreate**](#abacpoliciescreate) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create a new ABAC policy|
+|[**abacAttributesGet**](#abacattributesget) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get an attribute definition|
+|[**abacAttributesList**](#abacattributeslist) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List attribute definitions|
+|[**abacPoliciesCreate**](#abacpoliciescreate) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create an ABAC policy|
 |[**abacPoliciesDelete**](#abacpoliciesdelete) | **DELETE** /orgs/{orgId}/api/v1/abac/policies/{id} | Delete an ABAC policy|
-|[**abacPoliciesGet**](#abacpoliciesget) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get a single ABAC policy|
-|[**abacPoliciesList**](#abacpolicieslist) | **GET** /orgs/{orgId}/api/v1/abac/policies | List all ABAC policies|
-|[**abacPoliciesToggle**](#abacpoliciestoggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle policy active status|
-|[**patchAbacAttributesUpdate**](#patchabacattributesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition|
-|[**patchAbacPoliciesUpdate**](#patchabacpoliciesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy|
+|[**abacPoliciesGet**](#abacpoliciesget) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get an ABAC policy|
+|[**abacPoliciesList**](#abacpolicieslist) | **GET** /orgs/{orgId}/api/v1/abac/policies | List ABAC policies|
+|[**abacPoliciesToggle**](#abacpoliciestoggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle a policy between active and inactive|
+|[**patchAbacAttributesUpdate**](#patchabacattributesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Partially update an attribute definition|
+|[**patchAbacPoliciesUpdate**](#patchabacpoliciesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Partially update an ABAC policy|
 |[**putAbacAttributesUpdate**](#putabacattributesupdate) | **PUT** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition|
 |[**putAbacPoliciesUpdate**](#putabacpoliciesupdate) | **PUT** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy|
 
 # **abacAttributesCreate**
-> abacAttributesCreate()
+> AbacAttributesCreateResponse abacAttributesCreate()
 
 
 ### Example
@@ -49,7 +49,7 @@ const { status, data } = await apiInstance.abacAttributesCreate(
 
 ### Return type
 
-void (empty response body)
+**AbacAttributesCreateResponse**
 
 ### Authorization
 
@@ -58,18 +58,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created |  -  |
+|**409** | An attribute with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacAttributesDelete**
-> abacAttributesDelete()
+> MessageResponse abacAttributesDelete()
 
 
 ### Example
@@ -102,7 +103,7 @@ const { status, data } = await apiInstance.abacAttributesDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -111,18 +112,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
+|**403** | System attribute definitions cannot be deleted |  -  |
+|**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacAttributesGet**
-> abacAttributesGet()
+> AbacAttributesGetResponse abacAttributesGet()
 
 
 ### Example
@@ -155,7 +158,7 @@ const { status, data } = await apiInstance.abacAttributesGet(
 
 ### Return type
 
-void (empty response body)
+**AbacAttributesGetResponse**
 
 ### Authorization
 
@@ -164,18 +167,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Attribute definition |  -  |
+|**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacAttributesList**
-> abacAttributesList()
+> AbacAttributesListResponse abacAttributesList()
 
 
 ### Example
@@ -205,7 +209,7 @@ const { status, data } = await apiInstance.abacAttributesList(
 
 ### Return type
 
-void (empty response body)
+**AbacAttributesListResponse**
 
 ### Authorization
 
@@ -214,18 +218,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Paginated attribute definitions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacPoliciesCreate**
-> abacPoliciesCreate()
+> AbacPoliciesCreateResponse abacPoliciesCreate()
 
 
 ### Example
@@ -255,7 +259,7 @@ const { status, data } = await apiInstance.abacPoliciesCreate(
 
 ### Return type
 
-void (empty response body)
+**AbacPoliciesCreateResponse**
 
 ### Authorization
 
@@ -264,18 +268,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created |  -  |
+|**400** | Invalid effect or policy conditions |  -  |
+|**409** | A policy with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacPoliciesDelete**
-> abacPoliciesDelete()
+> MessageResponse abacPoliciesDelete()
 
 
 ### Example
@@ -308,7 +314,7 @@ const { status, data } = await apiInstance.abacPoliciesDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -317,18 +323,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
+|**403** | System policies cannot be deleted |  -  |
+|**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacPoliciesGet**
-> abacPoliciesGet()
+> AbacPoliciesGetResponse abacPoliciesGet()
 
 
 ### Example
@@ -361,7 +369,7 @@ const { status, data } = await apiInstance.abacPoliciesGet(
 
 ### Return type
 
-void (empty response body)
+**AbacPoliciesGetResponse**
 
 ### Authorization
 
@@ -370,18 +378,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Policy |  -  |
+|**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacPoliciesList**
-> abacPoliciesList()
+> AbacPoliciesListResponse abacPoliciesList()
 
 
 ### Example
@@ -411,7 +420,7 @@ const { status, data } = await apiInstance.abacPoliciesList(
 
 ### Return type
 
-void (empty response body)
+**AbacPoliciesListResponse**
 
 ### Authorization
 
@@ -420,18 +429,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Paginated policies |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abacPoliciesToggle**
-> abacPoliciesToggle()
+> AbacPoliciesToggleResponse abacPoliciesToggle()
 
 
 ### Example
@@ -464,7 +473,7 @@ const { status, data } = await apiInstance.abacPoliciesToggle(
 
 ### Return type
 
-void (empty response body)
+**AbacPoliciesToggleResponse**
 
 ### Authorization
 
@@ -473,18 +482,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Toggled policy |  -  |
+|**403** | System policies cannot be modified |  -  |
+|**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAbacAttributesUpdate**
-> patchAbacAttributesUpdate()
+> PutAbacAttributesUpdateResponse patchAbacAttributesUpdate()
 
 
 ### Example
@@ -517,7 +528,7 @@ const { status, data } = await apiInstance.patchAbacAttributesUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAbacAttributesUpdateResponse**
 
 ### Authorization
 
@@ -526,18 +537,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated |  -  |
+|**403** | System attribute definitions cannot be modified |  -  |
+|**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAbacPoliciesUpdate**
-> patchAbacPoliciesUpdate()
+> PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate()
 
 
 ### Example
@@ -570,7 +583,7 @@ const { status, data } = await apiInstance.patchAbacPoliciesUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAbacPoliciesUpdateResponse**
 
 ### Authorization
 
@@ -579,18 +592,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated |  -  |
+|**403** | System policies cannot be modified |  -  |
+|**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAbacAttributesUpdate**
-> putAbacAttributesUpdate()
+> PutAbacAttributesUpdateResponse putAbacAttributesUpdate()
 
 
 ### Example
@@ -623,7 +638,7 @@ const { status, data } = await apiInstance.putAbacAttributesUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAbacAttributesUpdateResponse**
 
 ### Authorization
 
@@ -632,18 +647,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated |  -  |
+|**403** | System attribute definitions cannot be modified |  -  |
+|**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAbacPoliciesUpdate**
-> putAbacPoliciesUpdate()
+> PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate()
 
 
 ### Example
@@ -676,7 +693,7 @@ const { status, data } = await apiInstance.putAbacPoliciesUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAbacPoliciesUpdateResponse**
 
 ### Authorization
 
@@ -685,13 +702,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated |  -  |
+|**403** | System policies cannot be modified |  -  |
+|**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

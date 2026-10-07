@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminGroupsAddMembers**](#admingroupsaddmembers) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}|
+|[**adminGroupsAddMembers**](#admingroupsaddmembers) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group|
 |[**adminGroupsAddRole**](#admingroupsaddrole) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group|
 |[**adminGroupsCreate**](#admingroupscreate) | **POST** /orgs/{orgId}/api/v1/admin/groups | Create a new group|
 |[**adminGroupsDelete**](#admingroupsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group|
@@ -12,14 +12,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminGroupsGetMembers**](#admingroupsgetmembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members|
 |[**adminGroupsGroupsGetRoles**](#admingroupsgroupsgetroles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles|
 |[**adminGroupsList**](#admingroupslist) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant|
-|[**adminGroupsRemoveMember**](#admingroupsremovemember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email|
+|[**adminGroupsRemoveMember**](#admingroupsremovemember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group|
 |[**adminGroupsRemoveRole**](#admingroupsremoverole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group|
 |[**adminGroupsUpdateRoles**](#admingroupsupdateroles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)|
 |[**patchAdminGroupsUpdate**](#patchadmingroupsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group|
 |[**putAdminGroupsUpdate**](#putadmingroupsupdate) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group|
 
 # **adminGroupsAddMembers**
-> adminGroupsAddMembers()
+> AdminGroupsCreateResponse adminGroupsAddMembers()
 
 
 ### Example
@@ -52,7 +52,7 @@ const { status, data } = await apiInstance.adminGroupsAddMembers(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsCreateResponse**
 
 ### Authorization
 
@@ -61,18 +61,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated group; message reports how many members were added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsAddRole**
-> adminGroupsAddRole()
+> MessageResponse adminGroupsAddRole()
 
 
 ### Example
@@ -105,7 +105,7 @@ const { status, data } = await apiInstance.adminGroupsAddRole(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -114,18 +114,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsCreate**
-> adminGroupsCreate()
+> AdminGroupsCreateResponse adminGroupsCreate()
 
 
 ### Example
@@ -155,7 +155,7 @@ const { status, data } = await apiInstance.adminGroupsCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsCreateResponse**
 
 ### Authorization
 
@@ -164,18 +164,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsDelete**
-> adminGroupsDelete()
+> MessageResponse adminGroupsDelete()
 
 
 ### Example
@@ -208,7 +208,7 @@ const { status, data } = await apiInstance.adminGroupsDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -217,18 +217,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsGet**
-> adminGroupsGet()
+> AdminGroupsGetResponse adminGroupsGet()
 
 
 ### Example
@@ -261,7 +261,7 @@ const { status, data } = await apiInstance.adminGroupsGet(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsGetResponse**
 
 ### Authorization
 
@@ -270,18 +270,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsGetMembers**
-> adminGroupsGetMembers()
+> AdminGroupsGetMembersResponse adminGroupsGetMembers()
 
 
 ### Example
@@ -314,7 +314,7 @@ const { status, data } = await apiInstance.adminGroupsGetMembers(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsGetMembersResponse**
 
 ### Authorization
 
@@ -323,18 +323,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Group members |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsGroupsGetRoles**
-> adminGroupsGroupsGetRoles()
+> AdminGroupsGroupsGetRolesResponse adminGroupsGroupsGetRoles()
 
 
 ### Example
@@ -367,7 +367,7 @@ const { status, data } = await apiInstance.adminGroupsGroupsGetRoles(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsGroupsGetRolesResponse**
 
 ### Authorization
 
@@ -376,18 +376,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Group roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsList**
-> adminGroupsList()
+> AdminGroupsListResponse adminGroupsList()
 
 
 ### Example
@@ -417,7 +417,7 @@ const { status, data } = await apiInstance.adminGroupsList(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsListResponse**
 
 ### Authorization
 
@@ -426,18 +426,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Groups |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsRemoveMember**
-> adminGroupsRemoveMember()
+> MessageResponse adminGroupsRemoveMember()
 
 
 ### Example
@@ -473,7 +473,7 @@ const { status, data } = await apiInstance.adminGroupsRemoveMember(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -482,18 +482,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsRemoveRole**
-> adminGroupsRemoveRole()
+> MessageResponse adminGroupsRemoveRole()
 
 
 ### Example
@@ -529,7 +529,7 @@ const { status, data } = await apiInstance.adminGroupsRemoveRole(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -538,18 +538,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminGroupsUpdateRoles**
-> adminGroupsUpdateRoles()
+> AdminGroupsCreateResponse adminGroupsUpdateRoles()
 
 
 ### Example
@@ -582,7 +582,7 @@ const { status, data } = await apiInstance.adminGroupsUpdateRoles(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsCreateResponse**
 
 ### Authorization
 
@@ -591,18 +591,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminGroupsUpdate**
-> patchAdminGroupsUpdate()
+> AdminGroupsCreateResponse patchAdminGroupsUpdate()
 
 
 ### Example
@@ -635,7 +635,7 @@ const { status, data } = await apiInstance.patchAdminGroupsUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsCreateResponse**
 
 ### Authorization
 
@@ -644,18 +644,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminGroupsUpdate**
-> putAdminGroupsUpdate()
+> AdminGroupsCreateResponse putAdminGroupsUpdate()
 
 
 ### Example
@@ -688,7 +688,7 @@ const { status, data } = await apiInstance.putAdminGroupsUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminGroupsCreateResponse**
 
 ### Authorization
 
@@ -697,13 +697,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

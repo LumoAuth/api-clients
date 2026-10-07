@@ -21,6 +21,34 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminWebhooksCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksDeliveriesListResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksDeliveryReplayResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksDeliveryShowResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksEventsResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksGetResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksListResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksRotateSecretResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksTestResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksTunnelStartResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksWebhooksDisableResponse } from '../models';
+// @ts-ignore
+import type { AdminWebhooksWebhooksEnableResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PutAdminWebhooksUpdateResponse } from '../models';
 /**
  * AdminWebhooksApi - axios parameter creator
  * @export
@@ -28,8 +56,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Create a new webhook
+         * The signing secret is generated server-side and returned once in this response only.
+         * @summary Create a webhook
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -114,8 +142,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
-         * @summary List recent delivery attempts for a webhook.
+         * Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
+         * @summary List recent deliveries
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -159,8 +187,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * Resets the delivery\'s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
-         * @summary Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+         * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+         * @summary Replay a delivery
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {string} deliveryId 
@@ -208,8 +236,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+         * A single delivery including the event payload and the per-attempt history.
+         * @summary Get a delivery
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {string} deliveryId 
@@ -258,7 +286,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get available webhook event types
+         * @summary List available webhook event types
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -299,7 +327,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get a single webhook by ID
+         * @summary Get a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -343,8 +371,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary List all webhooks in the tenant
+         * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+         * @summary List webhooks
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -384,8 +412,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary Rotate webhook secret
+         * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+         * @summary Rotate the signing secret
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -429,8 +457,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
-         * @summary Test a webhook by sending a test payload
+         * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+         * @summary Send a test delivery
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -474,7 +502,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+         * @summary Start a webhook tunnel
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -514,7 +543,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
+         * @summary Stop a webhook tunnel
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -558,7 +588,8 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * 
+         * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+         * @summary Stream tunnel deliveries (SSE)
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -603,7 +634,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Disable webhook
+         * @summary Disable a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -648,7 +679,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Enable webhook
+         * @summary Enable a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -693,7 +724,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update an existing webhook
+         * @summary Partially update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -738,7 +769,7 @@ export const AdminWebhooksApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update an existing webhook
+         * @summary Update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
@@ -792,13 +823,13 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminWebhooksApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Create a new webhook
+         * The signing secret is generated server-side and returned once in this response only.
+         * @summary Create a webhook
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksCreate']?.[localVarOperationServerIndex]?.url;
@@ -812,51 +843,51 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksDelete(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksDelete(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksDelete(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksDelete']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
-         * @summary List recent delivery attempts for a webhook.
+         * Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
+         * @summary List recent deliveries
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksDeliveriesList(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksDeliveriesList(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksDeliveriesListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksDeliveriesList(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksDeliveriesList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Resets the delivery\'s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
-         * @summary Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+         * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+         * @summary Replay a delivery
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {string} deliveryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksDeliveryReplay(orgId: string, webhookId: string, deliveryId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksDeliveryReplay(orgId: string, webhookId: string, deliveryId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksDeliveryReplayResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksDeliveryReplay']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+         * A single delivery including the event payload and the per-attempt history.
+         * @summary Get a delivery
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {string} deliveryId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksDeliveryShow(orgId: string, webhookId: string, deliveryId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksDeliveryShow(orgId: string, webhookId: string, deliveryId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksDeliveryShowResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksDeliveryShow(orgId, webhookId, deliveryId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksDeliveryShow']?.[localVarOperationServerIndex]?.url;
@@ -864,12 +895,12 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get available webhook event types
+         * @summary List available webhook event types
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksEvents(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksEvents(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksEventsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksEvents(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksEvents']?.[localVarOperationServerIndex]?.url;
@@ -877,92 +908,95 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get a single webhook by ID
+         * @summary Get a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksGet(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksGet(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksGet(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary List all webhooks in the tenant
+         * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+         * @summary List webhooks
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksList']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Rotate webhook secret
+         * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+         * @summary Rotate the signing secret
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksRotateSecret(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksRotateSecret(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksRotateSecretResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksRotateSecret(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksRotateSecret']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Test a webhook by sending a test payload
+         * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+         * @summary Send a test delivery
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksTest(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksTest(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksTestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksTest(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksTest']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+         * @summary Start a webhook tunnel
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksTunnelStart(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksTunnelStart(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksTunnelStartResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksTunnelStart(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksTunnelStart']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
+         * @summary Stop a webhook tunnel
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksTunnelStop(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksTunnelStop(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksTunnelStop(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksTunnelStop']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+         * @summary Stream tunnel deliveries (SSE)
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksTunnelStream(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksTunnelStream(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksTunnelStream(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksTunnelStream']?.[localVarOperationServerIndex]?.url;
@@ -970,13 +1004,13 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Disable webhook
+         * @summary Disable a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksWebhooksDisable(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksWebhooksDisable(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksWebhooksDisableResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksWebhooksDisable(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksWebhooksDisable']?.[localVarOperationServerIndex]?.url;
@@ -984,13 +1018,13 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Enable webhook
+         * @summary Enable a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminWebhooksWebhooksEnable(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminWebhooksWebhooksEnable(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminWebhooksWebhooksEnableResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminWebhooksWebhooksEnable(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.adminWebhooksWebhooksEnable']?.[localVarOperationServerIndex]?.url;
@@ -998,13 +1032,13 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update an existing webhook
+         * @summary Partially update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminWebhooksUpdate(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminWebhooksUpdate(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminWebhooksUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminWebhooksUpdate(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.patchAdminWebhooksUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1012,13 +1046,13 @@ export const AdminWebhooksApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update an existing webhook
+         * @summary Update a webhook
          * @param {string} orgId 
          * @param {string} webhookId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminWebhooksUpdate(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminWebhooksUpdate(orgId: string, webhookId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminWebhooksUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminWebhooksUpdate(orgId, webhookId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminWebhooksApi.putAdminWebhooksUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1035,13 +1069,13 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
     const localVarFp = AdminWebhooksApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Create a new webhook
+         * The signing secret is generated server-side and returned once in this response only.
+         * @summary Create a webhook
          * @param {AdminWebhooksApiAdminWebhooksCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksCreate(requestParameters: AdminWebhooksApiAdminWebhooksCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksCreate(requestParameters: AdminWebhooksApiAdminWebhooksCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksCreateResponse> {
             return localVarFp.adminWebhooksCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1051,154 +1085,157 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksDelete(requestParameters: AdminWebhooksApiAdminWebhooksDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksDelete(requestParameters: AdminWebhooksApiAdminWebhooksDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminWebhooksDelete(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
-         * @summary List recent delivery attempts for a webhook.
+         * Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
+         * @summary List recent deliveries
          * @param {AdminWebhooksApiAdminWebhooksDeliveriesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksDeliveriesList(requestParameters: AdminWebhooksApiAdminWebhooksDeliveriesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksDeliveriesList(requestParameters: AdminWebhooksApiAdminWebhooksDeliveriesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveriesListResponse> {
             return localVarFp.adminWebhooksDeliveriesList(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Resets the delivery\'s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
-         * @summary Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+         * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+         * @summary Replay a delivery
          * @param {AdminWebhooksApiAdminWebhooksDeliveryReplayRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksDeliveryReplay(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryReplayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksDeliveryReplay(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryReplayRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveryReplayResponse> {
             return localVarFp.adminWebhooksDeliveryReplay(requestParameters.orgId, requestParameters.webhookId, requestParameters.deliveryId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+         * A single delivery including the event payload and the per-attempt history.
+         * @summary Get a delivery
          * @param {AdminWebhooksApiAdminWebhooksDeliveryShowRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksDeliveryShow(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryShowRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksDeliveryShow(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryShowRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveryShowResponse> {
             return localVarFp.adminWebhooksDeliveryShow(requestParameters.orgId, requestParameters.webhookId, requestParameters.deliveryId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get available webhook event types
+         * @summary List available webhook event types
          * @param {AdminWebhooksApiAdminWebhooksEventsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksEvents(requestParameters: AdminWebhooksApiAdminWebhooksEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksEvents(requestParameters: AdminWebhooksApiAdminWebhooksEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksEventsResponse> {
             return localVarFp.adminWebhooksEvents(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single webhook by ID
+         * @summary Get a webhook
          * @param {AdminWebhooksApiAdminWebhooksGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksGet(requestParameters: AdminWebhooksApiAdminWebhooksGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksGet(requestParameters: AdminWebhooksApiAdminWebhooksGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksGetResponse> {
             return localVarFp.adminWebhooksGet(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary List all webhooks in the tenant
+         * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+         * @summary List webhooks
          * @param {AdminWebhooksApiAdminWebhooksListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksList(requestParameters: AdminWebhooksApiAdminWebhooksListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksList(requestParameters: AdminWebhooksApiAdminWebhooksListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksListResponse> {
             return localVarFp.adminWebhooksList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Rotate webhook secret
+         * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+         * @summary Rotate the signing secret
          * @param {AdminWebhooksApiAdminWebhooksRotateSecretRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksRotateSecret(requestParameters: AdminWebhooksApiAdminWebhooksRotateSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksRotateSecret(requestParameters: AdminWebhooksApiAdminWebhooksRotateSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksRotateSecretResponse> {
             return localVarFp.adminWebhooksRotateSecret(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Test a webhook by sending a test payload
+         * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+         * @summary Send a test delivery
          * @param {AdminWebhooksApiAdminWebhooksTestRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksTest(requestParameters: AdminWebhooksApiAdminWebhooksTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksTest(requestParameters: AdminWebhooksApiAdminWebhooksTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksTestResponse> {
             return localVarFp.adminWebhooksTest(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+         * @summary Start a webhook tunnel
          * @param {AdminWebhooksApiAdminWebhooksTunnelStartRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksTunnelStart(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksTunnelStart(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksTunnelStartResponse> {
             return localVarFp.adminWebhooksTunnelStart(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
+         * @summary Stop a webhook tunnel
          * @param {AdminWebhooksApiAdminWebhooksTunnelStopRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksTunnelStop(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksTunnelStop(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminWebhooksTunnelStop(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+         * @summary Stream tunnel deliveries (SSE)
          * @param {AdminWebhooksApiAdminWebhooksTunnelStreamRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksTunnelStream(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksTunnelStream(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.adminWebhooksTunnelStream(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Disable webhook
+         * @summary Disable a webhook
          * @param {AdminWebhooksApiAdminWebhooksWebhooksDisableRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksWebhooksDisable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksWebhooksDisable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksWebhooksDisableResponse> {
             return localVarFp.adminWebhooksWebhooksDisable(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Enable webhook
+         * @summary Enable a webhook
          * @param {AdminWebhooksApiAdminWebhooksWebhooksEnableRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminWebhooksWebhooksEnable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminWebhooksWebhooksEnable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksWebhooksEnableResponse> {
             return localVarFp.adminWebhooksWebhooksEnable(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update an existing webhook
+         * @summary Partially update a webhook
          * @param {AdminWebhooksApiPatchAdminWebhooksUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse> {
             return localVarFp.patchAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update an existing webhook
+         * @summary Update a webhook
          * @param {AdminWebhooksApiPutAdminWebhooksUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse> {
             return localVarFp.putAdminWebhooksUpdate(requestParameters.orgId, requestParameters.webhookId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1211,14 +1248,14 @@ export const AdminWebhooksApiFactory = function (configuration?: Configuration, 
  */
 export interface AdminWebhooksApiInterface {
     /**
-     * 
-     * @summary Create a new webhook
+     * The signing secret is generated server-side and returned once in this response only.
+     * @summary Create a webhook
      * @param {AdminWebhooksApiAdminWebhooksCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksCreate(requestParameters: AdminWebhooksApiAdminWebhooksCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksCreate(requestParameters: AdminWebhooksApiAdminWebhooksCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksCreateResponse>;
 
     /**
      * 
@@ -1228,154 +1265,157 @@ export interface AdminWebhooksApiInterface {
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksDelete(requestParameters: AdminWebhooksApiAdminWebhooksDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksDelete(requestParameters: AdminWebhooksApiAdminWebhooksDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
-     * @summary List recent delivery attempts for a webhook.
+     * Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
+     * @summary List recent deliveries
      * @param {AdminWebhooksApiAdminWebhooksDeliveriesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksDeliveriesList(requestParameters: AdminWebhooksApiAdminWebhooksDeliveriesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksDeliveriesList(requestParameters: AdminWebhooksApiAdminWebhooksDeliveriesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveriesListResponse>;
 
     /**
-     * Resets the delivery\'s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
-     * @summary Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+     * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+     * @summary Replay a delivery
      * @param {AdminWebhooksApiAdminWebhooksDeliveryReplayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksDeliveryReplay(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryReplayRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksDeliveryReplay(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryReplayRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveryReplayResponse>;
 
     /**
-     * 
-     * @summary Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+     * A single delivery including the event payload and the per-attempt history.
+     * @summary Get a delivery
      * @param {AdminWebhooksApiAdminWebhooksDeliveryShowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksDeliveryShow(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryShowRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksDeliveryShow(requestParameters: AdminWebhooksApiAdminWebhooksDeliveryShowRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksDeliveryShowResponse>;
 
     /**
      * 
-     * @summary Get available webhook event types
+     * @summary List available webhook event types
      * @param {AdminWebhooksApiAdminWebhooksEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksEvents(requestParameters: AdminWebhooksApiAdminWebhooksEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksEvents(requestParameters: AdminWebhooksApiAdminWebhooksEventsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksEventsResponse>;
 
     /**
      * 
-     * @summary Get a single webhook by ID
+     * @summary Get a webhook
      * @param {AdminWebhooksApiAdminWebhooksGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksGet(requestParameters: AdminWebhooksApiAdminWebhooksGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksGet(requestParameters: AdminWebhooksApiAdminWebhooksGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksGetResponse>;
 
     /**
-     * 
-     * @summary List all webhooks in the tenant
+     * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+     * @summary List webhooks
      * @param {AdminWebhooksApiAdminWebhooksListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksList(requestParameters: AdminWebhooksApiAdminWebhooksListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksList(requestParameters: AdminWebhooksApiAdminWebhooksListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksListResponse>;
 
     /**
-     * 
-     * @summary Rotate webhook secret
+     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+     * @summary Rotate the signing secret
      * @param {AdminWebhooksApiAdminWebhooksRotateSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksRotateSecret(requestParameters: AdminWebhooksApiAdminWebhooksRotateSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksRotateSecret(requestParameters: AdminWebhooksApiAdminWebhooksRotateSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksRotateSecretResponse>;
 
     /**
-     * 
-     * @summary Test a webhook by sending a test payload
+     * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+     * @summary Send a test delivery
      * @param {AdminWebhooksApiAdminWebhooksTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksTest(requestParameters: AdminWebhooksApiAdminWebhooksTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksTest(requestParameters: AdminWebhooksApiAdminWebhooksTestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksTestResponse>;
 
     /**
-     * 
+     * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * @summary Start a webhook tunnel
      * @param {AdminWebhooksApiAdminWebhooksTunnelStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksTunnelStart(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksTunnelStart(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksTunnelStartResponse>;
 
     /**
-     * 
+     * Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
+     * @summary Stop a webhook tunnel
      * @param {AdminWebhooksApiAdminWebhooksTunnelStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksTunnelStop(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksTunnelStop(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStopRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
-     * 
+     * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+     * @summary Stream tunnel deliveries (SSE)
      * @param {AdminWebhooksApiAdminWebhooksTunnelStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksTunnelStream(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksTunnelStream(requestParameters: AdminWebhooksApiAdminWebhooksTunnelStreamRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
      * 
-     * @summary Disable webhook
+     * @summary Disable a webhook
      * @param {AdminWebhooksApiAdminWebhooksWebhooksDisableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksWebhooksDisable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksWebhooksDisable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksDisableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksWebhooksDisableResponse>;
 
     /**
      * 
-     * @summary Enable webhook
+     * @summary Enable a webhook
      * @param {AdminWebhooksApiAdminWebhooksWebhooksEnableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    adminWebhooksWebhooksEnable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminWebhooksWebhooksEnable(requestParameters: AdminWebhooksApiAdminWebhooksWebhooksEnableRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminWebhooksWebhooksEnableResponse>;
 
     /**
      * 
-     * @summary Update an existing webhook
+     * @summary Partially update a webhook
      * @param {AdminWebhooksApiPatchAdminWebhooksUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPatchAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse>;
 
     /**
      * 
-     * @summary Update an existing webhook
+     * @summary Update a webhook
      * @param {AdminWebhooksApiPutAdminWebhooksUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminWebhooksApiInterface
      */
-    putAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminWebhooksUpdate(requestParameters: AdminWebhooksApiPutAdminWebhooksUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminWebhooksUpdateResponse>;
 
 }
 
@@ -1730,8 +1770,8 @@ export interface AdminWebhooksApiPutAdminWebhooksUpdateRequest {
  */
 export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterface {
     /**
-     * 
-     * @summary Create a new webhook
+     * The signing secret is generated server-side and returned once in this response only.
+     * @summary Create a webhook
      * @param {AdminWebhooksApiAdminWebhooksCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1754,8 +1794,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
-     * @summary List recent delivery attempts for a webhook.
+     * Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
+     * @summary List recent deliveries
      * @param {AdminWebhooksApiAdminWebhooksDeliveriesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1766,8 +1806,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * Resets the delivery\'s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
-     * @summary Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+     * Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+     * @summary Replay a delivery
      * @param {AdminWebhooksApiAdminWebhooksDeliveryReplayRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1778,8 +1818,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
-     * @summary Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+     * A single delivery including the event payload and the per-attempt history.
+     * @summary Get a delivery
      * @param {AdminWebhooksApiAdminWebhooksDeliveryShowRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1791,7 +1831,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
 
     /**
      * 
-     * @summary Get available webhook event types
+     * @summary List available webhook event types
      * @param {AdminWebhooksApiAdminWebhooksEventsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1803,7 +1843,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
 
     /**
      * 
-     * @summary Get a single webhook by ID
+     * @summary Get a webhook
      * @param {AdminWebhooksApiAdminWebhooksGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1814,8 +1854,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
-     * @summary List all webhooks in the tenant
+     * Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+     * @summary List webhooks
      * @param {AdminWebhooksApiAdminWebhooksListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1826,8 +1866,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
-     * @summary Rotate webhook secret
+     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+     * @summary Rotate the signing secret
      * @param {AdminWebhooksApiAdminWebhooksRotateSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1838,8 +1878,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
-     * @summary Test a webhook by sending a test payload
+     * POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+     * @summary Send a test delivery
      * @param {AdminWebhooksApiAdminWebhooksTestRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1850,7 +1890,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
+     * Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     * @summary Start a webhook tunnel
      * @param {AdminWebhooksApiAdminWebhooksTunnelStartRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1861,7 +1902,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
+     * Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
+     * @summary Stop a webhook tunnel
      * @param {AdminWebhooksApiAdminWebhooksTunnelStopRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1872,7 +1914,8 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
     }
 
     /**
-     * 
+     * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+     * @summary Stream tunnel deliveries (SSE)
      * @param {AdminWebhooksApiAdminWebhooksTunnelStreamRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1884,7 +1927,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
 
     /**
      * 
-     * @summary Disable webhook
+     * @summary Disable a webhook
      * @param {AdminWebhooksApiAdminWebhooksWebhooksDisableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1896,7 +1939,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
 
     /**
      * 
-     * @summary Enable webhook
+     * @summary Enable a webhook
      * @param {AdminWebhooksApiAdminWebhooksWebhooksEnableRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1908,7 +1951,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
 
     /**
      * 
-     * @summary Update an existing webhook
+     * @summary Partially update a webhook
      * @param {AdminWebhooksApiPatchAdminWebhooksUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1920,7 +1963,7 @@ export class AdminWebhooksApi extends BaseAPI implements AdminWebhooksApiInterfa
 
     /**
      * 
-     * @summary Update an existing webhook
+     * @summary Update a webhook
      * @param {AdminWebhooksApiPutAdminWebhooksUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

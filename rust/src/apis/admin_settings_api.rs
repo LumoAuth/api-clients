@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAnalyticsDashboardError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum AdminAnalyticsDashboardError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAnalyticsLoginsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,6 @@ pub enum AdminAnalyticsLoginsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAnalyticsUsersError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +40,6 @@ pub enum AdminAnalyticsUsersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminOrganizationGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +47,6 @@ pub enum AdminOrganizationGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsAllError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +54,6 @@ pub enum AdminSettingsAllError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsAuthGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +61,6 @@ pub enum AdminSettingsAuthGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsAuthenticationGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +68,6 @@ pub enum AdminSettingsAuthenticationGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsBrandingGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +75,6 @@ pub enum AdminSettingsBrandingGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsEmailGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +82,6 @@ pub enum AdminSettingsEmailGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsGeneralGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +89,6 @@ pub enum AdminSettingsGeneralGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsScimGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +96,6 @@ pub enum AdminSettingsScimGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSettingsSecurityGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,7 +103,6 @@ pub enum AdminSettingsSecurityGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminTenantGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -123,7 +110,6 @@ pub enum AdminTenantGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminOrganizationUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -131,7 +117,6 @@ pub enum PatchAdminOrganizationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsAuthUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -139,7 +124,6 @@ pub enum PatchAdminSettingsAuthUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsAuthenticationUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -147,7 +131,6 @@ pub enum PatchAdminSettingsAuthenticationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsBrandingUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -155,7 +138,6 @@ pub enum PatchAdminSettingsBrandingUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsEmailUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -163,7 +145,6 @@ pub enum PatchAdminSettingsEmailUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsGeneralUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -171,7 +152,6 @@ pub enum PatchAdminSettingsGeneralUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsScimUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -179,7 +159,6 @@ pub enum PatchAdminSettingsScimUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSettingsSecurityUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -187,7 +166,6 @@ pub enum PatchAdminSettingsSecurityUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminTenantUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -195,7 +173,6 @@ pub enum PatchAdminTenantUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminOrganizationUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -203,7 +180,6 @@ pub enum PutAdminOrganizationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsAuthUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -211,7 +187,6 @@ pub enum PutAdminSettingsAuthUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsAuthenticationUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -219,7 +194,6 @@ pub enum PutAdminSettingsAuthenticationUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsBrandingUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -227,7 +201,6 @@ pub enum PutAdminSettingsBrandingUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsEmailUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -235,7 +208,6 @@ pub enum PutAdminSettingsEmailUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsGeneralUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -243,7 +215,6 @@ pub enum PutAdminSettingsGeneralUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsScimUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -251,7 +222,6 @@ pub enum PutAdminSettingsScimUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSettingsSecurityUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -259,12 +229,11 @@ pub enum PutAdminSettingsSecurityUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminTenantUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_analytics_dashboard(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAnalyticsDashboardError>> {
+pub async fn admin_analytics_dashboard(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAnalyticsDashboardResponse, Error<AdminAnalyticsDashboardError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -290,9 +259,20 @@ pub async fn admin_analytics_dashboard(configuration: &configuration::Configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAnalyticsDashboardResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAnalyticsDashboardResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAnalyticsDashboardError> = serde_json::from_str(&content).ok();
@@ -300,13 +280,17 @@ pub async fn admin_analytics_dashboard(configuration: &configuration::Configurat
     }
 }
 
-pub async fn admin_analytics_logins(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAnalyticsLoginsError>> {
+pub async fn admin_analytics_logins(configuration: &configuration::Configuration, org_id: &str, days: Option<i32>) -> Result<models::AdminAnalyticsLoginsResponse, Error<AdminAnalyticsLoginsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_days = days;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/analytics/logins", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_days {
+        req_builder = req_builder.query(&[("days", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -326,9 +310,20 @@ pub async fn admin_analytics_logins(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAnalyticsLoginsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAnalyticsLoginsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAnalyticsLoginsError> = serde_json::from_str(&content).ok();
@@ -336,13 +331,17 @@ pub async fn admin_analytics_logins(configuration: &configuration::Configuration
     }
 }
 
-pub async fn admin_analytics_users(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAnalyticsUsersError>> {
+pub async fn admin_analytics_users(configuration: &configuration::Configuration, org_id: &str, days: Option<i32>) -> Result<models::AdminAnalyticsUsersResponse, Error<AdminAnalyticsUsersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_days = days;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/analytics/users", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_days {
+        req_builder = req_builder.query(&[("days", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -362,9 +361,20 @@ pub async fn admin_analytics_users(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAnalyticsUsersResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAnalyticsUsersResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAnalyticsUsersError> = serde_json::from_str(&content).ok();
@@ -372,7 +382,7 @@ pub async fn admin_analytics_users(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_organization_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminOrganizationGetError>> {
+pub async fn admin_organization_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminTenantGetResponse, Error<AdminOrganizationGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -398,9 +408,20 @@ pub async fn admin_organization_get(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminTenantGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminTenantGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminOrganizationGetError> = serde_json::from_str(&content).ok();
@@ -408,7 +429,7 @@ pub async fn admin_organization_get(configuration: &configuration::Configuration
     }
 }
 
-pub async fn admin_settings_all(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsAllError>> {
+pub async fn admin_settings_all(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsAllResponse, Error<AdminSettingsAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -434,9 +455,20 @@ pub async fn admin_settings_all(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsAllResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsAllResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsAllError> = serde_json::from_str(&content).ok();
@@ -444,7 +476,7 @@ pub async fn admin_settings_all(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn admin_settings_auth_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsAuthGetError>> {
+pub async fn admin_settings_auth_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsAuthenticationGetResponse, Error<AdminSettingsAuthGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -470,9 +502,20 @@ pub async fn admin_settings_auth_get(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsAuthenticationGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsAuthenticationGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsAuthGetError> = serde_json::from_str(&content).ok();
@@ -480,7 +523,7 @@ pub async fn admin_settings_auth_get(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_settings_authentication_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsAuthenticationGetError>> {
+pub async fn admin_settings_authentication_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsAuthenticationGetResponse, Error<AdminSettingsAuthenticationGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -506,9 +549,20 @@ pub async fn admin_settings_authentication_get(configuration: &configuration::Co
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsAuthenticationGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsAuthenticationGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsAuthenticationGetError> = serde_json::from_str(&content).ok();
@@ -516,7 +570,7 @@ pub async fn admin_settings_authentication_get(configuration: &configuration::Co
     }
 }
 
-pub async fn admin_settings_branding_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsBrandingGetError>> {
+pub async fn admin_settings_branding_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsBrandingGetResponse, Error<AdminSettingsBrandingGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -542,9 +596,20 @@ pub async fn admin_settings_branding_get(configuration: &configuration::Configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsBrandingGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsBrandingGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsBrandingGetError> = serde_json::from_str(&content).ok();
@@ -552,7 +617,7 @@ pub async fn admin_settings_branding_get(configuration: &configuration::Configur
     }
 }
 
-pub async fn admin_settings_email_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsEmailGetError>> {
+pub async fn admin_settings_email_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsEmailGetResponse, Error<AdminSettingsEmailGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -578,9 +643,20 @@ pub async fn admin_settings_email_get(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsEmailGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsEmailGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsEmailGetError> = serde_json::from_str(&content).ok();
@@ -588,7 +664,7 @@ pub async fn admin_settings_email_get(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_settings_general_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsGeneralGetError>> {
+pub async fn admin_settings_general_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsGeneralGetResponse, Error<AdminSettingsGeneralGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -614,9 +690,20 @@ pub async fn admin_settings_general_get(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsGeneralGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsGeneralGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsGeneralGetError> = serde_json::from_str(&content).ok();
@@ -624,7 +711,7 @@ pub async fn admin_settings_general_get(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_settings_scim_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsScimGetError>> {
+pub async fn admin_settings_scim_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsScimGetResponse, Error<AdminSettingsScimGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -650,9 +737,20 @@ pub async fn admin_settings_scim_get(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsScimGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsScimGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsScimGetError> = serde_json::from_str(&content).ok();
@@ -660,7 +758,7 @@ pub async fn admin_settings_scim_get(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_settings_security_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSettingsSecurityGetError>> {
+pub async fn admin_settings_security_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSettingsSecurityGetResponse, Error<AdminSettingsSecurityGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -686,9 +784,20 @@ pub async fn admin_settings_security_get(configuration: &configuration::Configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSettingsSecurityGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSettingsSecurityGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSettingsSecurityGetError> = serde_json::from_str(&content).ok();
@@ -696,7 +805,7 @@ pub async fn admin_settings_security_get(configuration: &configuration::Configur
     }
 }
 
-pub async fn admin_tenant_get(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminTenantGetError>> {
+pub async fn admin_tenant_get(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminTenantGetResponse, Error<AdminTenantGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -722,9 +831,20 @@ pub async fn admin_tenant_get(configuration: &configuration::Configuration, org_
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminTenantGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminTenantGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminTenantGetError> = serde_json::from_str(&content).ok();
@@ -732,7 +852,7 @@ pub async fn admin_tenant_get(configuration: &configuration::Configuration, org_
     }
 }
 
-pub async fn patch_admin_organization_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminOrganizationUpdateError>> {
+pub async fn patch_admin_organization_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PatchAdminOrganizationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -758,9 +878,20 @@ pub async fn patch_admin_organization_update(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminOrganizationUpdateError> = serde_json::from_str(&content).ok();
@@ -768,7 +899,7 @@ pub async fn patch_admin_organization_update(configuration: &configuration::Conf
     }
 }
 
-pub async fn patch_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsAuthUpdateError>> {
+pub async fn patch_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PatchAdminSettingsAuthUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -794,9 +925,20 @@ pub async fn patch_admin_settings_auth_update(configuration: &configuration::Con
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsAuthUpdateError> = serde_json::from_str(&content).ok();
@@ -804,7 +946,7 @@ pub async fn patch_admin_settings_auth_update(configuration: &configuration::Con
     }
 }
 
-pub async fn patch_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsAuthenticationUpdateError>> {
+pub async fn patch_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PatchAdminSettingsAuthenticationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -830,9 +972,20 @@ pub async fn patch_admin_settings_authentication_update(configuration: &configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsAuthenticationUpdateError> = serde_json::from_str(&content).ok();
@@ -840,7 +993,7 @@ pub async fn patch_admin_settings_authentication_update(configuration: &configur
     }
 }
 
-pub async fn patch_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsBrandingUpdateError>> {
+pub async fn patch_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PatchAdminSettingsBrandingUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -866,9 +1019,20 @@ pub async fn patch_admin_settings_branding_update(configuration: &configuration:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsBrandingUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsBrandingUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsBrandingUpdateError> = serde_json::from_str(&content).ok();
@@ -876,7 +1040,7 @@ pub async fn patch_admin_settings_branding_update(configuration: &configuration:
     }
 }
 
-pub async fn patch_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsEmailUpdateError>> {
+pub async fn patch_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsEmailUpdateResponse, Error<PatchAdminSettingsEmailUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -902,9 +1066,20 @@ pub async fn patch_admin_settings_email_update(configuration: &configuration::Co
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsEmailUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsEmailUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsEmailUpdateError> = serde_json::from_str(&content).ok();
@@ -912,7 +1087,7 @@ pub async fn patch_admin_settings_email_update(configuration: &configuration::Co
     }
 }
 
-pub async fn patch_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsGeneralUpdateError>> {
+pub async fn patch_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsGeneralUpdateResponse, Error<PatchAdminSettingsGeneralUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -938,9 +1113,20 @@ pub async fn patch_admin_settings_general_update(configuration: &configuration::
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsGeneralUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsGeneralUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsGeneralUpdateError> = serde_json::from_str(&content).ok();
@@ -948,7 +1134,7 @@ pub async fn patch_admin_settings_general_update(configuration: &configuration::
     }
 }
 
-pub async fn patch_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsScimUpdateError>> {
+pub async fn patch_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsScimUpdateResponse, Error<PatchAdminSettingsScimUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -974,9 +1160,20 @@ pub async fn patch_admin_settings_scim_update(configuration: &configuration::Con
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsScimUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsScimUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsScimUpdateError> = serde_json::from_str(&content).ok();
@@ -984,7 +1181,7 @@ pub async fn patch_admin_settings_scim_update(configuration: &configuration::Con
     }
 }
 
-pub async fn patch_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminSettingsSecurityUpdateError>> {
+pub async fn patch_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsSecurityUpdateResponse, Error<PatchAdminSettingsSecurityUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1010,9 +1207,20 @@ pub async fn patch_admin_settings_security_update(configuration: &configuration:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsSecurityUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsSecurityUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSettingsSecurityUpdateError> = serde_json::from_str(&content).ok();
@@ -1020,7 +1228,7 @@ pub async fn patch_admin_settings_security_update(configuration: &configuration:
     }
 }
 
-pub async fn patch_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminTenantUpdateError>> {
+pub async fn patch_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PatchAdminTenantUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1046,9 +1254,20 @@ pub async fn patch_admin_tenant_update(configuration: &configuration::Configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminTenantUpdateError> = serde_json::from_str(&content).ok();
@@ -1056,7 +1275,7 @@ pub async fn patch_admin_tenant_update(configuration: &configuration::Configurat
     }
 }
 
-pub async fn put_admin_organization_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminOrganizationUpdateError>> {
+pub async fn put_admin_organization_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PutAdminOrganizationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1082,9 +1301,20 @@ pub async fn put_admin_organization_update(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminOrganizationUpdateError> = serde_json::from_str(&content).ok();
@@ -1092,7 +1322,7 @@ pub async fn put_admin_organization_update(configuration: &configuration::Config
     }
 }
 
-pub async fn put_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsAuthUpdateError>> {
+pub async fn put_admin_settings_auth_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PutAdminSettingsAuthUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1118,9 +1348,20 @@ pub async fn put_admin_settings_auth_update(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsAuthUpdateError> = serde_json::from_str(&content).ok();
@@ -1128,7 +1369,7 @@ pub async fn put_admin_settings_auth_update(configuration: &configuration::Confi
     }
 }
 
-pub async fn put_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsAuthenticationUpdateError>> {
+pub async fn put_admin_settings_authentication_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsAuthenticationUpdateResponse, Error<PutAdminSettingsAuthenticationUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1154,9 +1395,20 @@ pub async fn put_admin_settings_authentication_update(configuration: &configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsAuthenticationUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsAuthenticationUpdateError> = serde_json::from_str(&content).ok();
@@ -1164,7 +1416,7 @@ pub async fn put_admin_settings_authentication_update(configuration: &configurat
     }
 }
 
-pub async fn put_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsBrandingUpdateError>> {
+pub async fn put_admin_settings_branding_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsBrandingUpdateResponse, Error<PutAdminSettingsBrandingUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1190,9 +1442,20 @@ pub async fn put_admin_settings_branding_update(configuration: &configuration::C
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsBrandingUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsBrandingUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsBrandingUpdateError> = serde_json::from_str(&content).ok();
@@ -1200,7 +1463,7 @@ pub async fn put_admin_settings_branding_update(configuration: &configuration::C
     }
 }
 
-pub async fn put_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsEmailUpdateError>> {
+pub async fn put_admin_settings_email_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsEmailUpdateResponse, Error<PutAdminSettingsEmailUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1226,9 +1489,20 @@ pub async fn put_admin_settings_email_update(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsEmailUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsEmailUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsEmailUpdateError> = serde_json::from_str(&content).ok();
@@ -1236,7 +1510,7 @@ pub async fn put_admin_settings_email_update(configuration: &configuration::Conf
     }
 }
 
-pub async fn put_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsGeneralUpdateError>> {
+pub async fn put_admin_settings_general_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsGeneralUpdateResponse, Error<PutAdminSettingsGeneralUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1262,9 +1536,20 @@ pub async fn put_admin_settings_general_update(configuration: &configuration::Co
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsGeneralUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsGeneralUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsGeneralUpdateError> = serde_json::from_str(&content).ok();
@@ -1272,7 +1557,7 @@ pub async fn put_admin_settings_general_update(configuration: &configuration::Co
     }
 }
 
-pub async fn put_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsScimUpdateError>> {
+pub async fn put_admin_settings_scim_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsScimUpdateResponse, Error<PutAdminSettingsScimUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1298,9 +1583,20 @@ pub async fn put_admin_settings_scim_update(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsScimUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsScimUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsScimUpdateError> = serde_json::from_str(&content).ok();
@@ -1308,7 +1604,7 @@ pub async fn put_admin_settings_scim_update(configuration: &configuration::Confi
     }
 }
 
-pub async fn put_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminSettingsSecurityUpdateError>> {
+pub async fn put_admin_settings_security_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminSettingsSecurityUpdateResponse, Error<PutAdminSettingsSecurityUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1334,9 +1630,20 @@ pub async fn put_admin_settings_security_update(configuration: &configuration::C
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminSettingsSecurityUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminSettingsSecurityUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSettingsSecurityUpdateError> = serde_json::from_str(&content).ok();
@@ -1344,7 +1651,7 @@ pub async fn put_admin_settings_security_update(configuration: &configuration::C
     }
 }
 
-pub async fn put_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminTenantUpdateError>> {
+pub async fn put_admin_tenant_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::PutAdminTenantUpdateResponse, Error<PutAdminTenantUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -1370,9 +1677,20 @@ pub async fn put_admin_tenant_update(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminTenantUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminTenantUpdateError> = serde_json::from_str(&content).ok();

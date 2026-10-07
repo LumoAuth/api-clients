@@ -18,6 +18,17 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_org_invitations_create_response import AdminOrgInvitationsCreateResponse
+from lumoauth_api_client.models.admin_org_invitations_list_response import AdminOrgInvitationsListResponse
+from lumoauth_api_client.models.admin_org_members_add_response import AdminOrgMembersAddResponse
+from lumoauth_api_client.models.admin_org_members_list_response import AdminOrgMembersListResponse
+from lumoauth_api_client.models.admin_org_roles_create_response import AdminOrgRolesCreateResponse
+from lumoauth_api_client.models.admin_org_roles_list_response import AdminOrgRolesListResponse
+from lumoauth_api_client.models.admin_organizations_create_response import AdminOrganizationsCreateResponse
+from lumoauth_api_client.models.admin_organizations_get_response import AdminOrganizationsGetResponse
+from lumoauth_api_client.models.admin_organizations_list_response import AdminOrganizationsListResponse
+from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_org_members_update_response import PutAdminOrgMembersUpdateResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +65,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_invitations_create
+    ) -> AdminOrgInvitationsCreateResponse:
+        """Invite a user to an organization
 
 
         :param org_id: (required)
@@ -94,6 +105,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgInvitationsCreateResponse",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,8 +137,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_invitations_create
+    ) -> ApiResponse[AdminOrgInvitationsCreateResponse]:
+        """Invite a user to an organization
 
 
         :param org_id: (required)
@@ -163,6 +177,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgInvitationsCreateResponse",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -193,7 +210,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_invitations_create
+        """Invite a user to an organization
 
 
         :param org_id: (required)
@@ -232,6 +249,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgInvitationsCreateResponse",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +295,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -318,8 +345,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_invitations_list
+    ) -> AdminOrgInvitationsListResponse:
+        """List organization invitations
 
 
         :param org_id: (required)
@@ -358,6 +385,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgInvitationsListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -387,8 +416,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_invitations_list
+    ) -> ApiResponse[AdminOrgInvitationsListResponse]:
+        """List organization invitations
 
 
         :param org_id: (required)
@@ -427,6 +456,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgInvitationsListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -457,7 +488,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_invitations_list
+        """List organization invitations
 
 
         :param org_id: (required)
@@ -496,6 +527,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgInvitationsListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -539,6 +572,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -583,8 +623,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_invitations_resend
+    ) -> MessageResponse:
+        """Resend an invitation
 
 
         :param org_id: (required)
@@ -626,6 +666,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -656,8 +699,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_invitations_resend
+    ) -> ApiResponse[MessageResponse]:
+        """Resend an invitation
 
 
         :param org_id: (required)
@@ -699,6 +742,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -730,7 +776,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_invitations_resend
+        """Resend an invitation
 
 
         :param org_id: (required)
@@ -772,6 +818,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -818,6 +867,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -862,8 +918,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_invitations_revoke
+    ) -> MessageResponse:
+        """Revoke an invitation
 
 
         :param org_id: (required)
@@ -905,6 +961,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -935,8 +993,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_invitations_revoke
+    ) -> ApiResponse[MessageResponse]:
+        """Revoke an invitation
 
 
         :param org_id: (required)
@@ -978,6 +1036,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1009,7 +1069,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_invitations_revoke
+        """Revoke an invitation
 
 
         :param org_id: (required)
@@ -1051,6 +1111,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1097,6 +1159,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1140,8 +1209,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_members_add
+    ) -> AdminOrgMembersAddResponse:
+        """Add a member to an organization
 
 
         :param org_id: (required)
@@ -1180,6 +1249,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgMembersAddResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1209,8 +1281,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_members_add
+    ) -> ApiResponse[AdminOrgMembersAddResponse]:
+        """Add a member to an organization
 
 
         :param org_id: (required)
@@ -1249,6 +1321,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgMembersAddResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1279,7 +1354,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_members_add
+        """Add a member to an organization
 
 
         :param org_id: (required)
@@ -1318,6 +1393,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgMembersAddResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1361,6 +1439,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1404,8 +1489,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_members_list
+    ) -> AdminOrgMembersListResponse:
+        """List organization members
 
 
         :param org_id: (required)
@@ -1444,6 +1529,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgMembersListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1473,8 +1560,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_members_list
+    ) -> ApiResponse[AdminOrgMembersListResponse]:
+        """List organization members
 
 
         :param org_id: (required)
@@ -1513,6 +1600,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgMembersListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1543,7 +1632,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_members_list
+        """List organization members
 
 
         :param org_id: (required)
@@ -1582,6 +1671,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgMembersListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1625,6 +1716,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1669,8 +1767,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_members_remove
+    ) -> MessageResponse:
+        """Remove a member from an organization
 
 
         :param org_id: (required)
@@ -1712,6 +1810,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1742,8 +1843,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_members_remove
+    ) -> ApiResponse[MessageResponse]:
+        """Remove a member from an organization
 
 
         :param org_id: (required)
@@ -1785,6 +1886,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1816,7 +1920,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_members_remove
+        """Remove a member from an organization
 
 
         :param org_id: (required)
@@ -1858,6 +1962,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1904,6 +2011,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1947,8 +2061,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_roles_create
+    ) -> AdminOrgRolesCreateResponse:
+        """Create an organization role
 
 
         :param org_id: (required)
@@ -1987,6 +2101,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2016,8 +2133,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_roles_create
+    ) -> ApiResponse[AdminOrgRolesCreateResponse]:
+        """Create an organization role
 
 
         :param org_id: (required)
@@ -2056,6 +2173,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2086,7 +2206,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_roles_create
+        """Create an organization role
 
 
         :param org_id: (required)
@@ -2125,6 +2245,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2168,6 +2291,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2212,8 +2342,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_roles_delete
+    ) -> MessageResponse:
+        """Delete an organization role
 
 
         :param org_id: (required)
@@ -2255,6 +2385,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2285,8 +2418,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_roles_delete
+    ) -> ApiResponse[MessageResponse]:
+        """Delete an organization role
 
 
         :param org_id: (required)
@@ -2328,6 +2461,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2359,7 +2495,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_roles_delete
+        """Delete an organization role
 
 
         :param org_id: (required)
@@ -2401,6 +2537,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2447,6 +2586,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2490,8 +2636,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_org_roles_list
+    ) -> AdminOrgRolesListResponse:
+        """List organization roles
 
 
         :param org_id: (required)
@@ -2530,6 +2676,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2559,8 +2707,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_org_roles_list
+    ) -> ApiResponse[AdminOrgRolesListResponse]:
+        """List organization roles
 
 
         :param org_id: (required)
@@ -2599,6 +2747,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2629,7 +2779,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_org_roles_list
+        """List organization roles
 
 
         :param org_id: (required)
@@ -2668,6 +2818,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2711,6 +2863,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2753,8 +2912,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_organizations_create
+    ) -> AdminOrganizationsCreateResponse:
+        """Create an organization
 
 
         :param org_id: (required)
@@ -2790,6 +2949,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrganizationsCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2818,8 +2979,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_organizations_create
+    ) -> ApiResponse[AdminOrganizationsCreateResponse]:
+        """Create an organization
 
 
         :param org_id: (required)
@@ -2855,6 +3016,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrganizationsCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2884,7 +3047,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_organizations_create
+        """Create an organization
 
 
         :param org_id: (required)
@@ -2920,6 +3083,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminOrganizationsCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2960,6 +3125,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3003,8 +3175,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_organizations_delete
+    ) -> MessageResponse:
+        """Delete an organization
 
 
         :param org_id: (required)
@@ -3043,6 +3215,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3072,8 +3246,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_organizations_delete
+    ) -> ApiResponse[MessageResponse]:
+        """Delete an organization
 
 
         :param org_id: (required)
@@ -3112,6 +3286,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3142,7 +3318,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_organizations_delete
+        """Delete an organization
 
 
         :param org_id: (required)
@@ -3181,6 +3357,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3224,6 +3402,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3267,8 +3452,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_organizations_get
+    ) -> AdminOrganizationsGetResponse:
+        """Get an organization
 
 
         :param org_id: (required)
@@ -3307,6 +3492,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3336,8 +3523,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_organizations_get
+    ) -> ApiResponse[AdminOrganizationsGetResponse]:
+        """Get an organization
 
 
         :param org_id: (required)
@@ -3376,6 +3563,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3406,7 +3595,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_organizations_get
+        """Get an organization
 
 
         :param org_id: (required)
@@ -3445,6 +3634,8 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3488,6 +3679,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3530,8 +3728,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_organizations_list
+    ) -> AdminOrganizationsListResponse:
+        """List organizations
 
 
         :param org_id: (required)
@@ -3567,6 +3765,7 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3595,8 +3794,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_organizations_list
+    ) -> ApiResponse[AdminOrganizationsListResponse]:
+        """List organizations
 
 
         :param org_id: (required)
@@ -3632,6 +3831,7 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3661,7 +3861,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_organizations_list
+        """List organizations
 
 
         :param org_id: (required)
@@ -3697,6 +3897,7 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3737,6 +3938,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3781,8 +3989,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """patch_admin_org_members_update
+    ) -> PutAdminOrgMembersUpdateResponse:
+        """Update a member's role or status
 
 
         :param org_id: (required)
@@ -3824,6 +4032,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminOrgMembersUpdateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3854,8 +4065,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """patch_admin_org_members_update
+    ) -> ApiResponse[PutAdminOrgMembersUpdateResponse]:
+        """Update a member's role or status
 
 
         :param org_id: (required)
@@ -3897,6 +4108,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminOrgMembersUpdateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3928,7 +4142,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """patch_admin_org_members_update
+        """Update a member's role or status
 
 
         :param org_id: (required)
@@ -3970,6 +4184,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminOrgMembersUpdateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4016,6 +4233,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4060,8 +4284,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """patch_admin_org_roles_update
+    ) -> AdminOrgRolesCreateResponse:
+        """Update an organization role
 
 
         :param org_id: (required)
@@ -4103,6 +4327,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4133,8 +4360,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """patch_admin_org_roles_update
+    ) -> ApiResponse[AdminOrgRolesCreateResponse]:
+        """Update an organization role
 
 
         :param org_id: (required)
@@ -4176,6 +4403,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4207,7 +4437,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """patch_admin_org_roles_update
+        """Update an organization role
 
 
         :param org_id: (required)
@@ -4249,6 +4479,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4295,6 +4528,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4338,8 +4578,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """patch_admin_organizations_update
+    ) -> AdminOrganizationsGetResponse:
+        """Update an organization
 
 
         :param org_id: (required)
@@ -4378,6 +4618,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4407,8 +4650,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """patch_admin_organizations_update
+    ) -> ApiResponse[AdminOrganizationsGetResponse]:
+        """Update an organization
 
 
         :param org_id: (required)
@@ -4447,6 +4690,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4477,7 +4723,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """patch_admin_organizations_update
+        """Update an organization
 
 
         :param org_id: (required)
@@ -4516,6 +4762,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4559,6 +4808,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4603,8 +4859,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """put_admin_org_members_update
+    ) -> PutAdminOrgMembersUpdateResponse:
+        """Update a member's role or status
 
 
         :param org_id: (required)
@@ -4646,6 +4902,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminOrgMembersUpdateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4676,8 +4935,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """put_admin_org_members_update
+    ) -> ApiResponse[PutAdminOrgMembersUpdateResponse]:
+        """Update a member's role or status
 
 
         :param org_id: (required)
@@ -4719,6 +4978,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminOrgMembersUpdateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4750,7 +5012,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """put_admin_org_members_update
+        """Update a member's role or status
 
 
         :param org_id: (required)
@@ -4792,6 +5054,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminOrgMembersUpdateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4838,6 +5103,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4882,8 +5154,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """put_admin_org_roles_update
+    ) -> AdminOrgRolesCreateResponse:
+        """Update an organization role
 
 
         :param org_id: (required)
@@ -4925,6 +5197,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4955,8 +5230,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """put_admin_org_roles_update
+    ) -> ApiResponse[AdminOrgRolesCreateResponse]:
+        """Update an organization role
 
 
         :param org_id: (required)
@@ -4998,6 +5273,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5029,7 +5307,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """put_admin_org_roles_update
+        """Update an organization role
 
 
         :param org_id: (required)
@@ -5071,6 +5349,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrgRolesCreateResponse",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5117,6 +5398,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5160,8 +5448,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """put_admin_organizations_update
+    ) -> AdminOrganizationsGetResponse:
+        """Update an organization
 
 
         :param org_id: (required)
@@ -5200,6 +5488,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5229,8 +5520,8 @@ class AdminOrganizationsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """put_admin_organizations_update
+    ) -> ApiResponse[AdminOrganizationsGetResponse]:
+        """Update an organization
 
 
         :param org_id: (required)
@@ -5269,6 +5560,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5299,7 +5593,7 @@ class AdminOrganizationsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """put_admin_organizations_update
+        """Update an organization
 
 
         :param org_id: (required)
@@ -5338,6 +5632,9 @@ class AdminOrganizationsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminOrganizationsGetResponse",
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5381,6 +5678,13 @@ class AdminOrganizationsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

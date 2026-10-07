@@ -97,7 +97,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -165,7 +165,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -183,7 +183,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */
@@ -203,7 +203,7 @@ public class AAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the tenant portal AAuth consent page for the given request_token. </td><td>  * Location -  <br>  </td></tr>
         <tr><td> 400 </td><td> Missing request_token query parameter. </td><td>  -  </td></tr>
      </table>
      */

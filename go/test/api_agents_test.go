@@ -43,9 +43,10 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 		var orgId string
 		var agentId string
 
-		httpRes, err := apiClient.AgentsAPI.Attest(context.Background(), orgId, agentId).Execute()
+		resp, httpRes, err := apiClient.AgentsAPI.Attest(context.Background(), orgId, agentId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -85,9 +86,10 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 		var orgId string
 		var agentId string
 
-		httpRes, err := apiClient.AgentsAPI.GetAgentCard(context.Background(), orgId, agentId).Execute()
+		resp, httpRes, err := apiClient.AgentsAPI.GetAgentCard(context.Background(), orgId, agentId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -127,9 +129,10 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AgentsAPI.RegisterAgent(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AgentsAPI.RegisterAgent(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -140,9 +143,10 @@ func Test_lumoauthclient_AgentsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AgentsAPI.VerifyAgentCard(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AgentsAPI.VerifyAgentCard(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

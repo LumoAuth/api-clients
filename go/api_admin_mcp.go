@@ -24,7 +24,7 @@ import (
 type AdminMcpAPI interface {
 
 	/*
-	AdminMcpServersCreate POST /api/v1/admin/mcp/servers
+	AdminMcpServersCreate Register an MCP server
 
 	Body:
 name (required) — display name
@@ -35,6 +35,11 @@ scopes_supported (optional) — array OR space/comma-separated string
 transport (optional) — defaults to "http_streamable"
 auth_mode (optional) — defaults to "oauth"
 token_lifetime (optional, default 3600) — clamped to [60, 86400]
+allowed_client_ids (optional) — array of this organization's OAuth client ids;
+    unknown ids are a 422 (never persisted as policy)
+require_pkce (optional, default true)
+require_resource_param (optional, default true)
+require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -43,10 +48,11 @@ token_lifetime (optional, default 3600) — clamped to [60, 86400]
 	AdminMcpServersCreate(ctx context.Context, orgId string) ApiAdminMcpServersCreateRequest
 
 	// AdminMcpServersCreateExecute executes the request
-	AdminMcpServersCreateExecute(r ApiAdminMcpServersCreateRequest) (*http.Response, error)
+	//  @return AdminMcpServersCreateResponse
+	AdminMcpServersCreateExecute(r ApiAdminMcpServersCreateRequest) (*AdminMcpServersCreateResponse, *http.Response, error)
 
 	/*
-	AdminMcpServersDelete Method for AdminMcpServersDelete
+	AdminMcpServersDelete Delete an MCP server
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -56,10 +62,11 @@ token_lifetime (optional, default 3600) — clamped to [60, 86400]
 	AdminMcpServersDelete(ctx context.Context, orgId string, serverId string) ApiAdminMcpServersDeleteRequest
 
 	// AdminMcpServersDeleteExecute executes the request
-	AdminMcpServersDeleteExecute(r ApiAdminMcpServersDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminMcpServersDeleteExecute(r ApiAdminMcpServersDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminMcpServersGet Method for AdminMcpServersGet
+	AdminMcpServersGet Get an MCP server
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -69,10 +76,11 @@ token_lifetime (optional, default 3600) — clamped to [60, 86400]
 	AdminMcpServersGet(ctx context.Context, orgId string, serverId string) ApiAdminMcpServersGetRequest
 
 	// AdminMcpServersGetExecute executes the request
-	AdminMcpServersGetExecute(r ApiAdminMcpServersGetRequest) (*http.Response, error)
+	//  @return AdminMcpServersGetResponse
+	AdminMcpServersGetExecute(r ApiAdminMcpServersGetRequest) (*AdminMcpServersGetResponse, *http.Response, error)
 
 	/*
-	AdminMcpServersList Method for AdminMcpServersList
+	AdminMcpServersList List MCP servers
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -81,7 +89,8 @@ token_lifetime (optional, default 3600) — clamped to [60, 86400]
 	AdminMcpServersList(ctx context.Context, orgId string) ApiAdminMcpServersListRequest
 
 	// AdminMcpServersListExecute executes the request
-	AdminMcpServersListExecute(r ApiAdminMcpServersListRequest) (*http.Response, error)
+	//  @return AdminMcpServersListResponse
+	AdminMcpServersListExecute(r ApiAdminMcpServersListRequest) (*AdminMcpServersListResponse, *http.Response, error)
 }
 
 // AdminMcpAPIService AdminMcpAPI service
@@ -93,12 +102,12 @@ type ApiAdminMcpServersCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAdminMcpServersCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminMcpServersCreateRequest) Execute() (*AdminMcpServersCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminMcpServersCreateExecute(r)
 }
 
 /*
-AdminMcpServersCreate POST /api/v1/admin/mcp/servers
+AdminMcpServersCreate Register an MCP server
 
 Body:
 name (required) — display name
@@ -109,6 +118,11 @@ scopes_supported (optional) — array OR space/comma-separated string
 transport (optional) — defaults to "http_streamable"
 auth_mode (optional) — defaults to "oauth"
 token_lifetime (optional, default 3600) — clamped to [60, 86400]
+allowed_client_ids (optional) — array of this organization's OAuth client ids;
+    unknown ids are a 422 (never persisted as policy)
+require_pkce (optional, default true)
+require_resource_param (optional, default true)
+require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -123,16 +137,18 @@ func (a *AdminMcpAPIService) AdminMcpServersCreate(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCreateRequest) (*http.Response, error) {
+//  @return AdminMcpServersCreateResponse
+func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCreateRequest) (*AdminMcpServersCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers"
@@ -152,7 +168,7 @@ func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCr
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -175,19 +191,19 @@ func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCr
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -195,10 +211,19 @@ func (a *AdminMcpAPIService) AdminMcpServersCreateExecute(r ApiAdminMcpServersCr
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminMcpServersDeleteRequest struct {
@@ -208,12 +233,12 @@ type ApiAdminMcpServersDeleteRequest struct {
 	serverId string
 }
 
-func (r ApiAdminMcpServersDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminMcpServersDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminMcpServersDeleteExecute(r)
 }
 
 /*
-AdminMcpServersDelete Method for AdminMcpServersDelete
+AdminMcpServersDelete Delete an MCP server
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -230,16 +255,18 @@ func (a *AdminMcpAPIService) AdminMcpServersDelete(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminMcpAPIService) AdminMcpServersDeleteExecute(r ApiAdminMcpServersDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminMcpAPIService) AdminMcpServersDeleteExecute(r ApiAdminMcpServersDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
@@ -260,7 +287,7 @@ func (a *AdminMcpAPIService) AdminMcpServersDeleteExecute(r ApiAdminMcpServersDe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -283,19 +310,19 @@ func (a *AdminMcpAPIService) AdminMcpServersDeleteExecute(r ApiAdminMcpServersDe
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -303,10 +330,19 @@ func (a *AdminMcpAPIService) AdminMcpServersDeleteExecute(r ApiAdminMcpServersDe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminMcpServersGetRequest struct {
@@ -316,12 +352,12 @@ type ApiAdminMcpServersGetRequest struct {
 	serverId string
 }
 
-func (r ApiAdminMcpServersGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminMcpServersGetRequest) Execute() (*AdminMcpServersGetResponse, *http.Response, error) {
 	return r.ApiService.AdminMcpServersGetExecute(r)
 }
 
 /*
-AdminMcpServersGet Method for AdminMcpServersGet
+AdminMcpServersGet Get an MCP server
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -338,16 +374,18 @@ func (a *AdminMcpAPIService) AdminMcpServersGet(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AdminMcpAPIService) AdminMcpServersGetExecute(r ApiAdminMcpServersGetRequest) (*http.Response, error) {
+//  @return AdminMcpServersGetResponse
+func (a *AdminMcpAPIService) AdminMcpServersGetExecute(r ApiAdminMcpServersGetRequest) (*AdminMcpServersGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
@@ -368,7 +406,7 @@ func (a *AdminMcpAPIService) AdminMcpServersGetExecute(r ApiAdminMcpServersGetRe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -391,19 +429,19 @@ func (a *AdminMcpAPIService) AdminMcpServersGetExecute(r ApiAdminMcpServersGetRe
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -411,10 +449,19 @@ func (a *AdminMcpAPIService) AdminMcpServersGetExecute(r ApiAdminMcpServersGetRe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminMcpServersListRequest struct {
@@ -423,12 +470,12 @@ type ApiAdminMcpServersListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminMcpServersListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminMcpServersListRequest) Execute() (*AdminMcpServersListResponse, *http.Response, error) {
 	return r.ApiService.AdminMcpServersListExecute(r)
 }
 
 /*
-AdminMcpServersList Method for AdminMcpServersList
+AdminMcpServersList List MCP servers
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -443,16 +490,18 @@ func (a *AdminMcpAPIService) AdminMcpServersList(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminMcpAPIService) AdminMcpServersListExecute(r ApiAdminMcpServersListRequest) (*http.Response, error) {
+//  @return AdminMcpServersListResponse
+func (a *AdminMcpAPIService) AdminMcpServersListExecute(r ApiAdminMcpServersListRequest) (*AdminMcpServersListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminMcpServersListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminMcpAPIService.AdminMcpServersList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/mcp/servers"
@@ -472,7 +521,7 @@ func (a *AdminMcpAPIService) AdminMcpServersListExecute(r ApiAdminMcpServersList
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -495,19 +544,19 @@ func (a *AdminMcpAPIService) AdminMcpServersListExecute(r ApiAdminMcpServersList
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -515,8 +564,17 @@ func (a *AdminMcpAPIService) AdminMcpServersListExecute(r ApiAdminMcpServersList
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

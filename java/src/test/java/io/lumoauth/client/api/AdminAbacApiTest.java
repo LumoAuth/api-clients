@@ -14,6 +14,16 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AbacAttributesCreateResponse;
+import io.lumoauth.client.model.AbacAttributesGetResponse;
+import io.lumoauth.client.model.AbacAttributesListResponse;
+import io.lumoauth.client.model.AbacPoliciesCreateResponse;
+import io.lumoauth.client.model.AbacPoliciesGetResponse;
+import io.lumoauth.client.model.AbacPoliciesListResponse;
+import io.lumoauth.client.model.AbacPoliciesToggleResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAbacAttributesUpdateResponse;
+import io.lumoauth.client.model.PutAbacPoliciesUpdateResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,14 +41,14 @@ public class AdminAbacApiTest {
     private final AdminAbacApi api = new AdminAbacApi();
 
     /**
-     * Create a new attribute definition
+     * Create an attribute definition
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void abacAttributesCreateTest() throws ApiException {
         String orgId = null;
-        api.abacAttributesCreate(orgId);
+        AbacAttributesCreateResponse response = api.abacAttributesCreate(orgId);
         // TODO: test validations
     }
 
@@ -51,12 +61,12 @@ public class AdminAbacApiTest {
     public void abacAttributesDeleteTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.abacAttributesDelete(orgId, id);
+        MessageResponse response = api.abacAttributesDelete(orgId, id);
         // TODO: test validations
     }
 
     /**
-     * Get a single attribute definition
+     * Get an attribute definition
      *
      * @throws ApiException if the Api call fails
      */
@@ -64,31 +74,31 @@ public class AdminAbacApiTest {
     public void abacAttributesGetTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.abacAttributesGet(orgId, id);
+        AbacAttributesGetResponse response = api.abacAttributesGet(orgId, id);
         // TODO: test validations
     }
 
     /**
-     * List all attribute definitions
+     * List attribute definitions
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void abacAttributesListTest() throws ApiException {
         String orgId = null;
-        api.abacAttributesList(orgId);
+        AbacAttributesListResponse response = api.abacAttributesList(orgId);
         // TODO: test validations
     }
 
     /**
-     * Create a new ABAC policy
+     * Create an ABAC policy
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void abacPoliciesCreateTest() throws ApiException {
         String orgId = null;
-        api.abacPoliciesCreate(orgId);
+        AbacPoliciesCreateResponse response = api.abacPoliciesCreate(orgId);
         // TODO: test validations
     }
 
@@ -101,12 +111,12 @@ public class AdminAbacApiTest {
     public void abacPoliciesDeleteTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.abacPoliciesDelete(orgId, id);
+        MessageResponse response = api.abacPoliciesDelete(orgId, id);
         // TODO: test validations
     }
 
     /**
-     * Get a single ABAC policy
+     * Get an ABAC policy
      *
      * @throws ApiException if the Api call fails
      */
@@ -114,24 +124,24 @@ public class AdminAbacApiTest {
     public void abacPoliciesGetTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.abacPoliciesGet(orgId, id);
+        AbacPoliciesGetResponse response = api.abacPoliciesGet(orgId, id);
         // TODO: test validations
     }
 
     /**
-     * List all ABAC policies
+     * List ABAC policies
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void abacPoliciesListTest() throws ApiException {
         String orgId = null;
-        api.abacPoliciesList(orgId);
+        AbacPoliciesListResponse response = api.abacPoliciesList(orgId);
         // TODO: test validations
     }
 
     /**
-     * Toggle policy active status
+     * Toggle a policy between active and inactive
      *
      * @throws ApiException if the Api call fails
      */
@@ -139,12 +149,12 @@ public class AdminAbacApiTest {
     public void abacPoliciesToggleTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.abacPoliciesToggle(orgId, id);
+        AbacPoliciesToggleResponse response = api.abacPoliciesToggle(orgId, id);
         // TODO: test validations
     }
 
     /**
-     * Update an attribute definition
+     * Partially update an attribute definition
      *
      * @throws ApiException if the Api call fails
      */
@@ -152,12 +162,12 @@ public class AdminAbacApiTest {
     public void patchAbacAttributesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.patchAbacAttributesUpdate(orgId, id);
+        PutAbacAttributesUpdateResponse response = api.patchAbacAttributesUpdate(orgId, id);
         // TODO: test validations
     }
 
     /**
-     * Update an ABAC policy
+     * Partially update an ABAC policy
      *
      * @throws ApiException if the Api call fails
      */
@@ -165,7 +175,7 @@ public class AdminAbacApiTest {
     public void patchAbacPoliciesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.patchAbacPoliciesUpdate(orgId, id);
+        PutAbacPoliciesUpdateResponse response = api.patchAbacPoliciesUpdate(orgId, id);
         // TODO: test validations
     }
 
@@ -178,7 +188,7 @@ public class AdminAbacApiTest {
     public void putAbacAttributesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.putAbacAttributesUpdate(orgId, id);
+        PutAbacAttributesUpdateResponse response = api.putAbacAttributesUpdate(orgId, id);
         // TODO: test validations
     }
 
@@ -191,7 +201,7 @@ public class AdminAbacApiTest {
     public void putAbacPoliciesUpdateTest() throws ApiException {
         String orgId = null;
         String id = null;
-        api.putAbacPoliciesUpdate(orgId, id);
+        PutAbacPoliciesUpdateResponse response = api.putAbacPoliciesUpdate(orgId, id);
         // TODO: test validations
     }
 

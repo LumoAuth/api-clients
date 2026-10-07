@@ -21,6 +21,22 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { CreateClientResponse } from '../models';
+// @ts-ignore
+import type { GetClientResponse } from '../models';
+// @ts-ignore
+import type { ListClientScopesResponse } from '../models';
+// @ts-ignore
+import type { ListClientsResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { RotateClientSecretResponse } from '../models';
+// @ts-ignore
+import type { SetClientScopesResponse } from '../models';
+// @ts-ignore
+import type { UpdateClientResponse } from '../models';
 /**
  * AdminOAuthClientsApi - axios parameter creator
  * @export
@@ -29,7 +45,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
     return {
         /**
          * 
-         * @summary Create a new OAuth client
+         * @summary Create an OAuth client
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -115,7 +131,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Disable OAuth client
+         * @summary Disable an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -160,7 +176,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Enable OAuth client
+         * @summary Enable an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -205,7 +221,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Get a single OAuth client by ID or clientId
+         * @summary Get an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -250,7 +266,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Get client scopes
+         * @summary List the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -295,7 +311,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary List all OAuth clients in the tenant
+         * @summary List OAuth clients
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -336,7 +352,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Update an existing OAuth client
+         * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -381,7 +397,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Rotate client secret
+         * @summary Rotate an OAuth client secret
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -426,7 +442,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Set client scopes
+         * @summary Replace the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -471,7 +487,7 @@ export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: C
         },
         /**
          * 
-         * @summary Update an existing OAuth client
+         * @summary Replace an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -526,12 +542,12 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Create a new OAuth client
+         * @summary Create an OAuth client
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createClient(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createClient(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createClient(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.createClient']?.[localVarOperationServerIndex]?.url;
@@ -545,7 +561,7 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.deleteClient']?.[localVarOperationServerIndex]?.url;
@@ -553,13 +569,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Disable OAuth client
+         * @summary Disable an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async disableClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async disableClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.disableClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.disableClient']?.[localVarOperationServerIndex]?.url;
@@ -567,13 +583,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Enable OAuth client
+         * @summary Enable an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async enableClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async enableClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.enableClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.enableClient']?.[localVarOperationServerIndex]?.url;
@@ -581,13 +597,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get a single OAuth client by ID or clientId
+         * @summary Get an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.getClient']?.[localVarOperationServerIndex]?.url;
@@ -595,13 +611,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get client scopes
+         * @summary List the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listClientScopes(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listClientScopes(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListClientScopesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listClientScopes(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.listClientScopes']?.[localVarOperationServerIndex]?.url;
@@ -609,12 +625,12 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all OAuth clients in the tenant
+         * @summary List OAuth clients
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listClients(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listClients(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListClientsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listClients(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.listClients']?.[localVarOperationServerIndex]?.url;
@@ -622,13 +638,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update an existing OAuth client
+         * @summary Update an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.patchClient']?.[localVarOperationServerIndex]?.url;
@@ -636,13 +652,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Rotate client secret
+         * @summary Rotate an OAuth client secret
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async rotateClientSecret(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async rotateClientSecret(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RotateClientSecretResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.rotateClientSecret(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.rotateClientSecret']?.[localVarOperationServerIndex]?.url;
@@ -650,13 +666,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Set client scopes
+         * @summary Replace the scopes granted to an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setClientScopes(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async setClientScopes(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetClientScopesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.setClientScopes(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.setClientScopes']?.[localVarOperationServerIndex]?.url;
@@ -664,13 +680,13 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update an existing OAuth client
+         * @summary Replace an OAuth client
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateClient(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateClient(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.updateClient']?.[localVarOperationServerIndex]?.url;
@@ -688,12 +704,12 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
     return {
         /**
          * 
-         * @summary Create a new OAuth client
+         * @summary Create an OAuth client
          * @param {AdminOAuthClientsApiCreateClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateClientResponse> {
             return localVarFp.createClient(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -703,97 +719,97 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteClient(requestParameters: AdminOAuthClientsApiDeleteClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteClient(requestParameters: AdminOAuthClientsApiDeleteClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.deleteClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Disable OAuth client
+         * @summary Disable an OAuth client
          * @param {AdminOAuthClientsApiDisableClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        disableClient(requestParameters: AdminOAuthClientsApiDisableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        disableClient(requestParameters: AdminOAuthClientsApiDisableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
             return localVarFp.disableClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Enable OAuth client
+         * @summary Enable an OAuth client
          * @param {AdminOAuthClientsApiEnableClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        enableClient(requestParameters: AdminOAuthClientsApiEnableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        enableClient(requestParameters: AdminOAuthClientsApiEnableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
             return localVarFp.enableClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single OAuth client by ID or clientId
+         * @summary Get an OAuth client
          * @param {AdminOAuthClientsApiGetClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClient(requestParameters: AdminOAuthClientsApiGetClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getClient(requestParameters: AdminOAuthClientsApiGetClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetClientResponse> {
             return localVarFp.getClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get client scopes
+         * @summary List the scopes granted to an OAuth client
          * @param {AdminOAuthClientsApiListClientScopesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listClientScopes(requestParameters: AdminOAuthClientsApiListClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listClientScopes(requestParameters: AdminOAuthClientsApiListClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListClientScopesResponse> {
             return localVarFp.listClientScopes(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary List all OAuth clients in the tenant
+         * @summary List OAuth clients
          * @param {AdminOAuthClientsApiListClientsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listClients(requestParameters: AdminOAuthClientsApiListClientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listClients(requestParameters: AdminOAuthClientsApiListClientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListClientsResponse> {
             return localVarFp.listClients(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update an existing OAuth client
+         * @summary Update an OAuth client
          * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
             return localVarFp.patchClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Rotate client secret
+         * @summary Rotate an OAuth client secret
          * @param {AdminOAuthClientsApiRotateClientSecretRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        rotateClientSecret(requestParameters: AdminOAuthClientsApiRotateClientSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        rotateClientSecret(requestParameters: AdminOAuthClientsApiRotateClientSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<RotateClientSecretResponse> {
             return localVarFp.rotateClientSecret(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Set client scopes
+         * @summary Replace the scopes granted to an OAuth client
          * @param {AdminOAuthClientsApiSetClientScopesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetClientScopesResponse> {
             return localVarFp.setClientScopes(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update an existing OAuth client
+         * @summary Replace an OAuth client
          * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse> {
             return localVarFp.updateClient(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
     };
@@ -807,13 +823,13 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
 export interface AdminOAuthClientsApiInterface {
     /**
      * 
-     * @summary Create a new OAuth client
+     * @summary Create an OAuth client
      * @param {AdminOAuthClientsApiCreateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    createClient(requestParameters: AdminOAuthClientsApiCreateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateClientResponse>;
 
     /**
      * 
@@ -823,97 +839,97 @@ export interface AdminOAuthClientsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    deleteClient(requestParameters: AdminOAuthClientsApiDeleteClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    deleteClient(requestParameters: AdminOAuthClientsApiDeleteClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
-     * @summary Disable OAuth client
+     * @summary Disable an OAuth client
      * @param {AdminOAuthClientsApiDisableClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    disableClient(requestParameters: AdminOAuthClientsApiDisableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    disableClient(requestParameters: AdminOAuthClientsApiDisableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
     /**
      * 
-     * @summary Enable OAuth client
+     * @summary Enable an OAuth client
      * @param {AdminOAuthClientsApiEnableClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    enableClient(requestParameters: AdminOAuthClientsApiEnableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    enableClient(requestParameters: AdminOAuthClientsApiEnableClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
     /**
      * 
-     * @summary Get a single OAuth client by ID or clientId
+     * @summary Get an OAuth client
      * @param {AdminOAuthClientsApiGetClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    getClient(requestParameters: AdminOAuthClientsApiGetClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getClient(requestParameters: AdminOAuthClientsApiGetClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetClientResponse>;
 
     /**
      * 
-     * @summary Get client scopes
+     * @summary List the scopes granted to an OAuth client
      * @param {AdminOAuthClientsApiListClientScopesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    listClientScopes(requestParameters: AdminOAuthClientsApiListClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listClientScopes(requestParameters: AdminOAuthClientsApiListClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListClientScopesResponse>;
 
     /**
      * 
-     * @summary List all OAuth clients in the tenant
+     * @summary List OAuth clients
      * @param {AdminOAuthClientsApiListClientsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    listClients(requestParameters: AdminOAuthClientsApiListClientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listClients(requestParameters: AdminOAuthClientsApiListClientsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListClientsResponse>;
 
     /**
      * 
-     * @summary Update an existing OAuth client
+     * @summary Update an OAuth client
      * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchClient(requestParameters: AdminOAuthClientsApiPatchClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
     /**
      * 
-     * @summary Rotate client secret
+     * @summary Rotate an OAuth client secret
      * @param {AdminOAuthClientsApiRotateClientSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    rotateClientSecret(requestParameters: AdminOAuthClientsApiRotateClientSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    rotateClientSecret(requestParameters: AdminOAuthClientsApiRotateClientSecretRequest, options?: RawAxiosRequestConfig): AxiosPromise<RotateClientSecretResponse>;
 
     /**
      * 
-     * @summary Set client scopes
+     * @summary Replace the scopes granted to an OAuth client
      * @param {AdminOAuthClientsApiSetClientScopesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    setClientScopes(requestParameters: AdminOAuthClientsApiSetClientScopesRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetClientScopesResponse>;
 
     /**
      * 
-     * @summary Update an existing OAuth client
+     * @summary Replace an OAuth client
      * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOAuthClientsApiInterface
      */
-    updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
 }
 
@@ -1143,7 +1159,7 @@ export interface AdminOAuthClientsApiUpdateClientRequest {
 export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsApiInterface {
     /**
      * 
-     * @summary Create a new OAuth client
+     * @summary Create an OAuth client
      * @param {AdminOAuthClientsApiCreateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1167,7 +1183,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Disable OAuth client
+     * @summary Disable an OAuth client
      * @param {AdminOAuthClientsApiDisableClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1179,7 +1195,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Enable OAuth client
+     * @summary Enable an OAuth client
      * @param {AdminOAuthClientsApiEnableClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1191,7 +1207,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Get a single OAuth client by ID or clientId
+     * @summary Get an OAuth client
      * @param {AdminOAuthClientsApiGetClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1203,7 +1219,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Get client scopes
+     * @summary List the scopes granted to an OAuth client
      * @param {AdminOAuthClientsApiListClientScopesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1215,7 +1231,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary List all OAuth clients in the tenant
+     * @summary List OAuth clients
      * @param {AdminOAuthClientsApiListClientsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1227,7 +1243,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Update an existing OAuth client
+     * @summary Update an OAuth client
      * @param {AdminOAuthClientsApiPatchClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1239,7 +1255,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Rotate client secret
+     * @summary Rotate an OAuth client secret
      * @param {AdminOAuthClientsApiRotateClientSecretRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1251,7 +1267,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Set client scopes
+     * @summary Replace the scopes granted to an OAuth client
      * @param {AdminOAuthClientsApiSetClientScopesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1263,7 +1279,7 @@ export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsAp
 
     /**
      * 
-     * @summary Update an existing OAuth client
+     * @summary Replace an OAuth client
      * @param {AdminOAuthClientsApiUpdateClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

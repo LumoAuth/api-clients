@@ -22,6 +22,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetRequestStatusResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetRequestStatusResponse {
   public static final String SERIALIZED_NAME_REQUEST_ID = "request_id";
   @SerializedName(SERIALIZED_NAME_REQUEST_ID)
@@ -81,10 +82,20 @@ public class GetRequestStatusResponse {
   @javax.annotation.Nullable
   private Integer grantedTtl;
 
-  public static final String SERIALIZED_NAME_REVIEW_NOTES = "review_notes";
-  @SerializedName(SERIALIZED_NAME_REVIEW_NOTES)
+  public static final String SERIALIZED_NAME_HAS_NOTES = "has_notes";
+  @SerializedName(SERIALIZED_NAME_HAS_NOTES)
   @javax.annotation.Nullable
-  private String reviewNotes;
+  private Boolean hasNotes;
+
+  public static final String SERIALIZED_NAME_AGENT_MESSAGE = "agent_message";
+  @SerializedName(SERIALIZED_NAME_AGENT_MESSAGE)
+  @javax.annotation.Nullable
+  private String agentMessage;
+
+  public static final String SERIALIZED_NAME_DELEGATION_CONSENT_REQUIRED = "delegation_consent_required";
+  @SerializedName(SERIALIZED_NAME_DELEGATION_CONSENT_REQUIRED)
+  @javax.annotation.Nullable
+  private Boolean delegationConsentRequired;
 
   public static final String SERIALIZED_NAME_EXPIRES_AT = "expires_at";
   @SerializedName(SERIALIZED_NAME_EXPIRES_AT)
@@ -208,22 +219,60 @@ public class GetRequestStatusResponse {
   }
 
 
-  public GetRequestStatusResponse reviewNotes(@javax.annotation.Nullable String reviewNotes) {
-    this.reviewNotes = reviewNotes;
+  public GetRequestStatusResponse hasNotes(@javax.annotation.Nullable Boolean hasNotes) {
+    this.hasNotes = hasNotes;
     return this;
   }
 
   /**
-   * Present when denied.
-   * @return reviewNotes
+   * Present when decided: whether the reviewer left notes (the notes themselves are never returned).
+   * @return hasNotes
    */
   @javax.annotation.Nullable
-  public String getReviewNotes() {
-    return reviewNotes;
+  public Boolean getHasNotes() {
+    return hasNotes;
   }
 
-  public void setReviewNotes(@javax.annotation.Nullable String reviewNotes) {
-    this.reviewNotes = reviewNotes;
+  public void setHasNotes(@javax.annotation.Nullable Boolean hasNotes) {
+    this.hasNotes = hasNotes;
+  }
+
+
+  public GetRequestStatusResponse agentMessage(@javax.annotation.Nullable String agentMessage) {
+    this.agentMessage = agentMessage;
+    return this;
+  }
+
+  /**
+   * Present when decided: message the reviewer explicitly wrote for the agent.
+   * @return agentMessage
+   */
+  @javax.annotation.Nullable
+  public String getAgentMessage() {
+    return agentMessage;
+  }
+
+  public void setAgentMessage(@javax.annotation.Nullable String agentMessage) {
+    this.agentMessage = agentMessage;
+  }
+
+
+  public GetRequestStatusResponse delegationConsentRequired(@javax.annotation.Nullable Boolean delegationConsentRequired) {
+    this.delegationConsentRequired = delegationConsentRequired;
+    return this;
+  }
+
+  /**
+   * Present when pending: the on_behalf_of user must consent.
+   * @return delegationConsentRequired
+   */
+  @javax.annotation.Nullable
+  public Boolean getDelegationConsentRequired() {
+    return delegationConsentRequired;
+  }
+
+  public void setDelegationConsentRequired(@javax.annotation.Nullable Boolean delegationConsentRequired) {
+    this.delegationConsentRequired = delegationConsentRequired;
   }
 
 
@@ -262,13 +311,26 @@ public class GetRequestStatusResponse {
         Objects.equals(this.taskId, getRequestStatusResponse.taskId) &&
         Objects.equals(this.tokenUrl, getRequestStatusResponse.tokenUrl) &&
         Objects.equals(this.grantedTtl, getRequestStatusResponse.grantedTtl) &&
-        Objects.equals(this.reviewNotes, getRequestStatusResponse.reviewNotes) &&
+        Objects.equals(this.hasNotes, getRequestStatusResponse.hasNotes) &&
+        Objects.equals(this.agentMessage, getRequestStatusResponse.agentMessage) &&
+        Objects.equals(this.delegationConsentRequired, getRequestStatusResponse.delegationConsentRequired) &&
         Objects.equals(this.expiresAt, getRequestStatusResponse.expiresAt);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(requestId, status, riskLevel, taskId, tokenUrl, grantedTtl, reviewNotes, expiresAt);
+    return Objects.hash(requestId, status, riskLevel, taskId, tokenUrl, grantedTtl, hasNotes, agentMessage, delegationConsentRequired, expiresAt);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -281,7 +343,9 @@ public class GetRequestStatusResponse {
     sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
     sb.append("    tokenUrl: ").append(toIndentedString(tokenUrl)).append("\n");
     sb.append("    grantedTtl: ").append(toIndentedString(grantedTtl)).append("\n");
-    sb.append("    reviewNotes: ").append(toIndentedString(reviewNotes)).append("\n");
+    sb.append("    hasNotes: ").append(toIndentedString(hasNotes)).append("\n");
+    sb.append("    agentMessage: ").append(toIndentedString(agentMessage)).append("\n");
+    sb.append("    delegationConsentRequired: ").append(toIndentedString(delegationConsentRequired)).append("\n");
     sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("}");
     return sb.toString();
@@ -304,7 +368,7 @@ public class GetRequestStatusResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("request_id", "status", "risk_level", "task_id", "token_url", "granted_ttl", "review_notes", "expires_at"));
+    openapiFields = new HashSet<String>(Arrays.asList("request_id", "status", "risk_level", "task_id", "token_url", "granted_ttl", "has_notes", "agent_message", "delegation_consent_required", "expires_at"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -346,8 +410,8 @@ public class GetRequestStatusResponse {
       if ((jsonObj.get("token_url") != null && !jsonObj.get("token_url").isJsonNull()) && !jsonObj.get("token_url").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `token_url` to be a primitive type in the JSON string but got `%s`", jsonObj.get("token_url").toString()));
       }
-      if ((jsonObj.get("review_notes") != null && !jsonObj.get("review_notes").isJsonNull()) && !jsonObj.get("review_notes").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `review_notes` to be a primitive type in the JSON string but got `%s`", jsonObj.get("review_notes").toString()));
+      if ((jsonObj.get("agent_message") != null && !jsonObj.get("agent_message").isJsonNull()) && !jsonObj.get("agent_message").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `agent_message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("agent_message").toString()));
       }
   }
 

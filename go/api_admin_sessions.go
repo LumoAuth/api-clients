@@ -24,7 +24,7 @@ import (
 type AdminSessionsAPI interface {
 
 	/*
-	AdminClientTokensRevokeAll Revoke all tokens for a client
+	AdminClientTokensRevokeAll Revoke all tokens of a client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -34,10 +34,11 @@ type AdminSessionsAPI interface {
 	AdminClientTokensRevokeAll(ctx context.Context, orgId string, clientId string) ApiAdminClientTokensRevokeAllRequest
 
 	// AdminClientTokensRevokeAllExecute executes the request
-	AdminClientTokensRevokeAllExecute(r ApiAdminClientTokensRevokeAllRequest) (*http.Response, error)
+	//  @return AdminClientTokensRevokeAllResponse
+	AdminClientTokensRevokeAllExecute(r ApiAdminClientTokensRevokeAllRequest) (*AdminClientTokensRevokeAllResponse, *http.Response, error)
 
 	/*
-	AdminClientTokensRevokePost Revoke all tokens for a client via POST
+	AdminClientTokensRevokePost Revoke all tokens of a client (POST alias)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -47,10 +48,11 @@ type AdminSessionsAPI interface {
 	AdminClientTokensRevokePost(ctx context.Context, orgId string, clientId string) ApiAdminClientTokensRevokePostRequest
 
 	// AdminClientTokensRevokePostExecute executes the request
-	AdminClientTokensRevokePostExecute(r ApiAdminClientTokensRevokePostRequest) (*http.Response, error)
+	//  @return AdminUserTokensRevokePostResponse
+	AdminClientTokensRevokePostExecute(r ApiAdminClientTokensRevokePostRequest) (*AdminUserTokensRevokePostResponse, *http.Response, error)
 
 	/*
-	AdminSessionsCount Get active session count for the tenant
+	AdminSessionsCount Active session count
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -59,10 +61,13 @@ type AdminSessionsAPI interface {
 	AdminSessionsCount(ctx context.Context, orgId string) ApiAdminSessionsCountRequest
 
 	// AdminSessionsCountExecute executes the request
-	AdminSessionsCountExecute(r ApiAdminSessionsCountRequest) (*http.Response, error)
+	//  @return AdminSessionsCountResponse
+	AdminSessionsCountExecute(r ApiAdminSessionsCountRequest) (*AdminSessionsCountResponse, *http.Response, error)
 
 	/*
-	AdminSessionsList List active sessions for the tenant
+	AdminSessionsList List active sessions
+
+	Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -71,10 +76,11 @@ type AdminSessionsAPI interface {
 	AdminSessionsList(ctx context.Context, orgId string) ApiAdminSessionsListRequest
 
 	// AdminSessionsListExecute executes the request
-	AdminSessionsListExecute(r ApiAdminSessionsListRequest) (*http.Response, error)
+	//  @return AdminSessionsListResponse
+	AdminSessionsListExecute(r ApiAdminSessionsListRequest) (*AdminSessionsListResponse, *http.Response, error)
 
 	/*
-	AdminSessionsRevoke Revoke a specific session
+	AdminSessionsRevoke Revoke a session
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -84,10 +90,13 @@ type AdminSessionsAPI interface {
 	AdminSessionsRevoke(ctx context.Context, orgId string, sessionId string) ApiAdminSessionsRevokeRequest
 
 	// AdminSessionsRevokeExecute executes the request
-	AdminSessionsRevokeExecute(r ApiAdminSessionsRevokeRequest) (*http.Response, error)
+	//  @return AdminSessionsRevokeResponse
+	AdminSessionsRevokeExecute(r ApiAdminSessionsRevokeRequest) (*AdminSessionsRevokeResponse, *http.Response, error)
 
 	/*
-	AdminSessionsRevokeAll Revoke all tenant sessions via POST
+	AdminSessionsRevokeAll Revoke every session in the tenant
+
+	Signs out all users. Requires `confirm: true` in the body.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -96,10 +105,11 @@ type AdminSessionsAPI interface {
 	AdminSessionsRevokeAll(ctx context.Context, orgId string) ApiAdminSessionsRevokeAllRequest
 
 	// AdminSessionsRevokeAllExecute executes the request
-	AdminSessionsRevokeAllExecute(r ApiAdminSessionsRevokeAllRequest) (*http.Response, error)
+	//  @return AdminSessionsRevokeAllResponse
+	AdminSessionsRevokeAllExecute(r ApiAdminSessionsRevokeAllRequest) (*AdminSessionsRevokeAllResponse, *http.Response, error)
 
 	/*
-	AdminSessionsStats Get session statistics for the tenant
+	AdminSessionsStats Session statistics
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -108,10 +118,13 @@ type AdminSessionsAPI interface {
 	AdminSessionsStats(ctx context.Context, orgId string) ApiAdminSessionsStatsRequest
 
 	// AdminSessionsStatsExecute executes the request
-	AdminSessionsStatsExecute(r ApiAdminSessionsStatsRequest) (*http.Response, error)
+	//  @return AdminSessionsStatsResponse
+	AdminSessionsStatsExecute(r ApiAdminSessionsStatsRequest) (*AdminSessionsStatsResponse, *http.Response, error)
 
 	/*
-	AdminTokensList List access tokens for the tenant
+	AdminTokensList List access tokens
+
+	Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -120,7 +133,8 @@ type AdminSessionsAPI interface {
 	AdminTokensList(ctx context.Context, orgId string) ApiAdminTokensListRequest
 
 	// AdminTokensListExecute executes the request
-	AdminTokensListExecute(r ApiAdminTokensListRequest) (*http.Response, error)
+	//  @return AdminTokensListResponse
+	AdminTokensListExecute(r ApiAdminTokensListRequest) (*AdminTokensListResponse, *http.Response, error)
 
 	/*
 	AdminTokensRevoke Revoke a token
@@ -133,10 +147,13 @@ type AdminSessionsAPI interface {
 	AdminTokensRevoke(ctx context.Context, orgId string, tokenId string) ApiAdminTokensRevokeRequest
 
 	// AdminTokensRevokeExecute executes the request
-	AdminTokensRevokeExecute(r ApiAdminTokensRevokeRequest) (*http.Response, error)
+	//  @return AdminTokensRevokeResponse
+	AdminTokensRevokeExecute(r ApiAdminTokensRevokeRequest) (*AdminTokensRevokeResponse, *http.Response, error)
 
 	/*
-	AdminUserSessionsList Get sessions for a specific user
+	AdminUserSessionsList List a user's active sessions
+
+	All active sessions of one user (UUID or email), returned as a single page.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -146,10 +163,11 @@ type AdminSessionsAPI interface {
 	AdminUserSessionsList(ctx context.Context, orgId string, userId string) ApiAdminUserSessionsListRequest
 
 	// AdminUserSessionsListExecute executes the request
-	AdminUserSessionsListExecute(r ApiAdminUserSessionsListRequest) (*http.Response, error)
+	//  @return AdminUserSessionsListResponse
+	AdminUserSessionsListExecute(r ApiAdminUserSessionsListRequest) (*AdminUserSessionsListResponse, *http.Response, error)
 
 	/*
-	AdminUserSessionsRevokeAll Revoke all sessions for a user
+	AdminUserSessionsRevokeAll Revoke all sessions of a user
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -159,10 +177,11 @@ type AdminSessionsAPI interface {
 	AdminUserSessionsRevokeAll(ctx context.Context, orgId string, userId string) ApiAdminUserSessionsRevokeAllRequest
 
 	// AdminUserSessionsRevokeAllExecute executes the request
-	AdminUserSessionsRevokeAllExecute(r ApiAdminUserSessionsRevokeAllRequest) (*http.Response, error)
+	//  @return AdminUserSessionsRevokeAllResponse
+	AdminUserSessionsRevokeAllExecute(r ApiAdminUserSessionsRevokeAllRequest) (*AdminUserSessionsRevokeAllResponse, *http.Response, error)
 
 	/*
-	AdminUserSessionsRevokePost Revoke all sessions for a user via POST
+	AdminUserSessionsRevokePost Revoke all sessions of a user (POST alias)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -172,10 +191,11 @@ type AdminSessionsAPI interface {
 	AdminUserSessionsRevokePost(ctx context.Context, orgId string, userId string) ApiAdminUserSessionsRevokePostRequest
 
 	// AdminUserSessionsRevokePostExecute executes the request
-	AdminUserSessionsRevokePostExecute(r ApiAdminUserSessionsRevokePostRequest) (*http.Response, error)
+	//  @return AdminUserSessionsRevokePostResponse
+	AdminUserSessionsRevokePostExecute(r ApiAdminUserSessionsRevokePostRequest) (*AdminUserSessionsRevokePostResponse, *http.Response, error)
 
 	/*
-	AdminUserTokensRevokeAll Revoke all tokens for a user
+	AdminUserTokensRevokeAll Revoke all tokens of a user
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -185,10 +205,11 @@ type AdminSessionsAPI interface {
 	AdminUserTokensRevokeAll(ctx context.Context, orgId string, userId string) ApiAdminUserTokensRevokeAllRequest
 
 	// AdminUserTokensRevokeAllExecute executes the request
-	AdminUserTokensRevokeAllExecute(r ApiAdminUserTokensRevokeAllRequest) (*http.Response, error)
+	//  @return AdminUserTokensRevokeAllResponse
+	AdminUserTokensRevokeAllExecute(r ApiAdminUserTokensRevokeAllRequest) (*AdminUserTokensRevokeAllResponse, *http.Response, error)
 
 	/*
-	AdminUserTokensRevokePost Revoke all tokens for a user via POST
+	AdminUserTokensRevokePost Revoke all tokens of a user (POST alias)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -198,7 +219,8 @@ type AdminSessionsAPI interface {
 	AdminUserTokensRevokePost(ctx context.Context, orgId string, userId string) ApiAdminUserTokensRevokePostRequest
 
 	// AdminUserTokensRevokePostExecute executes the request
-	AdminUserTokensRevokePostExecute(r ApiAdminUserTokensRevokePostRequest) (*http.Response, error)
+	//  @return AdminUserTokensRevokePostResponse
+	AdminUserTokensRevokePostExecute(r ApiAdminUserTokensRevokePostRequest) (*AdminUserTokensRevokePostResponse, *http.Response, error)
 }
 
 // AdminSessionsAPIService AdminSessionsAPI service
@@ -211,12 +233,12 @@ type ApiAdminClientTokensRevokeAllRequest struct {
 	clientId string
 }
 
-func (r ApiAdminClientTokensRevokeAllRequest) Execute() (*http.Response, error) {
+func (r ApiAdminClientTokensRevokeAllRequest) Execute() (*AdminClientTokensRevokeAllResponse, *http.Response, error) {
 	return r.ApiService.AdminClientTokensRevokeAllExecute(r)
 }
 
 /*
-AdminClientTokensRevokeAll Revoke all tokens for a client
+AdminClientTokensRevokeAll Revoke all tokens of a client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -233,16 +255,18 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokeAll(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminClientTokensRevokeAllExecute(r ApiAdminClientTokensRevokeAllRequest) (*http.Response, error) {
+//  @return AdminClientTokensRevokeAllResponse
+func (a *AdminSessionsAPIService) AdminClientTokensRevokeAllExecute(r ApiAdminClientTokensRevokeAllRequest) (*AdminClientTokensRevokeAllResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminClientTokensRevokeAllResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminClientTokensRevokeAll")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens"
@@ -263,7 +287,7 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokeAllExecute(r ApiAdminCl
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -286,19 +310,19 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokeAllExecute(r ApiAdminCl
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -306,10 +330,19 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokeAllExecute(r ApiAdminCl
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminClientTokensRevokePostRequest struct {
@@ -319,12 +352,12 @@ type ApiAdminClientTokensRevokePostRequest struct {
 	clientId string
 }
 
-func (r ApiAdminClientTokensRevokePostRequest) Execute() (*http.Response, error) {
+func (r ApiAdminClientTokensRevokePostRequest) Execute() (*AdminUserTokensRevokePostResponse, *http.Response, error) {
 	return r.ApiService.AdminClientTokensRevokePostExecute(r)
 }
 
 /*
-AdminClientTokensRevokePost Revoke all tokens for a client via POST
+AdminClientTokensRevokePost Revoke all tokens of a client (POST alias)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -341,16 +374,18 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokePost(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminClientTokensRevokePostExecute(r ApiAdminClientTokensRevokePostRequest) (*http.Response, error) {
+//  @return AdminUserTokensRevokePostResponse
+func (a *AdminSessionsAPIService) AdminClientTokensRevokePostExecute(r ApiAdminClientTokensRevokePostRequest) (*AdminUserTokensRevokePostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminUserTokensRevokePostResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminClientTokensRevokePost")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke"
@@ -371,7 +406,7 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokePostExecute(r ApiAdminC
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -394,19 +429,19 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokePostExecute(r ApiAdminC
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -414,10 +449,19 @@ func (a *AdminSessionsAPIService) AdminClientTokensRevokePostExecute(r ApiAdminC
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSessionsCountRequest struct {
@@ -426,12 +470,12 @@ type ApiAdminSessionsCountRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSessionsCountRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSessionsCountRequest) Execute() (*AdminSessionsCountResponse, *http.Response, error) {
 	return r.ApiService.AdminSessionsCountExecute(r)
 }
 
 /*
-AdminSessionsCount Get active session count for the tenant
+AdminSessionsCount Active session count
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -446,16 +490,18 @@ func (a *AdminSessionsAPIService) AdminSessionsCount(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminSessionsCountExecute(r ApiAdminSessionsCountRequest) (*http.Response, error) {
+//  @return AdminSessionsCountResponse
+func (a *AdminSessionsAPIService) AdminSessionsCountExecute(r ApiAdminSessionsCountRequest) (*AdminSessionsCountResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSessionsCountResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminSessionsCount")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sessions/count"
@@ -475,7 +521,7 @@ func (a *AdminSessionsAPIService) AdminSessionsCountExecute(r ApiAdminSessionsCo
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -498,19 +544,19 @@ func (a *AdminSessionsAPIService) AdminSessionsCountExecute(r ApiAdminSessionsCo
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -518,10 +564,19 @@ func (a *AdminSessionsAPIService) AdminSessionsCountExecute(r ApiAdminSessionsCo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSessionsListRequest struct {
@@ -530,12 +585,14 @@ type ApiAdminSessionsListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSessionsListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSessionsListRequest) Execute() (*AdminSessionsListResponse, *http.Response, error) {
 	return r.ApiService.AdminSessionsListExecute(r)
 }
 
 /*
-AdminSessionsList List active sessions for the tenant
+AdminSessionsList List active sessions
+
+Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -550,16 +607,18 @@ func (a *AdminSessionsAPIService) AdminSessionsList(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminSessionsListExecute(r ApiAdminSessionsListRequest) (*http.Response, error) {
+//  @return AdminSessionsListResponse
+func (a *AdminSessionsAPIService) AdminSessionsListExecute(r ApiAdminSessionsListRequest) (*AdminSessionsListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSessionsListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminSessionsList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sessions"
@@ -579,7 +638,7 @@ func (a *AdminSessionsAPIService) AdminSessionsListExecute(r ApiAdminSessionsLis
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -602,19 +661,19 @@ func (a *AdminSessionsAPIService) AdminSessionsListExecute(r ApiAdminSessionsLis
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -622,10 +681,19 @@ func (a *AdminSessionsAPIService) AdminSessionsListExecute(r ApiAdminSessionsLis
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSessionsRevokeRequest struct {
@@ -635,12 +703,12 @@ type ApiAdminSessionsRevokeRequest struct {
 	sessionId string
 }
 
-func (r ApiAdminSessionsRevokeRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSessionsRevokeRequest) Execute() (*AdminSessionsRevokeResponse, *http.Response, error) {
 	return r.ApiService.AdminSessionsRevokeExecute(r)
 }
 
 /*
-AdminSessionsRevoke Revoke a specific session
+AdminSessionsRevoke Revoke a session
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -657,16 +725,18 @@ func (a *AdminSessionsAPIService) AdminSessionsRevoke(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminSessionsRevokeExecute(r ApiAdminSessionsRevokeRequest) (*http.Response, error) {
+//  @return AdminSessionsRevokeResponse
+func (a *AdminSessionsAPIService) AdminSessionsRevokeExecute(r ApiAdminSessionsRevokeRequest) (*AdminSessionsRevokeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSessionsRevokeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminSessionsRevoke")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sessions/{sessionId}"
@@ -687,7 +757,7 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeExecute(r ApiAdminSessionsR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -710,19 +780,19 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeExecute(r ApiAdminSessionsR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -730,24 +800,41 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeExecute(r ApiAdminSessionsR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSessionsRevokeAllRequest struct {
 	ctx context.Context
 	ApiService AdminSessionsAPI
 	orgId string
+	adminSessionsRevokeAllRequest *AdminSessionsRevokeAllRequest
 }
 
-func (r ApiAdminSessionsRevokeAllRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSessionsRevokeAllRequest) AdminSessionsRevokeAllRequest(adminSessionsRevokeAllRequest AdminSessionsRevokeAllRequest) ApiAdminSessionsRevokeAllRequest {
+	r.adminSessionsRevokeAllRequest = &adminSessionsRevokeAllRequest
+	return r
+}
+
+func (r ApiAdminSessionsRevokeAllRequest) Execute() (*AdminSessionsRevokeAllResponse, *http.Response, error) {
 	return r.ApiService.AdminSessionsRevokeAllExecute(r)
 }
 
 /*
-AdminSessionsRevokeAll Revoke all tenant sessions via POST
+AdminSessionsRevokeAll Revoke every session in the tenant
+
+Signs out all users. Requires `confirm: true` in the body.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -762,16 +849,18 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeAll(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminSessionsRevokeAllExecute(r ApiAdminSessionsRevokeAllRequest) (*http.Response, error) {
+//  @return AdminSessionsRevokeAllResponse
+func (a *AdminSessionsAPIService) AdminSessionsRevokeAllExecute(r ApiAdminSessionsRevokeAllRequest) (*AdminSessionsRevokeAllResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSessionsRevokeAllResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminSessionsRevokeAll")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sessions/revoke-all"
@@ -780,9 +869,12 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeAllExecute(r ApiAdminSessio
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.adminSessionsRevokeAllRequest == nil {
+		return localVarReturnValue, nil, reportError("adminSessionsRevokeAllRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -791,13 +883,15 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeAllExecute(r ApiAdminSessio
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminSessionsRevokeAllRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -814,19 +908,19 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeAllExecute(r ApiAdminSessio
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -834,10 +928,19 @@ func (a *AdminSessionsAPIService) AdminSessionsRevokeAllExecute(r ApiAdminSessio
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSessionsStatsRequest struct {
@@ -846,12 +949,12 @@ type ApiAdminSessionsStatsRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSessionsStatsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSessionsStatsRequest) Execute() (*AdminSessionsStatsResponse, *http.Response, error) {
 	return r.ApiService.AdminSessionsStatsExecute(r)
 }
 
 /*
-AdminSessionsStats Get session statistics for the tenant
+AdminSessionsStats Session statistics
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -866,16 +969,18 @@ func (a *AdminSessionsAPIService) AdminSessionsStats(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminSessionsStatsExecute(r ApiAdminSessionsStatsRequest) (*http.Response, error) {
+//  @return AdminSessionsStatsResponse
+func (a *AdminSessionsAPIService) AdminSessionsStatsExecute(r ApiAdminSessionsStatsRequest) (*AdminSessionsStatsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSessionsStatsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminSessionsStats")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sessions/stats"
@@ -895,7 +1000,7 @@ func (a *AdminSessionsAPIService) AdminSessionsStatsExecute(r ApiAdminSessionsSt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -918,19 +1023,19 @@ func (a *AdminSessionsAPIService) AdminSessionsStatsExecute(r ApiAdminSessionsSt
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -938,10 +1043,19 @@ func (a *AdminSessionsAPIService) AdminSessionsStatsExecute(r ApiAdminSessionsSt
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminTokensListRequest struct {
@@ -950,12 +1064,14 @@ type ApiAdminTokensListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminTokensListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminTokensListRequest) Execute() (*AdminTokensListResponse, *http.Response, error) {
 	return r.ApiService.AdminTokensListExecute(r)
 }
 
 /*
-AdminTokensList List access tokens for the tenant
+AdminTokensList List access tokens
+
+Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -970,16 +1086,18 @@ func (a *AdminSessionsAPIService) AdminTokensList(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminTokensListExecute(r ApiAdminTokensListRequest) (*http.Response, error) {
+//  @return AdminTokensListResponse
+func (a *AdminSessionsAPIService) AdminTokensListExecute(r ApiAdminTokensListRequest) (*AdminTokensListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminTokensListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminTokensList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/tokens"
@@ -999,7 +1117,7 @@ func (a *AdminSessionsAPIService) AdminTokensListExecute(r ApiAdminTokensListReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1022,19 +1140,19 @@ func (a *AdminSessionsAPIService) AdminTokensListExecute(r ApiAdminTokensListReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1042,10 +1160,19 @@ func (a *AdminSessionsAPIService) AdminTokensListExecute(r ApiAdminTokensListReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminTokensRevokeRequest struct {
@@ -1055,7 +1182,7 @@ type ApiAdminTokensRevokeRequest struct {
 	tokenId string
 }
 
-func (r ApiAdminTokensRevokeRequest) Execute() (*http.Response, error) {
+func (r ApiAdminTokensRevokeRequest) Execute() (*AdminTokensRevokeResponse, *http.Response, error) {
 	return r.ApiService.AdminTokensRevokeExecute(r)
 }
 
@@ -1077,16 +1204,18 @@ func (a *AdminSessionsAPIService) AdminTokensRevoke(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminTokensRevokeExecute(r ApiAdminTokensRevokeRequest) (*http.Response, error) {
+//  @return AdminTokensRevokeResponse
+func (a *AdminSessionsAPIService) AdminTokensRevokeExecute(r ApiAdminTokensRevokeRequest) (*AdminTokensRevokeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminTokensRevokeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminTokensRevoke")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/tokens/{tokenId}"
@@ -1107,7 +1236,7 @@ func (a *AdminSessionsAPIService) AdminTokensRevokeExecute(r ApiAdminTokensRevok
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1130,19 +1259,19 @@ func (a *AdminSessionsAPIService) AdminTokensRevokeExecute(r ApiAdminTokensRevok
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1150,10 +1279,19 @@ func (a *AdminSessionsAPIService) AdminTokensRevokeExecute(r ApiAdminTokensRevok
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminUserSessionsListRequest struct {
@@ -1163,12 +1301,14 @@ type ApiAdminUserSessionsListRequest struct {
 	userId string
 }
 
-func (r ApiAdminUserSessionsListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminUserSessionsListRequest) Execute() (*AdminUserSessionsListResponse, *http.Response, error) {
 	return r.ApiService.AdminUserSessionsListExecute(r)
 }
 
 /*
-AdminUserSessionsList Get sessions for a specific user
+AdminUserSessionsList List a user's active sessions
+
+All active sessions of one user (UUID or email), returned as a single page.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1185,16 +1325,18 @@ func (a *AdminSessionsAPIService) AdminUserSessionsList(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminUserSessionsListExecute(r ApiAdminUserSessionsListRequest) (*http.Response, error) {
+//  @return AdminUserSessionsListResponse
+func (a *AdminSessionsAPIService) AdminUserSessionsListExecute(r ApiAdminUserSessionsListRequest) (*AdminUserSessionsListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminUserSessionsListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminUserSessionsList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions"
@@ -1215,7 +1357,7 @@ func (a *AdminSessionsAPIService) AdminUserSessionsListExecute(r ApiAdminUserSes
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1238,19 +1380,19 @@ func (a *AdminSessionsAPIService) AdminUserSessionsListExecute(r ApiAdminUserSes
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1258,10 +1400,19 @@ func (a *AdminSessionsAPIService) AdminUserSessionsListExecute(r ApiAdminUserSes
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminUserSessionsRevokeAllRequest struct {
@@ -1271,12 +1422,12 @@ type ApiAdminUserSessionsRevokeAllRequest struct {
 	userId string
 }
 
-func (r ApiAdminUserSessionsRevokeAllRequest) Execute() (*http.Response, error) {
+func (r ApiAdminUserSessionsRevokeAllRequest) Execute() (*AdminUserSessionsRevokeAllResponse, *http.Response, error) {
 	return r.ApiService.AdminUserSessionsRevokeAllExecute(r)
 }
 
 /*
-AdminUserSessionsRevokeAll Revoke all sessions for a user
+AdminUserSessionsRevokeAll Revoke all sessions of a user
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1293,16 +1444,18 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokeAll(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminUserSessionsRevokeAllExecute(r ApiAdminUserSessionsRevokeAllRequest) (*http.Response, error) {
+//  @return AdminUserSessionsRevokeAllResponse
+func (a *AdminSessionsAPIService) AdminUserSessionsRevokeAllExecute(r ApiAdminUserSessionsRevokeAllRequest) (*AdminUserSessionsRevokeAllResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminUserSessionsRevokeAllResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminUserSessionsRevokeAll")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions"
@@ -1323,7 +1476,7 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokeAllExecute(r ApiAdminUs
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1346,19 +1499,19 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokeAllExecute(r ApiAdminUs
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1366,10 +1519,19 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokeAllExecute(r ApiAdminUs
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminUserSessionsRevokePostRequest struct {
@@ -1379,12 +1541,12 @@ type ApiAdminUserSessionsRevokePostRequest struct {
 	userId string
 }
 
-func (r ApiAdminUserSessionsRevokePostRequest) Execute() (*http.Response, error) {
+func (r ApiAdminUserSessionsRevokePostRequest) Execute() (*AdminUserSessionsRevokePostResponse, *http.Response, error) {
 	return r.ApiService.AdminUserSessionsRevokePostExecute(r)
 }
 
 /*
-AdminUserSessionsRevokePost Revoke all sessions for a user via POST
+AdminUserSessionsRevokePost Revoke all sessions of a user (POST alias)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1401,16 +1563,18 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokePost(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminUserSessionsRevokePostExecute(r ApiAdminUserSessionsRevokePostRequest) (*http.Response, error) {
+//  @return AdminUserSessionsRevokePostResponse
+func (a *AdminSessionsAPIService) AdminUserSessionsRevokePostExecute(r ApiAdminUserSessionsRevokePostRequest) (*AdminUserSessionsRevokePostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminUserSessionsRevokePostResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminUserSessionsRevokePost")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke"
@@ -1431,7 +1595,7 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokePostExecute(r ApiAdminU
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1454,19 +1618,19 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokePostExecute(r ApiAdminU
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1474,10 +1638,19 @@ func (a *AdminSessionsAPIService) AdminUserSessionsRevokePostExecute(r ApiAdminU
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminUserTokensRevokeAllRequest struct {
@@ -1487,12 +1660,12 @@ type ApiAdminUserTokensRevokeAllRequest struct {
 	userId string
 }
 
-func (r ApiAdminUserTokensRevokeAllRequest) Execute() (*http.Response, error) {
+func (r ApiAdminUserTokensRevokeAllRequest) Execute() (*AdminUserTokensRevokeAllResponse, *http.Response, error) {
 	return r.ApiService.AdminUserTokensRevokeAllExecute(r)
 }
 
 /*
-AdminUserTokensRevokeAll Revoke all tokens for a user
+AdminUserTokensRevokeAll Revoke all tokens of a user
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1509,16 +1682,18 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokeAll(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminUserTokensRevokeAllExecute(r ApiAdminUserTokensRevokeAllRequest) (*http.Response, error) {
+//  @return AdminUserTokensRevokeAllResponse
+func (a *AdminSessionsAPIService) AdminUserTokensRevokeAllExecute(r ApiAdminUserTokensRevokeAllRequest) (*AdminUserTokensRevokeAllResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminUserTokensRevokeAllResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminUserTokensRevokeAll")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/tokens"
@@ -1539,7 +1714,7 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokeAllExecute(r ApiAdminUser
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1562,19 +1737,19 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokeAllExecute(r ApiAdminUser
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1582,10 +1757,19 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokeAllExecute(r ApiAdminUser
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminUserTokensRevokePostRequest struct {
@@ -1595,12 +1779,12 @@ type ApiAdminUserTokensRevokePostRequest struct {
 	userId string
 }
 
-func (r ApiAdminUserTokensRevokePostRequest) Execute() (*http.Response, error) {
+func (r ApiAdminUserTokensRevokePostRequest) Execute() (*AdminUserTokensRevokePostResponse, *http.Response, error) {
 	return r.ApiService.AdminUserTokensRevokePostExecute(r)
 }
 
 /*
-AdminUserTokensRevokePost Revoke all tokens for a user via POST
+AdminUserTokensRevokePost Revoke all tokens of a user (POST alias)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1617,16 +1801,18 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokePost(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *AdminSessionsAPIService) AdminUserTokensRevokePostExecute(r ApiAdminUserTokensRevokePostRequest) (*http.Response, error) {
+//  @return AdminUserTokensRevokePostResponse
+func (a *AdminSessionsAPIService) AdminUserTokensRevokePostExecute(r ApiAdminUserTokensRevokePostRequest) (*AdminUserTokensRevokePostResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminUserTokensRevokePostResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSessionsAPIService.AdminUserTokensRevokePost")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke"
@@ -1647,7 +1833,7 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokePostExecute(r ApiAdminUse
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1670,19 +1856,19 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokePostExecute(r ApiAdminUse
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1690,8 +1876,17 @@ func (a *AdminSessionsAPIService) AdminUserTokensRevokePostExecute(r ApiAdminUse
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

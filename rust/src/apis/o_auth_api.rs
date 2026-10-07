@@ -19,7 +19,8 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AuthorizeError {
-    DefaultResponse(),
+    Status400(String),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +28,10 @@ pub enum AuthorizeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum BackchannelAuthorizeError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status403(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +39,9 @@ pub enum BackchannelAuthorizeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeviceAuthorizationError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +49,7 @@ pub enum DeviceAuthorizationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetClientConfigurationError {
-    DefaultResponse(),
+    Status401(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +57,7 @@ pub enum GetClientConfigurationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetDeviceVerificationError {
-    DefaultResponse(),
+    Status429(String),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +65,7 @@ pub enum GetDeviceVerificationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOrgSelectionError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +73,9 @@ pub enum GetOrgSelectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum IntrospectError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +83,9 @@ pub enum IntrospectError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ParError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +93,6 @@ pub enum ParError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PasskeyLoginError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +100,10 @@ pub enum PasskeyLoginError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RegisterClientError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status403(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +111,9 @@ pub enum RegisterClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RevokeError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +121,6 @@ pub enum RevokeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SocialCallbackError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,7 +128,6 @@ pub enum SocialCallbackError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SocialCallbackPostError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -123,7 +135,6 @@ pub enum SocialCallbackPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SocialLoginError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -131,7 +142,8 @@ pub enum SocialLoginError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitAuthorizationError {
-    DefaultResponse(),
+    Status400(String),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -139,7 +151,7 @@ pub enum SubmitAuthorizationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitDeviceVerificationError {
-    DefaultResponse(),
+    Status429(String),
     UnknownValue(serde_json::Value),
 }
 
@@ -147,7 +159,7 @@ pub enum SubmitDeviceVerificationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitLoginError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -155,7 +167,11 @@ pub enum SubmitLoginError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitLoginJsonError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -163,7 +179,7 @@ pub enum SubmitLoginJsonError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SubmitOrgSelectionError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -171,12 +187,15 @@ pub enum SubmitOrgSelectionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TokenError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn authorize(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AuthorizeError>> {
+/// Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
+pub async fn authorize(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<AuthorizeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -191,9 +210,20 @@ pub async fn authorize(configuration: &configuration::Configuration, org_id: &st
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AuthorizeError> = serde_json::from_str(&content).ok();
@@ -201,7 +231,8 @@ pub async fn authorize(configuration: &configuration::Configuration, org_id: &st
     }
 }
 
-pub async fn backchannel_authorize(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<BackchannelAuthorizeError>> {
+/// OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
+pub async fn backchannel_authorize(configuration: &configuration::Configuration, org_id: &str) -> Result<models::BackchannelAuthorizeResponse, Error<BackchannelAuthorizeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -219,9 +250,20 @@ pub async fn backchannel_authorize(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BackchannelAuthorizeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BackchannelAuthorizeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<BackchannelAuthorizeError> = serde_json::from_str(&content).ok();
@@ -229,8 +271,8 @@ pub async fn backchannel_authorize(configuration: &configuration::Configuration,
     }
 }
 
-/// The device makes a request to the authorization server's device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
-pub async fn device_authorization(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<DeviceAuthorizationError>> {
+/// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+pub async fn device_authorization(configuration: &configuration::Configuration, org_id: &str) -> Result<models::DeviceAuthorizationResponse, Error<DeviceAuthorizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -248,9 +290,20 @@ pub async fn device_authorization(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeviceAuthorizationResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeviceAuthorizationResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<DeviceAuthorizationError> = serde_json::from_str(&content).ok();
@@ -258,7 +311,8 @@ pub async fn device_authorization(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn get_client_configuration(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<GetClientConfigurationError>> {
+/// Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
+pub async fn get_client_configuration(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::RegisteredClientMetadata, Error<GetClientConfigurationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -285,9 +339,20 @@ pub async fn get_client_configuration(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RegisteredClientMetadata`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RegisteredClientMetadata`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetClientConfigurationError> = serde_json::from_str(&content).ok();
@@ -295,8 +360,8 @@ pub async fn get_client_configuration(configuration: &configuration::Configurati
     }
 }
 
-/// This endpoint displays the user verification page where users enter their user_code to authorize the device.
-pub async fn get_device_verification(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetDeviceVerificationError>> {
+/// Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+pub async fn get_device_verification(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<GetDeviceVerificationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -311,9 +376,20 @@ pub async fn get_device_verification(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetDeviceVerificationError> = serde_json::from_str(&content).ok();
@@ -321,7 +397,8 @@ pub async fn get_device_verification(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn get_org_selection(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetOrgSelectionError>> {
+/// Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+pub async fn get_org_selection(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<GetOrgSelectionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -336,9 +413,20 @@ pub async fn get_org_selection(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetOrgSelectionError> = serde_json::from_str(&content).ok();
@@ -346,8 +434,8 @@ pub async fn get_org_selection(configuration: &configuration::Configuration, org
     }
 }
 
-/// Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
-pub async fn introspect(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<IntrospectError>> {
+/// Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+pub async fn introspect(configuration: &configuration::Configuration, org_id: &str) -> Result<models::IntrospectResponse, Error<IntrospectError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -365,9 +453,20 @@ pub async fn introspect(configuration: &configuration::Configuration, org_id: &s
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::IntrospectResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::IntrospectResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<IntrospectError> = serde_json::from_str(&content).ok();
@@ -375,7 +474,8 @@ pub async fn introspect(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<ParError>> {
+/// Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> Result<models::ParResponse, Error<ParError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -393,9 +493,20 @@ pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ParResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ParResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ParError> = serde_json::from_str(&content).ok();
@@ -403,6 +514,7 @@ pub async fn par(configuration: &configuration::Configuration, org_id: &str) -> 
     }
 }
 
+/// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 pub async fn passkey_login(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PasskeyLoginError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -428,7 +540,8 @@ pub async fn passkey_login(configuration: &configuration::Configuration, org_id:
     }
 }
 
-pub async fn register_client(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<RegisterClientError>> {
+/// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+pub async fn register_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::RegisterClientResponse, Error<RegisterClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -454,9 +567,20 @@ pub async fn register_client(configuration: &configuration::Configuration, org_i
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RegisterClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RegisterClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RegisterClientError> = serde_json::from_str(&content).ok();
@@ -464,8 +588,8 @@ pub async fn register_client(configuration: &configuration::Configuration, org_i
     }
 }
 
-/// Allows clients to notify the authorization server that a previously obtained token is no longer needed.
-pub async fn revoke(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<RevokeError>> {
+/// Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
+pub async fn revoke(configuration: &configuration::Configuration, org_id: &str) -> Result<serde_json::Value, Error<RevokeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -483,9 +607,20 @@ pub async fn revoke(configuration: &configuration::Configuration, org_id: &str) 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `serde_json::Value`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `serde_json::Value`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RevokeError> = serde_json::from_str(&content).ok();
@@ -493,6 +628,7 @@ pub async fn revoke(configuration: &configuration::Configuration, org_id: &str) 
     }
 }
 
+/// Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 pub async fn social_callback(configuration: &configuration::Configuration, org_id: &str, provider: &str) -> Result<(), Error<SocialCallbackError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -519,6 +655,7 @@ pub async fn social_callback(configuration: &configuration::Configuration, org_i
     }
 }
 
+/// Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 pub async fn social_callback_post(configuration: &configuration::Configuration, org_id: &str, provider: &str) -> Result<(), Error<SocialCallbackPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -545,7 +682,7 @@ pub async fn social_callback_post(configuration: &configuration::Configuration, 
     }
 }
 
-/// Redirects to the external provider's authorization endpoint.
+/// Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 pub async fn social_login(configuration: &configuration::Configuration, org_id: &str, provider: &str) -> Result<(), Error<SocialLoginError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -572,7 +709,8 @@ pub async fn social_login(configuration: &configuration::Configuration, org_id: 
     }
 }
 
-pub async fn submit_authorization(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<SubmitAuthorizationError>> {
+/// Same as GET; also receives the consent form submission. Not a JSON API.
+pub async fn submit_authorization(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<SubmitAuthorizationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -587,9 +725,20 @@ pub async fn submit_authorization(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitAuthorizationError> = serde_json::from_str(&content).ok();
@@ -597,8 +746,8 @@ pub async fn submit_authorization(configuration: &configuration::Configuration, 
     }
 }
 
-/// This endpoint displays the user verification page where users enter their user_code to authorize the device.
-pub async fn submit_device_verification(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<SubmitDeviceVerificationError>> {
+/// Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
+pub async fn submit_device_verification(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<SubmitDeviceVerificationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -613,9 +762,20 @@ pub async fn submit_device_verification(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitDeviceVerificationError> = serde_json::from_str(&content).ok();
@@ -623,6 +783,7 @@ pub async fn submit_device_verification(configuration: &configuration::Configura
     }
 }
 
+/// Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 pub async fn submit_login(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<SubmitLoginError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -648,8 +809,8 @@ pub async fn submit_login(configuration: &configuration::Configuration, org_id: 
     }
 }
 
-/// The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
-pub async fn submit_login_json(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<SubmitLoginJsonError>> {
+/// Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
+pub async fn submit_login_json(configuration: &configuration::Configuration, org_id: &str) -> Result<models::SubmitLoginJsonResponse, Error<SubmitLoginJsonError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -664,9 +825,20 @@ pub async fn submit_login_json(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SubmitLoginJsonResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SubmitLoginJsonResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitLoginJsonError> = serde_json::from_str(&content).ok();
@@ -674,7 +846,8 @@ pub async fn submit_login_json(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn submit_org_selection(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<SubmitOrgSelectionError>> {
+/// Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+pub async fn submit_org_selection(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<SubmitOrgSelectionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -689,9 +862,20 @@ pub async fn submit_org_selection(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SubmitOrgSelectionError> = serde_json::from_str(&content).ok();
@@ -699,7 +883,8 @@ pub async fn submit_org_selection(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn token(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<TokenError>> {
+/// Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+pub async fn token(configuration: &configuration::Configuration, org_id: &str) -> Result<models::TokenResponse, Error<TokenError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -717,9 +902,20 @@ pub async fn token(configuration: &configuration::Configuration, org_id: &str) -
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TokenResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TokenResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<TokenError> = serde_json::from_str(&content).ok();

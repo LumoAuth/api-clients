@@ -4,32 +4,34 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**Authorize**](OAuthAPI.md#Authorize) | **Get** /orgs/{orgId}/api/v1/oauth/authorize | 
-[**BackchannelAuthorize**](OAuthAPI.md#BackchannelAuthorize) | **Post** /orgs/{orgId}/api/v1/oauth/bc-authorize | 
-[**DeviceAuthorization**](OAuthAPI.md#DeviceAuthorization) | **Post** /orgs/{orgId}/api/v1/oauth/device_authorization | Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
-[**GetClientConfiguration**](OAuthAPI.md#GetClientConfiguration) | **Get** /orgs/{orgId}/api/v1/connect/register/{clientId} | Client Configuration Endpoint per OIDC spec Section 4
-[**GetDeviceVerification**](OAuthAPI.md#GetDeviceVerification) | **Get** /orgs/{orgId}/api/v1/oauth/device | Device Verification Page (RFC 8628 Section 3.3)
-[**GetOrgSelection**](OAuthAPI.md#GetOrgSelection) | **Get** /orgs/{orgId}/api/v1/oauth/org-select | 
-[**Introspect**](OAuthAPI.md#Introspect) | **Post** /orgs/{orgId}/api/v1/oauth/introspect | RFC 7662 - Token Introspection Endpoint
-[**Par**](OAuthAPI.md#Par) | **Post** /orgs/{orgId}/api/v1/oauth/par | 
-[**PasskeyLogin**](OAuthAPI.md#PasskeyLogin) | **Get** /orgs/{orgId}/api/v1/oauth/passkey-login | 
-[**RegisterClient**](OAuthAPI.md#RegisterClient) | **Post** /orgs/{orgId}/api/v1/connect/register | Client Registration Endpoint per OIDC spec Section 3
-[**Revoke**](OAuthAPI.md#Revoke) | **Post** /orgs/{orgId}/api/v1/oauth/revoke | RFC 7009 - Token Revocation Endpoint
-[**SocialCallback**](OAuthAPI.md#SocialCallback) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Handle social login callback from provider.
-[**SocialCallbackPost**](OAuthAPI.md#SocialCallbackPost) | **Post** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Handle social login callback from provider.
-[**SocialLogin**](OAuthAPI.md#SocialLogin) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider} | Initiate social login flow.
-[**SubmitAuthorization**](OAuthAPI.md#SubmitAuthorization) | **Post** /orgs/{orgId}/api/v1/oauth/authorize | 
-[**SubmitDeviceVerification**](OAuthAPI.md#SubmitDeviceVerification) | **Post** /orgs/{orgId}/api/v1/oauth/device | Device Verification Page (RFC 8628 Section 3.3)
-[**SubmitLogin**](OAuthAPI.md#SubmitLogin) | **Post** /orgs/{orgId}/api/v1/oauth/login/submit | 
-[**SubmitLoginJson**](OAuthAPI.md#SubmitLoginJson) | **Post** /orgs/{orgId}/api/v1/oauth/login/json | JSON credential login, for applications that render their own sign-in form.
-[**SubmitOrgSelection**](OAuthAPI.md#SubmitOrgSelection) | **Post** /orgs/{orgId}/api/v1/oauth/org-select | 
-[**Token**](OAuthAPI.md#Token) | **Post** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 Token Endpoint
+[**Authorize**](OAuthAPI.md#Authorize) | **Get** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
+[**BackchannelAuthorize**](OAuthAPI.md#BackchannelAuthorize) | **Post** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+[**DeviceAuthorization**](OAuthAPI.md#DeviceAuthorization) | **Post** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
+[**GetClientConfiguration**](OAuthAPI.md#GetClientConfiguration) | **Get** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+[**GetDeviceVerification**](OAuthAPI.md#GetDeviceVerification) | **Get** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
+[**GetOrgSelection**](OAuthAPI.md#GetOrgSelection) | **Get** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
+[**Introspect**](OAuthAPI.md#Introspect) | **Post** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
+[**Par**](OAuthAPI.md#Par) | **Post** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
+[**PasskeyLogin**](OAuthAPI.md#PasskeyLogin) | **Get** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
+[**RegisterClient**](OAuthAPI.md#RegisterClient) | **Post** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+[**Revoke**](OAuthAPI.md#Revoke) | **Post** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
+[**SocialCallback**](OAuthAPI.md#SocialCallback) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
+[**SocialCallbackPost**](OAuthAPI.md#SocialCallbackPost) | **Post** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
+[**SocialLogin**](OAuthAPI.md#SocialLogin) | **Get** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
+[**SubmitAuthorization**](OAuthAPI.md#SubmitAuthorization) | **Post** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
+[**SubmitDeviceVerification**](OAuthAPI.md#SubmitDeviceVerification) | **Post** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
+[**SubmitLogin**](OAuthAPI.md#SubmitLogin) | **Post** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
+[**SubmitLoginJson**](OAuthAPI.md#SubmitLoginJson) | **Post** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
+[**SubmitOrgSelection**](OAuthAPI.md#SubmitOrgSelection) | **Post** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
+[**Token**](OAuthAPI.md#Token) | **Post** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
 
 
 
 ## Authorize
 
-> Authorize(ctx, orgId).Execute()
+> string Authorize(ctx, orgId).Execute()
+
+OAuth 2.1 / OIDC authorization endpoint
 
 
 
@@ -50,11 +52,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.Authorize(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Authorize(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Authorize``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Authorize`: string
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.Authorize`: %v\n", resp)
 }
 ```
 
@@ -77,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -86,7 +90,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -95,7 +99,9 @@ No authorization required
 
 ## BackchannelAuthorize
 
-> BackchannelAuthorize(ctx, orgId).Execute()
+> BackchannelAuthorizeResponse BackchannelAuthorize(ctx, orgId).Execute()
+
+CIBA backchannel authentication request
 
 
 
@@ -116,11 +122,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.BackchannelAuthorize(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.BackchannelAuthorize(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.BackchannelAuthorize``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `BackchannelAuthorize`: BackchannelAuthorizeResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.BackchannelAuthorize`: %v\n", resp)
 }
 ```
 
@@ -143,7 +151,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**BackchannelAuthorizeResponse**](BackchannelAuthorizeResponse.md)
 
 ### Authorization
 
@@ -152,7 +160,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -161,9 +169,9 @@ Name | Type | Description  | Notes
 
 ## DeviceAuthorization
 
-> DeviceAuthorization(ctx, orgId).Execute()
+> DeviceAuthorizationResponse DeviceAuthorization(ctx, orgId).Execute()
 
-Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+Device authorization request (RFC 8628)
 
 
 
@@ -184,11 +192,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.DeviceAuthorization(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.DeviceAuthorization(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.DeviceAuthorization``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `DeviceAuthorization`: DeviceAuthorizationResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.DeviceAuthorization`: %v\n", resp)
 }
 ```
 
@@ -211,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**DeviceAuthorizationResponse**](DeviceAuthorizationResponse.md)
 
 ### Authorization
 
@@ -220,7 +230,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -229,9 +239,11 @@ Name | Type | Description  | Notes
 
 ## GetClientConfiguration
 
-> GetClientConfiguration(ctx, orgId, clientId).Execute()
+> RegisteredClientMetadata GetClientConfiguration(ctx, orgId, clientId).Execute()
 
-Client Configuration Endpoint per OIDC spec Section 4
+Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+
+
 
 ### Example
 
@@ -251,11 +263,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.GetClientConfiguration(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.OAuthAPI.GetClientConfiguration(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.GetClientConfiguration``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetClientConfiguration`: RegisteredClientMetadata
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.GetClientConfiguration`: %v\n", resp)
 }
 ```
 
@@ -280,7 +294,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**RegisteredClientMetadata**](RegisteredClientMetadata.md)
 
 ### Authorization
 
@@ -289,7 +303,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -298,9 +312,9 @@ Name | Type | Description  | Notes
 
 ## GetDeviceVerification
 
-> GetDeviceVerification(ctx, orgId).Execute()
+> string GetDeviceVerification(ctx, orgId).Execute()
 
-Device Verification Page (RFC 8628 Section 3.3)
+Device verification page (RFC 8628 §3.3)
 
 
 
@@ -321,11 +335,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.GetDeviceVerification(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.GetDeviceVerification(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.GetDeviceVerification``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetDeviceVerification`: string
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.GetDeviceVerification`: %v\n", resp)
 }
 ```
 
@@ -348,7 +364,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -357,7 +373,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -366,7 +382,9 @@ No authorization required
 
 ## GetOrgSelection
 
-> GetOrgSelection(ctx, orgId).Execute()
+> string GetOrgSelection(ctx, orgId).Execute()
+
+Organization selector page
 
 
 
@@ -387,11 +405,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.GetOrgSelection(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.GetOrgSelection(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.GetOrgSelection``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetOrgSelection`: string
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.GetOrgSelection`: %v\n", resp)
 }
 ```
 
@@ -414,7 +434,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -423,7 +443,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -432,9 +452,9 @@ No authorization required
 
 ## Introspect
 
-> Introspect(ctx, orgId).Execute()
+> IntrospectResponse Introspect(ctx, orgId).Execute()
 
-RFC 7662 - Token Introspection Endpoint
+Token introspection (RFC 7662)
 
 
 
@@ -455,11 +475,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.Introspect(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Introspect(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Introspect``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Introspect`: IntrospectResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.Introspect`: %v\n", resp)
 }
 ```
 
@@ -482,7 +504,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**IntrospectResponse**](IntrospectResponse.md)
 
 ### Authorization
 
@@ -491,7 +513,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -500,7 +522,9 @@ Name | Type | Description  | Notes
 
 ## Par
 
-> Par(ctx, orgId).Execute()
+> ParResponse Par(ctx, orgId).Execute()
+
+Pushed authorization request (RFC 9126)
 
 
 
@@ -521,11 +545,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.Par(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Par(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Par``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Par`: ParResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.Par`: %v\n", resp)
 }
 ```
 
@@ -548,7 +574,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**ParResponse**](ParResponse.md)
 
 ### Authorization
 
@@ -557,7 +583,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -567,6 +593,8 @@ Name | Type | Description  | Notes
 ## PasskeyLogin
 
 > PasskeyLogin(ctx, orgId).Execute()
+
+Passkey login entry point
 
 
 
@@ -632,9 +660,11 @@ No authorization required
 
 ## RegisterClient
 
-> RegisterClient(ctx, orgId).Execute()
+> RegisterClientResponse RegisterClient(ctx, orgId).Execute()
 
-Client Registration Endpoint per OIDC spec Section 3
+Dynamic client registration (RFC 7591 / OIDC DCR)
+
+
 
 ### Example
 
@@ -653,11 +683,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.RegisterClient(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.RegisterClient(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.RegisterClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `RegisterClient`: RegisterClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.RegisterClient`: %v\n", resp)
 }
 ```
 
@@ -680,7 +712,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**RegisterClientResponse**](RegisterClientResponse.md)
 
 ### Authorization
 
@@ -689,7 +721,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -698,9 +730,9 @@ Name | Type | Description  | Notes
 
 ## Revoke
 
-> Revoke(ctx, orgId).Execute()
+> map[string]interface{} Revoke(ctx, orgId).Execute()
 
-RFC 7009 - Token Revocation Endpoint
+Token revocation (RFC 7009)
 
 
 
@@ -721,11 +753,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.Revoke(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Revoke(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Revoke``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Revoke`: map[string]interface{}
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.Revoke`: %v\n", resp)
 }
 ```
 
@@ -748,7 +782,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**map[string]interface{}**
 
 ### Authorization
 
@@ -757,7 +791,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -768,7 +802,9 @@ Name | Type | Description  | Notes
 
 > SocialCallback(ctx, orgId, provider).Execute()
 
-Handle social login callback from provider.
+Social / enterprise identity-provider callback
+
+
 
 ### Example
 
@@ -837,7 +873,9 @@ No authorization required
 
 > SocialCallbackPost(ctx, orgId, provider).Execute()
 
-Handle social login callback from provider.
+Social / enterprise identity-provider callback (form_post)
+
+
 
 ### Example
 
@@ -906,7 +944,7 @@ No authorization required
 
 > SocialLogin(ctx, orgId, provider).Execute()
 
-Initiate social login flow.
+Start social / enterprise identity-provider login
 
 
 
@@ -975,7 +1013,9 @@ No authorization required
 
 ## SubmitAuthorization
 
-> SubmitAuthorization(ctx, orgId).Execute()
+> string SubmitAuthorization(ctx, orgId).Execute()
+
+OAuth 2.1 / OIDC authorization endpoint (form submission)
 
 
 
@@ -996,11 +1036,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.SubmitAuthorization(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.SubmitAuthorization(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.SubmitAuthorization``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SubmitAuthorization`: string
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.SubmitAuthorization`: %v\n", resp)
 }
 ```
 
@@ -1023,7 +1065,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -1032,7 +1074,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1041,9 +1083,9 @@ No authorization required
 
 ## SubmitDeviceVerification
 
-> SubmitDeviceVerification(ctx, orgId).Execute()
+> string SubmitDeviceVerification(ctx, orgId).Execute()
 
-Device Verification Page (RFC 8628 Section 3.3)
+Submit device verification
 
 
 
@@ -1064,11 +1106,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.SubmitDeviceVerification(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.SubmitDeviceVerification(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.SubmitDeviceVerification``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SubmitDeviceVerification`: string
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.SubmitDeviceVerification`: %v\n", resp)
 }
 ```
 
@@ -1091,7 +1135,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -1100,7 +1144,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1110,6 +1154,8 @@ No authorization required
 ## SubmitLogin
 
 > SubmitLogin(ctx, orgId).Execute()
+
+Hosted login form submission
 
 
 
@@ -1175,9 +1221,9 @@ No authorization required
 
 ## SubmitLoginJson
 
-> SubmitLoginJson(ctx, orgId).Execute()
+> SubmitLoginJsonResponse SubmitLoginJson(ctx, orgId).Execute()
 
-JSON credential login, for applications that render their own sign-in form.
+Programmatic (JSON) login for the authorization flow
 
 
 
@@ -1198,11 +1244,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.SubmitLoginJson(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.SubmitLoginJson(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.SubmitLoginJson``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SubmitLoginJson`: SubmitLoginJsonResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.SubmitLoginJson`: %v\n", resp)
 }
 ```
 
@@ -1225,7 +1273,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**SubmitLoginJsonResponse**](SubmitLoginJsonResponse.md)
 
 ### Authorization
 
@@ -1234,7 +1282,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1243,7 +1291,9 @@ No authorization required
 
 ## SubmitOrgSelection
 
-> SubmitOrgSelection(ctx, orgId).Execute()
+> string SubmitOrgSelection(ctx, orgId).Execute()
+
+Submit organization selection
 
 
 
@@ -1264,11 +1314,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.SubmitOrgSelection(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.SubmitOrgSelection(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.SubmitOrgSelection``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SubmitOrgSelection`: string
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.SubmitOrgSelection`: %v\n", resp)
 }
 ```
 
@@ -1291,7 +1343,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -1300,7 +1352,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1309,9 +1361,11 @@ No authorization required
 
 ## Token
 
-> Token(ctx, orgId).Execute()
+> TokenResponse Token(ctx, orgId).Execute()
 
-OAuth 2.1 Token Endpoint
+OAuth 2.1 token endpoint
+
+
 
 ### Example
 
@@ -1330,11 +1384,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OAuthAPI.Token(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OAuthAPI.Token(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OAuthAPI.Token``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Token`: TokenResponse
+	fmt.Fprintf(os.Stdout, "Response from `OAuthAPI.Token`: %v\n", resp)
 }
 ```
 
@@ -1357,7 +1413,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**TokenResponse**](TokenResponse.md)
 
 ### Authorization
 
@@ -1366,7 +1422,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -14,6 +14,13 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminPermissionsCreateResponse;
+import io.lumoauth.client.model.AdminPermissionsGetResponse;
+import io.lumoauth.client.model.AdminPermissionsListResponse;
+import io.lumoauth.client.model.AdminPermissionsUsageResponse;
+import io.lumoauth.client.model.AdminScopesCreateResponse;
+import io.lumoauth.client.model.AdminScopesListResponse;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +45,7 @@ public class AdminPermissionsApiTest {
     @Test
     public void adminPermissionsCreateTest() throws ApiException {
         String orgId = null;
-        api.adminPermissionsCreate(orgId);
+        AdminPermissionsCreateResponse response = api.adminPermissionsCreate(orgId);
         // TODO: test validations
     }
 
@@ -51,7 +58,7 @@ public class AdminPermissionsApiTest {
     public void adminPermissionsDeleteTest() throws ApiException {
         String orgId = null;
         String permissionId = null;
-        api.adminPermissionsDelete(orgId, permissionId);
+        MessageResponse response = api.adminPermissionsDelete(orgId, permissionId);
         // TODO: test validations
     }
 
@@ -64,7 +71,7 @@ public class AdminPermissionsApiTest {
     public void adminPermissionsGetTest() throws ApiException {
         String orgId = null;
         String permissionId = null;
-        api.adminPermissionsGet(orgId, permissionId);
+        AdminPermissionsGetResponse response = api.adminPermissionsGet(orgId, permissionId);
         // TODO: test validations
     }
 
@@ -76,7 +83,7 @@ public class AdminPermissionsApiTest {
     @Test
     public void adminPermissionsListTest() throws ApiException {
         String orgId = null;
-        api.adminPermissionsList(orgId);
+        AdminPermissionsListResponse response = api.adminPermissionsList(orgId);
         // TODO: test validations
     }
 
@@ -89,7 +96,7 @@ public class AdminPermissionsApiTest {
     public void adminPermissionsUpdateTest() throws ApiException {
         String orgId = null;
         String permissionId = null;
-        api.adminPermissionsUpdate(orgId, permissionId);
+        AdminPermissionsCreateResponse response = api.adminPermissionsUpdate(orgId, permissionId);
         // TODO: test validations
     }
 
@@ -102,7 +109,7 @@ public class AdminPermissionsApiTest {
     public void adminPermissionsUsageTest() throws ApiException {
         String orgId = null;
         String permissionId = null;
-        api.adminPermissionsUsage(orgId, permissionId);
+        AdminPermissionsUsageResponse response = api.adminPermissionsUsage(orgId, permissionId);
         // TODO: test validations
     }
 
@@ -114,7 +121,7 @@ public class AdminPermissionsApiTest {
     @Test
     public void adminScopesCreateTest() throws ApiException {
         String orgId = null;
-        api.adminScopesCreate(orgId);
+        AdminScopesCreateResponse response = api.adminScopesCreate(orgId);
         // TODO: test validations
     }
 
@@ -127,7 +134,7 @@ public class AdminPermissionsApiTest {
     public void adminScopesDeleteTest() throws ApiException {
         String orgId = null;
         String scopeId = null;
-        api.adminScopesDelete(orgId, scopeId);
+        MessageResponse response = api.adminScopesDelete(orgId, scopeId);
         // TODO: test validations
     }
 
@@ -139,7 +146,7 @@ public class AdminPermissionsApiTest {
     @Test
     public void adminScopesListTest() throws ApiException {
         String orgId = null;
-        api.adminScopesList(orgId);
+        AdminScopesListResponse response = api.adminScopesList(orgId);
         // TODO: test validations
     }
 

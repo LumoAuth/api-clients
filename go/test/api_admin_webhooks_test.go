@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDelete(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDelete(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveriesList(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveriesList(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -71,9 +74,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var webhookId string
 		var deliveryId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryReplay(context.Background(), orgId, webhookId, deliveryId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryReplay(context.Background(), orgId, webhookId, deliveryId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -86,9 +90,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var webhookId string
 		var deliveryId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryShow(context.Background(), orgId, webhookId, deliveryId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryShow(context.Background(), orgId, webhookId, deliveryId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -99,9 +104,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksEvents(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksEvents(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -113,9 +119,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksGet(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksGet(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -126,9 +133,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -140,9 +148,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksRotateSecret(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksRotateSecret(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -154,9 +163,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTest(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTest(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -167,9 +177,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStart(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStart(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -181,9 +192,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStop(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStop(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -195,9 +207,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStream(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStream(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -209,9 +222,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksDisable(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksDisable(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -223,9 +237,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksEnable(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksEnable(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -237,9 +252,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.PatchAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.PatchAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -251,9 +267,10 @@ func Test_lumoauthclient_AdminWebhooksAPIService(t *testing.T) {
 		var orgId string
 		var webhookId string
 
-		httpRes, err := apiClient.AdminWebhooksAPI.PutAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
+		resp, httpRes, err := apiClient.AdminWebhooksAPI.PutAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

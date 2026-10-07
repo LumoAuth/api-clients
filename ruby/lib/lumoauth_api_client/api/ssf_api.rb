@@ -19,19 +19,19 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+    # Create an SSF stream
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [SsfStream]
     def create_stream_config(org_id, opts = {})
-      create_stream_config_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = create_stream_config_with_http_info(org_id, opts)
+      data
     end
 
-    # Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
+    # Create an SSF stream
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(SsfStream, Integer, Hash)>] SsfStream data, response status code and response headers
     def create_stream_config_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SsfApi.create_stream_config ...'
@@ -48,6 +48,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +58,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'SsfStream'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -78,20 +80,28 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Delete an SSF stream
+    # @param stream_id [String] 
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [nil]
-    def delete_stream_config(org_id, opts = {})
-      delete_stream_config_with_http_info(org_id, opts)
+    def delete_stream_config(stream_id, org_id, opts = {})
+      delete_stream_config_with_http_info(stream_id, org_id, opts)
       nil
     end
 
+    # Delete an SSF stream
+    # @param stream_id [String] 
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def delete_stream_config_with_http_info(org_id, opts = {})
+    def delete_stream_config_with_http_info(stream_id, org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SsfApi.delete_stream_config ...'
+      end
+      # verify the required parameter 'stream_id' is set
+      if @api_client.config.client_side_validation && stream_id.nil?
+        fail ArgumentError, "Missing the required parameter 'stream_id' when calling SsfApi.delete_stream_config"
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
@@ -102,6 +112,7 @@ module LumoAuthApiClient
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'stream_id'] = stream_id
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -135,19 +146,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+    # Read SSF stream configuration(s)
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @option opts [String] :stream_id 
+    # @return [GetStreamConfig200Response]
     def get_stream_config(org_id, opts = {})
-      get_stream_config_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_stream_config_with_http_info(org_id, opts)
+      data
     end
 
-    # Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
+    # Read SSF stream configuration(s)
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @option opts [String] :stream_id 
+    # @return [Array<(GetStreamConfig200Response, Integer, Hash)>] GetStreamConfig200Response data, response status code and response headers
     def get_stream_config_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: SsfApi.get_stream_config ...'
@@ -161,9 +174,12 @@ module LumoAuthApiClient
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'stream_id'] = opts[:'stream_id'] if !opts[:'stream_id'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -172,7 +188,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetStreamConfig200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -194,7 +210,7 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+    # Request a stream verification event
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [nil]
@@ -203,7 +219,7 @@ module LumoAuthApiClient
       nil
     end
 
-    # SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+    # Request a stream verification event
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers

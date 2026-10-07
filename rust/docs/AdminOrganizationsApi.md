@@ -4,33 +4,33 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_org_invitations_create**](AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | 
-[**admin_org_invitations_list**](AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | 
-[**admin_org_invitations_resend**](AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | 
-[**admin_org_invitations_revoke**](AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | 
-[**admin_org_members_add**](AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | 
-[**admin_org_members_list**](AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | 
-[**admin_org_members_remove**](AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-[**admin_org_roles_create**](AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | 
-[**admin_org_roles_delete**](AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-[**admin_org_roles_list**](AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | 
-[**admin_organizations_create**](AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | 
-[**admin_organizations_delete**](AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-[**admin_organizations_get**](AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-[**admin_organizations_list**](AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | 
-[**patch_admin_org_members_update**](AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-[**patch_admin_org_roles_update**](AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-[**patch_admin_organizations_update**](AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-[**put_admin_org_members_update**](AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-[**put_admin_org_roles_update**](AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-[**put_admin_organizations_update**](AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
+[**admin_org_invitations_create**](AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
+[**admin_org_invitations_list**](AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
+[**admin_org_invitations_resend**](AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
+[**admin_org_invitations_revoke**](AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation
+[**admin_org_members_add**](AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization
+[**admin_org_members_list**](AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members
+[**admin_org_members_remove**](AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization
+[**admin_org_roles_create**](AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role
+[**admin_org_roles_delete**](AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role
+[**admin_org_roles_list**](AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles
+[**admin_organizations_create**](AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization
+[**admin_organizations_delete**](AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization
+[**admin_organizations_get**](AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization
+[**admin_organizations_list**](AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations
+[**patch_admin_org_members_update**](AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member's role or status
+[**patch_admin_org_roles_update**](AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
+[**patch_admin_organizations_update**](AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
+[**put_admin_org_members_update**](AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member's role or status
+[**put_admin_org_roles_update**](AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
+[**put_admin_organizations_update**](AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
 
 
 
 ## admin_org_invitations_create
 
-> admin_org_invitations_create(org_id, organization_id)
-
+> models::AdminOrgInvitationsCreateResponse admin_org_invitations_create(org_id, organization_id)
+Invite a user to an organization
 
 ### Parameters
 
@@ -42,7 +42,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgInvitationsCreateResponse**](AdminOrgInvitationsCreateResponse.md)
 
 ### Authorization
 
@@ -51,15 +51,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_invitations_list
 
-> admin_org_invitations_list(org_id, organization_id)
-
+> models::AdminOrgInvitationsListResponse admin_org_invitations_list(org_id, organization_id)
+List organization invitations
 
 ### Parameters
 
@@ -71,7 +71,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgInvitationsListResponse**](AdminOrgInvitationsListResponse.md)
 
 ### Authorization
 
@@ -80,15 +80,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_invitations_resend
 
-> admin_org_invitations_resend(org_id, organization_id, inv_id)
-
+> models::MessageResponse admin_org_invitations_resend(org_id, organization_id, inv_id)
+Resend an invitation
 
 ### Parameters
 
@@ -101,7 +101,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -110,15 +110,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_invitations_revoke
 
-> admin_org_invitations_revoke(org_id, organization_id, inv_id)
-
+> models::MessageResponse admin_org_invitations_revoke(org_id, organization_id, inv_id)
+Revoke an invitation
 
 ### Parameters
 
@@ -131,7 +131,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -140,15 +140,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_members_add
 
-> admin_org_members_add(org_id, organization_id)
-
+> models::AdminOrgMembersAddResponse admin_org_members_add(org_id, organization_id)
+Add a member to an organization
 
 ### Parameters
 
@@ -160,7 +160,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgMembersAddResponse**](AdminOrgMembersAddResponse.md)
 
 ### Authorization
 
@@ -169,15 +169,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_members_list
 
-> admin_org_members_list(org_id, organization_id)
-
+> models::AdminOrgMembersListResponse admin_org_members_list(org_id, organization_id)
+List organization members
 
 ### Parameters
 
@@ -189,7 +189,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgMembersListResponse**](AdminOrgMembersListResponse.md)
 
 ### Authorization
 
@@ -198,15 +198,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_members_remove
 
-> admin_org_members_remove(org_id, organization_id, user_id)
-
+> models::MessageResponse admin_org_members_remove(org_id, organization_id, user_id)
+Remove a member from an organization
 
 ### Parameters
 
@@ -219,7 +219,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -228,15 +228,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_roles_create
 
-> admin_org_roles_create(org_id, organization_id)
-
+> models::AdminOrgRolesCreateResponse admin_org_roles_create(org_id, organization_id)
+Create an organization role
 
 ### Parameters
 
@@ -248,7 +248,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -257,15 +257,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_roles_delete
 
-> admin_org_roles_delete(org_id, organization_id, role_id)
-
+> models::MessageResponse admin_org_roles_delete(org_id, organization_id, role_id)
+Delete an organization role
 
 ### Parameters
 
@@ -278,7 +278,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -287,15 +287,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_org_roles_list
 
-> admin_org_roles_list(org_id, organization_id)
-
+> models::AdminOrgRolesListResponse admin_org_roles_list(org_id, organization_id)
+List organization roles
 
 ### Parameters
 
@@ -307,7 +307,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgRolesListResponse**](AdminOrgRolesListResponse.md)
 
 ### Authorization
 
@@ -316,15 +316,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_organizations_create
 
-> admin_organizations_create(org_id)
-
+> models::AdminOrganizationsCreateResponse admin_organizations_create(org_id)
+Create an organization
 
 ### Parameters
 
@@ -335,7 +335,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrganizationsCreateResponse**](AdminOrganizationsCreateResponse.md)
 
 ### Authorization
 
@@ -344,15 +344,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_organizations_delete
 
-> admin_organizations_delete(org_id, organization_id)
-
+> models::MessageResponse admin_organizations_delete(org_id, organization_id)
+Delete an organization
 
 ### Parameters
 
@@ -364,7 +364,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -373,15 +373,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_organizations_get
 
-> admin_organizations_get(org_id, organization_id)
-
+> models::AdminOrganizationsGetResponse admin_organizations_get(org_id, organization_id)
+Get an organization
 
 ### Parameters
 
@@ -393,7 +393,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -402,15 +402,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_organizations_list
 
-> admin_organizations_list(org_id)
-
+> models::AdminOrganizationsListResponse admin_organizations_list(org_id)
+List organizations
 
 ### Parameters
 
@@ -421,7 +421,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrganizationsListResponse**](AdminOrganizationsListResponse.md)
 
 ### Authorization
 
@@ -430,15 +430,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_org_members_update
 
-> patch_admin_org_members_update(org_id, organization_id, user_id)
-
+> models::PutAdminOrgMembersUpdateResponse patch_admin_org_members_update(org_id, organization_id, user_id)
+Update a member's role or status
 
 ### Parameters
 
@@ -451,7 +451,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -460,15 +460,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_org_roles_update
 
-> patch_admin_org_roles_update(org_id, organization_id, role_id)
-
+> models::AdminOrgRolesCreateResponse patch_admin_org_roles_update(org_id, organization_id, role_id)
+Update an organization role
 
 ### Parameters
 
@@ -481,7 +481,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -490,15 +490,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_organizations_update
 
-> patch_admin_organizations_update(org_id, organization_id)
-
+> models::AdminOrganizationsGetResponse patch_admin_organizations_update(org_id, organization_id)
+Update an organization
 
 ### Parameters
 
@@ -510,7 +510,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -519,15 +519,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_org_members_update
 
-> put_admin_org_members_update(org_id, organization_id, user_id)
-
+> models::PutAdminOrgMembersUpdateResponse put_admin_org_members_update(org_id, organization_id, user_id)
+Update a member's role or status
 
 ### Parameters
 
@@ -540,7 +540,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -549,15 +549,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_org_roles_update
 
-> put_admin_org_roles_update(org_id, organization_id, role_id)
-
+> models::AdminOrgRolesCreateResponse put_admin_org_roles_update(org_id, organization_id, role_id)
+Update an organization role
 
 ### Parameters
 
@@ -570,7 +570,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -579,15 +579,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_organizations_update
 
-> put_admin_organizations_update(org_id, organization_id)
-
+> models::AdminOrganizationsGetResponse put_admin_organizations_update(org_id, organization_id)
+Update an organization
 
 ### Parameters
 
@@ -599,7 +599,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -608,7 +608,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

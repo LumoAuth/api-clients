@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**GetConnectionToken**](TokenVaultApi.md#getconnectiontoken) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection. |
-| [**ListConnections**](TokenVaultApi.md#listconnections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the connections this agent may use, with grant status. No secrets. |
+| [**GetConnectionToken**](TokenVaultApi.md#getconnectiontoken) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection |
+| [**ListConnections**](TokenVaultApi.md#listconnections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the outbound connections this agent may use |
 
 <a id="getconnectiontoken"></a>
 # **GetConnectionToken**
-> void GetConnectionToken (string orgId, string connectionId)
+> GetConnectionTokenResponse GetConnectionToken (string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = null)
 
-Fetch a live third-party access token for a connection.
+Fetch a live third-party access token for a connection
 
-POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
 ### Example
 ```csharp
@@ -45,11 +45,13 @@ namespace Example
             var apiInstance = new TokenVaultApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var connectionId = "connectionId_example";  // string | 
+            var getConnectionTokenRequest = new GetConnectionTokenRequest?(); // GetConnectionTokenRequest? |  (optional) 
 
             try
             {
-                // Fetch a live third-party access token for a connection.
-                apiInstance.GetConnectionToken(orgId, connectionId);
+                // Fetch a live third-party access token for a connection
+                GetConnectionTokenResponse result = apiInstance.GetConnectionToken(orgId, connectionId, getConnectionTokenRequest);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -68,8 +70,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Fetch a live third-party access token for a connection.
-    apiInstance.GetConnectionTokenWithHttpInfo(orgId, connectionId);
+    // Fetch a live third-party access token for a connection
+    ApiResponse<GetConnectionTokenResponse> response = apiInstance.GetConnectionTokenWithHttpInfo(orgId, connectionId, getConnectionTokenRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -85,10 +90,11 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **connectionId** | **string** |  |  |
+| **getConnectionTokenRequest** | [**GetConnectionTokenRequest?**](GetConnectionTokenRequest?.md) |  | [optional]  |
 
 ### Return type
 
-void (empty response body)
+[**GetConnectionTokenResponse**](GetConnectionTokenResponse.md)
 
 ### Authorization
 
@@ -96,24 +102,30 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | The provider access token. |  -  |
+| **400** | invalid_user_id. |  -  |
+| **403** | agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. |  -  |
+| **404** | tenant_not_found, connection_not_found or grant_not_found. |  -  |
+| **409** | grant_revoked, grant_expired or refresh_failed. |  -  |
+| **429** | rate_limited. |  -  |
+| **503** | refresh_in_progress (Retry-After: 2) or provider_unavailable. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listconnections"></a>
 # **ListConnections**
-> void ListConnections (string orgId)
+> ListConnectionsResponse ListConnections (string orgId)
 
-List the connections this agent may use, with grant status. No secrets.
+List the outbound connections this agent may use
 
-GET /orgs/{orgId}/api/v1/agents/me/connections
+Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
 ### Example
 ```csharp
@@ -147,8 +159,9 @@ namespace Example
 
             try
             {
-                // List the connections this agent may use, with grant status. No secrets.
-                apiInstance.ListConnections(orgId);
+                // List the outbound connections this agent may use
+                ListConnectionsResponse result = apiInstance.ListConnections(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -167,8 +180,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List the connections this agent may use, with grant status. No secrets.
-    apiInstance.ListConnectionsWithHttpInfo(orgId);
+    // List the outbound connections this agent may use
+    ApiResponse<ListConnectionsResponse> response = apiInstance.ListConnectionsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -186,7 +202,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**ListConnectionsResponse**](ListConnectionsResponse.md)
 
 ### Authorization
 
@@ -195,13 +211,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Connections available to the agent. connections and data hold the same list (data + pagination is the standard list envelope). |  -  |
+| **403** | agent_token_required (caller is not an agent) or cross_tenant. |  -  |
+| **404** | tenant_not_found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

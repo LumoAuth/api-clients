@@ -24,7 +24,9 @@ import (
 type AdminWebhooksAPI interface {
 
 	/*
-	AdminWebhooksCreate Create a new webhook
+	AdminWebhooksCreate Create a webhook
+
+	The signing secret is generated server-side and returned once in this response only.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,7 +35,8 @@ type AdminWebhooksAPI interface {
 	AdminWebhooksCreate(ctx context.Context, orgId string) ApiAdminWebhooksCreateRequest
 
 	// AdminWebhooksCreateExecute executes the request
-	AdminWebhooksCreateExecute(r ApiAdminWebhooksCreateRequest) (*http.Response, error)
+	//  @return AdminWebhooksCreateResponse
+	AdminWebhooksCreateExecute(r ApiAdminWebhooksCreateRequest) (*AdminWebhooksCreateResponse, *http.Response, error)
 
 	/*
 	AdminWebhooksDelete Delete a webhook
@@ -46,14 +49,13 @@ type AdminWebhooksAPI interface {
 	AdminWebhooksDelete(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksDeleteRequest
 
 	// AdminWebhooksDeleteExecute executes the request
-	AdminWebhooksDeleteExecute(r ApiAdminWebhooksDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminWebhooksDeleteExecute(r ApiAdminWebhooksDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksDeliveriesList List recent delivery attempts for a webhook.
+	AdminWebhooksDeliveriesList List recent deliveries
 
-	Optional query params:
-- status: filter by `pending|success|failed|dead_lettered`
-- limit: 1–200, default 50
+	Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -63,14 +65,13 @@ type AdminWebhooksAPI interface {
 	AdminWebhooksDeliveriesList(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksDeliveriesListRequest
 
 	// AdminWebhooksDeliveriesListExecute executes the request
-	AdminWebhooksDeliveriesListExecute(r ApiAdminWebhooksDeliveriesListRequest) (*http.Response, error)
+	//  @return AdminWebhooksDeliveriesListResponse
+	AdminWebhooksDeliveriesListExecute(r ApiAdminWebhooksDeliveriesListRequest) (*AdminWebhooksDeliveriesListResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksDeliveryReplay Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+	AdminWebhooksDeliveryReplay Replay a delivery
 
-	Resets the delivery's failure state but preserves the attempt history,
-then dispatches a fresh DispatchWebhookMessage that the handler will
-pick up. Idempotent on already-pending rows.
+	Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -81,10 +82,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksDeliveryReplay(ctx context.Context, orgId string, webhookId string, deliveryId string) ApiAdminWebhooksDeliveryReplayRequest
 
 	// AdminWebhooksDeliveryReplayExecute executes the request
-	AdminWebhooksDeliveryReplayExecute(r ApiAdminWebhooksDeliveryReplayRequest) (*http.Response, error)
+	//  @return AdminWebhooksDeliveryReplayResponse
+	AdminWebhooksDeliveryReplayExecute(r ApiAdminWebhooksDeliveryReplayRequest) (*AdminWebhooksDeliveryReplayResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksDeliveryShow Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+	AdminWebhooksDeliveryShow Get a delivery
+
+	A single delivery including the event payload and the per-attempt history.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -95,10 +99,11 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksDeliveryShow(ctx context.Context, orgId string, webhookId string, deliveryId string) ApiAdminWebhooksDeliveryShowRequest
 
 	// AdminWebhooksDeliveryShowExecute executes the request
-	AdminWebhooksDeliveryShowExecute(r ApiAdminWebhooksDeliveryShowRequest) (*http.Response, error)
+	//  @return AdminWebhooksDeliveryShowResponse
+	AdminWebhooksDeliveryShowExecute(r ApiAdminWebhooksDeliveryShowRequest) (*AdminWebhooksDeliveryShowResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksEvents Get available webhook event types
+	AdminWebhooksEvents List available webhook event types
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -107,10 +112,11 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksEvents(ctx context.Context, orgId string) ApiAdminWebhooksEventsRequest
 
 	// AdminWebhooksEventsExecute executes the request
-	AdminWebhooksEventsExecute(r ApiAdminWebhooksEventsRequest) (*http.Response, error)
+	//  @return AdminWebhooksEventsResponse
+	AdminWebhooksEventsExecute(r ApiAdminWebhooksEventsRequest) (*AdminWebhooksEventsResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksGet Get a single webhook by ID
+	AdminWebhooksGet Get a webhook
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -120,10 +126,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksGet(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksGetRequest
 
 	// AdminWebhooksGetExecute executes the request
-	AdminWebhooksGetExecute(r ApiAdminWebhooksGetRequest) (*http.Response, error)
+	//  @return AdminWebhooksGetResponse
+	AdminWebhooksGetExecute(r ApiAdminWebhooksGetRequest) (*AdminWebhooksGetResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksList List all webhooks in the tenant
+	AdminWebhooksList List webhooks
+
+	Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -132,10 +141,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksList(ctx context.Context, orgId string) ApiAdminWebhooksListRequest
 
 	// AdminWebhooksListExecute executes the request
-	AdminWebhooksListExecute(r ApiAdminWebhooksListRequest) (*http.Response, error)
+	//  @return AdminWebhooksListResponse
+	AdminWebhooksListExecute(r ApiAdminWebhooksListRequest) (*AdminWebhooksListResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksRotateSecret Rotate webhook secret
+	AdminWebhooksRotateSecret Rotate the signing secret
+
+	Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -145,10 +157,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksRotateSecret(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksRotateSecretRequest
 
 	// AdminWebhooksRotateSecretExecute executes the request
-	AdminWebhooksRotateSecretExecute(r ApiAdminWebhooksRotateSecretRequest) (*http.Response, error)
+	//  @return AdminWebhooksRotateSecretResponse
+	AdminWebhooksRotateSecretExecute(r ApiAdminWebhooksRotateSecretRequest) (*AdminWebhooksRotateSecretResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksTest Test a webhook by sending a test payload
+	AdminWebhooksTest Send a test delivery
+
+	POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -158,10 +173,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksTest(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksTestRequest
 
 	// AdminWebhooksTestExecute executes the request
-	AdminWebhooksTestExecute(r ApiAdminWebhooksTestRequest) (*http.Response, error)
+	//  @return AdminWebhooksTestResponse
+	AdminWebhooksTestExecute(r ApiAdminWebhooksTestRequest) (*AdminWebhooksTestResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksTunnelStart Method for AdminWebhooksTunnelStart
+	AdminWebhooksTunnelStart Start a webhook tunnel
+
+	Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -170,10 +188,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksTunnelStart(ctx context.Context, orgId string) ApiAdminWebhooksTunnelStartRequest
 
 	// AdminWebhooksTunnelStartExecute executes the request
-	AdminWebhooksTunnelStartExecute(r ApiAdminWebhooksTunnelStartRequest) (*http.Response, error)
+	//  @return AdminWebhooksTunnelStartResponse
+	AdminWebhooksTunnelStartExecute(r ApiAdminWebhooksTunnelStartRequest) (*AdminWebhooksTunnelStartResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksTunnelStop Method for AdminWebhooksTunnelStop
+	AdminWebhooksTunnelStop Stop a webhook tunnel
+
+	Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -183,10 +204,13 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksTunnelStop(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksTunnelStopRequest
 
 	// AdminWebhooksTunnelStopExecute executes the request
-	AdminWebhooksTunnelStopExecute(r ApiAdminWebhooksTunnelStopRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminWebhooksTunnelStopExecute(r ApiAdminWebhooksTunnelStopRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksTunnelStream Method for AdminWebhooksTunnelStream
+	AdminWebhooksTunnelStream Stream tunnel deliveries (SSE)
+
+	Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -196,10 +220,11 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksTunnelStream(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksTunnelStreamRequest
 
 	// AdminWebhooksTunnelStreamExecute executes the request
-	AdminWebhooksTunnelStreamExecute(r ApiAdminWebhooksTunnelStreamRequest) (*http.Response, error)
+	//  @return string
+	AdminWebhooksTunnelStreamExecute(r ApiAdminWebhooksTunnelStreamRequest) (string, *http.Response, error)
 
 	/*
-	AdminWebhooksWebhooksDisable Disable webhook
+	AdminWebhooksWebhooksDisable Disable a webhook
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -209,10 +234,11 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksWebhooksDisable(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksWebhooksDisableRequest
 
 	// AdminWebhooksWebhooksDisableExecute executes the request
-	AdminWebhooksWebhooksDisableExecute(r ApiAdminWebhooksWebhooksDisableRequest) (*http.Response, error)
+	//  @return AdminWebhooksWebhooksDisableResponse
+	AdminWebhooksWebhooksDisableExecute(r ApiAdminWebhooksWebhooksDisableRequest) (*AdminWebhooksWebhooksDisableResponse, *http.Response, error)
 
 	/*
-	AdminWebhooksWebhooksEnable Enable webhook
+	AdminWebhooksWebhooksEnable Enable a webhook
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -222,10 +248,11 @@ pick up. Idempotent on already-pending rows.
 	AdminWebhooksWebhooksEnable(ctx context.Context, orgId string, webhookId string) ApiAdminWebhooksWebhooksEnableRequest
 
 	// AdminWebhooksWebhooksEnableExecute executes the request
-	AdminWebhooksWebhooksEnableExecute(r ApiAdminWebhooksWebhooksEnableRequest) (*http.Response, error)
+	//  @return AdminWebhooksWebhooksEnableResponse
+	AdminWebhooksWebhooksEnableExecute(r ApiAdminWebhooksWebhooksEnableRequest) (*AdminWebhooksWebhooksEnableResponse, *http.Response, error)
 
 	/*
-	PatchAdminWebhooksUpdate Update an existing webhook
+	PatchAdminWebhooksUpdate Partially update a webhook
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -235,10 +262,11 @@ pick up. Idempotent on already-pending rows.
 	PatchAdminWebhooksUpdate(ctx context.Context, orgId string, webhookId string) ApiPatchAdminWebhooksUpdateRequest
 
 	// PatchAdminWebhooksUpdateExecute executes the request
-	PatchAdminWebhooksUpdateExecute(r ApiPatchAdminWebhooksUpdateRequest) (*http.Response, error)
+	//  @return PutAdminWebhooksUpdateResponse
+	PatchAdminWebhooksUpdateExecute(r ApiPatchAdminWebhooksUpdateRequest) (*PutAdminWebhooksUpdateResponse, *http.Response, error)
 
 	/*
-	PutAdminWebhooksUpdate Update an existing webhook
+	PutAdminWebhooksUpdate Update a webhook
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -248,7 +276,8 @@ pick up. Idempotent on already-pending rows.
 	PutAdminWebhooksUpdate(ctx context.Context, orgId string, webhookId string) ApiPutAdminWebhooksUpdateRequest
 
 	// PutAdminWebhooksUpdateExecute executes the request
-	PutAdminWebhooksUpdateExecute(r ApiPutAdminWebhooksUpdateRequest) (*http.Response, error)
+	//  @return PutAdminWebhooksUpdateResponse
+	PutAdminWebhooksUpdateExecute(r ApiPutAdminWebhooksUpdateRequest) (*PutAdminWebhooksUpdateResponse, *http.Response, error)
 }
 
 // AdminWebhooksAPIService AdminWebhooksAPI service
@@ -260,12 +289,14 @@ type ApiAdminWebhooksCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAdminWebhooksCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksCreateRequest) Execute() (*AdminWebhooksCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksCreateExecute(r)
 }
 
 /*
-AdminWebhooksCreate Create a new webhook
+AdminWebhooksCreate Create a webhook
+
+The signing secret is generated server-side and returned once in this response only.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -280,16 +311,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksCreate(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksCreateRequest) (*http.Response, error) {
+//  @return AdminWebhooksCreateResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksCreateRequest) (*AdminWebhooksCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks"
@@ -309,7 +342,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksC
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -332,19 +365,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksC
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -352,10 +385,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksCreateExecute(r ApiAdminWebhooksC
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksDeleteRequest struct {
@@ -365,7 +407,7 @@ type ApiAdminWebhooksDeleteRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksDeleteExecute(r)
 }
 
@@ -387,16 +429,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDelete(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksDeleteExecute(r ApiAdminWebhooksDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksDeleteExecute(r ApiAdminWebhooksDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
@@ -417,7 +461,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeleteExecute(r ApiAdminWebhooksD
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -440,19 +484,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeleteExecute(r ApiAdminWebhooksD
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -460,10 +504,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeleteExecute(r ApiAdminWebhooksD
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksDeliveriesListRequest struct {
@@ -473,16 +526,14 @@ type ApiAdminWebhooksDeliveriesListRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksDeliveriesListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksDeliveriesListRequest) Execute() (*AdminWebhooksDeliveriesListResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksDeliveriesListExecute(r)
 }
 
 /*
-AdminWebhooksDeliveriesList List recent delivery attempts for a webhook.
+AdminWebhooksDeliveriesList List recent deliveries
 
-Optional query params:
-- status: filter by `pending|success|failed|dead_lettered`
-- limit: 1–200, default 50
+Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -499,16 +550,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveriesList(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksDeliveriesListExecute(r ApiAdminWebhooksDeliveriesListRequest) (*http.Response, error) {
+//  @return AdminWebhooksDeliveriesListResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksDeliveriesListExecute(r ApiAdminWebhooksDeliveriesListRequest) (*AdminWebhooksDeliveriesListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksDeliveriesListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksDeliveriesList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries"
@@ -529,7 +582,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveriesListExecute(r ApiAdminW
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -552,19 +605,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveriesListExecute(r ApiAdminW
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -572,10 +625,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveriesListExecute(r ApiAdminW
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksDeliveryReplayRequest struct {
@@ -586,16 +648,14 @@ type ApiAdminWebhooksDeliveryReplayRequest struct {
 	deliveryId string
 }
 
-func (r ApiAdminWebhooksDeliveryReplayRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksDeliveryReplayRequest) Execute() (*AdminWebhooksDeliveryReplayResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksDeliveryReplayExecute(r)
 }
 
 /*
-AdminWebhooksDeliveryReplay Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+AdminWebhooksDeliveryReplay Replay a delivery
 
-Resets the delivery's failure state but preserves the attempt history,
-then dispatches a fresh DispatchWebhookMessage that the handler will
-pick up. Idempotent on already-pending rows.
+Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -614,16 +674,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryReplay(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryReplayExecute(r ApiAdminWebhooksDeliveryReplayRequest) (*http.Response, error) {
+//  @return AdminWebhooksDeliveryReplayResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryReplayExecute(r ApiAdminWebhooksDeliveryReplayRequest) (*AdminWebhooksDeliveryReplayResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksDeliveryReplayResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksDeliveryReplay")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay"
@@ -645,7 +707,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryReplayExecute(r ApiAdminW
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -668,19 +730,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryReplayExecute(r ApiAdminW
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -688,10 +750,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryReplayExecute(r ApiAdminW
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksDeliveryShowRequest struct {
@@ -702,12 +773,14 @@ type ApiAdminWebhooksDeliveryShowRequest struct {
 	deliveryId string
 }
 
-func (r ApiAdminWebhooksDeliveryShowRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksDeliveryShowRequest) Execute() (*AdminWebhooksDeliveryShowResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksDeliveryShowExecute(r)
 }
 
 /*
-AdminWebhooksDeliveryShow Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+AdminWebhooksDeliveryShow Get a delivery
+
+A single delivery including the event payload and the per-attempt history.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -726,16 +799,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryShow(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryShowExecute(r ApiAdminWebhooksDeliveryShowRequest) (*http.Response, error) {
+//  @return AdminWebhooksDeliveryShowResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryShowExecute(r ApiAdminWebhooksDeliveryShowRequest) (*AdminWebhooksDeliveryShowResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksDeliveryShowResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksDeliveryShow")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}"
@@ -757,7 +832,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryShowExecute(r ApiAdminWeb
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -780,19 +855,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryShowExecute(r ApiAdminWeb
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -800,10 +875,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksDeliveryShowExecute(r ApiAdminWeb
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksEventsRequest struct {
@@ -812,12 +896,12 @@ type ApiAdminWebhooksEventsRequest struct {
 	orgId string
 }
 
-func (r ApiAdminWebhooksEventsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksEventsRequest) Execute() (*AdminWebhooksEventsResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksEventsExecute(r)
 }
 
 /*
-AdminWebhooksEvents Get available webhook event types
+AdminWebhooksEvents List available webhook event types
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -832,16 +916,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksEvents(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksEventsExecute(r ApiAdminWebhooksEventsRequest) (*http.Response, error) {
+//  @return AdminWebhooksEventsResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksEventsExecute(r ApiAdminWebhooksEventsRequest) (*AdminWebhooksEventsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksEventsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksEvents")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/events"
@@ -861,7 +947,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksEventsExecute(r ApiAdminWebhooksE
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -884,19 +970,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksEventsExecute(r ApiAdminWebhooksE
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -904,10 +990,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksEventsExecute(r ApiAdminWebhooksE
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksGetRequest struct {
@@ -917,12 +1012,12 @@ type ApiAdminWebhooksGetRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksGetRequest) Execute() (*AdminWebhooksGetResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksGetExecute(r)
 }
 
 /*
-AdminWebhooksGet Get a single webhook by ID
+AdminWebhooksGet Get a webhook
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -939,16 +1034,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksGet(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksGetExecute(r ApiAdminWebhooksGetRequest) (*http.Response, error) {
+//  @return AdminWebhooksGetResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksGetExecute(r ApiAdminWebhooksGetRequest) (*AdminWebhooksGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
@@ -969,7 +1066,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksGetExecute(r ApiAdminWebhooksGetR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -992,19 +1089,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksGetExecute(r ApiAdminWebhooksGetR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1012,10 +1109,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksGetExecute(r ApiAdminWebhooksGetR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksListRequest struct {
@@ -1024,12 +1130,14 @@ type ApiAdminWebhooksListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminWebhooksListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksListRequest) Execute() (*AdminWebhooksListResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksListExecute(r)
 }
 
 /*
-AdminWebhooksList List all webhooks in the tenant
+AdminWebhooksList List webhooks
+
+Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1044,16 +1152,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksList(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksListExecute(r ApiAdminWebhooksListRequest) (*http.Response, error) {
+//  @return AdminWebhooksListResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksListExecute(r ApiAdminWebhooksListRequest) (*AdminWebhooksListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks"
@@ -1073,7 +1183,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksListExecute(r ApiAdminWebhooksLis
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1096,19 +1206,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksListExecute(r ApiAdminWebhooksLis
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1116,10 +1226,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksListExecute(r ApiAdminWebhooksLis
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksRotateSecretRequest struct {
@@ -1129,12 +1248,14 @@ type ApiAdminWebhooksRotateSecretRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksRotateSecretRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksRotateSecretRequest) Execute() (*AdminWebhooksRotateSecretResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksRotateSecretExecute(r)
 }
 
 /*
-AdminWebhooksRotateSecret Rotate webhook secret
+AdminWebhooksRotateSecret Rotate the signing secret
+
+Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1151,16 +1272,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksRotateSecret(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksRotateSecretExecute(r ApiAdminWebhooksRotateSecretRequest) (*http.Response, error) {
+//  @return AdminWebhooksRotateSecretResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksRotateSecretExecute(r ApiAdminWebhooksRotateSecretRequest) (*AdminWebhooksRotateSecretResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksRotateSecretResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksRotateSecret")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret"
@@ -1181,7 +1304,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksRotateSecretExecute(r ApiAdminWeb
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1204,19 +1327,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksRotateSecretExecute(r ApiAdminWeb
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1224,10 +1347,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksRotateSecretExecute(r ApiAdminWeb
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksTestRequest struct {
@@ -1237,12 +1369,14 @@ type ApiAdminWebhooksTestRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksTestRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksTestRequest) Execute() (*AdminWebhooksTestResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksTestExecute(r)
 }
 
 /*
-AdminWebhooksTest Test a webhook by sending a test payload
+AdminWebhooksTest Send a test delivery
+
+POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1259,16 +1393,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTest(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksTestExecute(r ApiAdminWebhooksTestRequest) (*http.Response, error) {
+//  @return AdminWebhooksTestResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksTestExecute(r ApiAdminWebhooksTestRequest) (*AdminWebhooksTestResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksTestResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksTest")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test"
@@ -1289,7 +1425,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTestExecute(r ApiAdminWebhooksTes
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1312,19 +1448,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTestExecute(r ApiAdminWebhooksTes
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1332,10 +1468,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTestExecute(r ApiAdminWebhooksTes
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksTunnelStartRequest struct {
@@ -1344,12 +1489,14 @@ type ApiAdminWebhooksTunnelStartRequest struct {
 	orgId string
 }
 
-func (r ApiAdminWebhooksTunnelStartRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksTunnelStartRequest) Execute() (*AdminWebhooksTunnelStartResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksTunnelStartExecute(r)
 }
 
 /*
-AdminWebhooksTunnelStart Method for AdminWebhooksTunnelStart
+AdminWebhooksTunnelStart Start a webhook tunnel
+
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1364,16 +1511,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStart(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStartExecute(r ApiAdminWebhooksTunnelStartRequest) (*http.Response, error) {
+//  @return AdminWebhooksTunnelStartResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStartExecute(r ApiAdminWebhooksTunnelStartRequest) (*AdminWebhooksTunnelStartResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksTunnelStartResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksTunnelStart")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/tunnel/start"
@@ -1393,7 +1542,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStartExecute(r ApiAdminWebh
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1416,19 +1565,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStartExecute(r ApiAdminWebh
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1436,10 +1585,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStartExecute(r ApiAdminWebh
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksTunnelStopRequest struct {
@@ -1449,12 +1607,14 @@ type ApiAdminWebhooksTunnelStopRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksTunnelStopRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksTunnelStopRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksTunnelStopExecute(r)
 }
 
 /*
-AdminWebhooksTunnelStop Method for AdminWebhooksTunnelStop
+AdminWebhooksTunnelStop Stop a webhook tunnel
+
+Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1471,16 +1631,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStop(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStopExecute(r ApiAdminWebhooksTunnelStopRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStopExecute(r ApiAdminWebhooksTunnelStopRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksTunnelStop")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop"
@@ -1501,7 +1663,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStopExecute(r ApiAdminWebho
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1524,19 +1686,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStopExecute(r ApiAdminWebho
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1544,10 +1706,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStopExecute(r ApiAdminWebho
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksTunnelStreamRequest struct {
@@ -1557,12 +1728,14 @@ type ApiAdminWebhooksTunnelStreamRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksTunnelStreamRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksTunnelStreamRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.AdminWebhooksTunnelStreamExecute(r)
 }
 
 /*
-AdminWebhooksTunnelStream Method for AdminWebhooksTunnelStream
+AdminWebhooksTunnelStream Stream tunnel deliveries (SSE)
+
+Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1579,16 +1752,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStream(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStreamExecute(r ApiAdminWebhooksTunnelStreamRequest) (*http.Response, error) {
+//  @return string
+func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStreamExecute(r ApiAdminWebhooksTunnelStreamRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksTunnelStream")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream"
@@ -1609,7 +1784,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStreamExecute(r ApiAdminWeb
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/event-stream"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1632,19 +1807,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStreamExecute(r ApiAdminWeb
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1652,10 +1827,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksTunnelStreamExecute(r ApiAdminWeb
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksWebhooksDisableRequest struct {
@@ -1665,12 +1849,12 @@ type ApiAdminWebhooksWebhooksDisableRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksWebhooksDisableRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksWebhooksDisableRequest) Execute() (*AdminWebhooksWebhooksDisableResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksWebhooksDisableExecute(r)
 }
 
 /*
-AdminWebhooksWebhooksDisable Disable webhook
+AdminWebhooksWebhooksDisable Disable a webhook
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1687,16 +1871,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksDisable(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksDisableExecute(r ApiAdminWebhooksWebhooksDisableRequest) (*http.Response, error) {
+//  @return AdminWebhooksWebhooksDisableResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksDisableExecute(r ApiAdminWebhooksWebhooksDisableRequest) (*AdminWebhooksWebhooksDisableResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksWebhooksDisableResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksWebhooksDisable")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable"
@@ -1717,7 +1903,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksDisableExecute(r ApiAdmin
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1740,19 +1926,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksDisableExecute(r ApiAdmin
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1760,10 +1946,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksDisableExecute(r ApiAdmin
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminWebhooksWebhooksEnableRequest struct {
@@ -1773,12 +1968,12 @@ type ApiAdminWebhooksWebhooksEnableRequest struct {
 	webhookId string
 }
 
-func (r ApiAdminWebhooksWebhooksEnableRequest) Execute() (*http.Response, error) {
+func (r ApiAdminWebhooksWebhooksEnableRequest) Execute() (*AdminWebhooksWebhooksEnableResponse, *http.Response, error) {
 	return r.ApiService.AdminWebhooksWebhooksEnableExecute(r)
 }
 
 /*
-AdminWebhooksWebhooksEnable Enable webhook
+AdminWebhooksWebhooksEnable Enable a webhook
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1795,16 +1990,18 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksEnable(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksEnableExecute(r ApiAdminWebhooksWebhooksEnableRequest) (*http.Response, error) {
+//  @return AdminWebhooksWebhooksEnableResponse
+func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksEnableExecute(r ApiAdminWebhooksWebhooksEnableRequest) (*AdminWebhooksWebhooksEnableResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminWebhooksWebhooksEnableResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.AdminWebhooksWebhooksEnable")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable"
@@ -1825,7 +2022,7 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksEnableExecute(r ApiAdminW
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1848,19 +2045,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksEnableExecute(r ApiAdminW
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1868,10 +2065,19 @@ func (a *AdminWebhooksAPIService) AdminWebhooksWebhooksEnableExecute(r ApiAdminW
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminWebhooksUpdateRequest struct {
@@ -1881,12 +2087,12 @@ type ApiPatchAdminWebhooksUpdateRequest struct {
 	webhookId string
 }
 
-func (r ApiPatchAdminWebhooksUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminWebhooksUpdateRequest) Execute() (*PutAdminWebhooksUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminWebhooksUpdateExecute(r)
 }
 
 /*
-PatchAdminWebhooksUpdate Update an existing webhook
+PatchAdminWebhooksUpdate Partially update a webhook
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1903,16 +2109,18 @@ func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdate(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdminWebhooksUpdateRequest) (*http.Response, error) {
+//  @return PutAdminWebhooksUpdateResponse
+func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdminWebhooksUpdateRequest) (*PutAdminWebhooksUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminWebhooksUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.PatchAdminWebhooksUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
@@ -1933,7 +2141,7 @@ func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdmi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1956,19 +2164,19 @@ func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdmi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1976,10 +2184,19 @@ func (a *AdminWebhooksAPIService) PatchAdminWebhooksUpdateExecute(r ApiPatchAdmi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminWebhooksUpdateRequest struct {
@@ -1989,12 +2206,12 @@ type ApiPutAdminWebhooksUpdateRequest struct {
 	webhookId string
 }
 
-func (r ApiPutAdminWebhooksUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminWebhooksUpdateRequest) Execute() (*PutAdminWebhooksUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminWebhooksUpdateExecute(r)
 }
 
 /*
-PutAdminWebhooksUpdate Update an existing webhook
+PutAdminWebhooksUpdate Update a webhook
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2011,16 +2228,18 @@ func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdate(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWebhooksUpdateRequest) (*http.Response, error) {
+//  @return PutAdminWebhooksUpdateResponse
+func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWebhooksUpdateRequest) (*PutAdminWebhooksUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminWebhooksUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminWebhooksAPIService.PutAdminWebhooksUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}"
@@ -2041,7 +2260,7 @@ func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWeb
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2064,19 +2283,19 @@ func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWeb
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2084,8 +2303,17 @@ func (a *AdminWebhooksAPIService) PutAdminWebhooksUpdateExecute(r ApiPutAdminWeb
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

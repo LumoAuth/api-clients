@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,220 +29,244 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Authorize(string orgId);
-
-        /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AuthorizeWithHttpInfo(string orgId);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void BackchannelAuthorize(string orgId);
+        /// <returns>string</returns>
+        string Authorize(string orgId);
 
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> BackchannelAuthorizeWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> AuthorizeWithHttpInfo(string orgId);
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
+        /// CIBA backchannel authentication request
         /// </summary>
         /// <remarks>
-        /// The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void DeviceAuthorization(string orgId);
+        /// <returns>BackchannelAuthorizeResponse</returns>
+        BackchannelAuthorizeResponse BackchannelAuthorize(string orgId);
 
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
+        /// CIBA backchannel authentication request
         /// </summary>
         /// <remarks>
-        /// The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeviceAuthorizationWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of BackchannelAuthorizeResponse</returns>
+        ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId);
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="clientId"></param>
-        /// <returns></returns>
-        void GetClientConfiguration(string orgId, string clientId);
-
-        /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4
+        /// Device authorization request (RFC 8628)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>DeviceAuthorizationResponse</returns>
+        DeviceAuthorizationResponse DeviceAuthorization(string orgId);
+
+        /// <summary>
+        /// Device authorization request (RFC 8628)
+        /// </summary>
+        /// <remarks>
+        /// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of DeviceAuthorizationResponse</returns>
+        ApiResponse<DeviceAuthorizationResponse> DeviceAuthorizationWithHttpInfo(string orgId);
+        /// <summary>
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+        /// </summary>
+        /// <remarks>
+        /// Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetClientConfigurationWithHttpInfo(string orgId, string clientId);
-        /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
-        /// </summary>
-        /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetDeviceVerification(string orgId);
+        /// <returns>RegisteredClientMetadata</returns>
+        RegisteredClientMetadata GetClientConfiguration(string orgId, string clientId);
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetDeviceVerificationWithHttpInfo(string orgId);
+        /// <param name="clientId"></param>
+        /// <returns>ApiResponse of RegisteredClientMetadata</returns>
+        ApiResponse<RegisteredClientMetadata> GetClientConfigurationWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// 
+        /// Device verification page (RFC 8628 §3.3)
         /// </summary>
+        /// <remarks>
+        /// Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetOrgSelection(string orgId);
+        /// <returns>string</returns>
+        string GetDeviceVerification(string orgId);
 
         /// <summary>
-        /// 
+        /// Device verification page (RFC 8628 §3.3)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetOrgSelectionWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> GetDeviceVerificationWithHttpInfo(string orgId);
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint
+        /// Organization selector page
         /// </summary>
         /// <remarks>
-        /// Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Introspect(string orgId);
+        /// <returns>string</returns>
+        string GetOrgSelection(string orgId);
 
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint
+        /// Organization selector page
         /// </summary>
         /// <remarks>
-        /// Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> IntrospectWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> GetOrgSelectionWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Token introspection (RFC 7662)
         /// </summary>
+        /// <remarks>
+        /// Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Par(string orgId);
+        /// <returns>IntrospectResponse</returns>
+        IntrospectResponse Introspect(string orgId);
 
         /// <summary>
-        /// 
+        /// Token introspection (RFC 7662)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ParWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of IntrospectResponse</returns>
+        ApiResponse<IntrospectResponse> IntrospectWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Pushed authorization request (RFC 9126)
         /// </summary>
+        /// <remarks>
+        /// Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ParResponse</returns>
+        ParResponse Par(string orgId);
+
+        /// <summary>
+        /// Pushed authorization request (RFC 9126)
+        /// </summary>
+        /// <remarks>
+        /// Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of ParResponse</returns>
+        ApiResponse<ParResponse> ParWithHttpInfo(string orgId);
+        /// <summary>
+        /// Passkey login entry point
+        /// </summary>
+        /// <remarks>
+        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns></returns>
         void PasskeyLogin(string orgId);
 
         /// <summary>
-        /// 
+        /// Passkey login entry point
         /// </summary>
         /// <remarks>
-        /// 
+        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> PasskeyLoginWithHttpInfo(string orgId);
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3
+        /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
+        /// <remarks>
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void RegisterClient(string orgId);
+        /// <returns>RegisterClientResponse</returns>
+        RegisterClientResponse RegisterClient(string orgId);
 
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3
+        /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> RegisterClientWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of RegisterClientResponse</returns>
+        ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId);
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint
+        /// Token revocation (RFC 7009)
         /// </summary>
         /// <remarks>
-        /// Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Revoke(string orgId);
+        /// <returns>Object</returns>
+        Object Revoke(string orgId);
 
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint
+        /// Token revocation (RFC 7009)
         /// </summary>
         /// <remarks>
-        /// Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
+        /// <returns>ApiResponse of Object</returns>
         ApiResponse<Object> RevokeWithHttpInfo(string orgId);
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback
         /// </summary>
+        /// <remarks>
+        /// Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="provider"></param>
@@ -249,10 +274,10 @@ namespace LumoAuth.ApiClient.Api
         void SocialCallback(string orgId, string provider);
 
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback
         /// </summary>
         /// <remarks>
-        /// 
+        /// Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -260,8 +285,11 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> SocialCallbackWithHttpInfo(string orgId, string provider);
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback (form_post)
         /// </summary>
+        /// <remarks>
+        /// Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="provider"></param>
@@ -269,10 +297,10 @@ namespace LumoAuth.ApiClient.Api
         void SocialCallbackPost(string orgId, string provider);
 
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback (form_post)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -280,10 +308,10 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> SocialCallbackPostWithHttpInfo(string orgId, string provider);
         /// <summary>
-        /// Initiate social login flow.
+        /// Start social / enterprise identity-provider login
         /// </summary>
         /// <remarks>
-        /// Redirects to the external provider&#39;s authorization endpoint.
+        /// Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -292,10 +320,10 @@ namespace LumoAuth.ApiClient.Api
         void SocialLogin(string orgId, string provider);
 
         /// <summary>
-        /// Initiate social login flow.
+        /// Start social / enterprise identity-provider login
         /// </summary>
         /// <remarks>
-        /// Redirects to the external provider&#39;s authorization endpoint.
+        /// Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -303,119 +331,131 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> SocialLoginWithHttpInfo(string orgId, string provider);
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission)
         /// </summary>
+        /// <remarks>
+        /// Same as GET; also receives the consent form submission. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void SubmitAuthorization(string orgId);
+        /// <returns>string</returns>
+        string SubmitAuthorization(string orgId);
 
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same as GET; also receives the consent form submission. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SubmitAuthorizationWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> SubmitAuthorizationWithHttpInfo(string orgId);
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Submit device verification
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void SubmitDeviceVerification(string orgId);
+        /// <returns>string</returns>
+        string SubmitDeviceVerification(string orgId);
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Submit device verification
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SubmitDeviceVerificationWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> SubmitDeviceVerificationWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Hosted login form submission
         /// </summary>
+        /// <remarks>
+        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns></returns>
         void SubmitLogin(string orgId);
 
         /// <summary>
-        /// 
+        /// Hosted login form submission
         /// </summary>
         /// <remarks>
-        /// 
+        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> SubmitLoginWithHttpInfo(string orgId);
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form.
+        /// Programmatic (JSON) login for the authorization flow
         /// </summary>
         /// <remarks>
-        /// The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void SubmitLoginJson(string orgId);
+        /// <returns>SubmitLoginJsonResponse</returns>
+        SubmitLoginJsonResponse SubmitLoginJson(string orgId);
 
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form.
+        /// Programmatic (JSON) login for the authorization flow
         /// </summary>
         /// <remarks>
-        /// The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SubmitLoginJsonWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of SubmitLoginJsonResponse</returns>
+        ApiResponse<SubmitLoginJsonResponse> SubmitLoginJsonWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Submit organization selection
         /// </summary>
+        /// <remarks>
+        /// Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void SubmitOrgSelection(string orgId);
+        /// <returns>string</returns>
+        string SubmitOrgSelection(string orgId);
 
         /// <summary>
-        /// 
+        /// Submit organization selection
         /// </summary>
         /// <remarks>
-        /// 
+        /// Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SubmitOrgSelectionWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> SubmitOrgSelectionWithHttpInfo(string orgId);
         /// <summary>
-        /// OAuth 2.1 Token Endpoint
+        /// OAuth 2.1 token endpoint
         /// </summary>
+        /// <remarks>
+        /// Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Token(string orgId);
+        /// <returns>TokenResponse</returns>
+        TokenResponse Token(string orgId);
 
         /// <summary>
-        /// OAuth 2.1 Token Endpoint
+        /// OAuth 2.1 token endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> TokenWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of TokenResponse</returns>
+        ApiResponse<TokenResponse> TokenWithHttpInfo(string orgId);
         #endregion Synchronous Operations
     }
 
@@ -426,196 +466,196 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> AuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> AuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// CIBA backchannel authentication request
         /// </summary>
         /// <remarks>
-        /// 
+        /// OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task BackchannelAuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of BackchannelAuthorizeResponse</returns>
+        System.Threading.Tasks.Task<BackchannelAuthorizeResponse> BackchannelAuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// CIBA backchannel authentication request
         /// </summary>
         /// <remarks>
-        /// 
+        /// OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (BackchannelAuthorizeResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
+        /// Device authorization request (RFC 8628)
         /// </summary>
         /// <remarks>
-        /// The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeviceAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of DeviceAuthorizationResponse</returns>
+        System.Threading.Tasks.Task<DeviceAuthorizationResponse> DeviceAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
+        /// Device authorization request (RFC 8628)
         /// </summary>
         /// <remarks>
-        /// The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeviceAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (DeviceAuthorizationResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<DeviceAuthorizationResponse>> DeviceAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetClientConfigurationAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of RegisteredClientMetadata</returns>
+        System.Threading.Tasks.Task<RegisteredClientMetadata> GetClientConfigurationAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetClientConfigurationWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (RegisteredClientMetadata)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RegisteredClientMetadata>> GetClientConfigurationWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Device verification page (RFC 8628 §3.3)
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> GetDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Device verification page (RFC 8628 §3.3)
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> GetDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Organization selector page
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> GetOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Organization selector page
         /// </summary>
         /// <remarks>
-        /// 
+        /// Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> GetOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint
+        /// Token introspection (RFC 7662)
         /// </summary>
         /// <remarks>
-        /// Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task IntrospectAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of IntrospectResponse</returns>
+        System.Threading.Tasks.Task<IntrospectResponse> IntrospectAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint
+        /// Token introspection (RFC 7662)
         /// </summary>
         /// <remarks>
-        /// Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> IntrospectWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (IntrospectResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<IntrospectResponse>> IntrospectWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Pushed authorization request (RFC 9126)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ParAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ParResponse</returns>
+        System.Threading.Tasks.Task<ParResponse> ParAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Pushed authorization request (RFC 9126)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (ParResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Passkey login entry point
         /// </summary>
         /// <remarks>
-        /// 
+        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -624,10 +664,10 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task PasskeyLoginAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Passkey login entry point
         /// </summary>
         /// <remarks>
-        /// 
+        /// Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -635,56 +675,56 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> PasskeyLoginWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3
+        /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RegisterClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of RegisterClientResponse</returns>
+        System.Threading.Tasks.Task<RegisterClientResponse> RegisterClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3
+        /// Dynamic client registration (RFC 7591 / OIDC DCR)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (RegisterClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint
+        /// Token revocation (RFC 7009)
         /// </summary>
         /// <remarks>
-        /// Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RevokeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of Object</returns>
+        System.Threading.Tasks.Task<Object> RevokeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint
+        /// Token revocation (RFC 7009)
         /// </summary>
         /// <remarks>
-        /// Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
+        /// <returns>Task of ApiResponse (Object)</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> RevokeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback
         /// </summary>
         /// <remarks>
-        /// 
+        /// Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -694,10 +734,10 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task SocialCallbackAsync(string orgId, string provider, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback
         /// </summary>
         /// <remarks>
-        /// 
+        /// Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -706,10 +746,10 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> SocialCallbackWithHttpInfoAsync(string orgId, string provider, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback (form_post)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -719,10 +759,10 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task SocialCallbackPostAsync(string orgId, string provider, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Handle social login callback from provider.
+        /// Social / enterprise identity-provider callback (form_post)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -731,10 +771,10 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> SocialCallbackPostWithHttpInfoAsync(string orgId, string provider, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Initiate social login flow.
+        /// Start social / enterprise identity-provider login
         /// </summary>
         /// <remarks>
-        /// Redirects to the external provider&#39;s authorization endpoint.
+        /// Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -744,10 +784,10 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task SocialLoginAsync(string orgId, string provider, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Initiate social login flow.
+        /// Start social / enterprise identity-provider login
         /// </summary>
         /// <remarks>
-        /// Redirects to the external provider&#39;s authorization endpoint.
+        /// Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -756,56 +796,56 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> SocialLoginWithHttpInfoAsync(string orgId, string provider, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same as GET; also receives the consent form submission. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SubmitAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> SubmitAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same as GET; also receives the consent form submission. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SubmitAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> SubmitAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Submit device verification
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SubmitDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> SubmitDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3)
+        /// Submit device verification
         /// </summary>
         /// <remarks>
-        /// This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SubmitDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> SubmitDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Hosted login form submission
         /// </summary>
         /// <remarks>
-        /// 
+        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -814,10 +854,10 @@ namespace LumoAuth.ApiClient.Api
         System.Threading.Tasks.Task SubmitLoginAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Hosted login form submission
         /// </summary>
         /// <remarks>
-        /// 
+        /// Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -825,74 +865,74 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> SubmitLoginWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form.
+        /// Programmatic (JSON) login for the authorization flow
         /// </summary>
         /// <remarks>
-        /// The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SubmitLoginJsonAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of SubmitLoginJsonResponse</returns>
+        System.Threading.Tasks.Task<SubmitLoginJsonResponse> SubmitLoginJsonAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form.
+        /// Programmatic (JSON) login for the authorization flow
         /// </summary>
         /// <remarks>
-        /// The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SubmitLoginJsonWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (SubmitLoginJsonResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SubmitLoginJsonResponse>> SubmitLoginJsonWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Submit organization selection
         /// </summary>
         /// <remarks>
-        /// 
+        /// Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SubmitOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> SubmitOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Submit organization selection
         /// </summary>
         /// <remarks>
-        /// 
+        /// Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SubmitOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> SubmitOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// OAuth 2.1 Token Endpoint
+        /// OAuth 2.1 token endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task TokenAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of TokenResponse</returns>
+        System.Threading.Tasks.Task<TokenResponse> TokenAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// OAuth 2.1 Token Endpoint
+        /// OAuth 2.1 token endpoint
         /// </summary>
         /// <remarks>
-        /// 
+        /// Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> TokenWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (TokenResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<TokenResponse>> TokenWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -1107,23 +1147,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Authorize(string orgId)
+        /// <returns>string</returns>
+        public string Authorize(string orgId)
         {
-            AuthorizeWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = AuthorizeWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AuthorizeWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> AuthorizeWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1136,6 +1177,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1148,7 +1190,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<string>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1160,25 +1202,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> AuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AuthorizeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await AuthorizeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> AuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1192,6 +1235,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -1206,7 +1250,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<string>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1218,23 +1262,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// CIBA backchannel authentication request OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void BackchannelAuthorize(string orgId)
+        /// <returns>BackchannelAuthorizeResponse</returns>
+        public BackchannelAuthorizeResponse BackchannelAuthorize(string orgId)
         {
-            BackchannelAuthorizeWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> localVarResponse = BackchannelAuthorizeWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// CIBA backchannel authentication request OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> BackchannelAuthorizeWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of BackchannelAuthorizeResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> BackchannelAuthorizeWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1247,6 +1292,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1265,7 +1311,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/bc-authorize", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<BackchannelAuthorizeResponse>("/orgs/{orgId}/api/v1/oauth/bc-authorize", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1277,25 +1323,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// CIBA backchannel authentication request OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task BackchannelAuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of BackchannelAuthorizeResponse</returns>
+        public async System.Threading.Tasks.Task<BackchannelAuthorizeResponse> BackchannelAuthorizeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await BackchannelAuthorizeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse> localVarResponse = await BackchannelAuthorizeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// CIBA backchannel authentication request OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (BackchannelAuthorizeResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<BackchannelAuthorizeResponse>> BackchannelAuthorizeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1309,6 +1356,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1329,7 +1377,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/bc-authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<BackchannelAuthorizeResponse>("/orgs/{orgId}/api/v1/oauth/bc-authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1341,23 +1389,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2) The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// Device authorization request (RFC 8628) Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void DeviceAuthorization(string orgId)
+        /// <returns>DeviceAuthorizationResponse</returns>
+        public DeviceAuthorizationResponse DeviceAuthorization(string orgId)
         {
-            DeviceAuthorizationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> localVarResponse = DeviceAuthorizationWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2) The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// Device authorization request (RFC 8628) Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> DeviceAuthorizationWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of DeviceAuthorizationResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> DeviceAuthorizationWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1370,6 +1419,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1388,7 +1438,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/device_authorization", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<DeviceAuthorizationResponse>("/orgs/{orgId}/api/v1/oauth/device_authorization", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1400,25 +1450,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2) The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// Device authorization request (RFC 8628) Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeviceAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of DeviceAuthorizationResponse</returns>
+        public async System.Threading.Tasks.Task<DeviceAuthorizationResponse> DeviceAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await DeviceAuthorizationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse> localVarResponse = await DeviceAuthorizationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2) The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        /// Device authorization request (RFC 8628) Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> DeviceAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (DeviceAuthorizationResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<DeviceAuthorizationResponse>> DeviceAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1432,6 +1483,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1452,7 +1504,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/device_authorization", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<DeviceAuthorizationResponse>("/orgs/{orgId}/api/v1/oauth/device_authorization", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1464,25 +1516,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4 
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4) Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void GetClientConfiguration(string orgId, string clientId)
+        /// <returns>RegisteredClientMetadata</returns>
+        public RegisteredClientMetadata GetClientConfiguration(string orgId, string clientId)
         {
-            GetClientConfigurationWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisteredClientMetadata> localVarResponse = GetClientConfigurationWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4 
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4) Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetClientConfigurationWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of RegisteredClientMetadata</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<RegisteredClientMetadata> GetClientConfigurationWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1499,6 +1552,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1523,7 +1577,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/connect/register/{clientId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<RegisteredClientMetadata>("/orgs/{orgId}/api/v1/connect/register/{clientId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1535,27 +1589,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4 
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4) Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetClientConfigurationAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of RegisteredClientMetadata</returns>
+        public async System.Threading.Tasks.Task<RegisteredClientMetadata> GetClientConfigurationAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetClientConfigurationWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisteredClientMetadata> localVarResponse = await GetClientConfigurationWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Client Configuration Endpoint per OIDC spec Section 4 
+        /// Read a dynamically registered client (RFC 7592 / OIDC DCR §4) Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetClientConfigurationWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (RegisteredClientMetadata)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisteredClientMetadata>> GetClientConfigurationWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1573,6 +1628,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1599,7 +1655,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/connect/register/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<RegisteredClientMetadata>("/orgs/{orgId}/api/v1/connect/register/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1611,23 +1667,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Device verification page (RFC 8628 §3.3) Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetDeviceVerification(string orgId)
+        /// <returns>string</returns>
+        public string GetDeviceVerification(string orgId)
         {
-            GetDeviceVerificationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = GetDeviceVerificationWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Device verification page (RFC 8628 §3.3) Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetDeviceVerificationWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> GetDeviceVerificationWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1640,6 +1697,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1652,7 +1710,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<string>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1664,25 +1722,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Device verification page (RFC 8628 §3.3) Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> GetDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetDeviceVerificationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await GetDeviceVerificationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Device verification page (RFC 8628 §3.3) Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> GetDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1696,6 +1755,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -1710,7 +1770,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<string>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1722,23 +1782,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Organization selector page Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetOrgSelection(string orgId)
+        /// <returns>string</returns>
+        public string GetOrgSelection(string orgId)
         {
-            GetOrgSelectionWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = GetOrgSelectionWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Organization selector page Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetOrgSelectionWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> GetOrgSelectionWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1751,6 +1812,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1763,7 +1825,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<string>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1775,25 +1837,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Organization selector page Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> GetOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetOrgSelectionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await GetOrgSelectionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Organization selector page Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> GetOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1807,6 +1870,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -1821,7 +1885,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<string>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1833,23 +1897,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Token introspection (RFC 7662) Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Introspect(string orgId)
+        /// <returns>IntrospectResponse</returns>
+        public IntrospectResponse Introspect(string orgId)
         {
-            IntrospectWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> localVarResponse = IntrospectWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Token introspection (RFC 7662) Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> IntrospectWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of IntrospectResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> IntrospectWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1862,6 +1927,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1880,7 +1946,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/introspect", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<IntrospectResponse>("/orgs/{orgId}/api/v1/oauth/introspect", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1892,25 +1958,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Token introspection (RFC 7662) Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task IntrospectAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of IntrospectResponse</returns>
+        public async System.Threading.Tasks.Task<IntrospectResponse> IntrospectAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await IntrospectWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse> localVarResponse = await IntrospectWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// RFC 7662 - Token Introspection Endpoint Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        /// Token introspection (RFC 7662) Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> IntrospectWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (IntrospectResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<IntrospectResponse>> IntrospectWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1924,6 +1991,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1944,7 +2012,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/introspect", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<IntrospectResponse>("/orgs/{orgId}/api/v1/oauth/introspect", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1956,23 +2024,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Pushed authorization request (RFC 9126) Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Par(string orgId)
+        /// <returns>ParResponse</returns>
+        public ParResponse Par(string orgId)
         {
-            ParWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<ParResponse> localVarResponse = ParWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Pushed authorization request (RFC 9126) Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> ParWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of ParResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<ParResponse> ParWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1985,6 +2054,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2003,7 +2073,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/par", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<ParResponse>("/orgs/{orgId}/api/v1/oauth/par", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2015,25 +2085,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Pushed authorization request (RFC 9126) Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ParAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ParResponse</returns>
+        public async System.Threading.Tasks.Task<ParResponse> ParAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await ParWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ParResponse> localVarResponse = await ParWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Pushed authorization request (RFC 9126) Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (ParResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ParResponse>> ParWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2047,6 +2118,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2067,7 +2139,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/par", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<ParResponse>("/orgs/{orgId}/api/v1/oauth/par", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2079,7 +2151,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2090,7 +2162,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2132,7 +2204,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2144,7 +2216,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Passkey login entry point Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2190,23 +2262,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3 
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void RegisterClient(string orgId)
+        /// <returns>RegisterClientResponse</returns>
+        public RegisterClientResponse RegisterClient(string orgId)
         {
-            RegisterClientWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> localVarResponse = RegisterClientWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3 
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> RegisterClientWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of RegisterClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> RegisterClientWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2219,6 +2292,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2242,7 +2316,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/connect/register", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<RegisterClientResponse>("/orgs/{orgId}/api/v1/connect/register", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2254,25 +2328,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3 
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RegisterClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of RegisterClientResponse</returns>
+        public async System.Threading.Tasks.Task<RegisterClientResponse> RegisterClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await RegisterClientWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse> localVarResponse = await RegisterClientWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Client Registration Endpoint per OIDC spec Section 3 
+        /// Dynamic client registration (RFC 7591 / OIDC DCR) Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (RegisterClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisterClientResponse>> RegisterClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2286,6 +2361,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2311,7 +2387,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/connect/register", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<RegisterClientResponse>("/orgs/{orgId}/api/v1/connect/register", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2323,22 +2399,23 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Token revocation (RFC 7009) Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Revoke(string orgId)
+        /// <returns>Object</returns>
+        public Object Revoke(string orgId)
         {
-            RevokeWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<Object> localVarResponse = RevokeWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Token revocation (RFC 7009) Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
+        /// <returns>ApiResponse of Object</returns>
         public LumoAuth.ApiClient.Client.ApiResponse<Object> RevokeWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
@@ -2352,6 +2429,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2382,24 +2460,25 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Token revocation (RFC 7009) Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RevokeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of Object</returns>
+        public async System.Threading.Tasks.Task<Object> RevokeAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await RevokeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<Object> localVarResponse = await RevokeWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// RFC 7009 - Token Revocation Endpoint Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        /// Token revocation (RFC 7009) Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
+        /// <returns>Task of ApiResponse (Object)</returns>
         public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> RevokeWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
@@ -2414,6 +2493,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2446,7 +2526,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2458,7 +2538,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2506,7 +2586,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2519,7 +2599,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2571,7 +2651,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback (form_post) Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2583,7 +2663,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback (form_post) Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2631,7 +2711,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback (form_post) Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2644,7 +2724,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Handle social login callback from provider. 
+        /// Social / enterprise identity-provider callback (form_post) Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2696,7 +2776,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Initiate social login flow. Redirects to the external provider&#39;s authorization endpoint.
+        /// Start social / enterprise identity-provider login Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2708,7 +2788,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Initiate social login flow. Redirects to the external provider&#39;s authorization endpoint.
+        /// Start social / enterprise identity-provider login Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2756,7 +2836,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Initiate social login flow. Redirects to the external provider&#39;s authorization endpoint.
+        /// Start social / enterprise identity-provider login Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2769,7 +2849,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Initiate social login flow. Redirects to the external provider&#39;s authorization endpoint.
+        /// Start social / enterprise identity-provider login Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -2821,23 +2901,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission) Same as GET; also receives the consent form submission. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void SubmitAuthorization(string orgId)
+        /// <returns>string</returns>
+        public string SubmitAuthorization(string orgId)
         {
-            SubmitAuthorizationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = SubmitAuthorizationWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission) Same as GET; also receives the consent form submission. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> SubmitAuthorizationWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> SubmitAuthorizationWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2850,6 +2931,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2862,7 +2944,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<string>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2874,25 +2956,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission) Same as GET; also receives the consent form submission. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SubmitAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> SubmitAuthorizationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await SubmitAuthorizationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await SubmitAuthorizationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OAuth 2.1 / OIDC authorization endpoint (form submission) Same as GET; also receives the consent form submission. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> SubmitAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> SubmitAuthorizationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2906,6 +2989,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -2920,7 +3004,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/orgs/{orgId}/api/v1/oauth/authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2932,23 +3016,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Submit device verification Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void SubmitDeviceVerification(string orgId)
+        /// <returns>string</returns>
+        public string SubmitDeviceVerification(string orgId)
         {
-            SubmitDeviceVerificationWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = SubmitDeviceVerificationWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Submit device verification Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> SubmitDeviceVerificationWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> SubmitDeviceVerificationWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2961,6 +3046,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2973,7 +3059,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<string>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2985,25 +3071,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Submit device verification Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SubmitDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> SubmitDeviceVerificationAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await SubmitDeviceVerificationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await SubmitDeviceVerificationWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Device Verification Page (RFC 8628 Section 3.3) This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        /// Submit device verification Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> SubmitDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> SubmitDeviceVerificationWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3017,6 +3104,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -3031,7 +3119,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/orgs/{orgId}/api/v1/oauth/device", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -3043,7 +3131,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3054,7 +3142,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3096,7 +3184,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3108,7 +3196,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Hosted login form submission Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
@@ -3154,23 +3242,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form. The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Programmatic (JSON) login for the authorization flow Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void SubmitLoginJson(string orgId)
+        /// <returns>SubmitLoginJsonResponse</returns>
+        public SubmitLoginJsonResponse SubmitLoginJson(string orgId)
         {
-            SubmitLoginJsonWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> localVarResponse = SubmitLoginJsonWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form. The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Programmatic (JSON) login for the authorization flow Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> SubmitLoginJsonWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of SubmitLoginJsonResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> SubmitLoginJsonWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3183,6 +3272,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -3195,7 +3285,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/login/json", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<SubmitLoginJsonResponse>("/orgs/{orgId}/api/v1/oauth/login/json", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -3207,25 +3297,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form. The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Programmatic (JSON) login for the authorization flow Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SubmitLoginJsonAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of SubmitLoginJsonResponse</returns>
+        public async System.Threading.Tasks.Task<SubmitLoginJsonResponse> SubmitLoginJsonAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await SubmitLoginJsonWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse> localVarResponse = await SubmitLoginJsonWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// JSON credential login, for applications that render their own sign-in form. The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+        /// Programmatic (JSON) login for the authorization flow Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> SubmitLoginJsonWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (SubmitLoginJsonResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SubmitLoginJsonResponse>> SubmitLoginJsonWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3239,6 +3330,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -3253,7 +3345,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/login/json", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<SubmitLoginJsonResponse>("/orgs/{orgId}/api/v1/oauth/login/json", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -3265,23 +3357,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Submit organization selection Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void SubmitOrgSelection(string orgId)
+        /// <returns>string</returns>
+        public string SubmitOrgSelection(string orgId)
         {
-            SubmitOrgSelectionWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = SubmitOrgSelectionWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Submit organization selection Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> SubmitOrgSelectionWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> SubmitOrgSelectionWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3294,6 +3387,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -3306,7 +3400,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<string>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -3318,25 +3412,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Submit organization selection Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SubmitOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> SubmitOrgSelectionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await SubmitOrgSelectionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await SubmitOrgSelectionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Submit organization selection Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> SubmitOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> SubmitOrgSelectionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3350,6 +3445,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -3364,7 +3460,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/orgs/{orgId}/api/v1/oauth/org-select", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -3376,23 +3472,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OAuth 2.1 Token Endpoint 
+        /// OAuth 2.1 token endpoint Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Token(string orgId)
+        /// <returns>TokenResponse</returns>
+        public TokenResponse Token(string orgId)
         {
-            TokenWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> localVarResponse = TokenWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OAuth 2.1 Token Endpoint 
+        /// OAuth 2.1 token endpoint Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> TokenWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of TokenResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> TokenWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3405,6 +3502,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -3423,7 +3521,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/token", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<TokenResponse>("/orgs/{orgId}/api/v1/oauth/token", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -3435,25 +3533,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OAuth 2.1 Token Endpoint 
+        /// OAuth 2.1 token endpoint Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task TokenAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of TokenResponse</returns>
+        public async System.Threading.Tasks.Task<TokenResponse> TokenAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await TokenWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<TokenResponse> localVarResponse = await TokenWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OAuth 2.1 Token Endpoint 
+        /// OAuth 2.1 token endpoint Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> TokenWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (TokenResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<TokenResponse>> TokenWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -3467,6 +3566,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -3487,7 +3587,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/token", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<TokenResponse>("/orgs/{orgId}/api/v1/oauth/token", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

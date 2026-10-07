@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,16 +29,16 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+        /// Destroy a sandbox tenant
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
-        /// <returns></returns>
-        void AdminSandboxDestroy(string orgId, string sandboxSlug);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminSandboxDestroy(string orgId, string sandboxSlug);
 
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+        /// Destroy a sandbox tenant
         /// </summary>
         /// <remarks>
         /// 
@@ -45,44 +46,46 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSandboxDestroyWithHttpInfo(string orgId, string sandboxSlug);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminSandboxDestroyWithHttpInfo(string orgId, string sandboxSlug);
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only).
+        /// List the caller&#39;s sandbox tenants
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSandboxList(string orgId);
+        /// <returns>AdminSandboxListResponse</returns>
+        AdminSandboxListResponse AdminSandboxList(string orgId);
 
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only).
+        /// List the caller&#39;s sandbox tenants
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSandboxListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSandboxListResponse</returns>
+        ApiResponse<AdminSandboxListResponse> AdminSandboxListWithHttpInfo(string orgId);
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+        /// Spawn a sandbox tenant
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSandboxSpawn(string orgId);
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
+        /// <returns>AdminSandboxSpawnResponse</returns>
+        AdminSandboxSpawnResponse AdminSandboxSpawn(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default);
 
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+        /// Spawn a sandbox tenant
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSandboxSpawnWithHttpInfo(string orgId);
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
+        /// <returns>ApiResponse of AdminSandboxSpawnResponse</returns>
+        ApiResponse<AdminSandboxSpawnResponse> AdminSandboxSpawnWithHttpInfo(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default);
         #endregion Synchronous Operations
     }
 
@@ -93,7 +96,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+        /// Destroy a sandbox tenant
         /// </summary>
         /// <remarks>
         /// 
@@ -102,11 +105,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSandboxDestroyAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminSandboxDestroyAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+        /// Destroy a sandbox tenant
         /// </summary>
         /// <remarks>
         /// 
@@ -115,10 +118,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSandboxDestroyWithHttpInfoAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminSandboxDestroyWithHttpInfoAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only).
+        /// List the caller&#39;s sandbox tenants
         /// </summary>
         /// <remarks>
         /// 
@@ -126,11 +129,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSandboxListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSandboxListResponse</returns>
+        System.Threading.Tasks.Task<AdminSandboxListResponse> AdminSandboxListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only).
+        /// List the caller&#39;s sandbox tenants
         /// </summary>
         /// <remarks>
         /// 
@@ -138,31 +141,33 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSandboxListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSandboxListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSandboxListResponse>> AdminSandboxListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+        /// Spawn a sandbox tenant
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSandboxSpawnAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSandboxSpawnResponse</returns>
+        System.Threading.Tasks.Task<AdminSandboxSpawnResponse> AdminSandboxSpawnAsync(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+        /// Spawn a sandbox tenant
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSandboxSpawnWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSandboxSpawnResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSandboxSpawnResponse>> AdminSandboxSpawnWithHttpInfoAsync(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -377,25 +382,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. 
+        /// Destroy a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
-        /// <returns></returns>
-        public void AdminSandboxDestroy(string orgId, string sandboxSlug)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminSandboxDestroy(string orgId, string sandboxSlug)
         {
-            AdminSandboxDestroyWithHttpInfo(orgId, sandboxSlug);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminSandboxDestroyWithHttpInfo(orgId, sandboxSlug);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. 
+        /// Destroy a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSandboxDestroyWithHttpInfo(string orgId, string sandboxSlug)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminSandboxDestroyWithHttpInfo(string orgId, string sandboxSlug)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -412,6 +418,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -436,7 +443,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<MessageResponse>("/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -448,27 +455,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. 
+        /// Destroy a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSandboxDestroyAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminSandboxDestroyAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSandboxDestroyWithHttpInfoAsync(orgId, sandboxSlug, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminSandboxDestroyWithHttpInfoAsync(orgId, sandboxSlug, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. 
+        /// Destroy a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sandboxSlug"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSandboxDestroyWithHttpInfoAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminSandboxDestroyWithHttpInfoAsync(string orgId, string sandboxSlug, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -486,6 +494,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -512,7 +521,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -524,23 +533,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only). 
+        /// List the caller&#39;s sandbox tenants 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSandboxList(string orgId)
+        /// <returns>AdminSandboxListResponse</returns>
+        public AdminSandboxListResponse AdminSandboxList(string orgId)
         {
-            AdminSandboxListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxListResponse> localVarResponse = AdminSandboxListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only). 
+        /// List the caller&#39;s sandbox tenants 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSandboxListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSandboxListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxListResponse> AdminSandboxListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -553,6 +563,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -576,7 +587,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/sandbox", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSandboxListResponse>("/orgs/{orgId}/api/v1/admin/sandbox", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -588,25 +599,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only). 
+        /// List the caller&#39;s sandbox tenants 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSandboxListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSandboxListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSandboxListResponse> AdminSandboxListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSandboxListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxListResponse> localVarResponse = await AdminSandboxListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// GET / Lists the caller&#39;s active sandbox tenants (their own only). 
+        /// List the caller&#39;s sandbox tenants 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSandboxListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSandboxListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxListResponse>> AdminSandboxListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -620,6 +632,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -645,7 +658,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/sandbox", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSandboxListResponse>("/orgs/{orgId}/api/v1/admin/sandbox", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -657,23 +670,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} 
+        /// Spawn a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSandboxSpawn(string orgId)
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
+        /// <returns>AdminSandboxSpawnResponse</returns>
+        public AdminSandboxSpawnResponse AdminSandboxSpawn(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default)
         {
-            AdminSandboxSpawnWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxSpawnResponse> localVarResponse = AdminSandboxSpawnWithHttpInfo(orgId, adminSandboxSpawnRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} 
+        /// Spawn a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSandboxSpawnWithHttpInfo(string orgId)
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
+        /// <returns>ApiResponse of AdminSandboxSpawnResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxSpawnResponse> AdminSandboxSpawnWithHttpInfo(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -682,10 +698,12 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -695,6 +713,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminSandboxSpawnRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -709,7 +728,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/sandbox/spawn", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminSandboxSpawnResponse>("/orgs/{orgId}/api/v1/admin/sandbox/spawn", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -721,25 +740,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} 
+        /// Spawn a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSandboxSpawnAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSandboxSpawnResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSandboxSpawnResponse> AdminSandboxSpawnAsync(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSandboxSpawnWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxSpawnResponse> localVarResponse = await AdminSandboxSpawnWithHttpInfoAsync(orgId, adminSandboxSpawnRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} 
+        /// Spawn a sandbox tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSandboxSpawnRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSandboxSpawnWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSandboxSpawnResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSandboxSpawnResponse>> AdminSandboxSpawnWithHttpInfoAsync(string orgId, AdminSandboxSpawnRequest? adminSandboxSpawnRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -749,10 +771,12 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -763,6 +787,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminSandboxSpawnRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -778,7 +803,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/sandbox/spawn", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminSandboxSpawnResponse>("/orgs/{orgId}/api/v1/admin/sandbox/spawn", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

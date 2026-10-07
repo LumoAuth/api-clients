@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,16 +29,16 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// 
+        /// Remove the custom email template so the built-in default is used
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        void AdminEmailTemplatesDelete(string orgId, string type);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminEmailTemplatesDelete(string orgId, string type);
 
         /// <summary>
-        /// 
+        /// Remove the custom email template so the built-in default is used
         /// </summary>
         /// <remarks>
         /// 
@@ -45,19 +46,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type);
         /// <summary>
-        /// 
+        /// Get an email template (custom or built-in default)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        void AdminEmailTemplatesGet(string orgId, string type);
+        /// <returns>EmailTemplate</returns>
+        EmailTemplate AdminEmailTemplatesGet(string orgId, string type);
 
         /// <summary>
-        /// 
+        /// Get an email template (custom or built-in default)
         /// </summary>
         /// <remarks>
         /// 
@@ -65,57 +66,37 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type);
+        /// <returns>ApiResponse of EmailTemplate</returns>
+        ApiResponse<EmailTemplate> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type);
         /// <summary>
-        /// 
+        /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminEmailTemplatesList(string orgId);
+        /// <returns>AdminEmailTemplatesListResponse</returns>
+        AdminEmailTemplatesListResponse AdminEmailTemplatesList(string orgId);
 
         /// <summary>
-        /// 
+        /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminEmailTemplatesListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminEmailTemplatesListResponse</returns>
+        ApiResponse<AdminEmailTemplatesListResponse> AdminEmailTemplatesListWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Render an email template with sample data
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        void AdminEmailTemplatesPreview(string orgId, string type);
+        /// <returns>AdminEmailTemplatesPreviewResponse</returns>
+        AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview(string orgId, string type);
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminEmailTemplatesPreviewWithHttpInfo(string orgId, string type);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        void AdminEmailTemplatesUpsert(string orgId, string type);
-
-        /// <summary>
-        /// 
+        /// Render an email template with sample data
         /// </summary>
         /// <remarks>
         /// 
@@ -123,19 +104,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminEmailTemplatesUpsertWithHttpInfo(string orgId, string type);
+        /// <returns>ApiResponse of AdminEmailTemplatesPreviewResponse</returns>
+        ApiResponse<AdminEmailTemplatesPreviewResponse> AdminEmailTemplatesPreviewWithHttpInfo(string orgId, string type);
         /// <summary>
-        /// 
+        /// Create or replace the custom email template for a type
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        void AdminEmailTemplatesVariables(string orgId, string type);
+        /// <returns>EmailTemplate</returns>
+        EmailTemplate AdminEmailTemplatesUpsert(string orgId, string type);
 
         /// <summary>
-        /// 
+        /// Create or replace the custom email template for a type
         /// </summary>
         /// <remarks>
         /// 
@@ -143,8 +124,28 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminEmailTemplatesVariablesWithHttpInfo(string orgId, string type);
+        /// <returns>ApiResponse of EmailTemplate</returns>
+        ApiResponse<EmailTemplate> AdminEmailTemplatesUpsertWithHttpInfo(string orgId, string type);
+        /// <summary>
+        /// List the placeholders available to an email template type
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="type"></param>
+        /// <returns>AdminEmailTemplatesVariablesResponse</returns>
+        AdminEmailTemplatesVariablesResponse AdminEmailTemplatesVariables(string orgId, string type);
+
+        /// <summary>
+        /// List the placeholders available to an email template type
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="type"></param>
+        /// <returns>ApiResponse of AdminEmailTemplatesVariablesResponse</returns>
+        ApiResponse<AdminEmailTemplatesVariablesResponse> AdminEmailTemplatesVariablesWithHttpInfo(string orgId, string type);
         #endregion Synchronous Operations
     }
 
@@ -155,7 +156,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// 
+        /// Remove the custom email template so the built-in default is used
         /// </summary>
         /// <remarks>
         /// 
@@ -164,11 +165,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminEmailTemplatesDeleteAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminEmailTemplatesDeleteAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Remove the custom email template so the built-in default is used
         /// </summary>
         /// <remarks>
         /// 
@@ -177,10 +178,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Get an email template (custom or built-in default)
         /// </summary>
         /// <remarks>
         /// 
@@ -189,11 +190,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminEmailTemplatesGetAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of EmailTemplate</returns>
+        System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesGetAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Get an email template (custom or built-in default)
         /// </summary>
         /// <remarks>
         /// 
@@ -202,10 +203,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (EmailTemplate)</returns>
+        System.Threading.Tasks.Task<ApiResponse<EmailTemplate>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <remarks>
         /// 
@@ -213,11 +214,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminEmailTemplatesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminEmailTemplatesListResponse</returns>
+        System.Threading.Tasks.Task<AdminEmailTemplatesListResponse> AdminEmailTemplatesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// List every email template type with its current (custom or built-in) template
         /// </summary>
         /// <remarks>
         /// 
@@ -225,10 +226,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminEmailTemplatesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminEmailTemplatesListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminEmailTemplatesListResponse>> AdminEmailTemplatesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Render an email template with sample data
         /// </summary>
         /// <remarks>
         /// 
@@ -237,11 +238,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminEmailTemplatesPreviewAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminEmailTemplatesPreviewResponse</returns>
+        System.Threading.Tasks.Task<AdminEmailTemplatesPreviewResponse> AdminEmailTemplatesPreviewAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Render an email template with sample data
         /// </summary>
         /// <remarks>
         /// 
@@ -250,10 +251,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminEmailTemplatesPreviewWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminEmailTemplatesPreviewResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminEmailTemplatesPreviewResponse>> AdminEmailTemplatesPreviewWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Create or replace the custom email template for a type
         /// </summary>
         /// <remarks>
         /// 
@@ -262,11 +263,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminEmailTemplatesUpsertAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of EmailTemplate</returns>
+        System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesUpsertAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Create or replace the custom email template for a type
         /// </summary>
         /// <remarks>
         /// 
@@ -275,10 +276,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminEmailTemplatesUpsertWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (EmailTemplate)</returns>
+        System.Threading.Tasks.Task<ApiResponse<EmailTemplate>> AdminEmailTemplatesUpsertWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// List the placeholders available to an email template type
         /// </summary>
         /// <remarks>
         /// 
@@ -287,11 +288,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminEmailTemplatesVariablesAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminEmailTemplatesVariablesResponse</returns>
+        System.Threading.Tasks.Task<AdminEmailTemplatesVariablesResponse> AdminEmailTemplatesVariablesAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// List the placeholders available to an email template type
         /// </summary>
         /// <remarks>
         /// 
@@ -300,8 +301,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminEmailTemplatesVariablesWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminEmailTemplatesVariablesResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminEmailTemplatesVariablesResponse>> AdminEmailTemplatesVariablesWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -516,25 +517,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Remove the custom email template so the built-in default is used 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        public void AdminEmailTemplatesDelete(string orgId, string type)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminEmailTemplatesDelete(string orgId, string type)
         {
-            AdminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminEmailTemplatesDeleteWithHttpInfo(orgId, type);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Remove the custom email template so the built-in default is used 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminEmailTemplatesDeleteWithHttpInfo(string orgId, string type)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -551,6 +553,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -575,7 +578,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -587,27 +590,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Remove the custom email template so the built-in default is used 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminEmailTemplatesDeleteAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminEmailTemplatesDeleteAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminEmailTemplatesDeleteWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminEmailTemplatesDeleteWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Remove the custom email template so the built-in default is used 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminEmailTemplatesDeleteWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -625,6 +629,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -651,7 +656,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -663,25 +668,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Get an email template (custom or built-in default) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        public void AdminEmailTemplatesGet(string orgId, string type)
+        /// <returns>EmailTemplate</returns>
+        public EmailTemplate AdminEmailTemplatesGet(string orgId, string type)
         {
-            AdminEmailTemplatesGetWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = AdminEmailTemplatesGetWithHttpInfo(orgId, type);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Get an email template (custom or built-in default) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type)
+        /// <returns>ApiResponse of EmailTemplate</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> AdminEmailTemplatesGetWithHttpInfo(string orgId, string type)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -698,6 +704,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -722,7 +729,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<EmailTemplate>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -734,27 +741,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Get an email template (custom or built-in default) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminEmailTemplatesGetAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of EmailTemplate</returns>
+        public async System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesGetAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminEmailTemplatesGetWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = await AdminEmailTemplatesGetWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Get an email template (custom or built-in default) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (EmailTemplate)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate>> AdminEmailTemplatesGetWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -772,6 +780,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -798,7 +807,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<EmailTemplate>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -810,23 +819,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// List every email template type with its current (custom or built-in) template 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminEmailTemplatesList(string orgId)
+        /// <returns>AdminEmailTemplatesListResponse</returns>
+        public AdminEmailTemplatesListResponse AdminEmailTemplatesList(string orgId)
         {
-            AdminEmailTemplatesListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesListResponse> localVarResponse = AdminEmailTemplatesListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// List every email template type with its current (custom or built-in) template 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminEmailTemplatesListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminEmailTemplatesListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesListResponse> AdminEmailTemplatesListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -839,6 +849,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -862,7 +873,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/email-templates", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminEmailTemplatesListResponse>("/orgs/{orgId}/api/v1/admin/email-templates", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -874,25 +885,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// List every email template type with its current (custom or built-in) template 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminEmailTemplatesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminEmailTemplatesListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminEmailTemplatesListResponse> AdminEmailTemplatesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminEmailTemplatesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesListResponse> localVarResponse = await AdminEmailTemplatesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// List every email template type with its current (custom or built-in) template 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminEmailTemplatesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminEmailTemplatesListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesListResponse>> AdminEmailTemplatesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -906,6 +918,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -931,7 +944,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/email-templates", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminEmailTemplatesListResponse>("/orgs/{orgId}/api/v1/admin/email-templates", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -943,25 +956,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Render an email template with sample data 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        public void AdminEmailTemplatesPreview(string orgId, string type)
+        /// <returns>AdminEmailTemplatesPreviewResponse</returns>
+        public AdminEmailTemplatesPreviewResponse AdminEmailTemplatesPreview(string orgId, string type)
         {
-            AdminEmailTemplatesPreviewWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesPreviewResponse> localVarResponse = AdminEmailTemplatesPreviewWithHttpInfo(orgId, type);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Render an email template with sample data 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminEmailTemplatesPreviewWithHttpInfo(string orgId, string type)
+        /// <returns>ApiResponse of AdminEmailTemplatesPreviewResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesPreviewResponse> AdminEmailTemplatesPreviewWithHttpInfo(string orgId, string type)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -978,6 +992,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1002,7 +1017,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminEmailTemplatesPreviewResponse>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1014,27 +1029,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Render an email template with sample data 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminEmailTemplatesPreviewAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminEmailTemplatesPreviewResponse</returns>
+        public async System.Threading.Tasks.Task<AdminEmailTemplatesPreviewResponse> AdminEmailTemplatesPreviewAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminEmailTemplatesPreviewWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesPreviewResponse> localVarResponse = await AdminEmailTemplatesPreviewWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Render an email template with sample data 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminEmailTemplatesPreviewWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminEmailTemplatesPreviewResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesPreviewResponse>> AdminEmailTemplatesPreviewWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1052,6 +1068,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1078,7 +1095,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminEmailTemplatesPreviewResponse>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1090,25 +1107,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Create or replace the custom email template for a type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        public void AdminEmailTemplatesUpsert(string orgId, string type)
+        /// <returns>EmailTemplate</returns>
+        public EmailTemplate AdminEmailTemplatesUpsert(string orgId, string type)
         {
-            AdminEmailTemplatesUpsertWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = AdminEmailTemplatesUpsertWithHttpInfo(orgId, type);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Create or replace the custom email template for a type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminEmailTemplatesUpsertWithHttpInfo(string orgId, string type)
+        /// <returns>ApiResponse of EmailTemplate</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> AdminEmailTemplatesUpsertWithHttpInfo(string orgId, string type)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1125,6 +1143,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1149,7 +1168,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<EmailTemplate>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1161,27 +1180,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Create or replace the custom email template for a type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminEmailTemplatesUpsertAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of EmailTemplate</returns>
+        public async System.Threading.Tasks.Task<EmailTemplate> AdminEmailTemplatesUpsertAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminEmailTemplatesUpsertWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate> localVarResponse = await AdminEmailTemplatesUpsertWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Create or replace the custom email template for a type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminEmailTemplatesUpsertWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (EmailTemplate)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<EmailTemplate>> AdminEmailTemplatesUpsertWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1199,6 +1219,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1225,7 +1246,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<EmailTemplate>("/orgs/{orgId}/api/v1/admin/email-templates/{type}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1237,25 +1258,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// List the placeholders available to an email template type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns></returns>
-        public void AdminEmailTemplatesVariables(string orgId, string type)
+        /// <returns>AdminEmailTemplatesVariablesResponse</returns>
+        public AdminEmailTemplatesVariablesResponse AdminEmailTemplatesVariables(string orgId, string type)
         {
-            AdminEmailTemplatesVariablesWithHttpInfo(orgId, type);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesVariablesResponse> localVarResponse = AdminEmailTemplatesVariablesWithHttpInfo(orgId, type);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// List the placeholders available to an email template type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminEmailTemplatesVariablesWithHttpInfo(string orgId, string type)
+        /// <returns>ApiResponse of AdminEmailTemplatesVariablesResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesVariablesResponse> AdminEmailTemplatesVariablesWithHttpInfo(string orgId, string type)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1272,6 +1294,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1296,7 +1319,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminEmailTemplatesVariablesResponse>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1308,27 +1331,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// List the placeholders available to an email template type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminEmailTemplatesVariablesAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminEmailTemplatesVariablesResponse</returns>
+        public async System.Threading.Tasks.Task<AdminEmailTemplatesVariablesResponse> AdminEmailTemplatesVariablesAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminEmailTemplatesVariablesWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesVariablesResponse> localVarResponse = await AdminEmailTemplatesVariablesWithHttpInfoAsync(orgId, type, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// List the placeholders available to an email template type 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="type"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminEmailTemplatesVariablesWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminEmailTemplatesVariablesResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminEmailTemplatesVariablesResponse>> AdminEmailTemplatesVariablesWithHttpInfoAsync(string orgId, string type, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1346,6 +1370,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1372,7 +1397,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminEmailTemplatesVariablesResponse>("/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

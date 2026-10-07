@@ -14,6 +14,20 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminClientTokensRevokeAllResponse;
+import io.lumoauth.client.model.AdminSessionsCountResponse;
+import io.lumoauth.client.model.AdminSessionsListResponse;
+import io.lumoauth.client.model.AdminSessionsRevokeAllRequest;
+import io.lumoauth.client.model.AdminSessionsRevokeAllResponse;
+import io.lumoauth.client.model.AdminSessionsRevokeResponse;
+import io.lumoauth.client.model.AdminSessionsStatsResponse;
+import io.lumoauth.client.model.AdminTokensListResponse;
+import io.lumoauth.client.model.AdminTokensRevokeResponse;
+import io.lumoauth.client.model.AdminUserSessionsListResponse;
+import io.lumoauth.client.model.AdminUserSessionsRevokeAllResponse;
+import io.lumoauth.client.model.AdminUserSessionsRevokePostResponse;
+import io.lumoauth.client.model.AdminUserTokensRevokeAllResponse;
+import io.lumoauth.client.model.AdminUserTokensRevokePostResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +45,7 @@ public class AdminSessionsApiTest {
     private final AdminSessionsApi api = new AdminSessionsApi();
 
     /**
-     * Revoke all tokens for a client
+     * Revoke all tokens of a client
      *
      * @throws ApiException if the Api call fails
      */
@@ -39,12 +53,12 @@ public class AdminSessionsApiTest {
     public void adminClientTokensRevokeAllTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.adminClientTokensRevokeAll(orgId, clientId);
+        AdminClientTokensRevokeAllResponse response = api.adminClientTokensRevokeAll(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Revoke all tokens for a client via POST
+     * Revoke all tokens of a client (POST alias)
      *
      * @throws ApiException if the Api call fails
      */
@@ -52,36 +66,38 @@ public class AdminSessionsApiTest {
     public void adminClientTokensRevokePostTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.adminClientTokensRevokePost(orgId, clientId);
+        AdminUserTokensRevokePostResponse response = api.adminClientTokensRevokePost(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Get active session count for the tenant
+     * Active session count
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSessionsCountTest() throws ApiException {
         String orgId = null;
-        api.adminSessionsCount(orgId);
+        AdminSessionsCountResponse response = api.adminSessionsCount(orgId);
         // TODO: test validations
     }
 
     /**
-     * List active sessions for the tenant
+     * List active sessions
+     *
+     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSessionsListTest() throws ApiException {
         String orgId = null;
-        api.adminSessionsList(orgId);
+        AdminSessionsListResponse response = api.adminSessionsList(orgId);
         // TODO: test validations
     }
 
     /**
-     * Revoke a specific session
+     * Revoke a session
      *
      * @throws ApiException if the Api call fails
      */
@@ -89,43 +105,48 @@ public class AdminSessionsApiTest {
     public void adminSessionsRevokeTest() throws ApiException {
         String orgId = null;
         String sessionId = null;
-        api.adminSessionsRevoke(orgId, sessionId);
+        AdminSessionsRevokeResponse response = api.adminSessionsRevoke(orgId, sessionId);
         // TODO: test validations
     }
 
     /**
-     * Revoke all tenant sessions via POST
+     * Revoke every session in the tenant
+     *
+     * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSessionsRevokeAllTest() throws ApiException {
         String orgId = null;
-        api.adminSessionsRevokeAll(orgId);
+        AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest = null;
+        AdminSessionsRevokeAllResponse response = api.adminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest);
         // TODO: test validations
     }
 
     /**
-     * Get session statistics for the tenant
+     * Session statistics
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSessionsStatsTest() throws ApiException {
         String orgId = null;
-        api.adminSessionsStats(orgId);
+        AdminSessionsStatsResponse response = api.adminSessionsStats(orgId);
         // TODO: test validations
     }
 
     /**
-     * List access tokens for the tenant
+     * List access tokens
+     *
+     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminTokensListTest() throws ApiException {
         String orgId = null;
-        api.adminTokensList(orgId);
+        AdminTokensListResponse response = api.adminTokensList(orgId);
         // TODO: test validations
     }
 
@@ -138,12 +159,14 @@ public class AdminSessionsApiTest {
     public void adminTokensRevokeTest() throws ApiException {
         String orgId = null;
         String tokenId = null;
-        api.adminTokensRevoke(orgId, tokenId);
+        AdminTokensRevokeResponse response = api.adminTokensRevoke(orgId, tokenId);
         // TODO: test validations
     }
 
     /**
-     * Get sessions for a specific user
+     * List a user&#39;s active sessions
+     *
+     * All active sessions of one user (UUID or email), returned as a single page.
      *
      * @throws ApiException if the Api call fails
      */
@@ -151,12 +174,12 @@ public class AdminSessionsApiTest {
     public void adminUserSessionsListTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.adminUserSessionsList(orgId, userId);
+        AdminUserSessionsListResponse response = api.adminUserSessionsList(orgId, userId);
         // TODO: test validations
     }
 
     /**
-     * Revoke all sessions for a user
+     * Revoke all sessions of a user
      *
      * @throws ApiException if the Api call fails
      */
@@ -164,12 +187,12 @@ public class AdminSessionsApiTest {
     public void adminUserSessionsRevokeAllTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.adminUserSessionsRevokeAll(orgId, userId);
+        AdminUserSessionsRevokeAllResponse response = api.adminUserSessionsRevokeAll(orgId, userId);
         // TODO: test validations
     }
 
     /**
-     * Revoke all sessions for a user via POST
+     * Revoke all sessions of a user (POST alias)
      *
      * @throws ApiException if the Api call fails
      */
@@ -177,12 +200,12 @@ public class AdminSessionsApiTest {
     public void adminUserSessionsRevokePostTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.adminUserSessionsRevokePost(orgId, userId);
+        AdminUserSessionsRevokePostResponse response = api.adminUserSessionsRevokePost(orgId, userId);
         // TODO: test validations
     }
 
     /**
-     * Revoke all tokens for a user
+     * Revoke all tokens of a user
      *
      * @throws ApiException if the Api call fails
      */
@@ -190,12 +213,12 @@ public class AdminSessionsApiTest {
     public void adminUserTokensRevokeAllTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.adminUserTokensRevokeAll(orgId, userId);
+        AdminUserTokensRevokeAllResponse response = api.adminUserTokensRevokeAll(orgId, userId);
         // TODO: test validations
     }
 
     /**
-     * Revoke all tokens for a user via POST
+     * Revoke all tokens of a user (POST alias)
      *
      * @throws ApiException if the Api call fails
      */
@@ -203,7 +226,7 @@ public class AdminSessionsApiTest {
     public void adminUserTokensRevokePostTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.adminUserTokensRevokePost(orgId, userId);
+        AdminUserTokensRevokePostResponse response = api.adminUserTokensRevokePost(orgId, userId);
         // TODO: test validations
     }
 

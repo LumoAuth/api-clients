@@ -13,15 +13,19 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct DenyRequestRequest {
-    /// Optional denial reason.
+    /// Optional denial reason (internal; never shown to the agent).
     #[serde(rename = "reason", skip_serializing_if = "Option::is_none")]
     pub reason: Option<String>,
+    /// Optional message the agent MAY read on the status endpoint / callback.
+    #[serde(rename = "agent_message", skip_serializing_if = "Option::is_none")]
+    pub agent_message: Option<String>,
 }
 
 impl DenyRequestRequest {
     pub fn new() -> DenyRequestRequest {
         DenyRequestRequest {
             reason: None,
+            agent_message: None,
         }
     }
 }

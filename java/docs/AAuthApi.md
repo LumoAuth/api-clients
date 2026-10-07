@@ -86,7 +86,7 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **302** | Redirect to the tenant portal AAuth consent page for the given request_token. |  -  |
+| **302** | Redirect to the tenant portal AAuth consent page for the given request_token. |  * Location -  <br>  |
 | **400** | Missing request_token query parameter. |  -  |
 
 <a id="getAgentJwks"></a>

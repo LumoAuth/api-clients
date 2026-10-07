@@ -24,7 +24,7 @@ import (
 type AdminIdentityProvidersAPI interface {
 
 	/*
-	AdminSocialProvidersAvailable Get available social login provider types
+	AdminSocialProvidersAvailable List the available social login provider types
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,10 +33,11 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersAvailable(ctx context.Context, orgId string) ApiAdminSocialProvidersAvailableRequest
 
 	// AdminSocialProvidersAvailableExecute executes the request
-	AdminSocialProvidersAvailableExecute(r ApiAdminSocialProvidersAvailableRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersAvailableResponse
+	AdminSocialProvidersAvailableExecute(r ApiAdminSocialProvidersAvailableRequest) (*AdminSocialProvidersAvailableResponse, *http.Response, error)
 
 	/*
-	AdminSocialProvidersCallbackUrls Get callback URLs for all configured providers
+	AdminSocialProvidersCallbackUrls Get the OAuth callback URL of every configured provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -45,10 +46,11 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersCallbackUrls(ctx context.Context, orgId string) ApiAdminSocialProvidersCallbackUrlsRequest
 
 	// AdminSocialProvidersCallbackUrlsExecute executes the request
-	AdminSocialProvidersCallbackUrlsExecute(r ApiAdminSocialProvidersCallbackUrlsRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersCallbackUrlsResponse
+	AdminSocialProvidersCallbackUrlsExecute(r ApiAdminSocialProvidersCallbackUrlsRequest) (*AdminSocialProvidersCallbackUrlsResponse, *http.Response, error)
 
 	/*
-	AdminSocialProvidersCreate Create a new social login provider
+	AdminSocialProvidersCreate Create a social login provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -57,7 +59,8 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersCreate(ctx context.Context, orgId string) ApiAdminSocialProvidersCreateRequest
 
 	// AdminSocialProvidersCreateExecute executes the request
-	AdminSocialProvidersCreateExecute(r ApiAdminSocialProvidersCreateRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersCreateResponse
+	AdminSocialProvidersCreateExecute(r ApiAdminSocialProvidersCreateRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error)
 
 	/*
 	AdminSocialProvidersDelete Delete a social login provider
@@ -70,7 +73,8 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersDelete(ctx context.Context, orgId string, providerId string) ApiAdminSocialProvidersDeleteRequest
 
 	// AdminSocialProvidersDeleteExecute executes the request
-	AdminSocialProvidersDeleteExecute(r ApiAdminSocialProvidersDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminSocialProvidersDeleteExecute(r ApiAdminSocialProvidersDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminSocialProvidersDisable Disable a social login provider
@@ -83,7 +87,8 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersDisable(ctx context.Context, orgId string, providerId string) ApiAdminSocialProvidersDisableRequest
 
 	// AdminSocialProvidersDisableExecute executes the request
-	AdminSocialProvidersDisableExecute(r ApiAdminSocialProvidersDisableRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersCreateResponse
+	AdminSocialProvidersDisableExecute(r ApiAdminSocialProvidersDisableRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error)
 
 	/*
 	AdminSocialProvidersEnable Enable a social login provider
@@ -96,10 +101,11 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersEnable(ctx context.Context, orgId string, providerId string) ApiAdminSocialProvidersEnableRequest
 
 	// AdminSocialProvidersEnableExecute executes the request
-	AdminSocialProvidersEnableExecute(r ApiAdminSocialProvidersEnableRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersCreateResponse
+	AdminSocialProvidersEnableExecute(r ApiAdminSocialProvidersEnableRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error)
 
 	/*
-	AdminSocialProvidersGet Get a single social login provider (by ID or by provider name)
+	AdminSocialProvidersGet Get a social login provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -109,10 +115,11 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersGet(ctx context.Context, orgId string, providerId string) ApiAdminSocialProvidersGetRequest
 
 	// AdminSocialProvidersGetExecute executes the request
-	AdminSocialProvidersGetExecute(r ApiAdminSocialProvidersGetRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersGetResponse
+	AdminSocialProvidersGetExecute(r ApiAdminSocialProvidersGetRequest) (*AdminSocialProvidersGetResponse, *http.Response, error)
 
 	/*
-	AdminSocialProvidersList List all configured social login providers
+	AdminSocialProvidersList List social login providers
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -121,10 +128,11 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersList(ctx context.Context, orgId string) ApiAdminSocialProvidersListRequest
 
 	// AdminSocialProvidersListExecute executes the request
-	AdminSocialProvidersListExecute(r ApiAdminSocialProvidersListRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersListResponse
+	AdminSocialProvidersListExecute(r ApiAdminSocialProvidersListRequest) (*AdminSocialProvidersListResponse, *http.Response, error)
 
 	/*
-	AdminSocialProvidersTypes Get available social login provider types
+	AdminSocialProvidersTypes List the available social login provider types
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -133,10 +141,11 @@ type AdminIdentityProvidersAPI interface {
 	AdminSocialProvidersTypes(ctx context.Context, orgId string) ApiAdminSocialProvidersTypesRequest
 
 	// AdminSocialProvidersTypesExecute executes the request
-	AdminSocialProvidersTypesExecute(r ApiAdminSocialProvidersTypesRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersAvailableResponse
+	AdminSocialProvidersTypesExecute(r ApiAdminSocialProvidersTypesRequest) (*AdminSocialProvidersAvailableResponse, *http.Response, error)
 
 	/*
-	PatchAdminSocialProvidersUpdate Upsert (create or update) a social login provider via PUT; update via PATCH
+	PatchAdminSocialProvidersUpdate Update a social login provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -146,10 +155,11 @@ type AdminIdentityProvidersAPI interface {
 	PatchAdminSocialProvidersUpdate(ctx context.Context, orgId string, providerId string) ApiPatchAdminSocialProvidersUpdateRequest
 
 	// PatchAdminSocialProvidersUpdateExecute executes the request
-	PatchAdminSocialProvidersUpdateExecute(r ApiPatchAdminSocialProvidersUpdateRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersCreateResponse
+	PatchAdminSocialProvidersUpdateExecute(r ApiPatchAdminSocialProvidersUpdateRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error)
 
 	/*
-	PutAdminSocialProvidersUpdate Upsert (create or update) a social login provider via PUT; update via PATCH
+	PutAdminSocialProvidersUpdate Create or replace a social login provider
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -159,7 +169,8 @@ type AdminIdentityProvidersAPI interface {
 	PutAdminSocialProvidersUpdate(ctx context.Context, orgId string, providerId string) ApiPutAdminSocialProvidersUpdateRequest
 
 	// PutAdminSocialProvidersUpdateExecute executes the request
-	PutAdminSocialProvidersUpdateExecute(r ApiPutAdminSocialProvidersUpdateRequest) (*http.Response, error)
+	//  @return AdminSocialProvidersCreateResponse
+	PutAdminSocialProvidersUpdateExecute(r ApiPutAdminSocialProvidersUpdateRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error)
 }
 
 // AdminIdentityProvidersAPIService AdminIdentityProvidersAPI service
@@ -171,12 +182,12 @@ type ApiAdminSocialProvidersAvailableRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSocialProvidersAvailableRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersAvailableRequest) Execute() (*AdminSocialProvidersAvailableResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersAvailableExecute(r)
 }
 
 /*
-AdminSocialProvidersAvailable Get available social login provider types
+AdminSocialProvidersAvailable List the available social login provider types
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -191,16 +202,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersAvailable(ctx con
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersAvailableExecute(r ApiAdminSocialProvidersAvailableRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersAvailableResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersAvailableExecute(r ApiAdminSocialProvidersAvailableRequest) (*AdminSocialProvidersAvailableResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersAvailableResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersAvailable")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/available"
@@ -220,7 +233,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersAvailableExecute(
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -243,19 +256,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersAvailableExecute(
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -263,10 +276,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersAvailableExecute(
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersCallbackUrlsRequest struct {
@@ -275,12 +297,12 @@ type ApiAdminSocialProvidersCallbackUrlsRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSocialProvidersCallbackUrlsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersCallbackUrlsRequest) Execute() (*AdminSocialProvidersCallbackUrlsResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersCallbackUrlsExecute(r)
 }
 
 /*
-AdminSocialProvidersCallbackUrls Get callback URLs for all configured providers
+AdminSocialProvidersCallbackUrls Get the OAuth callback URL of every configured provider
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -295,16 +317,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCallbackUrls(ctx 
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCallbackUrlsExecute(r ApiAdminSocialProvidersCallbackUrlsRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersCallbackUrlsResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCallbackUrlsExecute(r ApiAdminSocialProvidersCallbackUrlsRequest) (*AdminSocialProvidersCallbackUrlsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersCallbackUrlsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersCallbackUrls")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/callback-urls"
@@ -324,7 +348,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCallbackUrlsExecu
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -347,19 +371,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCallbackUrlsExecu
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -367,10 +391,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCallbackUrlsExecu
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersCreateRequest struct {
@@ -379,12 +412,12 @@ type ApiAdminSocialProvidersCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSocialProvidersCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersCreateRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersCreateExecute(r)
 }
 
 /*
-AdminSocialProvidersCreate Create a new social login provider
+AdminSocialProvidersCreate Create a social login provider
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -399,16 +432,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreate(ctx contex
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r ApiAdminSocialProvidersCreateRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersCreateResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r ApiAdminSocialProvidersCreateRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers"
@@ -428,7 +463,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r A
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -451,19 +486,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r A
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -471,10 +506,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersCreateExecute(r A
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersDeleteRequest struct {
@@ -484,7 +528,7 @@ type ApiAdminSocialProvidersDeleteRequest struct {
 	providerId string
 }
 
-func (r ApiAdminSocialProvidersDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersDeleteExecute(r)
 }
 
@@ -506,16 +550,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDelete(ctx contex
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDeleteExecute(r ApiAdminSocialProvidersDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDeleteExecute(r ApiAdminSocialProvidersDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
@@ -536,7 +582,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDeleteExecute(r A
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -559,19 +605,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDeleteExecute(r A
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -579,10 +625,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDeleteExecute(r A
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersDisableRequest struct {
@@ -592,7 +647,7 @@ type ApiAdminSocialProvidersDisableRequest struct {
 	providerId string
 }
 
-func (r ApiAdminSocialProvidersDisableRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersDisableRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersDisableExecute(r)
 }
 
@@ -614,16 +669,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDisable(ctx conte
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDisableExecute(r ApiAdminSocialProvidersDisableRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersCreateResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDisableExecute(r ApiAdminSocialProvidersDisableRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersDisable")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable"
@@ -644,7 +701,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDisableExecute(r 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -667,19 +724,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDisableExecute(r 
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -687,10 +744,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersDisableExecute(r 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersEnableRequest struct {
@@ -700,7 +766,7 @@ type ApiAdminSocialProvidersEnableRequest struct {
 	providerId string
 }
 
-func (r ApiAdminSocialProvidersEnableRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersEnableRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersEnableExecute(r)
 }
 
@@ -722,16 +788,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersEnable(ctx contex
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersEnableExecute(r ApiAdminSocialProvidersEnableRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersCreateResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersEnableExecute(r ApiAdminSocialProvidersEnableRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersEnable")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable"
@@ -752,7 +820,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersEnableExecute(r A
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -775,19 +843,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersEnableExecute(r A
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -795,10 +863,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersEnableExecute(r A
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersGetRequest struct {
@@ -808,12 +885,12 @@ type ApiAdminSocialProvidersGetRequest struct {
 	providerId string
 }
 
-func (r ApiAdminSocialProvidersGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersGetRequest) Execute() (*AdminSocialProvidersGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersGetExecute(r)
 }
 
 /*
-AdminSocialProvidersGet Get a single social login provider (by ID or by provider name)
+AdminSocialProvidersGet Get a social login provider
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -830,16 +907,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersGet(ctx context.C
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersGetExecute(r ApiAdminSocialProvidersGetRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersGetResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersGetExecute(r ApiAdminSocialProvidersGetRequest) (*AdminSocialProvidersGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
@@ -860,7 +939,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersGetExecute(r ApiA
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -883,19 +962,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersGetExecute(r ApiA
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -903,10 +982,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersGetExecute(r ApiA
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersListRequest struct {
@@ -915,12 +1003,12 @@ type ApiAdminSocialProvidersListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSocialProvidersListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersListRequest) Execute() (*AdminSocialProvidersListResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersListExecute(r)
 }
 
 /*
-AdminSocialProvidersList List all configured social login providers
+AdminSocialProvidersList List social login providers
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -935,16 +1023,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersList(ctx context.
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersListExecute(r ApiAdminSocialProvidersListRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersListResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersListExecute(r ApiAdminSocialProvidersListRequest) (*AdminSocialProvidersListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers"
@@ -964,7 +1054,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersListExecute(r Api
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -987,19 +1077,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersListExecute(r Api
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1007,10 +1097,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersListExecute(r Api
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSocialProvidersTypesRequest struct {
@@ -1019,12 +1118,12 @@ type ApiAdminSocialProvidersTypesRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSocialProvidersTypesRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSocialProvidersTypesRequest) Execute() (*AdminSocialProvidersAvailableResponse, *http.Response, error) {
 	return r.ApiService.AdminSocialProvidersTypesExecute(r)
 }
 
 /*
-AdminSocialProvidersTypes Get available social login provider types
+AdminSocialProvidersTypes List the available social login provider types
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1039,16 +1138,18 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersTypes(ctx context
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersTypesExecute(r ApiAdminSocialProvidersTypesRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersAvailableResponse
+func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersTypesExecute(r ApiAdminSocialProvidersTypesRequest) (*AdminSocialProvidersAvailableResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersAvailableResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.AdminSocialProvidersTypes")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/types"
@@ -1068,7 +1169,7 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersTypesExecute(r Ap
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1091,19 +1192,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersTypesExecute(r Ap
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1111,10 +1212,19 @@ func (a *AdminIdentityProvidersAPIService) AdminSocialProvidersTypesExecute(r Ap
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSocialProvidersUpdateRequest struct {
@@ -1124,12 +1234,12 @@ type ApiPatchAdminSocialProvidersUpdateRequest struct {
 	providerId string
 }
 
-func (r ApiPatchAdminSocialProvidersUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSocialProvidersUpdateRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSocialProvidersUpdateExecute(r)
 }
 
 /*
-PatchAdminSocialProvidersUpdate Upsert (create or update) a social login provider via PUT; update via PATCH
+PatchAdminSocialProvidersUpdate Update a social login provider
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1146,16 +1256,18 @@ func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdate(ctx c
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecute(r ApiPatchAdminSocialProvidersUpdateRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersCreateResponse
+func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecute(r ApiPatchAdminSocialProvidersUpdateRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.PatchAdminSocialProvidersUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
@@ -1176,7 +1288,7 @@ func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecut
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1199,19 +1311,19 @@ func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecut
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1219,10 +1331,19 @@ func (a *AdminIdentityProvidersAPIService) PatchAdminSocialProvidersUpdateExecut
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSocialProvidersUpdateRequest struct {
@@ -1232,12 +1353,12 @@ type ApiPutAdminSocialProvidersUpdateRequest struct {
 	providerId string
 }
 
-func (r ApiPutAdminSocialProvidersUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSocialProvidersUpdateRequest) Execute() (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSocialProvidersUpdateExecute(r)
 }
 
 /*
-PutAdminSocialProvidersUpdate Upsert (create or update) a social login provider via PUT; update via PATCH
+PutAdminSocialProvidersUpdate Create or replace a social login provider
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1254,16 +1375,18 @@ func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdate(ctx con
 }
 
 // Execute executes the request
-func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(r ApiPutAdminSocialProvidersUpdateRequest) (*http.Response, error) {
+//  @return AdminSocialProvidersCreateResponse
+func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(r ApiPutAdminSocialProvidersUpdateRequest) (*AdminSocialProvidersCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSocialProvidersCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminIdentityProvidersAPIService.PutAdminSocialProvidersUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
@@ -1284,7 +1407,7 @@ func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1307,19 +1430,19 @@ func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1327,8 +1450,17 @@ func (a *AdminIdentityProvidersAPIService) PutAdminSocialProvidersUpdateExecute(
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

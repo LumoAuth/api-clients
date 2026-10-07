@@ -254,8 +254,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Task belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call completeTaskCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId, final ApiCallback _callback) throws ApiException {
@@ -333,8 +334,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Task belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public CompleteTaskResponse completeTask(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId) throws ApiException {
@@ -355,8 +357,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Task belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<CompleteTaskResponse> completeTaskWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId) throws ApiException {
@@ -379,8 +382,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Task completed and resources cleaned up. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Task belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Task belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or task not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call completeTaskAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String taskId, final ApiCallback<CompleteTaskResponse> _callback) throws ApiException {
@@ -862,8 +866,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getRequestStatusCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, final ApiCallback _callback) throws ApiException {
@@ -941,8 +946,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public GetRequestStatusResponse getRequestStatus(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId) throws ApiException {
@@ -963,8 +969,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetRequestStatusResponse> getRequestStatusWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId) throws ApiException {
@@ -987,8 +994,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Current status of the JIT permission request. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, or a JIT token of another task was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getRequestStatusAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, final ApiCallback<GetRequestStatusResponse> _callback) throws ApiException {
@@ -1011,9 +1019,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent, or is not yet approved. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit or agent budget exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getRequestTokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, final ApiCallback _callback) throws ApiException {
@@ -1091,9 +1099,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent, or is not yet approved. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit or agent budget exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public GetRequestTokenResponse getRequestToken(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId) throws ApiException {
@@ -1114,9 +1122,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent, or is not yet approved. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit or agent budget exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<GetRequestTokenResponse> getRequestTokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId) throws ApiException {
@@ -1139,9 +1147,9 @@ public class JitApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A downscoped JIT token (RFC 8693 token exchange). </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Invalid or missing agent token. </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> Request belongs to a different agent, or is not yet approved. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or request not found. </td><td>  -  </td></tr>
-        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit or agent budget exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getRequestTokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String requestId, final ApiCallback<GetRequestTokenResponse> _callback) throws ApiException {

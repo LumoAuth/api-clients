@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**create_stream_config**](SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; } |
-| [**delete_stream_config**](SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream |  |
-| [**get_stream_config**](SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned. |
-| [**verify_stream**](SsfApi.md#verify_stream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; } |
+| [**create_stream_config**](SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream |
+| [**delete_stream_config**](SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream |
+| [**get_stream_config**](SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s) |
+| [**verify_stream**](SsfApi.md#verify_stream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event |
 
 
 ## create_stream_config
 
-> create_stream_config(org_id)
+> <SsfStream> create_stream_config(org_id)
 
-Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+Create an SSF stream
 
 ### Examples
 
@@ -36,8 +36,9 @@ api_instance = LumoAuthApiClient::SsfApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
-  api_instance.create_stream_config(org_id)
+  # Create an SSF stream
+  result = api_instance.create_stream_config(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->create_stream_config: #{e}"
 end
@@ -45,17 +46,17 @@ end
 
 #### Using the create_stream_config_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> create_stream_config_with_http_info(org_id)
+> <Array(<SsfStream>, Integer, Hash)> create_stream_config_with_http_info(org_id)
 
 ```ruby
 begin
-  # Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+  # Create an SSF stream
   data, status_code, headers = api_instance.create_stream_config_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <SsfStream>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->create_stream_config_with_http_info: #{e}"
 end
@@ -69,7 +70,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**SsfStream**](SsfStream.md)
 
 ### Authorization
 
@@ -78,14 +79,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## delete_stream_config
 
-> delete_stream_config(org_id)
+> delete_stream_config(stream_id, org_id)
 
-
+Delete an SSF stream
 
 ### Examples
 
@@ -104,11 +105,12 @@ LumoAuthApiClient.configure do |config|
 end
 
 api_instance = LumoAuthApiClient::SsfApi.new
+stream_id = 'stream_id_example' # String | 
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.delete_stream_config(org_id)
+  # Delete an SSF stream
+  api_instance.delete_stream_config(stream_id, org_id)
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->delete_stream_config: #{e}"
 end
@@ -118,12 +120,12 @@ end
 
 This returns an Array which contains the response data (`nil` in this case), status code and headers.
 
-> <Array(nil, Integer, Hash)> delete_stream_config_with_http_info(org_id)
+> <Array(nil, Integer, Hash)> delete_stream_config_with_http_info(stream_id, org_id)
 
 ```ruby
 begin
-  
-  data, status_code, headers = api_instance.delete_stream_config_with_http_info(org_id)
+  # Delete an SSF stream
+  data, status_code, headers = api_instance.delete_stream_config_with_http_info(stream_id, org_id)
   p status_code # => 2xx
   p headers # => { ... }
   p data # => nil
@@ -136,6 +138,7 @@ end
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
+| **stream_id** | **String** |  |  |
 | **org_id** | **String** |  |  |
 
 ### Return type
@@ -154,9 +157,9 @@ nil (empty response body)
 
 ## get_stream_config
 
-> get_stream_config(org_id)
+> <GetStreamConfig200Response> get_stream_config(org_id, opts)
 
-Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+Read SSF stream configuration(s)
 
 ### Examples
 
@@ -176,10 +179,14 @@ end
 
 api_instance = LumoAuthApiClient::SsfApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  stream_id: 'stream_id_example' # String | 
+}
 
 begin
-  # Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
-  api_instance.get_stream_config(org_id)
+  # Read SSF stream configuration(s)
+  result = api_instance.get_stream_config(org_id, opts)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->get_stream_config: #{e}"
 end
@@ -187,17 +194,17 @@ end
 
 #### Using the get_stream_config_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_stream_config_with_http_info(org_id)
+> <Array(<GetStreamConfig200Response>, Integer, Hash)> get_stream_config_with_http_info(org_id, opts)
 
 ```ruby
 begin
-  # Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
-  data, status_code, headers = api_instance.get_stream_config_with_http_info(org_id)
+  # Read SSF stream configuration(s)
+  data, status_code, headers = api_instance.get_stream_config_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <GetStreamConfig200Response>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->get_stream_config_with_http_info: #{e}"
 end
@@ -208,10 +215,11 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **stream_id** | **String** |  | [optional] |
 
 ### Return type
 
-nil (empty response body)
+[**GetStreamConfig200Response**](GetStreamConfig200Response.md)
 
 ### Authorization
 
@@ -220,14 +228,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## verify_stream
 
 > verify_stream(org_id)
 
-SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+Request a stream verification event
 
 ### Examples
 
@@ -249,7 +257,7 @@ api_instance = LumoAuthApiClient::SsfApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+  # Request a stream verification event
   api_instance.verify_stream(org_id)
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling SsfApi->verify_stream: #{e}"
@@ -264,7 +272,7 @@ This returns an Array which contains the response data (`nil` in this case), sta
 
 ```ruby
 begin
-  # SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+  # Request a stream verification event
   data, status_code, headers = api_instance.verify_stream_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }

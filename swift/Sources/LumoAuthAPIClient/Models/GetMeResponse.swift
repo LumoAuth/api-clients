@@ -23,9 +23,9 @@ public struct GetMeResponse: Codable, JSONEncodable, Hashable {
     public var mfaEnabled: Bool?
     public var roles: [String]?
     public var capabilities: [String]?
-    public var tenant: GetMeResponseTenant?
+    public var tenant: GroupRef?
 
-    public init(subjectType: SubjectType? = nil, id: String? = nil, email: String? = nil, name: String? = nil, mfaEnabled: Bool? = nil, roles: [String]? = nil, capabilities: [String]? = nil, tenant: GetMeResponseTenant? = nil) {
+    public init(subjectType: SubjectType? = nil, id: String? = nil, email: String? = nil, name: String? = nil, mfaEnabled: Bool? = nil, roles: [String]? = nil, capabilities: [String]? = nil, tenant: GroupRef? = nil) {
         self.subjectType = subjectType
         self.id = id
         self.email = email

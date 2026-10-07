@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetAuthorizationServerMetadata(orgId);
+            //var response = instance.GetAuthorizationServerMetadata(orgId);
+            //Assert.IsType<AuthorizationServerMetadata>(response);
         }
 
         /// <summary>
@@ -71,7 +74,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetJwks(orgId);
+            //var response = instance.GetJwks(orgId);
+            //Assert.IsType<JsonWebKeySet>(response);
         }
 
         /// <summary>
@@ -82,7 +86,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetOpenidConfiguration(orgId);
+            //var response = instance.GetOpenidConfiguration(orgId);
+            //Assert.IsType<OpenIdConfiguration>(response);
         }
 
         /// <summary>
@@ -93,7 +98,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetSsfConfiguration(orgId);
+            //var response = instance.GetSsfConfiguration(orgId);
+            //Assert.IsType<GetSsfConfigurationResponse>(response);
         }
     }
 }

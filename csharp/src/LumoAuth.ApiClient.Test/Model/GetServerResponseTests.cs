@@ -155,6 +155,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'RequireDpop'
+        /// </summary>
+        [Fact]
+        public void RequireDpopTest()
+        {
+            // TODO unit test for the property 'RequireDpop'
+        }
+
+        /// <summary>
         /// Test the property 'TokenLifetime'
         /// </summary>
         [Fact]

@@ -17,7 +17,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminPermissionsCreate"></a>
 # **adminPermissionsCreate**
-> adminPermissionsCreate(orgId)
+> AdminPermissionsCreateResponse adminPermissionsCreate(orgId)
 
 Create a custom permission for the tenant
 
@@ -49,7 +49,8 @@ public class Example {
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminPermissionsCreate(orgId);
+      AdminPermissionsCreateResponse result = apiInstance.adminPermissionsCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsCreate");
       System.err.println("Status code: " + e.getCode());
@@ -69,7 +70,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -78,16 +79,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created permission |  -  |
 
 <a id="adminPermissionsDelete"></a>
 # **adminPermissionsDelete**
-> adminPermissionsDelete(orgId, permissionId)
+> MessageResponse adminPermissionsDelete(orgId, permissionId)
 
 Delete a custom permission
 
@@ -120,7 +121,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String permissionId = "permissionId_example"; // String | 
     try {
-      apiInstance.adminPermissionsDelete(orgId, permissionId);
+      MessageResponse result = apiInstance.adminPermissionsDelete(orgId, permissionId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsDelete");
       System.err.println("Status code: " + e.getCode());
@@ -141,7 +143,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -150,16 +152,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 <a id="adminPermissionsGet"></a>
 # **adminPermissionsGet**
-> adminPermissionsGet(orgId, permissionId)
+> AdminPermissionsGetResponse adminPermissionsGet(orgId, permissionId)
 
 Get a single permission
 
@@ -192,7 +194,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String permissionId = "permissionId_example"; // String | 
     try {
-      apiInstance.adminPermissionsGet(orgId, permissionId);
+      AdminPermissionsGetResponse result = apiInstance.adminPermissionsGet(orgId, permissionId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsGet");
       System.err.println("Status code: " + e.getCode());
@@ -213,7 +216,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminPermissionsGetResponse**](AdminPermissionsGetResponse.md)
 
 ### Authorization
 
@@ -222,16 +225,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permission |  -  |
 
 <a id="adminPermissionsList"></a>
 # **adminPermissionsList**
-> adminPermissionsList(orgId)
+> AdminPermissionsListResponse adminPermissionsList(orgId)
 
 List all available permissions for the tenant
 
@@ -263,7 +266,8 @@ public class Example {
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminPermissionsList(orgId);
+      AdminPermissionsListResponse result = apiInstance.adminPermissionsList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsList");
       System.err.println("Status code: " + e.getCode());
@@ -283,7 +287,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminPermissionsListResponse**](AdminPermissionsListResponse.md)
 
 ### Authorization
 
@@ -292,16 +296,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permissions |  -  |
 
 <a id="adminPermissionsUpdate"></a>
 # **adminPermissionsUpdate**
-> adminPermissionsUpdate(orgId, permissionId)
+> AdminPermissionsCreateResponse adminPermissionsUpdate(orgId, permissionId)
 
 Update a permission
 
@@ -334,7 +338,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String permissionId = "permissionId_example"; // String | 
     try {
-      apiInstance.adminPermissionsUpdate(orgId, permissionId);
+      AdminPermissionsCreateResponse result = apiInstance.adminPermissionsUpdate(orgId, permissionId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -355,7 +360,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -364,16 +369,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated permission |  -  |
 
 <a id="adminPermissionsUsage"></a>
 # **adminPermissionsUsage**
-> adminPermissionsUsage(orgId, permissionId)
+> AdminPermissionsUsageResponse adminPermissionsUsage(orgId, permissionId)
 
 Get permission usage (roles assigned to this permission)
 
@@ -406,7 +411,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String permissionId = "permissionId_example"; // String | 
     try {
-      apiInstance.adminPermissionsUsage(orgId, permissionId);
+      AdminPermissionsUsageResponse result = apiInstance.adminPermissionsUsage(orgId, permissionId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminPermissionsUsage");
       System.err.println("Status code: " + e.getCode());
@@ -427,7 +433,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminPermissionsUsageResponse**](AdminPermissionsUsageResponse.md)
 
 ### Authorization
 
@@ -436,16 +442,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Usage |  -  |
 
 <a id="adminScopesCreate"></a>
 # **adminScopesCreate**
-> adminScopesCreate(orgId)
+> AdminScopesCreateResponse adminScopesCreate(orgId)
 
 Create a custom OAuth scope
 
@@ -477,7 +483,8 @@ public class Example {
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminScopesCreate(orgId);
+      AdminScopesCreateResponse result = apiInstance.adminScopesCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminScopesCreate");
       System.err.println("Status code: " + e.getCode());
@@ -497,7 +504,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminScopesCreateResponse**](AdminScopesCreateResponse.md)
 
 ### Authorization
 
@@ -506,16 +513,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created scope |  -  |
 
 <a id="adminScopesDelete"></a>
 # **adminScopesDelete**
-> adminScopesDelete(orgId, scopeId)
+> MessageResponse adminScopesDelete(orgId, scopeId)
 
 Delete a custom OAuth scope
 
@@ -548,7 +555,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String scopeId = "scopeId_example"; // String | 
     try {
-      apiInstance.adminScopesDelete(orgId, scopeId);
+      MessageResponse result = apiInstance.adminScopesDelete(orgId, scopeId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminScopesDelete");
       System.err.println("Status code: " + e.getCode());
@@ -569,7 +577,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -578,16 +586,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 <a id="adminScopesList"></a>
 # **adminScopesList**
-> adminScopesList(orgId)
+> AdminScopesListResponse adminScopesList(orgId)
 
 List OAuth scopes
 
@@ -619,7 +627,8 @@ public class Example {
     AdminPermissionsApi apiInstance = new AdminPermissionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminScopesList(orgId);
+      AdminScopesListResponse result = apiInstance.adminScopesList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminPermissionsApi#adminScopesList");
       System.err.println("Status code: " + e.getCode());
@@ -639,7 +648,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminScopesListResponse**](AdminScopesListResponse.md)
 
 ### Authorization
 
@@ -648,10 +657,10 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Scopes |  -  |
 

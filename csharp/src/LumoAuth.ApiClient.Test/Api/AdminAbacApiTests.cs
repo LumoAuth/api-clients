@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AbacAttributesCreate(orgId);
+            //var response = instance.AbacAttributesCreate(orgId);
+            //Assert.IsType<AbacAttributesCreateResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.AbacAttributesDelete(orgId, id);
+            //var response = instance.AbacAttributesDelete(orgId, id);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.AbacAttributesGet(orgId, id);
+            //var response = instance.AbacAttributesGet(orgId, id);
+            //Assert.IsType<AbacAttributesGetResponse>(response);
         }
 
         /// <summary>
@@ -95,7 +100,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AbacAttributesList(orgId);
+            //var response = instance.AbacAttributesList(orgId);
+            //Assert.IsType<AbacAttributesListResponse>(response);
         }
 
         /// <summary>
@@ -106,7 +112,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AbacPoliciesCreate(orgId);
+            //var response = instance.AbacPoliciesCreate(orgId);
+            //Assert.IsType<AbacPoliciesCreateResponse>(response);
         }
 
         /// <summary>
@@ -118,7 +125,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.AbacPoliciesDelete(orgId, id);
+            //var response = instance.AbacPoliciesDelete(orgId, id);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -130,7 +138,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.AbacPoliciesGet(orgId, id);
+            //var response = instance.AbacPoliciesGet(orgId, id);
+            //Assert.IsType<AbacPoliciesGetResponse>(response);
         }
 
         /// <summary>
@@ -141,7 +150,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AbacPoliciesList(orgId);
+            //var response = instance.AbacPoliciesList(orgId);
+            //Assert.IsType<AbacPoliciesListResponse>(response);
         }
 
         /// <summary>
@@ -153,7 +163,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.AbacPoliciesToggle(orgId, id);
+            //var response = instance.AbacPoliciesToggle(orgId, id);
+            //Assert.IsType<AbacPoliciesToggleResponse>(response);
         }
 
         /// <summary>
@@ -165,7 +176,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.PatchAbacAttributesUpdate(orgId, id);
+            //var response = instance.PatchAbacAttributesUpdate(orgId, id);
+            //Assert.IsType<PutAbacAttributesUpdateResponse>(response);
         }
 
         /// <summary>
@@ -177,7 +189,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.PatchAbacPoliciesUpdate(orgId, id);
+            //var response = instance.PatchAbacPoliciesUpdate(orgId, id);
+            //Assert.IsType<PutAbacPoliciesUpdateResponse>(response);
         }
 
         /// <summary>
@@ -189,7 +202,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.PutAbacAttributesUpdate(orgId, id);
+            //var response = instance.PutAbacAttributesUpdate(orgId, id);
+            //Assert.IsType<PutAbacAttributesUpdateResponse>(response);
         }
 
         /// <summary>
@@ -201,7 +215,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string id = null;
-            //instance.PutAbacPoliciesUpdate(orgId, id);
+            //var response = instance.PutAbacPoliciesUpdate(orgId, id);
+            //Assert.IsType<PutAbacPoliciesUpdateResponse>(response);
         }
     }
 }

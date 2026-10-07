@@ -27,6 +27,24 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminAnalyticsDashboardResponse;
+import io.lumoauth.client.model.AdminAnalyticsLoginsResponse;
+import io.lumoauth.client.model.AdminAnalyticsUsersResponse;
+import io.lumoauth.client.model.AdminSettingsAllResponse;
+import io.lumoauth.client.model.AdminSettingsAuthenticationGetResponse;
+import io.lumoauth.client.model.AdminSettingsBrandingGetResponse;
+import io.lumoauth.client.model.AdminSettingsEmailGetResponse;
+import io.lumoauth.client.model.AdminSettingsGeneralGetResponse;
+import io.lumoauth.client.model.AdminSettingsScimGetResponse;
+import io.lumoauth.client.model.AdminSettingsSecurityGetResponse;
+import io.lumoauth.client.model.AdminTenantGetResponse;
+import io.lumoauth.client.model.PutAdminSettingsAuthenticationUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsBrandingUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsEmailUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsGeneralUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsScimUpdateResponse;
+import io.lumoauth.client.model.PutAdminSettingsSecurityUpdateResponse;
+import io.lumoauth.client.model.PutAdminTenantUpdateResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +99,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Dashboard counters </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAnalyticsDashboardCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +129,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -143,34 +162,37 @@ public class AdminSettingsApi {
      * Get dashboard analytics
      * 
      * @param orgId  (required)
+     * @return AdminAnalyticsDashboardResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Dashboard counters </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAnalyticsDashboard(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAnalyticsDashboardWithHttpInfo(orgId);
+    public AdminAnalyticsDashboardResponse adminAnalyticsDashboard(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAnalyticsDashboardResponse> localVarResp = adminAnalyticsDashboardWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get dashboard analytics
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAnalyticsDashboardResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Dashboard counters </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAnalyticsDashboardWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAnalyticsDashboardResponse> adminAnalyticsDashboardWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminAnalyticsDashboardValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAnalyticsDashboardResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -184,18 +206,20 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Dashboard counters </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAnalyticsDashboardAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAnalyticsDashboardAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAnalyticsDashboardResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAnalyticsDashboardValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAnalyticsDashboardResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for adminAnalyticsLogins
      * @param orgId  (required)
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -203,10 +227,10 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily login attempts </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAnalyticsLoginsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAnalyticsLoginsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -232,7 +256,12 @@ public class AdminSettingsApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (days != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("days", days));
+        }
+
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -251,13 +280,13 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAnalyticsLoginsValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAnalyticsLoginsValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAnalyticsLogins(Async)");
         }
 
-        return adminAnalyticsLoginsCall(orgId, _callback);
+        return adminAnalyticsLoginsCall(orgId, days, _callback);
 
     }
 
@@ -265,40 +294,46 @@ public class AdminSettingsApi {
      * Get login analytics
      * 
      * @param orgId  (required)
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
+     * @return AdminAnalyticsLoginsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily login attempts </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAnalyticsLogins(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAnalyticsLoginsWithHttpInfo(orgId);
+    public AdminAnalyticsLoginsResponse adminAnalyticsLogins(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days) throws ApiException {
+        ApiResponse<AdminAnalyticsLoginsResponse> localVarResp = adminAnalyticsLoginsWithHttpInfo(orgId, days);
+        return localVarResp.getData();
     }
 
     /**
      * Get login analytics
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
+     * @return ApiResponse&lt;AdminAnalyticsLoginsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily login attempts </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAnalyticsLoginsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminAnalyticsLoginsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<AdminAnalyticsLoginsResponse> adminAnalyticsLoginsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days) throws ApiException {
+        okhttp3.Call localVarCall = adminAnalyticsLoginsValidateBeforeCall(orgId, days, null);
+        Type localVarReturnType = new TypeToken<AdminAnalyticsLoginsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Get login analytics (asynchronously)
      * 
      * @param orgId  (required)
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -306,18 +341,20 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily login attempts </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAnalyticsLoginsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAnalyticsLoginsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days, final ApiCallback<AdminAnalyticsLoginsResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAnalyticsLoginsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = adminAnalyticsLoginsValidateBeforeCall(orgId, days, _callback);
+        Type localVarReturnType = new TypeToken<AdminAnalyticsLoginsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for adminAnalyticsUsers
      * @param orgId  (required)
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -325,10 +362,10 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily registrations and user breakdowns </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAnalyticsUsersCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminAnalyticsUsersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -354,7 +391,12 @@ public class AdminSettingsApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (days != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("days", days));
+        }
+
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -373,13 +415,13 @@ public class AdminSettingsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminAnalyticsUsersValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminAnalyticsUsersValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminAnalyticsUsers(Async)");
         }
 
-        return adminAnalyticsUsersCall(orgId, _callback);
+        return adminAnalyticsUsersCall(orgId, days, _callback);
 
     }
 
@@ -387,40 +429,46 @@ public class AdminSettingsApi {
      * Get user growth analytics
      * 
      * @param orgId  (required)
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
+     * @return AdminAnalyticsUsersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily registrations and user breakdowns </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAnalyticsUsers(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAnalyticsUsersWithHttpInfo(orgId);
+    public AdminAnalyticsUsersResponse adminAnalyticsUsers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days) throws ApiException {
+        ApiResponse<AdminAnalyticsUsersResponse> localVarResp = adminAnalyticsUsersWithHttpInfo(orgId, days);
+        return localVarResp.getData();
     }
 
     /**
      * Get user growth analytics
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
+     * @return ApiResponse&lt;AdminAnalyticsUsersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily registrations and user breakdowns </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAnalyticsUsersWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminAnalyticsUsersValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<AdminAnalyticsUsersResponse> adminAnalyticsUsersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days) throws ApiException {
+        okhttp3.Call localVarCall = adminAnalyticsUsersValidateBeforeCall(orgId, days, null);
+        Type localVarReturnType = new TypeToken<AdminAnalyticsUsersResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Get user growth analytics (asynchronously)
      * 
      * @param orgId  (required)
+     * @param days Window in days (1-90, default 30). (optional, default to 30)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -428,13 +476,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Daily registrations and user breakdowns </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAnalyticsUsersAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAnalyticsUsersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer days, final ApiCallback<AdminAnalyticsUsersResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminAnalyticsUsersValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = adminAnalyticsUsersValidateBeforeCall(orgId, days, _callback);
+        Type localVarReturnType = new TypeToken<AdminAnalyticsUsersResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -447,7 +496,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminOrganizationGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -477,6 +526,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -506,41 +556,44 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get tenant information
+     * Get organization (tenant) profile
      * 
      * @param orgId  (required)
+     * @return AdminTenantGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public void adminOrganizationGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminOrganizationGetWithHttpInfo(orgId);
+    public AdminTenantGetResponse adminOrganizationGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminTenantGetResponse> localVarResp = adminOrganizationGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get tenant information
+     * Get organization (tenant) profile
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminTenantGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminOrganizationGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminTenantGetResponse> adminOrganizationGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminOrganizationGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminTenantGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get tenant information (asynchronously)
+     * Get organization (tenant) profile (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -550,13 +603,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminOrganizationGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminOrganizationGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminTenantGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminOrganizationGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminTenantGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -569,7 +623,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Combined settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsAllCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -599,6 +653,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -631,34 +686,37 @@ public class AdminSettingsApi {
      * Get all settings (combined)
      * 
      * @param orgId  (required)
+     * @return AdminSettingsAllResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Combined settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsAll(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsAllWithHttpInfo(orgId);
+    public AdminSettingsAllResponse adminSettingsAll(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsAllResponse> localVarResp = adminSettingsAllWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get all settings (combined)
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsAllResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Combined settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsAllWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsAllResponse> adminSettingsAllWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsAllValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsAllResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -672,13 +730,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Combined settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsAllAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsAllAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsAllResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsAllValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsAllResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -691,7 +750,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsAuthGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -721,6 +780,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -753,34 +813,37 @@ public class AdminSettingsApi {
      * Get authentication settings
      * 
      * @param orgId  (required)
+     * @return AdminSettingsAuthenticationGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsAuthGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsAuthGetWithHttpInfo(orgId);
+    public AdminSettingsAuthenticationGetResponse adminSettingsAuthGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsAuthenticationGetResponse> localVarResp = adminSettingsAuthGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get authentication settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsAuthenticationGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsAuthGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsAuthenticationGetResponse> adminSettingsAuthGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsAuthGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsAuthenticationGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -794,13 +857,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsAuthGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsAuthGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsAuthenticationGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsAuthGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsAuthenticationGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -813,7 +877,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsAuthenticationGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -843,6 +907,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -875,34 +940,37 @@ public class AdminSettingsApi {
      * Get authentication settings (alias for settings/auth)
      * 
      * @param orgId  (required)
+     * @return AdminSettingsAuthenticationGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsAuthenticationGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsAuthenticationGetWithHttpInfo(orgId);
+    public AdminSettingsAuthenticationGetResponse adminSettingsAuthenticationGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsAuthenticationGetResponse> localVarResp = adminSettingsAuthenticationGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get authentication settings (alias for settings/auth)
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsAuthenticationGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsAuthenticationGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsAuthenticationGetResponse> adminSettingsAuthenticationGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsAuthenticationGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsAuthenticationGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -916,13 +984,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsAuthenticationGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsAuthenticationGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsAuthenticationGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsAuthenticationGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsAuthenticationGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -935,7 +1004,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Branding settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsBrandingGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -965,6 +1034,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -997,34 +1067,37 @@ public class AdminSettingsApi {
      * Get branding/login page settings
      * 
      * @param orgId  (required)
+     * @return AdminSettingsBrandingGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsBrandingGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsBrandingGetWithHttpInfo(orgId);
+    public AdminSettingsBrandingGetResponse adminSettingsBrandingGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsBrandingGetResponse> localVarResp = adminSettingsBrandingGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get branding/login page settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsBrandingGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsBrandingGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsBrandingGetResponse> adminSettingsBrandingGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsBrandingGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsBrandingGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1038,13 +1111,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsBrandingGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsBrandingGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsBrandingGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsBrandingGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsBrandingGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1057,7 +1131,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Email settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsEmailGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1087,6 +1161,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1119,34 +1194,37 @@ public class AdminSettingsApi {
      * Get email settings
      * 
      * @param orgId  (required)
+     * @return AdminSettingsEmailGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Email settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsEmailGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsEmailGetWithHttpInfo(orgId);
+    public AdminSettingsEmailGetResponse adminSettingsEmailGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsEmailGetResponse> localVarResp = adminSettingsEmailGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get email settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsEmailGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Email settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsEmailGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsEmailGetResponse> adminSettingsEmailGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsEmailGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsEmailGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1160,13 +1238,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Email settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsEmailGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsEmailGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsEmailGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsEmailGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsEmailGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1179,7 +1258,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> General settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsGeneralGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1209,6 +1288,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1241,34 +1321,37 @@ public class AdminSettingsApi {
      * Get general settings
      * 
      * @param orgId  (required)
+     * @return AdminSettingsGeneralGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> General settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsGeneralGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsGeneralGetWithHttpInfo(orgId);
+    public AdminSettingsGeneralGetResponse adminSettingsGeneralGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsGeneralGetResponse> localVarResp = adminSettingsGeneralGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get general settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsGeneralGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> General settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsGeneralGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsGeneralGetResponse> adminSettingsGeneralGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsGeneralGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsGeneralGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1282,13 +1365,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> General settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsGeneralGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsGeneralGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsGeneralGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsGeneralGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsGeneralGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1301,7 +1385,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> SCIM settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsScimGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1331,6 +1415,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1363,34 +1448,37 @@ public class AdminSettingsApi {
      * Get SCIM settings
      * 
      * @param orgId  (required)
+     * @return AdminSettingsScimGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsScimGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsScimGetWithHttpInfo(orgId);
+    public AdminSettingsScimGetResponse adminSettingsScimGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsScimGetResponse> localVarResp = adminSettingsScimGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get SCIM settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsScimGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsScimGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsScimGetResponse> adminSettingsScimGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsScimGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsScimGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1404,13 +1492,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsScimGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsScimGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsScimGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsScimGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsScimGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1423,7 +1512,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Security settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSettingsSecurityGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1453,6 +1542,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1485,34 +1575,37 @@ public class AdminSettingsApi {
      * Get security settings
      * 
      * @param orgId  (required)
+     * @return AdminSettingsSecurityGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Security settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSettingsSecurityGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSettingsSecurityGetWithHttpInfo(orgId);
+    public AdminSettingsSecurityGetResponse adminSettingsSecurityGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSettingsSecurityGetResponse> localVarResp = adminSettingsSecurityGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get security settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSettingsSecurityGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Security settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSettingsSecurityGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSettingsSecurityGetResponse> adminSettingsSecurityGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSettingsSecurityGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSettingsSecurityGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1526,13 +1619,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSettingsSecurityGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSettingsSecurityGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSettingsSecurityGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSettingsSecurityGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSettingsSecurityGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1545,7 +1639,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminTenantGetCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1575,6 +1669,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1604,41 +1699,44 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Get tenant information
+     * Get organization (tenant) profile
      * 
      * @param orgId  (required)
+     * @return AdminTenantGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public void adminTenantGet(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminTenantGetWithHttpInfo(orgId);
+    public AdminTenantGetResponse adminTenantGet(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminTenantGetResponse> localVarResp = adminTenantGetWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get tenant information
+     * Get organization (tenant) profile
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminTenantGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminTenantGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminTenantGetResponse> adminTenantGetWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminTenantGetValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminTenantGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get tenant information (asynchronously)
+     * Get organization (tenant) profile (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1648,13 +1746,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminTenantGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminTenantGetAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminTenantGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminTenantGetValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminTenantGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1667,7 +1766,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1697,6 +1796,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1726,41 +1826,44 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
+     * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminOrganizationUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = patchAdminOrganizationUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminTenantUpdateResponse> patchAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminOrganizationUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update tenant settings (asynchronously)
+     * Update organization (tenant) name and settings (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1770,13 +1873,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminOrganizationUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1789,7 +1893,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1819,6 +1923,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1851,34 +1956,37 @@ public class AdminSettingsApi {
      * Update authentication settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = patchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update authentication settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsAuthUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1892,13 +2000,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsAuthUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1911,7 +2020,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1941,6 +2050,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1973,34 +2083,37 @@ public class AdminSettingsApi {
      * Update authentication settings (alias for settings/auth)
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = patchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> patchAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2014,13 +2127,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2033,7 +2147,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2063,6 +2177,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2095,34 +2210,37 @@ public class AdminSettingsApi {
      * Update branding/login page settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsBrandingUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResp = patchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update branding/login page settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsBrandingUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsBrandingUpdateResponse> patchAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsBrandingUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2136,13 +2254,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsBrandingUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2155,7 +2274,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsEmailUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2185,6 +2304,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2217,34 +2337,37 @@ public class AdminSettingsApi {
      * Update email settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsEmailUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsEmailUpdateResponse patchAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResp = patchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update email settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsEmailUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsEmailUpdateResponse> patchAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsEmailUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2258,13 +2381,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsEmailUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsEmailUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2277,7 +2401,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsGeneralUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2307,6 +2431,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2339,34 +2464,37 @@ public class AdminSettingsApi {
      * Update general settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsGeneralUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsGeneralUpdateResponse patchAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResp = patchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update general settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsGeneralUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsGeneralUpdateResponse> patchAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsGeneralUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2380,13 +2508,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsGeneralUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsGeneralUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2399,7 +2528,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsScimUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2429,6 +2558,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2461,34 +2591,37 @@ public class AdminSettingsApi {
      * Update SCIM settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsScimUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsScimUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResp = patchAdminSettingsScimUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update SCIM settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsScimUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsScimUpdateResponse> patchAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsScimUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2502,13 +2635,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsScimUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsScimUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2521,7 +2655,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSettingsSecurityUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2551,6 +2685,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2583,34 +2718,37 @@ public class AdminSettingsApi {
      * Update security settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsSecurityUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResp = patchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update security settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsSecurityUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsSecurityUpdateResponse> patchAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSettingsSecurityUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2624,13 +2762,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsSecurityUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSettingsSecurityUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2643,7 +2782,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2673,6 +2812,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2702,41 +2842,44 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
+     * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminTenantUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse patchAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = patchAdminTenantUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminTenantUpdateResponse> patchAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminTenantUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update tenant settings (asynchronously)
+     * Update organization (tenant) name and settings (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -2746,13 +2889,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminTenantUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2765,7 +2909,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminOrganizationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2795,6 +2939,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2824,41 +2969,44 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
+     * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminOrganizationUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse putAdminOrganizationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = putAdminOrganizationUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminTenantUpdateResponse> putAdminOrganizationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminOrganizationUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update tenant settings (asynchronously)
+     * Update organization (tenant) name and settings (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -2868,13 +3016,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminOrganizationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminOrganizationUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2887,7 +3036,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsAuthUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2917,6 +3066,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2949,34 +3099,37 @@ public class AdminSettingsApi {
      * Update authentication settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = putAdminSettingsAuthUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update authentication settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsAuthUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -2990,13 +3143,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsAuthUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsAuthUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3009,7 +3163,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsAuthenticationUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3039,6 +3193,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3071,34 +3226,37 @@ public class AdminSettingsApi {
      * Update authentication settings (alias for settings/auth)
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsAuthenticationUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> localVarResp = putAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update authentication settings (alias for settings/auth)
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsAuthenticationUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> putAdminSettingsAuthenticationUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -3112,13 +3270,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated authentication settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsAuthenticationUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsAuthenticationUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsAuthenticationUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsAuthenticationUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3131,7 +3290,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsBrandingUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3161,6 +3320,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3193,34 +3353,37 @@ public class AdminSettingsApi {
      * Update branding/login page settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsBrandingUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsBrandingUpdateResponse> localVarResp = putAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update branding/login page settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsBrandingUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsBrandingUpdateResponse> putAdminSettingsBrandingUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsBrandingUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -3234,13 +3397,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated branding settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsBrandingUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsBrandingUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsBrandingUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsBrandingUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3253,7 +3417,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsEmailUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3283,6 +3447,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3315,34 +3480,37 @@ public class AdminSettingsApi {
      * Update email settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsEmailUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsEmailUpdateResponse putAdminSettingsEmailUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsEmailUpdateResponse> localVarResp = putAdminSettingsEmailUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update email settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsEmailUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsEmailUpdateResponse> putAdminSettingsEmailUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsEmailUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -3356,13 +3524,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated email settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsEmailUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsEmailUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsEmailUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsEmailUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3375,7 +3544,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsGeneralUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3405,6 +3574,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3437,34 +3607,37 @@ public class AdminSettingsApi {
      * Update general settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsGeneralUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsGeneralUpdateResponse putAdminSettingsGeneralUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsGeneralUpdateResponse> localVarResp = putAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update general settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsGeneralUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsGeneralUpdateResponse> putAdminSettingsGeneralUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsGeneralUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -3478,13 +3651,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated general settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsGeneralUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsGeneralUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsGeneralUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsGeneralUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3497,7 +3671,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsScimUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3527,6 +3701,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3559,34 +3734,37 @@ public class AdminSettingsApi {
      * Update SCIM settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsScimUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsScimUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsScimUpdateResponse> localVarResp = putAdminSettingsScimUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update SCIM settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsScimUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsScimUpdateResponse> putAdminSettingsScimUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsScimUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -3600,13 +3778,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated SCIM settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsScimUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsScimUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsScimUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsScimUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3619,7 +3798,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSettingsSecurityUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3649,6 +3828,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3681,34 +3861,37 @@ public class AdminSettingsApi {
      * Update security settings
      * 
      * @param orgId  (required)
+     * @return PutAdminSettingsSecurityUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    public PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminSettingsSecurityUpdateResponse> localVarResp = putAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update security settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminSettingsSecurityUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminSettingsSecurityUpdateResponse> putAdminSettingsSecurityUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSettingsSecurityUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -3722,13 +3905,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated security settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSettingsSecurityUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminSettingsSecurityUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSettingsSecurityUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminSettingsSecurityUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3741,7 +3925,7 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminTenantUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -3771,6 +3955,7 @@ public class AdminSettingsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3800,41 +3985,44 @@ public class AdminSettingsApi {
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
+     * @return PutAdminTenantUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminTenantUpdateWithHttpInfo(orgId);
+    public PutAdminTenantUpdateResponse putAdminTenantUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<PutAdminTenantUpdateResponse> localVarResp = putAdminTenantUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update tenant settings
+     * Update organization (tenant) name and settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminTenantUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<PutAdminTenantUpdateResponse> putAdminTenantUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminTenantUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update tenant settings (asynchronously)
+     * Update organization (tenant) name and settings (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -3844,13 +4032,14 @@ public class AdminSettingsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated organization profile </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminTenantUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<PutAdminTenantUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminTenantUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminTenantUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

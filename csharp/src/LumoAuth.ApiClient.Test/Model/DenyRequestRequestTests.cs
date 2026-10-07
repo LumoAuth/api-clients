@@ -63,5 +63,14 @@ namespace LumoAuth.ApiClient.Test.Model
         {
             // TODO unit test for the property 'Reason'
         }
+
+        /// <summary>
+        /// Test the property 'AgentMessage'
+        /// </summary>
+        [Fact]
+        public void AgentMessageTest()
+        {
+            // TODO unit test for the property 'AgentMessage'
+        }
     }
 }

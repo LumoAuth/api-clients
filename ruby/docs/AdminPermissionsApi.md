@@ -17,7 +17,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_permissions_create
 
-> admin_permissions_create(org_id)
+> <AdminPermissionsCreateResponse> admin_permissions_create(org_id)
 
 Create a custom permission for the tenant
 
@@ -42,7 +42,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Create a custom permission for the tenant
-  api_instance.admin_permissions_create(org_id)
+  result = api_instance.admin_permissions_create(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_create: #{e}"
 end
@@ -50,9 +51,9 @@ end
 
 #### Using the admin_permissions_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_permissions_create_with_http_info(org_id)
+> <Array(<AdminPermissionsCreateResponse>, Integer, Hash)> admin_permissions_create_with_http_info(org_id)
 
 ```ruby
 begin
@@ -60,7 +61,7 @@ begin
   data, status_code, headers = api_instance.admin_permissions_create_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminPermissionsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_create_with_http_info: #{e}"
 end
@@ -74,7 +75,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -83,12 +84,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_permissions_delete
 
-> admin_permissions_delete(org_id, permission_id)
+> <MessageResponse> admin_permissions_delete(org_id, permission_id)
 
 Delete a custom permission
 
@@ -114,7 +115,8 @@ permission_id = 'permission_id_example' # String |
 
 begin
   # Delete a custom permission
-  api_instance.admin_permissions_delete(org_id, permission_id)
+  result = api_instance.admin_permissions_delete(org_id, permission_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_delete: #{e}"
 end
@@ -122,9 +124,9 @@ end
 
 #### Using the admin_permissions_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_permissions_delete_with_http_info(org_id, permission_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_permissions_delete_with_http_info(org_id, permission_id)
 
 ```ruby
 begin
@@ -132,7 +134,7 @@ begin
   data, status_code, headers = api_instance.admin_permissions_delete_with_http_info(org_id, permission_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_delete_with_http_info: #{e}"
 end
@@ -147,7 +149,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -156,12 +158,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_permissions_get
 
-> admin_permissions_get(org_id, permission_id)
+> <AdminPermissionsGetResponse> admin_permissions_get(org_id, permission_id)
 
 Get a single permission
 
@@ -187,7 +189,8 @@ permission_id = 'permission_id_example' # String |
 
 begin
   # Get a single permission
-  api_instance.admin_permissions_get(org_id, permission_id)
+  result = api_instance.admin_permissions_get(org_id, permission_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_get: #{e}"
 end
@@ -195,9 +198,9 @@ end
 
 #### Using the admin_permissions_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_permissions_get_with_http_info(org_id, permission_id)
+> <Array(<AdminPermissionsGetResponse>, Integer, Hash)> admin_permissions_get_with_http_info(org_id, permission_id)
 
 ```ruby
 begin
@@ -205,7 +208,7 @@ begin
   data, status_code, headers = api_instance.admin_permissions_get_with_http_info(org_id, permission_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminPermissionsGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_get_with_http_info: #{e}"
 end
@@ -220,7 +223,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminPermissionsGetResponse**](AdminPermissionsGetResponse.md)
 
 ### Authorization
 
@@ -229,12 +232,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_permissions_list
 
-> admin_permissions_list(org_id)
+> <AdminPermissionsListResponse> admin_permissions_list(org_id)
 
 List all available permissions for the tenant
 
@@ -259,7 +262,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # List all available permissions for the tenant
-  api_instance.admin_permissions_list(org_id)
+  result = api_instance.admin_permissions_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_list: #{e}"
 end
@@ -267,9 +271,9 @@ end
 
 #### Using the admin_permissions_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_permissions_list_with_http_info(org_id)
+> <Array(<AdminPermissionsListResponse>, Integer, Hash)> admin_permissions_list_with_http_info(org_id)
 
 ```ruby
 begin
@@ -277,7 +281,7 @@ begin
   data, status_code, headers = api_instance.admin_permissions_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminPermissionsListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_list_with_http_info: #{e}"
 end
@@ -291,7 +295,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminPermissionsListResponse**](AdminPermissionsListResponse.md)
 
 ### Authorization
 
@@ -300,12 +304,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_permissions_update
 
-> admin_permissions_update(org_id, permission_id)
+> <AdminPermissionsCreateResponse> admin_permissions_update(org_id, permission_id)
 
 Update a permission
 
@@ -331,7 +335,8 @@ permission_id = 'permission_id_example' # String |
 
 begin
   # Update a permission
-  api_instance.admin_permissions_update(org_id, permission_id)
+  result = api_instance.admin_permissions_update(org_id, permission_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_update: #{e}"
 end
@@ -339,9 +344,9 @@ end
 
 #### Using the admin_permissions_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_permissions_update_with_http_info(org_id, permission_id)
+> <Array(<AdminPermissionsCreateResponse>, Integer, Hash)> admin_permissions_update_with_http_info(org_id, permission_id)
 
 ```ruby
 begin
@@ -349,7 +354,7 @@ begin
   data, status_code, headers = api_instance.admin_permissions_update_with_http_info(org_id, permission_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminPermissionsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_update_with_http_info: #{e}"
 end
@@ -364,7 +369,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -373,12 +378,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_permissions_usage
 
-> admin_permissions_usage(org_id, permission_id)
+> <AdminPermissionsUsageResponse> admin_permissions_usage(org_id, permission_id)
 
 Get permission usage (roles assigned to this permission)
 
@@ -404,7 +409,8 @@ permission_id = 'permission_id_example' # String |
 
 begin
   # Get permission usage (roles assigned to this permission)
-  api_instance.admin_permissions_usage(org_id, permission_id)
+  result = api_instance.admin_permissions_usage(org_id, permission_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_usage: #{e}"
 end
@@ -412,9 +418,9 @@ end
 
 #### Using the admin_permissions_usage_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_permissions_usage_with_http_info(org_id, permission_id)
+> <Array(<AdminPermissionsUsageResponse>, Integer, Hash)> admin_permissions_usage_with_http_info(org_id, permission_id)
 
 ```ruby
 begin
@@ -422,7 +428,7 @@ begin
   data, status_code, headers = api_instance.admin_permissions_usage_with_http_info(org_id, permission_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminPermissionsUsageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_permissions_usage_with_http_info: #{e}"
 end
@@ -437,7 +443,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminPermissionsUsageResponse**](AdminPermissionsUsageResponse.md)
 
 ### Authorization
 
@@ -446,12 +452,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_scopes_create
 
-> admin_scopes_create(org_id)
+> <AdminScopesCreateResponse> admin_scopes_create(org_id)
 
 Create a custom OAuth scope
 
@@ -476,7 +482,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Create a custom OAuth scope
-  api_instance.admin_scopes_create(org_id)
+  result = api_instance.admin_scopes_create(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_create: #{e}"
 end
@@ -484,9 +491,9 @@ end
 
 #### Using the admin_scopes_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_scopes_create_with_http_info(org_id)
+> <Array(<AdminScopesCreateResponse>, Integer, Hash)> admin_scopes_create_with_http_info(org_id)
 
 ```ruby
 begin
@@ -494,7 +501,7 @@ begin
   data, status_code, headers = api_instance.admin_scopes_create_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminScopesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_create_with_http_info: #{e}"
 end
@@ -508,7 +515,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminScopesCreateResponse**](AdminScopesCreateResponse.md)
 
 ### Authorization
 
@@ -517,12 +524,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_scopes_delete
 
-> admin_scopes_delete(org_id, scope_id)
+> <MessageResponse> admin_scopes_delete(org_id, scope_id)
 
 Delete a custom OAuth scope
 
@@ -548,7 +555,8 @@ scope_id = 'scope_id_example' # String |
 
 begin
   # Delete a custom OAuth scope
-  api_instance.admin_scopes_delete(org_id, scope_id)
+  result = api_instance.admin_scopes_delete(org_id, scope_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_delete: #{e}"
 end
@@ -556,9 +564,9 @@ end
 
 #### Using the admin_scopes_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_scopes_delete_with_http_info(org_id, scope_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_scopes_delete_with_http_info(org_id, scope_id)
 
 ```ruby
 begin
@@ -566,7 +574,7 @@ begin
   data, status_code, headers = api_instance.admin_scopes_delete_with_http_info(org_id, scope_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_delete_with_http_info: #{e}"
 end
@@ -581,7 +589,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -590,12 +598,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_scopes_list
 
-> admin_scopes_list(org_id)
+> <AdminScopesListResponse> admin_scopes_list(org_id)
 
 List OAuth scopes
 
@@ -620,7 +628,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # List OAuth scopes
-  api_instance.admin_scopes_list(org_id)
+  result = api_instance.admin_scopes_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_list: #{e}"
 end
@@ -628,9 +637,9 @@ end
 
 #### Using the admin_scopes_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_scopes_list_with_http_info(org_id)
+> <Array(<AdminScopesListResponse>, Integer, Hash)> admin_scopes_list_with_http_info(org_id)
 
 ```ruby
 begin
@@ -638,7 +647,7 @@ begin
   data, status_code, headers = api_instance.admin_scopes_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminScopesListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminPermissionsApi->admin_scopes_list_with_http_info: #{e}"
 end
@@ -652,7 +661,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminScopesListResponse**](AdminScopesListResponse.md)
 
 ### Authorization
 
@@ -661,5 +670,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

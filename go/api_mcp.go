@@ -24,12 +24,9 @@ import (
 type McpAPI interface {
 
 	/*
-	GetProtectedResourceMetadata OAuth 2.0 Protected Resource Metadata (RFC 9728)
+	GetProtectedResourceMetadata MCP server protected resource metadata (RFC 9728)
 
-	Well-known endpoint for MCP servers with path-specific metadata.
-Example: /.well-known/oauth-protected-resource/mcp/{serverId}
-
-MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+	Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -39,13 +36,13 @@ MCP clients MUST support this discovery mechanism per the MCP Authorization spec
 	GetProtectedResourceMetadata(ctx context.Context, orgId string, serverId string) ApiGetProtectedResourceMetadataRequest
 
 	// GetProtectedResourceMetadataExecute executes the request
-	GetProtectedResourceMetadataExecute(r ApiGetProtectedResourceMetadataRequest) (*http.Response, error)
+	//  @return ProtectedResourceMetadata
+	GetProtectedResourceMetadataExecute(r ApiGetProtectedResourceMetadataRequest) (*ProtectedResourceMetadata, *http.Response, error)
 
 	/*
-	GetProtectedResourceMetadataRoot Root-level Protected Resource Metadata
+	GetProtectedResourceMetadataRoot Organization-level protected resource metadata (RFC 9728)
 
-	Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists.
-Returns metadata for the first active MCP server, or a list of available servers.
+	Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -54,7 +51,8 @@ Returns metadata for the first active MCP server, or a list of available servers
 	GetProtectedResourceMetadataRoot(ctx context.Context, orgId string) ApiGetProtectedResourceMetadataRootRequest
 
 	// GetProtectedResourceMetadataRootExecute executes the request
-	GetProtectedResourceMetadataRootExecute(r ApiGetProtectedResourceMetadataRootRequest) (*http.Response, error)
+	//  @return GetProtectedResourceMetadataRoot200Response
+	GetProtectedResourceMetadataRootExecute(r ApiGetProtectedResourceMetadataRootRequest) (*GetProtectedResourceMetadataRoot200Response, *http.Response, error)
 
 	/*
 	GetServer REST API: Get a specific MCP server.
@@ -73,12 +71,9 @@ Returns metadata for the first active MCP server, or a list of available servers
 	GetServerExecute(r ApiGetServerRequest) (*GetServerResponse, *http.Response, error)
 
 	/*
-	GetServerChallenge Simulated MCP Server 401 challenge endpoint.
+	GetServerChallenge Simulated MCP server authorization challenge
 
-	When an MCP client sends an unauthenticated request, the MCP server MUST
-respond with 401 including WWW-Authenticate header per the spec.
-
-This endpoint allows testing the challenge flow.
+	Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -88,7 +83,8 @@ This endpoint allows testing the challenge flow.
 	GetServerChallenge(ctx context.Context, orgId string, serverId string) ApiGetServerChallengeRequest
 
 	// GetServerChallengeExecute executes the request
-	GetServerChallengeExecute(r ApiGetServerChallengeRequest) (*http.Response, error)
+	//  @return GetServerChallengeResponse
+	GetServerChallengeExecute(r ApiGetServerChallengeRequest) (*GetServerChallengeResponse, *http.Response, error)
 
 	/*
 	ListServers REST API: List MCP servers for a tenant.
@@ -106,12 +102,9 @@ This endpoint allows testing the challenge flow.
 	ListServersExecute(r ApiListServersRequest) (*ListServersResponse, *http.Response, error)
 
 	/*
-	PostServerChallenge Simulated MCP Server 401 challenge endpoint.
+	PostServerChallenge Simulated MCP server authorization challenge (POST)
 
-	When an MCP client sends an unauthenticated request, the MCP server MUST
-respond with 401 including WWW-Authenticate header per the spec.
-
-This endpoint allows testing the challenge flow.
+	Identical to GET; the HTTP method is only recorded in the audit trail.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -121,7 +114,8 @@ This endpoint allows testing the challenge flow.
 	PostServerChallenge(ctx context.Context, orgId string, serverId string) ApiPostServerChallengeRequest
 
 	// PostServerChallengeExecute executes the request
-	PostServerChallengeExecute(r ApiPostServerChallengeRequest) (*http.Response, error)
+	//  @return GetServerChallengeResponse
+	PostServerChallengeExecute(r ApiPostServerChallengeRequest) (*GetServerChallengeResponse, *http.Response, error)
 }
 
 // McpAPIService McpAPI service
@@ -134,17 +128,14 @@ type ApiGetProtectedResourceMetadataRequest struct {
 	serverId string
 }
 
-func (r ApiGetProtectedResourceMetadataRequest) Execute() (*http.Response, error) {
+func (r ApiGetProtectedResourceMetadataRequest) Execute() (*ProtectedResourceMetadata, *http.Response, error) {
 	return r.ApiService.GetProtectedResourceMetadataExecute(r)
 }
 
 /*
-GetProtectedResourceMetadata OAuth 2.0 Protected Resource Metadata (RFC 9728)
+GetProtectedResourceMetadata MCP server protected resource metadata (RFC 9728)
 
-Well-known endpoint for MCP servers with path-specific metadata.
-Example: /.well-known/oauth-protected-resource/mcp/{serverId}
-
-MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -161,16 +152,18 @@ func (a *McpAPIService) GetProtectedResourceMetadata(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *McpAPIService) GetProtectedResourceMetadataExecute(r ApiGetProtectedResourceMetadataRequest) (*http.Response, error) {
+//  @return ProtectedResourceMetadata
+func (a *McpAPIService) GetProtectedResourceMetadataExecute(r ApiGetProtectedResourceMetadataRequest) (*ProtectedResourceMetadata, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ProtectedResourceMetadata
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "McpAPIService.GetProtectedResourceMetadata")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}"
@@ -191,7 +184,7 @@ func (a *McpAPIService) GetProtectedResourceMetadataExecute(r ApiGetProtectedRes
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -200,19 +193,19 @@ func (a *McpAPIService) GetProtectedResourceMetadataExecute(r ApiGetProtectedRes
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -220,10 +213,19 @@ func (a *McpAPIService) GetProtectedResourceMetadataExecute(r ApiGetProtectedRes
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetProtectedResourceMetadataRootRequest struct {
@@ -232,15 +234,14 @@ type ApiGetProtectedResourceMetadataRootRequest struct {
 	orgId string
 }
 
-func (r ApiGetProtectedResourceMetadataRootRequest) Execute() (*http.Response, error) {
+func (r ApiGetProtectedResourceMetadataRootRequest) Execute() (*GetProtectedResourceMetadataRoot200Response, *http.Response, error) {
 	return r.ApiService.GetProtectedResourceMetadataRootExecute(r)
 }
 
 /*
-GetProtectedResourceMetadataRoot Root-level Protected Resource Metadata
+GetProtectedResourceMetadataRoot Organization-level protected resource metadata (RFC 9728)
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists.
-Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -255,16 +256,18 @@ func (a *McpAPIService) GetProtectedResourceMetadataRoot(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *McpAPIService) GetProtectedResourceMetadataRootExecute(r ApiGetProtectedResourceMetadataRootRequest) (*http.Response, error) {
+//  @return GetProtectedResourceMetadataRoot200Response
+func (a *McpAPIService) GetProtectedResourceMetadataRootExecute(r ApiGetProtectedResourceMetadataRootRequest) (*GetProtectedResourceMetadataRoot200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetProtectedResourceMetadataRoot200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "McpAPIService.GetProtectedResourceMetadataRoot")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource"
@@ -284,7 +287,7 @@ func (a *McpAPIService) GetProtectedResourceMetadataRootExecute(r ApiGetProtecte
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -293,19 +296,19 @@ func (a *McpAPIService) GetProtectedResourceMetadataRootExecute(r ApiGetProtecte
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -313,10 +316,19 @@ func (a *McpAPIService) GetProtectedResourceMetadataRootExecute(r ApiGetProtecte
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetServerRequest struct {
@@ -447,17 +459,14 @@ type ApiGetServerChallengeRequest struct {
 	serverId string
 }
 
-func (r ApiGetServerChallengeRequest) Execute() (*http.Response, error) {
+func (r ApiGetServerChallengeRequest) Execute() (*GetServerChallengeResponse, *http.Response, error) {
 	return r.ApiService.GetServerChallengeExecute(r)
 }
 
 /*
-GetServerChallenge Simulated MCP Server 401 challenge endpoint.
+GetServerChallenge Simulated MCP server authorization challenge
 
-When an MCP client sends an unauthenticated request, the MCP server MUST
-respond with 401 including WWW-Authenticate header per the spec.
-
-This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -474,16 +483,18 @@ func (a *McpAPIService) GetServerChallenge(ctx context.Context, orgId string, se
 }
 
 // Execute executes the request
-func (a *McpAPIService) GetServerChallengeExecute(r ApiGetServerChallengeRequest) (*http.Response, error) {
+//  @return GetServerChallengeResponse
+func (a *McpAPIService) GetServerChallengeExecute(r ApiGetServerChallengeRequest) (*GetServerChallengeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetServerChallengeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "McpAPIService.GetServerChallenge")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/mcp/{serverId}/challenge"
@@ -504,7 +515,7 @@ func (a *McpAPIService) GetServerChallengeExecute(r ApiGetServerChallengeRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -513,19 +524,19 @@ func (a *McpAPIService) GetServerChallengeExecute(r ApiGetServerChallengeRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -533,10 +544,19 @@ func (a *McpAPIService) GetServerChallengeExecute(r ApiGetServerChallengeRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiListServersRequest struct {
@@ -663,17 +683,14 @@ type ApiPostServerChallengeRequest struct {
 	serverId string
 }
 
-func (r ApiPostServerChallengeRequest) Execute() (*http.Response, error) {
+func (r ApiPostServerChallengeRequest) Execute() (*GetServerChallengeResponse, *http.Response, error) {
 	return r.ApiService.PostServerChallengeExecute(r)
 }
 
 /*
-PostServerChallenge Simulated MCP Server 401 challenge endpoint.
+PostServerChallenge Simulated MCP server authorization challenge (POST)
 
-When an MCP client sends an unauthenticated request, the MCP server MUST
-respond with 401 including WWW-Authenticate header per the spec.
-
-This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -690,16 +707,18 @@ func (a *McpAPIService) PostServerChallenge(ctx context.Context, orgId string, s
 }
 
 // Execute executes the request
-func (a *McpAPIService) PostServerChallengeExecute(r ApiPostServerChallengeRequest) (*http.Response, error) {
+//  @return GetServerChallengeResponse
+func (a *McpAPIService) PostServerChallengeExecute(r ApiPostServerChallengeRequest) (*GetServerChallengeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetServerChallengeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "McpAPIService.PostServerChallenge")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/mcp/{serverId}/challenge"
@@ -720,7 +739,7 @@ func (a *McpAPIService) PostServerChallengeExecute(r ApiPostServerChallengeReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -729,19 +748,19 @@ func (a *McpAPIService) PostServerChallengeExecute(r ApiPostServerChallengeReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -749,8 +768,17 @@ func (a *McpAPIService) PostServerChallengeExecute(r ApiPostServerChallengeReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

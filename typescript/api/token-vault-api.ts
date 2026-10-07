@@ -21,6 +21,12 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { GetConnectionTokenRequest } from '../models';
+// @ts-ignore
+import type { GetConnectionTokenResponse } from '../models';
+// @ts-ignore
+import type { ListConnectionsResponse } from '../models';
 /**
  * TokenVaultApi - axios parameter creator
  * @export
@@ -28,14 +34,15 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const TokenVaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
-         * @summary Fetch a live third-party access token for a connection.
+         * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
+         * @summary Fetch a live third-party access token for a connection
          * @param {string} orgId 
          * @param {string} connectionId 
+         * @param {GetConnectionTokenRequest} [getConnectionTokenRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConnectionToken: async (orgId: string, connectionId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getConnectionToken: async (orgId: string, connectionId: string, getConnectionTokenRequest?: GetConnectionTokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('getConnectionToken', 'orgId', orgId)
             // verify required parameter 'connectionId' is not null or undefined
@@ -63,9 +70,12 @@ export const TokenVaultApiAxiosParamCreator = function (configuration?: Configur
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getConnectionTokenRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -73,8 +83,8 @@ export const TokenVaultApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * GET /orgs/{orgId}/api/v1/agents/me/connections
-         * @summary List the connections this agent may use, with grant status. No secrets.
+         * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
+         * @summary List the outbound connections this agent may use
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -124,27 +134,28 @@ export const TokenVaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TokenVaultApiAxiosParamCreator(configuration)
     return {
         /**
-         * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
-         * @summary Fetch a live third-party access token for a connection.
+         * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
+         * @summary Fetch a live third-party access token for a connection
          * @param {string} orgId 
          * @param {string} connectionId 
+         * @param {GetConnectionTokenRequest} [getConnectionTokenRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getConnectionToken(orgId: string, connectionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getConnectionToken(orgId, connectionId, options);
+        async getConnectionToken(orgId: string, connectionId: string, getConnectionTokenRequest?: GetConnectionTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetConnectionTokenResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getConnectionToken(orgId, connectionId, getConnectionTokenRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TokenVaultApi.getConnectionToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GET /orgs/{orgId}/api/v1/agents/me/connections
-         * @summary List the connections this agent may use, with grant status. No secrets.
+         * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
+         * @summary List the outbound connections this agent may use
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listConnections(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listConnections(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListConnectionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listConnections(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TokenVaultApi.listConnections']?.[localVarOperationServerIndex]?.url;
@@ -161,23 +172,23 @@ export const TokenVaultApiFactory = function (configuration?: Configuration, bas
     const localVarFp = TokenVaultApiFp(configuration)
     return {
         /**
-         * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
-         * @summary Fetch a live third-party access token for a connection.
+         * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
+         * @summary Fetch a live third-party access token for a connection
          * @param {TokenVaultApiGetConnectionTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getConnectionToken(requestParameters: TokenVaultApiGetConnectionTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getConnectionToken(requestParameters.orgId, requestParameters.connectionId, options).then((request) => request(axios, basePath));
+        getConnectionToken(requestParameters: TokenVaultApiGetConnectionTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetConnectionTokenResponse> {
+            return localVarFp.getConnectionToken(requestParameters.orgId, requestParameters.connectionId, requestParameters.getConnectionTokenRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * GET /orgs/{orgId}/api/v1/agents/me/connections
-         * @summary List the connections this agent may use, with grant status. No secrets.
+         * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
+         * @summary List the outbound connections this agent may use
          * @param {TokenVaultApiListConnectionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listConnections(requestParameters: TokenVaultApiListConnectionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listConnections(requestParameters: TokenVaultApiListConnectionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListConnectionsResponse> {
             return localVarFp.listConnections(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -190,24 +201,24 @@ export const TokenVaultApiFactory = function (configuration?: Configuration, bas
  */
 export interface TokenVaultApiInterface {
     /**
-     * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
-     * @summary Fetch a live third-party access token for a connection.
+     * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
+     * @summary Fetch a live third-party access token for a connection
      * @param {TokenVaultApiGetConnectionTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TokenVaultApiInterface
      */
-    getConnectionToken(requestParameters: TokenVaultApiGetConnectionTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getConnectionToken(requestParameters: TokenVaultApiGetConnectionTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetConnectionTokenResponse>;
 
     /**
-     * GET /orgs/{orgId}/api/v1/agents/me/connections
-     * @summary List the connections this agent may use, with grant status. No secrets.
+     * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
+     * @summary List the outbound connections this agent may use
      * @param {TokenVaultApiListConnectionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TokenVaultApiInterface
      */
-    listConnections(requestParameters: TokenVaultApiListConnectionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listConnections(requestParameters: TokenVaultApiListConnectionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListConnectionsResponse>;
 
 }
 
@@ -230,6 +241,13 @@ export interface TokenVaultApiGetConnectionTokenRequest {
      * @memberof TokenVaultApiGetConnectionToken
      */
     readonly connectionId: string
+
+    /**
+     * 
+     * @type {GetConnectionTokenRequest}
+     * @memberof TokenVaultApiGetConnectionToken
+     */
+    readonly getConnectionTokenRequest?: GetConnectionTokenRequest
 }
 
 /**
@@ -254,20 +272,20 @@ export interface TokenVaultApiListConnectionsRequest {
  */
 export class TokenVaultApi extends BaseAPI implements TokenVaultApiInterface {
     /**
-     * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
-     * @summary Fetch a live third-party access token for a connection.
+     * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
+     * @summary Fetch a live third-party access token for a connection
      * @param {TokenVaultApiGetConnectionTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TokenVaultApi
      */
     public getConnectionToken(requestParameters: TokenVaultApiGetConnectionTokenRequest, options?: RawAxiosRequestConfig) {
-        return TokenVaultApiFp(this.configuration).getConnectionToken(requestParameters.orgId, requestParameters.connectionId, options).then((request) => request(this.axios, this.basePath));
+        return TokenVaultApiFp(this.configuration).getConnectionToken(requestParameters.orgId, requestParameters.connectionId, requestParameters.getConnectionTokenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * GET /orgs/{orgId}/api/v1/agents/me/connections
-     * @summary List the connections this agent may use, with grant status. No secrets.
+     * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
+     * @summary List the outbound connections this agent may use
      * @param {TokenVaultApiListConnectionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

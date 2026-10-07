@@ -13,9 +13,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminAgentsGenerateTokenResponse {
-    /// The issued token and its metadata (access_token, expires_in, ...).
     #[serde(rename = "data", skip_serializing_if = "Option::is_none")]
-    pub data: Option<serde_json::Value>,
+    pub data: Option<Box<models::AdminAgentsGenerateTokenResponseData>>,
 }
 
 impl AdminAgentsGenerateTokenResponse {

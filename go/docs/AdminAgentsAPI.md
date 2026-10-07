@@ -450,7 +450,7 @@ Name | Type | Description  | Notes
 
 ## AdminAgentsDelete
 
-> MessageResponse AdminAgentsDelete(ctx, orgId, agentId).Execute()
+> AdminAgentsDeleteResponse AdminAgentsDelete(ctx, orgId, agentId).Execute()
 
 Delete an agent
 
@@ -477,7 +477,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAgentsAPI.AdminAgentsDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `AdminAgentsDelete`: MessageResponse
+	// response from `AdminAgentsDelete`: AdminAgentsDeleteResponse
 	fmt.Fprintf(os.Stdout, "Response from `AdminAgentsAPI.AdminAgentsDelete`: %v\n", resp)
 }
 ```
@@ -503,7 +503,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MessageResponse**](MessageResponse.md)
+[**AdminAgentsDeleteResponse**](AdminAgentsDeleteResponse.md)
 
 ### Authorization
 

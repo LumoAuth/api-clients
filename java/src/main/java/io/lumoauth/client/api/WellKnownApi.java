@@ -27,6 +27,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AuthorizationServerMetadata;
+import io.lumoauth.client.model.GetSsfConfigurationResponse;
+import io.lumoauth.client.model.JsonWebKeySet;
+import io.lumoauth.client.model.OpenIdConfiguration;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +85,8 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getAuthorizationServerMetadataCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +116,7 @@ public class WellKnownApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,42 +146,47 @@ public class WellKnownApi {
     }
 
     /**
-     * 
-     * 
+     * OAuth 2.0 authorization server metadata (RFC 8414)
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
      * @param orgId  (required)
+     * @return AuthorizationServerMetadata
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public void getAuthorizationServerMetadata(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getAuthorizationServerMetadataWithHttpInfo(orgId);
+    public AuthorizationServerMetadata getAuthorizationServerMetadata(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AuthorizationServerMetadata> localVarResp = getAuthorizationServerMetadataWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * OAuth 2.0 authorization server metadata (RFC 8414)
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AuthorizationServerMetadata&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getAuthorizationServerMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AuthorizationServerMetadata> getAuthorizationServerMetadataWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getAuthorizationServerMetadataValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AuthorizationServerMetadata>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * OAuth 2.0 authorization server metadata (RFC 8414) (asynchronously)
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -184,13 +195,15 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getAuthorizationServerMetadataAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getAuthorizationServerMetadataAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AuthorizationServerMetadata> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getAuthorizationServerMetadataValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AuthorizationServerMetadata>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -203,7 +216,8 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> JWK Set. Each key is an RSA (n, e) or EC (crv, x, y) public JWK with kid, use&#x3D;sig and alg. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getJwksCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -233,6 +247,7 @@ public class WellKnownApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -262,42 +277,47 @@ public class WellKnownApi {
     }
 
     /**
-     * 
-     * 
+     * JSON Web Key Set (RFC 7517)
+     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
+     * @return JsonWebKeySet
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> JWK Set. Each key is an RSA (n, e) or EC (crv, x, y) public JWK with kid, use&#x3D;sig and alg. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public void getJwks(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getJwksWithHttpInfo(orgId);
+    public JsonWebKeySet getJwks(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<JsonWebKeySet> localVarResp = getJwksWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * JSON Web Key Set (RFC 7517)
+     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;JsonWebKeySet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> JWK Set. Each key is an RSA (n, e) or EC (crv, x, y) public JWK with kid, use&#x3D;sig and alg. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getJwksWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<JsonWebKeySet> getJwksWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getJwksValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<JsonWebKeySet>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * JSON Web Key Set (RFC 7517) (asynchronously)
+     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -306,13 +326,15 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> JWK Set. Each key is an RSA (n, e) or EC (crv, x, y) public JWK with kid, use&#x3D;sig and alg. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getJwksAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getJwksAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<JsonWebKeySet> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getJwksValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<JsonWebKeySet>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -325,7 +347,8 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getOpenidConfigurationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -355,6 +378,7 @@ public class WellKnownApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -384,42 +408,47 @@ public class WellKnownApi {
     }
 
     /**
-     * 
-     * 
+     * OpenID Provider configuration (OIDC Discovery 1.0)
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
      * @param orgId  (required)
+     * @return OpenIdConfiguration
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public void getOpenidConfiguration(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getOpenidConfigurationWithHttpInfo(orgId);
+    public OpenIdConfiguration getOpenidConfiguration(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<OpenIdConfiguration> localVarResp = getOpenidConfigurationWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * OpenID Provider configuration (OIDC Discovery 1.0)
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;OpenIdConfiguration&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getOpenidConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<OpenIdConfiguration> getOpenidConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getOpenidConfigurationValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<OpenIdConfiguration>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * OpenID Provider configuration (OIDC Discovery 1.0) (asynchronously)
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -428,13 +457,15 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getOpenidConfigurationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getOpenidConfigurationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<OpenIdConfiguration> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getOpenidConfigurationValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<OpenIdConfiguration>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -447,7 +478,8 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getSsfConfigurationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -477,6 +509,7 @@ public class WellKnownApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -506,41 +539,46 @@ public class WellKnownApi {
     }
 
     /**
-     * 
+     * SSF transmitter configuration metadata
      * 
      * @param orgId  (required)
+     * @return GetSsfConfigurationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
      </table>
      */
-    public void getSsfConfiguration(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getSsfConfigurationWithHttpInfo(orgId);
+    public GetSsfConfigurationResponse getSsfConfiguration(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<GetSsfConfigurationResponse> localVarResp = getSsfConfigurationWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * SSF transmitter configuration metadata
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;GetSsfConfigurationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getSsfConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<GetSsfConfigurationResponse> getSsfConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getSsfConfigurationValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<GetSsfConfigurationResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * SSF transmitter configuration metadata (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -550,13 +588,15 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Transmitter configuration </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Tenant not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getSsfConfigurationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getSsfConfigurationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<GetSsfConfigurationResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getSsfConfigurationValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<GetSsfConfigurationResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

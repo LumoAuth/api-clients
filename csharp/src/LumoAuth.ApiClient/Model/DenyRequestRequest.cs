@@ -36,18 +36,27 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="DenyRequestRequest" /> class.
         /// </summary>
-        /// <param name="reason">Optional denial reason..</param>
-        public DenyRequestRequest(string reason = default)
+        /// <param name="reason">Optional denial reason (internal; never shown to the agent)..</param>
+        /// <param name="agentMessage">Optional message the agent MAY read on the status endpoint / callback..</param>
+        public DenyRequestRequest(string reason = default, string agentMessage = default)
         {
             this.Reason = reason;
+            this.AgentMessage = agentMessage;
         }
 
         /// <summary>
-        /// Optional denial reason.
+        /// Optional denial reason (internal; never shown to the agent).
         /// </summary>
-        /// <value>Optional denial reason.</value>
+        /// <value>Optional denial reason (internal; never shown to the agent).</value>
         [DataMember(Name = "reason", EmitDefaultValue = false)]
         public string Reason { get; set; }
+
+        /// <summary>
+        /// Optional message the agent MAY read on the status endpoint / callback.
+        /// </summary>
+        /// <value>Optional message the agent MAY read on the status endpoint / callback.</value>
+        [DataMember(Name = "agent_message", EmitDefaultValue = false)]
+        public string AgentMessage { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -58,6 +67,7 @@ namespace LumoAuth.ApiClient.Model
             StringBuilder sb = new StringBuilder();
             sb.Append("class DenyRequestRequest {\n");
             sb.Append("  Reason: ").Append(Reason).Append("\n");
+            sb.Append("  AgentMessage: ").Append(AgentMessage).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

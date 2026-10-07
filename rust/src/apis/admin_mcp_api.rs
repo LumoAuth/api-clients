@@ -19,7 +19,8 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminMcpServersCreateError {
-    DefaultResponse(),
+    Status409(),
+    Status422(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +28,7 @@ pub enum AdminMcpServersCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminMcpServersDeleteError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +36,7 @@ pub enum AdminMcpServersDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminMcpServersGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,13 +44,12 @@ pub enum AdminMcpServersGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminMcpServersListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-/// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
-pub async fn admin_mcp_servers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminMcpServersCreateError>> {
+/// Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization's OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
+pub async fn admin_mcp_servers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminMcpServersCreateResponse, Error<AdminMcpServersCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -75,9 +75,20 @@ pub async fn admin_mcp_servers_create(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminMcpServersCreateError> = serde_json::from_str(&content).ok();
@@ -85,7 +96,7 @@ pub async fn admin_mcp_servers_create(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_mcp_servers_delete(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<(), Error<AdminMcpServersDeleteError>> {
+pub async fn admin_mcp_servers_delete(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<models::MessageResponse, Error<AdminMcpServersDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_server_id = server_id;
@@ -112,9 +123,20 @@ pub async fn admin_mcp_servers_delete(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminMcpServersDeleteError> = serde_json::from_str(&content).ok();
@@ -122,7 +144,7 @@ pub async fn admin_mcp_servers_delete(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_mcp_servers_get(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<(), Error<AdminMcpServersGetError>> {
+pub async fn admin_mcp_servers_get(configuration: &configuration::Configuration, org_id: &str, server_id: &str) -> Result<models::AdminMcpServersGetResponse, Error<AdminMcpServersGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_server_id = server_id;
@@ -149,9 +171,20 @@ pub async fn admin_mcp_servers_get(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminMcpServersGetError> = serde_json::from_str(&content).ok();
@@ -159,7 +192,7 @@ pub async fn admin_mcp_servers_get(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_mcp_servers_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminMcpServersListError>> {
+pub async fn admin_mcp_servers_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminMcpServersListResponse, Error<AdminMcpServersListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -185,9 +218,20 @@ pub async fn admin_mcp_servers_list(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminMcpServersListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminMcpServersListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminMcpServersListError> = serde_json::from_str(&content).ok();

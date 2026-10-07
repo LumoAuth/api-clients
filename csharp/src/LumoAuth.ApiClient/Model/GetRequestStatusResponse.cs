@@ -42,9 +42,11 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="taskId">taskId.</param>
         /// <param name="tokenUrl">Present when approved..</param>
         /// <param name="grantedTtl">Present when approved..</param>
-        /// <param name="reviewNotes">Present when denied..</param>
+        /// <param name="hasNotes">Present when decided: whether the reviewer left notes (the notes themselves are never returned)..</param>
+        /// <param name="agentMessage">Present when decided: message the reviewer explicitly wrote for the agent..</param>
+        /// <param name="delegationConsentRequired">Present when pending: the on_behalf_of user must consent..</param>
         /// <param name="expiresAt">Present when pending..</param>
-        public GetRequestStatusResponse(string requestId = default, string status = default, string riskLevel = default, string taskId = default, string tokenUrl = default, int grantedTtl = default, string reviewNotes = default, DateTime expiresAt = default)
+        public GetRequestStatusResponse(string requestId = default, string status = default, string riskLevel = default, string taskId = default, string tokenUrl = default, int grantedTtl = default, bool hasNotes = default, string agentMessage = default, bool delegationConsentRequired = default, DateTime expiresAt = default)
         {
             this.RequestId = requestId;
             this.Status = status;
@@ -52,7 +54,9 @@ namespace LumoAuth.ApiClient.Model
             this.TaskId = taskId;
             this.TokenUrl = tokenUrl;
             this.GrantedTtl = grantedTtl;
-            this.ReviewNotes = reviewNotes;
+            this.HasNotes = hasNotes;
+            this.AgentMessage = agentMessage;
+            this.DelegationConsentRequired = delegationConsentRequired;
             this.ExpiresAt = expiresAt;
         }
 
@@ -98,11 +102,25 @@ namespace LumoAuth.ApiClient.Model
         public int GrantedTtl { get; set; }
 
         /// <summary>
-        /// Present when denied.
+        /// Present when decided: whether the reviewer left notes (the notes themselves are never returned).
         /// </summary>
-        /// <value>Present when denied.</value>
-        [DataMember(Name = "review_notes", EmitDefaultValue = false)]
-        public string ReviewNotes { get; set; }
+        /// <value>Present when decided: whether the reviewer left notes (the notes themselves are never returned).</value>
+        [DataMember(Name = "has_notes", EmitDefaultValue = true)]
+        public bool HasNotes { get; set; }
+
+        /// <summary>
+        /// Present when decided: message the reviewer explicitly wrote for the agent.
+        /// </summary>
+        /// <value>Present when decided: message the reviewer explicitly wrote for the agent.</value>
+        [DataMember(Name = "agent_message", EmitDefaultValue = true)]
+        public string AgentMessage { get; set; }
+
+        /// <summary>
+        /// Present when pending: the on_behalf_of user must consent.
+        /// </summary>
+        /// <value>Present when pending: the on_behalf_of user must consent.</value>
+        [DataMember(Name = "delegation_consent_required", EmitDefaultValue = true)]
+        public bool DelegationConsentRequired { get; set; }
 
         /// <summary>
         /// Present when pending.
@@ -125,7 +143,9 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  TaskId: ").Append(TaskId).Append("\n");
             sb.Append("  TokenUrl: ").Append(TokenUrl).Append("\n");
             sb.Append("  GrantedTtl: ").Append(GrantedTtl).Append("\n");
-            sb.Append("  ReviewNotes: ").Append(ReviewNotes).Append("\n");
+            sb.Append("  HasNotes: ").Append(HasNotes).Append("\n");
+            sb.Append("  AgentMessage: ").Append(AgentMessage).Append("\n");
+            sb.Append("  DelegationConsentRequired: ").Append(DelegationConsentRequired).Append("\n");
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("}\n");
             return sb.ToString();

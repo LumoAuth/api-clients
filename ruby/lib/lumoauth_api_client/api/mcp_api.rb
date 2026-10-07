@@ -19,23 +19,23 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # OAuth 2.0 Protected Resource Metadata (RFC 9728)
-    # Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+    # MCP server protected resource metadata (RFC 9728)
+    # Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
     # @param org_id [String] 
     # @param server_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [ProtectedResourceMetadata]
     def get_protected_resource_metadata(org_id, server_id, opts = {})
-      get_protected_resource_metadata_with_http_info(org_id, server_id, opts)
-      nil
+      data, _status_code, _headers = get_protected_resource_metadata_with_http_info(org_id, server_id, opts)
+      data
     end
 
-    # OAuth 2.0 Protected Resource Metadata (RFC 9728)
-    # Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+    # MCP server protected resource metadata (RFC 9728)
+    # Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
     # @param org_id [String] 
     # @param server_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(ProtectedResourceMetadata, Integer, Hash)>] ProtectedResourceMetadata data, response status code and response headers
     def get_protected_resource_metadata_with_http_info(org_id, server_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: McpApi.get_protected_resource_metadata ...'
@@ -56,6 +56,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -64,7 +66,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'ProtectedResourceMetadata'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -86,21 +88,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Root-level Protected Resource Metadata
-    # Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+    # Organization-level protected resource metadata (RFC 9728)
+    # Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [GetProtectedResourceMetadataRoot200Response]
     def get_protected_resource_metadata_root(org_id, opts = {})
-      get_protected_resource_metadata_root_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_protected_resource_metadata_root_with_http_info(org_id, opts)
+      data
     end
 
-    # Root-level Protected Resource Metadata
-    # Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+    # Organization-level protected resource metadata (RFC 9728)
+    # Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(GetProtectedResourceMetadataRoot200Response, Integer, Hash)>] GetProtectedResourceMetadataRoot200Response data, response status code and response headers
     def get_protected_resource_metadata_root_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: McpApi.get_protected_resource_metadata_root ...'
@@ -117,6 +119,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -125,7 +129,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetProtectedResourceMetadataRoot200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -216,23 +220,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Simulated MCP Server 401 challenge endpoint.
-    # When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+    # Simulated MCP server authorization challenge
+    # Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
     # @param org_id [String] 
     # @param server_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [GetServerChallengeResponse]
     def get_server_challenge(org_id, server_id, opts = {})
-      get_server_challenge_with_http_info(org_id, server_id, opts)
-      nil
+      data, _status_code, _headers = get_server_challenge_with_http_info(org_id, server_id, opts)
+      data
     end
 
-    # Simulated MCP Server 401 challenge endpoint.
-    # When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+    # Simulated MCP server authorization challenge
+    # Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
     # @param org_id [String] 
     # @param server_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(GetServerChallengeResponse, Integer, Hash)>] GetServerChallengeResponse data, response status code and response headers
     def get_server_challenge_with_http_info(org_id, server_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: McpApi.get_server_challenge ...'
@@ -253,6 +257,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -261,7 +267,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetServerChallengeResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerAuth']
@@ -346,23 +352,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Simulated MCP Server 401 challenge endpoint.
-    # When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+    # Simulated MCP server authorization challenge (POST)
+    # Identical to GET; the HTTP method is only recorded in the audit trail.
     # @param org_id [String] 
     # @param server_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [GetServerChallengeResponse]
     def post_server_challenge(org_id, server_id, opts = {})
-      post_server_challenge_with_http_info(org_id, server_id, opts)
-      nil
+      data, _status_code, _headers = post_server_challenge_with_http_info(org_id, server_id, opts)
+      data
     end
 
-    # Simulated MCP Server 401 challenge endpoint.
-    # When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+    # Simulated MCP server authorization challenge (POST)
+    # Identical to GET; the HTTP method is only recorded in the audit trail.
     # @param org_id [String] 
     # @param server_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(GetServerChallengeResponse, Integer, Hash)>] GetServerChallengeResponse data, response status code and response headers
     def post_server_challenge_with_http_info(org_id, server_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: McpApi.post_server_challenge ...'
@@ -383,6 +389,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -391,7 +399,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetServerChallengeResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerAuth']

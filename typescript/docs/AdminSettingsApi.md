@@ -7,7 +7,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminAnalyticsDashboard**](#adminanalyticsdashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics|
 |[**adminAnalyticsLogins**](#adminanalyticslogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics|
 |[**adminAnalyticsUsers**](#adminanalyticsusers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics|
-|[**adminOrganizationGet**](#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information|
+|[**adminOrganizationGet**](#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile|
 |[**adminSettingsAll**](#adminsettingsall) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)|
 |[**adminSettingsAuthGet**](#adminsettingsauthget) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings|
 |[**adminSettingsAuthenticationGet**](#adminsettingsauthenticationget) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)|
@@ -16,8 +16,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminSettingsGeneralGet**](#adminsettingsgeneralget) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings|
 |[**adminSettingsScimGet**](#adminsettingsscimget) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings|
 |[**adminSettingsSecurityGet**](#adminsettingssecurityget) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings|
-|[**adminTenantGet**](#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information|
-|[**patchAdminOrganizationUpdate**](#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings|
+|[**adminTenantGet**](#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile|
+|[**patchAdminOrganizationUpdate**](#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings|
 |[**patchAdminSettingsAuthUpdate**](#patchadminsettingsauthupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings|
 |[**patchAdminSettingsAuthenticationUpdate**](#patchadminsettingsauthenticationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)|
 |[**patchAdminSettingsBrandingUpdate**](#patchadminsettingsbrandingupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings|
@@ -25,8 +25,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**patchAdminSettingsGeneralUpdate**](#patchadminsettingsgeneralupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings|
 |[**patchAdminSettingsScimUpdate**](#patchadminsettingsscimupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings|
 |[**patchAdminSettingsSecurityUpdate**](#patchadminsettingssecurityupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings|
-|[**patchAdminTenantUpdate**](#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings|
-|[**putAdminOrganizationUpdate**](#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings|
+|[**patchAdminTenantUpdate**](#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings|
+|[**putAdminOrganizationUpdate**](#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings|
 |[**putAdminSettingsAuthUpdate**](#putadminsettingsauthupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings|
 |[**putAdminSettingsAuthenticationUpdate**](#putadminsettingsauthenticationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)|
 |[**putAdminSettingsBrandingUpdate**](#putadminsettingsbrandingupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings|
@@ -34,10 +34,10 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminSettingsGeneralUpdate**](#putadminsettingsgeneralupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings|
 |[**putAdminSettingsScimUpdate**](#putadminsettingsscimupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings|
 |[**putAdminSettingsSecurityUpdate**](#putadminsettingssecurityupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings|
-|[**putAdminTenantUpdate**](#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings|
+|[**putAdminTenantUpdate**](#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings|
 
 # **adminAnalyticsDashboard**
-> adminAnalyticsDashboard()
+> AdminAnalyticsDashboardResponse adminAnalyticsDashboard()
 
 
 ### Example
@@ -67,7 +67,7 @@ const { status, data } = await apiInstance.adminAnalyticsDashboard(
 
 ### Return type
 
-void (empty response body)
+**AdminAnalyticsDashboardResponse**
 
 ### Authorization
 
@@ -76,18 +76,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Dashboard counters |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAnalyticsLogins**
-> adminAnalyticsLogins()
+> AdminAnalyticsLoginsResponse adminAnalyticsLogins()
 
 
 ### Example
@@ -102,9 +102,11 @@ const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let days: number; //Window in days (1-90, default 30). (optional) (default to 30)
 
 const { status, data } = await apiInstance.adminAnalyticsLogins(
-    orgId
+    orgId,
+    days
 );
 ```
 
@@ -113,11 +115,12 @@ const { status, data } = await apiInstance.adminAnalyticsLogins(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **days** | [**number**] | Window in days (1-90, default 30). | (optional) defaults to 30|
 
 
 ### Return type
 
-void (empty response body)
+**AdminAnalyticsLoginsResponse**
 
 ### Authorization
 
@@ -126,18 +129,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Daily login attempts |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAnalyticsUsers**
-> adminAnalyticsUsers()
+> AdminAnalyticsUsersResponse adminAnalyticsUsers()
 
 
 ### Example
@@ -152,9 +155,11 @@ const configuration = new Configuration();
 const apiInstance = new AdminSettingsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let days: number; //Window in days (1-90, default 30). (optional) (default to 30)
 
 const { status, data } = await apiInstance.adminAnalyticsUsers(
-    orgId
+    orgId,
+    days
 );
 ```
 
@@ -163,11 +168,12 @@ const { status, data } = await apiInstance.adminAnalyticsUsers(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | [**string**] |  | defaults to undefined|
+| **days** | [**number**] | Window in days (1-90, default 30). | (optional) defaults to 30|
 
 
 ### Return type
 
-void (empty response body)
+**AdminAnalyticsUsersResponse**
 
 ### Authorization
 
@@ -176,18 +182,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Daily registrations and user breakdowns |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationGet**
-> adminOrganizationGet()
+> AdminTenantGetResponse adminOrganizationGet()
 
 
 ### Example
@@ -217,7 +223,7 @@ const { status, data } = await apiInstance.adminOrganizationGet(
 
 ### Return type
 
-void (empty response body)
+**AdminTenantGetResponse**
 
 ### Authorization
 
@@ -226,18 +232,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsAll**
-> adminSettingsAll()
+> AdminSettingsAllResponse adminSettingsAll()
 
 
 ### Example
@@ -267,7 +273,7 @@ const { status, data } = await apiInstance.adminSettingsAll(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsAllResponse**
 
 ### Authorization
 
@@ -276,18 +282,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Combined settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsAuthGet**
-> adminSettingsAuthGet()
+> AdminSettingsAuthenticationGetResponse adminSettingsAuthGet()
 
 
 ### Example
@@ -317,7 +323,7 @@ const { status, data } = await apiInstance.adminSettingsAuthGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsAuthenticationGetResponse**
 
 ### Authorization
 
@@ -326,18 +332,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsAuthenticationGet**
-> adminSettingsAuthenticationGet()
+> AdminSettingsAuthenticationGetResponse adminSettingsAuthenticationGet()
 
 
 ### Example
@@ -367,7 +373,7 @@ const { status, data } = await apiInstance.adminSettingsAuthenticationGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsAuthenticationGetResponse**
 
 ### Authorization
 
@@ -376,18 +382,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsBrandingGet**
-> adminSettingsBrandingGet()
+> AdminSettingsBrandingGetResponse adminSettingsBrandingGet()
 
 
 ### Example
@@ -417,7 +423,7 @@ const { status, data } = await apiInstance.adminSettingsBrandingGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsBrandingGetResponse**
 
 ### Authorization
 
@@ -426,18 +432,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsEmailGet**
-> adminSettingsEmailGet()
+> AdminSettingsEmailGetResponse adminSettingsEmailGet()
 
 
 ### Example
@@ -467,7 +473,7 @@ const { status, data } = await apiInstance.adminSettingsEmailGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsEmailGetResponse**
 
 ### Authorization
 
@@ -476,18 +482,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsGeneralGet**
-> adminSettingsGeneralGet()
+> AdminSettingsGeneralGetResponse adminSettingsGeneralGet()
 
 
 ### Example
@@ -517,7 +523,7 @@ const { status, data } = await apiInstance.adminSettingsGeneralGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsGeneralGetResponse**
 
 ### Authorization
 
@@ -526,18 +532,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | General settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsScimGet**
-> adminSettingsScimGet()
+> AdminSettingsScimGetResponse adminSettingsScimGet()
 
 
 ### Example
@@ -567,7 +573,7 @@ const { status, data } = await apiInstance.adminSettingsScimGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsScimGetResponse**
 
 ### Authorization
 
@@ -576,18 +582,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsSecurityGet**
-> adminSettingsSecurityGet()
+> AdminSettingsSecurityGetResponse adminSettingsSecurityGet()
 
 
 ### Example
@@ -617,7 +623,7 @@ const { status, data } = await apiInstance.adminSettingsSecurityGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSettingsSecurityGetResponse**
 
 ### Authorization
 
@@ -626,18 +632,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminTenantGet**
-> adminTenantGet()
+> AdminTenantGetResponse adminTenantGet()
 
 
 ### Example
@@ -667,7 +673,7 @@ const { status, data } = await apiInstance.adminTenantGet(
 
 ### Return type
 
-void (empty response body)
+**AdminTenantGetResponse**
 
 ### Authorization
 
@@ -676,18 +682,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrganizationUpdate**
-> patchAdminOrganizationUpdate()
+> PutAdminTenantUpdateResponse patchAdminOrganizationUpdate()
 
 
 ### Example
@@ -717,7 +723,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminTenantUpdateResponse**
 
 ### Authorization
 
@@ -726,18 +732,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsAuthUpdate**
-> patchAdminSettingsAuthUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate()
 
 
 ### Example
@@ -767,7 +773,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsAuthenticationUpdateResponse**
 
 ### Authorization
 
@@ -776,18 +782,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsAuthenticationUpdate**
-> patchAdminSettingsAuthenticationUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate()
 
 
 ### Example
@@ -817,7 +823,7 @@ const { status, data } = await apiInstance.patchAdminSettingsAuthenticationUpdat
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsAuthenticationUpdateResponse**
 
 ### Authorization
 
@@ -826,18 +832,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsBrandingUpdate**
-> patchAdminSettingsBrandingUpdate()
+> PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate()
 
 
 ### Example
@@ -867,7 +873,7 @@ const { status, data } = await apiInstance.patchAdminSettingsBrandingUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsBrandingUpdateResponse**
 
 ### Authorization
 
@@ -876,18 +882,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsEmailUpdate**
-> patchAdminSettingsEmailUpdate()
+> PutAdminSettingsEmailUpdateResponse patchAdminSettingsEmailUpdate()
 
 
 ### Example
@@ -917,7 +923,7 @@ const { status, data } = await apiInstance.patchAdminSettingsEmailUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsEmailUpdateResponse**
 
 ### Authorization
 
@@ -926,18 +932,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsGeneralUpdate**
-> patchAdminSettingsGeneralUpdate()
+> PutAdminSettingsGeneralUpdateResponse patchAdminSettingsGeneralUpdate()
 
 
 ### Example
@@ -967,7 +973,7 @@ const { status, data } = await apiInstance.patchAdminSettingsGeneralUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsGeneralUpdateResponse**
 
 ### Authorization
 
@@ -976,18 +982,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated general settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsScimUpdate**
-> patchAdminSettingsScimUpdate()
+> PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate()
 
 
 ### Example
@@ -1017,7 +1023,7 @@ const { status, data } = await apiInstance.patchAdminSettingsScimUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsScimUpdateResponse**
 
 ### Authorization
 
@@ -1026,18 +1032,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsSecurityUpdate**
-> patchAdminSettingsSecurityUpdate()
+> PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate()
 
 
 ### Example
@@ -1067,7 +1073,7 @@ const { status, data } = await apiInstance.patchAdminSettingsSecurityUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsSecurityUpdateResponse**
 
 ### Authorization
 
@@ -1076,18 +1082,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminTenantUpdate**
-> patchAdminTenantUpdate()
+> PutAdminTenantUpdateResponse patchAdminTenantUpdate()
 
 
 ### Example
@@ -1117,7 +1123,7 @@ const { status, data } = await apiInstance.patchAdminTenantUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminTenantUpdateResponse**
 
 ### Authorization
 
@@ -1126,18 +1132,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrganizationUpdate**
-> putAdminOrganizationUpdate()
+> PutAdminTenantUpdateResponse putAdminOrganizationUpdate()
 
 
 ### Example
@@ -1167,7 +1173,7 @@ const { status, data } = await apiInstance.putAdminOrganizationUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminTenantUpdateResponse**
 
 ### Authorization
 
@@ -1176,18 +1182,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsAuthUpdate**
-> putAdminSettingsAuthUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate()
 
 
 ### Example
@@ -1217,7 +1223,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsAuthenticationUpdateResponse**
 
 ### Authorization
 
@@ -1226,18 +1232,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsAuthenticationUpdate**
-> putAdminSettingsAuthenticationUpdate()
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate()
 
 
 ### Example
@@ -1267,7 +1273,7 @@ const { status, data } = await apiInstance.putAdminSettingsAuthenticationUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsAuthenticationUpdateResponse**
 
 ### Authorization
 
@@ -1276,18 +1282,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsBrandingUpdate**
-> putAdminSettingsBrandingUpdate()
+> PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate()
 
 
 ### Example
@@ -1317,7 +1323,7 @@ const { status, data } = await apiInstance.putAdminSettingsBrandingUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsBrandingUpdateResponse**
 
 ### Authorization
 
@@ -1326,18 +1332,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsEmailUpdate**
-> putAdminSettingsEmailUpdate()
+> PutAdminSettingsEmailUpdateResponse putAdminSettingsEmailUpdate()
 
 
 ### Example
@@ -1367,7 +1373,7 @@ const { status, data } = await apiInstance.putAdminSettingsEmailUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsEmailUpdateResponse**
 
 ### Authorization
 
@@ -1376,18 +1382,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsGeneralUpdate**
-> putAdminSettingsGeneralUpdate()
+> PutAdminSettingsGeneralUpdateResponse putAdminSettingsGeneralUpdate()
 
 
 ### Example
@@ -1417,7 +1423,7 @@ const { status, data } = await apiInstance.putAdminSettingsGeneralUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsGeneralUpdateResponse**
 
 ### Authorization
 
@@ -1426,18 +1432,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated general settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsScimUpdate**
-> putAdminSettingsScimUpdate()
+> PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate()
 
 
 ### Example
@@ -1467,7 +1473,7 @@ const { status, data } = await apiInstance.putAdminSettingsScimUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsScimUpdateResponse**
 
 ### Authorization
 
@@ -1476,18 +1482,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsSecurityUpdate**
-> putAdminSettingsSecurityUpdate()
+> PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate()
 
 
 ### Example
@@ -1517,7 +1523,7 @@ const { status, data } = await apiInstance.putAdminSettingsSecurityUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminSettingsSecurityUpdateResponse**
 
 ### Authorization
 
@@ -1526,18 +1532,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminTenantUpdate**
-> putAdminTenantUpdate()
+> PutAdminTenantUpdateResponse putAdminTenantUpdate()
 
 
 ### Example
@@ -1567,7 +1573,7 @@ const { status, data } = await apiInstance.putAdminTenantUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminTenantUpdateResponse**
 
 ### Authorization
 
@@ -1576,13 +1582,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

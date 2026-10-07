@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**adminAnalyticsDashboard**](AdminSettingsAPI.md#adminanalyticsdashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 [**adminAnalyticsLogins**](AdminSettingsAPI.md#adminanalyticslogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 [**adminAnalyticsUsers**](AdminSettingsAPI.md#adminanalyticsusers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-[**adminOrganizationGet**](AdminSettingsAPI.md#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information
+[**adminOrganizationGet**](AdminSettingsAPI.md#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
 [**adminSettingsAll**](AdminSettingsAPI.md#adminsettingsall) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 [**adminSettingsAuthGet**](AdminSettingsAPI.md#adminsettingsauthget) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 [**adminSettingsAuthenticationGet**](AdminSettingsAPI.md#adminsettingsauthenticationget) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**adminSettingsGeneralGet**](AdminSettingsAPI.md#adminsettingsgeneralget) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 [**adminSettingsScimGet**](AdminSettingsAPI.md#adminsettingsscimget) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 [**adminSettingsSecurityGet**](AdminSettingsAPI.md#adminsettingssecurityget) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-[**adminTenantGet**](AdminSettingsAPI.md#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information
-[**patchAdminOrganizationUpdate**](AdminSettingsAPI.md#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**adminTenantGet**](AdminSettingsAPI.md#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
+[**patchAdminOrganizationUpdate**](AdminSettingsAPI.md#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**patchAdminSettingsAuthUpdate**](AdminSettingsAPI.md#patchadminsettingsauthupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**patchAdminSettingsAuthenticationUpdate**](AdminSettingsAPI.md#patchadminsettingsauthenticationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**patchAdminSettingsBrandingUpdate**](AdminSettingsAPI.md#patchadminsettingsbrandingupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -25,8 +25,8 @@ Method | HTTP request | Description
 [**patchAdminSettingsGeneralUpdate**](AdminSettingsAPI.md#patchadminsettingsgeneralupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**patchAdminSettingsScimUpdate**](AdminSettingsAPI.md#patchadminsettingsscimupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**patchAdminSettingsSecurityUpdate**](AdminSettingsAPI.md#patchadminsettingssecurityupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**patchAdminTenantUpdate**](AdminSettingsAPI.md#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
-[**putAdminOrganizationUpdate**](AdminSettingsAPI.md#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**patchAdminTenantUpdate**](AdminSettingsAPI.md#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+[**putAdminOrganizationUpdate**](AdminSettingsAPI.md#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**putAdminSettingsAuthUpdate**](AdminSettingsAPI.md#putadminsettingsauthupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**putAdminSettingsAuthenticationUpdate**](AdminSettingsAPI.md#putadminsettingsauthenticationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**putAdminSettingsBrandingUpdate**](AdminSettingsAPI.md#putadminsettingsbrandingupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -34,12 +34,12 @@ Method | HTTP request | Description
 [**putAdminSettingsGeneralUpdate**](AdminSettingsAPI.md#putadminsettingsgeneralupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**putAdminSettingsScimUpdate**](AdminSettingsAPI.md#putadminsettingsscimupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**putAdminSettingsSecurityUpdate**](AdminSettingsAPI.md#putadminsettingssecurityupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**putAdminTenantUpdate**](AdminSettingsAPI.md#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
+[**putAdminTenantUpdate**](AdminSettingsAPI.md#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
 
 
 # **adminAnalyticsDashboard**
 ```swift
-    open class func adminAnalyticsDashboard(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminAnalyticsDashboard(orgId: String, completion: @escaping (_ data: AdminAnalyticsDashboardResponse?, _ error: Error?) -> Void)
 ```
 
 Get dashboard analytics
@@ -72,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminAnalyticsDashboardResponse**](AdminAnalyticsDashboardResponse.md)
 
 ### Authorization
 
@@ -81,13 +81,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAnalyticsLogins**
 ```swift
-    open class func adminAnalyticsLogins(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminAnalyticsLogins(orgId: String, days: Int? = nil, completion: @escaping (_ data: AdminAnalyticsLoginsResponse?, _ error: Error?) -> Void)
 ```
 
 Get login analytics
@@ -98,9 +98,10 @@ Get login analytics
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let days = 987 // Int | Window in days (1-90, default 30). (optional) (default to 30)
 
 // Get login analytics
-AdminSettingsAPI.adminAnalyticsLogins(orgId: orgId) { (response, error) in
+AdminSettingsAPI.adminAnalyticsLogins(orgId: orgId, days: days) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -117,10 +118,11 @@ AdminSettingsAPI.adminAnalyticsLogins(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **days** | **Int** | Window in days (1-90, default 30). | [optional] [default to 30]
 
 ### Return type
 
-Void (empty response body)
+[**AdminAnalyticsLoginsResponse**](AdminAnalyticsLoginsResponse.md)
 
 ### Authorization
 
@@ -129,13 +131,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAnalyticsUsers**
 ```swift
-    open class func adminAnalyticsUsers(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminAnalyticsUsers(orgId: String, days: Int? = nil, completion: @escaping (_ data: AdminAnalyticsUsersResponse?, _ error: Error?) -> Void)
 ```
 
 Get user growth analytics
@@ -146,9 +148,10 @@ Get user growth analytics
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let days = 987 // Int | Window in days (1-90, default 30). (optional) (default to 30)
 
 // Get user growth analytics
-AdminSettingsAPI.adminAnalyticsUsers(orgId: orgId) { (response, error) in
+AdminSettingsAPI.adminAnalyticsUsers(orgId: orgId, days: days) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -165,10 +168,11 @@ AdminSettingsAPI.adminAnalyticsUsers(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **days** | **Int** | Window in days (1-90, default 30). | [optional] [default to 30]
 
 ### Return type
 
-Void (empty response body)
+[**AdminAnalyticsUsersResponse**](AdminAnalyticsUsersResponse.md)
 
 ### Authorization
 
@@ -177,16 +181,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationGet**
 ```swift
-    open class func adminOrganizationGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminOrganizationGet(orgId: String, completion: @escaping (_ data: AdminTenantGetResponse?, _ error: Error?) -> Void)
 ```
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 ```swift
@@ -195,7 +199,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Get tenant information
+// Get organization (tenant) profile
 AdminSettingsAPI.adminOrganizationGet(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -216,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -225,13 +229,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsAll**
 ```swift
-    open class func adminSettingsAll(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsAll(orgId: String, completion: @escaping (_ data: AdminSettingsAllResponse?, _ error: Error?) -> Void)
 ```
 
 Get all settings (combined)
@@ -264,7 +268,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsAllResponse**](AdminSettingsAllResponse.md)
 
 ### Authorization
 
@@ -273,13 +277,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsAuthGet**
 ```swift
-    open class func adminSettingsAuthGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsAuthGet(orgId: String, completion: @escaping (_ data: AdminSettingsAuthenticationGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get authentication settings
@@ -312,7 +316,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -321,13 +325,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsAuthenticationGet**
 ```swift
-    open class func adminSettingsAuthenticationGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsAuthenticationGet(orgId: String, completion: @escaping (_ data: AdminSettingsAuthenticationGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get authentication settings (alias for settings/auth)
@@ -360,7 +364,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -369,13 +373,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsBrandingGet**
 ```swift
-    open class func adminSettingsBrandingGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsBrandingGet(orgId: String, completion: @escaping (_ data: AdminSettingsBrandingGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get branding/login page settings
@@ -408,7 +412,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsBrandingGetResponse**](AdminSettingsBrandingGetResponse.md)
 
 ### Authorization
 
@@ -417,13 +421,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsEmailGet**
 ```swift
-    open class func adminSettingsEmailGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsEmailGet(orgId: String, completion: @escaping (_ data: AdminSettingsEmailGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get email settings
@@ -456,7 +460,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsEmailGetResponse**](AdminSettingsEmailGetResponse.md)
 
 ### Authorization
 
@@ -465,13 +469,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsGeneralGet**
 ```swift
-    open class func adminSettingsGeneralGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsGeneralGet(orgId: String, completion: @escaping (_ data: AdminSettingsGeneralGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get general settings
@@ -504,7 +508,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsGeneralGetResponse**](AdminSettingsGeneralGetResponse.md)
 
 ### Authorization
 
@@ -513,13 +517,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsScimGet**
 ```swift
-    open class func adminSettingsScimGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsScimGet(orgId: String, completion: @escaping (_ data: AdminSettingsScimGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get SCIM settings
@@ -552,7 +556,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsScimGetResponse**](AdminSettingsScimGetResponse.md)
 
 ### Authorization
 
@@ -561,13 +565,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSettingsSecurityGet**
 ```swift
-    open class func adminSettingsSecurityGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSettingsSecurityGet(orgId: String, completion: @escaping (_ data: AdminSettingsSecurityGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get security settings
@@ -600,7 +604,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSettingsSecurityGetResponse**](AdminSettingsSecurityGetResponse.md)
 
 ### Authorization
 
@@ -609,16 +613,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminTenantGet**
 ```swift
-    open class func adminTenantGet(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminTenantGet(orgId: String, completion: @escaping (_ data: AdminTenantGetResponse?, _ error: Error?) -> Void)
 ```
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 ```swift
@@ -627,7 +631,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Get tenant information
+// Get organization (tenant) profile
 AdminSettingsAPI.adminTenantGet(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -648,7 +652,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -657,16 +661,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrganizationUpdate**
 ```swift
-    open class func patchAdminOrganizationUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminOrganizationUpdate(orgId: String, completion: @escaping (_ data: PutAdminTenantUpdateResponse?, _ error: Error?) -> Void)
 ```
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```swift
@@ -675,7 +679,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Update tenant settings
+// Update organization (tenant) name and settings
 AdminSettingsAPI.patchAdminOrganizationUpdate(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -696,7 +700,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -705,13 +709,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsAuthUpdate**
 ```swift
-    open class func patchAdminSettingsAuthUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsAuthUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsAuthenticationUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update authentication settings
@@ -744,7 +748,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -753,13 +757,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsAuthenticationUpdate**
 ```swift
-    open class func patchAdminSettingsAuthenticationUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsAuthenticationUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsAuthenticationUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update authentication settings (alias for settings/auth)
@@ -792,7 +796,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -801,13 +805,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsBrandingUpdate**
 ```swift
-    open class func patchAdminSettingsBrandingUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsBrandingUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsBrandingUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update branding/login page settings
@@ -840,7 +844,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -849,13 +853,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsEmailUpdate**
 ```swift
-    open class func patchAdminSettingsEmailUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsEmailUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsEmailUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update email settings
@@ -888,7 +892,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -897,13 +901,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsGeneralUpdate**
 ```swift
-    open class func patchAdminSettingsGeneralUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsGeneralUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsGeneralUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update general settings
@@ -936,7 +940,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -945,13 +949,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsScimUpdate**
 ```swift
-    open class func patchAdminSettingsScimUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsScimUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsScimUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update SCIM settings
@@ -984,7 +988,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -993,13 +997,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSettingsSecurityUpdate**
 ```swift
-    open class func patchAdminSettingsSecurityUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminSettingsSecurityUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsSecurityUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update security settings
@@ -1032,7 +1036,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -1041,16 +1045,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminTenantUpdate**
 ```swift
-    open class func patchAdminTenantUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminTenantUpdate(orgId: String, completion: @escaping (_ data: PutAdminTenantUpdateResponse?, _ error: Error?) -> Void)
 ```
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```swift
@@ -1059,7 +1063,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Update tenant settings
+// Update organization (tenant) name and settings
 AdminSettingsAPI.patchAdminTenantUpdate(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -1080,7 +1084,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1089,16 +1093,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrganizationUpdate**
 ```swift
-    open class func putAdminOrganizationUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminOrganizationUpdate(orgId: String, completion: @escaping (_ data: PutAdminTenantUpdateResponse?, _ error: Error?) -> Void)
 ```
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```swift
@@ -1107,7 +1111,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Update tenant settings
+// Update organization (tenant) name and settings
 AdminSettingsAPI.putAdminOrganizationUpdate(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -1128,7 +1132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1137,13 +1141,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsAuthUpdate**
 ```swift
-    open class func putAdminSettingsAuthUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsAuthUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsAuthenticationUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update authentication settings
@@ -1176,7 +1180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1185,13 +1189,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsAuthenticationUpdate**
 ```swift
-    open class func putAdminSettingsAuthenticationUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsAuthenticationUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsAuthenticationUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update authentication settings (alias for settings/auth)
@@ -1224,7 +1228,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1233,13 +1237,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsBrandingUpdate**
 ```swift
-    open class func putAdminSettingsBrandingUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsBrandingUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsBrandingUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update branding/login page settings
@@ -1272,7 +1276,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1281,13 +1285,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsEmailUpdate**
 ```swift
-    open class func putAdminSettingsEmailUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsEmailUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsEmailUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update email settings
@@ -1320,7 +1324,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1329,13 +1333,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsGeneralUpdate**
 ```swift
-    open class func putAdminSettingsGeneralUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsGeneralUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsGeneralUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update general settings
@@ -1368,7 +1372,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1377,13 +1381,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsScimUpdate**
 ```swift
-    open class func putAdminSettingsScimUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsScimUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsScimUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update SCIM settings
@@ -1416,7 +1420,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -1425,13 +1429,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSettingsSecurityUpdate**
 ```swift
-    open class func putAdminSettingsSecurityUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminSettingsSecurityUpdate(orgId: String, completion: @escaping (_ data: PutAdminSettingsSecurityUpdateResponse?, _ error: Error?) -> Void)
 ```
 
 Update security settings
@@ -1464,7 +1468,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -1473,16 +1477,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminTenantUpdate**
 ```swift
-    open class func putAdminTenantUpdate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminTenantUpdate(orgId: String, completion: @escaping (_ data: PutAdminTenantUpdateResponse?, _ error: Error?) -> Void)
 ```
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```swift
@@ -1491,7 +1495,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Update tenant settings
+// Update organization (tenant) name and settings
 AdminSettingsAPI.putAdminTenantUpdate(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -1512,7 +1516,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1521,7 +1525,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

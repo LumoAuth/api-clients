@@ -4,7 +4,7 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **message** | **String** |  | [optional] |
+| **message** | **String** |  |  |
 
 ## Example
 
@@ -12,7 +12,7 @@
 require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::MessageResponse.new(
-  message: Agent deleted successfully
+  message: null
 )
 ```
 

@@ -24,7 +24,7 @@ import (
 type AdminEmailAPI interface {
 
 	/*
-	AdminEmailTemplatesDelete Method for AdminEmailTemplatesDelete
+	AdminEmailTemplatesDelete Remove the custom email template so the built-in default is used
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -34,10 +34,11 @@ type AdminEmailAPI interface {
 	AdminEmailTemplatesDelete(ctx context.Context, orgId string, type_ string) ApiAdminEmailTemplatesDeleteRequest
 
 	// AdminEmailTemplatesDeleteExecute executes the request
-	AdminEmailTemplatesDeleteExecute(r ApiAdminEmailTemplatesDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminEmailTemplatesDeleteExecute(r ApiAdminEmailTemplatesDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminEmailTemplatesGet Method for AdminEmailTemplatesGet
+	AdminEmailTemplatesGet Get an email template (custom or built-in default)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -47,10 +48,11 @@ type AdminEmailAPI interface {
 	AdminEmailTemplatesGet(ctx context.Context, orgId string, type_ string) ApiAdminEmailTemplatesGetRequest
 
 	// AdminEmailTemplatesGetExecute executes the request
-	AdminEmailTemplatesGetExecute(r ApiAdminEmailTemplatesGetRequest) (*http.Response, error)
+	//  @return EmailTemplate
+	AdminEmailTemplatesGetExecute(r ApiAdminEmailTemplatesGetRequest) (*EmailTemplate, *http.Response, error)
 
 	/*
-	AdminEmailTemplatesList Method for AdminEmailTemplatesList
+	AdminEmailTemplatesList List every email template type with its current (custom or built-in) template
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -59,10 +61,11 @@ type AdminEmailAPI interface {
 	AdminEmailTemplatesList(ctx context.Context, orgId string) ApiAdminEmailTemplatesListRequest
 
 	// AdminEmailTemplatesListExecute executes the request
-	AdminEmailTemplatesListExecute(r ApiAdminEmailTemplatesListRequest) (*http.Response, error)
+	//  @return AdminEmailTemplatesListResponse
+	AdminEmailTemplatesListExecute(r ApiAdminEmailTemplatesListRequest) (*AdminEmailTemplatesListResponse, *http.Response, error)
 
 	/*
-	AdminEmailTemplatesPreview Method for AdminEmailTemplatesPreview
+	AdminEmailTemplatesPreview Render an email template with sample data
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -72,10 +75,11 @@ type AdminEmailAPI interface {
 	AdminEmailTemplatesPreview(ctx context.Context, orgId string, type_ string) ApiAdminEmailTemplatesPreviewRequest
 
 	// AdminEmailTemplatesPreviewExecute executes the request
-	AdminEmailTemplatesPreviewExecute(r ApiAdminEmailTemplatesPreviewRequest) (*http.Response, error)
+	//  @return AdminEmailTemplatesPreviewResponse
+	AdminEmailTemplatesPreviewExecute(r ApiAdminEmailTemplatesPreviewRequest) (*AdminEmailTemplatesPreviewResponse, *http.Response, error)
 
 	/*
-	AdminEmailTemplatesUpsert Method for AdminEmailTemplatesUpsert
+	AdminEmailTemplatesUpsert Create or replace the custom email template for a type
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -85,10 +89,11 @@ type AdminEmailAPI interface {
 	AdminEmailTemplatesUpsert(ctx context.Context, orgId string, type_ string) ApiAdminEmailTemplatesUpsertRequest
 
 	// AdminEmailTemplatesUpsertExecute executes the request
-	AdminEmailTemplatesUpsertExecute(r ApiAdminEmailTemplatesUpsertRequest) (*http.Response, error)
+	//  @return EmailTemplate
+	AdminEmailTemplatesUpsertExecute(r ApiAdminEmailTemplatesUpsertRequest) (*EmailTemplate, *http.Response, error)
 
 	/*
-	AdminEmailTemplatesVariables Method for AdminEmailTemplatesVariables
+	AdminEmailTemplatesVariables List the placeholders available to an email template type
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -98,7 +103,8 @@ type AdminEmailAPI interface {
 	AdminEmailTemplatesVariables(ctx context.Context, orgId string, type_ string) ApiAdminEmailTemplatesVariablesRequest
 
 	// AdminEmailTemplatesVariablesExecute executes the request
-	AdminEmailTemplatesVariablesExecute(r ApiAdminEmailTemplatesVariablesRequest) (*http.Response, error)
+	//  @return AdminEmailTemplatesVariablesResponse
+	AdminEmailTemplatesVariablesExecute(r ApiAdminEmailTemplatesVariablesRequest) (*AdminEmailTemplatesVariablesResponse, *http.Response, error)
 }
 
 // AdminEmailAPIService AdminEmailAPI service
@@ -111,12 +117,12 @@ type ApiAdminEmailTemplatesDeleteRequest struct {
 	type_ string
 }
 
-func (r ApiAdminEmailTemplatesDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminEmailTemplatesDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminEmailTemplatesDeleteExecute(r)
 }
 
 /*
-AdminEmailTemplatesDelete Method for AdminEmailTemplatesDelete
+AdminEmailTemplatesDelete Remove the custom email template so the built-in default is used
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -133,16 +139,18 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesDelete(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminEmailAPIService) AdminEmailTemplatesDeleteExecute(r ApiAdminEmailTemplatesDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminEmailAPIService) AdminEmailTemplatesDeleteExecute(r ApiAdminEmailTemplatesDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminEmailAPIService.AdminEmailTemplatesDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
@@ -163,7 +171,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesDeleteExecute(r ApiAdminEmailT
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -186,19 +194,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesDeleteExecute(r ApiAdminEmailT
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -206,10 +214,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesDeleteExecute(r ApiAdminEmailT
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminEmailTemplatesGetRequest struct {
@@ -219,12 +236,12 @@ type ApiAdminEmailTemplatesGetRequest struct {
 	type_ string
 }
 
-func (r ApiAdminEmailTemplatesGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminEmailTemplatesGetRequest) Execute() (*EmailTemplate, *http.Response, error) {
 	return r.ApiService.AdminEmailTemplatesGetExecute(r)
 }
 
 /*
-AdminEmailTemplatesGet Method for AdminEmailTemplatesGet
+AdminEmailTemplatesGet Get an email template (custom or built-in default)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -241,16 +258,18 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesGet(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminEmailAPIService) AdminEmailTemplatesGetExecute(r ApiAdminEmailTemplatesGetRequest) (*http.Response, error) {
+//  @return EmailTemplate
+func (a *AdminEmailAPIService) AdminEmailTemplatesGetExecute(r ApiAdminEmailTemplatesGetRequest) (*EmailTemplate, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *EmailTemplate
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminEmailAPIService.AdminEmailTemplatesGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
@@ -271,7 +290,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesGetExecute(r ApiAdminEmailTemp
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -294,19 +313,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesGetExecute(r ApiAdminEmailTemp
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -314,10 +333,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesGetExecute(r ApiAdminEmailTemp
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminEmailTemplatesListRequest struct {
@@ -326,12 +354,12 @@ type ApiAdminEmailTemplatesListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminEmailTemplatesListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminEmailTemplatesListRequest) Execute() (*AdminEmailTemplatesListResponse, *http.Response, error) {
 	return r.ApiService.AdminEmailTemplatesListExecute(r)
 }
 
 /*
-AdminEmailTemplatesList Method for AdminEmailTemplatesList
+AdminEmailTemplatesList List every email template type with its current (custom or built-in) template
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -346,16 +374,18 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesList(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminEmailAPIService) AdminEmailTemplatesListExecute(r ApiAdminEmailTemplatesListRequest) (*http.Response, error) {
+//  @return AdminEmailTemplatesListResponse
+func (a *AdminEmailAPIService) AdminEmailTemplatesListExecute(r ApiAdminEmailTemplatesListRequest) (*AdminEmailTemplatesListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminEmailTemplatesListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminEmailAPIService.AdminEmailTemplatesList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/email-templates"
@@ -375,7 +405,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesListExecute(r ApiAdminEmailTem
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -398,19 +428,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesListExecute(r ApiAdminEmailTem
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -418,10 +448,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesListExecute(r ApiAdminEmailTem
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminEmailTemplatesPreviewRequest struct {
@@ -431,12 +470,12 @@ type ApiAdminEmailTemplatesPreviewRequest struct {
 	type_ string
 }
 
-func (r ApiAdminEmailTemplatesPreviewRequest) Execute() (*http.Response, error) {
+func (r ApiAdminEmailTemplatesPreviewRequest) Execute() (*AdminEmailTemplatesPreviewResponse, *http.Response, error) {
 	return r.ApiService.AdminEmailTemplatesPreviewExecute(r)
 }
 
 /*
-AdminEmailTemplatesPreview Method for AdminEmailTemplatesPreview
+AdminEmailTemplatesPreview Render an email template with sample data
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -453,16 +492,18 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesPreview(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmailTemplatesPreviewRequest) (*http.Response, error) {
+//  @return AdminEmailTemplatesPreviewResponse
+func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmailTemplatesPreviewRequest) (*AdminEmailTemplatesPreviewResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminEmailTemplatesPreviewResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminEmailAPIService.AdminEmailTemplatesPreview")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview"
@@ -483,7 +524,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmail
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -506,19 +547,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmail
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -526,10 +567,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesPreviewExecute(r ApiAdminEmail
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminEmailTemplatesUpsertRequest struct {
@@ -539,12 +589,12 @@ type ApiAdminEmailTemplatesUpsertRequest struct {
 	type_ string
 }
 
-func (r ApiAdminEmailTemplatesUpsertRequest) Execute() (*http.Response, error) {
+func (r ApiAdminEmailTemplatesUpsertRequest) Execute() (*EmailTemplate, *http.Response, error) {
 	return r.ApiService.AdminEmailTemplatesUpsertExecute(r)
 }
 
 /*
-AdminEmailTemplatesUpsert Method for AdminEmailTemplatesUpsert
+AdminEmailTemplatesUpsert Create or replace the custom email template for a type
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -561,16 +611,18 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesUpsert(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailTemplatesUpsertRequest) (*http.Response, error) {
+//  @return EmailTemplate
+func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailTemplatesUpsertRequest) (*EmailTemplate, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *EmailTemplate
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminEmailAPIService.AdminEmailTemplatesUpsert")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
@@ -591,7 +643,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailT
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -614,19 +666,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailT
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -634,10 +686,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesUpsertExecute(r ApiAdminEmailT
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminEmailTemplatesVariablesRequest struct {
@@ -647,12 +708,12 @@ type ApiAdminEmailTemplatesVariablesRequest struct {
 	type_ string
 }
 
-func (r ApiAdminEmailTemplatesVariablesRequest) Execute() (*http.Response, error) {
+func (r ApiAdminEmailTemplatesVariablesRequest) Execute() (*AdminEmailTemplatesVariablesResponse, *http.Response, error) {
 	return r.ApiService.AdminEmailTemplatesVariablesExecute(r)
 }
 
 /*
-AdminEmailTemplatesVariables Method for AdminEmailTemplatesVariables
+AdminEmailTemplatesVariables List the placeholders available to an email template type
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -669,16 +730,18 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesVariables(ctx context.Context,
 }
 
 // Execute executes the request
-func (a *AdminEmailAPIService) AdminEmailTemplatesVariablesExecute(r ApiAdminEmailTemplatesVariablesRequest) (*http.Response, error) {
+//  @return AdminEmailTemplatesVariablesResponse
+func (a *AdminEmailAPIService) AdminEmailTemplatesVariablesExecute(r ApiAdminEmailTemplatesVariablesRequest) (*AdminEmailTemplatesVariablesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminEmailTemplatesVariablesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminEmailAPIService.AdminEmailTemplatesVariables")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables"
@@ -699,7 +762,7 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesVariablesExecute(r ApiAdminEma
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -722,19 +785,19 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesVariablesExecute(r ApiAdminEma
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -742,8 +805,17 @@ func (a *AdminEmailAPIService) AdminEmailTemplatesVariablesExecute(r ApiAdminEma
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

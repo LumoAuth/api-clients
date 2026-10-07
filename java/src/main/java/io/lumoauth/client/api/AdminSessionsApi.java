@@ -27,6 +27,20 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminClientTokensRevokeAllResponse;
+import io.lumoauth.client.model.AdminSessionsCountResponse;
+import io.lumoauth.client.model.AdminSessionsListResponse;
+import io.lumoauth.client.model.AdminSessionsRevokeAllRequest;
+import io.lumoauth.client.model.AdminSessionsRevokeAllResponse;
+import io.lumoauth.client.model.AdminSessionsRevokeResponse;
+import io.lumoauth.client.model.AdminSessionsStatsResponse;
+import io.lumoauth.client.model.AdminTokensListResponse;
+import io.lumoauth.client.model.AdminTokensRevokeResponse;
+import io.lumoauth.client.model.AdminUserSessionsListResponse;
+import io.lumoauth.client.model.AdminUserSessionsRevokeAllResponse;
+import io.lumoauth.client.model.AdminUserSessionsRevokePostResponse;
+import io.lumoauth.client.model.AdminUserTokensRevokeAllResponse;
+import io.lumoauth.client.model.AdminUserTokensRevokePostResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -82,7 +96,8 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminClientTokensRevokeAllCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -113,6 +128,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -147,43 +163,48 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke all tokens for a client
+     * Revoke all tokens of a client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return AdminClientTokensRevokeAllResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminClientTokensRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        adminClientTokensRevokeAllWithHttpInfo(orgId, clientId);
+    public AdminClientTokensRevokeAllResponse adminClientTokensRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<AdminClientTokensRevokeAllResponse> localVarResp = adminClientTokensRevokeAllWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all tokens for a client
+     * Revoke all tokens of a client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminClientTokensRevokeAllResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminClientTokensRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<AdminClientTokensRevokeAllResponse> adminClientTokensRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = adminClientTokensRevokeAllValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminClientTokensRevokeAllResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all tokens for a client (asynchronously)
+     * Revoke all tokens of a client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -194,13 +215,15 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminClientTokensRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminClientTokensRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<AdminClientTokensRevokeAllResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminClientTokensRevokeAllValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminClientTokensRevokeAllResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -214,7 +237,8 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminClientTokensRevokePostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -245,6 +269,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -279,43 +304,48 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke all tokens for a client via POST
+     * Revoke all tokens of a client (POST alias)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return AdminUserTokensRevokePostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminClientTokensRevokePost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        adminClientTokensRevokePostWithHttpInfo(orgId, clientId);
+    public AdminUserTokensRevokePostResponse adminClientTokensRevokePost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<AdminUserTokensRevokePostResponse> localVarResp = adminClientTokensRevokePostWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all tokens for a client via POST
+     * Revoke all tokens of a client (POST alias)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminUserTokensRevokePostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminClientTokensRevokePostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<AdminUserTokensRevokePostResponse> adminClientTokensRevokePostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = adminClientTokensRevokePostValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminUserTokensRevokePostResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all tokens for a client via POST (asynchronously)
+     * Revoke all tokens of a client (POST alias) (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -326,13 +356,15 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminClientTokensRevokePostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminClientTokensRevokePostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<AdminUserTokensRevokePostResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminClientTokensRevokePostValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminUserTokensRevokePostResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -345,7 +377,7 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Active session count </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSessionsCountCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -375,6 +407,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -404,41 +437,44 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Get active session count for the tenant
+     * Active session count
      * 
      * @param orgId  (required)
+     * @return AdminSessionsCountResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Active session count </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSessionsCount(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSessionsCountWithHttpInfo(orgId);
+    public AdminSessionsCountResponse adminSessionsCount(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSessionsCountResponse> localVarResp = adminSessionsCountWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get active session count for the tenant
+     * Active session count
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSessionsCountResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Active session count </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSessionsCountWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSessionsCountResponse> adminSessionsCountWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSessionsCountValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSessionsCountResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get active session count for the tenant (asynchronously)
+     * Active session count (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -448,13 +484,14 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Active session count </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSessionsCountAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSessionsCountAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSessionsCountResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSessionsCountValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSessionsCountResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -467,7 +504,7 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSessionsListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -497,6 +534,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -526,42 +564,45 @@ public class AdminSessionsApi {
     }
 
     /**
-     * List active sessions for the tenant
-     * 
+     * List active sessions
+     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      * @param orgId  (required)
+     * @return AdminSessionsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSessionsList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSessionsListWithHttpInfo(orgId);
+    public AdminSessionsListResponse adminSessionsList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSessionsListResponse> localVarResp = adminSessionsListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List active sessions for the tenant
-     * 
+     * List active sessions
+     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSessionsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSessionsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSessionsListResponse> adminSessionsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSessionsListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSessionsListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List active sessions for the tenant (asynchronously)
-     * 
+     * List active sessions (asynchronously)
+     * Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -570,13 +611,14 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSessionsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSessionsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSessionsListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSessionsListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSessionsListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -590,7 +632,9 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Session not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSessionsRevokeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId, final ApiCallback _callback) throws ApiException {
@@ -621,6 +665,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -655,43 +700,50 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke a specific session
+     * Revoke a session
      * 
      * @param orgId  (required)
      * @param sessionId  (required)
+     * @return AdminSessionsRevokeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Session not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSessionsRevoke(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId) throws ApiException {
-        adminSessionsRevokeWithHttpInfo(orgId, sessionId);
+    public AdminSessionsRevokeResponse adminSessionsRevoke(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId) throws ApiException {
+        ApiResponse<AdminSessionsRevokeResponse> localVarResp = adminSessionsRevokeWithHttpInfo(orgId, sessionId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke a specific session
+     * Revoke a session
      * 
      * @param orgId  (required)
      * @param sessionId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSessionsRevokeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Session not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSessionsRevokeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId) throws ApiException {
+    public ApiResponse<AdminSessionsRevokeResponse> adminSessionsRevokeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId) throws ApiException {
         okhttp3.Call localVarCall = adminSessionsRevokeValidateBeforeCall(orgId, sessionId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSessionsRevokeResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke a specific session (asynchronously)
+     * Revoke a session (asynchronously)
      * 
      * @param orgId  (required)
      * @param sessionId  (required)
@@ -702,18 +754,22 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Session not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSessionsRevokeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSessionsRevokeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String sessionId, final ApiCallback<AdminSessionsRevokeResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSessionsRevokeValidateBeforeCall(orgId, sessionId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSessionsRevokeResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for adminSessionsRevokeAll
      * @param orgId  (required)
+     * @param adminSessionsRevokeAllRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -721,10 +777,11 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> confirm: true is required </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSessionsRevokeAllCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call adminSessionsRevokeAllCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -738,7 +795,7 @@ public class AdminSessionsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = adminSessionsRevokeAllRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/admin/sessions/revoke-all"
@@ -751,6 +808,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -758,6 +816,7 @@ public class AdminSessionsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -769,54 +828,67 @@ public class AdminSessionsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call adminSessionsRevokeAllValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call adminSessionsRevokeAllValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling adminSessionsRevokeAll(Async)");
         }
 
-        return adminSessionsRevokeAllCall(orgId, _callback);
+        // verify the required parameter 'adminSessionsRevokeAllRequest' is set
+        if (adminSessionsRevokeAllRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminSessionsRevokeAllRequest' when calling adminSessionsRevokeAll(Async)");
+        }
+
+        return adminSessionsRevokeAllCall(orgId, adminSessionsRevokeAllRequest, _callback);
 
     }
 
     /**
-     * Revoke all tenant sessions via POST
-     * 
+     * Revoke every session in the tenant
+     * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      * @param orgId  (required)
+     * @param adminSessionsRevokeAllRequest  (required)
+     * @return AdminSessionsRevokeAllResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> confirm: true is required </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSessionsRevokeAll(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSessionsRevokeAllWithHttpInfo(orgId);
+    public AdminSessionsRevokeAllResponse adminSessionsRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest) throws ApiException {
+        ApiResponse<AdminSessionsRevokeAllResponse> localVarResp = adminSessionsRevokeAllWithHttpInfo(orgId, adminSessionsRevokeAllRequest);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all tenant sessions via POST
-     * 
+     * Revoke every session in the tenant
+     * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param adminSessionsRevokeAllRequest  (required)
+     * @return ApiResponse&lt;AdminSessionsRevokeAllResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> confirm: true is required </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSessionsRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = adminSessionsRevokeAllValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<AdminSessionsRevokeAllResponse> adminSessionsRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminSessionsRevokeAllValidateBeforeCall(orgId, adminSessionsRevokeAllRequest, null);
+        Type localVarReturnType = new TypeToken<AdminSessionsRevokeAllResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all tenant sessions via POST (asynchronously)
-     * 
+     * Revoke every session in the tenant (asynchronously)
+     * Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
      * @param orgId  (required)
+     * @param adminSessionsRevokeAllRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -824,13 +896,15 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> confirm: true is required </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSessionsRevokeAllAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSessionsRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, final ApiCallback<AdminSessionsRevokeAllResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = adminSessionsRevokeAllValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = adminSessionsRevokeAllValidateBeforeCall(orgId, adminSessionsRevokeAllRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminSessionsRevokeAllResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -843,7 +917,7 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session counts </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSessionsStatsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -873,6 +947,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -902,41 +977,44 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Get session statistics for the tenant
+     * Session statistics
      * 
      * @param orgId  (required)
+     * @return AdminSessionsStatsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session counts </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSessionsStats(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSessionsStatsWithHttpInfo(orgId);
+    public AdminSessionsStatsResponse adminSessionsStats(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSessionsStatsResponse> localVarResp = adminSessionsStatsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get session statistics for the tenant
+     * Session statistics
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSessionsStatsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session counts </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSessionsStatsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSessionsStatsResponse> adminSessionsStatsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSessionsStatsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSessionsStatsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get session statistics for the tenant (asynchronously)
+     * Session statistics (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -946,13 +1024,14 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Session counts </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSessionsStatsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSessionsStatsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSessionsStatsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSessionsStatsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSessionsStatsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -965,7 +1044,7 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminTokensListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -995,6 +1074,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1024,42 +1104,45 @@ public class AdminSessionsApi {
     }
 
     /**
-     * List access tokens for the tenant
-     * 
+     * List access tokens
+     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      * @param orgId  (required)
+     * @return AdminTokensListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
      </table>
      */
-    public void adminTokensList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminTokensListWithHttpInfo(orgId);
+    public AdminTokensListResponse adminTokensList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminTokensListResponse> localVarResp = adminTokensListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List access tokens for the tenant
-     * 
+     * List access tokens
+     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminTokensListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminTokensListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminTokensListResponse> adminTokensListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminTokensListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminTokensListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List access tokens for the tenant (asynchronously)
-     * 
+     * List access tokens (asynchronously)
+     * Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1068,13 +1151,14 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminTokensListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminTokensListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminTokensListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminTokensListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminTokensListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1088,7 +1172,9 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Token not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminTokensRevokeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId, final ApiCallback _callback) throws ApiException {
@@ -1119,6 +1205,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1157,16 +1244,20 @@ public class AdminSessionsApi {
      * 
      * @param orgId  (required)
      * @param tokenId  (required)
+     * @return AdminTokensRevokeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Token not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminTokensRevoke(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId) throws ApiException {
-        adminTokensRevokeWithHttpInfo(orgId, tokenId);
+    public AdminTokensRevokeResponse adminTokensRevoke(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId) throws ApiException {
+        ApiResponse<AdminTokensRevokeResponse> localVarResp = adminTokensRevokeWithHttpInfo(orgId, tokenId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1174,18 +1265,21 @@ public class AdminSessionsApi {
      * 
      * @param orgId  (required)
      * @param tokenId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminTokensRevokeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Token not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminTokensRevokeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId) throws ApiException {
+    public ApiResponse<AdminTokensRevokeResponse> adminTokensRevokeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId) throws ApiException {
         okhttp3.Call localVarCall = adminTokensRevokeValidateBeforeCall(orgId, tokenId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminTokensRevokeResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1200,13 +1294,16 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Token not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminTokensRevokeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminTokensRevokeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String tokenId, final ApiCallback<AdminTokensRevokeResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminTokensRevokeValidateBeforeCall(orgId, tokenId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminTokensRevokeResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1220,7 +1317,8 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminUserSessionsListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1251,6 +1349,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1285,44 +1384,49 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Get sessions for a specific user
-     * 
+     * List a user&#39;s active sessions
+     * All active sessions of one user (UUID or email), returned as a single page.
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminUserSessionsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminUserSessionsList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminUserSessionsListWithHttpInfo(orgId, userId);
+    public AdminUserSessionsListResponse adminUserSessionsList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminUserSessionsListResponse> localVarResp = adminUserSessionsListWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get sessions for a specific user
-     * 
+     * List a user&#39;s active sessions
+     * All active sessions of one user (UUID or email), returned as a single page.
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminUserSessionsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminUserSessionsListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminUserSessionsListResponse> adminUserSessionsListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminUserSessionsListValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminUserSessionsListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get sessions for a specific user (asynchronously)
-     * 
+     * List a user&#39;s active sessions (asynchronously)
+     * All active sessions of one user (UUID or email), returned as a single page.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1332,13 +1436,15 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminUserSessionsListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminUserSessionsListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminUserSessionsListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminUserSessionsListValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminUserSessionsListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1352,7 +1458,9 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminUserSessionsRevokeAllCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1383,6 +1491,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1417,43 +1526,50 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke all sessions for a user
+     * Revoke all sessions of a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminUserSessionsRevokeAllResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminUserSessionsRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminUserSessionsRevokeAllWithHttpInfo(orgId, userId);
+    public AdminUserSessionsRevokeAllResponse adminUserSessionsRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminUserSessionsRevokeAllResponse> localVarResp = adminUserSessionsRevokeAllWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all sessions for a user
+     * Revoke all sessions of a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminUserSessionsRevokeAllResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminUserSessionsRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminUserSessionsRevokeAllResponse> adminUserSessionsRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminUserSessionsRevokeAllValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminUserSessionsRevokeAllResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all sessions for a user (asynchronously)
+     * Revoke all sessions of a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1464,13 +1580,16 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminUserSessionsRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminUserSessionsRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminUserSessionsRevokeAllResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminUserSessionsRevokeAllValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminUserSessionsRevokeAllResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1484,7 +1603,9 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminUserSessionsRevokePostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1515,6 +1636,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1549,43 +1671,50 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke all sessions for a user via POST
+     * Revoke all sessions of a user (POST alias)
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminUserSessionsRevokePostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminUserSessionsRevokePost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminUserSessionsRevokePostWithHttpInfo(orgId, userId);
+    public AdminUserSessionsRevokePostResponse adminUserSessionsRevokePost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminUserSessionsRevokePostResponse> localVarResp = adminUserSessionsRevokePostWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all sessions for a user via POST
+     * Revoke all sessions of a user (POST alias)
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminUserSessionsRevokePostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminUserSessionsRevokePostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminUserSessionsRevokePostResponse> adminUserSessionsRevokePostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminUserSessionsRevokePostValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminUserSessionsRevokePostResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all sessions for a user via POST (asynchronously)
+     * Revoke all sessions of a user (POST alias) (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1596,13 +1725,16 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Sessions revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminUserSessionsRevokePostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminUserSessionsRevokePostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminUserSessionsRevokePostResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminUserSessionsRevokePostValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminUserSessionsRevokePostResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1616,7 +1748,9 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminUserTokensRevokeAllCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1647,6 +1781,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1681,43 +1816,50 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke all tokens for a user
+     * Revoke all tokens of a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminUserTokensRevokeAllResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminUserTokensRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminUserTokensRevokeAllWithHttpInfo(orgId, userId);
+    public AdminUserTokensRevokeAllResponse adminUserTokensRevokeAll(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminUserTokensRevokeAllResponse> localVarResp = adminUserTokensRevokeAllWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all tokens for a user
+     * Revoke all tokens of a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminUserTokensRevokeAllResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminUserTokensRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminUserTokensRevokeAllResponse> adminUserTokensRevokeAllWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminUserTokensRevokeAllValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminUserTokensRevokeAllResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all tokens for a user (asynchronously)
+     * Revoke all tokens of a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1728,13 +1870,16 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminUserTokensRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminUserTokensRevokeAllAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminUserTokensRevokeAllResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminUserTokensRevokeAllValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminUserTokensRevokeAllResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1748,7 +1893,9 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminUserTokensRevokePostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1779,6 +1926,7 @@ public class AdminSessionsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1813,43 +1961,50 @@ public class AdminSessionsApi {
     }
 
     /**
-     * Revoke all tokens for a user via POST
+     * Revoke all tokens of a user (POST alias)
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminUserTokensRevokePostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminUserTokensRevokePost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminUserTokensRevokePostWithHttpInfo(orgId, userId);
+    public AdminUserTokensRevokePostResponse adminUserTokensRevokePost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminUserTokensRevokePostResponse> localVarResp = adminUserTokensRevokePostWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * Revoke all tokens for a user via POST
+     * Revoke all tokens of a user (POST alias)
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminUserTokensRevokePostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminUserTokensRevokePostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminUserTokensRevokePostResponse> adminUserTokensRevokePostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminUserTokensRevokePostValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminUserTokensRevokePostResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Revoke all tokens for a user via POST (asynchronously)
+     * Revoke all tokens of a user (POST alias) (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1860,13 +2015,16 @@ public class AdminSessionsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tokens revoked; the message carries the count </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Target holds privileges the actor lacks </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminUserTokensRevokePostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminUserTokensRevokePostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminUserTokensRevokePostResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminUserTokensRevokePostValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminUserTokensRevokePostResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

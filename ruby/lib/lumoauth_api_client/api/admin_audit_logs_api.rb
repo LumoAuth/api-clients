@@ -19,19 +19,19 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # List available audit action types for this tenant
+    # List the distinct audit action types recorded for the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsActionsResponse]
     def admin_audit_logs_actions(org_id, opts = {})
-      admin_audit_logs_actions_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_audit_logs_actions_with_http_info(org_id, opts)
+      data
     end
 
-    # List available audit action types for this tenant
+    # List the distinct audit action types recorded for the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsActionsResponse, Integer, Hash)>] AdminAuditLogsActionsResponse data, response status code and response headers
     def admin_audit_logs_actions_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.admin_audit_logs_actions ...'
@@ -48,6 +48,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +58,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsActionsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -78,19 +80,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Export audit logs as CSV or JSON
+    # Export audit logs as CSV (default) or JSON
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def admin_audit_logs_export(org_id, opts = {})
-      admin_audit_logs_export_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_audit_logs_export_with_http_info(org_id, opts)
+      data
     end
 
-    # Export audit logs as CSV or JSON
+    # Export audit logs as CSV (default) or JSON
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def admin_audit_logs_export_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.admin_audit_logs_export ...'
@@ -107,6 +109,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/csv', 'application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -115,7 +119,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -137,21 +141,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single audit log entry
+    # Get an audit log entry
     # @param org_id [String] 
     # @param log_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsGetResponse]
     def admin_audit_logs_get(org_id, log_id, opts = {})
-      admin_audit_logs_get_with_http_info(org_id, log_id, opts)
-      nil
+      data, _status_code, _headers = admin_audit_logs_get_with_http_info(org_id, log_id, opts)
+      data
     end
 
-    # Get a single audit log entry
+    # Get an audit log entry
     # @param org_id [String] 
     # @param log_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsGetResponse, Integer, Hash)>] AdminAuditLogsGetResponse data, response status code and response headers
     def admin_audit_logs_get_with_http_info(org_id, log_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.admin_audit_logs_get ...'
@@ -177,6 +181,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -185,7 +191,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -207,19 +213,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List audit logs for the tenant
+    # List audit log entries
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsListResponse]
     def admin_audit_logs_list(org_id, opts = {})
-      admin_audit_logs_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_audit_logs_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List audit logs for the tenant
+    # List audit log entries
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsListResponse, Integer, Hash)>] AdminAuditLogsListResponse data, response status code and response headers
     def admin_audit_logs_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.admin_audit_logs_list ...'
@@ -236,6 +242,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -244,7 +252,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -269,16 +277,16 @@ module LumoAuthApiClient
     # Get audit log retention settings
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsRetentionResponse]
     def admin_audit_logs_retention(org_id, opts = {})
-      admin_audit_logs_retention_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_audit_logs_retention_with_http_info(org_id, opts)
+      data
     end
 
     # Get audit log retention settings
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers
     def admin_audit_logs_retention_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.admin_audit_logs_retention ...'
@@ -295,6 +303,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -303,7 +313,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsRetentionResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -325,19 +335,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get audit log statistics
+    # Audit log statistics for a period (default: last 30 days)
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsStatsResponse]
     def admin_audit_logs_stats(org_id, opts = {})
-      admin_audit_logs_stats_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_audit_logs_stats_with_http_info(org_id, opts)
+      data
     end
 
-    # Get audit log statistics
+    # Audit log statistics for a period (default: last 30 days)
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsStatsResponse, Integer, Hash)>] AdminAuditLogsStatsResponse data, response status code and response headers
     def admin_audit_logs_stats_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.admin_audit_logs_stats ...'
@@ -354,6 +364,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -362,7 +374,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsStatsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -387,16 +399,16 @@ module LumoAuthApiClient
     # Update audit log retention settings
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsRetentionResponse]
     def patch_admin_audit_logs_retention_update(org_id, opts = {})
-      patch_admin_audit_logs_retention_update_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = patch_admin_audit_logs_retention_update_with_http_info(org_id, opts)
+      data
     end
 
     # Update audit log retention settings
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers
     def patch_admin_audit_logs_retention_update_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.patch_admin_audit_logs_retention_update ...'
@@ -413,6 +425,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -421,7 +435,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsRetentionResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -446,16 +460,16 @@ module LumoAuthApiClient
     # Update audit log retention settings
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminAuditLogsRetentionResponse]
     def put_admin_audit_logs_retention_update(org_id, opts = {})
-      put_admin_audit_logs_retention_update_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = put_admin_audit_logs_retention_update_with_http_info(org_id, opts)
+      data
     end
 
     # Update audit log retention settings
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminAuditLogsRetentionResponse, Integer, Hash)>] AdminAuditLogsRetentionResponse data, response status code and response headers
     def put_admin_audit_logs_retention_update_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAuditLogsApi.put_admin_audit_logs_retention_update ...'
@@ -472,6 +486,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -480,7 +496,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminAuditLogsRetentionResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

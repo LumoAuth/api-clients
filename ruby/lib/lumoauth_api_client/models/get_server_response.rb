@@ -37,6 +37,8 @@ module LumoAuthApiClient
 
     attr_accessor :require_pkce
 
+    attr_accessor :require_dpop
+
     attr_accessor :token_lifetime
 
     attr_accessor :created_at
@@ -59,6 +61,7 @@ module LumoAuthApiClient
         :'status' => :'status',
         :'scopes_supported' => :'scopes_supported',
         :'require_pkce' => :'require_pkce',
+        :'require_dpop' => :'require_dpop',
         :'token_lifetime' => :'token_lifetime',
         :'created_at' => :'created_at',
         :'updated_at' => :'updated_at',
@@ -90,6 +93,7 @@ module LumoAuthApiClient
         :'status' => :'String',
         :'scopes_supported' => :'Array<String>',
         :'require_pkce' => :'Boolean',
+        :'require_dpop' => :'Boolean',
         :'token_lifetime' => :'Integer',
         :'created_at' => :'Time',
         :'updated_at' => :'Time',
@@ -165,6 +169,10 @@ module LumoAuthApiClient
         self.require_pkce = attributes[:'require_pkce']
       end
 
+      if attributes.key?(:'require_dpop')
+        self.require_dpop = attributes[:'require_dpop']
+      end
+
       if attributes.key?(:'token_lifetime')
         self.token_lifetime = attributes[:'token_lifetime']
       end
@@ -213,6 +221,7 @@ module LumoAuthApiClient
           status == o.status &&
           scopes_supported == o.scopes_supported &&
           require_pkce == o.require_pkce &&
+          require_dpop == o.require_dpop &&
           token_lifetime == o.token_lifetime &&
           created_at == o.created_at &&
           updated_at == o.updated_at &&
@@ -228,7 +237,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, server_id, name, description, resource_uri, endpoint_url, transport, auth_mode, status, scopes_supported, require_pkce, token_lifetime, created_at, updated_at, discovery].hash
+      [id, server_id, name, description, resource_uri, endpoint_url, transport, auth_mode, status, scopes_supported, require_pkce, require_dpop, token_lifetime, created_at, updated_at, discovery].hash
     end
 
     # Builds the object from hash

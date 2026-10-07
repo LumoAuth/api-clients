@@ -27,6 +27,16 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AbacAttributesCreateResponse;
+import io.lumoauth.client.model.AbacAttributesGetResponse;
+import io.lumoauth.client.model.AbacAttributesListResponse;
+import io.lumoauth.client.model.AbacPoliciesCreateResponse;
+import io.lumoauth.client.model.AbacPoliciesGetResponse;
+import io.lumoauth.client.model.AbacPoliciesListResponse;
+import io.lumoauth.client.model.AbacPoliciesToggleResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAbacAttributesUpdateResponse;
+import io.lumoauth.client.model.PutAbacPoliciesUpdateResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +91,8 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacAttributesCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +122,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,41 +152,46 @@ public class AdminAbacApi {
     }
 
     /**
-     * Create a new attribute definition
+     * Create an attribute definition
      * 
      * @param orgId  (required)
+     * @return AbacAttributesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
-    public void abacAttributesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        abacAttributesCreateWithHttpInfo(orgId);
+    public AbacAttributesCreateResponse abacAttributesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AbacAttributesCreateResponse> localVarResp = abacAttributesCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Create a new attribute definition
+     * Create an attribute definition
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacAttributesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacAttributesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AbacAttributesCreateResponse> abacAttributesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = abacAttributesCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacAttributesCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Create a new attribute definition (asynchronously)
+     * Create an attribute definition (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -184,13 +201,15 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An attribute with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacAttributesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacAttributesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AbacAttributesCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacAttributesCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacAttributesCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -204,7 +223,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacAttributesDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -235,6 +256,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -273,16 +295,20 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public void abacAttributesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        abacAttributesDeleteWithHttpInfo(orgId, id);
+    public MessageResponse abacAttributesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = abacAttributesDeleteWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
@@ -290,18 +316,21 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacAttributesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<MessageResponse> abacAttributesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = abacAttributesDeleteValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -316,13 +345,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacAttributesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacAttributesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacAttributesDeleteValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -336,7 +368,8 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attribute definition </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacAttributesGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -367,6 +400,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -401,43 +435,48 @@ public class AdminAbacApi {
     }
 
     /**
-     * Get a single attribute definition
+     * Get an attribute definition
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return AbacAttributesGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attribute definition </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public void abacAttributesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        abacAttributesGetWithHttpInfo(orgId, id);
+    public AbacAttributesGetResponse abacAttributesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<AbacAttributesGetResponse> localVarResp = abacAttributesGetWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single attribute definition
+     * Get an attribute definition
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacAttributesGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attribute definition </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacAttributesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<AbacAttributesGetResponse> abacAttributesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = abacAttributesGetValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacAttributesGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single attribute definition (asynchronously)
+     * Get an attribute definition (asynchronously)
      * 
      * @param orgId  (required)
      * @param id  (required)
@@ -448,13 +487,15 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attribute definition </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacAttributesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacAttributesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<AbacAttributesGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacAttributesGetValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacAttributesGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -467,7 +508,7 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated attribute definitions </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacAttributesListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -497,6 +538,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -526,41 +568,44 @@ public class AdminAbacApi {
     }
 
     /**
-     * List all attribute definitions
+     * List attribute definitions
      * 
      * @param orgId  (required)
+     * @return AbacAttributesListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated attribute definitions </td><td>  -  </td></tr>
      </table>
      */
-    public void abacAttributesList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        abacAttributesListWithHttpInfo(orgId);
+    public AbacAttributesListResponse abacAttributesList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AbacAttributesListResponse> localVarResp = abacAttributesListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List all attribute definitions
+     * List attribute definitions
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacAttributesListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated attribute definitions </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacAttributesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AbacAttributesListResponse> abacAttributesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = abacAttributesListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacAttributesListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List all attribute definitions (asynchronously)
+     * List attribute definitions (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -570,13 +615,14 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated attribute definitions </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacAttributesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacAttributesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AbacAttributesListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacAttributesListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacAttributesListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -589,7 +635,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacPoliciesCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -619,6 +667,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -648,41 +697,48 @@ public class AdminAbacApi {
     }
 
     /**
-     * Create a new ABAC policy
+     * Create an ABAC policy
      * 
      * @param orgId  (required)
+     * @return AbacPoliciesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
-    public void abacPoliciesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        abacPoliciesCreateWithHttpInfo(orgId);
+    public AbacPoliciesCreateResponse abacPoliciesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AbacPoliciesCreateResponse> localVarResp = abacPoliciesCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Create a new ABAC policy
+     * Create an ABAC policy
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacPoliciesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacPoliciesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AbacPoliciesCreateResponse> abacPoliciesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = abacPoliciesCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacPoliciesCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Create a new ABAC policy (asynchronously)
+     * Create an ABAC policy (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -692,13 +748,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Invalid effect or policy conditions </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> A policy with this slug already exists </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AbacPoliciesCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacPoliciesCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacPoliciesCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -712,7 +771,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacPoliciesDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -743,6 +804,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -781,16 +843,20 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public void abacPoliciesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        abacPoliciesDeleteWithHttpInfo(orgId, id);
+    public MessageResponse abacPoliciesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = abacPoliciesDeleteWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
@@ -798,18 +864,21 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacPoliciesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<MessageResponse> abacPoliciesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = abacPoliciesDeleteValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -824,13 +893,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacPoliciesDeleteValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -844,7 +916,8 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Policy </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacPoliciesGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -875,6 +948,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -909,43 +983,48 @@ public class AdminAbacApi {
     }
 
     /**
-     * Get a single ABAC policy
+     * Get an ABAC policy
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return AbacPoliciesGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Policy </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public void abacPoliciesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        abacPoliciesGetWithHttpInfo(orgId, id);
+    public AbacPoliciesGetResponse abacPoliciesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<AbacPoliciesGetResponse> localVarResp = abacPoliciesGetWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single ABAC policy
+     * Get an ABAC policy
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacPoliciesGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Policy </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacPoliciesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<AbacPoliciesGetResponse> abacPoliciesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = abacPoliciesGetValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacPoliciesGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single ABAC policy (asynchronously)
+     * Get an ABAC policy (asynchronously)
      * 
      * @param orgId  (required)
      * @param id  (required)
@@ -956,13 +1035,15 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Policy </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<AbacPoliciesGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacPoliciesGetValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacPoliciesGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -975,7 +1056,7 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacPoliciesListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1005,6 +1086,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1034,41 +1116,44 @@ public class AdminAbacApi {
     }
 
     /**
-     * List all ABAC policies
+     * List ABAC policies
      * 
      * @param orgId  (required)
+     * @return AbacPoliciesListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public void abacPoliciesList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        abacPoliciesListWithHttpInfo(orgId);
+    public AbacPoliciesListResponse abacPoliciesList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AbacPoliciesListResponse> localVarResp = abacPoliciesListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List all ABAC policies
+     * List ABAC policies
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacPoliciesListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacPoliciesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AbacPoliciesListResponse> abacPoliciesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = abacPoliciesListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacPoliciesListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List all ABAC policies (asynchronously)
+     * List ABAC policies (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1078,13 +1163,14 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Paginated policies </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AbacPoliciesListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacPoliciesListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacPoliciesListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1098,7 +1184,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call abacPoliciesToggleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -1129,6 +1217,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1163,43 +1252,50 @@ public class AdminAbacApi {
     }
 
     /**
-     * Toggle policy active status
+     * Toggle a policy between active and inactive
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return AbacPoliciesToggleResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public void abacPoliciesToggle(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        abacPoliciesToggleWithHttpInfo(orgId, id);
+    public AbacPoliciesToggleResponse abacPoliciesToggle(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<AbacPoliciesToggleResponse> localVarResp = abacPoliciesToggleWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
-     * Toggle policy active status
+     * Toggle a policy between active and inactive
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AbacPoliciesToggleResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> abacPoliciesToggleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<AbacPoliciesToggleResponse> abacPoliciesToggleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = abacPoliciesToggleValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AbacPoliciesToggleResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Toggle policy active status (asynchronously)
+     * Toggle a policy between active and inactive (asynchronously)
      * 
      * @param orgId  (required)
      * @param id  (required)
@@ -1210,13 +1306,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Toggled policy </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call abacPoliciesToggleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call abacPoliciesToggleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<AbacPoliciesToggleResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = abacPoliciesToggleValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AbacPoliciesToggleResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1230,7 +1329,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAbacAttributesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -1261,6 +1362,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1295,43 +1397,50 @@ public class AdminAbacApi {
     }
 
     /**
-     * Update an attribute definition
+     * Partially update an attribute definition
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return PutAbacAttributesUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAbacAttributesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        patchAbacAttributesUpdateWithHttpInfo(orgId, id);
+    public PutAbacAttributesUpdateResponse patchAbacAttributesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<PutAbacAttributesUpdateResponse> localVarResp = patchAbacAttributesUpdateWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
-     * Update an attribute definition
+     * Partially update an attribute definition
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAbacAttributesUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAbacAttributesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<PutAbacAttributesUpdateResponse> patchAbacAttributesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = patchAbacAttributesUpdateValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAbacAttributesUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update an attribute definition (asynchronously)
+     * Partially update an attribute definition (asynchronously)
      * 
      * @param orgId  (required)
      * @param id  (required)
@@ -1342,13 +1451,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAbacAttributesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAbacAttributesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<PutAbacAttributesUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAbacAttributesUpdateValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAbacAttributesUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1362,7 +1474,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAbacPoliciesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -1393,6 +1507,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1427,43 +1542,50 @@ public class AdminAbacApi {
     }
 
     /**
-     * Update an ABAC policy
+     * Partially update an ABAC policy
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return PutAbacPoliciesUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAbacPoliciesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        patchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    public PutAbacPoliciesUpdateResponse patchAbacPoliciesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<PutAbacPoliciesUpdateResponse> localVarResp = patchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
-     * Update an ABAC policy
+     * Partially update an ABAC policy
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAbacPoliciesUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAbacPoliciesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<PutAbacPoliciesUpdateResponse> patchAbacPoliciesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = patchAbacPoliciesUpdateValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAbacPoliciesUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update an ABAC policy (asynchronously)
+     * Partially update an ABAC policy (asynchronously)
      * 
      * @param orgId  (required)
      * @param id  (required)
@@ -1474,13 +1596,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAbacPoliciesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAbacPoliciesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<PutAbacPoliciesUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAbacPoliciesUpdateValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAbacPoliciesUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1494,7 +1619,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAbacAttributesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -1525,6 +1652,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1563,16 +1691,20 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return PutAbacAttributesUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public void putAbacAttributesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        putAbacAttributesUpdateWithHttpInfo(orgId, id);
+    public PutAbacAttributesUpdateResponse putAbacAttributesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<PutAbacAttributesUpdateResponse> localVarResp = putAbacAttributesUpdateWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
@@ -1580,18 +1712,21 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAbacAttributesUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAbacAttributesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<PutAbacAttributesUpdateResponse> putAbacAttributesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = putAbacAttributesUpdateValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAbacAttributesUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1606,13 +1741,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System attribute definitions cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Attribute definition not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAbacAttributesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAbacAttributesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<PutAbacAttributesUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAbacAttributesUpdateValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAbacAttributesUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1626,7 +1764,9 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAbacPoliciesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback _callback) throws ApiException {
@@ -1657,6 +1797,7 @@ public class AdminAbacApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1695,16 +1836,20 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
+     * @return PutAbacPoliciesUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public void putAbacPoliciesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
-        putAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    public PutAbacPoliciesUpdateResponse putAbacPoliciesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+        ApiResponse<PutAbacPoliciesUpdateResponse> localVarResp = putAbacPoliciesUpdateWithHttpInfo(orgId, id);
+        return localVarResp.getData();
     }
 
     /**
@@ -1712,18 +1857,21 @@ public class AdminAbacApi {
      * 
      * @param orgId  (required)
      * @param id  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAbacPoliciesUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAbacPoliciesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
+    public ApiResponse<PutAbacPoliciesUpdateResponse> putAbacPoliciesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id) throws ApiException {
         okhttp3.Call localVarCall = putAbacPoliciesUpdateValidateBeforeCall(orgId, id, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAbacPoliciesUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1738,13 +1886,16 @@ public class AdminAbacApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> System policies cannot be modified </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Policy not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAbacPoliciesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAbacPoliciesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String id, final ApiCallback<PutAbacPoliciesUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAbacPoliciesUpdateValidateBeforeCall(orgId, id, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAbacPoliciesUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

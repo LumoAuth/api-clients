@@ -36,19 +36,26 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageResponse" /> class.
         /// </summary>
-        /// <param name="message">message.</param>
+        [JsonConstructorAttribute]
+        protected MessageResponse() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MessageResponse" /> class.
+        /// </summary>
+        /// <param name="message">message (required).</param>
         public MessageResponse(string message = default)
         {
+            // to ensure "message" is required (not null)
+            if (message == null)
+            {
+                throw new ArgumentNullException("message is a required property for MessageResponse and cannot be null");
+            }
             this.Message = message;
         }
 
         /// <summary>
         /// Gets or Sets Message
         /// </summary>
-        /*
-        <example>Agent deleted successfully</example>
-        */
-        [DataMember(Name = "message", EmitDefaultValue = false)]
+        [DataMember(Name = "message", IsRequired = true, EmitDefaultValue = true)]
         public string Message { get; set; }
 
         /// <summary>

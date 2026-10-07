@@ -4,17 +4,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CheckSession**](OIDCAPI.md#CheckSession) | **Get** /orgs/{orgId}/api/v1/oauth/check_session | 
-[**Logout**](OIDCAPI.md#Logout) | **Get** /orgs/{orgId}/api/v1/oauth/logout | 
-[**LogoutPost**](OIDCAPI.md#LogoutPost) | **Post** /orgs/{orgId}/api/v1/oauth/logout | 
-[**Userinfo**](OIDCAPI.md#Userinfo) | **Get** /orgs/{orgId}/api/v1/oauth/userinfo | OIDC UserInfo Endpoint
-[**UserinfoPost**](OIDCAPI.md#UserinfoPost) | **Post** /orgs/{orgId}/api/v1/oauth/userinfo | OIDC UserInfo Endpoint
+[**CheckSession**](OIDCAPI.md#CheckSession) | **Get** /orgs/{orgId}/api/v1/oauth/check_session | OP session-check iframe (OIDC Session Management 1.0)
+[**Logout**](OIDCAPI.md#Logout) | **Get** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+[**LogoutPost**](OIDCAPI.md#LogoutPost) | **Post** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (confirmation submission)
+[**Userinfo**](OIDCAPI.md#Userinfo) | **Get** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint
+[**UserinfoPost**](OIDCAPI.md#UserinfoPost) | **Post** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint (POST)
 
 
 
 ## CheckSession
 
-> CheckSession(ctx, orgId).Execute()
+> string CheckSession(ctx, orgId).Execute()
+
+OP session-check iframe (OIDC Session Management 1.0)
 
 
 
@@ -35,11 +37,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OIDCAPI.CheckSession(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OIDCAPI.CheckSession(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.CheckSession``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckSession`: string
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.CheckSession`: %v\n", resp)
 }
 ```
 
@@ -62,7 +66,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -71,7 +75,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -80,7 +84,9 @@ No authorization required
 
 ## Logout
 
-> Logout(ctx, orgId).Execute()
+> string Logout(ctx, orgId).Execute()
+
+RP-initiated logout (OIDC RP-Initiated Logout 1.0)
 
 
 
@@ -101,11 +107,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OIDCAPI.Logout(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OIDCAPI.Logout(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.Logout``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Logout`: string
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.Logout`: %v\n", resp)
 }
 ```
 
@@ -128,7 +136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -137,7 +145,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -146,7 +154,9 @@ No authorization required
 
 ## LogoutPost
 
-> LogoutPost(ctx, orgId).Execute()
+> string LogoutPost(ctx, orgId).Execute()
+
+RP-initiated logout (confirmation submission)
 
 
 
@@ -167,11 +177,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OIDCAPI.LogoutPost(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OIDCAPI.LogoutPost(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.LogoutPost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `LogoutPost`: string
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.LogoutPost`: %v\n", resp)
 }
 ```
 
@@ -194,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -203,7 +215,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/html
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -212,9 +224,9 @@ No authorization required
 
 ## Userinfo
 
-> Userinfo(ctx, orgId).Execute()
+> UserinfoResponse Userinfo(ctx, orgId).Execute()
 
-OIDC UserInfo Endpoint
+OpenID Connect UserInfo endpoint
 
 
 
@@ -235,11 +247,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OIDCAPI.Userinfo(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OIDCAPI.Userinfo(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.Userinfo``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Userinfo`: UserinfoResponse
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.Userinfo`: %v\n", resp)
 }
 ```
 
@@ -262,7 +276,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**UserinfoResponse**](UserinfoResponse.md)
 
 ### Authorization
 
@@ -271,7 +285,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -280,9 +294,9 @@ Name | Type | Description  | Notes
 
 ## UserinfoPost
 
-> UserinfoPost(ctx, orgId).Execute()
+> UserinfoResponse UserinfoPost(ctx, orgId).Execute()
 
-OIDC UserInfo Endpoint
+OpenID Connect UserInfo endpoint (POST)
 
 
 
@@ -303,11 +317,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.OIDCAPI.UserinfoPost(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.OIDCAPI.UserinfoPost(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `OIDCAPI.UserinfoPost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `UserinfoPost`: UserinfoResponse
+	fmt.Fprintf(os.Stdout, "Response from `OIDCAPI.UserinfoPost`: %v\n", resp)
 }
 ```
 
@@ -330,7 +346,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**UserinfoResponse**](UserinfoResponse.md)
 
 ### Authorization
 
@@ -339,7 +355,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

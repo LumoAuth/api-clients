@@ -21,6 +21,7 @@ import io.lumoauth.client.model.AdminAgentsAgentsRotateKeyResponse;
 import io.lumoauth.client.model.AdminAgentsCreateRequest;
 import io.lumoauth.client.model.AdminAgentsCreateResponse;
 import io.lumoauth.client.model.AdminAgentsDeactivateResponse;
+import io.lumoauth.client.model.AdminAgentsDeleteResponse;
 import io.lumoauth.client.model.AdminAgentsGenerateTokenRequest;
 import io.lumoauth.client.model.AdminAgentsGenerateTokenResponse;
 import io.lumoauth.client.model.AdminAgentsGetResponse;
@@ -30,7 +31,6 @@ import io.lumoauth.client.model.AdminAgentsRevokeKeyResponse;
 import io.lumoauth.client.model.AdminAgentsRotateCredentialsResponse;
 import io.lumoauth.client.model.AdminAgentsSetScopesRequest;
 import io.lumoauth.client.model.AdminAgentsSetScopesResponse;
-import io.lumoauth.client.model.MessageResponse;
 import io.lumoauth.client.model.PutAdminAgentsUpdateRequest;
 import io.lumoauth.client.model.PutAdminAgentsUpdateResponse;
 import org.junit.jupiter.api.Disabled;
@@ -136,7 +136,7 @@ public class AdminAgentsApiTest {
     public void adminAgentsDeleteTest() throws ApiException {
         String orgId = null;
         String agentId = null;
-        MessageResponse response = api.adminAgentsDelete(orgId, agentId);
+        AdminAgentsDeleteResponse response = api.adminAgentsDelete(orgId, agentId);
         // TODO: test validations
     }
 

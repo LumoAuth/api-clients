@@ -5,14 +5,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ask**](AgentsAPI.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
-[**attest**](AgentsAPI.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | 
+[**attest**](AgentsAPI.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 [**authorizeMcp**](AgentsAPI.md#authorizemcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
 [**createApproval**](AgentsAPI.md#createapproval) | **POST** /orgs/{orgId}/api/v1/agents/me/approvals | 
-[**getAgentCard**](AgentsAPI.md#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | 
+[**getAgentCard**](AgentsAPI.md#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 [**getApprovalStatus**](AgentsAPI.md#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**getCurrentAgent**](AgentsAPI.md#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
-[**registerAgent**](AgentsAPI.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | 
-[**verifyAgentCard**](AgentsAPI.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | 
+[**registerAgent**](AgentsAPI.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+[**verifyAgentCard**](AgentsAPI.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
 
 # **ask**
@@ -69,10 +69,12 @@ Name | Type | Description  | Notes
 
 # **attest**
 ```swift
-    open class func attest(orgId: String, agentId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func attest(orgId: String, agentId: String, attestRequest: AttestRequest, completion: @escaping (_ data: AttestResponse?, _ error: Error?) -> Void)
 ```
 
+Workload attestation: exchange a cloud OIDC token for an agent access token
 
+Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
 ### Example
 ```swift
@@ -81,8 +83,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
+let attestRequest = AttestRequest(attestationToken: "attestationToken_example") // AttestRequest | 
 
-AgentsAPI.attest(orgId: orgId, agentId: agentId) { (response, error) in
+// Workload attestation: exchange a cloud OIDC token for an agent access token
+AgentsAPI.attest(orgId: orgId, agentId: agentId, attestRequest: attestRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -100,10 +104,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **agentId** | **String** |  | 
+ **attestRequest** | [**AttestRequest**](AttestRequest.md) |  | 
 
 ### Return type
 
-Void (empty response body)
+[**AttestResponse**](AttestResponse.md)
 
 ### Authorization
 
@@ -111,8 +116,8 @@ Void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -219,10 +224,12 @@ Name | Type | Description  | Notes
 
 # **getAgentCard**
 ```swift
-    open class func getAgentCard(orgId: String, agentId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func getAgentCard(orgId: String, agentId: String, completion: @escaping (_ data: SignedAgentCard?, _ error: Error?) -> Void)
 ```
 
+Signed A2A agent card
 
+Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
 ### Example
 ```swift
@@ -232,6 +239,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
 
+// Signed A2A agent card
 AgentsAPI.getAgentCard(orgId: orgId, agentId: agentId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -253,7 +261,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**SignedAgentCard**](SignedAgentCard.md)
 
 ### Authorization
 
@@ -262,7 +270,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -367,10 +375,10 @@ Name | Type | Description  | Notes
 
 # **registerAgent**
 ```swift
-    open class func registerAgent(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func registerAgent(orgId: String, completion: @escaping (_ data: RegisterAgentResponse?, _ error: Error?) -> Void)
 ```
 
-
+Register (or re-register) an agent
 
 ### Example
 ```swift
@@ -379,6 +387,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
+// Register (or re-register) an agent
 AgentsAPI.registerAgent(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -399,7 +408,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**RegisterAgentResponse**](RegisterAgentResponse.md)
 
 ### Authorization
 
@@ -408,16 +417,18 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **verifyAgentCard**
 ```swift
-    open class func verifyAgentCard(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func verifyAgentCard(orgId: String, requestBody: [String: AnyCodable], completion: @escaping (_ data: VerifyAgentCardResponse?, _ error: Error?) -> Void)
 ```
 
+Verify a signed A2A agent card
 
+Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
 ### Example
 ```swift
@@ -425,8 +436,10 @@ Void (empty response body)
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let requestBody = "TODO" // [String: AnyCodable] | 
 
-AgentsAPI.verifyAgentCard(orgId: orgId) { (response, error) in
+// Verify a signed A2A agent card
+AgentsAPI.verifyAgentCard(orgId: orgId, requestBody: requestBody) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -443,10 +456,11 @@ AgentsAPI.verifyAgentCard(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **requestBody** | [**[String: AnyCodable]**](AnyCodable.md) |  | 
 
 ### Return type
 
-Void (empty response body)
+[**VerifyAgentCardResponse**](VerifyAgentCardResponse.md)
 
 ### Authorization
 
@@ -454,8 +468,8 @@ Void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

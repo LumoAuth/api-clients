@@ -29,9 +29,10 @@ func Test_lumoauthclient_AdminEmailAPIService(t *testing.T) {
 		var orgId string
 		var type_ string
 
-		httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesDelete(context.Background(), orgId, type_).Execute()
+		resp, httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesDelete(context.Background(), orgId, type_).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -43,9 +44,10 @@ func Test_lumoauthclient_AdminEmailAPIService(t *testing.T) {
 		var orgId string
 		var type_ string
 
-		httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesGet(context.Background(), orgId, type_).Execute()
+		resp, httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesGet(context.Background(), orgId, type_).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminEmailAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -70,9 +73,10 @@ func Test_lumoauthclient_AdminEmailAPIService(t *testing.T) {
 		var orgId string
 		var type_ string
 
-		httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesPreview(context.Background(), orgId, type_).Execute()
+		resp, httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesPreview(context.Background(), orgId, type_).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -84,9 +88,10 @@ func Test_lumoauthclient_AdminEmailAPIService(t *testing.T) {
 		var orgId string
 		var type_ string
 
-		httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesUpsert(context.Background(), orgId, type_).Execute()
+		resp, httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesUpsert(context.Background(), orgId, type_).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -98,9 +103,10 @@ func Test_lumoauthclient_AdminEmailAPIService(t *testing.T) {
 		var orgId string
 		var type_ string
 
-		httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesVariables(context.Background(), orgId, type_).Execute()
+		resp, httpRes, err := apiClient.AdminEmailAPI.AdminEmailTemplatesVariables(context.Background(), orgId, type_).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

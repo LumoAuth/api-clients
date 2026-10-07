@@ -17,7 +17,35 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import StrictInt, StrictStr, field_validator
+from typing import Optional
+from lumoauth_api_client.models.add_user_group_response import AddUserGroupResponse
+from lumoauth_api_client.models.add_user_permission_response import AddUserPermissionResponse
+from lumoauth_api_client.models.add_user_role_response import AddUserRoleResponse
+from lumoauth_api_client.models.admin_agents_get_response import AdminAgentsGetResponse
+from lumoauth_api_client.models.admin_groups_groups_get_roles_response import AdminGroupsGroupsGetRolesResponse
+from lumoauth_api_client.models.admin_identities_legacy_saml_relink_request import AdminIdentitiesLegacySamlRelinkRequest
+from lumoauth_api_client.models.admin_identities_legacy_saml_relink_response import AdminIdentitiesLegacySamlRelinkResponse
+from lumoauth_api_client.models.admin_identities_legacy_saml_report_response import AdminIdentitiesLegacySamlReportResponse
+from lumoauth_api_client.models.admin_identities_link_request import AdminIdentitiesLinkRequest
+from lumoauth_api_client.models.admin_identities_list_response import AdminIdentitiesListResponse
+from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
+from lumoauth_api_client.models.block_user_response import BlockUserResponse
+from lumoauth_api_client.models.create_user_response import CreateUserResponse
+from lumoauth_api_client.models.delete_user_response import DeleteUserResponse
+from lumoauth_api_client.models.get_user_response import GetUserResponse
+from lumoauth_api_client.models.list_users_response import ListUsersResponse
+from lumoauth_api_client.models.mark_user_verified_response import MarkUserVerifiedResponse
+from lumoauth_api_client.models.remove_user_group_response import RemoveUserGroupResponse
+from lumoauth_api_client.models.remove_user_permission_response import RemoveUserPermissionResponse
+from lumoauth_api_client.models.remove_user_role_response import RemoveUserRoleResponse
+from lumoauth_api_client.models.send_user_verification_email_response import SendUserVerificationEmailResponse
+from lumoauth_api_client.models.set_user_password_post_response import SetUserPasswordPostResponse
+from lumoauth_api_client.models.trigger_user_password_reset_response import TriggerUserPasswordResetResponse
+from lumoauth_api_client.models.unblock_user_response import UnblockUserResponse
+from lumoauth_api_client.models.update_user_groups_response import UpdateUserGroupsResponse
+from lumoauth_api_client.models.update_user_response import UpdateUserResponse
+from lumoauth_api_client.models.update_user_roles_response import UpdateUserRolesResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +82,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """add_user_group
+    ) -> AddUserGroupResponse:
+        """Add a user to a group
 
 
         :param org_id: (required)
@@ -94,6 +122,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserGroupResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,8 +152,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """add_user_group
+    ) -> ApiResponse[AddUserGroupResponse]:
+        """Add a user to a group
 
 
         :param org_id: (required)
@@ -163,6 +192,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserGroupResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -193,7 +223,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """add_user_group
+        """Add a user to a group
 
 
         :param org_id: (required)
@@ -232,6 +262,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserGroupResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +306,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -318,8 +356,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """add_user_permission
+    ) -> AddUserPermissionResponse:
+        """Assign a permission to a user
 
 
         :param org_id: (required)
@@ -358,6 +396,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -387,8 +426,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """add_user_permission
+    ) -> ApiResponse[AddUserPermissionResponse]:
+        """Assign a permission to a user
 
 
         :param org_id: (required)
@@ -427,6 +466,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -457,7 +497,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """add_user_permission
+        """Assign a permission to a user
 
 
         :param org_id: (required)
@@ -496,6 +536,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -539,6 +580,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -582,8 +630,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """add_user_role
+    ) -> AddUserRoleResponse:
+        """Assign a role to a user
 
 
         :param org_id: (required)
@@ -622,6 +670,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserRoleResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -651,8 +700,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """add_user_role
+    ) -> ApiResponse[AddUserRoleResponse]:
+        """Assign a role to a user
 
 
         :param org_id: (required)
@@ -691,6 +740,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserRoleResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -721,7 +771,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """add_user_role
+        """Assign a role to a user
 
 
         :param org_id: (required)
@@ -760,6 +810,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AddUserRoleResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -803,6 +854,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -814,6 +872,1485 @@ class AdminUsersApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/orgs/{orgId}/api/v1/admin/users/{userId}/roles',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_identities_legacy_saml_relink(
+        self,
+        org_id: StrictStr,
+        admin_identities_legacy_saml_relink_request: AdminIdentitiesLegacySamlRelinkRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminIdentitiesLegacySamlRelinkResponse:
+        """Relink legacy SAML users to an IdP
+
+        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param admin_identities_legacy_saml_relink_request: (required)
+        :type admin_identities_legacy_saml_relink_request: AdminIdentitiesLegacySamlRelinkRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_legacy_saml_relink_serialize(
+            org_id=org_id,
+            admin_identities_legacy_saml_relink_request=admin_identities_legacy_saml_relink_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesLegacySamlRelinkResponse",
+            '403': None,
+            '404': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_identities_legacy_saml_relink_with_http_info(
+        self,
+        org_id: StrictStr,
+        admin_identities_legacy_saml_relink_request: AdminIdentitiesLegacySamlRelinkRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminIdentitiesLegacySamlRelinkResponse]:
+        """Relink legacy SAML users to an IdP
+
+        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param admin_identities_legacy_saml_relink_request: (required)
+        :type admin_identities_legacy_saml_relink_request: AdminIdentitiesLegacySamlRelinkRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_legacy_saml_relink_serialize(
+            org_id=org_id,
+            admin_identities_legacy_saml_relink_request=admin_identities_legacy_saml_relink_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesLegacySamlRelinkResponse",
+            '403': None,
+            '404': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_identities_legacy_saml_relink_without_preload_content(
+        self,
+        org_id: StrictStr,
+        admin_identities_legacy_saml_relink_request: AdminIdentitiesLegacySamlRelinkRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Relink legacy SAML users to an IdP
+
+        Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param admin_identities_legacy_saml_relink_request: (required)
+        :type admin_identities_legacy_saml_relink_request: AdminIdentitiesLegacySamlRelinkRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_legacy_saml_relink_serialize(
+            org_id=org_id,
+            admin_identities_legacy_saml_relink_request=admin_identities_legacy_saml_relink_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesLegacySamlRelinkResponse",
+            '403': None,
+            '404': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_identities_legacy_saml_relink_serialize(
+        self,
+        org_id,
+        admin_identities_legacy_saml_relink_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if admin_identities_legacy_saml_relink_request is not None:
+            _body_params = admin_identities_legacy_saml_relink_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/orgs/{orgId}/api/v1/admin/identities/legacy-saml',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_identities_legacy_saml_report(
+        self,
+        org_id: StrictStr,
+        idp_id: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminIdentitiesLegacySamlReportResponse:
+        """Legacy SAML bindings report
+
+        Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param idp_id:
+        :type idp_id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_legacy_saml_report_serialize(
+            org_id=org_id,
+            idp_id=idp_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesLegacySamlReportResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_identities_legacy_saml_report_with_http_info(
+        self,
+        org_id: StrictStr,
+        idp_id: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminIdentitiesLegacySamlReportResponse]:
+        """Legacy SAML bindings report
+
+        Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param idp_id:
+        :type idp_id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_legacy_saml_report_serialize(
+            org_id=org_id,
+            idp_id=idp_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesLegacySamlReportResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_identities_legacy_saml_report_without_preload_content(
+        self,
+        org_id: StrictStr,
+        idp_id: Optional[StrictInt] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Legacy SAML bindings report
+
+        Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param idp_id:
+        :type idp_id: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_legacy_saml_report_serialize(
+            org_id=org_id,
+            idp_id=idp_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesLegacySamlReportResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_identities_legacy_saml_report_serialize(
+        self,
+        org_id,
+        idp_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        # process the query parameters
+        if idp_id is not None:
+            
+            _query_params.append(('idp_id', idp_id))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/orgs/{orgId}/api/v1/admin/identities/legacy-saml',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_identities_link(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        admin_identities_link_request: AdminIdentitiesLinkRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminAgentsGetResponse:
+        """Link a SAML or LDAP identity to a user
+
+        Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param admin_identities_link_request: (required)
+        :type admin_identities_link_request: AdminIdentitiesLinkRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_link_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            admin_identities_link_request=admin_identities_link_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminAgentsGetResponse",
+            '403': None,
+            '404': None,
+            '409': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_identities_link_with_http_info(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        admin_identities_link_request: AdminIdentitiesLinkRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminAgentsGetResponse]:
+        """Link a SAML or LDAP identity to a user
+
+        Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param admin_identities_link_request: (required)
+        :type admin_identities_link_request: AdminIdentitiesLinkRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_link_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            admin_identities_link_request=admin_identities_link_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminAgentsGetResponse",
+            '403': None,
+            '404': None,
+            '409': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_identities_link_without_preload_content(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        admin_identities_link_request: AdminIdentitiesLinkRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Link a SAML or LDAP identity to a user
+
+        Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param admin_identities_link_request: (required)
+        :type admin_identities_link_request: AdminIdentitiesLinkRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_link_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            admin_identities_link_request=admin_identities_link_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminAgentsGetResponse",
+            '403': None,
+            '404': None,
+            '409': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_identities_link_serialize(
+        self,
+        org_id,
+        user_id,
+        admin_identities_link_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if user_id is not None:
+            _path_params['userId'] = user_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if admin_identities_link_request is not None:
+            _body_params = admin_identities_link_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/orgs/{orgId}/api/v1/admin/users/{userId}/identities',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_identities_list(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminIdentitiesListResponse:
+        """List a user's federated identity links
+
+        SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_list_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesListResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_identities_list_with_http_info(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminIdentitiesListResponse]:
+        """List a user's federated identity links
+
+        SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_list_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesListResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_identities_list_without_preload_content(
+        self,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List a user's federated identity links
+
+        SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_list_serialize(
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminIdentitiesListResponse",
+            '404': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_identities_list_serialize(
+        self,
+        org_id,
+        user_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if user_id is not None:
+            _path_params['userId'] = user_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/orgs/{orgId}/api/v1/admin/users/{userId}/identities',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def admin_identities_unlink(
+        self,
+        type: StrictStr,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> AdminAgentsGetResponse:
+        """Unlink a user's SAML, LDAP or social identity
+
+        Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+
+        :param type: (required)
+        :type type: str
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_unlink_serialize(
+            type=type,
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAgentsGetResponse",
+            '403': None,
+            '404': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def admin_identities_unlink_with_http_info(
+        self,
+        type: StrictStr,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[AdminAgentsGetResponse]:
+        """Unlink a user's SAML, LDAP or social identity
+
+        Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+
+        :param type: (required)
+        :type type: str
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_unlink_serialize(
+            type=type,
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAgentsGetResponse",
+            '403': None,
+            '404': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def admin_identities_unlink_without_preload_content(
+        self,
+        type: StrictStr,
+        org_id: StrictStr,
+        user_id: StrictStr,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Unlink a user's SAML, LDAP or social identity
+
+        Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+
+        :param type: (required)
+        :type type: str
+        :param org_id: (required)
+        :type org_id: str
+        :param user_id: (required)
+        :type user_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._admin_identities_unlink_serialize(
+            type=type,
+            org_id=org_id,
+            user_id=user_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAgentsGetResponse",
+            '403': None,
+            '404': None,
+            '422': None,
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _admin_identities_unlink_serialize(
+        self,
+        type,
+        org_id,
+        user_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if type is not None:
+            _path_params['type'] = type
+        if org_id is not None:
+            _path_params['orgId'] = org_id
+        if user_id is not None:
+            _path_params['userId'] = user_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'ApiKeyAuth', 
+            'BearerAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -846,8 +2383,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """block_user
+    ) -> BlockUserResponse:
+        """Block a user
 
 
         :param org_id: (required)
@@ -886,6 +2423,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BlockUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -915,8 +2453,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """block_user
+    ) -> ApiResponse[BlockUserResponse]:
+        """Block a user
 
 
         :param org_id: (required)
@@ -955,6 +2493,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BlockUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -985,7 +2524,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """block_user
+        """Block a user
 
 
         :param org_id: (required)
@@ -1024,6 +2563,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BlockUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1067,6 +2607,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1109,8 +2656,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """create_user
+    ) -> CreateUserResponse:
+        """Create a user
 
 
         :param org_id: (required)
@@ -1146,6 +2693,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1174,8 +2722,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """create_user
+    ) -> ApiResponse[CreateUserResponse]:
+        """Create a user
 
 
         :param org_id: (required)
@@ -1211,6 +2759,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1240,7 +2789,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """create_user
+        """Create a user
 
 
         :param org_id: (required)
@@ -1276,6 +2825,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1316,6 +2866,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1359,8 +2916,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """delete_user
+    ) -> DeleteUserResponse:
+        """Delete a user
 
 
         :param org_id: (required)
@@ -1399,6 +2956,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1428,8 +2986,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """delete_user
+    ) -> ApiResponse[DeleteUserResponse]:
+        """Delete a user
 
 
         :param org_id: (required)
@@ -1468,6 +3026,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1498,7 +3057,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """delete_user
+        """Delete a user
 
 
         :param org_id: (required)
@@ -1537,6 +3096,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeleteUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1580,6 +3140,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1623,8 +3190,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_user
+    ) -> GetUserResponse:
+        """Get a user
 
 
         :param org_id: (required)
@@ -1663,6 +3230,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1692,8 +3260,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_user
+    ) -> ApiResponse[GetUserResponse]:
+        """Get a user
 
 
         :param org_id: (required)
@@ -1732,6 +3300,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1762,7 +3331,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_user
+        """Get a user
 
 
         :param org_id: (required)
@@ -1801,6 +3370,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1844,6 +3414,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1887,8 +3464,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """list_user_groups
+    ) -> AdminGroupsGroupsGetRolesResponse:
+        """List a user's groups
 
 
         :param org_id: (required)
@@ -1927,6 +3504,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1956,8 +3534,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """list_user_groups
+    ) -> ApiResponse[AdminGroupsGroupsGetRolesResponse]:
+        """List a user's groups
 
 
         :param org_id: (required)
@@ -1996,6 +3574,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2026,7 +3605,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """list_user_groups
+        """List a user's groups
 
 
         :param org_id: (required)
@@ -2065,6 +3644,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2108,6 +3688,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2151,8 +3738,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """list_user_permissions
+    ) -> AdminRolesGetPermissionsResponse:
+        """List a user's direct permissions
 
 
         :param org_id: (required)
@@ -2191,6 +3778,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2220,8 +3808,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """list_user_permissions
+    ) -> ApiResponse[AdminRolesGetPermissionsResponse]:
+        """List a user's direct permissions
 
 
         :param org_id: (required)
@@ -2260,6 +3848,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2290,7 +3879,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """list_user_permissions
+        """List a user's direct permissions
 
 
         :param org_id: (required)
@@ -2329,6 +3918,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2372,6 +3962,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2415,8 +4012,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """list_user_roles
+    ) -> AdminGroupsGroupsGetRolesResponse:
+        """List a user's roles
 
 
         :param org_id: (required)
@@ -2455,6 +4052,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2484,8 +4082,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """list_user_roles
+    ) -> ApiResponse[AdminGroupsGroupsGetRolesResponse]:
+        """List a user's roles
 
 
         :param org_id: (required)
@@ -2524,6 +4122,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2554,7 +4153,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """list_user_roles
+        """List a user's roles
 
 
         :param org_id: (required)
@@ -2593,6 +4192,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2636,6 +4236,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2678,8 +4285,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """list_users
+    ) -> ListUsersResponse:
+        """List users
 
 
         :param org_id: (required)
@@ -2715,6 +4322,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2743,8 +4351,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """list_users
+    ) -> ApiResponse[ListUsersResponse]:
+        """List users
 
 
         :param org_id: (required)
@@ -2780,6 +4388,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2809,7 +4418,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """list_users
+        """List users
 
 
         :param org_id: (required)
@@ -2845,6 +4454,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2885,6 +4495,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2928,8 +4545,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """mark_user_verified
+    ) -> MarkUserVerifiedResponse:
+        """Mark a user's email as verified
 
 
         :param org_id: (required)
@@ -2968,6 +4585,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MarkUserVerifiedResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2997,8 +4615,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """mark_user_verified
+    ) -> ApiResponse[MarkUserVerifiedResponse]:
+        """Mark a user's email as verified
 
 
         :param org_id: (required)
@@ -3037,6 +4655,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MarkUserVerifiedResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3067,7 +4686,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """mark_user_verified
+        """Mark a user's email as verified
 
 
         :param org_id: (required)
@@ -3106,6 +4725,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MarkUserVerifiedResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3149,6 +4769,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3192,8 +4819,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """patch_user
+    ) -> UpdateUserResponse:
+        """Update a user
 
 
         :param org_id: (required)
@@ -3232,6 +4859,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3261,8 +4889,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """patch_user
+    ) -> ApiResponse[UpdateUserResponse]:
+        """Update a user
 
 
         :param org_id: (required)
@@ -3301,6 +4929,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3331,7 +4960,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """patch_user
+        """Update a user
 
 
         :param org_id: (required)
@@ -3370,6 +4999,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3413,6 +5043,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3457,8 +5094,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """remove_user_group
+    ) -> RemoveUserGroupResponse:
+        """Remove a user from a group
 
 
         :param org_id: (required)
@@ -3500,6 +5137,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserGroupResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3530,8 +5168,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """remove_user_group
+    ) -> ApiResponse[RemoveUserGroupResponse]:
+        """Remove a user from a group
 
 
         :param org_id: (required)
@@ -3573,6 +5211,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserGroupResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3604,7 +5243,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """remove_user_group
+        """Remove a user from a group
 
 
         :param org_id: (required)
@@ -3646,6 +5285,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserGroupResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3692,6 +5332,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3736,8 +5383,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """remove_user_permission
+    ) -> RemoveUserPermissionResponse:
+        """Remove a permission from a user
 
 
         :param org_id: (required)
@@ -3779,6 +5426,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3809,8 +5457,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """remove_user_permission
+    ) -> ApiResponse[RemoveUserPermissionResponse]:
+        """Remove a permission from a user
 
 
         :param org_id: (required)
@@ -3852,6 +5500,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3883,7 +5532,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """remove_user_permission
+        """Remove a permission from a user
 
 
         :param org_id: (required)
@@ -3925,6 +5574,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3971,6 +5621,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4015,8 +5672,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """remove_user_role
+    ) -> RemoveUserRoleResponse:
+        """Remove a role from a user
 
 
         :param org_id: (required)
@@ -4058,6 +5715,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserRoleResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4088,8 +5746,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """remove_user_role
+    ) -> ApiResponse[RemoveUserRoleResponse]:
+        """Remove a role from a user
 
 
         :param org_id: (required)
@@ -4131,6 +5789,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserRoleResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4162,7 +5821,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """remove_user_role
+        """Remove a role from a user
 
 
         :param org_id: (required)
@@ -4204,6 +5863,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RemoveUserRoleResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4250,6 +5910,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4294,8 +5961,9 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """reset_user_mfa
+        """(Deprecated) Reset MFA (removed)
 
+        Removed: admins cannot disable a user's MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
 
         :param org_id: (required)
         :type org_id: str
@@ -4322,6 +5990,7 @@ class AdminUsersApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("POST /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset is deprecated.", DeprecationWarning)
 
         _param = self._reset_user_mfa_serialize(
             org_id=org_id,
@@ -4333,6 +6002,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '410': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4363,8 +6033,9 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """reset_user_mfa
+        """(Deprecated) Reset MFA (removed)
 
+        Removed: admins cannot disable a user's MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
 
         :param org_id: (required)
         :type org_id: str
@@ -4391,6 +6062,7 @@ class AdminUsersApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("POST /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset is deprecated.", DeprecationWarning)
 
         _param = self._reset_user_mfa_serialize(
             org_id=org_id,
@@ -4402,6 +6074,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '410': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4432,8 +6105,9 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """reset_user_mfa
+        """(Deprecated) Reset MFA (removed)
 
+        Removed: admins cannot disable a user's MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
 
         :param org_id: (required)
         :type org_id: str
@@ -4460,6 +6134,7 @@ class AdminUsersApi:
         :type _host_index: int, optional
         :return: Returns the result object.
         """ # noqa: E501
+        warnings.warn("POST /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset is deprecated.", DeprecationWarning)
 
         _param = self._reset_user_mfa_serialize(
             org_id=org_id,
@@ -4471,6 +6146,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '410': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4557,8 +6233,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """send_user_verification_email
+    ) -> SendUserVerificationEmailResponse:
+        """Send a verification email
 
 
         :param org_id: (required)
@@ -4597,6 +6273,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SendUserVerificationEmailResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4626,8 +6303,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """send_user_verification_email
+    ) -> ApiResponse[SendUserVerificationEmailResponse]:
+        """Send a verification email
 
 
         :param org_id: (required)
@@ -4666,6 +6343,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SendUserVerificationEmailResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4696,7 +6374,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """send_user_verification_email
+        """Send a verification email
 
 
         :param org_id: (required)
@@ -4735,6 +6413,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SendUserVerificationEmailResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4778,6 +6457,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4821,8 +6507,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """set_user_password
+    ) -> SetUserPasswordPostResponse:
+        """Set a user's password
 
 
         :param org_id: (required)
@@ -4861,6 +6547,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserPasswordPostResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4890,8 +6577,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """set_user_password
+    ) -> ApiResponse[SetUserPasswordPostResponse]:
+        """Set a user's password
 
 
         :param org_id: (required)
@@ -4930,6 +6617,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserPasswordPostResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4960,7 +6648,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """set_user_password
+        """Set a user's password
 
 
         :param org_id: (required)
@@ -4999,6 +6687,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserPasswordPostResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5042,6 +6731,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5085,8 +6781,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """set_user_password_post
+    ) -> SetUserPasswordPostResponse:
+        """Set a user's password
 
 
         :param org_id: (required)
@@ -5125,6 +6821,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserPasswordPostResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5154,8 +6851,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """set_user_password_post
+    ) -> ApiResponse[SetUserPasswordPostResponse]:
+        """Set a user's password
 
 
         :param org_id: (required)
@@ -5194,6 +6891,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserPasswordPostResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5224,7 +6922,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """set_user_password_post
+        """Set a user's password
 
 
         :param org_id: (required)
@@ -5263,6 +6961,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserPasswordPostResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5306,6 +7005,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5349,8 +7055,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """trigger_user_password_reset
+    ) -> TriggerUserPasswordResetResponse:
+        """Send a password reset email
 
 
         :param org_id: (required)
@@ -5389,6 +7095,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TriggerUserPasswordResetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5418,8 +7125,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """trigger_user_password_reset
+    ) -> ApiResponse[TriggerUserPasswordResetResponse]:
+        """Send a password reset email
 
 
         :param org_id: (required)
@@ -5458,6 +7165,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TriggerUserPasswordResetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5488,7 +7196,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """trigger_user_password_reset
+        """Send a password reset email
 
 
         :param org_id: (required)
@@ -5527,6 +7235,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TriggerUserPasswordResetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5570,6 +7279,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5613,8 +7329,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """unblock_user
+    ) -> UnblockUserResponse:
+        """Unblock a user
 
 
         :param org_id: (required)
@@ -5653,6 +7369,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UnblockUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5682,8 +7399,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """unblock_user
+    ) -> ApiResponse[UnblockUserResponse]:
+        """Unblock a user
 
 
         :param org_id: (required)
@@ -5722,6 +7439,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UnblockUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5752,7 +7470,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """unblock_user
+        """Unblock a user
 
 
         :param org_id: (required)
@@ -5791,6 +7509,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UnblockUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5834,6 +7553,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5877,8 +7603,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """update_user
+    ) -> UpdateUserResponse:
+        """Update a user
 
 
         :param org_id: (required)
@@ -5917,6 +7643,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5946,8 +7673,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """update_user
+    ) -> ApiResponse[UpdateUserResponse]:
+        """Update a user
 
 
         :param org_id: (required)
@@ -5986,6 +7713,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6016,7 +7744,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """update_user
+        """Update a user
 
 
         :param org_id: (required)
@@ -6055,6 +7783,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6098,6 +7827,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6141,8 +7877,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """update_user_groups
+    ) -> UpdateUserGroupsResponse:
+        """Replace a user's groups
 
 
         :param org_id: (required)
@@ -6181,6 +7917,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserGroupsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6210,8 +7947,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """update_user_groups
+    ) -> ApiResponse[UpdateUserGroupsResponse]:
+        """Replace a user's groups
 
 
         :param org_id: (required)
@@ -6250,6 +7987,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserGroupsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6280,7 +8018,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """update_user_groups
+        """Replace a user's groups
 
 
         :param org_id: (required)
@@ -6319,6 +8057,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserGroupsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6362,6 +8101,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6405,8 +8151,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """update_user_roles
+    ) -> UpdateUserRolesResponse:
+        """Replace a user's roles
 
 
         :param org_id: (required)
@@ -6445,6 +8191,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6474,8 +8221,8 @@ class AdminUsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """update_user_roles
+    ) -> ApiResponse[UpdateUserRolesResponse]:
+        """Replace a user's roles
 
 
         :param org_id: (required)
@@ -6514,6 +8261,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6544,7 +8292,7 @@ class AdminUsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """update_user_roles
+        """Replace a user's roles
 
 
         :param org_id: (required)
@@ -6583,6 +8331,7 @@ class AdminUsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateUserRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6626,6 +8375,13 @@ class AdminUsersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

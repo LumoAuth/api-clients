@@ -16,7 +16,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminpermissionscreate"></a>
 # **AdminPermissionsCreate**
-> void AdminPermissionsCreate (string orgId)
+> AdminPermissionsCreateResponse AdminPermissionsCreate (string orgId)
 
 Create a custom permission for the tenant
 
@@ -53,7 +53,8 @@ namespace Example
             try
             {
                 // Create a custom permission for the tenant
-                apiInstance.AdminPermissionsCreate(orgId);
+                AdminPermissionsCreateResponse result = apiInstance.AdminPermissionsCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -73,7 +74,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a custom permission for the tenant
-    apiInstance.AdminPermissionsCreateWithHttpInfo(orgId);
+    ApiResponse<AdminPermissionsCreateResponse> response = apiInstance.AdminPermissionsCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -91,7 +95,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -100,19 +104,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminpermissionsdelete"></a>
 # **AdminPermissionsDelete**
-> void AdminPermissionsDelete (string orgId, string permissionId)
+> MessageResponse AdminPermissionsDelete (string orgId, string permissionId)
 
 Delete a custom permission
 
@@ -150,7 +154,8 @@ namespace Example
             try
             {
                 // Delete a custom permission
-                apiInstance.AdminPermissionsDelete(orgId, permissionId);
+                MessageResponse result = apiInstance.AdminPermissionsDelete(orgId, permissionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -170,7 +175,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a custom permission
-    apiInstance.AdminPermissionsDeleteWithHttpInfo(orgId, permissionId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminPermissionsDeleteWithHttpInfo(orgId, permissionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -189,7 +197,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -198,19 +206,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminpermissionsget"></a>
 # **AdminPermissionsGet**
-> void AdminPermissionsGet (string orgId, string permissionId)
+> AdminPermissionsGetResponse AdminPermissionsGet (string orgId, string permissionId)
 
 Get a single permission
 
@@ -248,7 +256,8 @@ namespace Example
             try
             {
                 // Get a single permission
-                apiInstance.AdminPermissionsGet(orgId, permissionId);
+                AdminPermissionsGetResponse result = apiInstance.AdminPermissionsGet(orgId, permissionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -268,7 +277,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get a single permission
-    apiInstance.AdminPermissionsGetWithHttpInfo(orgId, permissionId);
+    ApiResponse<AdminPermissionsGetResponse> response = apiInstance.AdminPermissionsGetWithHttpInfo(orgId, permissionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -287,7 +299,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsGetResponse**](AdminPermissionsGetResponse.md)
 
 ### Authorization
 
@@ -296,19 +308,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminpermissionslist"></a>
 # **AdminPermissionsList**
-> void AdminPermissionsList (string orgId)
+> AdminPermissionsListResponse AdminPermissionsList (string orgId)
 
 List all available permissions for the tenant
 
@@ -345,7 +357,8 @@ namespace Example
             try
             {
                 // List all available permissions for the tenant
-                apiInstance.AdminPermissionsList(orgId);
+                AdminPermissionsListResponse result = apiInstance.AdminPermissionsList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -365,7 +378,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List all available permissions for the tenant
-    apiInstance.AdminPermissionsListWithHttpInfo(orgId);
+    ApiResponse<AdminPermissionsListResponse> response = apiInstance.AdminPermissionsListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -383,7 +399,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsListResponse**](AdminPermissionsListResponse.md)
 
 ### Authorization
 
@@ -392,19 +408,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permissions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminpermissionsupdate"></a>
 # **AdminPermissionsUpdate**
-> void AdminPermissionsUpdate (string orgId, string permissionId)
+> AdminPermissionsCreateResponse AdminPermissionsUpdate (string orgId, string permissionId)
 
 Update a permission
 
@@ -442,7 +458,8 @@ namespace Example
             try
             {
                 // Update a permission
-                apiInstance.AdminPermissionsUpdate(orgId, permissionId);
+                AdminPermissionsCreateResponse result = apiInstance.AdminPermissionsUpdate(orgId, permissionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -462,7 +479,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update a permission
-    apiInstance.AdminPermissionsUpdateWithHttpInfo(orgId, permissionId);
+    ApiResponse<AdminPermissionsCreateResponse> response = apiInstance.AdminPermissionsUpdateWithHttpInfo(orgId, permissionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -481,7 +501,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -490,19 +510,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminpermissionsusage"></a>
 # **AdminPermissionsUsage**
-> void AdminPermissionsUsage (string orgId, string permissionId)
+> AdminPermissionsUsageResponse AdminPermissionsUsage (string orgId, string permissionId)
 
 Get permission usage (roles assigned to this permission)
 
@@ -540,7 +560,8 @@ namespace Example
             try
             {
                 // Get permission usage (roles assigned to this permission)
-                apiInstance.AdminPermissionsUsage(orgId, permissionId);
+                AdminPermissionsUsageResponse result = apiInstance.AdminPermissionsUsage(orgId, permissionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -560,7 +581,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get permission usage (roles assigned to this permission)
-    apiInstance.AdminPermissionsUsageWithHttpInfo(orgId, permissionId);
+    ApiResponse<AdminPermissionsUsageResponse> response = apiInstance.AdminPermissionsUsageWithHttpInfo(orgId, permissionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -579,7 +603,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsUsageResponse**](AdminPermissionsUsageResponse.md)
 
 ### Authorization
 
@@ -588,19 +612,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Usage |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminscopescreate"></a>
 # **AdminScopesCreate**
-> void AdminScopesCreate (string orgId)
+> AdminScopesCreateResponse AdminScopesCreate (string orgId)
 
 Create a custom OAuth scope
 
@@ -637,7 +661,8 @@ namespace Example
             try
             {
                 // Create a custom OAuth scope
-                apiInstance.AdminScopesCreate(orgId);
+                AdminScopesCreateResponse result = apiInstance.AdminScopesCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -657,7 +682,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a custom OAuth scope
-    apiInstance.AdminScopesCreateWithHttpInfo(orgId);
+    ApiResponse<AdminScopesCreateResponse> response = apiInstance.AdminScopesCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -675,7 +703,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminScopesCreateResponse**](AdminScopesCreateResponse.md)
 
 ### Authorization
 
@@ -684,19 +712,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created scope |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminscopesdelete"></a>
 # **AdminScopesDelete**
-> void AdminScopesDelete (string orgId, string scopeId)
+> MessageResponse AdminScopesDelete (string orgId, string scopeId)
 
 Delete a custom OAuth scope
 
@@ -734,7 +762,8 @@ namespace Example
             try
             {
                 // Delete a custom OAuth scope
-                apiInstance.AdminScopesDelete(orgId, scopeId);
+                MessageResponse result = apiInstance.AdminScopesDelete(orgId, scopeId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -754,7 +783,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a custom OAuth scope
-    apiInstance.AdminScopesDeleteWithHttpInfo(orgId, scopeId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminScopesDeleteWithHttpInfo(orgId, scopeId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -773,7 +805,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -782,19 +814,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminscopeslist"></a>
 # **AdminScopesList**
-> void AdminScopesList (string orgId)
+> AdminScopesListResponse AdminScopesList (string orgId)
 
 List OAuth scopes
 
@@ -831,7 +863,8 @@ namespace Example
             try
             {
                 // List OAuth scopes
-                apiInstance.AdminScopesList(orgId);
+                AdminScopesListResponse result = apiInstance.AdminScopesList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -851,7 +884,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List OAuth scopes
-    apiInstance.AdminScopesListWithHttpInfo(orgId);
+    ApiResponse<AdminScopesListResponse> response = apiInstance.AdminScopesListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -869,7 +905,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminScopesListResponse**](AdminScopesListResponse.md)
 
 ### Authorization
 
@@ -878,13 +914,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Scopes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSocialProvidersAvailable(orgId);
+            //var response = instance.AdminSocialProvidersAvailable(orgId);
+            //Assert.IsType<AdminSocialProvidersAvailableResponse>(response);
         }
 
         /// <summary>
@@ -71,7 +74,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSocialProvidersCallbackUrls(orgId);
+            //var response = instance.AdminSocialProvidersCallbackUrls(orgId);
+            //Assert.IsType<AdminSocialProvidersCallbackUrlsResponse>(response);
         }
 
         /// <summary>
@@ -82,7 +86,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSocialProvidersCreate(orgId);
+            //var response = instance.AdminSocialProvidersCreate(orgId);
+            //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
 
         /// <summary>
@@ -94,7 +99,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //instance.AdminSocialProvidersDelete(orgId, providerId);
+            //var response = instance.AdminSocialProvidersDelete(orgId, providerId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -106,7 +112,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //instance.AdminSocialProvidersDisable(orgId, providerId);
+            //var response = instance.AdminSocialProvidersDisable(orgId, providerId);
+            //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
 
         /// <summary>
@@ -118,7 +125,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //instance.AdminSocialProvidersEnable(orgId, providerId);
+            //var response = instance.AdminSocialProvidersEnable(orgId, providerId);
+            //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
 
         /// <summary>
@@ -130,7 +138,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //instance.AdminSocialProvidersGet(orgId, providerId);
+            //var response = instance.AdminSocialProvidersGet(orgId, providerId);
+            //Assert.IsType<AdminSocialProvidersGetResponse>(response);
         }
 
         /// <summary>
@@ -141,7 +150,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSocialProvidersList(orgId);
+            //var response = instance.AdminSocialProvidersList(orgId);
+            //Assert.IsType<AdminSocialProvidersListResponse>(response);
         }
 
         /// <summary>
@@ -152,7 +162,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSocialProvidersTypes(orgId);
+            //var response = instance.AdminSocialProvidersTypes(orgId);
+            //Assert.IsType<AdminSocialProvidersAvailableResponse>(response);
         }
 
         /// <summary>
@@ -164,7 +175,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //instance.PatchAdminSocialProvidersUpdate(orgId, providerId);
+            //var response = instance.PatchAdminSocialProvidersUpdate(orgId, providerId);
+            //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
 
         /// <summary>
@@ -176,7 +188,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string providerId = null;
-            //instance.PutAdminSocialProvidersUpdate(orgId, providerId);
+            //var response = instance.PutAdminSocialProvidersUpdate(orgId, providerId);
+            //Assert.IsType<AdminSocialProvidersCreateResponse>(response);
         }
     }
 }

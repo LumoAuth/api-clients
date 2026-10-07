@@ -4,30 +4,32 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminWebhooksCreate**](AdminWebhooksApi.md#adminWebhooksCreate) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a new webhook |
+| [**adminWebhooksCreate**](AdminWebhooksApi.md#adminWebhooksCreate) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a webhook |
 | [**adminWebhooksDelete**](AdminWebhooksApi.md#adminWebhooksDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Delete a webhook |
-| [**adminWebhooksDeliveriesList**](AdminWebhooksApi.md#adminWebhooksDeliveriesList) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent delivery attempts for a webhook. |
-| [**adminWebhooksDeliveryReplay**](AdminWebhooksApi.md#adminWebhooksDeliveryReplay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage |
-| [**adminWebhooksDeliveryShow**](AdminWebhooksApi.md#adminWebhooksDeliveryShow) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis. |
-| [**adminWebhooksEvents**](AdminWebhooksApi.md#adminWebhooksEvents) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | Get available webhook event types |
-| [**adminWebhooksGet**](AdminWebhooksApi.md#adminWebhooksGet) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a single webhook by ID |
-| [**adminWebhooksList**](AdminWebhooksApi.md#adminWebhooksList) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List all webhooks in the tenant |
-| [**adminWebhooksRotateSecret**](AdminWebhooksApi.md#adminWebhooksRotateSecret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate webhook secret |
-| [**adminWebhooksTest**](AdminWebhooksApi.md#adminWebhooksTest) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Test a webhook by sending a test payload |
-| [**adminWebhooksTunnelStart**](AdminWebhooksApi.md#adminWebhooksTunnelStart) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start |  |
-| [**adminWebhooksTunnelStop**](AdminWebhooksApi.md#adminWebhooksTunnelStop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop |  |
-| [**adminWebhooksTunnelStream**](AdminWebhooksApi.md#adminWebhooksTunnelStream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream |  |
-| [**adminWebhooksWebhooksDisable**](AdminWebhooksApi.md#adminWebhooksWebhooksDisable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable webhook |
-| [**adminWebhooksWebhooksEnable**](AdminWebhooksApi.md#adminWebhooksWebhooksEnable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable webhook |
-| [**patchAdminWebhooksUpdate**](AdminWebhooksApi.md#patchAdminWebhooksUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook |
-| [**putAdminWebhooksUpdate**](AdminWebhooksApi.md#putAdminWebhooksUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook |
+| [**adminWebhooksDeliveriesList**](AdminWebhooksApi.md#adminWebhooksDeliveriesList) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent deliveries |
+| [**adminWebhooksDeliveryReplay**](AdminWebhooksApi.md#adminWebhooksDeliveryReplay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Replay a delivery |
+| [**adminWebhooksDeliveryShow**](AdminWebhooksApi.md#adminWebhooksDeliveryShow) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a delivery |
+| [**adminWebhooksEvents**](AdminWebhooksApi.md#adminWebhooksEvents) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | List available webhook event types |
+| [**adminWebhooksGet**](AdminWebhooksApi.md#adminWebhooksGet) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a webhook |
+| [**adminWebhooksList**](AdminWebhooksApi.md#adminWebhooksList) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List webhooks |
+| [**adminWebhooksRotateSecret**](AdminWebhooksApi.md#adminWebhooksRotateSecret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate the signing secret |
+| [**adminWebhooksTest**](AdminWebhooksApi.md#adminWebhooksTest) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Send a test delivery |
+| [**adminWebhooksTunnelStart**](AdminWebhooksApi.md#adminWebhooksTunnelStart) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | Start a webhook tunnel |
+| [**adminWebhooksTunnelStop**](AdminWebhooksApi.md#adminWebhooksTunnelStop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | Stop a webhook tunnel |
+| [**adminWebhooksTunnelStream**](AdminWebhooksApi.md#adminWebhooksTunnelStream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | Stream tunnel deliveries (SSE) |
+| [**adminWebhooksWebhooksDisable**](AdminWebhooksApi.md#adminWebhooksWebhooksDisable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable a webhook |
+| [**adminWebhooksWebhooksEnable**](AdminWebhooksApi.md#adminWebhooksWebhooksEnable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook |
+| [**patchAdminWebhooksUpdate**](AdminWebhooksApi.md#patchAdminWebhooksUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook |
+| [**putAdminWebhooksUpdate**](AdminWebhooksApi.md#putAdminWebhooksUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook |
 
 
 <a id="adminWebhooksCreate"></a>
 # **adminWebhooksCreate**
-> adminWebhooksCreate(orgId)
+> AdminWebhooksCreateResponse adminWebhooksCreate(orgId)
 
-Create a new webhook
+Create a webhook
+
+The signing secret is generated server-side and returned once in this response only.
 
 ### Example
 ```java
@@ -57,7 +59,8 @@ public class Example {
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminWebhooksCreate(orgId);
+      AdminWebhooksCreateResponse result = apiInstance.adminWebhooksCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksCreate");
       System.err.println("Status code: " + e.getCode());
@@ -77,7 +80,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksCreateResponse**](AdminWebhooksCreateResponse.md)
 
 ### Authorization
 
@@ -86,16 +89,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Webhook created; the secret is shown once |  -  |
 
 <a id="adminWebhooksDelete"></a>
 # **adminWebhooksDelete**
-> adminWebhooksDelete(orgId, webhookId)
+> MessageResponse adminWebhooksDelete(orgId, webhookId)
 
 Delete a webhook
 
@@ -128,7 +131,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksDelete(orgId, webhookId);
+      MessageResponse result = apiInstance.adminWebhooksDelete(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksDelete");
       System.err.println("Status code: " + e.getCode());
@@ -149,7 +153,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -158,20 +162,21 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook deleted |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksDeliveriesList"></a>
 # **adminWebhooksDeliveriesList**
-> adminWebhooksDeliveriesList(orgId, webhookId)
+> AdminWebhooksDeliveriesListResponse adminWebhooksDeliveriesList(orgId, webhookId)
 
-List recent delivery attempts for a webhook.
+List recent deliveries
 
-Optional query params: - status: filter by &#x60;pending|success|failed|dead_lettered&#x60; - limit: 1–200, default 50
+Most recent delivery attempts for the webhook (single page, newest first). Optional &#x60;status&#x60; filter (pending|success|failed|dead_lettered) and &#x60;limit&#x60; (1-200, default 50).
 
 ### Example
 ```java
@@ -202,7 +207,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksDeliveriesList(orgId, webhookId);
+      AdminWebhooksDeliveriesListResponse result = apiInstance.adminWebhooksDeliveriesList(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksDeliveriesList");
       System.err.println("Status code: " + e.getCode());
@@ -223,7 +229,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksDeliveriesListResponse**](AdminWebhooksDeliveriesListResponse.md)
 
 ### Authorization
 
@@ -232,20 +238,21 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deliveries |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksDeliveryReplay"></a>
 # **adminWebhooksDeliveryReplay**
-> adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId)
+> AdminWebhooksDeliveryReplayResponse adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId)
 
-Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+Replay a delivery
 
-Resets the delivery&#39;s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
 ### Example
 ```java
@@ -277,7 +284,8 @@ public class Example {
     String webhookId = "webhookId_example"; // String | 
     String deliveryId = "deliveryId_example"; // String | 
     try {
-      apiInstance.adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+      AdminWebhooksDeliveryReplayResponse result = apiInstance.adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksDeliveryReplay");
       System.err.println("Status code: " + e.getCode());
@@ -299,7 +307,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksDeliveryReplayResponse**](AdminWebhooksDeliveryReplayResponse.md)
 
 ### Authorization
 
@@ -308,18 +316,21 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Delivery re-enqueued |  -  |
+| **404** | Webhook or delivery not found |  -  |
 
 <a id="adminWebhooksDeliveryShow"></a>
 # **adminWebhooksDeliveryShow**
-> adminWebhooksDeliveryShow(orgId, webhookId, deliveryId)
+> AdminWebhooksDeliveryShowResponse adminWebhooksDeliveryShow(orgId, webhookId, deliveryId)
 
-Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.
+Get a delivery
+
+A single delivery including the event payload and the per-attempt history.
 
 ### Example
 ```java
@@ -351,7 +362,8 @@ public class Example {
     String webhookId = "webhookId_example"; // String | 
     String deliveryId = "deliveryId_example"; // String | 
     try {
-      apiInstance.adminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+      AdminWebhooksDeliveryShowResponse result = apiInstance.adminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksDeliveryShow");
       System.err.println("Status code: " + e.getCode());
@@ -373,7 +385,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksDeliveryShowResponse**](AdminWebhooksDeliveryShowResponse.md)
 
 ### Authorization
 
@@ -382,18 +394,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Delivery with payload and attempts |  -  |
+| **404** | Webhook or delivery not found |  -  |
 
 <a id="adminWebhooksEvents"></a>
 # **adminWebhooksEvents**
-> adminWebhooksEvents(orgId)
+> AdminWebhooksEventsResponse adminWebhooksEvents(orgId)
 
-Get available webhook event types
+List available webhook event types
 
 ### Example
 ```java
@@ -423,7 +436,8 @@ public class Example {
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminWebhooksEvents(orgId);
+      AdminWebhooksEventsResponse result = apiInstance.adminWebhooksEvents(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksEvents");
       System.err.println("Status code: " + e.getCode());
@@ -443,7 +457,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksEventsResponse**](AdminWebhooksEventsResponse.md)
 
 ### Authorization
 
@@ -452,18 +466,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Event types keyed by name, with a human-readable description |  -  |
 
 <a id="adminWebhooksGet"></a>
 # **adminWebhooksGet**
-> adminWebhooksGet(orgId, webhookId)
+> AdminWebhooksGetResponse adminWebhooksGet(orgId, webhookId)
 
-Get a single webhook by ID
+Get a webhook
 
 ### Example
 ```java
@@ -494,7 +508,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksGet(orgId, webhookId);
+      AdminWebhooksGetResponse result = apiInstance.adminWebhooksGet(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksGet");
       System.err.println("Status code: " + e.getCode());
@@ -515,7 +530,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksGetResponse**](AdminWebhooksGetResponse.md)
 
 ### Authorization
 
@@ -524,18 +539,21 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksList"></a>
 # **adminWebhooksList**
-> adminWebhooksList(orgId)
+> AdminWebhooksListResponse adminWebhooksList(orgId)
 
-List all webhooks in the tenant
+List webhooks
+
+Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
 
 ### Example
 ```java
@@ -565,7 +583,8 @@ public class Example {
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminWebhooksList(orgId);
+      AdminWebhooksListResponse result = apiInstance.adminWebhooksList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksList");
       System.err.println("Status code: " + e.getCode());
@@ -585,7 +604,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksListResponse**](AdminWebhooksListResponse.md)
 
 ### Authorization
 
@@ -594,18 +613,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhooks |  -  |
 
 <a id="adminWebhooksRotateSecret"></a>
 # **adminWebhooksRotateSecret**
-> adminWebhooksRotateSecret(orgId, webhookId)
+> AdminWebhooksRotateSecretResponse adminWebhooksRotateSecret(orgId, webhookId)
 
-Rotate webhook secret
+Rotate the signing secret
+
+Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
 ### Example
 ```java
@@ -636,7 +657,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksRotateSecret(orgId, webhookId);
+      AdminWebhooksRotateSecretResponse result = apiInstance.adminWebhooksRotateSecret(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksRotateSecret");
       System.err.println("Status code: " + e.getCode());
@@ -657,7 +679,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksRotateSecretResponse**](AdminWebhooksRotateSecretResponse.md)
 
 ### Authorization
 
@@ -666,18 +688,21 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Secret rotated; the new secret is shown once |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksTest"></a>
 # **adminWebhooksTest**
-> adminWebhooksTest(orgId, webhookId)
+> AdminWebhooksTestResponse adminWebhooksTest(orgId, webhookId)
 
-Test a webhook by sending a test payload
+Send a test delivery
+
+POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
 
 ### Example
 ```java
@@ -708,7 +733,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksTest(orgId, webhookId);
+      AdminWebhooksTestResponse result = apiInstance.adminWebhooksTest(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksTest");
       System.err.println("Status code: " + e.getCode());
@@ -729,7 +755,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksTestResponse**](AdminWebhooksTestResponse.md)
 
 ### Authorization
 
@@ -738,18 +764,22 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Test result |  -  |
+| **404** | Webhook not found |  -  |
+| **502** | Failed to deliver test webhook |  -  |
 
 <a id="adminWebhooksTunnelStart"></a>
 # **adminWebhooksTunnelStart**
-> adminWebhooksTunnelStart(orgId)
+> AdminWebhooksTunnelStartResponse adminWebhooksTunnelStart(orgId)
 
+Start a webhook tunnel
 
+Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
 ### Example
 ```java
@@ -779,7 +809,8 @@ public class Example {
     AdminWebhooksApi apiInstance = new AdminWebhooksApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminWebhooksTunnelStart(orgId);
+      AdminWebhooksTunnelStartResponse result = apiInstance.adminWebhooksTunnelStart(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksTunnelStart");
       System.err.println("Status code: " + e.getCode());
@@ -799,7 +830,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksTunnelStartResponse**](AdminWebhooksTunnelStartResponse.md)
 
 ### Authorization
 
@@ -808,18 +839,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tunnel started |  -  |
 
 <a id="adminWebhooksTunnelStop"></a>
 # **adminWebhooksTunnelStop**
-> adminWebhooksTunnelStop(orgId, webhookId)
+> MessageResponse adminWebhooksTunnelStop(orgId, webhookId)
 
+Stop a webhook tunnel
 
+Deletes the tunnel webhook and its pending deliveries. Only &#x60;tunnel://&#x60; webhooks can be stopped here.
 
 ### Example
 ```java
@@ -850,7 +883,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksTunnelStop(orgId, webhookId);
+      MessageResponse result = apiInstance.adminWebhooksTunnelStop(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksTunnelStop");
       System.err.println("Status code: " + e.getCode());
@@ -871,7 +905,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -880,18 +914,22 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tunnel closed |  -  |
+| **400** | Not a tunnel webhook |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksTunnelStream"></a>
 # **adminWebhooksTunnelStream**
-> adminWebhooksTunnelStream(orgId, webhookId)
+> String adminWebhooksTunnelStream(orgId, webhookId)
 
+Stream tunnel deliveries (SSE)
 
+Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
 ### Example
 ```java
@@ -922,7 +960,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksTunnelStream(orgId, webhookId);
+      String result = apiInstance.adminWebhooksTunnelStream(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksTunnelStream");
       System.err.println("Status code: " + e.getCode());
@@ -943,7 +982,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+**String**
 
 ### Authorization
 
@@ -952,18 +991,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/event-stream
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+| **400** | Not a tunnel webhook |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksWebhooksDisable"></a>
 # **adminWebhooksWebhooksDisable**
-> adminWebhooksWebhooksDisable(orgId, webhookId)
+> AdminWebhooksWebhooksDisableResponse adminWebhooksWebhooksDisable(orgId, webhookId)
 
-Disable webhook
+Disable a webhook
 
 ### Example
 ```java
@@ -994,7 +1035,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksWebhooksDisable(orgId, webhookId);
+      AdminWebhooksWebhooksDisableResponse result = apiInstance.adminWebhooksWebhooksDisable(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksWebhooksDisable");
       System.err.println("Status code: " + e.getCode());
@@ -1015,7 +1057,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksWebhooksDisableResponse**](AdminWebhooksWebhooksDisableResponse.md)
 
 ### Authorization
 
@@ -1024,18 +1066,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook disabled |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="adminWebhooksWebhooksEnable"></a>
 # **adminWebhooksWebhooksEnable**
-> adminWebhooksWebhooksEnable(orgId, webhookId)
+> AdminWebhooksWebhooksEnableResponse adminWebhooksWebhooksEnable(orgId, webhookId)
 
-Enable webhook
+Enable a webhook
 
 ### Example
 ```java
@@ -1066,7 +1109,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.adminWebhooksWebhooksEnable(orgId, webhookId);
+      AdminWebhooksWebhooksEnableResponse result = apiInstance.adminWebhooksWebhooksEnable(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#adminWebhooksWebhooksEnable");
       System.err.println("Status code: " + e.getCode());
@@ -1087,7 +1131,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminWebhooksWebhooksEnableResponse**](AdminWebhooksWebhooksEnableResponse.md)
 
 ### Authorization
 
@@ -1096,18 +1140,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Webhook enabled |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="patchAdminWebhooksUpdate"></a>
 # **patchAdminWebhooksUpdate**
-> patchAdminWebhooksUpdate(orgId, webhookId)
+> PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(orgId, webhookId)
 
-Update an existing webhook
+Partially update a webhook
 
 ### Example
 ```java
@@ -1138,7 +1183,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.patchAdminWebhooksUpdate(orgId, webhookId);
+      PutAdminWebhooksUpdateResponse result = apiInstance.patchAdminWebhooksUpdate(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#patchAdminWebhooksUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1159,7 +1205,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1168,18 +1214,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+| **404** | Webhook not found |  -  |
 
 <a id="putAdminWebhooksUpdate"></a>
 # **putAdminWebhooksUpdate**
-> putAdminWebhooksUpdate(orgId, webhookId)
+> PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(orgId, webhookId)
 
-Update an existing webhook
+Update a webhook
 
 ### Example
 ```java
@@ -1210,7 +1257,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String webhookId = "webhookId_example"; // String | 
     try {
-      apiInstance.putAdminWebhooksUpdate(orgId, webhookId);
+      PutAdminWebhooksUpdateResponse result = apiInstance.putAdminWebhooksUpdate(orgId, webhookId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminWebhooksApi#putAdminWebhooksUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1231,7 +1279,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1240,10 +1288,11 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+| **404** | Webhook not found |  -  |
 

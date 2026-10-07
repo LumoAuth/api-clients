@@ -66,6 +66,8 @@ type APIClient struct {
 
 	AdminMcpAPI AdminMcpAPI
 
+	AdminMfaAPI AdminMfaAPI
+
 	AdminOAuthClientsAPI AdminOAuthClientsAPI
 
 	AdminOrganizationsAPI AdminOrganizationsAPI
@@ -93,6 +95,8 @@ type APIClient struct {
 	JitAPI JitAPI
 
 	McpAPI McpAPI
+
+	MfaAPI MfaAPI
 
 	OAuthAPI OAuthAPI
 
@@ -129,6 +133,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.AdminGroupsAPI = (*AdminGroupsAPIService)(&c.common)
 	c.AdminIdentityProvidersAPI = (*AdminIdentityProvidersAPIService)(&c.common)
 	c.AdminMcpAPI = (*AdminMcpAPIService)(&c.common)
+	c.AdminMfaAPI = (*AdminMfaAPIService)(&c.common)
 	c.AdminOAuthClientsAPI = (*AdminOAuthClientsAPIService)(&c.common)
 	c.AdminOrganizationsAPI = (*AdminOrganizationsAPIService)(&c.common)
 	c.AdminPermissionsAPI = (*AdminPermissionsAPIService)(&c.common)
@@ -143,6 +148,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.IdentityAPI = (*IdentityAPIService)(&c.common)
 	c.JitAPI = (*JitAPIService)(&c.common)
 	c.McpAPI = (*McpAPIService)(&c.common)
+	c.MfaAPI = (*MfaAPIService)(&c.common)
 	c.OAuthAPI = (*OAuthAPIService)(&c.common)
 	c.OIDCAPI = (*OIDCAPIService)(&c.common)
 	c.SsfAPI = (*SsfAPIService)(&c.common)

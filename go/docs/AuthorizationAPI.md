@@ -4,32 +4,32 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CheckAbac**](AuthorizationAPI.md#CheckAbac) | **Post** /orgs/{orgId}/api/v1/abac/check | Check ABAC authorization
-[**CheckAbacBulk**](AuthorizationAPI.md#CheckAbacBulk) | **Post** /orgs/{orgId}/api/v1/abac/check-bulk | Bulk check multiple authorization requests
-[**CheckAllPermissions**](AuthorizationAPI.md#CheckAllPermissions) | **Post** /api/v1/authz/check-all | Check if user has ALL of the specified permissions
-[**CheckAnyPermission**](AuthorizationAPI.md#CheckAnyPermission) | **Post** /api/v1/authz/check-any | Check if user has ANY of the specified permissions
-[**CheckPermission**](AuthorizationAPI.md#CheckPermission) | **Post** /api/v1/authz/check | Check if the authenticated user has a specific permission
-[**CheckPermissionsBulk**](AuthorizationAPI.md#CheckPermissionsBulk) | **Post** /api/v1/authz/check-bulk | Check multiple permissions at once
-[**CheckRelation**](AuthorizationAPI.md#CheckRelation) | **Post** /api/v1/authz/zanzibar/check | Zanzibar-style relationship check
-[**CheckRelationScoped**](AuthorizationAPI.md#CheckRelationScoped) | **Post** /orgs/{orgId}/api/v1/zanzibar/check | 
-[**Evaluate**](AuthorizationAPI.md#Evaluate) | **Post** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
-[**EvaluateBatch**](AuthorizationAPI.md#EvaluateBatch) | **Post** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+[**CheckAbac**](AuthorizationAPI.md#CheckAbac) | **Post** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
+[**CheckAbacBulk**](AuthorizationAPI.md#CheckAbacBulk) | **Post** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
+[**CheckAllPermissions**](AuthorizationAPI.md#CheckAllPermissions) | **Post** /api/v1/authz/check-all | Check whether the subject holds all of the permissions
+[**CheckAnyPermission**](AuthorizationAPI.md#CheckAnyPermission) | **Post** /api/v1/authz/check-any | Check whether the subject holds any of the permissions
+[**CheckPermission**](AuthorizationAPI.md#CheckPermission) | **Post** /api/v1/authz/check | Check one permission
+[**CheckPermissionsBulk**](AuthorizationAPI.md#CheckPermissionsBulk) | **Post** /api/v1/authz/check-bulk | Check up to 100 permissions in one call
+[**CheckRelation**](AuthorizationAPI.md#CheckRelation) | **Post** /api/v1/authz/zanzibar/check | Zanzibar relationship check
+[**CheckRelationScoped**](AuthorizationAPI.md#CheckRelationScoped) | **Post** /orgs/{orgId}/api/v1/zanzibar/check | Zanzibar relationship check
+[**Evaluate**](AuthorizationAPI.md#Evaluate) | **Post** /api/v1/authz/v1/evaluation | AuthZEN 1.0 access evaluation
+[**EvaluateBatch**](AuthorizationAPI.md#EvaluateBatch) | **Post** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations
 [**ExpandRelation**](AuthorizationAPI.md#ExpandRelation) | **Post** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
 [**ExpandRelationScoped**](AuthorizationAPI.md#ExpandRelationScoped) | **Post** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
-[**GetMyAttributes**](AuthorizationAPI.md#GetMyAttributes) | **Get** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI)
-[**GetResourceAttributes**](AuthorizationAPI.md#GetResourceAttributes) | **Get** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
-[**ListAttributeDefinitions**](AuthorizationAPI.md#ListAttributeDefinitions) | **Get** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
-[**ListPermissions**](AuthorizationAPI.md#ListPermissions) | **Get** /api/v1/authz/permissions | List all permissions for the authenticated user
-[**SetResourceAttribute**](AuthorizationAPI.md#SetResourceAttribute) | **Put** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set resource attribute
-[**SetUserAttribute**](AuthorizationAPI.md#SetUserAttribute) | **Put** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set user attribute
+[**GetMyAttributes**](AuthorizationAPI.md#GetMyAttributes) | **Get** /orgs/{orgId}/api/v1/abac/my-attributes | The caller&#39;s ABAC subject attributes
+[**GetResourceAttributes**](AuthorizationAPI.md#GetResourceAttributes) | **Get** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Attributes stored for a resource
+[**ListAttributeDefinitions**](AuthorizationAPI.md#ListAttributeDefinitions) | **Get** /orgs/{orgId}/api/v1/abac/attribute-definitions | Attribute definitions available to the organization
+[**ListPermissions**](AuthorizationAPI.md#ListPermissions) | **Get** /api/v1/authz/permissions | List the caller&#39;s effective permissions
+[**SetResourceAttribute**](AuthorizationAPI.md#SetResourceAttribute) | **Put** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set a resource attribute
+[**SetUserAttribute**](AuthorizationAPI.md#SetUserAttribute) | **Put** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set a user attribute
 
 
 
 ## CheckAbac
 
-> CheckAbac(ctx, orgId).Execute()
+> CheckAbacResponse CheckAbac(ctx, orgId).Execute()
 
-Check ABAC authorization
+Evaluate an ABAC policy decision for the caller
 
 
 
@@ -50,11 +50,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckAbac(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAbac(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAbac``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckAbac`: CheckAbacResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckAbac`: %v\n", resp)
 }
 ```
 
@@ -77,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**CheckAbacResponse**](CheckAbacResponse.md)
 
 ### Authorization
 
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -95,9 +97,9 @@ Name | Type | Description  | Notes
 
 ## CheckAbacBulk
 
-> CheckAbacBulk(ctx, orgId).Execute()
+> CheckAbacBulkResponse CheckAbacBulk(ctx, orgId).Execute()
 
-Bulk check multiple authorization requests
+Evaluate up to 100 ABAC checks for the caller in one call
 
 
 
@@ -118,11 +120,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckAbacBulk(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAbacBulk(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAbacBulk``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckAbacBulk`: CheckAbacBulkResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckAbacBulk`: %v\n", resp)
 }
 ```
 
@@ -145,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**CheckAbacBulkResponse**](CheckAbacBulkResponse.md)
 
 ### Authorization
 
@@ -154,7 +158,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -163,9 +167,9 @@ Name | Type | Description  | Notes
 
 ## CheckAllPermissions
 
-> CheckAllPermissions(ctx).Execute()
+> CheckAnyPermissionResponse CheckAllPermissions(ctx).Execute()
 
-Check if user has ALL of the specified permissions
+Check whether the subject holds all of the permissions
 
 
 
@@ -185,11 +189,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckAllPermissions(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAllPermissions(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAllPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckAllPermissions`: CheckAnyPermissionResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckAllPermissions`: %v\n", resp)
 }
 ```
 
@@ -204,7 +210,7 @@ Other parameters are passed through a pointer to a apiCheckAllPermissionsRequest
 
 ### Return type
 
- (empty response body)
+[**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
 
 ### Authorization
 
@@ -213,7 +219,7 @@ Other parameters are passed through a pointer to a apiCheckAllPermissionsRequest
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -222,9 +228,9 @@ Other parameters are passed through a pointer to a apiCheckAllPermissionsRequest
 
 ## CheckAnyPermission
 
-> CheckAnyPermission(ctx).Execute()
+> CheckAnyPermissionResponse CheckAnyPermission(ctx).Execute()
 
-Check if user has ANY of the specified permissions
+Check whether the subject holds any of the permissions
 
 
 
@@ -244,11 +250,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckAnyPermission(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckAnyPermission(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckAnyPermission``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckAnyPermission`: CheckAnyPermissionResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckAnyPermission`: %v\n", resp)
 }
 ```
 
@@ -263,7 +271,7 @@ Other parameters are passed through a pointer to a apiCheckAnyPermissionRequest 
 
 ### Return type
 
- (empty response body)
+[**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
 
 ### Authorization
 
@@ -272,7 +280,7 @@ Other parameters are passed through a pointer to a apiCheckAnyPermissionRequest 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -281,9 +289,9 @@ Other parameters are passed through a pointer to a apiCheckAnyPermissionRequest 
 
 ## CheckPermission
 
-> CheckPermission(ctx).Execute()
+> CheckPermissionResponse CheckPermission(ctx).Execute()
 
-Check if the authenticated user has a specific permission
+Check one permission
 
 
 
@@ -303,11 +311,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckPermission(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckPermission(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckPermission``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckPermission`: CheckPermissionResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckPermission`: %v\n", resp)
 }
 ```
 
@@ -322,7 +332,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionRequest str
 
 ### Return type
 
- (empty response body)
+[**CheckPermissionResponse**](CheckPermissionResponse.md)
 
 ### Authorization
 
@@ -331,7 +341,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionRequest str
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -340,9 +350,9 @@ Other parameters are passed through a pointer to a apiCheckPermissionRequest str
 
 ## CheckPermissionsBulk
 
-> CheckPermissionsBulk(ctx).Execute()
+> CheckPermissionsBulkResponse CheckPermissionsBulk(ctx).Execute()
 
-Check multiple permissions at once
+Check up to 100 permissions in one call
 
 
 
@@ -362,11 +372,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckPermissionsBulk(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckPermissionsBulk(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckPermissionsBulk``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckPermissionsBulk`: CheckPermissionsBulkResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckPermissionsBulk`: %v\n", resp)
 }
 ```
 
@@ -381,7 +393,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionsBulkReques
 
 ### Return type
 
- (empty response body)
+[**CheckPermissionsBulkResponse**](CheckPermissionsBulkResponse.md)
 
 ### Authorization
 
@@ -390,7 +402,7 @@ Other parameters are passed through a pointer to a apiCheckPermissionsBulkReques
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -399,9 +411,9 @@ Other parameters are passed through a pointer to a apiCheckPermissionsBulkReques
 
 ## CheckRelation
 
-> CheckRelation(ctx).Execute()
+> CheckRelationResponse CheckRelation(ctx).Execute()
 
-Zanzibar-style relationship check
+Zanzibar relationship check
 
 
 
@@ -421,11 +433,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckRelation(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckRelation(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckRelation``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckRelation`: CheckRelationResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckRelation`: %v\n", resp)
 }
 ```
 
@@ -440,7 +454,7 @@ Other parameters are passed through a pointer to a apiCheckRelationRequest struc
 
 ### Return type
 
- (empty response body)
+[**CheckRelationResponse**](CheckRelationResponse.md)
 
 ### Authorization
 
@@ -449,7 +463,7 @@ Other parameters are passed through a pointer to a apiCheckRelationRequest struc
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -458,9 +472,9 @@ Other parameters are passed through a pointer to a apiCheckRelationRequest struc
 
 ## CheckRelationScoped
 
-> CheckRelationScoped(ctx, orgId).Execute()
+> CheckRelationScopedResponse CheckRelationScoped(ctx, orgId).Execute()
 
-
+Zanzibar relationship check
 
 ### Example
 
@@ -479,11 +493,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.CheckRelationScoped(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.CheckRelationScoped(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.CheckRelationScoped``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CheckRelationScoped`: CheckRelationScopedResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.CheckRelationScoped`: %v\n", resp)
 }
 ```
 
@@ -506,7 +522,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**CheckRelationScopedResponse**](CheckRelationScopedResponse.md)
 
 ### Authorization
 
@@ -515,7 +531,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -524,9 +540,9 @@ Name | Type | Description  | Notes
 
 ## Evaluate
 
-> Evaluate(ctx).Execute()
+> AuthZenDecision Evaluate(ctx).Execute()
 
-AuthZEN 1.0 single access evaluation.
+AuthZEN 1.0 access evaluation
 
 
 
@@ -546,11 +562,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.Evaluate(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.Evaluate(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.Evaluate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Evaluate`: AuthZenDecision
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.Evaluate`: %v\n", resp)
 }
 ```
 
@@ -565,7 +583,7 @@ Other parameters are passed through a pointer to a apiEvaluateRequest struct via
 
 ### Return type
 
- (empty response body)
+[**AuthZenDecision**](AuthZenDecision.md)
 
 ### Authorization
 
@@ -574,7 +592,7 @@ Other parameters are passed through a pointer to a apiEvaluateRequest struct via
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -583,9 +601,9 @@ Other parameters are passed through a pointer to a apiEvaluateRequest struct via
 
 ## EvaluateBatch
 
-> EvaluateBatch(ctx).Execute()
+> EvaluateBatchResponse EvaluateBatch(ctx).Execute()
 
-AuthZEN 1.0 boxcarred access evaluations.
+AuthZEN 1.0 boxcarred access evaluations
 
 
 
@@ -605,11 +623,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.EvaluateBatch(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.EvaluateBatch(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.EvaluateBatch``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `EvaluateBatch`: EvaluateBatchResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.EvaluateBatch`: %v\n", resp)
 }
 ```
 
@@ -624,7 +644,7 @@ Other parameters are passed through a pointer to a apiEvaluateBatchRequest struc
 
 ### Return type
 
- (empty response body)
+[**EvaluateBatchResponse**](EvaluateBatchResponse.md)
 
 ### Authorization
 
@@ -633,7 +653,7 @@ Other parameters are passed through a pointer to a apiEvaluateBatchRequest struc
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -780,9 +800,9 @@ Name | Type | Description  | Notes
 
 ## GetMyAttributes
 
-> GetMyAttributes(ctx, orgId).Execute()
+> GetMyAttributesResponse GetMyAttributes(ctx, orgId).Execute()
 
-Get user's current attributes (for debugging/UI)
+The caller's ABAC subject attributes
 
 
 
@@ -803,11 +823,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.GetMyAttributes(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.GetMyAttributes(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.GetMyAttributes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetMyAttributes`: GetMyAttributesResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.GetMyAttributes`: %v\n", resp)
 }
 ```
 
@@ -830,7 +852,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**GetMyAttributesResponse**](GetMyAttributesResponse.md)
 
 ### Authorization
 
@@ -839,7 +861,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -848,9 +870,9 @@ Name | Type | Description  | Notes
 
 ## GetResourceAttributes
 
-> GetResourceAttributes(ctx, orgId, resourceType, resourceId).Execute()
+> GetResourceAttributesResponse GetResourceAttributes(ctx, orgId, resourceType, resourceId).Execute()
 
-Get resource attributes
+Attributes stored for a resource
 
 
 
@@ -873,11 +895,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.GetResourceAttributes(context.Background(), orgId, resourceType, resourceId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.GetResourceAttributes(context.Background(), orgId, resourceType, resourceId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.GetResourceAttributes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetResourceAttributes`: GetResourceAttributesResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.GetResourceAttributes`: %v\n", resp)
 }
 ```
 
@@ -904,7 +928,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**GetResourceAttributesResponse**](GetResourceAttributesResponse.md)
 
 ### Authorization
 
@@ -913,7 +937,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -922,9 +946,9 @@ Name | Type | Description  | Notes
 
 ## ListAttributeDefinitions
 
-> ListAttributeDefinitions(ctx, orgId).Execute()
+> ListAttributeDefinitionsResponse ListAttributeDefinitions(ctx, orgId).Type_(type_).Execute()
 
-Get available attribute definitions
+Attribute definitions available to the organization
 
 
 
@@ -942,14 +966,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	type_ := "type__example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.ListAttributeDefinitions(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.ListAttributeDefinitions(context.Background(), orgId).Type_(type_).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.ListAttributeDefinitions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `ListAttributeDefinitions`: ListAttributeDefinitionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.ListAttributeDefinitions`: %v\n", resp)
 }
 ```
 
@@ -969,10 +996,11 @@ Other parameters are passed through a pointer to a apiListAttributeDefinitionsRe
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **type_** | **string** |  | 
 
 ### Return type
 
- (empty response body)
+[**ListAttributeDefinitionsResponse**](ListAttributeDefinitionsResponse.md)
 
 ### Authorization
 
@@ -981,7 +1009,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -990,9 +1018,9 @@ Name | Type | Description  | Notes
 
 ## ListPermissions
 
-> ListPermissions(ctx).Execute()
+> ListPermissionsResponse ListPermissions(ctx).Execute()
 
-List all permissions for the authenticated user
+List the caller's effective permissions
 
 
 
@@ -1012,11 +1040,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.ListPermissions(context.Background()).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.ListPermissions(context.Background()).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.ListPermissions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `ListPermissions`: ListPermissionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.ListPermissions`: %v\n", resp)
 }
 ```
 
@@ -1031,7 +1061,7 @@ Other parameters are passed through a pointer to a apiListPermissionsRequest str
 
 ### Return type
 
- (empty response body)
+[**ListPermissionsResponse**](ListPermissionsResponse.md)
 
 ### Authorization
 
@@ -1040,7 +1070,7 @@ Other parameters are passed through a pointer to a apiListPermissionsRequest str
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1049,9 +1079,9 @@ Other parameters are passed through a pointer to a apiListPermissionsRequest str
 
 ## SetResourceAttribute
 
-> SetResourceAttribute(ctx, orgId, resourceType, resourceId, attributeSlug).Execute()
+> SetResourceAttributeResponse SetResourceAttribute(ctx, orgId, resourceType, resourceId, attributeSlug).Execute()
 
-Set resource attribute
+Set a resource attribute
 
 
 
@@ -1075,11 +1105,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.SetResourceAttribute(context.Background(), orgId, resourceType, resourceId, attributeSlug).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.SetResourceAttribute(context.Background(), orgId, resourceType, resourceId, attributeSlug).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.SetResourceAttribute``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SetResourceAttribute`: SetResourceAttributeResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.SetResourceAttribute`: %v\n", resp)
 }
 ```
 
@@ -1108,7 +1140,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**SetResourceAttributeResponse**](SetResourceAttributeResponse.md)
 
 ### Authorization
 
@@ -1117,7 +1149,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1126,9 +1158,9 @@ Name | Type | Description  | Notes
 
 ## SetUserAttribute
 
-> SetUserAttribute(ctx, orgId, userId, attributeSlug).Execute()
+> SetUserAttributeResponse SetUserAttribute(ctx, orgId, userId, attributeSlug).Execute()
 
-Set user attribute
+Set a user attribute
 
 
 
@@ -1151,11 +1183,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AuthorizationAPI.SetUserAttribute(context.Background(), orgId, userId, attributeSlug).Execute()
+	resp, r, err := apiClient.AuthorizationAPI.SetUserAttribute(context.Background(), orgId, userId, attributeSlug).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AuthorizationAPI.SetUserAttribute``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SetUserAttribute`: SetUserAttributeResponse
+	fmt.Fprintf(os.Stdout, "Response from `AuthorizationAPI.SetUserAttribute`: %v\n", resp)
 }
 ```
 
@@ -1182,7 +1216,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**SetUserAttributeResponse**](SetUserAttributeResponse.md)
 
 ### Authorization
 
@@ -1191,7 +1225,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

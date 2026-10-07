@@ -14,6 +14,10 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminMcpServersCreateResponse;
+import io.lumoauth.client.model.AdminMcpServersGetResponse;
+import io.lumoauth.client.model.AdminMcpServersListResponse;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,48 +35,54 @@ public class AdminMcpApiTest {
     private final AdminMcpApi api = new AdminMcpApi();
 
     /**
-     * POST /api/v1/admin/mcp/servers
+     * Register an MCP server
      *
-     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminMcpServersCreateTest() throws ApiException {
         String orgId = null;
-        api.adminMcpServersCreate(orgId);
+        AdminMcpServersCreateResponse response = api.adminMcpServersCreate(orgId);
         // TODO: test validations
     }
 
     /**
+     * Delete an MCP server
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminMcpServersDeleteTest() throws ApiException {
         String orgId = null;
         String serverId = null;
-        api.adminMcpServersDelete(orgId, serverId);
+        MessageResponse response = api.adminMcpServersDelete(orgId, serverId);
         // TODO: test validations
     }
 
     /**
+     * Get an MCP server
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminMcpServersGetTest() throws ApiException {
         String orgId = null;
         String serverId = null;
-        api.adminMcpServersGet(orgId, serverId);
+        AdminMcpServersGetResponse response = api.adminMcpServersGet(orgId, serverId);
         // TODO: test validations
     }
 
     /**
+     * List MCP servers
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminMcpServersListTest() throws ApiException {
         String orgId = null;
-        api.adminMcpServersList(orgId);
+        AdminMcpServersListResponse response = api.adminMcpServersList(orgId);
         // TODO: test validations
     }
 

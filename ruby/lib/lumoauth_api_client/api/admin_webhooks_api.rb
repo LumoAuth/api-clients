@@ -19,19 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create a new webhook
+    # Create a webhook
+    # The signing secret is generated server-side and returned once in this response only.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksCreateResponse]
     def admin_webhooks_create(org_id, opts = {})
-      admin_webhooks_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_create_with_http_info(org_id, opts)
+      data
     end
 
-    # Create a new webhook
+    # Create a webhook
+    # The signing secret is generated server-side and returned once in this response only.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksCreateResponse, Integer, Hash)>] AdminWebhooksCreateResponse data, response status code and response headers
     def admin_webhooks_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_create ...'
@@ -48,6 +50,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +60,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -82,17 +86,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_webhooks_delete(org_id, webhook_id, opts = {})
-      admin_webhooks_delete_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_delete_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
     # Delete a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_webhooks_delete_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_delete ...'
@@ -113,6 +117,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -121,7 +127,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -143,23 +149,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List recent delivery attempts for a webhook.
-    # Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+    # List recent deliveries
+    # Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksDeliveriesListResponse]
     def admin_webhooks_deliveries_list(org_id, webhook_id, opts = {})
-      admin_webhooks_deliveries_list_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_deliveries_list_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # List recent delivery attempts for a webhook.
-    # Optional query params: - status: filter by &#x60;pending|success|failed|dead_lettered&#x60; - limit: 1–200, default 50
+    # List recent deliveries
+    # Most recent delivery attempts for the webhook (single page, newest first). Optional &#x60;status&#x60; filter (pending|success|failed|dead_lettered) and &#x60;limit&#x60; (1-200, default 50).
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksDeliveriesListResponse, Integer, Hash)>] AdminWebhooksDeliveriesListResponse data, response status code and response headers
     def admin_webhooks_deliveries_list_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_deliveries_list ...'
@@ -180,6 +186,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -188,7 +196,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksDeliveriesListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -210,25 +218,25 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-    # Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+    # Replay a delivery
+    # Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param delivery_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksDeliveryReplayResponse]
     def admin_webhooks_delivery_replay(org_id, webhook_id, delivery_id, opts = {})
-      admin_webhooks_delivery_replay_with_http_info(org_id, webhook_id, delivery_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_delivery_replay_with_http_info(org_id, webhook_id, delivery_id, opts)
+      data
     end
 
-    # Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-    # Resets the delivery&#39;s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+    # Replay a delivery
+    # Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param delivery_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksDeliveryReplayResponse, Integer, Hash)>] AdminWebhooksDeliveryReplayResponse data, response status code and response headers
     def admin_webhooks_delivery_replay_with_http_info(org_id, webhook_id, delivery_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_delivery_replay ...'
@@ -253,6 +261,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -261,7 +271,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksDeliveryReplayResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -283,23 +293,25 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+    # Get a delivery
+    # A single delivery including the event payload and the per-attempt history.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param delivery_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksDeliveryShowResponse]
     def admin_webhooks_delivery_show(org_id, webhook_id, delivery_id, opts = {})
-      admin_webhooks_delivery_show_with_http_info(org_id, webhook_id, delivery_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_delivery_show_with_http_info(org_id, webhook_id, delivery_id, opts)
+      data
     end
 
-    # Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.
+    # Get a delivery
+    # A single delivery including the event payload and the per-attempt history.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param delivery_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksDeliveryShowResponse, Integer, Hash)>] AdminWebhooksDeliveryShowResponse data, response status code and response headers
     def admin_webhooks_delivery_show_with_http_info(org_id, webhook_id, delivery_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_delivery_show ...'
@@ -324,6 +336,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -332,7 +346,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksDeliveryShowResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -354,19 +368,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get available webhook event types
+    # List available webhook event types
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksEventsResponse]
     def admin_webhooks_events(org_id, opts = {})
-      admin_webhooks_events_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_events_with_http_info(org_id, opts)
+      data
     end
 
-    # Get available webhook event types
+    # List available webhook event types
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksEventsResponse, Integer, Hash)>] AdminWebhooksEventsResponse data, response status code and response headers
     def admin_webhooks_events_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_events ...'
@@ -383,6 +397,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -391,7 +407,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksEventsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -413,21 +429,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single webhook by ID
+    # Get a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksGetResponse]
     def admin_webhooks_get(org_id, webhook_id, opts = {})
-      admin_webhooks_get_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_get_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Get a single webhook by ID
+    # Get a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksGetResponse, Integer, Hash)>] AdminWebhooksGetResponse data, response status code and response headers
     def admin_webhooks_get_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_get ...'
@@ -448,6 +464,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -456,7 +474,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -478,19 +496,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all webhooks in the tenant
+    # List webhooks
+    # Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksListResponse]
     def admin_webhooks_list(org_id, opts = {})
-      admin_webhooks_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List all webhooks in the tenant
+    # List webhooks
+    # Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksListResponse, Integer, Hash)>] AdminWebhooksListResponse data, response status code and response headers
     def admin_webhooks_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_list ...'
@@ -507,6 +527,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -515,7 +537,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -537,21 +559,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Rotate webhook secret
+    # Rotate the signing secret
+    # Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksRotateSecretResponse]
     def admin_webhooks_rotate_secret(org_id, webhook_id, opts = {})
-      admin_webhooks_rotate_secret_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_rotate_secret_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Rotate webhook secret
+    # Rotate the signing secret
+    # Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksRotateSecretResponse, Integer, Hash)>] AdminWebhooksRotateSecretResponse data, response status code and response headers
     def admin_webhooks_rotate_secret_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_rotate_secret ...'
@@ -572,6 +596,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -580,7 +606,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksRotateSecretResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -602,21 +628,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Test a webhook by sending a test payload
+    # Send a test delivery
+    # POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksTestResponse]
     def admin_webhooks_test(org_id, webhook_id, opts = {})
-      admin_webhooks_test_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_test_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Test a webhook by sending a test payload
+    # Send a test delivery
+    # POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksTestResponse, Integer, Hash)>] AdminWebhooksTestResponse data, response status code and response headers
     def admin_webhooks_test_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_test ...'
@@ -637,6 +665,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -645,7 +675,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksTestResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -667,17 +697,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Start a webhook tunnel
+    # Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksTunnelStartResponse]
     def admin_webhooks_tunnel_start(org_id, opts = {})
-      admin_webhooks_tunnel_start_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_tunnel_start_with_http_info(org_id, opts)
+      data
     end
 
+    # Start a webhook tunnel
+    # Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksTunnelStartResponse, Integer, Hash)>] AdminWebhooksTunnelStartResponse data, response status code and response headers
     def admin_webhooks_tunnel_start_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_tunnel_start ...'
@@ -694,6 +728,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -702,7 +738,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksTunnelStartResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -724,19 +760,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Stop a webhook tunnel
+    # Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_webhooks_tunnel_stop(org_id, webhook_id, opts = {})
-      admin_webhooks_tunnel_stop_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_tunnel_stop_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
+    # Stop a webhook tunnel
+    # Deletes the tunnel webhook and its pending deliveries. Only &#x60;tunnel://&#x60; webhooks can be stopped here.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_webhooks_tunnel_stop_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_tunnel_stop ...'
@@ -757,6 +797,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -765,7 +807,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -787,19 +829,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Stream tunnel deliveries (SSE)
+    # Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def admin_webhooks_tunnel_stream(org_id, webhook_id, opts = {})
-      admin_webhooks_tunnel_stream_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_tunnel_stream_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
+    # Stream tunnel deliveries (SSE)
+    # Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def admin_webhooks_tunnel_stream_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_tunnel_stream ...'
@@ -820,6 +866,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/event-stream']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -828,7 +876,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -850,21 +898,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Disable webhook
+    # Disable a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksWebhooksDisableResponse]
     def admin_webhooks_webhooks_disable(org_id, webhook_id, opts = {})
-      admin_webhooks_webhooks_disable_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_webhooks_disable_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Disable webhook
+    # Disable a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksWebhooksDisableResponse, Integer, Hash)>] AdminWebhooksWebhooksDisableResponse data, response status code and response headers
     def admin_webhooks_webhooks_disable_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_webhooks_disable ...'
@@ -885,6 +933,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -893,7 +943,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksWebhooksDisableResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -915,21 +965,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Enable webhook
+    # Enable a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminWebhooksWebhooksEnableResponse]
     def admin_webhooks_webhooks_enable(org_id, webhook_id, opts = {})
-      admin_webhooks_webhooks_enable_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = admin_webhooks_webhooks_enable_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Enable webhook
+    # Enable a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminWebhooksWebhooksEnableResponse, Integer, Hash)>] AdminWebhooksWebhooksEnableResponse data, response status code and response headers
     def admin_webhooks_webhooks_enable_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.admin_webhooks_webhooks_enable ...'
@@ -950,6 +1000,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -958,7 +1010,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminWebhooksWebhooksEnableResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -980,21 +1032,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update an existing webhook
+    # Partially update a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [PutAdminWebhooksUpdateResponse]
     def patch_admin_webhooks_update(org_id, webhook_id, opts = {})
-      patch_admin_webhooks_update_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = patch_admin_webhooks_update_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Update an existing webhook
+    # Partially update a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(PutAdminWebhooksUpdateResponse, Integer, Hash)>] PutAdminWebhooksUpdateResponse data, response status code and response headers
     def patch_admin_webhooks_update_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.patch_admin_webhooks_update ...'
@@ -1015,6 +1067,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -1023,7 +1077,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'PutAdminWebhooksUpdateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -1045,21 +1099,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update an existing webhook
+    # Update a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [PutAdminWebhooksUpdateResponse]
     def put_admin_webhooks_update(org_id, webhook_id, opts = {})
-      put_admin_webhooks_update_with_http_info(org_id, webhook_id, opts)
-      nil
+      data, _status_code, _headers = put_admin_webhooks_update_with_http_info(org_id, webhook_id, opts)
+      data
     end
 
-    # Update an existing webhook
+    # Update a webhook
     # @param org_id [String] 
     # @param webhook_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(PutAdminWebhooksUpdateResponse, Integer, Hash)>] PutAdminWebhooksUpdateResponse data, response status code and response headers
     def put_admin_webhooks_update_with_http_info(org_id, webhook_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminWebhooksApi.put_admin_webhooks_update ...'
@@ -1080,6 +1134,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -1088,7 +1144,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'PutAdminWebhooksUpdateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

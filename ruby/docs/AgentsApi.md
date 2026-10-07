@@ -5,14 +5,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
 | [**ask**](AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style) |
-| [**attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest |  |
+| [**attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token |
 | [**authorize_mcp**](AgentsApi.md#authorize_mcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3). |
 | [**create_approval**](AgentsApi.md#create_approval) | **POST** /orgs/{orgId}/api/v1/agents/me/approvals |  |
-| [**get_agent_card**](AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card |  |
+| [**get_agent_card**](AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card |
 | [**get_approval_status**](AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status |  |
 | [**get_current_agent**](AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent |
-| [**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register |  |
-| [**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify |  |
+| [**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent |
+| [**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card |
 
 
 ## ask
@@ -93,9 +93,11 @@ end
 
 ## attest
 
-> attest(org_id, agent_id)
+> <AttestResponse> attest(org_id, agent_id, attest_request)
 
+Workload attestation: exchange a cloud OIDC token for an agent access token
 
+Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
 ### Examples
 
@@ -116,10 +118,12 @@ end
 api_instance = LumoAuthApiClient::AgentsApi.new
 org_id = 'org_id_example' # String | 
 agent_id = 'agent_id_example' # String | 
+attest_request = LumoAuthApiClient::AttestRequest.new({attestation_token: 'attestation_token_example'}) # AttestRequest | 
 
 begin
-  
-  api_instance.attest(org_id, agent_id)
+  # Workload attestation: exchange a cloud OIDC token for an agent access token
+  result = api_instance.attest(org_id, agent_id, attest_request)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->attest: #{e}"
 end
@@ -127,17 +131,17 @@ end
 
 #### Using the attest_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> attest_with_http_info(org_id, agent_id)
+> <Array(<AttestResponse>, Integer, Hash)> attest_with_http_info(org_id, agent_id, attest_request)
 
 ```ruby
 begin
-  
-  data, status_code, headers = api_instance.attest_with_http_info(org_id, agent_id)
+  # Workload attestation: exchange a cloud OIDC token for an agent access token
+  data, status_code, headers = api_instance.attest_with_http_info(org_id, agent_id, attest_request)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AttestResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->attest_with_http_info: #{e}"
 end
@@ -149,10 +153,11 @@ end
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
 | **agent_id** | **String** |  |  |
+| **attest_request** | [**AttestRequest**](AttestRequest.md) |  |  |
 
 ### Return type
 
-nil (empty response body)
+[**AttestResponse**](AttestResponse.md)
 
 ### Authorization
 
@@ -160,8 +165,8 @@ nil (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## authorize_mcp
@@ -316,9 +321,11 @@ end
 
 ## get_agent_card
 
-> get_agent_card(org_id, agent_id)
+> <SignedAgentCard> get_agent_card(org_id, agent_id)
 
+Signed A2A agent card
 
+Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
 ### Examples
 
@@ -331,8 +338,9 @@ org_id = 'org_id_example' # String |
 agent_id = 'agent_id_example' # String | 
 
 begin
-  
-  api_instance.get_agent_card(org_id, agent_id)
+  # Signed A2A agent card
+  result = api_instance.get_agent_card(org_id, agent_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->get_agent_card: #{e}"
 end
@@ -340,17 +348,17 @@ end
 
 #### Using the get_agent_card_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_agent_card_with_http_info(org_id, agent_id)
+> <Array(<SignedAgentCard>, Integer, Hash)> get_agent_card_with_http_info(org_id, agent_id)
 
 ```ruby
 begin
-  
+  # Signed A2A agent card
   data, status_code, headers = api_instance.get_agent_card_with_http_info(org_id, agent_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <SignedAgentCard>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->get_agent_card_with_http_info: #{e}"
 end
@@ -365,7 +373,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**SignedAgentCard**](SignedAgentCard.md)
 
 ### Authorization
 
@@ -374,7 +382,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## get_approval_status
@@ -527,9 +535,9 @@ end
 
 ## register_agent
 
-> register_agent(org_id)
+> <RegisterAgentResponse> register_agent(org_id)
 
-
+Register (or re-register) an agent
 
 ### Examples
 
@@ -551,8 +559,9 @@ api_instance = LumoAuthApiClient::AgentsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.register_agent(org_id)
+  # Register (or re-register) an agent
+  result = api_instance.register_agent(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->register_agent: #{e}"
 end
@@ -560,17 +569,17 @@ end
 
 #### Using the register_agent_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> register_agent_with_http_info(org_id)
+> <Array(<RegisterAgentResponse>, Integer, Hash)> register_agent_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # Register (or re-register) an agent
   data, status_code, headers = api_instance.register_agent_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <RegisterAgentResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->register_agent_with_http_info: #{e}"
 end
@@ -584,7 +593,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**RegisterAgentResponse**](RegisterAgentResponse.md)
 
 ### Authorization
 
@@ -593,14 +602,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## verify_agent_card
 
-> verify_agent_card(org_id)
+> <VerifyAgentCardResponse> verify_agent_card(org_id, request_body)
 
+Verify a signed A2A agent card
 
+Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
 ### Examples
 
@@ -620,10 +631,12 @@ end
 
 api_instance = LumoAuthApiClient::AgentsApi.new
 org_id = 'org_id_example' # String | 
+request_body = { key: 3.56} # Hash<String, Object> | 
 
 begin
-  
-  api_instance.verify_agent_card(org_id)
+  # Verify a signed A2A agent card
+  result = api_instance.verify_agent_card(org_id, request_body)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->verify_agent_card: #{e}"
 end
@@ -631,17 +644,17 @@ end
 
 #### Using the verify_agent_card_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> verify_agent_card_with_http_info(org_id)
+> <Array(<VerifyAgentCardResponse>, Integer, Hash)> verify_agent_card_with_http_info(org_id, request_body)
 
 ```ruby
 begin
-  
-  data, status_code, headers = api_instance.verify_agent_card_with_http_info(org_id)
+  # Verify a signed A2A agent card
+  data, status_code, headers = api_instance.verify_agent_card_with_http_info(org_id, request_body)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <VerifyAgentCardResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AgentsApi->verify_agent_card_with_http_info: #{e}"
 end
@@ -652,10 +665,11 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **request_body** | [**Hash&lt;String, Object&gt;**](Object.md) |  |  |
 
 ### Return type
 
-nil (empty response body)
+[**VerifyAgentCardResponse**](VerifyAgentCardResponse.md)
 
 ### Authorization
 
@@ -663,6 +677,6 @@ nil (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 

@@ -15,6 +15,7 @@
 | **status** | **String** |  | [optional] |
 | **scopes_supported** | **Array&lt;String&gt;** |  | [optional] |
 | **require_pkce** | **Boolean** |  | [optional] |
+| **require_dpop** | **Boolean** |  | [optional] |
 | **token_lifetime** | **Integer** |  | [optional] |
 | **created_at** | **Time** |  | [optional] |
 | **updated_at** | **Time** |  | [optional] |
@@ -37,6 +38,7 @@ instance = LumoAuthApiClient::GetServerResponse.new(
   status: null,
   scopes_supported: null,
   require_pkce: null,
+  require_dpop: null,
   token_lifetime: null,
   created_at: null,
   updated_at: null,

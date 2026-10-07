@@ -21,6 +21,14 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminSandboxListResponse } from '../models';
+// @ts-ignore
+import type { AdminSandboxSpawnRequest } from '../models';
+// @ts-ignore
+import type { AdminSandboxSpawnResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
 /**
  * AdminSandboxApi - axios parameter creator
  * @export
@@ -29,7 +37,7 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
     return {
         /**
          * 
-         * @summary POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+         * @summary Destroy a sandbox tenant
          * @param {string} orgId 
          * @param {string} sandboxSlug 
          * @param {*} [options] Override http request option.
@@ -74,7 +82,7 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary GET / Lists the caller\'s active sandbox tenants (their own only).
+         * @summary List the caller\'s sandbox tenants
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -115,12 +123,13 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
         },
         /**
          * 
-         * @summary POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+         * @summary Spawn a sandbox tenant
          * @param {string} orgId 
+         * @param {AdminSandboxSpawnRequest} [adminSandboxSpawnRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSandboxSpawn: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminSandboxSpawn: async (orgId: string, adminSandboxSpawnRequest?: AdminSandboxSpawnRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminSandboxSpawn', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/sandbox/spawn`
@@ -145,9 +154,12 @@ export const AdminSandboxApiAxiosParamCreator = function (configuration?: Config
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminSandboxSpawnRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -166,13 +178,13 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+         * @summary Destroy a sandbox tenant
          * @param {string} orgId 
          * @param {string} sandboxSlug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSandboxDestroy(orgId: string, sandboxSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSandboxDestroy(orgId: string, sandboxSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSandboxDestroy(orgId, sandboxSlug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSandboxApi.adminSandboxDestroy']?.[localVarOperationServerIndex]?.url;
@@ -180,12 +192,12 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary GET / Lists the caller\'s active sandbox tenants (their own only).
+         * @summary List the caller\'s sandbox tenants
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSandboxList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSandboxList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSandboxListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSandboxList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSandboxApi.adminSandboxList']?.[localVarOperationServerIndex]?.url;
@@ -193,13 +205,14 @@ export const AdminSandboxApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+         * @summary Spawn a sandbox tenant
          * @param {string} orgId 
+         * @param {AdminSandboxSpawnRequest} [adminSandboxSpawnRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSandboxSpawn(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminSandboxSpawn(orgId, options);
+        async adminSandboxSpawn(orgId: string, adminSandboxSpawnRequest?: AdminSandboxSpawnRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSandboxSpawnResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminSandboxSpawn(orgId, adminSandboxSpawnRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSandboxApi.adminSandboxSpawn']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -216,33 +229,33 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
     return {
         /**
          * 
-         * @summary POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+         * @summary Destroy a sandbox tenant
          * @param {AdminSandboxApiAdminSandboxDestroyRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSandboxDestroy(requestParameters: AdminSandboxApiAdminSandboxDestroyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSandboxDestroy(requestParameters: AdminSandboxApiAdminSandboxDestroyRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminSandboxDestroy(requestParameters.orgId, requestParameters.sandboxSlug, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary GET / Lists the caller\'s active sandbox tenants (their own only).
+         * @summary List the caller\'s sandbox tenants
          * @param {AdminSandboxApiAdminSandboxListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSandboxList(requestParameters: AdminSandboxApiAdminSandboxListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSandboxList(requestParameters: AdminSandboxApiAdminSandboxListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSandboxListResponse> {
             return localVarFp.adminSandboxList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+         * @summary Spawn a sandbox tenant
          * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSandboxSpawn(requestParameters: AdminSandboxApiAdminSandboxSpawnRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.adminSandboxSpawn(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        adminSandboxSpawn(requestParameters: AdminSandboxApiAdminSandboxSpawnRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSandboxSpawnResponse> {
+            return localVarFp.adminSandboxSpawn(requestParameters.orgId, requestParameters.adminSandboxSpawnRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -255,33 +268,33 @@ export const AdminSandboxApiFactory = function (configuration?: Configuration, b
 export interface AdminSandboxApiInterface {
     /**
      * 
-     * @summary POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     * @summary Destroy a sandbox tenant
      * @param {AdminSandboxApiAdminSandboxDestroyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSandboxApiInterface
      */
-    adminSandboxDestroy(requestParameters: AdminSandboxApiAdminSandboxDestroyRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSandboxDestroy(requestParameters: AdminSandboxApiAdminSandboxDestroyRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
-     * @summary GET / Lists the caller\'s active sandbox tenants (their own only).
+     * @summary List the caller\'s sandbox tenants
      * @param {AdminSandboxApiAdminSandboxListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSandboxApiInterface
      */
-    adminSandboxList(requestParameters: AdminSandboxApiAdminSandboxListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSandboxList(requestParameters: AdminSandboxApiAdminSandboxListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSandboxListResponse>;
 
     /**
      * 
-     * @summary POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+     * @summary Spawn a sandbox tenant
      * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSandboxApiInterface
      */
-    adminSandboxSpawn(requestParameters: AdminSandboxApiAdminSandboxSpawnRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSandboxSpawn(requestParameters: AdminSandboxApiAdminSandboxSpawnRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSandboxSpawnResponse>;
 
 }
 
@@ -332,6 +345,13 @@ export interface AdminSandboxApiAdminSandboxSpawnRequest {
      * @memberof AdminSandboxApiAdminSandboxSpawn
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminSandboxSpawnRequest}
+     * @memberof AdminSandboxApiAdminSandboxSpawn
+     */
+    readonly adminSandboxSpawnRequest?: AdminSandboxSpawnRequest
 }
 
 /**
@@ -343,7 +363,7 @@ export interface AdminSandboxApiAdminSandboxSpawnRequest {
 export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface {
     /**
      * 
-     * @summary POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     * @summary Destroy a sandbox tenant
      * @param {AdminSandboxApiAdminSandboxDestroyRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -355,7 +375,7 @@ export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface
 
     /**
      * 
-     * @summary GET / Lists the caller\'s active sandbox tenants (their own only).
+     * @summary List the caller\'s sandbox tenants
      * @param {AdminSandboxApiAdminSandboxListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -367,14 +387,14 @@ export class AdminSandboxApi extends BaseAPI implements AdminSandboxApiInterface
 
     /**
      * 
-     * @summary POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+     * @summary Spawn a sandbox tenant
      * @param {AdminSandboxApiAdminSandboxSpawnRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSandboxApi
      */
     public adminSandboxSpawn(requestParameters: AdminSandboxApiAdminSandboxSpawnRequest, options?: RawAxiosRequestConfig) {
-        return AdminSandboxApiFp(this.configuration).adminSandboxSpawn(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSandboxApiFp(this.configuration).adminSandboxSpawn(requestParameters.orgId, requestParameters.adminSandboxSpawnRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

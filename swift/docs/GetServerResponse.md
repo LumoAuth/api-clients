@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **status** | **String** |  | [optional] 
 **scopesSupported** | **[String]** |  | [optional] 
 **requirePkce** | **Bool** |  | [optional] 
+**requireDpop** | **Bool** |  | [optional] 
 **tokenLifetime** | **Int** |  | [optional] 
 **createdAt** | **Date** |  | [optional] 
 **updatedAt** | **Date** |  | [optional] 

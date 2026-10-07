@@ -27,6 +27,14 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.CreateClientResponse;
+import io.lumoauth.client.model.GetClientResponse;
+import io.lumoauth.client.model.ListClientScopesResponse;
+import io.lumoauth.client.model.ListClientsResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.RotateClientSecretResponse;
+import io.lumoauth.client.model.SetClientScopesResponse;
+import io.lumoauth.client.model.UpdateClientResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +89,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +119,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,41 +149,44 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Create a new OAuth client
+     * Create an OAuth client
      * 
      * @param orgId  (required)
+     * @return CreateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
      </table>
      */
-    public void createClient(@javax.annotation.Nonnull String orgId) throws ApiException {
-        createClientWithHttpInfo(orgId);
+    public CreateClientResponse createClient(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<CreateClientResponse> localVarResp = createClientWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Create a new OAuth client
+     * Create an OAuth client
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;CreateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> createClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<CreateClientResponse> createClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = createClientValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<CreateClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Create a new OAuth client (asynchronously)
+     * Create an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -184,13 +196,14 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created — the plaintext secret is included once and never shown again </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call createClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CreateClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createClientValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<CreateClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -204,7 +217,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deleteClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -235,6 +249,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -273,16 +288,19 @@ public class AdminOAuthClientsApi {
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void deleteClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        deleteClientWithHttpInfo(orgId, clientId);
+    public MessageResponse deleteClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = deleteClientWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
@@ -290,18 +308,20 @@ public class AdminOAuthClientsApi {
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> deleteClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<MessageResponse> deleteClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = deleteClientValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -316,13 +336,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call deleteClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteClientValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -336,7 +358,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call disableClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -367,6 +390,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -401,43 +425,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Disable OAuth client
+     * Disable an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return UpdateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void disableClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        disableClientWithHttpInfo(orgId, clientId);
+    public UpdateClientResponse disableClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<UpdateClientResponse> localVarResp = disableClientWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Disable OAuth client
+     * Disable an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> disableClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<UpdateClientResponse> disableClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = disableClientValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Disable OAuth client (asynchronously)
+     * Disable an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -448,13 +477,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call disableClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call disableClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = disableClientValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -468,7 +499,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call enableClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -499,6 +531,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -533,43 +566,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Enable OAuth client
+     * Enable an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return UpdateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void enableClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        enableClientWithHttpInfo(orgId, clientId);
+    public UpdateClientResponse enableClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<UpdateClientResponse> localVarResp = enableClientWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Enable OAuth client
+     * Enable an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> enableClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<UpdateClientResponse> enableClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = enableClientValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Enable OAuth client (asynchronously)
+     * Enable an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -580,13 +618,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Client enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call enableClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call enableClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = enableClientValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -600,7 +640,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -631,6 +672,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -665,43 +707,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Get a single OAuth client by ID or clientId
+     * Get an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return GetClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void getClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        getClientWithHttpInfo(orgId, clientId);
+    public GetClientResponse getClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<GetClientResponse> localVarResp = getClientWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single OAuth client by ID or clientId
+     * Get an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;GetClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<GetClientResponse> getClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = getClientValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<GetClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single OAuth client by ID or clientId (asynchronously)
+     * Get an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -712,13 +759,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<GetClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getClientValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<GetClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -732,7 +781,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listClientScopesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -763,6 +813,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -797,43 +848,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Get client scopes
+     * List the scopes granted to an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return ListClientScopesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void listClientScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        listClientScopesWithHttpInfo(orgId, clientId);
+    public ListClientScopesResponse listClientScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<ListClientScopesResponse> localVarResp = listClientScopesWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get client scopes
+     * List the scopes granted to an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;ListClientScopesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listClientScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<ListClientScopesResponse> listClientScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = listClientScopesValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<ListClientScopesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get client scopes (asynchronously)
+     * List the scopes granted to an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -844,13 +900,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listClientScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listClientScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<ListClientScopesResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listClientScopesValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<ListClientScopesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -863,7 +921,7 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth clients (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listClientsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -893,6 +951,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -922,41 +981,44 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * List all OAuth clients in the tenant
+     * List OAuth clients
      * 
      * @param orgId  (required)
+     * @return ListClientsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth clients (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public void listClients(@javax.annotation.Nonnull String orgId) throws ApiException {
-        listClientsWithHttpInfo(orgId);
+    public ListClientsResponse listClients(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<ListClientsResponse> localVarResp = listClientsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List all OAuth clients in the tenant
+     * List OAuth clients
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;ListClientsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth clients (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listClientsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<ListClientsResponse> listClientsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = listClientsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<ListClientsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List all OAuth clients in the tenant (asynchronously)
+     * List OAuth clients (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -966,13 +1028,14 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OAuth clients (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listClientsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listClientsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ListClientsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listClientsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<ListClientsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -986,7 +1049,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -1017,6 +1081,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1051,43 +1116,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Update an existing OAuth client
+     * Update an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return UpdateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void patchClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        patchClientWithHttpInfo(orgId, clientId);
+    public UpdateClientResponse patchClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<UpdateClientResponse> localVarResp = patchClientWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update an existing OAuth client
+     * Update an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<UpdateClientResponse> patchClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update an existing OAuth client (asynchronously)
+     * Update an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -1098,13 +1168,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchClientValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1118,7 +1190,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call rotateClientSecretCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -1149,6 +1222,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1183,43 +1257,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Rotate client secret
+     * Rotate an OAuth client secret
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return RotateClientSecretResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void rotateClientSecret(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        rotateClientSecretWithHttpInfo(orgId, clientId);
+    public RotateClientSecretResponse rotateClientSecret(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<RotateClientSecretResponse> localVarResp = rotateClientSecretWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Rotate client secret
+     * Rotate an OAuth client secret
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RotateClientSecretResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> rotateClientSecretWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<RotateClientSecretResponse> rotateClientSecretWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = rotateClientSecretValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RotateClientSecretResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Rotate client secret (asynchronously)
+     * Rotate an OAuth client secret (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -1230,13 +1309,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Rotated — the new plaintext secret is included once and never shown again </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call rotateClientSecretAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call rotateClientSecretAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<RotateClientSecretResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = rotateClientSecretValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RotateClientSecretResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1250,7 +1331,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setClientScopesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -1281,6 +1363,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1315,43 +1398,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Set client scopes
+     * Replace the scopes granted to an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return SetClientScopesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void setClientScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        setClientScopesWithHttpInfo(orgId, clientId);
+    public SetClientScopesResponse setClientScopes(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<SetClientScopesResponse> localVarResp = setClientScopesWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Set client scopes
+     * Replace the scopes granted to an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SetClientScopesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> setClientScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<SetClientScopesResponse> setClientScopesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = setClientScopesValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SetClientScopesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Set client scopes (asynchronously)
+     * Replace the scopes granted to an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -1362,13 +1450,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated scope names </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setClientScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call setClientScopesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<SetClientScopesResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = setClientScopesValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SetClientScopesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1382,7 +1472,8 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call updateClientCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -1413,6 +1504,7 @@ public class AdminOAuthClientsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1447,43 +1539,48 @@ public class AdminOAuthClientsApi {
     }
 
     /**
-     * Update an existing OAuth client
+     * Replace an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return UpdateClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public void updateClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        updateClientWithHttpInfo(orgId, clientId);
+    public UpdateClientResponse updateClient(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<UpdateClientResponse> localVarResp = updateClientWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update an existing OAuth client
+     * Replace an OAuth client
      * 
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> updateClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<UpdateClientResponse> updateClientWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = updateClientValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update an existing OAuth client (asynchronously)
+     * Replace an OAuth client (asynchronously)
      * 
      * @param orgId  (required)
      * @param clientId  (required)
@@ -1494,13 +1591,15 @@ public class AdminOAuthClientsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated OAuth client (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> OAuth client not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call updateClientAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<UpdateClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateClientValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

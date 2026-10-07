@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacAttributesCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacAttributesCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacAttributesDelete(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacAttributesDelete(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacAttributesGet(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacAttributesGet(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -69,9 +72,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacAttributesList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacAttributesList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -82,9 +86,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -96,9 +101,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesDelete(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesDelete(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -110,9 +116,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesGet(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesGet(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -123,9 +130,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -137,9 +145,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesToggle(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.AbacPoliciesToggle(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -151,9 +160,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.PatchAbacAttributesUpdate(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.PatchAbacAttributesUpdate(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -165,9 +175,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.PatchAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.PatchAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -179,9 +190,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.PutAbacAttributesUpdate(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.PutAbacAttributesUpdate(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -193,9 +205,10 @@ func Test_lumoauthclient_AdminAbacAPIService(t *testing.T) {
 		var orgId string
 		var id string
 
-		httpRes, err := apiClient.AdminAbacAPI.PutAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
+		resp, httpRes, err := apiClient.AdminAbacAPI.PutAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

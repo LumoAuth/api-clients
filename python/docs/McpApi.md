@@ -4,29 +4,27 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_protected_resource_metadata**](McpApi.md#get_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728)
-[**get_protected_resource_metadata_root**](McpApi.md#get_protected_resource_metadata_root) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata
+[**get_protected_resource_metadata**](McpApi.md#get_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728)
+[**get_protected_resource_metadata_root**](McpApi.md#get_protected_resource_metadata_root) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728)
 [**get_server**](McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
-[**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.
+[**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 [**list_servers**](McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
-[**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.
+[**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 
 
 # **get_protected_resource_metadata**
-> get_protected_resource_metadata(org_id, server_id)
+> ProtectedResourceMetadata get_protected_resource_metadata(org_id, server_id)
 
-OAuth 2.0 Protected Resource Metadata (RFC 9728)
+MCP server protected resource metadata (RFC 9728)
 
-Well-known endpoint for MCP servers with path-specific metadata.
-Example: /.well-known/oauth-protected-resource/mcp/{serverId}
-
-MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.protected_resource_metadata import ProtectedResourceMetadata
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -45,8 +43,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     server_id = 'server_id_example' # str | 
 
     try:
-        # OAuth 2.0 Protected Resource Metadata (RFC 9728)
-        api_instance.get_protected_resource_metadata(org_id, server_id)
+        # MCP server protected resource metadata (RFC 9728)
+        api_response = api_instance.get_protected_resource_metadata(org_id, server_id)
+        print("The response of McpApi->get_protected_resource_metadata:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling McpApi->get_protected_resource_metadata: %s\n" % e)
 ```
@@ -63,7 +63,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ProtectedResourceMetadata**](ProtectedResourceMetadata.md)
 
 ### Authorization
 
@@ -72,29 +72,31 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). |  -  |
+**400** | not_applicable — the MCP server does not require authorization. |  -  |
+**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_protected_resource_metadata_root**
-> get_protected_resource_metadata_root(org_id)
+> GetProtectedResourceMetadataRoot200Response get_protected_resource_metadata_root(org_id)
 
-Root-level Protected Resource Metadata
+Organization-level protected resource metadata (RFC 9728)
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists.
-Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_protected_resource_metadata_root200_response import GetProtectedResourceMetadataRoot200Response
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -112,8 +114,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Root-level Protected Resource Metadata
-        api_instance.get_protected_resource_metadata_root(org_id)
+        # Organization-level protected resource metadata (RFC 9728)
+        api_response = api_instance.get_protected_resource_metadata_root(org_id)
+        print("The response of McpApi->get_protected_resource_metadata_root:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling McpApi->get_protected_resource_metadata_root: %s\n" % e)
 ```
@@ -129,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**GetProtectedResourceMetadataRoot200Response**](GetProtectedResourceMetadataRoot200Response.md)
 
 ### Authorization
 
@@ -138,13 +142,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. |  -  |
+**404** | not_found — unknown organization, or no protected MCP servers configured. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -238,14 +243,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_server_challenge**
-> get_server_challenge(org_id, server_id)
+> GetServerChallengeResponse get_server_challenge(org_id, server_id)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge
 
-When an MCP client sends an unauthenticated request, the MCP server MUST
-respond with 401 including WWW-Authenticate header per the spec.
-
-This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 ### Example
 
@@ -253,6 +255,7 @@ This endpoint allows testing the challenge flow.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_server_challenge_response import GetServerChallengeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -280,8 +283,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     server_id = 'server_id_example' # str | 
 
     try:
-        # Simulated MCP Server 401 challenge endpoint.
-        api_instance.get_server_challenge(org_id, server_id)
+        # Simulated MCP server authorization challenge
+        api_response = api_instance.get_server_challenge(org_id, server_id)
+        print("The response of McpApi->get_server_challenge:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling McpApi->get_server_challenge: %s\n" % e)
 ```
@@ -298,7 +303,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -307,13 +312,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | The access token is valid for this MCP server. |  -  |
+**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+**403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+**429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -405,14 +414,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_server_challenge**
-> post_server_challenge(org_id, server_id)
+> GetServerChallengeResponse post_server_challenge(org_id, server_id)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge (POST)
 
-When an MCP client sends an unauthenticated request, the MCP server MUST
-respond with 401 including WWW-Authenticate header per the spec.
-
-This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
 ### Example
 
@@ -420,6 +426,7 @@ This endpoint allows testing the challenge flow.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_server_challenge_response import GetServerChallengeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -447,8 +454,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     server_id = 'server_id_example' # str | 
 
     try:
-        # Simulated MCP Server 401 challenge endpoint.
-        api_instance.post_server_challenge(org_id, server_id)
+        # Simulated MCP server authorization challenge (POST)
+        api_response = api_instance.post_server_challenge(org_id, server_id)
+        print("The response of McpApi->post_server_challenge:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling McpApi->post_server_challenge: %s\n" % e)
 ```
@@ -465,7 +474,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -474,13 +483,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | The access token is valid for this MCP server. |  -  |
+**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+**403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+**429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Ttl** | Pointer to **int32** | Optional TTL override in seconds. | [optional] 
-**Notes** | Pointer to **string** | Optional reviewer notes. | [optional] 
+**Notes** | Pointer to **string** | Optional reviewer notes (internal; never shown to the agent). | [optional] 
+**AgentMessage** | Pointer to **string** | Optional message the agent MAY read on the status endpoint / callback. | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetNotes sets Notes field to given value.
 `func (o *ApproveRequestRequest) HasNotes() bool`
 
 HasNotes returns a boolean if a field has been set.
+
+### GetAgentMessage
+
+`func (o *ApproveRequestRequest) GetAgentMessage() string`
+
+GetAgentMessage returns the AgentMessage field if non-nil, zero value otherwise.
+
+### GetAgentMessageOk
+
+`func (o *ApproveRequestRequest) GetAgentMessageOk() (*string, bool)`
+
+GetAgentMessageOk returns a tuple with the AgentMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAgentMessage
+
+`func (o *ApproveRequestRequest) SetAgentMessage(v string)`
+
+SetAgentMessage sets AgentMessage field to given value.
+
+### HasAgentMessage
+
+`func (o *ApproveRequestRequest) HasAgentMessage() bool`
+
+HasAgentMessage returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

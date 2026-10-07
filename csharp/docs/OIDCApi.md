@@ -4,17 +4,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**CheckSession**](OIDCApi.md#checksession) | **GET** /orgs/{orgId}/api/v1/oauth/check_session |  |
-| [**Logout**](OIDCApi.md#logout) | **GET** /orgs/{orgId}/api/v1/oauth/logout |  |
-| [**LogoutPost**](OIDCApi.md#logoutpost) | **POST** /orgs/{orgId}/api/v1/oauth/logout |  |
-| [**Userinfo**](OIDCApi.md#userinfo) | **GET** /orgs/{orgId}/api/v1/oauth/userinfo | OIDC UserInfo Endpoint |
-| [**UserinfoPost**](OIDCApi.md#userinfopost) | **POST** /orgs/{orgId}/api/v1/oauth/userinfo | OIDC UserInfo Endpoint |
+| [**CheckSession**](OIDCApi.md#checksession) | **GET** /orgs/{orgId}/api/v1/oauth/check_session | OP session-check iframe (OIDC Session Management 1.0) |
+| [**Logout**](OIDCApi.md#logout) | **GET** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (OIDC RP-Initiated Logout 1.0) |
+| [**LogoutPost**](OIDCApi.md#logoutpost) | **POST** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (confirmation submission) |
+| [**Userinfo**](OIDCApi.md#userinfo) | **GET** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint |
+| [**UserinfoPost**](OIDCApi.md#userinfopost) | **POST** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint (POST) |
 
 <a id="checksession"></a>
 # **CheckSession**
-> void CheckSession (string orgId)
+> string CheckSession (string orgId)
 
+OP session-check iframe (OIDC Session Management 1.0)
 
+The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
 
 ### Example
 ```csharp
@@ -41,7 +43,9 @@ namespace Example
 
             try
             {
-                apiInstance.CheckSession(orgId);
+                // OP session-check iframe (OIDC Session Management 1.0)
+                string result = apiInstance.CheckSession(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -60,7 +64,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.CheckSessionWithHttpInfo(orgId);
+    // OP session-check iframe (OIDC Session Management 1.0)
+    ApiResponse<string> response = apiInstance.CheckSessionWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -78,7 +86,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -87,21 +95,23 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | HTML page containing the session-state comparison script. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="logout"></a>
 # **Logout**
-> void Logout (string orgId)
+> string Logout (string orgId)
 
+RP-initiated logout (OIDC RP-Initiated Logout 1.0)
 
+end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
 
 ### Example
 ```csharp
@@ -128,7 +138,9 @@ namespace Example
 
             try
             {
-                apiInstance.Logout(orgId);
+                // RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+                string result = apiInstance.Logout(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -147,7 +159,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.LogoutWithHttpInfo(orgId);
+    // RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+    ApiResponse<string> response = apiInstance.LogoutWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -165,7 +181,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -174,21 +190,25 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. |  -  |
+| **302** | Redirect to the validated post_logout_redirect_uri (state appended when given). |  * Location -  <br>  |
+| **404** | invalid_tenant — unknown or inactive organization (JSON). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="logoutpost"></a>
 # **LogoutPost**
-> void LogoutPost (string orgId)
+> string LogoutPost (string orgId)
 
+RP-initiated logout (confirmation submission)
 
+Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
 
 ### Example
 ```csharp
@@ -215,7 +235,9 @@ namespace Example
 
             try
             {
-                apiInstance.LogoutPost(orgId);
+                // RP-initiated logout (confirmation submission)
+                string result = apiInstance.LogoutPost(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -234,7 +256,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.LogoutPostWithHttpInfo(orgId);
+    // RP-initiated logout (confirmation submission)
+    ApiResponse<string> response = apiInstance.LogoutPostWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -252,7 +278,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -261,23 +287,25 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/html
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. |  -  |
+| **302** | Redirect to the validated post_logout_redirect_uri (state appended when given). |  * Location -  <br>  |
+| **404** | invalid_tenant — unknown or inactive organization (JSON). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="userinfo"></a>
 # **Userinfo**
-> void Userinfo (string orgId)
+> UserinfoResponse Userinfo (string orgId)
 
-OIDC UserInfo Endpoint
+OpenID Connect UserInfo endpoint
 
-Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
 
 ### Example
 ```csharp
@@ -307,8 +335,9 @@ namespace Example
 
             try
             {
-                // OIDC UserInfo Endpoint
-                apiInstance.Userinfo(orgId);
+                // OpenID Connect UserInfo endpoint
+                UserinfoResponse result = apiInstance.Userinfo(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -327,8 +356,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // OIDC UserInfo Endpoint
-    apiInstance.UserinfoWithHttpInfo(orgId);
+    // OpenID Connect UserInfo endpoint
+    ApiResponse<UserinfoResponse> response = apiInstance.UserinfoWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -346,7 +378,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UserinfoResponse**](UserinfoResponse.md)
 
 ### Authorization
 
@@ -355,23 +387,26 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. |  -  |
+| **400** | invalid_request — Authorization header missing or malformed. |  -  |
+| **401** | invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. |  -  |
+| **403** | insufficient_scope — the openid scope is required. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="userinfopost"></a>
 # **UserinfoPost**
-> void UserinfoPost (string orgId)
+> UserinfoResponse UserinfoPost (string orgId)
 
-OIDC UserInfo Endpoint
+OpenID Connect UserInfo endpoint (POST)
 
-Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+Identical to GET.
 
 ### Example
 ```csharp
@@ -401,8 +436,9 @@ namespace Example
 
             try
             {
-                // OIDC UserInfo Endpoint
-                apiInstance.UserinfoPost(orgId);
+                // OpenID Connect UserInfo endpoint (POST)
+                UserinfoResponse result = apiInstance.UserinfoPost(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -421,8 +457,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // OIDC UserInfo Endpoint
-    apiInstance.UserinfoPostWithHttpInfo(orgId);
+    // OpenID Connect UserInfo endpoint (POST)
+    ApiResponse<UserinfoResponse> response = apiInstance.UserinfoPostWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -440,7 +479,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UserinfoResponse**](UserinfoResponse.md)
 
 ### Authorization
 
@@ -449,13 +488,16 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. |  -  |
+| **400** | invalid_request — Authorization header missing or malformed. |  -  |
+| **401** | invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. |  -  |
+| **403** | insufficient_scope — the openid scope is required. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

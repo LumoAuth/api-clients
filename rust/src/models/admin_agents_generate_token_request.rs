@@ -13,19 +13,19 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AdminAgentsGenerateTokenRequest {
-    /// Optional scopes to embed in the token.
+    /// Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+    #[serde(rename = "expiresIn", skip_serializing_if = "Option::is_none")]
+    pub expires_in: Option<i32>,
+    /// Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
     #[serde(rename = "scopes", skip_serializing_if = "Option::is_none")]
     pub scopes: Option<Vec<String>>,
-    /// Optional token lifetime in seconds.
-    #[serde(rename = "ttl", skip_serializing_if = "Option::is_none")]
-    pub ttl: Option<i32>,
 }
 
 impl AdminAgentsGenerateTokenRequest {
     pub fn new() -> AdminAgentsGenerateTokenRequest {
         AdminAgentsGenerateTokenRequest {
+            expires_in: None,
             scopes: None,
-            ttl: None,
         }
     }
 }

@@ -553,7 +553,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_agents_delete**
-> MessageResponse admin_agents_delete(org_id, agent_id)
+> AdminAgentsDeleteResponse admin_agents_delete(org_id, agent_id)
 
 Delete an agent
 
@@ -564,7 +564,7 @@ Delete an agent
 
 ```python
 import lumoauth_api_client
-from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.admin_agents_delete_response import AdminAgentsDeleteResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -618,7 +618,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MessageResponse**](MessageResponse.md)
+[**AdminAgentsDeleteResponse**](AdminAgentsDeleteResponse.md)
 
 ### Authorization
 
@@ -725,7 +725,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A generated agent token. The token value is returned ONCE. |  -  |
-**400** | Cannot generate token for inactive agent. |  -  |
+**400** | Inactive agent, or requested scopes outside the agent&#39;s capabilities. |  -  |
 **401** | Authentication required. |  -  |
 **403** | Admin privileges required. |  -  |
 **404** | Tenant or agent not found. |  -  |

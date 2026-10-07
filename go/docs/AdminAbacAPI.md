@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AbacAttributesCreate**](AdminAbacAPI.md#AbacAttributesCreate) | **Post** /orgs/{orgId}/api/v1/abac/attributes | Create a new attribute definition
+[**AbacAttributesCreate**](AdminAbacAPI.md#AbacAttributesCreate) | **Post** /orgs/{orgId}/api/v1/abac/attributes | Create an attribute definition
 [**AbacAttributesDelete**](AdminAbacAPI.md#AbacAttributesDelete) | **Delete** /orgs/{orgId}/api/v1/abac/attributes/{id} | Delete an attribute definition
-[**AbacAttributesGet**](AdminAbacAPI.md#AbacAttributesGet) | **Get** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get a single attribute definition
-[**AbacAttributesList**](AdminAbacAPI.md#AbacAttributesList) | **Get** /orgs/{orgId}/api/v1/abac/attributes | List all attribute definitions
-[**AbacPoliciesCreate**](AdminAbacAPI.md#AbacPoliciesCreate) | **Post** /orgs/{orgId}/api/v1/abac/policies | Create a new ABAC policy
+[**AbacAttributesGet**](AdminAbacAPI.md#AbacAttributesGet) | **Get** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get an attribute definition
+[**AbacAttributesList**](AdminAbacAPI.md#AbacAttributesList) | **Get** /orgs/{orgId}/api/v1/abac/attributes | List attribute definitions
+[**AbacPoliciesCreate**](AdminAbacAPI.md#AbacPoliciesCreate) | **Post** /orgs/{orgId}/api/v1/abac/policies | Create an ABAC policy
 [**AbacPoliciesDelete**](AdminAbacAPI.md#AbacPoliciesDelete) | **Delete** /orgs/{orgId}/api/v1/abac/policies/{id} | Delete an ABAC policy
-[**AbacPoliciesGet**](AdminAbacAPI.md#AbacPoliciesGet) | **Get** /orgs/{orgId}/api/v1/abac/policies/{id} | Get a single ABAC policy
-[**AbacPoliciesList**](AdminAbacAPI.md#AbacPoliciesList) | **Get** /orgs/{orgId}/api/v1/abac/policies | List all ABAC policies
-[**AbacPoliciesToggle**](AdminAbacAPI.md#AbacPoliciesToggle) | **Post** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle policy active status
-[**PatchAbacAttributesUpdate**](AdminAbacAPI.md#PatchAbacAttributesUpdate) | **Patch** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition
-[**PatchAbacPoliciesUpdate**](AdminAbacAPI.md#PatchAbacPoliciesUpdate) | **Patch** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy
+[**AbacPoliciesGet**](AdminAbacAPI.md#AbacPoliciesGet) | **Get** /orgs/{orgId}/api/v1/abac/policies/{id} | Get an ABAC policy
+[**AbacPoliciesList**](AdminAbacAPI.md#AbacPoliciesList) | **Get** /orgs/{orgId}/api/v1/abac/policies | List ABAC policies
+[**AbacPoliciesToggle**](AdminAbacAPI.md#AbacPoliciesToggle) | **Post** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle a policy between active and inactive
+[**PatchAbacAttributesUpdate**](AdminAbacAPI.md#PatchAbacAttributesUpdate) | **Patch** /orgs/{orgId}/api/v1/abac/attributes/{id} | Partially update an attribute definition
+[**PatchAbacPoliciesUpdate**](AdminAbacAPI.md#PatchAbacPoliciesUpdate) | **Patch** /orgs/{orgId}/api/v1/abac/policies/{id} | Partially update an ABAC policy
 [**PutAbacAttributesUpdate**](AdminAbacAPI.md#PutAbacAttributesUpdate) | **Put** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition
 [**PutAbacPoliciesUpdate**](AdminAbacAPI.md#PutAbacPoliciesUpdate) | **Put** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy
 
@@ -22,9 +22,9 @@ Method | HTTP request | Description
 
 ## AbacAttributesCreate
 
-> AbacAttributesCreate(ctx, orgId).Execute()
+> AbacAttributesCreateResponse AbacAttributesCreate(ctx, orgId).Execute()
 
-Create a new attribute definition
+Create an attribute definition
 
 ### Example
 
@@ -43,11 +43,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacAttributesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacAttributesCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacAttributesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacAttributesCreate`: AbacAttributesCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacAttributesCreate`: %v\n", resp)
 }
 ```
 
@@ -70,7 +72,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacAttributesCreateResponse**](AbacAttributesCreateResponse.md)
 
 ### Authorization
 
@@ -79,7 +81,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -88,7 +90,7 @@ Name | Type | Description  | Notes
 
 ## AbacAttributesDelete
 
-> AbacAttributesDelete(ctx, orgId, id).Execute()
+> MessageResponse AbacAttributesDelete(ctx, orgId, id).Execute()
 
 Delete an attribute definition
 
@@ -110,11 +112,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacAttributesDelete(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacAttributesDelete(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacAttributesDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacAttributesDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacAttributesDelete`: %v\n", resp)
 }
 ```
 
@@ -139,7 +143,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -148,7 +152,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -157,9 +161,9 @@ Name | Type | Description  | Notes
 
 ## AbacAttributesGet
 
-> AbacAttributesGet(ctx, orgId, id).Execute()
+> AbacAttributesGetResponse AbacAttributesGet(ctx, orgId, id).Execute()
 
-Get a single attribute definition
+Get an attribute definition
 
 ### Example
 
@@ -179,11 +183,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacAttributesGet(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacAttributesGet(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacAttributesGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacAttributesGet`: AbacAttributesGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacAttributesGet`: %v\n", resp)
 }
 ```
 
@@ -208,7 +214,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacAttributesGetResponse**](AbacAttributesGetResponse.md)
 
 ### Authorization
 
@@ -217,7 +223,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -226,9 +232,9 @@ Name | Type | Description  | Notes
 
 ## AbacAttributesList
 
-> AbacAttributesList(ctx, orgId).Execute()
+> AbacAttributesListResponse AbacAttributesList(ctx, orgId).Execute()
 
-List all attribute definitions
+List attribute definitions
 
 ### Example
 
@@ -247,11 +253,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacAttributesList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacAttributesList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacAttributesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacAttributesList`: AbacAttributesListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacAttributesList`: %v\n", resp)
 }
 ```
 
@@ -274,7 +282,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacAttributesListResponse**](AbacAttributesListResponse.md)
 
 ### Authorization
 
@@ -283,7 +291,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -292,9 +300,9 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesCreate
 
-> AbacPoliciesCreate(ctx, orgId).Execute()
+> AbacPoliciesCreateResponse AbacPoliciesCreate(ctx, orgId).Execute()
 
-Create a new ABAC policy
+Create an ABAC policy
 
 ### Example
 
@@ -313,11 +321,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacPoliciesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacPoliciesCreate`: AbacPoliciesCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacPoliciesCreate`: %v\n", resp)
 }
 ```
 
@@ -340,7 +350,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacPoliciesCreateResponse**](AbacPoliciesCreateResponse.md)
 
 ### Authorization
 
@@ -349,7 +359,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -358,7 +368,7 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesDelete
 
-> AbacPoliciesDelete(ctx, orgId, id).Execute()
+> MessageResponse AbacPoliciesDelete(ctx, orgId, id).Execute()
 
 Delete an ABAC policy
 
@@ -380,11 +390,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacPoliciesDelete(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesDelete(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacPoliciesDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacPoliciesDelete`: %v\n", resp)
 }
 ```
 
@@ -409,7 +421,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -418,7 +430,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -427,9 +439,9 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesGet
 
-> AbacPoliciesGet(ctx, orgId, id).Execute()
+> AbacPoliciesGetResponse AbacPoliciesGet(ctx, orgId, id).Execute()
 
-Get a single ABAC policy
+Get an ABAC policy
 
 ### Example
 
@@ -449,11 +461,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacPoliciesGet(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesGet(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacPoliciesGet`: AbacPoliciesGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacPoliciesGet`: %v\n", resp)
 }
 ```
 
@@ -478,7 +492,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacPoliciesGetResponse**](AbacPoliciesGetResponse.md)
 
 ### Authorization
 
@@ -487,7 +501,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -496,9 +510,9 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesList
 
-> AbacPoliciesList(ctx, orgId).Execute()
+> AbacPoliciesListResponse AbacPoliciesList(ctx, orgId).Execute()
 
-List all ABAC policies
+List ABAC policies
 
 ### Example
 
@@ -517,11 +531,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacPoliciesList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacPoliciesList`: AbacPoliciesListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacPoliciesList`: %v\n", resp)
 }
 ```
 
@@ -544,7 +560,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacPoliciesListResponse**](AbacPoliciesListResponse.md)
 
 ### Authorization
 
@@ -553,7 +569,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -562,9 +578,9 @@ Name | Type | Description  | Notes
 
 ## AbacPoliciesToggle
 
-> AbacPoliciesToggle(ctx, orgId, id).Execute()
+> AbacPoliciesToggleResponse AbacPoliciesToggle(ctx, orgId, id).Execute()
 
-Toggle policy active status
+Toggle a policy between active and inactive
 
 ### Example
 
@@ -584,11 +600,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.AbacPoliciesToggle(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.AbacPoliciesToggle(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.AbacPoliciesToggle``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AbacPoliciesToggle`: AbacPoliciesToggleResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.AbacPoliciesToggle`: %v\n", resp)
 }
 ```
 
@@ -613,7 +631,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AbacPoliciesToggleResponse**](AbacPoliciesToggleResponse.md)
 
 ### Authorization
 
@@ -622,7 +640,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -631,9 +649,9 @@ Name | Type | Description  | Notes
 
 ## PatchAbacAttributesUpdate
 
-> PatchAbacAttributesUpdate(ctx, orgId, id).Execute()
+> PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(ctx, orgId, id).Execute()
 
-Update an attribute definition
+Partially update an attribute definition
 
 ### Example
 
@@ -653,11 +671,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.PatchAbacAttributesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PatchAbacAttributesUpdate(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PatchAbacAttributesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAbacAttributesUpdate`: PutAbacAttributesUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.PatchAbacAttributesUpdate`: %v\n", resp)
 }
 ```
 
@@ -682,7 +702,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -691,7 +711,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -700,9 +720,9 @@ Name | Type | Description  | Notes
 
 ## PatchAbacPoliciesUpdate
 
-> PatchAbacPoliciesUpdate(ctx, orgId, id).Execute()
+> PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(ctx, orgId, id).Execute()
 
-Update an ABAC policy
+Partially update an ABAC policy
 
 ### Example
 
@@ -722,11 +742,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.PatchAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PatchAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PatchAbacPoliciesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAbacPoliciesUpdate`: PutAbacPoliciesUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.PatchAbacPoliciesUpdate`: %v\n", resp)
 }
 ```
 
@@ -751,7 +773,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -760,7 +782,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -769,7 +791,7 @@ Name | Type | Description  | Notes
 
 ## PutAbacAttributesUpdate
 
-> PutAbacAttributesUpdate(ctx, orgId, id).Execute()
+> PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(ctx, orgId, id).Execute()
 
 Update an attribute definition
 
@@ -791,11 +813,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.PutAbacAttributesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PutAbacAttributesUpdate(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PutAbacAttributesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAbacAttributesUpdate`: PutAbacAttributesUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.PutAbacAttributesUpdate`: %v\n", resp)
 }
 ```
 
@@ -820,7 +844,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -829,7 +853,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -838,7 +862,7 @@ Name | Type | Description  | Notes
 
 ## PutAbacPoliciesUpdate
 
-> PutAbacPoliciesUpdate(ctx, orgId, id).Execute()
+> PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(ctx, orgId, id).Execute()
 
 Update an ABAC policy
 
@@ -860,11 +884,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAbacAPI.PutAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
+	resp, r, err := apiClient.AdminAbacAPI.PutAbacPoliciesUpdate(context.Background(), orgId, id).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAbacAPI.PutAbacPoliciesUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAbacPoliciesUpdate`: PutAbacPoliciesUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAbacAPI.PutAbacPoliciesUpdate`: %v\n", resp)
 }
 ```
 
@@ -889,7 +915,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -898,7 +924,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

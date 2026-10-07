@@ -24,10 +24,9 @@ import (
 type TokenVaultAPI interface {
 
 	/*
-	GetConnectionToken Fetch a live third-party access token for a connection.
+	GetConnectionToken Fetch a live third-party access token for a connection
 
-	POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token
-Body (optional): {"user_id": "<uuid or email>"} for user-delegated grants.
+	Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {"user_id": "<uuid or email>"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -37,12 +36,13 @@ Body (optional): {"user_id": "<uuid or email>"} for user-delegated grants.
 	GetConnectionToken(ctx context.Context, orgId string, connectionId string) ApiGetConnectionTokenRequest
 
 	// GetConnectionTokenExecute executes the request
-	GetConnectionTokenExecute(r ApiGetConnectionTokenRequest) (*http.Response, error)
+	//  @return GetConnectionTokenResponse
+	GetConnectionTokenExecute(r ApiGetConnectionTokenRequest) (*GetConnectionTokenResponse, *http.Response, error)
 
 	/*
-	ListConnections List the connections this agent may use, with grant status. No secrets.
+	ListConnections List the outbound connections this agent may use
 
-	GET /orgs/{orgId}/api/v1/agents/me/connections
+	Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -51,7 +51,8 @@ Body (optional): {"user_id": "<uuid or email>"} for user-delegated grants.
 	ListConnections(ctx context.Context, orgId string) ApiListConnectionsRequest
 
 	// ListConnectionsExecute executes the request
-	ListConnectionsExecute(r ApiListConnectionsRequest) (*http.Response, error)
+	//  @return ListConnectionsResponse
+	ListConnectionsExecute(r ApiListConnectionsRequest) (*ListConnectionsResponse, *http.Response, error)
 }
 
 // TokenVaultAPIService TokenVaultAPI service
@@ -62,17 +63,22 @@ type ApiGetConnectionTokenRequest struct {
 	ApiService TokenVaultAPI
 	orgId string
 	connectionId string
+	getConnectionTokenRequest *GetConnectionTokenRequest
 }
 
-func (r ApiGetConnectionTokenRequest) Execute() (*http.Response, error) {
+func (r ApiGetConnectionTokenRequest) GetConnectionTokenRequest(getConnectionTokenRequest GetConnectionTokenRequest) ApiGetConnectionTokenRequest {
+	r.getConnectionTokenRequest = &getConnectionTokenRequest
+	return r
+}
+
+func (r ApiGetConnectionTokenRequest) Execute() (*GetConnectionTokenResponse, *http.Response, error) {
 	return r.ApiService.GetConnectionTokenExecute(r)
 }
 
 /*
-GetConnectionToken Fetch a live third-party access token for a connection.
+GetConnectionToken Fetch a live third-party access token for a connection
 
-POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token
-Body (optional): {"user_id": "<uuid or email>"} for user-delegated grants.
+Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {"user_id": "<uuid or email>"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -89,16 +95,18 @@ func (a *TokenVaultAPIService) GetConnectionToken(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *TokenVaultAPIService) GetConnectionTokenExecute(r ApiGetConnectionTokenRequest) (*http.Response, error) {
+//  @return GetConnectionTokenResponse
+func (a *TokenVaultAPIService) GetConnectionTokenExecute(r ApiGetConnectionTokenRequest) (*GetConnectionTokenResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetConnectionTokenResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenVaultAPIService.GetConnectionToken")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token"
@@ -110,7 +118,7 @@ func (a *TokenVaultAPIService) GetConnectionTokenExecute(r ApiGetConnectionToken
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -119,13 +127,15 @@ func (a *TokenVaultAPIService) GetConnectionTokenExecute(r ApiGetConnectionToken
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.getConnectionTokenRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -142,19 +152,19 @@ func (a *TokenVaultAPIService) GetConnectionTokenExecute(r ApiGetConnectionToken
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -162,10 +172,19 @@ func (a *TokenVaultAPIService) GetConnectionTokenExecute(r ApiGetConnectionToken
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiListConnectionsRequest struct {
@@ -174,14 +193,14 @@ type ApiListConnectionsRequest struct {
 	orgId string
 }
 
-func (r ApiListConnectionsRequest) Execute() (*http.Response, error) {
+func (r ApiListConnectionsRequest) Execute() (*ListConnectionsResponse, *http.Response, error) {
 	return r.ApiService.ListConnectionsExecute(r)
 }
 
 /*
-ListConnections List the connections this agent may use, with grant status. No secrets.
+ListConnections List the outbound connections this agent may use
 
-GET /orgs/{orgId}/api/v1/agents/me/connections
+Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -196,16 +215,18 @@ func (a *TokenVaultAPIService) ListConnections(ctx context.Context, orgId string
 }
 
 // Execute executes the request
-func (a *TokenVaultAPIService) ListConnectionsExecute(r ApiListConnectionsRequest) (*http.Response, error) {
+//  @return ListConnectionsResponse
+func (a *TokenVaultAPIService) ListConnectionsExecute(r ApiListConnectionsRequest) (*ListConnectionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ListConnectionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TokenVaultAPIService.ListConnections")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/me/connections"
@@ -225,7 +246,7 @@ func (a *TokenVaultAPIService) ListConnectionsExecute(r ApiListConnectionsReques
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -248,19 +269,19 @@ func (a *TokenVaultAPIService) ListConnectionsExecute(r ApiListConnectionsReques
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -268,8 +289,17 @@ func (a *TokenVaultAPIService) ListConnectionsExecute(r ApiListConnectionsReques
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

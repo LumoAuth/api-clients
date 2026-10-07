@@ -68,7 +68,7 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**302** | Redirect to the tenant portal AAuth consent page for the given request_token. |  -  |
+|**302** | Redirect to the tenant portal AAuth consent page for the given request_token. |  * Location -  <br>  |
 |**400** | Missing request_token query parameter. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

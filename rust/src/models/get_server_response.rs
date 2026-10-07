@@ -35,6 +35,8 @@ pub struct GetServerResponse {
     pub scopes_supported: Option<Vec<String>>,
     #[serde(rename = "require_pkce", skip_serializing_if = "Option::is_none")]
     pub require_pkce: Option<bool>,
+    #[serde(rename = "require_dpop", skip_serializing_if = "Option::is_none")]
+    pub require_dpop: Option<bool>,
     #[serde(rename = "token_lifetime", skip_serializing_if = "Option::is_none")]
     pub token_lifetime: Option<i32>,
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
@@ -59,6 +61,7 @@ impl GetServerResponse {
             status: None,
             scopes_supported: None,
             require_pkce: None,
+            require_dpop: None,
             token_lifetime: None,
             created_at: None,
             updated_at: None,

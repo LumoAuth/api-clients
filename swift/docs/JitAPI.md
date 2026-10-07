@@ -29,7 +29,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let requestId = "requestId_example" // String | 
-let approveRequestRequest = ApproveRequestRequest(ttl: 123, notes: "notes_example") // ApproveRequestRequest |  (optional)
+let approveRequestRequest = ApproveRequestRequest(ttl: 123, notes: "notes_example", agentMessage: "agentMessage_example") // ApproveRequestRequest |  (optional)
 
 // HITL: Approve a pending JIT request (requires user auth).
 JitAPI.approveRequest(orgId: orgId, requestId: requestId, approveRequestRequest: approveRequestRequest) { (response, error) in
@@ -183,7 +183,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let requestId = "requestId_example" // String | 
-let denyRequestRequest = DenyRequestRequest(reason: "reason_example") // DenyRequestRequest |  (optional)
+let denyRequestRequest = DenyRequestRequest(reason: "reason_example", agentMessage: "agentMessage_example") // DenyRequestRequest |  (optional)
 
 // HITL: Deny a pending JIT request (requires user auth).
 JitAPI.denyRequest(orgId: orgId, requestId: requestId, denyRequestRequest: denyRequestRequest) { (response, error) in

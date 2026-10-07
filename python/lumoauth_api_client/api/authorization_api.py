@@ -17,9 +17,25 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import StrictStr, field_validator
+from typing import Optional
+from lumoauth_api_client.models.auth_zen_decision import AuthZenDecision
+from lumoauth_api_client.models.check_abac_bulk_response import CheckAbacBulkResponse
+from lumoauth_api_client.models.check_abac_response import CheckAbacResponse
+from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse
+from lumoauth_api_client.models.check_permission_response import CheckPermissionResponse
+from lumoauth_api_client.models.check_permissions_bulk_response import CheckPermissionsBulkResponse
+from lumoauth_api_client.models.check_relation_response import CheckRelationResponse
+from lumoauth_api_client.models.check_relation_scoped_response import CheckRelationScopedResponse
+from lumoauth_api_client.models.evaluate_batch_response import EvaluateBatchResponse
 from lumoauth_api_client.models.expand_relation_request import ExpandRelationRequest
 from lumoauth_api_client.models.expand_relation_response import ExpandRelationResponse
+from lumoauth_api_client.models.get_my_attributes_response import GetMyAttributesResponse
+from lumoauth_api_client.models.get_resource_attributes_response import GetResourceAttributesResponse
+from lumoauth_api_client.models.list_attribute_definitions_response import ListAttributeDefinitionsResponse
+from lumoauth_api_client.models.list_permissions_response import ListPermissionsResponse
+from lumoauth_api_client.models.set_resource_attribute_response import SetResourceAttributeResponse
+from lumoauth_api_client.models.set_user_attribute_response import SetUserAttributeResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -55,8 +71,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Check ABAC authorization
+    ) -> CheckAbacResponse:
+        """Evaluate an ABAC policy decision for the caller
 
         POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
@@ -93,6 +109,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAbacResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -121,8 +138,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Check ABAC authorization
+    ) -> ApiResponse[CheckAbacResponse]:
+        """Evaluate an ABAC policy decision for the caller
 
         POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
@@ -159,6 +176,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAbacResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -188,7 +206,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Check ABAC authorization
+        """Evaluate an ABAC policy decision for the caller
 
         POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
@@ -225,6 +243,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAbacResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -265,6 +284,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -307,8 +333,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Bulk check multiple authorization requests
+    ) -> CheckAbacBulkResponse:
+        """Evaluate up to 100 ABAC checks for the caller in one call
 
         POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
 
@@ -345,6 +371,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAbacBulkResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -373,8 +400,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Bulk check multiple authorization requests
+    ) -> ApiResponse[CheckAbacBulkResponse]:
+        """Evaluate up to 100 ABAC checks for the caller in one call
 
         POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
 
@@ -411,6 +438,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAbacBulkResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -440,7 +468,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Bulk check multiple authorization requests
+        """Evaluate up to 100 ABAC checks for the caller in one call
 
         POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
 
@@ -477,6 +505,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAbacBulkResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -517,6 +546,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -558,8 +594,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Check if user has ALL of the specified permissions
+    ) -> CheckAnyPermissionResponse:
+        """Check whether the subject holds all of the permissions
 
         POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -593,6 +629,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAnyPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -620,8 +657,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Check if user has ALL of the specified permissions
+    ) -> ApiResponse[CheckAnyPermissionResponse]:
+        """Check whether the subject holds all of the permissions
 
         POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -655,6 +692,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAnyPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -683,7 +721,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Check if user has ALL of the specified permissions
+        """Check whether the subject holds all of the permissions
 
         POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -717,6 +755,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAnyPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -754,6 +793,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -795,8 +841,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Check if user has ANY of the specified permissions
+    ) -> CheckAnyPermissionResponse:
+        """Check whether the subject holds any of the permissions
 
         POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -830,6 +876,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAnyPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -857,8 +904,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Check if user has ANY of the specified permissions
+    ) -> ApiResponse[CheckAnyPermissionResponse]:
+        """Check whether the subject holds any of the permissions
 
         POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -892,6 +939,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAnyPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -920,7 +968,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Check if user has ANY of the specified permissions
+        """Check whether the subject holds any of the permissions
 
         POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -954,6 +1002,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckAnyPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -991,6 +1040,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1032,8 +1088,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Check if the authenticated user has a specific permission
+    ) -> CheckPermissionResponse:
+        """Check one permission
 
         POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
@@ -1067,6 +1123,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1094,8 +1151,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Check if the authenticated user has a specific permission
+    ) -> ApiResponse[CheckPermissionResponse]:
+        """Check one permission
 
         POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
@@ -1129,6 +1186,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1157,7 +1215,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Check if the authenticated user has a specific permission
+        """Check one permission
 
         POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
@@ -1191,6 +1249,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckPermissionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1228,6 +1287,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1269,8 +1335,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Check multiple permissions at once
+    ) -> CheckPermissionsBulkResponse:
+        """Check up to 100 permissions in one call
 
         POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -1304,6 +1370,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckPermissionsBulkResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1331,8 +1398,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Check multiple permissions at once
+    ) -> ApiResponse[CheckPermissionsBulkResponse]:
+        """Check up to 100 permissions in one call
 
         POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -1366,6 +1433,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckPermissionsBulkResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1394,7 +1462,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Check multiple permissions at once
+        """Check up to 100 permissions in one call
 
         POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -1428,6 +1496,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckPermissionsBulkResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1465,6 +1534,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1506,8 +1582,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Zanzibar-style relationship check
+    ) -> CheckRelationResponse:
+        """Zanzibar relationship check
 
         POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
@@ -1541,6 +1617,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckRelationResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1568,8 +1645,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Zanzibar-style relationship check
+    ) -> ApiResponse[CheckRelationResponse]:
+        """Zanzibar relationship check
 
         POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
@@ -1603,6 +1680,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckRelationResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1631,7 +1709,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Zanzibar-style relationship check
+        """Zanzibar relationship check
 
         POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
@@ -1665,6 +1743,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckRelationResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1702,6 +1781,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1744,8 +1830,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """check_relation_scoped
+    ) -> CheckRelationScopedResponse:
+        """Zanzibar relationship check
 
 
         :param org_id: (required)
@@ -1781,6 +1867,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckRelationScopedResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1809,8 +1896,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """check_relation_scoped
+    ) -> ApiResponse[CheckRelationScopedResponse]:
+        """Zanzibar relationship check
 
 
         :param org_id: (required)
@@ -1846,6 +1933,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckRelationScopedResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1875,7 +1963,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """check_relation_scoped
+        """Zanzibar relationship check
 
 
         :param org_id: (required)
@@ -1911,6 +1999,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "CheckRelationScopedResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1951,6 +2040,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1992,8 +2088,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """AuthZEN 1.0 single access evaluation.
+    ) -> AuthZenDecision:
+        """AuthZEN 1.0 access evaluation
 
         POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
@@ -2027,6 +2123,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AuthZenDecision",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2054,8 +2151,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """AuthZEN 1.0 single access evaluation.
+    ) -> ApiResponse[AuthZenDecision]:
+        """AuthZEN 1.0 access evaluation
 
         POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
@@ -2089,6 +2186,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AuthZenDecision",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2117,7 +2215,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """AuthZEN 1.0 single access evaluation.
+        """AuthZEN 1.0 access evaluation
 
         POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
@@ -2151,6 +2249,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AuthZenDecision",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2188,6 +2287,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2229,8 +2335,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """AuthZEN 1.0 boxcarred access evaluations.
+    ) -> EvaluateBatchResponse:
+        """AuthZEN 1.0 boxcarred access evaluations
 
         POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
@@ -2264,6 +2370,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EvaluateBatchResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2291,8 +2398,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """AuthZEN 1.0 boxcarred access evaluations.
+    ) -> ApiResponse[EvaluateBatchResponse]:
+        """AuthZEN 1.0 boxcarred access evaluations
 
         POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
@@ -2326,6 +2433,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EvaluateBatchResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2354,7 +2462,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """AuthZEN 1.0 boxcarred access evaluations.
+        """AuthZEN 1.0 boxcarred access evaluations
 
         POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
@@ -2388,6 +2496,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EvaluateBatchResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2425,6 +2534,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3044,8 +3160,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get user's current attributes (for debugging/UI)
+    ) -> GetMyAttributesResponse:
+        """The caller's ABAC subject attributes
 
         GET /api/v1/abac/my-attributes
 
@@ -3082,6 +3198,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetMyAttributesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3110,8 +3227,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get user's current attributes (for debugging/UI)
+    ) -> ApiResponse[GetMyAttributesResponse]:
+        """The caller's ABAC subject attributes
 
         GET /api/v1/abac/my-attributes
 
@@ -3148,6 +3265,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetMyAttributesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3177,7 +3295,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get user's current attributes (for debugging/UI)
+        """The caller's ABAC subject attributes
 
         GET /api/v1/abac/my-attributes
 
@@ -3214,6 +3332,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetMyAttributesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3254,6 +3373,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3298,8 +3424,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get resource attributes
+    ) -> GetResourceAttributesResponse:
+        """Attributes stored for a resource
 
         GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -3342,6 +3468,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetResourceAttributesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3372,8 +3499,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get resource attributes
+    ) -> ApiResponse[GetResourceAttributesResponse]:
+        """Attributes stored for a resource
 
         GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -3416,6 +3543,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetResourceAttributesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3447,7 +3575,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get resource attributes
+        """Attributes stored for a resource
 
         GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -3490,6 +3618,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetResourceAttributesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3536,6 +3665,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3566,6 +3702,7 @@ class AuthorizationApi:
     def list_attribute_definitions(
         self,
         org_id: StrictStr,
+        type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3578,13 +3715,15 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get available attribute definitions
+    ) -> ListAttributeDefinitionsResponse:
+        """Attribute definitions available to the organization
 
         GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
 
         :param org_id: (required)
         :type org_id: str
+        :param type:
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3609,6 +3748,7 @@ class AuthorizationApi:
 
         _param = self._list_attribute_definitions_serialize(
             org_id=org_id,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3616,6 +3756,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListAttributeDefinitionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3632,6 +3773,7 @@ class AuthorizationApi:
     def list_attribute_definitions_with_http_info(
         self,
         org_id: StrictStr,
+        type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3644,13 +3786,15 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get available attribute definitions
+    ) -> ApiResponse[ListAttributeDefinitionsResponse]:
+        """Attribute definitions available to the organization
 
         GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
 
         :param org_id: (required)
         :type org_id: str
+        :param type:
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3675,6 +3819,7 @@ class AuthorizationApi:
 
         _param = self._list_attribute_definitions_serialize(
             org_id=org_id,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3682,6 +3827,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListAttributeDefinitionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3698,6 +3844,7 @@ class AuthorizationApi:
     def list_attribute_definitions_without_preload_content(
         self,
         org_id: StrictStr,
+        type: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3711,12 +3858,14 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get available attribute definitions
+        """Attribute definitions available to the organization
 
         GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
 
         :param org_id: (required)
         :type org_id: str
+        :param type:
+        :type type: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3741,6 +3890,7 @@ class AuthorizationApi:
 
         _param = self._list_attribute_definitions_serialize(
             org_id=org_id,
+            type=type,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3748,6 +3898,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListAttributeDefinitionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3759,6 +3910,7 @@ class AuthorizationApi:
     def _list_attribute_definitions_serialize(
         self,
         org_id,
+        type,
         _request_auth,
         _content_type,
         _headers,
@@ -3783,11 +3935,22 @@ class AuthorizationApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if type is not None:
+            
+            _query_params.append(('type', type))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3829,8 +3992,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List all permissions for the authenticated user
+    ) -> ListPermissionsResponse:
+        """List the caller's effective permissions
 
         GET /api/v1/authz/permissions
 
@@ -3864,6 +4027,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3891,8 +4055,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List all permissions for the authenticated user
+    ) -> ApiResponse[ListPermissionsResponse]:
+        """List the caller's effective permissions
 
         GET /api/v1/authz/permissions
 
@@ -3926,6 +4090,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3954,7 +4119,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all permissions for the authenticated user
+        """List the caller's effective permissions
 
         GET /api/v1/authz/permissions
 
@@ -3988,6 +4153,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4025,6 +4191,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4070,8 +4243,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Set resource attribute
+    ) -> SetResourceAttributeResponse:
+        """Set a resource attribute
 
         PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -4117,6 +4290,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetResourceAttributeResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4148,8 +4322,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Set resource attribute
+    ) -> ApiResponse[SetResourceAttributeResponse]:
+        """Set a resource attribute
 
         PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -4195,6 +4369,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetResourceAttributeResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4227,7 +4402,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Set resource attribute
+        """Set a resource attribute
 
         PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -4273,6 +4448,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetResourceAttributeResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4322,6 +4498,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4366,8 +4549,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Set user attribute
+    ) -> SetUserAttributeResponse:
+        """Set a user attribute
 
         PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -4410,6 +4593,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserAttributeResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4440,8 +4624,8 @@ class AuthorizationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Set user attribute
+    ) -> ApiResponse[SetUserAttributeResponse]:
+        """Set a user attribute
 
         PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -4484,6 +4668,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserAttributeResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4515,7 +4700,7 @@ class AuthorizationApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Set user attribute
+        """Set a user attribute
 
         PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -4558,6 +4743,7 @@ class AuthorizationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetUserAttributeResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4604,6 +4790,13 @@ class AuthorizationApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

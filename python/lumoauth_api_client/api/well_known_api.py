@@ -18,6 +18,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.authorization_server_metadata import AuthorizationServerMetadata
+from lumoauth_api_client.models.get_ssf_configuration_response import GetSsfConfigurationResponse
+from lumoauth_api_client.models.json_web_key_set import JsonWebKeySet
+from lumoauth_api_client.models.open_id_configuration import OpenIdConfiguration
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,9 +57,10 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_authorization_server_metadata
+    ) -> AuthorizationServerMetadata:
+        """OAuth 2.0 authorization server metadata (RFC 8414)
 
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
         :param org_id: (required)
         :type org_id: str
@@ -90,6 +95,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AuthorizationServerMetadata",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,9 +125,10 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_authorization_server_metadata
+    ) -> ApiResponse[AuthorizationServerMetadata]:
+        """OAuth 2.0 authorization server metadata (RFC 8414)
 
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
         :param org_id: (required)
         :type org_id: str
@@ -155,6 +163,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AuthorizationServerMetadata",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,8 +194,9 @@ class WellKnownApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_authorization_server_metadata
+        """OAuth 2.0 authorization server metadata (RFC 8414)
 
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
         :param org_id: (required)
         :type org_id: str
@@ -220,6 +231,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AuthorizationServerMetadata",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +273,13 @@ class WellKnownApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -300,9 +320,10 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_jwks
+    ) -> JsonWebKeySet:
+        """JSON Web Key Set (RFC 7517)
 
+        Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -337,6 +358,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "JsonWebKeySet",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -365,9 +388,10 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_jwks
+    ) -> ApiResponse[JsonWebKeySet]:
+        """JSON Web Key Set (RFC 7517)
 
+        Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -402,6 +426,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "JsonWebKeySet",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -431,8 +457,9 @@ class WellKnownApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_jwks
+        """JSON Web Key Set (RFC 7517)
 
+        Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -467,6 +494,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "JsonWebKeySet",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -507,6 +536,13 @@ class WellKnownApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -547,9 +583,10 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_openid_configuration
+    ) -> OpenIdConfiguration:
+        """OpenID Provider configuration (OIDC Discovery 1.0)
 
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
         :param org_id: (required)
         :type org_id: str
@@ -584,6 +621,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "OpenIdConfiguration",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -612,9 +651,10 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_openid_configuration
+    ) -> ApiResponse[OpenIdConfiguration]:
+        """OpenID Provider configuration (OIDC Discovery 1.0)
 
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
         :param org_id: (required)
         :type org_id: str
@@ -649,6 +689,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "OpenIdConfiguration",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -678,8 +720,9 @@ class WellKnownApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_openid_configuration
+        """OpenID Provider configuration (OIDC Discovery 1.0)
 
+        Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
         :param org_id: (required)
         :type org_id: str
@@ -714,6 +757,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "OpenIdConfiguration",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -754,6 +799,13 @@ class WellKnownApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -794,8 +846,8 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_ssf_configuration
+    ) -> GetSsfConfigurationResponse:
+        """SSF transmitter configuration metadata
 
 
         :param org_id: (required)
@@ -831,6 +883,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetSsfConfigurationResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -859,8 +913,8 @@ class WellKnownApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_ssf_configuration
+    ) -> ApiResponse[GetSsfConfigurationResponse]:
+        """SSF transmitter configuration metadata
 
 
         :param org_id: (required)
@@ -896,6 +950,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetSsfConfigurationResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -925,7 +981,7 @@ class WellKnownApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_ssf_configuration
+        """SSF transmitter configuration metadata
 
 
         :param org_id: (required)
@@ -961,6 +1017,8 @@ class WellKnownApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetSsfConfigurationResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1001,6 +1059,13 @@ class WellKnownApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

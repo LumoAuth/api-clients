@@ -7,7 +7,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminAnalyticsDashboard**](AdminSettingsApi.md#adminanalyticsdashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics |
 | [**AdminAnalyticsLogins**](AdminSettingsApi.md#adminanalyticslogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics |
 | [**AdminAnalyticsUsers**](AdminSettingsApi.md#adminanalyticsusers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics |
-| [**AdminOrganizationGet**](AdminSettingsApi.md#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information |
+| [**AdminOrganizationGet**](AdminSettingsApi.md#adminorganizationget) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile |
 | [**AdminSettingsAll**](AdminSettingsApi.md#adminsettingsall) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined) |
 | [**AdminSettingsAuthGet**](AdminSettingsApi.md#adminsettingsauthget) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings |
 | [**AdminSettingsAuthenticationGet**](AdminSettingsApi.md#adminsettingsauthenticationget) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth) |
@@ -16,8 +16,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminSettingsGeneralGet**](AdminSettingsApi.md#adminsettingsgeneralget) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings |
 | [**AdminSettingsScimGet**](AdminSettingsApi.md#adminsettingsscimget) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings |
 | [**AdminSettingsSecurityGet**](AdminSettingsApi.md#adminsettingssecurityget) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings |
-| [**AdminTenantGet**](AdminSettingsApi.md#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information |
-| [**PatchAdminOrganizationUpdate**](AdminSettingsApi.md#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings |
+| [**AdminTenantGet**](AdminSettingsApi.md#admintenantget) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile |
+| [**PatchAdminOrganizationUpdate**](AdminSettingsApi.md#patchadminorganizationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
 | [**PatchAdminSettingsAuthUpdate**](AdminSettingsApi.md#patchadminsettingsauthupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**PatchAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#patchadminsettingsauthenticationupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**PatchAdminSettingsBrandingUpdate**](AdminSettingsApi.md#patchadminsettingsbrandingupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -25,8 +25,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**PatchAdminSettingsGeneralUpdate**](AdminSettingsApi.md#patchadminsettingsgeneralupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**PatchAdminSettingsScimUpdate**](AdminSettingsApi.md#patchadminsettingsscimupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**PatchAdminSettingsSecurityUpdate**](AdminSettingsApi.md#patchadminsettingssecurityupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**PatchAdminTenantUpdate**](AdminSettingsApi.md#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings |
-| [**PutAdminOrganizationUpdate**](AdminSettingsApi.md#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings |
+| [**PatchAdminTenantUpdate**](AdminSettingsApi.md#patchadmintenantupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
+| [**PutAdminOrganizationUpdate**](AdminSettingsApi.md#putadminorganizationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
 | [**PutAdminSettingsAuthUpdate**](AdminSettingsApi.md#putadminsettingsauthupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**PutAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#putadminsettingsauthenticationupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**PutAdminSettingsBrandingUpdate**](AdminSettingsApi.md#putadminsettingsbrandingupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -34,11 +34,11 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**PutAdminSettingsGeneralUpdate**](AdminSettingsApi.md#putadminsettingsgeneralupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**PutAdminSettingsScimUpdate**](AdminSettingsApi.md#putadminsettingsscimupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**PutAdminSettingsSecurityUpdate**](AdminSettingsApi.md#putadminsettingssecurityupdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**PutAdminTenantUpdate**](AdminSettingsApi.md#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings |
+| [**PutAdminTenantUpdate**](AdminSettingsApi.md#putadmintenantupdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
 
 <a id="adminanalyticsdashboard"></a>
 # **AdminAnalyticsDashboard**
-> void AdminAnalyticsDashboard (string orgId)
+> AdminAnalyticsDashboardResponse AdminAnalyticsDashboard (string orgId)
 
 Get dashboard analytics
 
@@ -75,7 +75,8 @@ namespace Example
             try
             {
                 // Get dashboard analytics
-                apiInstance.AdminAnalyticsDashboard(orgId);
+                AdminAnalyticsDashboardResponse result = apiInstance.AdminAnalyticsDashboard(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -95,7 +96,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get dashboard analytics
-    apiInstance.AdminAnalyticsDashboardWithHttpInfo(orgId);
+    ApiResponse<AdminAnalyticsDashboardResponse> response = apiInstance.AdminAnalyticsDashboardWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -113,7 +117,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminAnalyticsDashboardResponse**](AdminAnalyticsDashboardResponse.md)
 
 ### Authorization
 
@@ -122,19 +126,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Dashboard counters |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminanalyticslogins"></a>
 # **AdminAnalyticsLogins**
-> void AdminAnalyticsLogins (string orgId)
+> AdminAnalyticsLoginsResponse AdminAnalyticsLogins (string orgId, int? days = null)
 
 Get login analytics
 
@@ -167,11 +171,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var days = 30;  // int? | Window in days (1-90, default 30). (optional)  (default to 30)
 
             try
             {
                 // Get login analytics
-                apiInstance.AdminAnalyticsLogins(orgId);
+                AdminAnalyticsLoginsResponse result = apiInstance.AdminAnalyticsLogins(orgId, days);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -191,7 +197,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get login analytics
-    apiInstance.AdminAnalyticsLoginsWithHttpInfo(orgId);
+    ApiResponse<AdminAnalyticsLoginsResponse> response = apiInstance.AdminAnalyticsLoginsWithHttpInfo(orgId, days);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -206,10 +215,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **days** | **int?** | Window in days (1-90, default 30). | [optional] [default to 30] |
 
 ### Return type
 
-void (empty response body)
+[**AdminAnalyticsLoginsResponse**](AdminAnalyticsLoginsResponse.md)
 
 ### Authorization
 
@@ -218,19 +228,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Daily login attempts |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminanalyticsusers"></a>
 # **AdminAnalyticsUsers**
-> void AdminAnalyticsUsers (string orgId)
+> AdminAnalyticsUsersResponse AdminAnalyticsUsers (string orgId, int? days = null)
 
 Get user growth analytics
 
@@ -263,11 +273,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSettingsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var days = 30;  // int? | Window in days (1-90, default 30). (optional)  (default to 30)
 
             try
             {
                 // Get user growth analytics
-                apiInstance.AdminAnalyticsUsers(orgId);
+                AdminAnalyticsUsersResponse result = apiInstance.AdminAnalyticsUsers(orgId, days);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -287,7 +299,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get user growth analytics
-    apiInstance.AdminAnalyticsUsersWithHttpInfo(orgId);
+    ApiResponse<AdminAnalyticsUsersResponse> response = apiInstance.AdminAnalyticsUsersWithHttpInfo(orgId, days);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -302,10 +317,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **days** | **int?** | Window in days (1-90, default 30). | [optional] [default to 30] |
 
 ### Return type
 
-void (empty response body)
+[**AdminAnalyticsUsersResponse**](AdminAnalyticsUsersResponse.md)
 
 ### Authorization
 
@@ -314,21 +330,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Daily registrations and user breakdowns |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorganizationget"></a>
 # **AdminOrganizationGet**
-> void AdminOrganizationGet (string orgId)
+> AdminTenantGetResponse AdminOrganizationGet (string orgId)
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 ```csharp
@@ -362,8 +378,9 @@ namespace Example
 
             try
             {
-                // Get tenant information
-                apiInstance.AdminOrganizationGet(orgId);
+                // Get organization (tenant) profile
+                AdminTenantGetResponse result = apiInstance.AdminOrganizationGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -382,8 +399,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get tenant information
-    apiInstance.AdminOrganizationGetWithHttpInfo(orgId);
+    // Get organization (tenant) profile
+    ApiResponse<AdminTenantGetResponse> response = apiInstance.AdminOrganizationGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -401,7 +421,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -410,19 +430,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsall"></a>
 # **AdminSettingsAll**
-> void AdminSettingsAll (string orgId)
+> AdminSettingsAllResponse AdminSettingsAll (string orgId)
 
 Get all settings (combined)
 
@@ -459,7 +479,8 @@ namespace Example
             try
             {
                 // Get all settings (combined)
-                apiInstance.AdminSettingsAll(orgId);
+                AdminSettingsAllResponse result = apiInstance.AdminSettingsAll(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -479,7 +500,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get all settings (combined)
-    apiInstance.AdminSettingsAllWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsAllResponse> response = apiInstance.AdminSettingsAllWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -497,7 +521,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsAllResponse**](AdminSettingsAllResponse.md)
 
 ### Authorization
 
@@ -506,19 +530,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Combined settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsauthget"></a>
 # **AdminSettingsAuthGet**
-> void AdminSettingsAuthGet (string orgId)
+> AdminSettingsAuthenticationGetResponse AdminSettingsAuthGet (string orgId)
 
 Get authentication settings
 
@@ -555,7 +579,8 @@ namespace Example
             try
             {
                 // Get authentication settings
-                apiInstance.AdminSettingsAuthGet(orgId);
+                AdminSettingsAuthenticationGetResponse result = apiInstance.AdminSettingsAuthGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -575,7 +600,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get authentication settings
-    apiInstance.AdminSettingsAuthGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsAuthenticationGetResponse> response = apiInstance.AdminSettingsAuthGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -593,7 +621,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -602,19 +630,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsauthenticationget"></a>
 # **AdminSettingsAuthenticationGet**
-> void AdminSettingsAuthenticationGet (string orgId)
+> AdminSettingsAuthenticationGetResponse AdminSettingsAuthenticationGet (string orgId)
 
 Get authentication settings (alias for settings/auth)
 
@@ -651,7 +679,8 @@ namespace Example
             try
             {
                 // Get authentication settings (alias for settings/auth)
-                apiInstance.AdminSettingsAuthenticationGet(orgId);
+                AdminSettingsAuthenticationGetResponse result = apiInstance.AdminSettingsAuthenticationGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -671,7 +700,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get authentication settings (alias for settings/auth)
-    apiInstance.AdminSettingsAuthenticationGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsAuthenticationGetResponse> response = apiInstance.AdminSettingsAuthenticationGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -689,7 +721,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -698,19 +730,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsbrandingget"></a>
 # **AdminSettingsBrandingGet**
-> void AdminSettingsBrandingGet (string orgId)
+> AdminSettingsBrandingGetResponse AdminSettingsBrandingGet (string orgId)
 
 Get branding/login page settings
 
@@ -747,7 +779,8 @@ namespace Example
             try
             {
                 // Get branding/login page settings
-                apiInstance.AdminSettingsBrandingGet(orgId);
+                AdminSettingsBrandingGetResponse result = apiInstance.AdminSettingsBrandingGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -767,7 +800,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get branding/login page settings
-    apiInstance.AdminSettingsBrandingGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsBrandingGetResponse> response = apiInstance.AdminSettingsBrandingGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -785,7 +821,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsBrandingGetResponse**](AdminSettingsBrandingGetResponse.md)
 
 ### Authorization
 
@@ -794,19 +830,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsemailget"></a>
 # **AdminSettingsEmailGet**
-> void AdminSettingsEmailGet (string orgId)
+> AdminSettingsEmailGetResponse AdminSettingsEmailGet (string orgId)
 
 Get email settings
 
@@ -843,7 +879,8 @@ namespace Example
             try
             {
                 // Get email settings
-                apiInstance.AdminSettingsEmailGet(orgId);
+                AdminSettingsEmailGetResponse result = apiInstance.AdminSettingsEmailGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -863,7 +900,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get email settings
-    apiInstance.AdminSettingsEmailGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsEmailGetResponse> response = apiInstance.AdminSettingsEmailGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -881,7 +921,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsEmailGetResponse**](AdminSettingsEmailGetResponse.md)
 
 ### Authorization
 
@@ -890,19 +930,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsgeneralget"></a>
 # **AdminSettingsGeneralGet**
-> void AdminSettingsGeneralGet (string orgId)
+> AdminSettingsGeneralGetResponse AdminSettingsGeneralGet (string orgId)
 
 Get general settings
 
@@ -939,7 +979,8 @@ namespace Example
             try
             {
                 // Get general settings
-                apiInstance.AdminSettingsGeneralGet(orgId);
+                AdminSettingsGeneralGetResponse result = apiInstance.AdminSettingsGeneralGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -959,7 +1000,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get general settings
-    apiInstance.AdminSettingsGeneralGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsGeneralGetResponse> response = apiInstance.AdminSettingsGeneralGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -977,7 +1021,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsGeneralGetResponse**](AdminSettingsGeneralGetResponse.md)
 
 ### Authorization
 
@@ -986,19 +1030,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | General settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingsscimget"></a>
 # **AdminSettingsScimGet**
-> void AdminSettingsScimGet (string orgId)
+> AdminSettingsScimGetResponse AdminSettingsScimGet (string orgId)
 
 Get SCIM settings
 
@@ -1035,7 +1079,8 @@ namespace Example
             try
             {
                 // Get SCIM settings
-                apiInstance.AdminSettingsScimGet(orgId);
+                AdminSettingsScimGetResponse result = apiInstance.AdminSettingsScimGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1055,7 +1100,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get SCIM settings
-    apiInstance.AdminSettingsScimGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsScimGetResponse> response = apiInstance.AdminSettingsScimGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1073,7 +1121,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsScimGetResponse**](AdminSettingsScimGetResponse.md)
 
 ### Authorization
 
@@ -1082,19 +1130,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsettingssecurityget"></a>
 # **AdminSettingsSecurityGet**
-> void AdminSettingsSecurityGet (string orgId)
+> AdminSettingsSecurityGetResponse AdminSettingsSecurityGet (string orgId)
 
 Get security settings
 
@@ -1131,7 +1179,8 @@ namespace Example
             try
             {
                 // Get security settings
-                apiInstance.AdminSettingsSecurityGet(orgId);
+                AdminSettingsSecurityGetResponse result = apiInstance.AdminSettingsSecurityGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1151,7 +1200,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get security settings
-    apiInstance.AdminSettingsSecurityGetWithHttpInfo(orgId);
+    ApiResponse<AdminSettingsSecurityGetResponse> response = apiInstance.AdminSettingsSecurityGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1169,7 +1221,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSettingsSecurityGetResponse**](AdminSettingsSecurityGetResponse.md)
 
 ### Authorization
 
@@ -1178,21 +1230,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admintenantget"></a>
 # **AdminTenantGet**
-> void AdminTenantGet (string orgId)
+> AdminTenantGetResponse AdminTenantGet (string orgId)
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 ```csharp
@@ -1226,8 +1278,9 @@ namespace Example
 
             try
             {
-                // Get tenant information
-                apiInstance.AdminTenantGet(orgId);
+                // Get organization (tenant) profile
+                AdminTenantGetResponse result = apiInstance.AdminTenantGet(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1246,8 +1299,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get tenant information
-    apiInstance.AdminTenantGetWithHttpInfo(orgId);
+    // Get organization (tenant) profile
+    ApiResponse<AdminTenantGetResponse> response = apiInstance.AdminTenantGetWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1265,7 +1321,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -1274,21 +1330,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminorganizationupdate"></a>
 # **PatchAdminOrganizationUpdate**
-> void PatchAdminOrganizationUpdate (string orgId)
+> PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate (string orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```csharp
@@ -1322,8 +1378,9 @@ namespace Example
 
             try
             {
-                // Update tenant settings
-                apiInstance.PatchAdminOrganizationUpdate(orgId);
+                // Update organization (tenant) name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PatchAdminOrganizationUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1342,8 +1399,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update tenant settings
-    apiInstance.PatchAdminOrganizationUpdateWithHttpInfo(orgId);
+    // Update organization (tenant) name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PatchAdminOrganizationUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1361,7 +1421,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1370,19 +1430,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsauthupdate"></a>
 # **PatchAdminSettingsAuthUpdate**
-> void PatchAdminSettingsAuthUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate (string orgId)
 
 Update authentication settings
 
@@ -1419,7 +1479,8 @@ namespace Example
             try
             {
                 // Update authentication settings
-                apiInstance.PatchAdminSettingsAuthUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PatchAdminSettingsAuthUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1439,7 +1500,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings
-    apiInstance.PatchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PatchAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1457,7 +1521,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1466,19 +1530,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsauthenticationupdate"></a>
 # **PatchAdminSettingsAuthenticationUpdate**
-> void PatchAdminSettingsAuthenticationUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate (string orgId)
 
 Update authentication settings (alias for settings/auth)
 
@@ -1515,7 +1579,8 @@ namespace Example
             try
             {
                 // Update authentication settings (alias for settings/auth)
-                apiInstance.PatchAdminSettingsAuthenticationUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PatchAdminSettingsAuthenticationUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1535,7 +1600,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings (alias for settings/auth)
-    apiInstance.PatchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PatchAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1553,7 +1621,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1562,19 +1630,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsbrandingupdate"></a>
 # **PatchAdminSettingsBrandingUpdate**
-> void PatchAdminSettingsBrandingUpdate (string orgId)
+> PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate (string orgId)
 
 Update branding/login page settings
 
@@ -1611,7 +1679,8 @@ namespace Example
             try
             {
                 // Update branding/login page settings
-                apiInstance.PatchAdminSettingsBrandingUpdate(orgId);
+                PutAdminSettingsBrandingUpdateResponse result = apiInstance.PatchAdminSettingsBrandingUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1631,7 +1700,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update branding/login page settings
-    apiInstance.PatchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsBrandingUpdateResponse> response = apiInstance.PatchAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1649,7 +1721,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1658,19 +1730,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsemailupdate"></a>
 # **PatchAdminSettingsEmailUpdate**
-> void PatchAdminSettingsEmailUpdate (string orgId)
+> PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate (string orgId)
 
 Update email settings
 
@@ -1707,7 +1779,8 @@ namespace Example
             try
             {
                 // Update email settings
-                apiInstance.PatchAdminSettingsEmailUpdate(orgId);
+                PutAdminSettingsEmailUpdateResponse result = apiInstance.PatchAdminSettingsEmailUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1727,7 +1800,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update email settings
-    apiInstance.PatchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsEmailUpdateResponse> response = apiInstance.PatchAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1745,7 +1821,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1754,19 +1830,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsgeneralupdate"></a>
 # **PatchAdminSettingsGeneralUpdate**
-> void PatchAdminSettingsGeneralUpdate (string orgId)
+> PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate (string orgId)
 
 Update general settings
 
@@ -1803,7 +1879,8 @@ namespace Example
             try
             {
                 // Update general settings
-                apiInstance.PatchAdminSettingsGeneralUpdate(orgId);
+                PutAdminSettingsGeneralUpdateResponse result = apiInstance.PatchAdminSettingsGeneralUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1823,7 +1900,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update general settings
-    apiInstance.PatchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsGeneralUpdateResponse> response = apiInstance.PatchAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1841,7 +1921,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1850,19 +1930,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated general settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingsscimupdate"></a>
 # **PatchAdminSettingsScimUpdate**
-> void PatchAdminSettingsScimUpdate (string orgId)
+> PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate (string orgId)
 
 Update SCIM settings
 
@@ -1899,7 +1979,8 @@ namespace Example
             try
             {
                 // Update SCIM settings
-                apiInstance.PatchAdminSettingsScimUpdate(orgId);
+                PutAdminSettingsScimUpdateResponse result = apiInstance.PatchAdminSettingsScimUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1919,7 +2000,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update SCIM settings
-    apiInstance.PatchAdminSettingsScimUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsScimUpdateResponse> response = apiInstance.PatchAdminSettingsScimUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1937,7 +2021,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -1946,19 +2030,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsettingssecurityupdate"></a>
 # **PatchAdminSettingsSecurityUpdate**
-> void PatchAdminSettingsSecurityUpdate (string orgId)
+> PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate (string orgId)
 
 Update security settings
 
@@ -1995,7 +2079,8 @@ namespace Example
             try
             {
                 // Update security settings
-                apiInstance.PatchAdminSettingsSecurityUpdate(orgId);
+                PutAdminSettingsSecurityUpdateResponse result = apiInstance.PatchAdminSettingsSecurityUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2015,7 +2100,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update security settings
-    apiInstance.PatchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsSecurityUpdateResponse> response = apiInstance.PatchAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2033,7 +2121,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -2042,21 +2130,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadmintenantupdate"></a>
 # **PatchAdminTenantUpdate**
-> void PatchAdminTenantUpdate (string orgId)
+> PutAdminTenantUpdateResponse PatchAdminTenantUpdate (string orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```csharp
@@ -2090,8 +2178,9 @@ namespace Example
 
             try
             {
-                // Update tenant settings
-                apiInstance.PatchAdminTenantUpdate(orgId);
+                // Update organization (tenant) name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PatchAdminTenantUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2110,8 +2199,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update tenant settings
-    apiInstance.PatchAdminTenantUpdateWithHttpInfo(orgId);
+    // Update organization (tenant) name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PatchAdminTenantUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2129,7 +2221,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -2138,21 +2230,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminorganizationupdate"></a>
 # **PutAdminOrganizationUpdate**
-> void PutAdminOrganizationUpdate (string orgId)
+> PutAdminTenantUpdateResponse PutAdminOrganizationUpdate (string orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```csharp
@@ -2186,8 +2278,9 @@ namespace Example
 
             try
             {
-                // Update tenant settings
-                apiInstance.PutAdminOrganizationUpdate(orgId);
+                // Update organization (tenant) name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PutAdminOrganizationUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2206,8 +2299,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update tenant settings
-    apiInstance.PutAdminOrganizationUpdateWithHttpInfo(orgId);
+    // Update organization (tenant) name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PutAdminOrganizationUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2225,7 +2321,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -2234,19 +2330,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsauthupdate"></a>
 # **PutAdminSettingsAuthUpdate**
-> void PutAdminSettingsAuthUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate (string orgId)
 
 Update authentication settings
 
@@ -2283,7 +2379,8 @@ namespace Example
             try
             {
                 // Update authentication settings
-                apiInstance.PutAdminSettingsAuthUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PutAdminSettingsAuthUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2303,7 +2400,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings
-    apiInstance.PutAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PutAdminSettingsAuthUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2321,7 +2421,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -2330,19 +2430,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsauthenticationupdate"></a>
 # **PutAdminSettingsAuthenticationUpdate**
-> void PutAdminSettingsAuthenticationUpdate (string orgId)
+> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate (string orgId)
 
 Update authentication settings (alias for settings/auth)
 
@@ -2379,7 +2479,8 @@ namespace Example
             try
             {
                 // Update authentication settings (alias for settings/auth)
-                apiInstance.PutAdminSettingsAuthenticationUpdate(orgId);
+                PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.PutAdminSettingsAuthenticationUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2399,7 +2500,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update authentication settings (alias for settings/auth)
-    apiInstance.PutAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsAuthenticationUpdateResponse> response = apiInstance.PutAdminSettingsAuthenticationUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2417,7 +2521,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -2426,19 +2530,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsbrandingupdate"></a>
 # **PutAdminSettingsBrandingUpdate**
-> void PutAdminSettingsBrandingUpdate (string orgId)
+> PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate (string orgId)
 
 Update branding/login page settings
 
@@ -2475,7 +2579,8 @@ namespace Example
             try
             {
                 // Update branding/login page settings
-                apiInstance.PutAdminSettingsBrandingUpdate(orgId);
+                PutAdminSettingsBrandingUpdateResponse result = apiInstance.PutAdminSettingsBrandingUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2495,7 +2600,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update branding/login page settings
-    apiInstance.PutAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsBrandingUpdateResponse> response = apiInstance.PutAdminSettingsBrandingUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2513,7 +2621,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -2522,19 +2630,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated branding settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsemailupdate"></a>
 # **PutAdminSettingsEmailUpdate**
-> void PutAdminSettingsEmailUpdate (string orgId)
+> PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate (string orgId)
 
 Update email settings
 
@@ -2571,7 +2679,8 @@ namespace Example
             try
             {
                 // Update email settings
-                apiInstance.PutAdminSettingsEmailUpdate(orgId);
+                PutAdminSettingsEmailUpdateResponse result = apiInstance.PutAdminSettingsEmailUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2591,7 +2700,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update email settings
-    apiInstance.PutAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsEmailUpdateResponse> response = apiInstance.PutAdminSettingsEmailUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2609,7 +2721,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -2618,19 +2730,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated email settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsgeneralupdate"></a>
 # **PutAdminSettingsGeneralUpdate**
-> void PutAdminSettingsGeneralUpdate (string orgId)
+> PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate (string orgId)
 
 Update general settings
 
@@ -2667,7 +2779,8 @@ namespace Example
             try
             {
                 // Update general settings
-                apiInstance.PutAdminSettingsGeneralUpdate(orgId);
+                PutAdminSettingsGeneralUpdateResponse result = apiInstance.PutAdminSettingsGeneralUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2687,7 +2800,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update general settings
-    apiInstance.PutAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsGeneralUpdateResponse> response = apiInstance.PutAdminSettingsGeneralUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2705,7 +2821,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -2714,19 +2830,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated general settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingsscimupdate"></a>
 # **PutAdminSettingsScimUpdate**
-> void PutAdminSettingsScimUpdate (string orgId)
+> PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate (string orgId)
 
 Update SCIM settings
 
@@ -2763,7 +2879,8 @@ namespace Example
             try
             {
                 // Update SCIM settings
-                apiInstance.PutAdminSettingsScimUpdate(orgId);
+                PutAdminSettingsScimUpdateResponse result = apiInstance.PutAdminSettingsScimUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2783,7 +2900,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update SCIM settings
-    apiInstance.PutAdminSettingsScimUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsScimUpdateResponse> response = apiInstance.PutAdminSettingsScimUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2801,7 +2921,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -2810,19 +2930,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated SCIM settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsettingssecurityupdate"></a>
 # **PutAdminSettingsSecurityUpdate**
-> void PutAdminSettingsSecurityUpdate (string orgId)
+> PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate (string orgId)
 
 Update security settings
 
@@ -2859,7 +2979,8 @@ namespace Example
             try
             {
                 // Update security settings
-                apiInstance.PutAdminSettingsSecurityUpdate(orgId);
+                PutAdminSettingsSecurityUpdateResponse result = apiInstance.PutAdminSettingsSecurityUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2879,7 +3000,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update security settings
-    apiInstance.PutAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    ApiResponse<PutAdminSettingsSecurityUpdateResponse> response = apiInstance.PutAdminSettingsSecurityUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2897,7 +3021,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -2906,21 +3030,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated security settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadmintenantupdate"></a>
 # **PutAdminTenantUpdate**
-> void PutAdminTenantUpdate (string orgId)
+> PutAdminTenantUpdateResponse PutAdminTenantUpdate (string orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```csharp
@@ -2954,8 +3078,9 @@ namespace Example
 
             try
             {
-                // Update tenant settings
-                apiInstance.PutAdminTenantUpdate(orgId);
+                // Update organization (tenant) name and settings
+                PutAdminTenantUpdateResponse result = apiInstance.PutAdminTenantUpdate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2974,8 +3099,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update tenant settings
-    apiInstance.PutAdminTenantUpdateWithHttpInfo(orgId);
+    // Update organization (tenant) name and settings
+    ApiResponse<PutAdminTenantUpdateResponse> response = apiInstance.PutAdminTenantUpdateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2993,7 +3121,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -3002,13 +3130,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

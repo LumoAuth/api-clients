@@ -1,6 +1,6 @@
 # LumoAuth API clients — generated
 
-This tree holds the **generated** LumoAuth API clients: eight languages,
+This tree holds the **generated** LumoAuth API clients: nine languages,
 produced from the server's OpenAPI 3 spec by
 [`server/scripts/sdk-codegen/`](../server/scripts/sdk-codegen/). The spec
 they were generated from is committed here as [`openapi.json`](./openapi.json)
@@ -30,7 +30,7 @@ server-side SDKs expose the generated client as a built-in escape hatch —
 `lumo.api.*` on `@lumoauth/backend` (which depends on `@lumoauth/api-client`)
 and `client.api` on the Python `lumoauth` package (lazy-imports
 `lumoauth-api-client`). Browser packages never ship the generated client.
-In Java/C#/Ruby/Rust/Swift the generated client *is* the SDK today —
+In Java/C#/Ruby/Rust/Swift/PHP the generated client *is* the SDK today —
 each is labeled "generated client — ergonomic wrapper next" in its README,
 and that's the roadmap: ergonomic wrappers will be layered **on top of**
 (importing, not replacing) these packages.
@@ -47,6 +47,7 @@ and that's the roadmap: ergonomic wrappers will be layered **on top of**
 | Ruby | `ruby/` | `lumoauth_api_client` | 0.1.0 | rubygems.org |
 | Rust | `rust/` | `lumoauth-api-client` | 0.1.0 | crates.io |
 | Swift | `swift/` | `LumoAuthAPIClient` | 0.1.0 | SwiftPM (git tag) |
+| PHP | `php/` | `lumoauth/api-client` | 0.1.0 | packagist.org (via the `LumoAuth/api-client-php` split mirror) |
 
 All versions move in lockstep and are set in
 `server/scripts/sdk-codegen/configs/<language>.json` (one `*Version` key per
@@ -78,7 +79,8 @@ a PR here.
 
 CI proves every artifact packs cleanly (`npm publish --dry-run`,
 `twine check`, `gem build`, `mvn package`, `dotnet pack`,
-`cargo publish --dry-run`, `go build`, `swift build`). Real releases need
+`cargo publish --dry-run`, `go build`, `swift build`, `composer validate` +
+`composer install`). Real releases need
 registry credentials, configured as GitHub secrets. **The full release
 procedure — order of operations, version bumps, tagging, and the smoke test
 for each ecosystem — is in [`playbooks/sdk-release.md`](../playbooks/sdk-release.md);
@@ -94,7 +96,9 @@ the table below is only the credential inventory.**
 | crates.io | `CARGO_REGISTRY_TOKEN` | crates.io account; publish token |
 | Go | — | None. Tag `go/v0.1.0` on this repo; the module proxy picks it up |
 | Swift | — | None. Tag `0.1.0`; consumers point SwiftPM at this repo URL |
+| Packagist (PHP) | `API_CLIENT_PHP_MIRROR_TOKEN` | Composer needs `composer.json` at the **root** of a git repo, so `php/` is pushed with `git subtree split` to the read-only mirror `LumoAuth/api-client-php` and tagged there; packagist.org points at the mirror and auto-updates from its GitHub hook. No registry token. See `playbooks/sdk-publish-packagist.md` |
 
 Release flow: merge the regeneration PR → tag `v0.1.0` (plus `go/v0.1.0`)
-→ the release workflow publishes each package with the secrets above.
+→ the release workflow publishes each package with the secrets above and
+pushes the `php/` subtree to the Packagist mirror.
 Nothing else is hand-cranked.

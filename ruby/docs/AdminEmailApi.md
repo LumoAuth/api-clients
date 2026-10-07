@@ -4,19 +4,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_email_templates_delete**](AdminEmailApi.md#admin_email_templates_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**admin_email_templates_get**](AdminEmailApi.md#admin_email_templates_get) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**admin_email_templates_list**](AdminEmailApi.md#admin_email_templates_list) | **GET** /orgs/{orgId}/api/v1/admin/email-templates |  |
-| [**admin_email_templates_preview**](AdminEmailApi.md#admin_email_templates_preview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview |  |
-| [**admin_email_templates_upsert**](AdminEmailApi.md#admin_email_templates_upsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**admin_email_templates_variables**](AdminEmailApi.md#admin_email_templates_variables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables |  |
+| [**admin_email_templates_delete**](AdminEmailApi.md#admin_email_templates_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Remove the custom email template so the built-in default is used |
+| [**admin_email_templates_get**](AdminEmailApi.md#admin_email_templates_get) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Get an email template (custom or built-in default) |
+| [**admin_email_templates_list**](AdminEmailApi.md#admin_email_templates_list) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | List every email template type with its current (custom or built-in) template |
+| [**admin_email_templates_preview**](AdminEmailApi.md#admin_email_templates_preview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | Render an email template with sample data |
+| [**admin_email_templates_upsert**](AdminEmailApi.md#admin_email_templates_upsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Create or replace the custom email template for a type |
+| [**admin_email_templates_variables**](AdminEmailApi.md#admin_email_templates_variables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | List the placeholders available to an email template type |
 
 
 ## admin_email_templates_delete
 
-> admin_email_templates_delete(org_id, type)
+> <MessageResponse> admin_email_templates_delete(org_id, type)
 
-
+Remove the custom email template so the built-in default is used
 
 ### Examples
 
@@ -39,8 +39,9 @@ org_id = 'org_id_example' # String |
 type = 'type_example' # String | 
 
 begin
-  
-  api_instance.admin_email_templates_delete(org_id, type)
+  # Remove the custom email template so the built-in default is used
+  result = api_instance.admin_email_templates_delete(org_id, type)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_delete: #{e}"
 end
@@ -48,17 +49,17 @@ end
 
 #### Using the admin_email_templates_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_email_templates_delete_with_http_info(org_id, type)
+> <Array(<MessageResponse>, Integer, Hash)> admin_email_templates_delete_with_http_info(org_id, type)
 
 ```ruby
 begin
-  
+  # Remove the custom email template so the built-in default is used
   data, status_code, headers = api_instance.admin_email_templates_delete_with_http_info(org_id, type)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_delete_with_http_info: #{e}"
 end
@@ -73,7 +74,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -82,14 +83,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_email_templates_get
 
-> admin_email_templates_get(org_id, type)
+> <EmailTemplate> admin_email_templates_get(org_id, type)
 
-
+Get an email template (custom or built-in default)
 
 ### Examples
 
@@ -112,8 +113,9 @@ org_id = 'org_id_example' # String |
 type = 'type_example' # String | 
 
 begin
-  
-  api_instance.admin_email_templates_get(org_id, type)
+  # Get an email template (custom or built-in default)
+  result = api_instance.admin_email_templates_get(org_id, type)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_get: #{e}"
 end
@@ -121,17 +123,17 @@ end
 
 #### Using the admin_email_templates_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_email_templates_get_with_http_info(org_id, type)
+> <Array(<EmailTemplate>, Integer, Hash)> admin_email_templates_get_with_http_info(org_id, type)
 
 ```ruby
 begin
-  
+  # Get an email template (custom or built-in default)
   data, status_code, headers = api_instance.admin_email_templates_get_with_http_info(org_id, type)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <EmailTemplate>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_get_with_http_info: #{e}"
 end
@@ -146,7 +148,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -155,14 +157,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_email_templates_list
 
-> admin_email_templates_list(org_id)
+> <AdminEmailTemplatesListResponse> admin_email_templates_list(org_id)
 
-
+List every email template type with its current (custom or built-in) template
 
 ### Examples
 
@@ -184,8 +186,9 @@ api_instance = LumoAuthApiClient::AdminEmailApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.admin_email_templates_list(org_id)
+  # List every email template type with its current (custom or built-in) template
+  result = api_instance.admin_email_templates_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_list: #{e}"
 end
@@ -193,17 +196,17 @@ end
 
 #### Using the admin_email_templates_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_email_templates_list_with_http_info(org_id)
+> <Array(<AdminEmailTemplatesListResponse>, Integer, Hash)> admin_email_templates_list_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # List every email template type with its current (custom or built-in) template
   data, status_code, headers = api_instance.admin_email_templates_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminEmailTemplatesListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_list_with_http_info: #{e}"
 end
@@ -217,7 +220,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminEmailTemplatesListResponse**](AdminEmailTemplatesListResponse.md)
 
 ### Authorization
 
@@ -226,14 +229,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_email_templates_preview
 
-> admin_email_templates_preview(org_id, type)
+> <AdminEmailTemplatesPreviewResponse> admin_email_templates_preview(org_id, type)
 
-
+Render an email template with sample data
 
 ### Examples
 
@@ -256,8 +259,9 @@ org_id = 'org_id_example' # String |
 type = 'type_example' # String | 
 
 begin
-  
-  api_instance.admin_email_templates_preview(org_id, type)
+  # Render an email template with sample data
+  result = api_instance.admin_email_templates_preview(org_id, type)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_preview: #{e}"
 end
@@ -265,17 +269,17 @@ end
 
 #### Using the admin_email_templates_preview_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_email_templates_preview_with_http_info(org_id, type)
+> <Array(<AdminEmailTemplatesPreviewResponse>, Integer, Hash)> admin_email_templates_preview_with_http_info(org_id, type)
 
 ```ruby
 begin
-  
+  # Render an email template with sample data
   data, status_code, headers = api_instance.admin_email_templates_preview_with_http_info(org_id, type)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminEmailTemplatesPreviewResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_preview_with_http_info: #{e}"
 end
@@ -290,7 +294,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminEmailTemplatesPreviewResponse**](AdminEmailTemplatesPreviewResponse.md)
 
 ### Authorization
 
@@ -299,14 +303,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_email_templates_upsert
 
-> admin_email_templates_upsert(org_id, type)
+> <EmailTemplate> admin_email_templates_upsert(org_id, type)
 
-
+Create or replace the custom email template for a type
 
 ### Examples
 
@@ -329,8 +333,9 @@ org_id = 'org_id_example' # String |
 type = 'type_example' # String | 
 
 begin
-  
-  api_instance.admin_email_templates_upsert(org_id, type)
+  # Create or replace the custom email template for a type
+  result = api_instance.admin_email_templates_upsert(org_id, type)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_upsert: #{e}"
 end
@@ -338,17 +343,17 @@ end
 
 #### Using the admin_email_templates_upsert_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_email_templates_upsert_with_http_info(org_id, type)
+> <Array(<EmailTemplate>, Integer, Hash)> admin_email_templates_upsert_with_http_info(org_id, type)
 
 ```ruby
 begin
-  
+  # Create or replace the custom email template for a type
   data, status_code, headers = api_instance.admin_email_templates_upsert_with_http_info(org_id, type)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <EmailTemplate>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_upsert_with_http_info: #{e}"
 end
@@ -363,7 +368,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -372,14 +377,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_email_templates_variables
 
-> admin_email_templates_variables(org_id, type)
+> <AdminEmailTemplatesVariablesResponse> admin_email_templates_variables(org_id, type)
 
-
+List the placeholders available to an email template type
 
 ### Examples
 
@@ -402,8 +407,9 @@ org_id = 'org_id_example' # String |
 type = 'type_example' # String | 
 
 begin
-  
-  api_instance.admin_email_templates_variables(org_id, type)
+  # List the placeholders available to an email template type
+  result = api_instance.admin_email_templates_variables(org_id, type)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_variables: #{e}"
 end
@@ -411,17 +417,17 @@ end
 
 #### Using the admin_email_templates_variables_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_email_templates_variables_with_http_info(org_id, type)
+> <Array(<AdminEmailTemplatesVariablesResponse>, Integer, Hash)> admin_email_templates_variables_with_http_info(org_id, type)
 
 ```ruby
 begin
-  
+  # List the placeholders available to an email template type
   data, status_code, headers = api_instance.admin_email_templates_variables_with_http_info(org_id, type)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminEmailTemplatesVariablesResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminEmailApi->admin_email_templates_variables_with_http_info: #{e}"
 end
@@ -436,7 +442,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminEmailTemplatesVariablesResponse**](AdminEmailTemplatesVariablesResponse.md)
 
 ### Authorization
 
@@ -445,5 +451,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

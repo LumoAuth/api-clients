@@ -4,8 +4,8 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **scopes** | **Array&lt;String&gt;** | Optional scopes to embed in the token. | [optional] |
-| **ttl** | **Integer** | Optional token lifetime in seconds. | [optional] |
+| **expires_in** | **Integer** | Token lifetime in seconds. Default 3600, at most 2592000 (30 days). | [optional] |
+| **scopes** | **Array&lt;String&gt;** | Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400. | [optional] |
 
 ## Example
 
@@ -13,8 +13,8 @@
 require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::AdminAgentsGenerateTokenRequest.new(
-  scopes: null,
-  ttl: null
+  expires_in: 600,
+  scopes: [&quot;invoices.read&quot;]
 )
 ```
 

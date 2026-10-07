@@ -19,19 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Remove the custom email template so the built-in default is used
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_email_templates_delete(org_id, type, opts = {})
-      admin_email_templates_delete_with_http_info(org_id, type, opts)
-      nil
+      data, _status_code, _headers = admin_email_templates_delete_with_http_info(org_id, type, opts)
+      data
     end
 
+    # Remove the custom email template so the built-in default is used
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_email_templates_delete_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_delete ...'
@@ -52,6 +54,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -60,7 +64,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -82,19 +86,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Get an email template (custom or built-in default)
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [EmailTemplate]
     def admin_email_templates_get(org_id, type, opts = {})
-      admin_email_templates_get_with_http_info(org_id, type, opts)
-      nil
+      data, _status_code, _headers = admin_email_templates_get_with_http_info(org_id, type, opts)
+      data
     end
 
+    # Get an email template (custom or built-in default)
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(EmailTemplate, Integer, Hash)>] EmailTemplate data, response status code and response headers
     def admin_email_templates_get_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_get ...'
@@ -115,6 +121,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -123,7 +131,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'EmailTemplate'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -145,17 +153,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # List every email template type with its current (custom or built-in) template
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminEmailTemplatesListResponse]
     def admin_email_templates_list(org_id, opts = {})
-      admin_email_templates_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_email_templates_list_with_http_info(org_id, opts)
+      data
     end
 
+    # List every email template type with its current (custom or built-in) template
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminEmailTemplatesListResponse, Integer, Hash)>] AdminEmailTemplatesListResponse data, response status code and response headers
     def admin_email_templates_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_list ...'
@@ -172,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -180,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminEmailTemplatesListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -202,19 +214,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Render an email template with sample data
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminEmailTemplatesPreviewResponse]
     def admin_email_templates_preview(org_id, type, opts = {})
-      admin_email_templates_preview_with_http_info(org_id, type, opts)
-      nil
+      data, _status_code, _headers = admin_email_templates_preview_with_http_info(org_id, type, opts)
+      data
     end
 
+    # Render an email template with sample data
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminEmailTemplatesPreviewResponse, Integer, Hash)>] AdminEmailTemplatesPreviewResponse data, response status code and response headers
     def admin_email_templates_preview_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_preview ...'
@@ -235,6 +249,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -243,7 +259,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminEmailTemplatesPreviewResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -265,19 +281,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Create or replace the custom email template for a type
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [EmailTemplate]
     def admin_email_templates_upsert(org_id, type, opts = {})
-      admin_email_templates_upsert_with_http_info(org_id, type, opts)
-      nil
+      data, _status_code, _headers = admin_email_templates_upsert_with_http_info(org_id, type, opts)
+      data
     end
 
+    # Create or replace the custom email template for a type
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(EmailTemplate, Integer, Hash)>] EmailTemplate data, response status code and response headers
     def admin_email_templates_upsert_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_upsert ...'
@@ -298,6 +316,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -306,7 +326,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'EmailTemplate'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -328,19 +348,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # List the placeholders available to an email template type
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminEmailTemplatesVariablesResponse]
     def admin_email_templates_variables(org_id, type, opts = {})
-      admin_email_templates_variables_with_http_info(org_id, type, opts)
-      nil
+      data, _status_code, _headers = admin_email_templates_variables_with_http_info(org_id, type, opts)
+      data
     end
 
+    # List the placeholders available to an email template type
     # @param org_id [String] 
     # @param type [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminEmailTemplatesVariablesResponse, Integer, Hash)>] AdminEmailTemplatesVariablesResponse data, response status code and response headers
     def admin_email_templates_variables_with_http_info(org_id, type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminEmailApi.admin_email_templates_variables ...'
@@ -361,6 +383,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -369,7 +393,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminEmailTemplatesVariablesResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

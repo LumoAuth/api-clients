@@ -110,12 +110,30 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
-        /// Test the property 'ReviewNotes'
+        /// Test the property 'HasNotes'
         /// </summary>
         [Fact]
-        public void ReviewNotesTest()
+        public void HasNotesTest()
         {
-            // TODO unit test for the property 'ReviewNotes'
+            // TODO unit test for the property 'HasNotes'
+        }
+
+        /// <summary>
+        /// Test the property 'AgentMessage'
+        /// </summary>
+        [Fact]
+        public void AgentMessageTest()
+        {
+            // TODO unit test for the property 'AgentMessage'
+        }
+
+        /// <summary>
+        /// Test the property 'DelegationConsentRequired'
+        /// </summary>
+        [Fact]
+        public void DelegationConsentRequiredTest()
+        {
+            // TODO unit test for the property 'DelegationConsentRequired'
         }
 
         /// <summary>

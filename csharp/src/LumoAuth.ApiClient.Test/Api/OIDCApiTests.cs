@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CheckSession(orgId);
+            //var response = instance.CheckSession(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -71,7 +74,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Logout(orgId);
+            //var response = instance.Logout(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -82,7 +86,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.LogoutPost(orgId);
+            //var response = instance.LogoutPost(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -93,7 +98,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Userinfo(orgId);
+            //var response = instance.Userinfo(orgId);
+            //Assert.IsType<UserinfoResponse>(response);
         }
 
         /// <summary>
@@ -104,7 +110,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.UserinfoPost(orgId);
+            //var response = instance.UserinfoPost(orgId);
+            //Assert.IsType<UserinfoResponse>(response);
         }
     }
 }

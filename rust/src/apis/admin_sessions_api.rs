@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminClientTokensRevokeAllError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +27,7 @@ pub enum AdminClientTokensRevokeAllError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminClientTokensRevokePostError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +35,6 @@ pub enum AdminClientTokensRevokePostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSessionsCountError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +42,6 @@ pub enum AdminSessionsCountError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSessionsListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +49,8 @@ pub enum AdminSessionsListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSessionsRevokeError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +58,7 @@ pub enum AdminSessionsRevokeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSessionsRevokeAllError {
-    DefaultResponse(),
+    Status400(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +66,6 @@ pub enum AdminSessionsRevokeAllError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSessionsStatsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +73,6 @@ pub enum AdminSessionsStatsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminTokensListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +80,8 @@ pub enum AdminTokensListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminTokensRevokeError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +89,7 @@ pub enum AdminTokensRevokeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminUserSessionsListError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +97,8 @@ pub enum AdminUserSessionsListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminUserSessionsRevokeAllError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +106,8 @@ pub enum AdminUserSessionsRevokeAllError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminUserSessionsRevokePostError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,7 +115,8 @@ pub enum AdminUserSessionsRevokePostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminUserTokensRevokeAllError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -123,12 +124,13 @@ pub enum AdminUserTokensRevokeAllError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminUserTokensRevokePostError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_client_tokens_revoke_all(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<AdminClientTokensRevokeAllError>> {
+pub async fn admin_client_tokens_revoke_all(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::AdminClientTokensRevokeAllResponse, Error<AdminClientTokensRevokeAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -155,9 +157,20 @@ pub async fn admin_client_tokens_revoke_all(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminClientTokensRevokeAllResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminClientTokensRevokeAllResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminClientTokensRevokeAllError> = serde_json::from_str(&content).ok();
@@ -165,7 +178,7 @@ pub async fn admin_client_tokens_revoke_all(configuration: &configuration::Confi
     }
 }
 
-pub async fn admin_client_tokens_revoke_post(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<AdminClientTokensRevokePostError>> {
+pub async fn admin_client_tokens_revoke_post(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::AdminUserTokensRevokePostResponse, Error<AdminClientTokensRevokePostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -192,9 +205,20 @@ pub async fn admin_client_tokens_revoke_post(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUserTokensRevokePostResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUserTokensRevokePostResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminClientTokensRevokePostError> = serde_json::from_str(&content).ok();
@@ -202,7 +226,7 @@ pub async fn admin_client_tokens_revoke_post(configuration: &configuration::Conf
     }
 }
 
-pub async fn admin_sessions_count(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSessionsCountError>> {
+pub async fn admin_sessions_count(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSessionsCountResponse, Error<AdminSessionsCountError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -228,9 +252,20 @@ pub async fn admin_sessions_count(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSessionsCountResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSessionsCountResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSessionsCountError> = serde_json::from_str(&content).ok();
@@ -238,7 +273,8 @@ pub async fn admin_sessions_count(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn admin_sessions_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSessionsListError>> {
+/// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
+pub async fn admin_sessions_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSessionsListResponse, Error<AdminSessionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -264,9 +300,20 @@ pub async fn admin_sessions_list(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSessionsListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSessionsListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSessionsListError> = serde_json::from_str(&content).ok();
@@ -274,7 +321,7 @@ pub async fn admin_sessions_list(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_sessions_revoke(configuration: &configuration::Configuration, org_id: &str, session_id: &str) -> Result<(), Error<AdminSessionsRevokeError>> {
+pub async fn admin_sessions_revoke(configuration: &configuration::Configuration, org_id: &str, session_id: &str) -> Result<models::AdminSessionsRevokeResponse, Error<AdminSessionsRevokeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_session_id = session_id;
@@ -301,9 +348,20 @@ pub async fn admin_sessions_revoke(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSessionsRevokeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSessionsRevokeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSessionsRevokeError> = serde_json::from_str(&content).ok();
@@ -311,9 +369,11 @@ pub async fn admin_sessions_revoke(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_sessions_revoke_all(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSessionsRevokeAllError>> {
+/// Signs out all users. Requires `confirm: true` in the body.
+pub async fn admin_sessions_revoke_all(configuration: &configuration::Configuration, org_id: &str, admin_sessions_revoke_all_request: models::AdminSessionsRevokeAllRequest) -> Result<models::AdminSessionsRevokeAllResponse, Error<AdminSessionsRevokeAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_admin_sessions_revoke_all_request = admin_sessions_revoke_all_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/sessions/revoke-all", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -332,14 +392,26 @@ pub async fn admin_sessions_revoke_all(configuration: &configuration::Configurat
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_admin_sessions_revoke_all_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSessionsRevokeAllResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSessionsRevokeAllResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSessionsRevokeAllError> = serde_json::from_str(&content).ok();
@@ -347,7 +419,7 @@ pub async fn admin_sessions_revoke_all(configuration: &configuration::Configurat
     }
 }
 
-pub async fn admin_sessions_stats(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSessionsStatsError>> {
+pub async fn admin_sessions_stats(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSessionsStatsResponse, Error<AdminSessionsStatsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -373,9 +445,20 @@ pub async fn admin_sessions_stats(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSessionsStatsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSessionsStatsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSessionsStatsError> = serde_json::from_str(&content).ok();
@@ -383,7 +466,8 @@ pub async fn admin_sessions_stats(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn admin_tokens_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminTokensListError>> {
+/// Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
+pub async fn admin_tokens_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminTokensListResponse, Error<AdminTokensListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -409,9 +493,20 @@ pub async fn admin_tokens_list(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminTokensListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminTokensListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminTokensListError> = serde_json::from_str(&content).ok();
@@ -419,7 +514,7 @@ pub async fn admin_tokens_list(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn admin_tokens_revoke(configuration: &configuration::Configuration, org_id: &str, token_id: &str) -> Result<(), Error<AdminTokensRevokeError>> {
+pub async fn admin_tokens_revoke(configuration: &configuration::Configuration, org_id: &str, token_id: &str) -> Result<models::AdminTokensRevokeResponse, Error<AdminTokensRevokeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_token_id = token_id;
@@ -446,9 +541,20 @@ pub async fn admin_tokens_revoke(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminTokensRevokeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminTokensRevokeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminTokensRevokeError> = serde_json::from_str(&content).ok();
@@ -456,7 +562,8 @@ pub async fn admin_tokens_revoke(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_user_sessions_list(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AdminUserSessionsListError>> {
+/// All active sessions of one user (UUID or email), returned as a single page.
+pub async fn admin_user_sessions_list(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserSessionsListResponse, Error<AdminUserSessionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -483,9 +590,20 @@ pub async fn admin_user_sessions_list(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUserSessionsListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUserSessionsListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminUserSessionsListError> = serde_json::from_str(&content).ok();
@@ -493,7 +611,7 @@ pub async fn admin_user_sessions_list(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_user_sessions_revoke_all(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AdminUserSessionsRevokeAllError>> {
+pub async fn admin_user_sessions_revoke_all(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserSessionsRevokeAllResponse, Error<AdminUserSessionsRevokeAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -520,9 +638,20 @@ pub async fn admin_user_sessions_revoke_all(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUserSessionsRevokeAllResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUserSessionsRevokeAllResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminUserSessionsRevokeAllError> = serde_json::from_str(&content).ok();
@@ -530,7 +659,7 @@ pub async fn admin_user_sessions_revoke_all(configuration: &configuration::Confi
     }
 }
 
-pub async fn admin_user_sessions_revoke_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AdminUserSessionsRevokePostError>> {
+pub async fn admin_user_sessions_revoke_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserSessionsRevokePostResponse, Error<AdminUserSessionsRevokePostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -557,9 +686,20 @@ pub async fn admin_user_sessions_revoke_post(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUserSessionsRevokePostResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUserSessionsRevokePostResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminUserSessionsRevokePostError> = serde_json::from_str(&content).ok();
@@ -567,7 +707,7 @@ pub async fn admin_user_sessions_revoke_post(configuration: &configuration::Conf
     }
 }
 
-pub async fn admin_user_tokens_revoke_all(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AdminUserTokensRevokeAllError>> {
+pub async fn admin_user_tokens_revoke_all(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserTokensRevokeAllResponse, Error<AdminUserTokensRevokeAllError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -594,9 +734,20 @@ pub async fn admin_user_tokens_revoke_all(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUserTokensRevokeAllResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUserTokensRevokeAllResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminUserTokensRevokeAllError> = serde_json::from_str(&content).ok();
@@ -604,7 +755,7 @@ pub async fn admin_user_tokens_revoke_all(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_user_tokens_revoke_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AdminUserTokensRevokePostError>> {
+pub async fn admin_user_tokens_revoke_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminUserTokensRevokePostResponse, Error<AdminUserTokensRevokePostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -631,9 +782,20 @@ pub async fn admin_user_tokens_revoke_post(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminUserTokensRevokePostResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminUserTokensRevokePostResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminUserTokensRevokePostError> = serde_json::from_str(&content).ok();

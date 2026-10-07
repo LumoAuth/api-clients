@@ -18,6 +18,15 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from typing import Any, Dict
+from lumoauth_api_client.models.backchannel_authorize_response import BackchannelAuthorizeResponse
+from lumoauth_api_client.models.device_authorization_response import DeviceAuthorizationResponse
+from lumoauth_api_client.models.introspect_response import IntrospectResponse
+from lumoauth_api_client.models.par_response import ParResponse
+from lumoauth_api_client.models.register_client_response import RegisterClientResponse
+from lumoauth_api_client.models.registered_client_metadata import RegisteredClientMetadata
+from lumoauth_api_client.models.submit_login_json_response import SubmitLoginJsonResponse
+from lumoauth_api_client.models.token_response import TokenResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,9 +62,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """authorize
+    ) -> str:
+        """OAuth 2.1 / OIDC authorization endpoint
 
+        Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -90,6 +100,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '303': None,
+            '302': None,
+            '400': "str",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,9 +133,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """authorize
+    ) -> ApiResponse[str]:
+        """OAuth 2.1 / OIDC authorization endpoint
 
+        Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -155,6 +171,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '303': None,
+            '302': None,
+            '400': "str",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,8 +205,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """authorize
+        """OAuth 2.1 / OIDC authorization endpoint
 
+        Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -220,6 +242,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '303': None,
+            '302': None,
+            '400': "str",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +287,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -300,9 +334,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """backchannel_authorize
+    ) -> BackchannelAuthorizeResponse:
+        """CIBA backchannel authentication request
 
+        OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
 
         :param org_id: (required)
         :type org_id: str
@@ -337,6 +372,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BackchannelAuthorizeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -365,9 +405,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """backchannel_authorize
+    ) -> ApiResponse[BackchannelAuthorizeResponse]:
+        """CIBA backchannel authentication request
 
+        OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
 
         :param org_id: (required)
         :type org_id: str
@@ -402,6 +443,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BackchannelAuthorizeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -431,8 +477,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """backchannel_authorize
+        """CIBA backchannel authentication request
 
+        OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
 
         :param org_id: (required)
         :type org_id: str
@@ -467,6 +514,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BackchannelAuthorizeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -507,6 +559,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -548,10 +607,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+    ) -> DeviceAuthorizationResponse:
+        """Device authorization request (RFC 8628)
 
-        The device makes a request to the authorization server's device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
 
         :param org_id: (required)
         :type org_id: str
@@ -586,6 +645,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceAuthorizationResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -614,10 +677,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+    ) -> ApiResponse[DeviceAuthorizationResponse]:
+        """Device authorization request (RFC 8628)
 
-        The device makes a request to the authorization server's device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
 
         :param org_id: (required)
         :type org_id: str
@@ -652,6 +715,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceAuthorizationResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -681,9 +748,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+        """Device authorization request (RFC 8628)
 
-        The device makes a request to the authorization server's device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+        Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
 
         :param org_id: (required)
         :type org_id: str
@@ -718,6 +785,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DeviceAuthorizationResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -758,6 +829,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -800,9 +878,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Client Configuration Endpoint per OIDC spec Section 4
+    ) -> RegisteredClientMetadata:
+        """Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 
+        Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
 
         :param org_id: (required)
         :type org_id: str
@@ -840,6 +919,8 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RegisteredClientMetadata",
+            '401': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -869,9 +950,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Client Configuration Endpoint per OIDC spec Section 4
+    ) -> ApiResponse[RegisteredClientMetadata]:
+        """Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 
+        Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
 
         :param org_id: (required)
         :type org_id: str
@@ -909,6 +991,8 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RegisteredClientMetadata",
+            '401': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -939,8 +1023,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Client Configuration Endpoint per OIDC spec Section 4
+        """Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
 
+        Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
 
         :param org_id: (required)
         :type org_id: str
@@ -978,6 +1063,8 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RegisteredClientMetadata",
+            '401': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1021,6 +1108,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1063,10 +1157,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Device Verification Page (RFC 8628 Section 3.3)
+    ) -> str:
+        """Device verification page (RFC 8628 §3.3)
 
-        This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -1101,6 +1195,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '429': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1129,10 +1226,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Device Verification Page (RFC 8628 Section 3.3)
+    ) -> ApiResponse[str]:
+        """Device verification page (RFC 8628 §3.3)
 
-        This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -1167,6 +1264,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '429': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1196,9 +1296,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Device Verification Page (RFC 8628 Section 3.3)
+        """Device verification page (RFC 8628 §3.3)
 
-        This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -1233,6 +1333,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '429': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1273,6 +1376,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -1313,9 +1423,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_org_selection
+    ) -> str:
+        """Organization selector page
 
+        Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -1350,6 +1461,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1378,9 +1492,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_org_selection
+    ) -> ApiResponse[str]:
+        """Organization selector page
 
+        Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -1415,6 +1530,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1444,8 +1562,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_org_selection
+        """Organization selector page
 
+        Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -1480,6 +1599,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1520,6 +1642,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -1560,10 +1689,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """RFC 7662 - Token Introspection Endpoint
+    ) -> IntrospectResponse:
+        """Token introspection (RFC 7662)
 
-        Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
 
         :param org_id: (required)
         :type org_id: str
@@ -1598,6 +1727,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "IntrospectResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1626,10 +1759,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """RFC 7662 - Token Introspection Endpoint
+    ) -> ApiResponse[IntrospectResponse]:
+        """Token introspection (RFC 7662)
 
-        Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
 
         :param org_id: (required)
         :type org_id: str
@@ -1664,6 +1797,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "IntrospectResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1693,9 +1830,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """RFC 7662 - Token Introspection Endpoint
+        """Token introspection (RFC 7662)
 
-        Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+        Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
 
         :param org_id: (required)
         :type org_id: str
@@ -1730,6 +1867,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "IntrospectResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1770,6 +1911,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1811,9 +1959,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """par
+    ) -> ParResponse:
+        """Pushed authorization request (RFC 9126)
 
+        Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
 
         :param org_id: (required)
         :type org_id: str
@@ -1848,6 +1997,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "ParResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1876,9 +2029,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """par
+    ) -> ApiResponse[ParResponse]:
+        """Pushed authorization request (RFC 9126)
 
+        Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
 
         :param org_id: (required)
         :type org_id: str
@@ -1913,6 +2067,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "ParResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1942,8 +2100,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """par
+        """Pushed authorization request (RFC 9126)
 
+        Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
 
         :param org_id: (required)
         :type org_id: str
@@ -1978,6 +2137,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "ParResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2018,6 +2181,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2060,8 +2230,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """passkey_login
+        """Passkey login entry point
 
+        Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -2096,6 +2267,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2125,8 +2297,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """passkey_login
+        """Passkey login entry point
 
+        Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -2161,6 +2334,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2190,8 +2364,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_login
+        """Passkey login entry point
 
+        Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -2226,6 +2401,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2306,9 +2482,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Client Registration Endpoint per OIDC spec Section 3
+    ) -> RegisterClientResponse:
+        """Dynamic client registration (RFC 7591 / OIDC DCR)
 
+        Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 
         :param org_id: (required)
         :type org_id: str
@@ -2343,6 +2520,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "RegisterClientResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2371,9 +2553,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Client Registration Endpoint per OIDC spec Section 3
+    ) -> ApiResponse[RegisterClientResponse]:
+        """Dynamic client registration (RFC 7591 / OIDC DCR)
 
+        Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 
         :param org_id: (required)
         :type org_id: str
@@ -2408,6 +2591,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "RegisterClientResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2437,8 +2625,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Client Registration Endpoint per OIDC spec Section 3
+        """Dynamic client registration (RFC 7591 / OIDC DCR)
 
+        Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
 
         :param org_id: (required)
         :type org_id: str
@@ -2473,6 +2662,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "RegisterClientResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2513,6 +2707,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2555,10 +2756,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """RFC 7009 - Token Revocation Endpoint
+    ) -> object:
+        """Token revocation (RFC 7009)
 
-        Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
 
         :param org_id: (required)
         :type org_id: str
@@ -2593,6 +2794,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2621,10 +2826,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """RFC 7009 - Token Revocation Endpoint
+    ) -> ApiResponse[object]:
+        """Token revocation (RFC 7009)
 
-        Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
 
         :param org_id: (required)
         :type org_id: str
@@ -2659,6 +2864,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2688,9 +2897,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """RFC 7009 - Token Revocation Endpoint
+        """Token revocation (RFC 7009)
 
-        Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+        Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
 
         :param org_id: (required)
         :type org_id: str
@@ -2725,6 +2934,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "object",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2765,6 +2978,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2808,8 +3028,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Handle social login callback from provider.
+        """Social / enterprise identity-provider callback
 
+        Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -2847,6 +3068,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2877,8 +3099,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Handle social login callback from provider.
+        """Social / enterprise identity-provider callback
 
+        Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -2916,6 +3139,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2946,8 +3170,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Handle social login callback from provider.
+        """Social / enterprise identity-provider callback
 
+        Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -2985,6 +3210,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3070,8 +3296,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Handle social login callback from provider.
+        """Social / enterprise identity-provider callback (form_post)
 
+        Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3109,6 +3336,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3139,8 +3367,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Handle social login callback from provider.
+        """Social / enterprise identity-provider callback (form_post)
 
+        Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3178,6 +3407,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3208,8 +3438,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Handle social login callback from provider.
+        """Social / enterprise identity-provider callback (form_post)
 
+        Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3247,6 +3478,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3332,9 +3564,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """Initiate social login flow.
+        """Start social / enterprise identity-provider login
 
-        Redirects to the external provider's authorization endpoint.
+        Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3372,6 +3604,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3402,9 +3635,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """Initiate social login flow.
+        """Start social / enterprise identity-provider login
 
-        Redirects to the external provider's authorization endpoint.
+        Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3442,6 +3675,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3472,9 +3706,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Initiate social login flow.
+        """Start social / enterprise identity-provider login
 
-        Redirects to the external provider's authorization endpoint.
+        Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3512,6 +3746,7 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3595,9 +3830,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """submit_authorization
+    ) -> str:
+        """OAuth 2.1 / OIDC authorization endpoint (form submission)
 
+        Same as GET; also receives the consent form submission. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3632,6 +3868,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '303': None,
+            '302': None,
+            '400': "str",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3660,9 +3901,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """submit_authorization
+    ) -> ApiResponse[str]:
+        """OAuth 2.1 / OIDC authorization endpoint (form submission)
 
+        Same as GET; also receives the consent form submission. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3697,6 +3939,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '303': None,
+            '302': None,
+            '400': "str",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3726,8 +3973,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """submit_authorization
+        """OAuth 2.1 / OIDC authorization endpoint (form submission)
 
+        Same as GET; also receives the consent form submission. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3762,6 +4010,11 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '303': None,
+            '302': None,
+            '400': "str",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3802,6 +4055,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -3842,10 +4102,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Device Verification Page (RFC 8628 Section 3.3)
+    ) -> str:
+        """Submit device verification
 
-        This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3880,6 +4140,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '429': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3908,10 +4171,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Device Verification Page (RFC 8628 Section 3.3)
+    ) -> ApiResponse[str]:
+        """Submit device verification
 
-        This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -3946,6 +4209,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '429': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3975,9 +4241,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Device Verification Page (RFC 8628 Section 3.3)
+        """Submit device verification
 
-        This endpoint displays the user verification page where users enter their user_code to authorize the device.
+        Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4012,6 +4278,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '429': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4052,6 +4321,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -4093,8 +4369,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """submit_login
+        """Hosted login form submission
 
+        Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4129,6 +4406,8 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4158,8 +4437,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """submit_login
+        """Hosted login form submission
 
+        Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4194,6 +4474,8 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4223,8 +4505,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """submit_login
+        """Hosted login form submission
 
+        Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4259,6 +4542,8 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4339,10 +4624,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """JSON credential login, for applications that render their own sign-in form.
+    ) -> SubmitLoginJsonResponse:
+        """Programmatic (JSON) login for the authorization flow
 
-        The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
+        Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
         :param org_id: (required)
         :type org_id: str
@@ -4377,6 +4662,12 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SubmitLoginJsonResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4405,10 +4696,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """JSON credential login, for applications that render their own sign-in form.
+    ) -> ApiResponse[SubmitLoginJsonResponse]:
+        """Programmatic (JSON) login for the authorization flow
 
-        The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
+        Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
         :param org_id: (required)
         :type org_id: str
@@ -4443,6 +4734,12 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SubmitLoginJsonResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4472,9 +4769,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """JSON credential login, for applications that render their own sign-in form.
+        """Programmatic (JSON) login for the authorization flow
 
-        The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
+        Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
 
         :param org_id: (required)
         :type org_id: str
@@ -4509,6 +4806,12 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SubmitLoginJsonResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4549,6 +4852,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4589,9 +4899,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """submit_org_selection
+    ) -> str:
+        """Submit organization selection
 
+        Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4626,6 +4937,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4654,9 +4968,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """submit_org_selection
+    ) -> ApiResponse[str]:
+        """Submit organization selection
 
+        Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4691,6 +5006,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4720,8 +5038,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """submit_org_selection
+        """Submit organization selection
 
+        Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -4756,6 +5075,9 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4796,6 +5118,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -4836,9 +5165,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """OAuth 2.1 Token Endpoint
+    ) -> TokenResponse:
+        """OAuth 2.1 token endpoint
 
+        Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
 
         :param org_id: (required)
         :type org_id: str
@@ -4873,6 +5203,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TokenResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4901,9 +5235,10 @@ class OAuthApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """OAuth 2.1 Token Endpoint
+    ) -> ApiResponse[TokenResponse]:
+        """OAuth 2.1 token endpoint
 
+        Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
 
         :param org_id: (required)
         :type org_id: str
@@ -4938,6 +5273,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TokenResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4967,8 +5306,9 @@ class OAuthApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """OAuth 2.1 Token Endpoint
+        """OAuth 2.1 token endpoint
 
+        Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
 
         :param org_id: (required)
         :type org_id: str
@@ -5003,6 +5343,10 @@ class OAuthApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "TokenResponse",
+            '400': None,
+            '401': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5043,6 +5387,13 @@ class OAuthApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

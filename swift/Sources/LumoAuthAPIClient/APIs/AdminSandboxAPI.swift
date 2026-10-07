@@ -13,19 +13,19 @@ import AnyCodable
 open class AdminSandboxAPI {
 
     /**
-     POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     Destroy a sandbox tenant
      
      - parameter orgId: (path)  
      - parameter sandboxSlug: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSandboxDestroy(orgId: String, sandboxSlug: String) async throws {
+    open class func adminSandboxDestroy(orgId: String, sandboxSlug: String) async throws -> MessageResponse {
         return try await adminSandboxDestroyWithRequestBuilder(orgId: orgId, sandboxSlug: sandboxSlug).execute().body
     }
 
     /**
-     POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+     Destroy a sandbox tenant
      - POST /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -35,9 +35,9 @@ open class AdminSandboxAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter sandboxSlug: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminSandboxDestroyWithRequestBuilder(orgId: String, sandboxSlug: String) -> RequestBuilder<Void> {
+    open class func adminSandboxDestroyWithRequestBuilder(orgId: String, sandboxSlug: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -56,24 +56,24 @@ open class AdminSandboxAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     GET / Lists the caller's active sandbox tenants (their own only).
+     List the caller's sandbox tenants
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSandboxListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSandboxList(orgId: String) async throws {
+    open class func adminSandboxList(orgId: String) async throws -> AdminSandboxListResponse {
         return try await adminSandboxListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     GET / Lists the caller's active sandbox tenants (their own only).
+     List the caller's sandbox tenants
      - GET /orgs/{orgId}/api/v1/admin/sandbox
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -82,9 +82,9 @@ open class AdminSandboxAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSandboxListResponse> 
      */
-    open class func adminSandboxListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSandboxListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSandboxListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sandbox"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -100,24 +100,25 @@ open class AdminSandboxAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSandboxListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+     Spawn a sandbox tenant
      
      - parameter orgId: (path)  
-     - returns: Void
+     - parameter adminSandboxSpawnRequest: (body)  (optional)
+     - returns: AdminSandboxSpawnResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSandboxSpawn(orgId: String) async throws {
-        return try await adminSandboxSpawnWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminSandboxSpawn(orgId: String, adminSandboxSpawnRequest: AdminSandboxSpawnRequest? = nil) async throws -> AdminSandboxSpawnResponse {
+        return try await adminSandboxSpawnWithRequestBuilder(orgId: orgId, adminSandboxSpawnRequest: adminSandboxSpawnRequest).execute().body
     }
 
     /**
-     POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+     Spawn a sandbox tenant
      - POST /orgs/{orgId}/api/v1/admin/sandbox/spawn
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -126,25 +127,26 @@ open class AdminSandboxAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - parameter adminSandboxSpawnRequest: (body)  (optional)
+     - returns: RequestBuilder<AdminSandboxSpawnResponse> 
      */
-    open class func adminSandboxSpawnWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSandboxSpawnWithRequestBuilder(orgId: String, adminSandboxSpawnRequest: AdminSandboxSpawnRequest? = nil) -> RequestBuilder<AdminSandboxSpawnResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sandbox/spawn"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminSandboxSpawnRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSandboxSpawnResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

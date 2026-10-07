@@ -21,6 +21,8 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { UserinfoResponse } from '../models';
 /**
  * OIDCApi - axios parameter creator
  * @export
@@ -28,7 +30,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const OIDCApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
+         * @summary OP session-check iframe (OIDC Session Management 1.0)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -61,7 +64,8 @@ export const OIDCApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session\'s clients. Not a JSON API.
+         * @summary RP-initiated logout (OIDC RP-Initiated Logout 1.0)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -94,7 +98,8 @@ export const OIDCApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * 
+         * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+         * @summary RP-initiated logout (confirmation submission)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -127,8 +132,8 @@ export const OIDCApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-         * @summary OIDC UserInfo Endpoint
+         * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
+         * @summary OpenID Connect UserInfo endpoint
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -165,8 +170,8 @@ export const OIDCApiAxiosParamCreator = function (configuration?: Configuration)
             };
         },
         /**
-         * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-         * @summary OIDC UserInfo Endpoint
+         * Identical to GET.
+         * @summary OpenID Connect UserInfo endpoint (POST)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -213,62 +218,65 @@ export const OIDCApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OIDCApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
+         * @summary OP session-check iframe (OIDC Session Management 1.0)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkSession(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkSession(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkSession(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OIDCApi.checkSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session\'s clients. Not a JSON API.
+         * @summary RP-initiated logout (OIDC RP-Initiated Logout 1.0)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async logout(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async logout(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.logout(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OIDCApi.logout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+         * @summary RP-initiated logout (confirmation submission)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async logoutPost(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async logoutPost(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.logoutPost(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OIDCApi.logoutPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-         * @summary OIDC UserInfo Endpoint
+         * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
+         * @summary OpenID Connect UserInfo endpoint
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userinfo(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async userinfo(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserinfoResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.userinfo(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OIDCApi.userinfo']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-         * @summary OIDC UserInfo Endpoint
+         * Identical to GET.
+         * @summary OpenID Connect UserInfo endpoint (POST)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userinfoPost(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async userinfoPost(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserinfoResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.userinfoPost(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OIDCApi.userinfoPost']?.[localVarOperationServerIndex]?.url;
@@ -285,50 +293,53 @@ export const OIDCApiFactory = function (configuration?: Configuration, basePath?
     const localVarFp = OIDCApiFp(configuration)
     return {
         /**
-         * 
+         * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
+         * @summary OP session-check iframe (OIDC Session Management 1.0)
          * @param {OIDCApiCheckSessionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkSession(requestParameters: OIDCApiCheckSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkSession(requestParameters: OIDCApiCheckSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.checkSession(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session\'s clients. Not a JSON API.
+         * @summary RP-initiated logout (OIDC RP-Initiated Logout 1.0)
          * @param {OIDCApiLogoutRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logout(requestParameters: OIDCApiLogoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        logout(requestParameters: OIDCApiLogoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.logout(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+         * @summary RP-initiated logout (confirmation submission)
          * @param {OIDCApiLogoutPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        logoutPost(requestParameters: OIDCApiLogoutPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        logoutPost(requestParameters: OIDCApiLogoutPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.logoutPost(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-         * @summary OIDC UserInfo Endpoint
+         * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
+         * @summary OpenID Connect UserInfo endpoint
          * @param {OIDCApiUserinfoRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userinfo(requestParameters: OIDCApiUserinfoRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        userinfo(requestParameters: OIDCApiUserinfoRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserinfoResponse> {
             return localVarFp.userinfo(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-         * @summary OIDC UserInfo Endpoint
+         * Identical to GET.
+         * @summary OpenID Connect UserInfo endpoint (POST)
          * @param {OIDCApiUserinfoPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userinfoPost(requestParameters: OIDCApiUserinfoPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        userinfoPost(requestParameters: OIDCApiUserinfoPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserinfoResponse> {
             return localVarFp.userinfoPost(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -341,51 +352,54 @@ export const OIDCApiFactory = function (configuration?: Configuration, basePath?
  */
 export interface OIDCApiInterface {
     /**
-     * 
+     * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
+     * @summary OP session-check iframe (OIDC Session Management 1.0)
      * @param {OIDCApiCheckSessionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OIDCApiInterface
      */
-    checkSession(requestParameters: OIDCApiCheckSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkSession(requestParameters: OIDCApiCheckSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * 
+     * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session\'s clients. Not a JSON API.
+     * @summary RP-initiated logout (OIDC RP-Initiated Logout 1.0)
      * @param {OIDCApiLogoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OIDCApiInterface
      */
-    logout(requestParameters: OIDCApiLogoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    logout(requestParameters: OIDCApiLogoutRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * 
+     * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+     * @summary RP-initiated logout (confirmation submission)
      * @param {OIDCApiLogoutPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OIDCApiInterface
      */
-    logoutPost(requestParameters: OIDCApiLogoutPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    logoutPost(requestParameters: OIDCApiLogoutPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-     * @summary OIDC UserInfo Endpoint
+     * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
+     * @summary OpenID Connect UserInfo endpoint
      * @param {OIDCApiUserinfoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OIDCApiInterface
      */
-    userinfo(requestParameters: OIDCApiUserinfoRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    userinfo(requestParameters: OIDCApiUserinfoRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserinfoResponse>;
 
     /**
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-     * @summary OIDC UserInfo Endpoint
+     * Identical to GET.
+     * @summary OpenID Connect UserInfo endpoint (POST)
      * @param {OIDCApiUserinfoPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OIDCApiInterface
      */
-    userinfoPost(requestParameters: OIDCApiUserinfoPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    userinfoPost(requestParameters: OIDCApiUserinfoPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<UserinfoResponse>;
 
 }
 
@@ -467,7 +481,8 @@ export interface OIDCApiUserinfoPostRequest {
  */
 export class OIDCApi extends BaseAPI implements OIDCApiInterface {
     /**
-     * 
+     * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
+     * @summary OP session-check iframe (OIDC Session Management 1.0)
      * @param {OIDCApiCheckSessionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -478,7 +493,8 @@ export class OIDCApi extends BaseAPI implements OIDCApiInterface {
     }
 
     /**
-     * 
+     * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session\'s clients. Not a JSON API.
+     * @summary RP-initiated logout (OIDC RP-Initiated Logout 1.0)
      * @param {OIDCApiLogoutRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -489,7 +505,8 @@ export class OIDCApi extends BaseAPI implements OIDCApiInterface {
     }
 
     /**
-     * 
+     * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+     * @summary RP-initiated logout (confirmation submission)
      * @param {OIDCApiLogoutPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -500,8 +517,8 @@ export class OIDCApi extends BaseAPI implements OIDCApiInterface {
     }
 
     /**
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-     * @summary OIDC UserInfo Endpoint
+     * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
+     * @summary OpenID Connect UserInfo endpoint
      * @param {OIDCApiUserinfoRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -512,8 +529,8 @@ export class OIDCApi extends BaseAPI implements OIDCApiInterface {
     }
 
     /**
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-     * @summary OIDC UserInfo Endpoint
+     * Identical to GET.
+     * @summary OpenID Connect UserInfo endpoint (POST)
      * @param {OIDCApiUserinfoPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

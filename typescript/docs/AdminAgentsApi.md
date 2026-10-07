@@ -360,7 +360,7 @@ const { status, data } = await apiInstance.adminAgentsDeactivate(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAgentsDelete**
-> MessageResponse adminAgentsDelete()
+> AdminAgentsDeleteResponse adminAgentsDelete()
 
 
 ### Example
@@ -393,7 +393,7 @@ const { status, data } = await apiInstance.adminAgentsDelete(
 
 ### Return type
 
-**MessageResponse**
+**AdminAgentsDeleteResponse**
 
 ### Authorization
 
@@ -469,7 +469,7 @@ const { status, data } = await apiInstance.adminAgentsGenerateToken(
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 |**200** | A generated agent token. The token value is returned ONCE. |  -  |
-|**400** | Cannot generate token for inactive agent. |  -  |
+|**400** | Inactive agent, or requested scopes outside the agent\&#39;s capabilities. |  -  |
 |**401** | Authentication required. |  -  |
 |**403** | Admin privileges required. |  -  |
 |**404** | Tenant or agent not found. |  -  |

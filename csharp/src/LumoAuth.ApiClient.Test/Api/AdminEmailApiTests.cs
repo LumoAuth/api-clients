@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //instance.AdminEmailTemplatesDelete(orgId, type);
+            //var response = instance.AdminEmailTemplatesDelete(orgId, type);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -73,7 +76,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //instance.AdminEmailTemplatesGet(orgId, type);
+            //var response = instance.AdminEmailTemplatesGet(orgId, type);
+            //Assert.IsType<EmailTemplate>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminEmailTemplatesList(orgId);
+            //var response = instance.AdminEmailTemplatesList(orgId);
+            //Assert.IsType<AdminEmailTemplatesListResponse>(response);
         }
 
         /// <summary>
@@ -96,7 +101,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //instance.AdminEmailTemplatesPreview(orgId, type);
+            //var response = instance.AdminEmailTemplatesPreview(orgId, type);
+            //Assert.IsType<AdminEmailTemplatesPreviewResponse>(response);
         }
 
         /// <summary>
@@ -108,7 +114,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //instance.AdminEmailTemplatesUpsert(orgId, type);
+            //var response = instance.AdminEmailTemplatesUpsert(orgId, type);
+            //Assert.IsType<EmailTemplate>(response);
         }
 
         /// <summary>
@@ -120,7 +127,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string type = null;
-            //instance.AdminEmailTemplatesVariables(orgId, type);
+            //var response = instance.AdminEmailTemplatesVariables(orgId, type);
+            //Assert.IsType<AdminEmailTemplatesVariablesResponse>(response);
         }
     }
 }

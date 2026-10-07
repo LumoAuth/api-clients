@@ -15,7 +15,6 @@ require 'time'
 
 module LumoAuthApiClient
   class AdminAgentsGenerateTokenResponse
-    # The issued token and its metadata (access_token, expires_in, ...).
     attr_accessor :data
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -38,7 +37,7 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'data' => :'Object'
+        :'data' => :'AdminAgentsGenerateTokenResponseData'
       }
     end
 

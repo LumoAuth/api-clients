@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminSandboxDestroy**](AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. |
-| [**adminSandboxList**](AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller&#39;s active sandbox tenants (their own only). |
-| [**adminSandboxSpawn**](AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} |
+| [**adminSandboxDestroy**](AdminSandboxApi.md#adminSandboxDestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant |
+| [**adminSandboxList**](AdminSandboxApi.md#adminSandboxList) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants |
+| [**adminSandboxSpawn**](AdminSandboxApi.md#adminSandboxSpawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant |
 
 
 <a id="adminSandboxDestroy"></a>
 # **adminSandboxDestroy**
-> adminSandboxDestroy(orgId, sandboxSlug)
+> MessageResponse adminSandboxDestroy(orgId, sandboxSlug)
 
-POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+Destroy a sandbox tenant
 
 ### Example
 ```java
@@ -44,7 +44,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String sandboxSlug = "sandboxSlug_example"; // String | 
     try {
-      apiInstance.adminSandboxDestroy(orgId, sandboxSlug);
+      MessageResponse result = apiInstance.adminSandboxDestroy(orgId, sandboxSlug);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSandboxApi#adminSandboxDestroy");
       System.err.println("Status code: " + e.getCode());
@@ -65,7 +66,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -74,18 +75,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sandbox destroyed |  -  |
+| **404** | Sandbox not found |  -  |
 
 <a id="adminSandboxList"></a>
 # **adminSandboxList**
-> adminSandboxList(orgId)
+> AdminSandboxListResponse adminSandboxList(orgId)
 
-GET / Lists the caller&#39;s active sandbox tenants (their own only).
+List the caller&#39;s sandbox tenants
 
 ### Example
 ```java
@@ -115,7 +117,8 @@ public class Example {
     AdminSandboxApi apiInstance = new AdminSandboxApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSandboxList(orgId);
+      AdminSandboxListResponse result = apiInstance.adminSandboxList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSandboxApi#adminSandboxList");
       System.err.println("Status code: " + e.getCode());
@@ -135,7 +138,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSandboxListResponse**](AdminSandboxListResponse.md)
 
 ### Authorization
 
@@ -144,18 +147,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sandboxes |  -  |
 
 <a id="adminSandboxSpawn"></a>
 # **adminSandboxSpawn**
-> adminSandboxSpawn(orgId)
+> AdminSandboxSpawnResponse adminSandboxSpawn(orgId, adminSandboxSpawnRequest)
 
-POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+Spawn a sandbox tenant
 
 ### Example
 ```java
@@ -184,8 +187,10 @@ public class Example {
 
     AdminSandboxApi apiInstance = new AdminSandboxApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminSandboxSpawnRequest adminSandboxSpawnRequest = new AdminSandboxSpawnRequest(); // AdminSandboxSpawnRequest | 
     try {
-      apiInstance.adminSandboxSpawn(orgId);
+      AdminSandboxSpawnResponse result = apiInstance.adminSandboxSpawn(orgId, adminSandboxSpawnRequest);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSandboxApi#adminSandboxSpawn");
       System.err.println("Status code: " + e.getCode());
@@ -202,10 +207,11 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminSandboxSpawnRequest** | [**AdminSandboxSpawnRequest**](AdminSandboxSpawnRequest.md)|  | [optional] |
 
 ### Return type
 
-null (empty response body)
+[**AdminSandboxSpawnResponse**](AdminSandboxSpawnResponse.md)
 
 ### Authorization
 
@@ -213,11 +219,12 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Sandbox created |  -  |
+| **429** | Per-owner active-sandbox cap reached |  -  |
 

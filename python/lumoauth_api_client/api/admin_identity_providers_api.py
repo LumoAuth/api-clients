@@ -18,6 +18,12 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_social_providers_available_response import AdminSocialProvidersAvailableResponse
+from lumoauth_api_client.models.admin_social_providers_callback_urls_response import AdminSocialProvidersCallbackUrlsResponse
+from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
+from lumoauth_api_client.models.admin_social_providers_get_response import AdminSocialProvidersGetResponse
+from lumoauth_api_client.models.admin_social_providers_list_response import AdminSocialProvidersListResponse
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,8 +59,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get available social login provider types
+    ) -> AdminSocialProvidersAvailableResponse:
+        """List the available social login provider types
 
 
         :param org_id: (required)
@@ -90,6 +96,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersAvailableResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,8 +125,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get available social login provider types
+    ) -> ApiResponse[AdminSocialProvidersAvailableResponse]:
+        """List the available social login provider types
 
 
         :param org_id: (required)
@@ -155,6 +162,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersAvailableResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,7 +192,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get available social login provider types
+        """List the available social login provider types
 
 
         :param org_id: (required)
@@ -220,6 +228,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersAvailableResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +269,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -302,8 +318,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get callback URLs for all configured providers
+    ) -> AdminSocialProvidersCallbackUrlsResponse:
+        """Get the OAuth callback URL of every configured provider
 
 
         :param org_id: (required)
@@ -339,6 +355,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCallbackUrlsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -367,8 +384,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get callback URLs for all configured providers
+    ) -> ApiResponse[AdminSocialProvidersCallbackUrlsResponse]:
+        """Get the OAuth callback URL of every configured provider
 
 
         :param org_id: (required)
@@ -404,6 +421,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCallbackUrlsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -433,7 +451,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get callback URLs for all configured providers
+        """Get the OAuth callback URL of every configured provider
 
 
         :param org_id: (required)
@@ -469,6 +487,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCallbackUrlsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -509,6 +528,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -551,8 +577,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Create a new social login provider
+    ) -> AdminSocialProvidersCreateResponse:
+        """Create a social login provider
 
 
         :param org_id: (required)
@@ -588,6 +614,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminSocialProvidersCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -616,8 +644,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Create a new social login provider
+    ) -> ApiResponse[AdminSocialProvidersCreateResponse]:
+        """Create a social login provider
 
 
         :param org_id: (required)
@@ -653,6 +681,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminSocialProvidersCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -682,7 +712,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a new social login provider
+        """Create a social login provider
 
 
         :param org_id: (required)
@@ -718,6 +748,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminSocialProvidersCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -758,6 +790,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -801,7 +840,7 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete a social login provider
 
 
@@ -841,6 +880,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -870,7 +911,7 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete a social login provider
 
 
@@ -910,6 +951,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -979,6 +1022,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1022,6 +1067,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1065,7 +1117,7 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSocialProvidersCreateResponse:
         """Disable a social login provider
 
 
@@ -1105,6 +1157,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1134,7 +1188,7 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSocialProvidersCreateResponse]:
         """Disable a social login provider
 
 
@@ -1174,6 +1228,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1243,6 +1299,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1286,6 +1344,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1329,7 +1394,7 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSocialProvidersCreateResponse:
         """Enable a social login provider
 
 
@@ -1369,6 +1434,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1398,7 +1465,7 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSocialProvidersCreateResponse]:
         """Enable a social login provider
 
 
@@ -1438,6 +1505,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1507,6 +1576,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1550,6 +1621,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1593,8 +1671,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single social login provider (by ID or by provider name)
+    ) -> AdminSocialProvidersGetResponse:
+        """Get a social login provider
 
 
         :param org_id: (required)
@@ -1633,6 +1711,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1662,8 +1742,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single social login provider (by ID or by provider name)
+    ) -> ApiResponse[AdminSocialProvidersGetResponse]:
+        """Get a social login provider
 
 
         :param org_id: (required)
@@ -1702,6 +1782,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1732,7 +1814,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single social login provider (by ID or by provider name)
+        """Get a social login provider
 
 
         :param org_id: (required)
@@ -1771,6 +1853,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1814,6 +1898,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1856,8 +1947,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List all configured social login providers
+    ) -> AdminSocialProvidersListResponse:
+        """List social login providers
 
 
         :param org_id: (required)
@@ -1893,6 +1984,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1921,8 +2013,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List all configured social login providers
+    ) -> ApiResponse[AdminSocialProvidersListResponse]:
+        """List social login providers
 
 
         :param org_id: (required)
@@ -1958,6 +2050,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1987,7 +2080,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all configured social login providers
+        """List social login providers
 
 
         :param org_id: (required)
@@ -2023,6 +2116,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2063,6 +2157,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2105,8 +2206,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get available social login provider types
+    ) -> AdminSocialProvidersAvailableResponse:
+        """List the available social login provider types
 
 
         :param org_id: (required)
@@ -2142,6 +2243,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersAvailableResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2170,8 +2272,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get available social login provider types
+    ) -> ApiResponse[AdminSocialProvidersAvailableResponse]:
+        """List the available social login provider types
 
 
         :param org_id: (required)
@@ -2207,6 +2309,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersAvailableResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2236,7 +2339,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get available social login provider types
+        """List the available social login provider types
 
 
         :param org_id: (required)
@@ -2272,6 +2375,7 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersAvailableResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2312,6 +2416,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2355,8 +2466,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Upsert (create or update) a social login provider via PUT; update via PATCH
+    ) -> AdminSocialProvidersCreateResponse:
+        """Update a social login provider
 
 
         :param org_id: (required)
@@ -2395,6 +2506,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2424,8 +2537,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Upsert (create or update) a social login provider via PUT; update via PATCH
+    ) -> ApiResponse[AdminSocialProvidersCreateResponse]:
+        """Update a social login provider
 
 
         :param org_id: (required)
@@ -2464,6 +2577,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2494,7 +2609,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Upsert (create or update) a social login provider via PUT; update via PATCH
+        """Update a social login provider
 
 
         :param org_id: (required)
@@ -2533,6 +2648,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2576,6 +2693,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2619,8 +2743,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Upsert (create or update) a social login provider via PUT; update via PATCH
+    ) -> AdminSocialProvidersCreateResponse:
+        """Create or replace a social login provider
 
 
         :param org_id: (required)
@@ -2659,6 +2783,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '201': "AdminSocialProvidersCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2688,8 +2814,8 @@ class AdminIdentityProvidersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Upsert (create or update) a social login provider via PUT; update via PATCH
+    ) -> ApiResponse[AdminSocialProvidersCreateResponse]:
+        """Create or replace a social login provider
 
 
         :param org_id: (required)
@@ -2728,6 +2854,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '201': "AdminSocialProvidersCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2758,7 +2886,7 @@ class AdminIdentityProvidersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Upsert (create or update) a social login provider via PUT; update via PATCH
+        """Create or replace a social login provider
 
 
         :param org_id: (required)
@@ -2797,6 +2925,8 @@ class AdminIdentityProvidersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSocialProvidersCreateResponse",
+            '201': "AdminSocialProvidersCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2840,6 +2970,13 @@ class AdminIdentityProvidersApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

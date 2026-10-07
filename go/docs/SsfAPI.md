@@ -4,18 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateStreamConfig**](SsfAPI.md#CreateStreamConfig) | **Post** /orgs/{orgId}/api/v1/ssf/stream | Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
-[**DeleteStreamConfig**](SsfAPI.md#DeleteStreamConfig) | **Delete** /orgs/{orgId}/api/v1/ssf/stream | 
-[**GetStreamConfig**](SsfAPI.md#GetStreamConfig) | **Get** /orgs/{orgId}/api/v1/ssf/stream | Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
-[**VerifyStream**](SsfAPI.md#VerifyStream) | **Post** /orgs/{orgId}/api/v1/ssf/verify | SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+[**CreateStreamConfig**](SsfAPI.md#CreateStreamConfig) | **Post** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream
+[**DeleteStreamConfig**](SsfAPI.md#DeleteStreamConfig) | **Delete** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream
+[**GetStreamConfig**](SsfAPI.md#GetStreamConfig) | **Get** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s)
+[**VerifyStream**](SsfAPI.md#VerifyStream) | **Post** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event
 
 
 
 ## CreateStreamConfig
 
-> CreateStreamConfig(ctx, orgId).Execute()
+> SsfStream CreateStreamConfig(ctx, orgId).Execute()
 
-Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+Create an SSF stream
 
 ### Example
 
@@ -34,11 +34,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.SsfAPI.CreateStreamConfig(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.SsfAPI.CreateStreamConfig(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SsfAPI.CreateStreamConfig``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CreateStreamConfig`: SsfStream
+	fmt.Fprintf(os.Stdout, "Response from `SsfAPI.CreateStreamConfig`: %v\n", resp)
 }
 ```
 
@@ -61,7 +63,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**SsfStream**](SsfStream.md)
 
 ### Authorization
 
@@ -70,7 +72,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -79,9 +81,9 @@ Name | Type | Description  | Notes
 
 ## DeleteStreamConfig
 
-> DeleteStreamConfig(ctx, orgId).Execute()
+> DeleteStreamConfig(ctx, orgId).StreamId(streamId).Execute()
 
-
+Delete an SSF stream
 
 ### Example
 
@@ -96,11 +98,12 @@ import (
 )
 
 func main() {
+	streamId := "streamId_example" // string | 
 	orgId := "orgId_example" // string | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.SsfAPI.DeleteStreamConfig(context.Background(), orgId).Execute()
+	r, err := apiClient.SsfAPI.DeleteStreamConfig(context.Background(), orgId).StreamId(streamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SsfAPI.DeleteStreamConfig``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -123,6 +126,7 @@ Other parameters are passed through a pointer to a apiDeleteStreamConfigRequest 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **streamId** | **string** |  | 
 
 
 ### Return type
@@ -145,9 +149,9 @@ Name | Type | Description  | Notes
 
 ## GetStreamConfig
 
-> GetStreamConfig(ctx, orgId).Execute()
+> GetStreamConfig200Response GetStreamConfig(ctx, orgId).StreamId(streamId).Execute()
 
-Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+Read SSF stream configuration(s)
 
 ### Example
 
@@ -163,14 +167,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	streamId := "streamId_example" // string |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.SsfAPI.GetStreamConfig(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.SsfAPI.GetStreamConfig(context.Background(), orgId).StreamId(streamId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SsfAPI.GetStreamConfig``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetStreamConfig`: GetStreamConfig200Response
+	fmt.Fprintf(os.Stdout, "Response from `SsfAPI.GetStreamConfig`: %v\n", resp)
 }
 ```
 
@@ -190,10 +197,11 @@ Other parameters are passed through a pointer to a apiGetStreamConfigRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **streamId** | **string** |  | 
 
 ### Return type
 
- (empty response body)
+[**GetStreamConfig200Response**](GetStreamConfig200Response.md)
 
 ### Authorization
 
@@ -202,7 +210,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -213,7 +221,7 @@ Name | Type | Description  | Notes
 
 > VerifyStream(ctx, orgId).Execute()
 
-SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+Request a stream verification event
 
 ### Example
 

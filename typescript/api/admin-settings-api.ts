@@ -21,6 +21,42 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminAnalyticsDashboardResponse } from '../models';
+// @ts-ignore
+import type { AdminAnalyticsLoginsResponse } from '../models';
+// @ts-ignore
+import type { AdminAnalyticsUsersResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsAllResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsAuthenticationGetResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsBrandingGetResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsEmailGetResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsGeneralGetResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsScimGetResponse } from '../models';
+// @ts-ignore
+import type { AdminSettingsSecurityGetResponse } from '../models';
+// @ts-ignore
+import type { AdminTenantGetResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsAuthenticationUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsBrandingUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsEmailUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsGeneralUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsScimUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminSettingsSecurityUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAdminTenantUpdateResponse } from '../models';
 /**
  * AdminSettingsApi - axios parameter creator
  * @export
@@ -72,10 +108,11 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Get login analytics
          * @param {string} orgId 
+         * @param {number} [days] Window in days (1-90, default 30).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAnalyticsLogins: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAnalyticsLogins: async (orgId: string, days?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAnalyticsLogins', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/analytics/logins`
@@ -98,6 +135,10 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (days !== undefined) {
+                localVarQueryParameter['days'] = days;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -113,10 +154,11 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
          * 
          * @summary Get user growth analytics
          * @param {string} orgId 
+         * @param {number} [days] Window in days (1-90, default 30).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAnalyticsUsers: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        adminAnalyticsUsers: async (orgId: string, days?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('adminAnalyticsUsers', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/admin/analytics/users`
@@ -139,6 +181,10 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (days !== undefined) {
+                localVarQueryParameter['days'] = days;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -152,7 +198,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get tenant information
+         * @summary Get organization (tenant) profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -521,7 +567,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Get tenant information
+         * @summary Get organization (tenant) profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -562,7 +608,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -890,7 +936,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -931,7 +977,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1259,7 +1305,7 @@ export const AdminSettingsApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1315,7 +1361,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAnalyticsDashboard(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAnalyticsDashboard(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAnalyticsDashboardResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAnalyticsDashboard(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminAnalyticsDashboard']?.[localVarOperationServerIndex]?.url;
@@ -1325,11 +1371,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get login analytics
          * @param {string} orgId 
+         * @param {number} [days] Window in days (1-90, default 30).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAnalyticsLogins(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAnalyticsLogins(orgId, options);
+        async adminAnalyticsLogins(orgId: string, days?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAnalyticsLoginsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAnalyticsLogins(orgId, days, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminAnalyticsLogins']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1338,23 +1385,24 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get user growth analytics
          * @param {string} orgId 
+         * @param {number} [days] Window in days (1-90, default 30).
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAnalyticsUsers(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAnalyticsUsers(orgId, options);
+        async adminAnalyticsUsers(orgId: string, days?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAnalyticsUsersResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminAnalyticsUsers(orgId, days, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminAnalyticsUsers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @summary Get tenant information
+         * @summary Get organization (tenant) profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrganizationGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrganizationGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminTenantGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminOrganizationGet']?.[localVarOperationServerIndex]?.url;
@@ -1367,7 +1415,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsAll(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsAll(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsAllResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsAll(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsAll']?.[localVarOperationServerIndex]?.url;
@@ -1380,7 +1428,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsAuthGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsAuthGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsAuthenticationGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsAuthGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsAuthGet']?.[localVarOperationServerIndex]?.url;
@@ -1393,7 +1441,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsAuthenticationGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsAuthenticationGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsAuthenticationGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsAuthenticationGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsAuthenticationGet']?.[localVarOperationServerIndex]?.url;
@@ -1406,7 +1454,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsBrandingGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsBrandingGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsBrandingGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsBrandingGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsBrandingGet']?.[localVarOperationServerIndex]?.url;
@@ -1419,7 +1467,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsEmailGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsEmailGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsEmailGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsEmailGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsEmailGet']?.[localVarOperationServerIndex]?.url;
@@ -1432,7 +1480,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsGeneralGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsGeneralGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsGeneralGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsGeneralGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsGeneralGet']?.[localVarOperationServerIndex]?.url;
@@ -1445,7 +1493,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsScimGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsScimGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsScimGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsScimGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsScimGet']?.[localVarOperationServerIndex]?.url;
@@ -1458,7 +1506,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminSettingsSecurityGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminSettingsSecurityGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminSettingsSecurityGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminSettingsSecurityGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminSettingsSecurityGet']?.[localVarOperationServerIndex]?.url;
@@ -1466,12 +1514,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get tenant information
+         * @summary Get organization (tenant) profile
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminTenantGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminTenantGet(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminTenantGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminTenantGet(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.adminTenantGet']?.[localVarOperationServerIndex]?.url;
@@ -1479,12 +1527,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrganizationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminOrganizationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrganizationUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminOrganizationUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1497,7 +1545,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsAuthUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsAuthUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsAuthUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsAuthUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1510,7 +1558,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsAuthenticationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsAuthenticationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsAuthenticationUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsAuthenticationUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1523,7 +1571,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsBrandingUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsBrandingUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsBrandingUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsBrandingUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsBrandingUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1536,7 +1584,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsEmailUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsEmailUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsEmailUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsEmailUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsEmailUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1549,7 +1597,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsGeneralUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsGeneralUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsGeneralUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsGeneralUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsGeneralUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1562,7 +1610,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsScimUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsScimUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsScimUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsScimUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsScimUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1575,7 +1623,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminSettingsSecurityUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminSettingsSecurityUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsSecurityUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminSettingsSecurityUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminSettingsSecurityUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1583,12 +1631,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminTenantUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminTenantUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminTenantUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.patchAdminTenantUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1596,12 +1644,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrganizationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminOrganizationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrganizationUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminOrganizationUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1614,7 +1662,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsAuthUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsAuthUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsAuthUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsAuthUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1627,7 +1675,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsAuthenticationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsAuthenticationUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsAuthenticationUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsAuthenticationUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1640,7 +1688,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsBrandingUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsBrandingUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsBrandingUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsBrandingUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsBrandingUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1653,7 +1701,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsEmailUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsEmailUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsEmailUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsEmailUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsEmailUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1666,7 +1714,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsGeneralUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsGeneralUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsGeneralUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsGeneralUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsGeneralUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1679,7 +1727,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsScimUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsScimUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsScimUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsScimUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsScimUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1692,7 +1740,7 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminSettingsSecurityUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminSettingsSecurityUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminSettingsSecurityUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminSettingsSecurityUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminSettingsSecurityUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1700,12 +1748,12 @@ export const AdminSettingsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminTenantUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminTenantUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminTenantUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminTenantUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminSettingsApi.putAdminTenantUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1728,7 +1776,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAnalyticsDashboard(requestParameters: AdminSettingsApiAdminAnalyticsDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAnalyticsDashboard(requestParameters: AdminSettingsApiAdminAnalyticsDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsDashboardResponse> {
             return localVarFp.adminAnalyticsDashboard(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1738,8 +1786,8 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAnalyticsLogins(requestParameters: AdminSettingsApiAdminAnalyticsLoginsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.adminAnalyticsLogins(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        adminAnalyticsLogins(requestParameters: AdminSettingsApiAdminAnalyticsLoginsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsLoginsResponse> {
+            return localVarFp.adminAnalyticsLogins(requestParameters.orgId, requestParameters.days, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1748,17 +1796,17 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAnalyticsUsers(requestParameters: AdminSettingsApiAdminAnalyticsUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.adminAnalyticsUsers(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        adminAnalyticsUsers(requestParameters: AdminSettingsApiAdminAnalyticsUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsUsersResponse> {
+            return localVarFp.adminAnalyticsUsers(requestParameters.orgId, requestParameters.days, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get tenant information
+         * @summary Get organization (tenant) profile
          * @param {AdminSettingsApiAdminOrganizationGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrganizationGet(requestParameters: AdminSettingsApiAdminOrganizationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrganizationGet(requestParameters: AdminSettingsApiAdminOrganizationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTenantGetResponse> {
             return localVarFp.adminOrganizationGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1768,7 +1816,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsAll(requestParameters: AdminSettingsApiAdminSettingsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsAll(requestParameters: AdminSettingsApiAdminSettingsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsAllResponse> {
             return localVarFp.adminSettingsAll(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1778,7 +1826,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsAuthGet(requestParameters: AdminSettingsApiAdminSettingsAuthGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsAuthGet(requestParameters: AdminSettingsApiAdminSettingsAuthGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsAuthenticationGetResponse> {
             return localVarFp.adminSettingsAuthGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1788,7 +1836,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsAuthenticationGet(requestParameters: AdminSettingsApiAdminSettingsAuthenticationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsAuthenticationGet(requestParameters: AdminSettingsApiAdminSettingsAuthenticationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsAuthenticationGetResponse> {
             return localVarFp.adminSettingsAuthenticationGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1798,7 +1846,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsBrandingGet(requestParameters: AdminSettingsApiAdminSettingsBrandingGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsBrandingGet(requestParameters: AdminSettingsApiAdminSettingsBrandingGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsBrandingGetResponse> {
             return localVarFp.adminSettingsBrandingGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1808,7 +1856,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsEmailGet(requestParameters: AdminSettingsApiAdminSettingsEmailGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsEmailGet(requestParameters: AdminSettingsApiAdminSettingsEmailGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsEmailGetResponse> {
             return localVarFp.adminSettingsEmailGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1818,7 +1866,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsGeneralGet(requestParameters: AdminSettingsApiAdminSettingsGeneralGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsGeneralGet(requestParameters: AdminSettingsApiAdminSettingsGeneralGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsGeneralGetResponse> {
             return localVarFp.adminSettingsGeneralGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1828,7 +1876,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsScimGet(requestParameters: AdminSettingsApiAdminSettingsScimGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsScimGet(requestParameters: AdminSettingsApiAdminSettingsScimGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsScimGetResponse> {
             return localVarFp.adminSettingsScimGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1838,27 +1886,27 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminSettingsSecurityGet(requestParameters: AdminSettingsApiAdminSettingsSecurityGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminSettingsSecurityGet(requestParameters: AdminSettingsApiAdminSettingsSecurityGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsSecurityGetResponse> {
             return localVarFp.adminSettingsSecurityGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get tenant information
+         * @summary Get organization (tenant) profile
          * @param {AdminSettingsApiAdminTenantGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminTenantGet(requestParameters: AdminSettingsApiAdminTenantGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminTenantGet(requestParameters: AdminSettingsApiAdminTenantGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTenantGetResponse> {
             return localVarFp.adminTenantGet(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {AdminSettingsApiPatchAdminOrganizationUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
             return localVarFp.patchAdminOrganizationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1868,7 +1916,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
             return localVarFp.patchAdminSettingsAuthUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1878,7 +1926,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
             return localVarFp.patchAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1888,7 +1936,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse> {
             return localVarFp.patchAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1898,7 +1946,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse> {
             return localVarFp.patchAdminSettingsEmailUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1908,7 +1956,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsGeneralUpdateResponse> {
             return localVarFp.patchAdminSettingsGeneralUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1918,7 +1966,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsScimUpdateResponse> {
             return localVarFp.patchAdminSettingsScimUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1928,27 +1976,27 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsSecurityUpdateResponse> {
             return localVarFp.patchAdminSettingsSecurityUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {AdminSettingsApiPatchAdminTenantUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminTenantUpdate(requestParameters: AdminSettingsApiPatchAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminTenantUpdate(requestParameters: AdminSettingsApiPatchAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
             return localVarFp.patchAdminTenantUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {AdminSettingsApiPutAdminOrganizationUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
             return localVarFp.putAdminOrganizationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1958,7 +2006,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
             return localVarFp.putAdminSettingsAuthUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1968,7 +2016,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse> {
             return localVarFp.putAdminSettingsAuthenticationUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1978,7 +2026,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse> {
             return localVarFp.putAdminSettingsBrandingUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1988,7 +2036,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse> {
             return localVarFp.putAdminSettingsEmailUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1998,7 +2046,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsGeneralUpdateResponse> {
             return localVarFp.putAdminSettingsGeneralUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2008,7 +2056,7 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPutAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPutAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsScimUpdateResponse> {
             return localVarFp.putAdminSettingsScimUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2018,17 +2066,17 @@ export const AdminSettingsApiFactory = function (configuration?: Configuration, 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsSecurityUpdateResponse> {
             return localVarFp.putAdminSettingsSecurityUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update tenant settings
+         * @summary Update organization (tenant) name and settings
          * @param {AdminSettingsApiPutAdminTenantUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminTenantUpdate(requestParameters: AdminSettingsApiPutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminTenantUpdate(requestParameters: AdminSettingsApiPutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse> {
             return localVarFp.putAdminTenantUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -2048,7 +2096,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminAnalyticsDashboard(requestParameters: AdminSettingsApiAdminAnalyticsDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAnalyticsDashboard(requestParameters: AdminSettingsApiAdminAnalyticsDashboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsDashboardResponse>;
 
     /**
      * 
@@ -2058,7 +2106,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminAnalyticsLogins(requestParameters: AdminSettingsApiAdminAnalyticsLoginsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAnalyticsLogins(requestParameters: AdminSettingsApiAdminAnalyticsLoginsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsLoginsResponse>;
 
     /**
      * 
@@ -2068,17 +2116,17 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminAnalyticsUsers(requestParameters: AdminSettingsApiAdminAnalyticsUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAnalyticsUsers(requestParameters: AdminSettingsApiAdminAnalyticsUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAnalyticsUsersResponse>;
 
     /**
      * 
-     * @summary Get tenant information
+     * @summary Get organization (tenant) profile
      * @param {AdminSettingsApiAdminOrganizationGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminOrganizationGet(requestParameters: AdminSettingsApiAdminOrganizationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrganizationGet(requestParameters: AdminSettingsApiAdminOrganizationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTenantGetResponse>;
 
     /**
      * 
@@ -2088,7 +2136,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsAll(requestParameters: AdminSettingsApiAdminSettingsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsAll(requestParameters: AdminSettingsApiAdminSettingsAllRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsAllResponse>;
 
     /**
      * 
@@ -2098,7 +2146,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsAuthGet(requestParameters: AdminSettingsApiAdminSettingsAuthGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsAuthGet(requestParameters: AdminSettingsApiAdminSettingsAuthGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsAuthenticationGetResponse>;
 
     /**
      * 
@@ -2108,7 +2156,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsAuthenticationGet(requestParameters: AdminSettingsApiAdminSettingsAuthenticationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsAuthenticationGet(requestParameters: AdminSettingsApiAdminSettingsAuthenticationGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsAuthenticationGetResponse>;
 
     /**
      * 
@@ -2118,7 +2166,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsBrandingGet(requestParameters: AdminSettingsApiAdminSettingsBrandingGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsBrandingGet(requestParameters: AdminSettingsApiAdminSettingsBrandingGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsBrandingGetResponse>;
 
     /**
      * 
@@ -2128,7 +2176,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsEmailGet(requestParameters: AdminSettingsApiAdminSettingsEmailGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsEmailGet(requestParameters: AdminSettingsApiAdminSettingsEmailGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsEmailGetResponse>;
 
     /**
      * 
@@ -2138,7 +2186,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsGeneralGet(requestParameters: AdminSettingsApiAdminSettingsGeneralGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsGeneralGet(requestParameters: AdminSettingsApiAdminSettingsGeneralGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsGeneralGetResponse>;
 
     /**
      * 
@@ -2148,7 +2196,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsScimGet(requestParameters: AdminSettingsApiAdminSettingsScimGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsScimGet(requestParameters: AdminSettingsApiAdminSettingsScimGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsScimGetResponse>;
 
     /**
      * 
@@ -2158,27 +2206,27 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminSettingsSecurityGet(requestParameters: AdminSettingsApiAdminSettingsSecurityGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminSettingsSecurityGet(requestParameters: AdminSettingsApiAdminSettingsSecurityGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminSettingsSecurityGetResponse>;
 
     /**
      * 
-     * @summary Get tenant information
+     * @summary Get organization (tenant) profile
      * @param {AdminSettingsApiAdminTenantGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    adminTenantGet(requestParameters: AdminSettingsApiAdminTenantGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminTenantGet(requestParameters: AdminSettingsApiAdminTenantGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminTenantGetResponse>;
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPatchAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminOrganizationUpdate(requestParameters: AdminSettingsApiPatchAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse>;
 
     /**
      * 
@@ -2188,7 +2236,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
      * 
@@ -2198,7 +2246,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
      * 
@@ -2208,7 +2256,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse>;
 
     /**
      * 
@@ -2218,7 +2266,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse>;
 
     /**
      * 
@@ -2228,7 +2276,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsGeneralUpdateResponse>;
 
     /**
      * 
@@ -2238,7 +2286,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsScimUpdateResponse>;
 
     /**
      * 
@@ -2248,27 +2296,27 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPatchAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsSecurityUpdateResponse>;
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPatchAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    patchAdminTenantUpdate(requestParameters: AdminSettingsApiPatchAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminTenantUpdate(requestParameters: AdminSettingsApiPatchAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse>;
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPutAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminOrganizationUpdate(requestParameters: AdminSettingsApiPutAdminOrganizationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse>;
 
     /**
      * 
@@ -2278,7 +2326,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsAuthUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
      * 
@@ -2288,7 +2336,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsAuthenticationUpdate(requestParameters: AdminSettingsApiPutAdminSettingsAuthenticationUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsAuthenticationUpdateResponse>;
 
     /**
      * 
@@ -2298,7 +2346,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsBrandingUpdate(requestParameters: AdminSettingsApiPutAdminSettingsBrandingUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsBrandingUpdateResponse>;
 
     /**
      * 
@@ -2308,7 +2356,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsEmailUpdate(requestParameters: AdminSettingsApiPutAdminSettingsEmailUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsEmailUpdateResponse>;
 
     /**
      * 
@@ -2318,7 +2366,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsGeneralUpdate(requestParameters: AdminSettingsApiPutAdminSettingsGeneralUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsGeneralUpdateResponse>;
 
     /**
      * 
@@ -2328,7 +2376,7 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPutAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsScimUpdate(requestParameters: AdminSettingsApiPutAdminSettingsScimUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsScimUpdateResponse>;
 
     /**
      * 
@@ -2338,17 +2386,17 @@ export interface AdminSettingsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminSettingsSecurityUpdate(requestParameters: AdminSettingsApiPutAdminSettingsSecurityUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminSettingsSecurityUpdateResponse>;
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPutAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminSettingsApiInterface
      */
-    putAdminTenantUpdate(requestParameters: AdminSettingsApiPutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminTenantUpdate(requestParameters: AdminSettingsApiPutAdminTenantUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminTenantUpdateResponse>;
 
 }
 
@@ -2378,6 +2426,13 @@ export interface AdminSettingsApiAdminAnalyticsLoginsRequest {
      * @memberof AdminSettingsApiAdminAnalyticsLogins
      */
     readonly orgId: string
+
+    /**
+     * Window in days (1-90, default 30).
+     * @type {number}
+     * @memberof AdminSettingsApiAdminAnalyticsLogins
+     */
+    readonly days?: number
 }
 
 /**
@@ -2392,6 +2447,13 @@ export interface AdminSettingsApiAdminAnalyticsUsersRequest {
      * @memberof AdminSettingsApiAdminAnalyticsUsers
      */
     readonly orgId: string
+
+    /**
+     * Window in days (1-90, default 30).
+     * @type {number}
+     * @memberof AdminSettingsApiAdminAnalyticsUsers
+     */
+    readonly days?: number
 }
 
 /**
@@ -2814,7 +2876,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public adminAnalyticsLogins(requestParameters: AdminSettingsApiAdminAnalyticsLoginsRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).adminAnalyticsLogins(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).adminAnalyticsLogins(requestParameters.orgId, requestParameters.days, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2826,12 +2888,12 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
      * @memberof AdminSettingsApi
      */
     public adminAnalyticsUsers(requestParameters: AdminSettingsApiAdminAnalyticsUsersRequest, options?: RawAxiosRequestConfig) {
-        return AdminSettingsApiFp(this.configuration).adminAnalyticsUsers(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AdminSettingsApiFp(this.configuration).adminAnalyticsUsers(requestParameters.orgId, requestParameters.days, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @summary Get tenant information
+     * @summary Get organization (tenant) profile
      * @param {AdminSettingsApiAdminOrganizationGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2939,7 +3001,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Get tenant information
+     * @summary Get organization (tenant) profile
      * @param {AdminSettingsApiAdminTenantGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2951,7 +3013,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPatchAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3047,7 +3109,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPatchAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3059,7 +3121,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPutAdminOrganizationUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3155,7 +3217,7 @@ export class AdminSettingsApi extends BaseAPI implements AdminSettingsApiInterfa
 
     /**
      * 
-     * @summary Update tenant settings
+     * @summary Update organization (tenant) name and settings
      * @param {AdminSettingsApiPutAdminTenantUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

@@ -19,23 +19,25 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Fetch a live third-party access token for a connection.
-    # POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+    # Fetch a live third-party access token for a connection
+    # Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
     # @param org_id [String] 
     # @param connection_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @option opts [GetConnectionTokenRequest] :get_connection_token_request 
+    # @return [GetConnectionTokenResponse]
     def get_connection_token(org_id, connection_id, opts = {})
-      get_connection_token_with_http_info(org_id, connection_id, opts)
-      nil
+      data, _status_code, _headers = get_connection_token_with_http_info(org_id, connection_id, opts)
+      data
     end
 
-    # Fetch a live third-party access token for a connection.
-    # POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+    # Fetch a live third-party access token for a connection
+    # Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
     # @param org_id [String] 
     # @param connection_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @option opts [GetConnectionTokenRequest] :get_connection_token_request 
+    # @return [Array<(GetConnectionTokenResponse, Integer, Hash)>] GetConnectionTokenResponse data, response status code and response headers
     def get_connection_token_with_http_info(org_id, connection_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TokenVaultApi.get_connection_token ...'
@@ -56,15 +58,22 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'get_connection_token_request'])
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetConnectionTokenResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -86,21 +95,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List the connections this agent may use, with grant status. No secrets.
-    # GET /orgs/{orgId}/api/v1/agents/me/connections
+    # List the outbound connections this agent may use
+    # Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [ListConnectionsResponse]
     def list_connections(org_id, opts = {})
-      list_connections_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = list_connections_with_http_info(org_id, opts)
+      data
     end
 
-    # List the connections this agent may use, with grant status. No secrets.
-    # GET /orgs/{orgId}/api/v1/agents/me/connections
+    # List the outbound connections this agent may use
+    # Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(ListConnectionsResponse, Integer, Hash)>] ListConnectionsResponse data, response status code and response headers
     def list_connections_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TokenVaultApi.list_connections ...'
@@ -117,6 +126,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -125,7 +136,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'ListConnectionsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

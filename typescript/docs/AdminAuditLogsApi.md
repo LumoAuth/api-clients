@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminAuditLogsActions**](#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant|
-|[**adminAuditLogsExport**](#adminauditlogsexport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON|
-|[**adminAuditLogsGet**](#adminauditlogsget) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry|
-|[**adminAuditLogsList**](#adminauditlogslist) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant|
+|[**adminAuditLogsActions**](#adminauditlogsactions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant|
+|[**adminAuditLogsExport**](#adminauditlogsexport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON|
+|[**adminAuditLogsGet**](#adminauditlogsget) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry|
+|[**adminAuditLogsList**](#adminauditlogslist) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries|
 |[**adminAuditLogsRetention**](#adminauditlogsretention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings|
-|[**adminAuditLogsStats**](#adminauditlogsstats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics|
+|[**adminAuditLogsStats**](#adminauditlogsstats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days)|
 |[**patchAdminAuditLogsRetentionUpdate**](#patchadminauditlogsretentionupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings|
 |[**putAdminAuditLogsRetentionUpdate**](#putadminauditlogsretentionupdate) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings|
 
 # **adminAuditLogsActions**
-> adminAuditLogsActions()
+> AdminAuditLogsActionsResponse adminAuditLogsActions()
 
 
 ### Example
@@ -44,7 +44,7 @@ const { status, data } = await apiInstance.adminAuditLogsActions(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsActionsResponse**
 
 ### Authorization
 
@@ -53,18 +53,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Action names |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAuditLogsExport**
-> adminAuditLogsExport()
+> string adminAuditLogsExport()
 
 
 ### Example
@@ -94,7 +94,7 @@ const { status, data } = await apiInstance.adminAuditLogsExport(
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -103,18 +103,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/csv, application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAuditLogsGet**
-> adminAuditLogsGet()
+> AdminAuditLogsGetResponse adminAuditLogsGet()
 
 
 ### Example
@@ -147,7 +147,7 @@ const { status, data } = await apiInstance.adminAuditLogsGet(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsGetResponse**
 
 ### Authorization
 
@@ -156,18 +156,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Audit log entry (detailed) |  -  |
+|**404** | Audit log not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAuditLogsList**
-> adminAuditLogsList()
+> AdminAuditLogsListResponse adminAuditLogsList()
 
 
 ### Example
@@ -197,7 +198,7 @@ const { status, data } = await apiInstance.adminAuditLogsList(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsListResponse**
 
 ### Authorization
 
@@ -206,18 +207,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Audit log entries (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAuditLogsRetention**
-> adminAuditLogsRetention()
+> AdminAuditLogsRetentionResponse adminAuditLogsRetention()
 
 
 ### Example
@@ -247,7 +248,7 @@ const { status, data } = await apiInstance.adminAuditLogsRetention(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsRetentionResponse**
 
 ### Authorization
 
@@ -256,18 +257,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminAuditLogsStats**
-> adminAuditLogsStats()
+> AdminAuditLogsStatsResponse adminAuditLogsStats()
 
 
 ### Example
@@ -297,7 +298,7 @@ const { status, data } = await apiInstance.adminAuditLogsStats(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsStatsResponse**
 
 ### Authorization
 
@@ -306,18 +307,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Statistics |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminAuditLogsRetentionUpdate**
-> patchAdminAuditLogsRetentionUpdate()
+> AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate()
 
 
 ### Example
@@ -347,7 +348,7 @@ const { status, data } = await apiInstance.patchAdminAuditLogsRetentionUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsRetentionResponse**
 
 ### Authorization
 
@@ -356,18 +357,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminAuditLogsRetentionUpdate**
-> putAdminAuditLogsRetentionUpdate()
+> AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate()
 
 
 ### Example
@@ -397,7 +398,7 @@ const { status, data } = await apiInstance.putAdminAuditLogsRetentionUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminAuditLogsRetentionResponse**
 
 ### Authorization
 
@@ -406,13 +407,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

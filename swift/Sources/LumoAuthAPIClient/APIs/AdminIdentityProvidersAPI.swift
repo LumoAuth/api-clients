@@ -13,18 +13,18 @@ import AnyCodable
 open class AdminIdentityProvidersAPI {
 
     /**
-     Get available social login provider types
+     List the available social login provider types
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersAvailableResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersAvailable(orgId: String) async throws {
+    open class func adminSocialProvidersAvailable(orgId: String) async throws -> AdminSocialProvidersAvailableResponse {
         return try await adminSocialProvidersAvailableWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Get available social login provider types
+     List the available social login provider types
      - GET /orgs/{orgId}/api/v1/admin/social-providers/available
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -33,9 +33,9 @@ open class AdminIdentityProvidersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersAvailableResponse> 
      */
-    open class func adminSocialProvidersAvailableWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersAvailableWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSocialProvidersAvailableResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/available"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -51,24 +51,24 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersAvailableResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get callback URLs for all configured providers
+     Get the OAuth callback URL of every configured provider
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersCallbackUrlsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersCallbackUrls(orgId: String) async throws {
+    open class func adminSocialProvidersCallbackUrls(orgId: String) async throws -> AdminSocialProvidersCallbackUrlsResponse {
         return try await adminSocialProvidersCallbackUrlsWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Get callback URLs for all configured providers
+     Get the OAuth callback URL of every configured provider
      - GET /orgs/{orgId}/api/v1/admin/social-providers/callback-urls
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -77,9 +77,9 @@ open class AdminIdentityProvidersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersCallbackUrlsResponse> 
      */
-    open class func adminSocialProvidersCallbackUrlsWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersCallbackUrlsWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSocialProvidersCallbackUrlsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/callback-urls"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -95,24 +95,24 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersCallbackUrlsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Create a new social login provider
+     Create a social login provider
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersCreate(orgId: String) async throws {
+    open class func adminSocialProvidersCreate(orgId: String) async throws -> AdminSocialProvidersCreateResponse {
         return try await adminSocialProvidersCreateWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Create a new social login provider
+     Create a social login provider
      - POST /orgs/{orgId}/api/v1/admin/social-providers
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -121,9 +121,9 @@ open class AdminIdentityProvidersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func adminSocialProvidersCreateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -139,7 +139,7 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -149,10 +149,10 @@ open class AdminIdentityProvidersAPI {
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersDelete(orgId: String, providerId: String) async throws {
+    open class func adminSocialProvidersDelete(orgId: String, providerId: String) async throws -> MessageResponse {
         return try await adminSocialProvidersDeleteWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
     }
 
@@ -167,9 +167,9 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminSocialProvidersDeleteWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersDeleteWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -188,7 +188,7 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -198,10 +198,10 @@ open class AdminIdentityProvidersAPI {
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersDisable(orgId: String, providerId: String) async throws {
+    open class func adminSocialProvidersDisable(orgId: String, providerId: String) async throws -> AdminSocialProvidersCreateResponse {
         return try await adminSocialProvidersDisableWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
     }
 
@@ -216,9 +216,9 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func adminSocialProvidersDisableWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersDisableWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -237,7 +237,7 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -247,10 +247,10 @@ open class AdminIdentityProvidersAPI {
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersEnable(orgId: String, providerId: String) async throws {
+    open class func adminSocialProvidersEnable(orgId: String, providerId: String) async throws -> AdminSocialProvidersCreateResponse {
         return try await adminSocialProvidersEnableWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
     }
 
@@ -265,9 +265,9 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func adminSocialProvidersEnableWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersEnableWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -286,25 +286,25 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get a single social login provider (by ID or by provider name)
+     Get a social login provider
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersGetResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersGet(orgId: String, providerId: String) async throws {
+    open class func adminSocialProvidersGet(orgId: String, providerId: String) async throws -> AdminSocialProvidersGetResponse {
         return try await adminSocialProvidersGetWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
     }
 
     /**
-     Get a single social login provider (by ID or by provider name)
+     Get a social login provider
      - GET /orgs/{orgId}/api/v1/admin/social-providers/{providerId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -314,9 +314,9 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersGetResponse> 
      */
-    open class func adminSocialProvidersGetWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersGetWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersGetResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -335,24 +335,24 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     List all configured social login providers
+     List social login providers
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersList(orgId: String) async throws {
+    open class func adminSocialProvidersList(orgId: String) async throws -> AdminSocialProvidersListResponse {
         return try await adminSocialProvidersListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List all configured social login providers
+     List social login providers
      - GET /orgs/{orgId}/api/v1/admin/social-providers
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -361,9 +361,9 @@ open class AdminIdentityProvidersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersListResponse> 
      */
-    open class func adminSocialProvidersListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSocialProvidersListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -379,24 +379,24 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get available social login provider types
+     List the available social login provider types
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersAvailableResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSocialProvidersTypes(orgId: String) async throws {
+    open class func adminSocialProvidersTypes(orgId: String) async throws -> AdminSocialProvidersAvailableResponse {
         return try await adminSocialProvidersTypesWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Get available social login provider types
+     List the available social login provider types
      - GET /orgs/{orgId}/api/v1/admin/social-providers/types
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -405,9 +405,9 @@ open class AdminIdentityProvidersAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersAvailableResponse> 
      */
-    open class func adminSocialProvidersTypesWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSocialProvidersTypesWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSocialProvidersAvailableResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/types"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -423,25 +423,25 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersAvailableResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Upsert (create or update) a social login provider via PUT; update via PATCH
+     Update a social login provider
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminSocialProvidersUpdate(orgId: String, providerId: String) async throws {
+    open class func patchAdminSocialProvidersUpdate(orgId: String, providerId: String) async throws -> AdminSocialProvidersCreateResponse {
         return try await patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
     }
 
     /**
-     Upsert (create or update) a social login provider via PUT; update via PATCH
+     Update a social login provider
      - PATCH /orgs/{orgId}/api/v1/admin/social-providers/{providerId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -451,9 +451,9 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<Void> {
+    open class func patchAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -472,25 +472,25 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Upsert (create or update) a social login provider via PUT; update via PATCH
+     Create or replace a social login provider
      
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: Void
+     - returns: AdminSocialProvidersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminSocialProvidersUpdate(orgId: String, providerId: String) async throws {
+    open class func putAdminSocialProvidersUpdate(orgId: String, providerId: String) async throws -> AdminSocialProvidersCreateResponse {
         return try await putAdminSocialProvidersUpdateWithRequestBuilder(orgId: orgId, providerId: providerId).execute().body
     }
 
     /**
-     Upsert (create or update) a social login provider via PUT; update via PATCH
+     Create or replace a social login provider
      - PUT /orgs/{orgId}/api/v1/admin/social-providers/{providerId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -500,9 +500,9 @@ open class AdminIdentityProvidersAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter providerId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSocialProvidersCreateResponse> 
      */
-    open class func putAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<Void> {
+    open class func putAdminSocialProvidersUpdateWithRequestBuilder(orgId: String, providerId: String) -> RequestBuilder<AdminSocialProvidersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -521,7 +521,7 @@ open class AdminIdentityProvidersAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSocialProvidersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

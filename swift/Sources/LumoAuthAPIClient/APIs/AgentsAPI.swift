@@ -60,18 +60,22 @@ open class AgentsAPI {
     }
 
     /**
-
+     Workload attestation: exchange a cloud OIDC token for an agent access token
+     
      - parameter orgId: (path)  
      - parameter agentId: (path)  
-     - returns: Void
+     - parameter attestRequest: (body)  
+     - returns: AttestResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func attest(orgId: String, agentId: String) async throws {
-        return try await attestWithRequestBuilder(orgId: orgId, agentId: agentId).execute().body
+    open class func attest(orgId: String, agentId: String, attestRequest: AttestRequest) async throws -> AttestResponse {
+        return try await attestWithRequestBuilder(orgId: orgId, agentId: agentId, attestRequest: attestRequest).execute().body
     }
 
     /**
+     Workload attestation: exchange a cloud OIDC token for an agent access token
      - POST /orgs/{orgId}/api/v1/agents/{agentId}/attest
+     - Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -80,9 +84,10 @@ open class AgentsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter agentId: (path)  
-     - returns: RequestBuilder<Void> 
+     - parameter attestRequest: (body)  
+     - returns: RequestBuilder<AttestResponse> 
      */
-    open class func attestWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<Void> {
+    open class func attestWithRequestBuilder(orgId: String, agentId: String, attestRequest: AttestRequest) -> RequestBuilder<AttestResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/agents/{agentId}/attest"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -91,17 +96,17 @@ open class AgentsAPI {
         let agentIdPostEscape = agentIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{agentId}", with: agentIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: attestRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AttestResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -198,23 +203,26 @@ open class AgentsAPI {
     }
 
     /**
-
+     Signed A2A agent card
+     
      - parameter orgId: (path)  
      - parameter agentId: (path)  
-     - returns: Void
+     - returns: SignedAgentCard
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getAgentCard(orgId: String, agentId: String) async throws {
+    open class func getAgentCard(orgId: String, agentId: String) async throws -> SignedAgentCard {
         return try await getAgentCardWithRequestBuilder(orgId: orgId, agentId: agentId).execute().body
     }
 
     /**
+     Signed A2A agent card
      - GET /orgs/{orgId}/api/v1/agents/{agentId}/agent-card
+     - Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
      - parameter orgId: (path)  
      - parameter agentId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<SignedAgentCard> 
      */
-    open class func getAgentCardWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<Void> {
+    open class func getAgentCardWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<SignedAgentCard> {
         var localVariablePath = "/orgs/{orgId}/api/v1/agents/{agentId}/agent-card"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -233,7 +241,7 @@ open class AgentsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SignedAgentCard>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
@@ -331,16 +339,18 @@ open class AgentsAPI {
     }
 
     /**
-
+     Register (or re-register) an agent
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: RegisterAgentResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func registerAgent(orgId: String) async throws {
+    open class func registerAgent(orgId: String) async throws -> RegisterAgentResponse {
         return try await registerAgentWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     Register (or re-register) an agent
      - POST /orgs/{orgId}/api/v1/agents/register
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -349,9 +359,9 @@ open class AgentsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<RegisterAgentResponse> 
      */
-    open class func registerAgentWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func registerAgentWithRequestBuilder(orgId: String) -> RequestBuilder<RegisterAgentResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/agents/register"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -367,23 +377,27 @@ open class AgentsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<RegisterAgentResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Verify a signed A2A agent card
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - parameter requestBody: (body)  
+     - returns: VerifyAgentCardResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func verifyAgentCard(orgId: String) async throws {
-        return try await verifyAgentCardWithRequestBuilder(orgId: orgId).execute().body
+    open class func verifyAgentCard(orgId: String, requestBody: [String: AnyCodable]) async throws -> VerifyAgentCardResponse {
+        return try await verifyAgentCardWithRequestBuilder(orgId: orgId, requestBody: requestBody).execute().body
     }
 
     /**
+     Verify a signed A2A agent card
      - POST /orgs/{orgId}/api/v1/agents/agent-card/verify
+     - Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -391,25 +405,26 @@ open class AgentsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - parameter requestBody: (body)  
+     - returns: RequestBuilder<VerifyAgentCardResponse> 
      */
-    open class func verifyAgentCardWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func verifyAgentCardWithRequestBuilder(orgId: String, requestBody: [String: AnyCodable]) -> RequestBuilder<VerifyAgentCardResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/agents/agent-card/verify"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: requestBody)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<VerifyAgentCardResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

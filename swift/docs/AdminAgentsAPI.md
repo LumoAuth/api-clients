@@ -324,7 +324,7 @@ Name | Type | Description  | Notes
 
 # **adminAgentsDelete**
 ```swift
-    open class func adminAgentsDelete(orgId: String, agentId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
+    open class func adminAgentsDelete(orgId: String, agentId: String, completion: @escaping (_ data: AdminAgentsDeleteResponse?, _ error: Error?) -> Void)
 ```
 
 Delete an agent
@@ -359,7 +359,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MessageResponse**](MessageResponse.md)
+[**AdminAgentsDeleteResponse**](AdminAgentsDeleteResponse.md)
 
 ### Authorization
 
@@ -386,7 +386,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let adminAgentsGenerateTokenRequest = AdminAgentsGenerateTokenRequest(scopes: ["scopes_example"], ttl: 123) // AdminAgentsGenerateTokenRequest |  (optional)
+let adminAgentsGenerateTokenRequest = AdminAgentsGenerateTokenRequest(expiresIn: 123, scopes: ["scopes_example"]) // AdminAgentsGenerateTokenRequest |  (optional)
 
 // Generate a token for the agent
 AdminAgentsAPI.adminAgentsGenerateToken(orgId: orgId, agentId: agentId, adminAgentsGenerateTokenRequest: adminAgentsGenerateTokenRequest) { (response, error) in

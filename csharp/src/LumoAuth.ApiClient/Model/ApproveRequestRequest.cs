@@ -37,11 +37,13 @@ namespace LumoAuth.ApiClient.Model
         /// Initializes a new instance of the <see cref="ApproveRequestRequest" /> class.
         /// </summary>
         /// <param name="ttl">Optional TTL override in seconds..</param>
-        /// <param name="notes">Optional reviewer notes..</param>
-        public ApproveRequestRequest(int ttl = default, string notes = default)
+        /// <param name="notes">Optional reviewer notes (internal; never shown to the agent)..</param>
+        /// <param name="agentMessage">Optional message the agent MAY read on the status endpoint / callback..</param>
+        public ApproveRequestRequest(int ttl = default, string notes = default, string agentMessage = default)
         {
             this.Ttl = ttl;
             this.Notes = notes;
+            this.AgentMessage = agentMessage;
         }
 
         /// <summary>
@@ -52,11 +54,18 @@ namespace LumoAuth.ApiClient.Model
         public int Ttl { get; set; }
 
         /// <summary>
-        /// Optional reviewer notes.
+        /// Optional reviewer notes (internal; never shown to the agent).
         /// </summary>
-        /// <value>Optional reviewer notes.</value>
+        /// <value>Optional reviewer notes (internal; never shown to the agent).</value>
         [DataMember(Name = "notes", EmitDefaultValue = false)]
         public string Notes { get; set; }
+
+        /// <summary>
+        /// Optional message the agent MAY read on the status endpoint / callback.
+        /// </summary>
+        /// <value>Optional message the agent MAY read on the status endpoint / callback.</value>
+        [DataMember(Name = "agent_message", EmitDefaultValue = false)]
+        public string AgentMessage { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -68,6 +77,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class ApproveRequestRequest {\n");
             sb.Append("  Ttl: ").Append(Ttl).Append("\n");
             sb.Append("  Notes: ").Append(Notes).Append("\n");
+            sb.Append("  AgentMessage: ").Append(AgentMessage).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

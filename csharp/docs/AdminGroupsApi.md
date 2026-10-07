@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminGroupsAddMembers**](AdminGroupsApi.md#admingroupsaddmembers) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]} |
+| [**AdminGroupsAddMembers**](AdminGroupsApi.md#admingroupsaddmembers) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group |
 | [**AdminGroupsAddRole**](AdminGroupsApi.md#admingroupsaddrole) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group |
 | [**AdminGroupsCreate**](AdminGroupsApi.md#admingroupscreate) | **POST** /orgs/{orgId}/api/v1/admin/groups | Create a new group |
 | [**AdminGroupsDelete**](AdminGroupsApi.md#admingroupsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group |
@@ -12,7 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**AdminGroupsGetMembers**](AdminGroupsApi.md#admingroupsgetmembers) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**AdminGroupsGroupsGetRoles**](AdminGroupsApi.md#admingroupsgroupsgetroles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
 | [**AdminGroupsList**](AdminGroupsApi.md#admingroupslist) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
-| [**AdminGroupsRemoveMember**](AdminGroupsApi.md#admingroupsremovemember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email |
+| [**AdminGroupsRemoveMember**](AdminGroupsApi.md#admingroupsremovemember) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**AdminGroupsRemoveRole**](AdminGroupsApi.md#admingroupsremoverole) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**AdminGroupsUpdateRoles**](AdminGroupsApi.md#admingroupsupdateroles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
 | [**PatchAdminGroupsUpdate**](AdminGroupsApi.md#patchadmingroupsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group |
@@ -20,9 +20,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="admingroupsaddmembers"></a>
 # **AdminGroupsAddMembers**
-> void AdminGroupsAddMembers (string orgId, string groupId)
+> AdminGroupsCreateResponse AdminGroupsAddMembers (string orgId, string groupId)
 
-Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+Add member(s) to group
 
 ### Example
 ```csharp
@@ -57,8 +57,9 @@ namespace Example
 
             try
             {
-                // Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
-                apiInstance.AdminGroupsAddMembers(orgId, groupId);
+                // Add member(s) to group
+                AdminGroupsCreateResponse result = apiInstance.AdminGroupsAddMembers(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -77,8 +78,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
-    apiInstance.AdminGroupsAddMembersWithHttpInfo(orgId, groupId);
+    // Add member(s) to group
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsAddMembersWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -97,7 +101,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -106,19 +110,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group; message reports how many members were added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsaddrole"></a>
 # **AdminGroupsAddRole**
-> void AdminGroupsAddRole (string orgId, string groupId)
+> MessageResponse AdminGroupsAddRole (string orgId, string groupId)
 
 Add a single role to a group
 
@@ -156,7 +160,8 @@ namespace Example
             try
             {
                 // Add a single role to a group
-                apiInstance.AdminGroupsAddRole(orgId, groupId);
+                MessageResponse result = apiInstance.AdminGroupsAddRole(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -176,7 +181,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Add a single role to a group
-    apiInstance.AdminGroupsAddRoleWithHttpInfo(orgId, groupId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminGroupsAddRoleWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -195,7 +203,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -204,19 +212,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupscreate"></a>
 # **AdminGroupsCreate**
-> void AdminGroupsCreate (string orgId)
+> AdminGroupsCreateResponse AdminGroupsCreate (string orgId)
 
 Create a new group
 
@@ -253,7 +261,8 @@ namespace Example
             try
             {
                 // Create a new group
-                apiInstance.AdminGroupsCreate(orgId);
+                AdminGroupsCreateResponse result = apiInstance.AdminGroupsCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -273,7 +282,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Create a new group
-    apiInstance.AdminGroupsCreateWithHttpInfo(orgId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -291,7 +303,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -300,19 +312,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsdelete"></a>
 # **AdminGroupsDelete**
-> void AdminGroupsDelete (string orgId, string groupId)
+> MessageResponse AdminGroupsDelete (string orgId, string groupId)
 
 Delete a group
 
@@ -350,7 +362,8 @@ namespace Example
             try
             {
                 // Delete a group
-                apiInstance.AdminGroupsDelete(orgId, groupId);
+                MessageResponse result = apiInstance.AdminGroupsDelete(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -370,7 +383,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a group
-    apiInstance.AdminGroupsDeleteWithHttpInfo(orgId, groupId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminGroupsDeleteWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -389,7 +405,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -398,19 +414,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsget"></a>
 # **AdminGroupsGet**
-> void AdminGroupsGet (string orgId, string groupId)
+> AdminGroupsGetResponse AdminGroupsGet (string orgId, string groupId)
 
 Get a single group by ID or slug
 
@@ -448,7 +464,8 @@ namespace Example
             try
             {
                 // Get a single group by ID or slug
-                apiInstance.AdminGroupsGet(orgId, groupId);
+                AdminGroupsGetResponse result = apiInstance.AdminGroupsGet(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -468,7 +485,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get a single group by ID or slug
-    apiInstance.AdminGroupsGetWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsGetResponse> response = apiInstance.AdminGroupsGetWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -487,7 +507,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGetResponse**](AdminGroupsGetResponse.md)
 
 ### Authorization
 
@@ -496,19 +516,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsgetmembers"></a>
 # **AdminGroupsGetMembers**
-> void AdminGroupsGetMembers (string orgId, string groupId)
+> AdminGroupsGetMembersResponse AdminGroupsGetMembers (string orgId, string groupId)
 
 Get group members
 
@@ -546,7 +566,8 @@ namespace Example
             try
             {
                 // Get group members
-                apiInstance.AdminGroupsGetMembers(orgId, groupId);
+                AdminGroupsGetMembersResponse result = apiInstance.AdminGroupsGetMembers(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -566,7 +587,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get group members
-    apiInstance.AdminGroupsGetMembersWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsGetMembersResponse> response = apiInstance.AdminGroupsGetMembersWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -585,7 +609,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGetMembersResponse**](AdminGroupsGetMembersResponse.md)
 
 ### Authorization
 
@@ -594,19 +618,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Group members |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsgroupsgetroles"></a>
 # **AdminGroupsGroupsGetRoles**
-> void AdminGroupsGroupsGetRoles (string orgId, string groupId)
+> AdminGroupsGroupsGetRolesResponse AdminGroupsGroupsGetRoles (string orgId, string groupId)
 
 Get group roles
 
@@ -644,7 +668,8 @@ namespace Example
             try
             {
                 // Get group roles
-                apiInstance.AdminGroupsGroupsGetRoles(orgId, groupId);
+                AdminGroupsGroupsGetRolesResponse result = apiInstance.AdminGroupsGroupsGetRoles(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -664,7 +689,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Get group roles
-    apiInstance.AdminGroupsGroupsGetRolesWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsGroupsGetRolesResponse> response = apiInstance.AdminGroupsGroupsGetRolesWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -683,7 +711,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -692,19 +720,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Group roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupslist"></a>
 # **AdminGroupsList**
-> void AdminGroupsList (string orgId)
+> AdminGroupsListResponse AdminGroupsList (string orgId)
 
 List all groups in the tenant
 
@@ -741,7 +769,8 @@ namespace Example
             try
             {
                 // List all groups in the tenant
-                apiInstance.AdminGroupsList(orgId);
+                AdminGroupsListResponse result = apiInstance.AdminGroupsList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -761,7 +790,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // List all groups in the tenant
-    apiInstance.AdminGroupsListWithHttpInfo(orgId);
+    ApiResponse<AdminGroupsListResponse> response = apiInstance.AdminGroupsListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -779,7 +811,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsListResponse**](AdminGroupsListResponse.md)
 
 ### Authorization
 
@@ -788,21 +820,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Groups |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsremovemember"></a>
 # **AdminGroupsRemoveMember**
-> void AdminGroupsRemoveMember (string orgId, string groupId, string userId)
+> MessageResponse AdminGroupsRemoveMember (string orgId, string groupId, string userId)
 
-Remove member from group — userId is a UUID or email
+Remove member from group
 
 ### Example
 ```csharp
@@ -838,8 +870,9 @@ namespace Example
 
             try
             {
-                // Remove member from group — userId is a UUID or email
-                apiInstance.AdminGroupsRemoveMember(orgId, groupId, userId);
+                // Remove member from group
+                MessageResponse result = apiInstance.AdminGroupsRemoveMember(orgId, groupId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -858,8 +891,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Remove member from group — userId is a UUID or email
-    apiInstance.AdminGroupsRemoveMemberWithHttpInfo(orgId, groupId, userId);
+    // Remove member from group
+    ApiResponse<MessageResponse> response = apiInstance.AdminGroupsRemoveMemberWithHttpInfo(orgId, groupId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -879,7 +915,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -888,19 +924,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsremoverole"></a>
 # **AdminGroupsRemoveRole**
-> void AdminGroupsRemoveRole (string orgId, string groupId, string roleId)
+> MessageResponse AdminGroupsRemoveRole (string orgId, string groupId, string roleId)
 
 Remove a role from a group
 
@@ -939,7 +975,8 @@ namespace Example
             try
             {
                 // Remove a role from a group
-                apiInstance.AdminGroupsRemoveRole(orgId, groupId, roleId);
+                MessageResponse result = apiInstance.AdminGroupsRemoveRole(orgId, groupId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -959,7 +996,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Remove a role from a group
-    apiInstance.AdminGroupsRemoveRoleWithHttpInfo(orgId, groupId, roleId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminGroupsRemoveRoleWithHttpInfo(orgId, groupId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -979,7 +1019,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -988,19 +1028,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admingroupsupdateroles"></a>
 # **AdminGroupsUpdateRoles**
-> void AdminGroupsUpdateRoles (string orgId, string groupId)
+> AdminGroupsCreateResponse AdminGroupsUpdateRoles (string orgId, string groupId)
 
 Update group roles (replaces all existing roles)
 
@@ -1038,7 +1078,8 @@ namespace Example
             try
             {
                 // Update group roles (replaces all existing roles)
-                apiInstance.AdminGroupsUpdateRoles(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.AdminGroupsUpdateRoles(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1058,7 +1099,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update group roles (replaces all existing roles)
-    apiInstance.AdminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.AdminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1077,7 +1121,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -1086,19 +1130,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadmingroupsupdate"></a>
 # **PatchAdminGroupsUpdate**
-> void PatchAdminGroupsUpdate (string orgId, string groupId)
+> AdminGroupsCreateResponse PatchAdminGroupsUpdate (string orgId, string groupId)
 
 Update an existing group
 
@@ -1136,7 +1180,8 @@ namespace Example
             try
             {
                 // Update an existing group
-                apiInstance.PatchAdminGroupsUpdate(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.PatchAdminGroupsUpdate(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1156,7 +1201,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing group
-    apiInstance.PatchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.PatchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1175,7 +1223,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -1184,19 +1232,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadmingroupsupdate"></a>
 # **PutAdminGroupsUpdate**
-> void PutAdminGroupsUpdate (string orgId, string groupId)
+> AdminGroupsCreateResponse PutAdminGroupsUpdate (string orgId, string groupId)
 
 Update an existing group
 
@@ -1234,7 +1282,8 @@ namespace Example
             try
             {
                 // Update an existing group
-                apiInstance.PutAdminGroupsUpdate(orgId, groupId);
+                AdminGroupsCreateResponse result = apiInstance.PutAdminGroupsUpdate(orgId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1254,7 +1303,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an existing group
-    apiInstance.PutAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    ApiResponse<AdminGroupsCreateResponse> response = apiInstance.PutAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1273,7 +1325,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -1282,13 +1334,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

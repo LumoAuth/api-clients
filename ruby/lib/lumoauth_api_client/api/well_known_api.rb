@@ -19,17 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # OAuth 2.0 authorization server metadata (RFC 8414)
+    # Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AuthorizationServerMetadata]
     def get_authorization_server_metadata(org_id, opts = {})
-      get_authorization_server_metadata_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_authorization_server_metadata_with_http_info(org_id, opts)
+      data
     end
 
+    # OAuth 2.0 authorization server metadata (RFC 8414)
+    # Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AuthorizationServerMetadata, Integer, Hash)>] AuthorizationServerMetadata data, response status code and response headers
     def get_authorization_server_metadata_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: WellKnownApi.get_authorization_server_metadata ...'
@@ -46,6 +50,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -54,7 +60,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AuthorizationServerMetadata'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -76,17 +82,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # JSON Web Key Set (RFC 7517)
+    # Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [JsonWebKeySet]
     def get_jwks(org_id, opts = {})
-      get_jwks_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_jwks_with_http_info(org_id, opts)
+      data
     end
 
+    # JSON Web Key Set (RFC 7517)
+    # Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(JsonWebKeySet, Integer, Hash)>] JsonWebKeySet data, response status code and response headers
     def get_jwks_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: WellKnownApi.get_jwks ...'
@@ -103,6 +113,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -111,7 +123,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'JsonWebKeySet'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -133,17 +145,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # OpenID Provider configuration (OIDC Discovery 1.0)
+    # Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [OpenIdConfiguration]
     def get_openid_configuration(org_id, opts = {})
-      get_openid_configuration_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_openid_configuration_with_http_info(org_id, opts)
+      data
     end
 
+    # OpenID Provider configuration (OIDC Discovery 1.0)
+    # Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(OpenIdConfiguration, Integer, Hash)>] OpenIdConfiguration data, response status code and response headers
     def get_openid_configuration_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: WellKnownApi.get_openid_configuration ...'
@@ -160,6 +176,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -168,7 +186,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'OpenIdConfiguration'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -190,17 +208,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # SSF transmitter configuration metadata
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [GetSsfConfigurationResponse]
     def get_ssf_configuration(org_id, opts = {})
-      get_ssf_configuration_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = get_ssf_configuration_with_http_info(org_id, opts)
+      data
     end
 
+    # SSF transmitter configuration metadata
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(GetSsfConfigurationResponse, Integer, Hash)>] GetSsfConfigurationResponse data, response status code and response headers
     def get_ssf_configuration_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: WellKnownApi.get_ssf_configuration ...'
@@ -217,6 +237,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -225,7 +247,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetSsfConfigurationResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []

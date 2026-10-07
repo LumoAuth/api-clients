@@ -12,10 +12,9 @@ import AnyCodable
 
 public struct AdminAgentsGenerateTokenResponse: Codable, JSONEncodable, Hashable {
 
-    /** The issued token and its metadata (access_token, expires_in, ...). */
-    public var data: AnyCodable?
+    public var data: AdminAgentsGenerateTokenResponseData?
 
-    public init(data: AnyCodable? = nil) {
+    public init(data: AdminAgentsGenerateTokenResponseData? = nil) {
         self.data = data
     }
 

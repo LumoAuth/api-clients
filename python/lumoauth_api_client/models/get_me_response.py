@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from lumoauth_api_client.models.get_me_response_tenant import GetMeResponseTenant
+from lumoauth_api_client.models.group_ref import GroupRef
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -35,7 +35,7 @@ class GetMeResponse(BaseModel):
     mfa_enabled: Optional[StrictBool] = None
     roles: Optional[List[StrictStr]] = None
     capabilities: Optional[List[StrictStr]] = None
-    tenant: Optional[GetMeResponseTenant] = None
+    tenant: Optional[GroupRef] = None
     __properties: ClassVar[List[str]] = ["subject_type", "id", "email", "name", "mfa_enabled", "roles", "capabilities", "tenant"]
 
     @field_validator('subject_type')
@@ -134,7 +134,7 @@ class GetMeResponse(BaseModel):
             "mfa_enabled": obj.get("mfa_enabled"),
             "roles": obj.get("roles"),
             "capabilities": obj.get("capabilities"),
-            "tenant": GetMeResponseTenant.from_dict(obj["tenant"]) if obj.get("tenant") is not None else None
+            "tenant": GroupRef.from_dict(obj["tenant"]) if obj.get("tenant") is not None else None
         })
         return _obj
 

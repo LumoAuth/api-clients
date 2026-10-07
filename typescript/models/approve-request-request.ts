@@ -27,10 +27,16 @@ export interface ApproveRequestRequest {
      */
     'ttl'?: number;
     /**
-     * Optional reviewer notes.
+     * Optional reviewer notes (internal; never shown to the agent).
      * @type {string}
      * @memberof ApproveRequestRequest
      */
     'notes'?: string;
+    /**
+     * Optional message the agent MAY read on the status endpoint / callback.
+     * @type {string}
+     * @memberof ApproveRequestRequest
+     */
+    'agent_message'?: string;
 }
 

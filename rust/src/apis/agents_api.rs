@@ -28,7 +28,11 @@ pub enum AskError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AttestError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status403(),
+    Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -57,7 +61,7 @@ pub enum CreateApprovalError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAgentCardError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -82,7 +86,6 @@ pub enum GetCurrentAgentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RegisterAgentError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -90,7 +93,9 @@ pub enum RegisterAgentError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum VerifyAgentCardError {
-    DefaultResponse(),
+    Status400(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -145,10 +150,12 @@ pub async fn ask(configuration: &configuration::Configuration, org_id: &str, ask
     }
 }
 
-pub async fn attest(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<(), Error<AttestError>> {
+/// Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+pub async fn attest(configuration: &configuration::Configuration, org_id: &str, agent_id: &str, attest_request: models::AttestRequest) -> Result<models::AttestResponse, Error<AttestError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_agent_id = agent_id;
+    let p_attest_request = attest_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/agents/{agentId}/attest", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), agentId=crate::apis::urlencode(p_agent_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -167,14 +174,26 @@ pub async fn attest(configuration: &configuration::Configuration, org_id: &str, 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_attest_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AttestResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AttestResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AttestError> = serde_json::from_str(&content).ok();
@@ -281,7 +300,8 @@ pub async fn create_approval(configuration: &configuration::Configuration, org_i
     }
 }
 
-pub async fn get_agent_card(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<(), Error<GetAgentCardError>> {
+/// Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
+pub async fn get_agent_card(configuration: &configuration::Configuration, org_id: &str, agent_id: &str) -> Result<models::SignedAgentCard, Error<GetAgentCardError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_agent_id = agent_id;
@@ -297,9 +317,20 @@ pub async fn get_agent_card(configuration: &configuration::Configuration, org_id
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SignedAgentCard`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SignedAgentCard`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetAgentCardError> = serde_json::from_str(&content).ok();
@@ -403,7 +434,7 @@ pub async fn get_current_agent(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn register_agent(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<RegisterAgentError>> {
+pub async fn register_agent(configuration: &configuration::Configuration, org_id: &str) -> Result<models::RegisterAgentResponse, Error<RegisterAgentError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -429,9 +460,20 @@ pub async fn register_agent(configuration: &configuration::Configuration, org_id
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RegisterAgentResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RegisterAgentResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RegisterAgentError> = serde_json::from_str(&content).ok();
@@ -439,9 +481,11 @@ pub async fn register_agent(configuration: &configuration::Configuration, org_id
     }
 }
 
-pub async fn verify_agent_card(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<VerifyAgentCardError>> {
+/// Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
+pub async fn verify_agent_card(configuration: &configuration::Configuration, org_id: &str, request_body: std::collections::HashMap<String, serde_json::Value>) -> Result<models::VerifyAgentCardResponse, Error<VerifyAgentCardError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_request_body = request_body;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/agents/agent-card/verify", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -460,14 +504,26 @@ pub async fn verify_agent_card(configuration: &configuration::Configuration, org
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_request_body);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::VerifyAgentCardResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::VerifyAgentCardResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<VerifyAgentCardError> = serde_json::from_str(&content).ok();

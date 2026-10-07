@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **mfa_enabled** | **boolean** |  | [optional] [default to undefined]
 **roles** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **capabilities** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
-**tenant** | [**GetMeResponseTenant**](GetMeResponseTenant.md) |  | [optional] [default to undefined]
+**tenant** | [**GroupRef**](GroupRef.md) |  | [optional] [default to undefined]
 
 ## Example
 

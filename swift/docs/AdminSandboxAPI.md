@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adminSandboxDestroy**](AdminSandboxAPI.md#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
-[**adminSandboxList**](AdminSandboxAPI.md#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller&#39;s active sandbox tenants (their own only).
-[**adminSandboxSpawn**](AdminSandboxAPI.md#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+[**adminSandboxDestroy**](AdminSandboxAPI.md#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
+[**adminSandboxList**](AdminSandboxAPI.md#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
+[**adminSandboxSpawn**](AdminSandboxAPI.md#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
 
 
 # **adminSandboxDestroy**
 ```swift
-    open class func adminSandboxDestroy(orgId: String, sandboxSlug: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSandboxDestroy(orgId: String, sandboxSlug: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
-POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+Destroy a sandbox tenant
 
 ### Example
 ```swift
@@ -24,7 +24,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let sandboxSlug = "sandboxSlug_example" // String | 
 
-// POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+// Destroy a sandbox tenant
 AdminSandboxAPI.adminSandboxDestroy(orgId: orgId, sandboxSlug: sandboxSlug) { (response, error) in
     guard error == nil else {
         print(error)
@@ -46,7 +46,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -55,16 +55,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSandboxList**
 ```swift
-    open class func adminSandboxList(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSandboxList(orgId: String, completion: @escaping (_ data: AdminSandboxListResponse?, _ error: Error?) -> Void)
 ```
 
-GET / Lists the caller's active sandbox tenants (their own only).
+List the caller's sandbox tenants
 
 ### Example
 ```swift
@@ -73,7 +73,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// GET / Lists the caller's active sandbox tenants (their own only).
+// List the caller's sandbox tenants
 AdminSandboxAPI.adminSandboxList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -94,7 +94,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSandboxListResponse**](AdminSandboxListResponse.md)
 
 ### Authorization
 
@@ -103,16 +103,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSandboxSpawn**
 ```swift
-    open class func adminSandboxSpawn(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSandboxSpawn(orgId: String, adminSandboxSpawnRequest: AdminSandboxSpawnRequest? = nil, completion: @escaping (_ data: AdminSandboxSpawnResponse?, _ error: Error?) -> Void)
 ```
 
-POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+Spawn a sandbox tenant
 
 ### Example
 ```swift
@@ -120,9 +120,10 @@ POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminSandboxSpawnRequest = AdminSandboxSpawnRequest(name: "name_example", ttlHours: 123) // AdminSandboxSpawnRequest |  (optional)
 
-// POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
-AdminSandboxAPI.adminSandboxSpawn(orgId: orgId) { (response, error) in
+// Spawn a sandbox tenant
+AdminSandboxAPI.adminSandboxSpawn(orgId: orgId, adminSandboxSpawnRequest: adminSandboxSpawnRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -139,10 +140,11 @@ AdminSandboxAPI.adminSandboxSpawn(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminSandboxSpawnRequest** | [**AdminSandboxSpawnRequest**](AdminSandboxSpawnRequest.md) |  | [optional] 
 
 ### Return type
 
-Void (empty response body)
+[**AdminSandboxSpawnResponse**](AdminSandboxSpawnResponse.md)
 
 ### Authorization
 
@@ -150,8 +152,8 @@ Void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

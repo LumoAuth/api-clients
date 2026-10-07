@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 ## AdminPermissionsCreate
 
-> AdminPermissionsCreate(ctx, orgId).Execute()
+> AdminPermissionsCreateResponse AdminPermissionsCreate(ctx, orgId).Execute()
 
 Create a custom permission for the tenant
 
@@ -39,11 +39,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminPermissionsCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminPermissionsCreate`: AdminPermissionsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminPermissionsCreate`: %v\n", resp)
 }
 ```
 
@@ -66,7 +68,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -75,7 +77,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -84,7 +86,7 @@ Name | Type | Description  | Notes
 
 ## AdminPermissionsDelete
 
-> AdminPermissionsDelete(ctx, orgId, permissionId).Execute()
+> MessageResponse AdminPermissionsDelete(ctx, orgId, permissionId).Execute()
 
 Delete a custom permission
 
@@ -106,11 +108,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminPermissionsDelete(context.Background(), orgId, permissionId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsDelete(context.Background(), orgId, permissionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminPermissionsDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminPermissionsDelete`: %v\n", resp)
 }
 ```
 
@@ -135,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -144,7 +148,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -153,7 +157,7 @@ Name | Type | Description  | Notes
 
 ## AdminPermissionsGet
 
-> AdminPermissionsGet(ctx, orgId, permissionId).Execute()
+> AdminPermissionsGetResponse AdminPermissionsGet(ctx, orgId, permissionId).Execute()
 
 Get a single permission
 
@@ -175,11 +179,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminPermissionsGet(context.Background(), orgId, permissionId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsGet(context.Background(), orgId, permissionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminPermissionsGet`: AdminPermissionsGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminPermissionsGet`: %v\n", resp)
 }
 ```
 
@@ -204,7 +210,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminPermissionsGetResponse**](AdminPermissionsGetResponse.md)
 
 ### Authorization
 
@@ -213,7 +219,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -222,7 +228,7 @@ Name | Type | Description  | Notes
 
 ## AdminPermissionsList
 
-> AdminPermissionsList(ctx, orgId).Execute()
+> AdminPermissionsListResponse AdminPermissionsList(ctx, orgId).Execute()
 
 List all available permissions for the tenant
 
@@ -243,11 +249,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminPermissionsList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminPermissionsList`: AdminPermissionsListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminPermissionsList`: %v\n", resp)
 }
 ```
 
@@ -270,7 +278,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminPermissionsListResponse**](AdminPermissionsListResponse.md)
 
 ### Authorization
 
@@ -279,7 +287,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -288,7 +296,7 @@ Name | Type | Description  | Notes
 
 ## AdminPermissionsUpdate
 
-> AdminPermissionsUpdate(ctx, orgId, permissionId).Execute()
+> AdminPermissionsCreateResponse AdminPermissionsUpdate(ctx, orgId, permissionId).Execute()
 
 Update a permission
 
@@ -310,11 +318,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminPermissionsUpdate(context.Background(), orgId, permissionId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsUpdate(context.Background(), orgId, permissionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminPermissionsUpdate`: AdminPermissionsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminPermissionsUpdate`: %v\n", resp)
 }
 ```
 
@@ -339,7 +349,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -348,7 +358,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -357,7 +367,7 @@ Name | Type | Description  | Notes
 
 ## AdminPermissionsUsage
 
-> AdminPermissionsUsage(ctx, orgId, permissionId).Execute()
+> AdminPermissionsUsageResponse AdminPermissionsUsage(ctx, orgId, permissionId).Execute()
 
 Get permission usage (roles assigned to this permission)
 
@@ -379,11 +389,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminPermissionsUsage(context.Background(), orgId, permissionId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminPermissionsUsage(context.Background(), orgId, permissionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminPermissionsUsage``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminPermissionsUsage`: AdminPermissionsUsageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminPermissionsUsage`: %v\n", resp)
 }
 ```
 
@@ -408,7 +420,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminPermissionsUsageResponse**](AdminPermissionsUsageResponse.md)
 
 ### Authorization
 
@@ -417,7 +429,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -426,7 +438,7 @@ Name | Type | Description  | Notes
 
 ## AdminScopesCreate
 
-> AdminScopesCreate(ctx, orgId).Execute()
+> AdminScopesCreateResponse AdminScopesCreate(ctx, orgId).Execute()
 
 Create a custom OAuth scope
 
@@ -447,11 +459,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminScopesCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminScopesCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminScopesCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminScopesCreate`: AdminScopesCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminScopesCreate`: %v\n", resp)
 }
 ```
 
@@ -474,7 +488,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminScopesCreateResponse**](AdminScopesCreateResponse.md)
 
 ### Authorization
 
@@ -483,7 +497,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -492,7 +506,7 @@ Name | Type | Description  | Notes
 
 ## AdminScopesDelete
 
-> AdminScopesDelete(ctx, orgId, scopeId).Execute()
+> MessageResponse AdminScopesDelete(ctx, orgId, scopeId).Execute()
 
 Delete a custom OAuth scope
 
@@ -514,11 +528,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminScopesDelete(context.Background(), orgId, scopeId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminScopesDelete(context.Background(), orgId, scopeId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminScopesDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminScopesDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminScopesDelete`: %v\n", resp)
 }
 ```
 
@@ -543,7 +559,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -552,7 +568,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -561,7 +577,7 @@ Name | Type | Description  | Notes
 
 ## AdminScopesList
 
-> AdminScopesList(ctx, orgId).Execute()
+> AdminScopesListResponse AdminScopesList(ctx, orgId).Execute()
 
 List OAuth scopes
 
@@ -582,11 +598,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminPermissionsAPI.AdminScopesList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminPermissionsAPI.AdminScopesList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminPermissionsAPI.AdminScopesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminScopesList`: AdminScopesListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminPermissionsAPI.AdminScopesList`: %v\n", resp)
 }
 ```
 
@@ -609,7 +627,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminScopesListResponse**](AdminScopesListResponse.md)
 
 ### Authorization
 
@@ -618,7 +636,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -14,7 +14,7 @@
 |**mfaEnabled** | **Boolean** |  |  [optional] |
 |**roles** | **List&lt;String&gt;** |  |  [optional] |
 |**capabilities** | **List&lt;String&gt;** |  |  [optional] |
-|**tenant** | [**GetMeResponseTenant**](GetMeResponseTenant.md) |  |  [optional] |
+|**tenant** | [**GroupRef**](GroupRef.md) |  |  [optional] |
 
 
 

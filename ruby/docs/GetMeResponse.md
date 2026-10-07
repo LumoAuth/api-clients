@@ -11,7 +11,7 @@
 | **mfa_enabled** | **Boolean** |  | [optional] |
 | **roles** | **Array&lt;String&gt;** |  | [optional] |
 | **capabilities** | **Array&lt;String&gt;** |  | [optional] |
-| **tenant** | [**GetMeResponseTenant**](GetMeResponseTenant.md) |  | [optional] |
+| **tenant** | [**GroupRef**](GroupRef.md) |  | [optional] |
 
 ## Example
 

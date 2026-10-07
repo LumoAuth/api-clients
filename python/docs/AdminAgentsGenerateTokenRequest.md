@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**scopes** | **List[str]** | Optional scopes to embed in the token. | [optional] 
-**ttl** | **int** | Optional token lifetime in seconds. | [optional] 
+**expires_in** | **int** | Token lifetime in seconds. Default 3600, at most 2592000 (30 days). | [optional] 
+**scopes** | **List[str]** | Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400. | [optional] 
 
 ## Example
 

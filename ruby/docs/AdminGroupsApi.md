@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_groups_add_members**](AdminGroupsApi.md#admin_groups_add_members) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]} |
+| [**admin_groups_add_members**](AdminGroupsApi.md#admin_groups_add_members) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group |
 | [**admin_groups_add_role**](AdminGroupsApi.md#admin_groups_add_role) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group |
 | [**admin_groups_create**](AdminGroupsApi.md#admin_groups_create) | **POST** /orgs/{orgId}/api/v1/admin/groups | Create a new group |
 | [**admin_groups_delete**](AdminGroupsApi.md#admin_groups_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group |
@@ -12,7 +12,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**admin_groups_get_members**](AdminGroupsApi.md#admin_groups_get_members) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members |
 | [**admin_groups_groups_get_roles**](AdminGroupsApi.md#admin_groups_groups_get_roles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles |
 | [**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant |
-| [**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email |
+| [**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group |
 | [**admin_groups_remove_role**](AdminGroupsApi.md#admin_groups_remove_role) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group |
 | [**admin_groups_update_roles**](AdminGroupsApi.md#admin_groups_update_roles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles) |
 | [**patch_admin_groups_update**](AdminGroupsApi.md#patch_admin_groups_update) | **PATCH** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group |
@@ -21,9 +21,9 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_groups_add_members
 
-> admin_groups_add_members(org_id, group_id)
+> <AdminGroupsCreateResponse> admin_groups_add_members(org_id, group_id)
 
-Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+Add member(s) to group
 
 ### Examples
 
@@ -46,8 +46,9 @@ org_id = 'org_id_example' # String |
 group_id = 'group_id_example' # String | 
 
 begin
-  # Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
-  api_instance.admin_groups_add_members(org_id, group_id)
+  # Add member(s) to group
+  result = api_instance.admin_groups_add_members(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_add_members: #{e}"
 end
@@ -55,17 +56,17 @@ end
 
 #### Using the admin_groups_add_members_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_add_members_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_add_members_with_http_info(org_id, group_id)
 
 ```ruby
 begin
-  # Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+  # Add member(s) to group
   data, status_code, headers = api_instance.admin_groups_add_members_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_add_members_with_http_info: #{e}"
 end
@@ -80,7 +81,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -89,12 +90,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_add_role
 
-> admin_groups_add_role(org_id, group_id)
+> <MessageResponse> admin_groups_add_role(org_id, group_id)
 
 Add a single role to a group
 
@@ -120,7 +121,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Add a single role to a group
-  api_instance.admin_groups_add_role(org_id, group_id)
+  result = api_instance.admin_groups_add_role(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_add_role: #{e}"
 end
@@ -128,9 +130,9 @@ end
 
 #### Using the admin_groups_add_role_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_add_role_with_http_info(org_id, group_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_groups_add_role_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -138,7 +140,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_add_role_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_add_role_with_http_info: #{e}"
 end
@@ -153,7 +155,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -162,12 +164,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_create
 
-> admin_groups_create(org_id)
+> <AdminGroupsCreateResponse> admin_groups_create(org_id)
 
 Create a new group
 
@@ -192,7 +194,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Create a new group
-  api_instance.admin_groups_create(org_id)
+  result = api_instance.admin_groups_create(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_create: #{e}"
 end
@@ -200,9 +203,9 @@ end
 
 #### Using the admin_groups_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_create_with_http_info(org_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_create_with_http_info(org_id)
 
 ```ruby
 begin
@@ -210,7 +213,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_create_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_create_with_http_info: #{e}"
 end
@@ -224,7 +227,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -233,12 +236,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_delete
 
-> admin_groups_delete(org_id, group_id)
+> <MessageResponse> admin_groups_delete(org_id, group_id)
 
 Delete a group
 
@@ -264,7 +267,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Delete a group
-  api_instance.admin_groups_delete(org_id, group_id)
+  result = api_instance.admin_groups_delete(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_delete: #{e}"
 end
@@ -272,9 +276,9 @@ end
 
 #### Using the admin_groups_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_delete_with_http_info(org_id, group_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_groups_delete_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -282,7 +286,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_delete_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_delete_with_http_info: #{e}"
 end
@@ -297,7 +301,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -306,12 +310,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_get
 
-> admin_groups_get(org_id, group_id)
+> <AdminGroupsGetResponse> admin_groups_get(org_id, group_id)
 
 Get a single group by ID or slug
 
@@ -337,7 +341,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Get a single group by ID or slug
-  api_instance.admin_groups_get(org_id, group_id)
+  result = api_instance.admin_groups_get(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_get: #{e}"
 end
@@ -345,9 +350,9 @@ end
 
 #### Using the admin_groups_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_get_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsGetResponse>, Integer, Hash)> admin_groups_get_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -355,7 +360,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_get_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_get_with_http_info: #{e}"
 end
@@ -370,7 +375,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsGetResponse**](AdminGroupsGetResponse.md)
 
 ### Authorization
 
@@ -379,12 +384,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_get_members
 
-> admin_groups_get_members(org_id, group_id)
+> <AdminGroupsGetMembersResponse> admin_groups_get_members(org_id, group_id)
 
 Get group members
 
@@ -410,7 +415,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Get group members
-  api_instance.admin_groups_get_members(org_id, group_id)
+  result = api_instance.admin_groups_get_members(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_get_members: #{e}"
 end
@@ -418,9 +424,9 @@ end
 
 #### Using the admin_groups_get_members_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_get_members_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsGetMembersResponse>, Integer, Hash)> admin_groups_get_members_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -428,7 +434,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_get_members_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsGetMembersResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_get_members_with_http_info: #{e}"
 end
@@ -443,7 +449,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsGetMembersResponse**](AdminGroupsGetMembersResponse.md)
 
 ### Authorization
 
@@ -452,12 +458,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_groups_get_roles
 
-> admin_groups_groups_get_roles(org_id, group_id)
+> <AdminGroupsGroupsGetRolesResponse> admin_groups_groups_get_roles(org_id, group_id)
 
 Get group roles
 
@@ -483,7 +489,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Get group roles
-  api_instance.admin_groups_groups_get_roles(org_id, group_id)
+  result = api_instance.admin_groups_groups_get_roles(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_groups_get_roles: #{e}"
 end
@@ -491,9 +498,9 @@ end
 
 #### Using the admin_groups_groups_get_roles_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_groups_get_roles_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsGroupsGetRolesResponse>, Integer, Hash)> admin_groups_groups_get_roles_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -501,7 +508,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_groups_get_roles_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsGroupsGetRolesResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_groups_get_roles_with_http_info: #{e}"
 end
@@ -516,7 +523,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -525,12 +532,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_list
 
-> admin_groups_list(org_id)
+> <AdminGroupsListResponse> admin_groups_list(org_id)
 
 List all groups in the tenant
 
@@ -555,7 +562,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # List all groups in the tenant
-  api_instance.admin_groups_list(org_id)
+  result = api_instance.admin_groups_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_list: #{e}"
 end
@@ -563,9 +571,9 @@ end
 
 #### Using the admin_groups_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_list_with_http_info(org_id)
+> <Array(<AdminGroupsListResponse>, Integer, Hash)> admin_groups_list_with_http_info(org_id)
 
 ```ruby
 begin
@@ -573,7 +581,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_list_with_http_info: #{e}"
 end
@@ -587,7 +595,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsListResponse**](AdminGroupsListResponse.md)
 
 ### Authorization
 
@@ -596,14 +604,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_remove_member
 
-> admin_groups_remove_member(org_id, group_id, user_id)
+> <MessageResponse> admin_groups_remove_member(org_id, group_id, user_id)
 
-Remove member from group — userId is a UUID or email
+Remove member from group
 
 ### Examples
 
@@ -627,8 +635,9 @@ group_id = 'group_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  # Remove member from group — userId is a UUID or email
-  api_instance.admin_groups_remove_member(org_id, group_id, user_id)
+  # Remove member from group
+  result = api_instance.admin_groups_remove_member(org_id, group_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_remove_member: #{e}"
 end
@@ -636,17 +645,17 @@ end
 
 #### Using the admin_groups_remove_member_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_remove_member_with_http_info(org_id, group_id, user_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_groups_remove_member_with_http_info(org_id, group_id, user_id)
 
 ```ruby
 begin
-  # Remove member from group — userId is a UUID or email
+  # Remove member from group
   data, status_code, headers = api_instance.admin_groups_remove_member_with_http_info(org_id, group_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_remove_member_with_http_info: #{e}"
 end
@@ -662,7 +671,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -671,12 +680,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_remove_role
 
-> admin_groups_remove_role(org_id, group_id, role_id)
+> <MessageResponse> admin_groups_remove_role(org_id, group_id, role_id)
 
 Remove a role from a group
 
@@ -703,7 +712,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Remove a role from a group
-  api_instance.admin_groups_remove_role(org_id, group_id, role_id)
+  result = api_instance.admin_groups_remove_role(org_id, group_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_remove_role: #{e}"
 end
@@ -711,9 +721,9 @@ end
 
 #### Using the admin_groups_remove_role_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_remove_role_with_http_info(org_id, group_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_groups_remove_role_with_http_info(org_id, group_id, role_id)
 
 ```ruby
 begin
@@ -721,7 +731,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_remove_role_with_http_info(org_id, group_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_remove_role_with_http_info: #{e}"
 end
@@ -737,7 +747,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -746,12 +756,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_groups_update_roles
 
-> admin_groups_update_roles(org_id, group_id)
+> <AdminGroupsCreateResponse> admin_groups_update_roles(org_id, group_id)
 
 Update group roles (replaces all existing roles)
 
@@ -777,7 +787,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Update group roles (replaces all existing roles)
-  api_instance.admin_groups_update_roles(org_id, group_id)
+  result = api_instance.admin_groups_update_roles(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_update_roles: #{e}"
 end
@@ -785,9 +796,9 @@ end
 
 #### Using the admin_groups_update_roles_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_groups_update_roles_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> admin_groups_update_roles_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -795,7 +806,7 @@ begin
   data, status_code, headers = api_instance.admin_groups_update_roles_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->admin_groups_update_roles_with_http_info: #{e}"
 end
@@ -810,7 +821,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -819,12 +830,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_groups_update
 
-> patch_admin_groups_update(org_id, group_id)
+> <AdminGroupsCreateResponse> patch_admin_groups_update(org_id, group_id)
 
 Update an existing group
 
@@ -850,7 +861,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Update an existing group
-  api_instance.patch_admin_groups_update(org_id, group_id)
+  result = api_instance.patch_admin_groups_update(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->patch_admin_groups_update: #{e}"
 end
@@ -858,9 +870,9 @@ end
 
 #### Using the patch_admin_groups_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_groups_update_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> patch_admin_groups_update_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -868,7 +880,7 @@ begin
   data, status_code, headers = api_instance.patch_admin_groups_update_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->patch_admin_groups_update_with_http_info: #{e}"
 end
@@ -883,7 +895,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -892,12 +904,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_groups_update
 
-> put_admin_groups_update(org_id, group_id)
+> <AdminGroupsCreateResponse> put_admin_groups_update(org_id, group_id)
 
 Update an existing group
 
@@ -923,7 +935,8 @@ group_id = 'group_id_example' # String |
 
 begin
   # Update an existing group
-  api_instance.put_admin_groups_update(org_id, group_id)
+  result = api_instance.put_admin_groups_update(org_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->put_admin_groups_update: #{e}"
 end
@@ -931,9 +944,9 @@ end
 
 #### Using the put_admin_groups_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_groups_update_with_http_info(org_id, group_id)
+> <Array(<AdminGroupsCreateResponse>, Integer, Hash)> put_admin_groups_update_with_http_info(org_id, group_id)
 
 ```ruby
 begin
@@ -941,7 +954,7 @@ begin
   data, status_code, headers = api_instance.put_admin_groups_update_with_http_info(org_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminGroupsApi->put_admin_groups_update_with_http_info: #{e}"
 end
@@ -956,7 +969,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -965,5 +978,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

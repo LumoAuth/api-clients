@@ -29,9 +29,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsCreate(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsCreate(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -43,9 +44,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsList(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsList(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -58,9 +60,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var invId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsResend(context.Background(), orgId, organizationId, invId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsResend(context.Background(), orgId, organizationId, invId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -73,9 +76,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var invId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsRevoke(context.Background(), orgId, organizationId, invId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgInvitationsRevoke(context.Background(), orgId, organizationId, invId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -87,9 +91,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersAdd(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersAdd(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -101,9 +106,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersList(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersList(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -116,9 +122,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var userId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersRemove(context.Background(), orgId, organizationId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgMembersRemove(context.Background(), orgId, organizationId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -130,9 +137,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesCreate(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesCreate(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -145,9 +153,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var roleId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesDelete(context.Background(), orgId, organizationId, roleId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesDelete(context.Background(), orgId, organizationId, roleId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -159,9 +168,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesList(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrgRolesList(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -172,9 +182,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -186,9 +197,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsDelete(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsDelete(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -200,9 +212,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsGet(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsGet(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -213,9 +226,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.AdminOrganizationsList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -228,9 +242,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var userId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -243,9 +258,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var roleId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.PatchAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -257,9 +273,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.PatchAdminOrganizationsUpdate(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.PatchAdminOrganizationsUpdate(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -272,9 +289,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var userId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.PutAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.PutAdminOrgMembersUpdate(context.Background(), orgId, organizationId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -287,9 +305,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var organizationId string
 		var roleId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.PutAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.PutAdminOrgRolesUpdate(context.Background(), orgId, organizationId, roleId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -301,9 +320,10 @@ func Test_lumoauthclient_AdminOrganizationsAPIService(t *testing.T) {
 		var orgId string
 		var organizationId string
 
-		httpRes, err := apiClient.AdminOrganizationsAPI.PutAdminOrganizationsUpdate(context.Background(), orgId, organizationId).Execute()
+		resp, httpRes, err := apiClient.AdminOrganizationsAPI.PutAdminOrganizationsUpdate(context.Background(), orgId, organizationId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

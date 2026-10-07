@@ -22,16 +22,16 @@ module LumoAuthApiClient
     # Create a custom permission for the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminPermissionsCreateResponse]
     def admin_permissions_create(org_id, opts = {})
-      admin_permissions_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_permissions_create_with_http_info(org_id, opts)
+      data
     end
 
     # Create a custom permission for the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminPermissionsCreateResponse, Integer, Hash)>] AdminPermissionsCreateResponse data, response status code and response headers
     def admin_permissions_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_create ...'
@@ -48,6 +48,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +58,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminPermissionsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -82,17 +84,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_permissions_delete(org_id, permission_id, opts = {})
-      admin_permissions_delete_with_http_info(org_id, permission_id, opts)
-      nil
+      data, _status_code, _headers = admin_permissions_delete_with_http_info(org_id, permission_id, opts)
+      data
     end
 
     # Delete a custom permission
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_permissions_delete_with_http_info(org_id, permission_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_delete ...'
@@ -113,6 +115,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -121,7 +125,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -147,17 +151,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminPermissionsGetResponse]
     def admin_permissions_get(org_id, permission_id, opts = {})
-      admin_permissions_get_with_http_info(org_id, permission_id, opts)
-      nil
+      data, _status_code, _headers = admin_permissions_get_with_http_info(org_id, permission_id, opts)
+      data
     end
 
     # Get a single permission
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminPermissionsGetResponse, Integer, Hash)>] AdminPermissionsGetResponse data, response status code and response headers
     def admin_permissions_get_with_http_info(org_id, permission_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_get ...'
@@ -178,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -186,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminPermissionsGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -211,16 +217,16 @@ module LumoAuthApiClient
     # List all available permissions for the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminPermissionsListResponse]
     def admin_permissions_list(org_id, opts = {})
-      admin_permissions_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_permissions_list_with_http_info(org_id, opts)
+      data
     end
 
     # List all available permissions for the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminPermissionsListResponse, Integer, Hash)>] AdminPermissionsListResponse data, response status code and response headers
     def admin_permissions_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_list ...'
@@ -237,6 +243,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -245,7 +253,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminPermissionsListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -271,17 +279,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminPermissionsCreateResponse]
     def admin_permissions_update(org_id, permission_id, opts = {})
-      admin_permissions_update_with_http_info(org_id, permission_id, opts)
-      nil
+      data, _status_code, _headers = admin_permissions_update_with_http_info(org_id, permission_id, opts)
+      data
     end
 
     # Update a permission
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminPermissionsCreateResponse, Integer, Hash)>] AdminPermissionsCreateResponse data, response status code and response headers
     def admin_permissions_update_with_http_info(org_id, permission_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_update ...'
@@ -302,6 +310,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -310,7 +320,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminPermissionsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -336,17 +346,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminPermissionsUsageResponse]
     def admin_permissions_usage(org_id, permission_id, opts = {})
-      admin_permissions_usage_with_http_info(org_id, permission_id, opts)
-      nil
+      data, _status_code, _headers = admin_permissions_usage_with_http_info(org_id, permission_id, opts)
+      data
     end
 
     # Get permission usage (roles assigned to this permission)
     # @param org_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminPermissionsUsageResponse, Integer, Hash)>] AdminPermissionsUsageResponse data, response status code and response headers
     def admin_permissions_usage_with_http_info(org_id, permission_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_permissions_usage ...'
@@ -367,6 +377,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -375,7 +387,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminPermissionsUsageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -400,16 +412,16 @@ module LumoAuthApiClient
     # Create a custom OAuth scope
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminScopesCreateResponse]
     def admin_scopes_create(org_id, opts = {})
-      admin_scopes_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_scopes_create_with_http_info(org_id, opts)
+      data
     end
 
     # Create a custom OAuth scope
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminScopesCreateResponse, Integer, Hash)>] AdminScopesCreateResponse data, response status code and response headers
     def admin_scopes_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_scopes_create ...'
@@ -426,6 +438,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -434,7 +448,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminScopesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -460,17 +474,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param scope_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_scopes_delete(org_id, scope_id, opts = {})
-      admin_scopes_delete_with_http_info(org_id, scope_id, opts)
-      nil
+      data, _status_code, _headers = admin_scopes_delete_with_http_info(org_id, scope_id, opts)
+      data
     end
 
     # Delete a custom OAuth scope
     # @param org_id [String] 
     # @param scope_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_scopes_delete_with_http_info(org_id, scope_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_scopes_delete ...'
@@ -491,6 +505,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -499,7 +515,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -524,16 +540,16 @@ module LumoAuthApiClient
     # List OAuth scopes
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminScopesListResponse]
     def admin_scopes_list(org_id, opts = {})
-      admin_scopes_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_scopes_list_with_http_info(org_id, opts)
+      data
     end
 
     # List OAuth scopes
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminScopesListResponse, Integer, Hash)>] AdminScopesListResponse data, response status code and response headers
     def admin_scopes_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminPermissionsApi.admin_scopes_list ...'
@@ -550,6 +566,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -558,7 +576,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminScopesListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

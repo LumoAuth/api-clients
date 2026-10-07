@@ -48,12 +48,17 @@ import io.lumoauth.client.JSON;
 /**
  * DenyRequestRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class DenyRequestRequest {
   public static final String SERIALIZED_NAME_REASON = "reason";
   @SerializedName(SERIALIZED_NAME_REASON)
   @javax.annotation.Nullable
   private String reason;
+
+  public static final String SERIALIZED_NAME_AGENT_MESSAGE = "agent_message";
+  @SerializedName(SERIALIZED_NAME_AGENT_MESSAGE)
+  @javax.annotation.Nullable
+  private String agentMessage;
 
   public DenyRequestRequest() {
   }
@@ -64,7 +69,7 @@ public class DenyRequestRequest {
   }
 
   /**
-   * Optional denial reason.
+   * Optional denial reason (internal; never shown to the agent).
    * @return reason
    */
   @javax.annotation.Nullable
@@ -74,6 +79,25 @@ public class DenyRequestRequest {
 
   public void setReason(@javax.annotation.Nullable String reason) {
     this.reason = reason;
+  }
+
+
+  public DenyRequestRequest agentMessage(@javax.annotation.Nullable String agentMessage) {
+    this.agentMessage = agentMessage;
+    return this;
+  }
+
+  /**
+   * Optional message the agent MAY read on the status endpoint / callback.
+   * @return agentMessage
+   */
+  @javax.annotation.Nullable
+  public String getAgentMessage() {
+    return agentMessage;
+  }
+
+  public void setAgentMessage(@javax.annotation.Nullable String agentMessage) {
+    this.agentMessage = agentMessage;
   }
 
 
@@ -87,12 +111,13 @@ public class DenyRequestRequest {
       return false;
     }
     DenyRequestRequest denyRequestRequest = (DenyRequestRequest) o;
-    return Objects.equals(this.reason, denyRequestRequest.reason);
+    return Objects.equals(this.reason, denyRequestRequest.reason) &&
+        Objects.equals(this.agentMessage, denyRequestRequest.agentMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(reason);
+    return Objects.hash(reason, agentMessage);
   }
 
   @Override
@@ -100,6 +125,7 @@ public class DenyRequestRequest {
     StringBuilder sb = new StringBuilder();
     sb.append("class DenyRequestRequest {\n");
     sb.append("    reason: ").append(toIndentedString(reason)).append("\n");
+    sb.append("    agentMessage: ").append(toIndentedString(agentMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -121,7 +147,7 @@ public class DenyRequestRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("reason"));
+    openapiFields = new HashSet<String>(Arrays.asList("reason", "agent_message"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -150,6 +176,9 @@ public class DenyRequestRequest {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("reason") != null && !jsonObj.get("reason").isJsonNull()) && !jsonObj.get("reason").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `reason` to be a primitive type in the JSON string but got `%s`", jsonObj.get("reason").toString()));
+      }
+      if ((jsonObj.get("agent_message") != null && !jsonObj.get("agent_message").isJsonNull()) && !jsonObj.get("agent_message").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `agent_message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("agent_message").toString()));
       }
   }
 

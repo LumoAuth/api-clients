@@ -15,13 +15,17 @@ require 'time'
 
 module LumoAuthApiClient
   class DenyRequestRequest
-    # Optional denial reason.
+    # Optional denial reason (internal; never shown to the agent).
     attr_accessor :reason
+
+    # Optional message the agent MAY read on the status endpoint / callback.
+    attr_accessor :agent_message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'reason' => :'reason'
+        :'reason' => :'reason',
+        :'agent_message' => :'agent_message'
       }
     end
 
@@ -38,7 +42,8 @@ module LumoAuthApiClient
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'reason' => :'String'
+        :'reason' => :'String',
+        :'agent_message' => :'String'
       }
     end
 
@@ -67,6 +72,10 @@ module LumoAuthApiClient
       if attributes.key?(:'reason')
         self.reason = attributes[:'reason']
       end
+
+      if attributes.key?(:'agent_message')
+        self.agent_message = attributes[:'agent_message']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -89,7 +98,8 @@ module LumoAuthApiClient
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          reason == o.reason
+          reason == o.reason &&
+          agent_message == o.agent_message
     end
 
     # @see the `==` method
@@ -101,7 +111,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [reason].hash
+      [reason, agent_message].hash
     end
 
     # Builds the object from hash

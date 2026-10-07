@@ -27,6 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminGroupsCreateResponse;
+import io.lumoauth.client.model.AdminGroupsGetMembersResponse;
+import io.lumoauth.client.model.AdminGroupsGetResponse;
+import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
+import io.lumoauth.client.model.AdminGroupsListResponse;
+import io.lumoauth.client.model.MessageResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -82,7 +88,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsAddMembersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -113,6 +119,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -147,43 +154,46 @@ public class AdminGroupsApi {
     }
 
     /**
-     * Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     * Add member(s) to group
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsAddMembers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsAddMembersWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse adminGroupsAddMembers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsAddMembersWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
-     * Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     * Add member(s) to group
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsAddMembersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsCreateResponse> adminGroupsAddMembersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsAddMembersValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]} (asynchronously)
+     * Add member(s) to group (asynchronously)
      * 
      * @param orgId  (required)
      * @param groupId  (required)
@@ -194,13 +204,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group; message reports how many members were added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsAddMembersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsAddMembersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsAddMembersValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -214,7 +225,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsAddRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -245,6 +256,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -283,16 +295,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsAddRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsAddRoleWithHttpInfo(orgId, groupId);
+    public MessageResponse adminGroupsAddRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminGroupsAddRoleWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -300,18 +314,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsAddRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<MessageResponse> adminGroupsAddRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsAddRoleValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -326,13 +341,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsAddRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsAddRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsAddRoleValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -345,7 +361,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -375,6 +391,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -407,34 +424,37 @@ public class AdminGroupsApi {
      * Create a new group
      * 
      * @param orgId  (required)
+     * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminGroupsCreateWithHttpInfo(orgId);
+    public AdminGroupsCreateResponse adminGroupsCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Create a new group
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminGroupsCreateResponse> adminGroupsCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -448,13 +468,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -468,7 +489,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -499,6 +520,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -537,16 +559,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsDeleteWithHttpInfo(orgId, groupId);
+    public MessageResponse adminGroupsDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminGroupsDeleteWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -554,18 +578,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<MessageResponse> adminGroupsDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsDeleteValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -580,13 +605,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsDeleteValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -600,7 +626,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -631,6 +657,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -669,16 +696,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsGetWithHttpInfo(orgId, groupId);
+    public AdminGroupsGetResponse adminGroupsGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsGetResponse> localVarResp = adminGroupsGetWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -686,18 +715,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsGetResponse> adminGroupsGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsGetValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -712,13 +742,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsGetValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -732,7 +763,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group members </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsGetMembersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -763,6 +794,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -801,16 +833,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsGetMembersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group members </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsGetMembers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsGetMembersWithHttpInfo(orgId, groupId);
+    public AdminGroupsGetMembersResponse adminGroupsGetMembers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsGetMembersResponse> localVarResp = adminGroupsGetMembersWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -818,18 +852,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsGetMembersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group members </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsGetMembersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsGetMembersResponse> adminGroupsGetMembersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsGetMembersValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsGetMembersResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -844,13 +879,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group members </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsGetMembersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsGetMembersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsGetMembersResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsGetMembersValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsGetMembersResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -864,7 +900,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group roles </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsGroupsGetRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -895,6 +931,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -933,16 +970,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsGroupsGetRolesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group roles </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsGroupsGetRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsGroupsGetRolesWithHttpInfo(orgId, groupId);
+    public AdminGroupsGroupsGetRolesResponse adminGroupsGroupsGetRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsGroupsGetRolesResponse> localVarResp = adminGroupsGroupsGetRolesWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -950,18 +989,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsGroupsGetRolesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group roles </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsGroupsGetRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsGroupsGetRolesResponse> adminGroupsGroupsGetRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsGroupsGetRolesValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsGroupsGetRolesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -976,13 +1016,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Group roles </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsGroupsGetRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsGroupsGetRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsGroupsGetRolesResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsGroupsGetRolesValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsGroupsGetRolesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -995,7 +1036,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1025,6 +1066,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1057,34 +1099,37 @@ public class AdminGroupsApi {
      * List all groups in the tenant
      * 
      * @param orgId  (required)
+     * @return AdminGroupsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminGroupsListWithHttpInfo(orgId);
+    public AdminGroupsListResponse adminGroupsList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminGroupsListResponse> localVarResp = adminGroupsListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * List all groups in the tenant
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminGroupsListResponse> adminGroupsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1098,13 +1143,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminGroupsListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1119,7 +1165,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsRemoveMemberCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1151,6 +1197,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1190,45 +1237,48 @@ public class AdminGroupsApi {
     }
 
     /**
-     * Remove member from group — userId is a UUID or email
+     * Remove member from group
      * 
      * @param orgId  (required)
      * @param groupId  (required)
      * @param userId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsRemoveMember(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminGroupsRemoveMemberWithHttpInfo(orgId, groupId, userId);
+    public MessageResponse adminGroupsRemoveMember(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminGroupsRemoveMemberWithHttpInfo(orgId, groupId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * Remove member from group — userId is a UUID or email
+     * Remove member from group
      * 
      * @param orgId  (required)
      * @param groupId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsRemoveMemberWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<MessageResponse> adminGroupsRemoveMemberWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsRemoveMemberValidateBeforeCall(orgId, groupId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Remove member from group — userId is a UUID or email (asynchronously)
+     * Remove member from group (asynchronously)
      * 
      * @param orgId  (required)
      * @param groupId  (required)
@@ -1240,13 +1290,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsRemoveMemberAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsRemoveMemberAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String userId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsRemoveMemberValidateBeforeCall(orgId, groupId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1261,7 +1312,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsRemoveRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -1293,6 +1344,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1337,16 +1389,18 @@ public class AdminGroupsApi {
      * @param orgId  (required)
      * @param groupId  (required)
      * @param roleId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsRemoveRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminGroupsRemoveRoleWithHttpInfo(orgId, groupId, roleId);
+    public MessageResponse adminGroupsRemoveRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminGroupsRemoveRoleWithHttpInfo(orgId, groupId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1355,18 +1409,19 @@ public class AdminGroupsApi {
      * @param orgId  (required)
      * @param groupId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsRemoveRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<MessageResponse> adminGroupsRemoveRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsRemoveRoleValidateBeforeCall(orgId, groupId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1382,13 +1437,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsRemoveRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsRemoveRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsRemoveRoleValidateBeforeCall(orgId, groupId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1402,7 +1458,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminGroupsUpdateRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -1433,6 +1489,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1471,16 +1528,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public void adminGroupsUpdateRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        adminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse adminGroupsUpdateRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = adminGroupsUpdateRolesWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1488,18 +1547,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminGroupsUpdateRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsCreateResponse> adminGroupsUpdateRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = adminGroupsUpdateRolesValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1514,13 +1574,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminGroupsUpdateRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminGroupsUpdateRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminGroupsUpdateRolesValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1534,7 +1595,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminGroupsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -1565,6 +1626,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1603,16 +1665,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        patchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse patchAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = patchAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1620,18 +1684,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsCreateResponse> patchAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminGroupsUpdateValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1646,13 +1711,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminGroupsUpdateValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1666,7 +1732,7 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminGroupsUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -1697,6 +1763,7 @@ public class AdminGroupsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1735,16 +1802,18 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
+     * @return AdminGroupsCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        putAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+    public AdminGroupsCreateResponse putAdminGroupsUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<AdminGroupsCreateResponse> localVarResp = putAdminGroupsUpdateWithHttpInfo(orgId, groupId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1752,18 +1821,19 @@ public class AdminGroupsApi {
      * 
      * @param orgId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<AdminGroupsCreateResponse> putAdminGroupsUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = putAdminGroupsUpdateValidateBeforeCall(orgId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1778,13 +1848,14 @@ public class AdminGroupsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated group </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminGroupsUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String groupId, final ApiCallback<AdminGroupsCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminGroupsUpdateValidateBeforeCall(orgId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

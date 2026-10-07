@@ -21,7 +21,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 <a id="adminRolesAddPermissions"></a>
 # **adminRolesAddPermissions**
-> adminRolesAddPermissions(orgId, roleId)
+> MessageResponse adminRolesAddPermissions(orgId, roleId)
 
 Add permission(s) to a role
 
@@ -54,7 +54,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesAddPermissions(orgId, roleId);
+      MessageResponse result = apiInstance.adminRolesAddPermissions(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesAddPermissions");
       System.err.println("Status code: " + e.getCode());
@@ -75,7 +76,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -84,16 +85,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Added; message reports how many permissions were added |  -  |
 
 <a id="adminRolesAddUser"></a>
 # **adminRolesAddUser**
-> adminRolesAddUser(orgId, roleId)
+> MessageResponse adminRolesAddUser(orgId, roleId)
 
 Assign a user to a role
 
@@ -126,7 +127,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesAddUser(orgId, roleId);
+      MessageResponse result = apiInstance.adminRolesAddUser(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesAddUser");
       System.err.println("Status code: " + e.getCode());
@@ -147,7 +149,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -156,16 +158,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Assigned |  -  |
 
 <a id="adminRolesCreate"></a>
 # **adminRolesCreate**
-> adminRolesCreate(orgId)
+> AdminRolesCreateResponse adminRolesCreate(orgId)
 
 Create a new role
 
@@ -197,7 +199,8 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminRolesCreate(orgId);
+      AdminRolesCreateResponse result = apiInstance.adminRolesCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesCreate");
       System.err.println("Status code: " + e.getCode());
@@ -217,7 +220,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -226,16 +229,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created role |  -  |
 
 <a id="adminRolesDelete"></a>
 # **adminRolesDelete**
-> adminRolesDelete(orgId, roleId)
+> MessageResponse adminRolesDelete(orgId, roleId)
 
 Delete a role
 
@@ -268,7 +271,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesDelete(orgId, roleId);
+      MessageResponse result = apiInstance.adminRolesDelete(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesDelete");
       System.err.println("Status code: " + e.getCode());
@@ -289,7 +293,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -298,16 +302,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
 
 <a id="adminRolesGet"></a>
 # **adminRolesGet**
-> adminRolesGet(orgId, roleId)
+> AdminRolesGetResponse adminRolesGet(orgId, roleId)
 
 Get a single role by ID or slug
 
@@ -340,7 +344,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesGet(orgId, roleId);
+      AdminRolesGetResponse result = apiInstance.adminRolesGet(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesGet");
       System.err.println("Status code: " + e.getCode());
@@ -361,7 +366,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesGetResponse**](AdminRolesGetResponse.md)
 
 ### Authorization
 
@@ -370,16 +375,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role |  -  |
 
 <a id="adminRolesGetPermissions"></a>
 # **adminRolesGetPermissions**
-> adminRolesGetPermissions(orgId, roleId)
+> AdminRolesGetPermissionsResponse adminRolesGetPermissions(orgId, roleId)
 
 Get role permissions
 
@@ -412,7 +417,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesGetPermissions(orgId, roleId);
+      AdminRolesGetPermissionsResponse result = apiInstance.adminRolesGetPermissions(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesGetPermissions");
       System.err.println("Status code: " + e.getCode());
@@ -433,7 +439,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -442,16 +448,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role permissions |  -  |
 
 <a id="adminRolesGetUsers"></a>
 # **adminRolesGetUsers**
-> adminRolesGetUsers(orgId, roleId)
+> AdminRolesGetUsersResponse adminRolesGetUsers(orgId, roleId)
 
 Get users assigned to a role
 
@@ -484,7 +490,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesGetUsers(orgId, roleId);
+      AdminRolesGetUsersResponse result = apiInstance.adminRolesGetUsers(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesGetUsers");
       System.err.println("Status code: " + e.getCode());
@@ -505,7 +512,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesGetUsersResponse**](AdminRolesGetUsersResponse.md)
 
 ### Authorization
 
@@ -514,16 +521,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role users |  -  |
 
 <a id="adminRolesList"></a>
 # **adminRolesList**
-> adminRolesList(orgId)
+> AdminRolesListResponse adminRolesList(orgId)
 
 List all roles in the tenant
 
@@ -555,7 +562,8 @@ public class Example {
     AdminRolesApi apiInstance = new AdminRolesApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminRolesList(orgId);
+      AdminRolesListResponse result = apiInstance.adminRolesList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesList");
       System.err.println("Status code: " + e.getCode());
@@ -575,7 +583,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesListResponse**](AdminRolesListResponse.md)
 
 ### Authorization
 
@@ -584,16 +592,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Roles |  -  |
 
 <a id="adminRolesRemovePermission"></a>
 # **adminRolesRemovePermission**
-> adminRolesRemovePermission(orgId, roleId, permissionId)
+> MessageResponse adminRolesRemovePermission(orgId, roleId, permissionId)
 
 Remove a permission from a role
 
@@ -627,7 +635,8 @@ public class Example {
     String roleId = "roleId_example"; // String | 
     String permissionId = "permissionId_example"; // String | 
     try {
-      apiInstance.adminRolesRemovePermission(orgId, roleId, permissionId);
+      MessageResponse result = apiInstance.adminRolesRemovePermission(orgId, roleId, permissionId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesRemovePermission");
       System.err.println("Status code: " + e.getCode());
@@ -649,7 +658,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -658,16 +667,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 <a id="adminRolesRemoveUser"></a>
 # **adminRolesRemoveUser**
-> adminRolesRemoveUser(orgId, roleId, userId)
+> MessageResponse adminRolesRemoveUser(orgId, roleId, userId)
 
 Remove a user from a role
 
@@ -701,7 +710,8 @@ public class Example {
     String roleId = "roleId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminRolesRemoveUser(orgId, roleId, userId);
+      MessageResponse result = apiInstance.adminRolesRemoveUser(orgId, roleId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesRemoveUser");
       System.err.println("Status code: " + e.getCode());
@@ -723,7 +733,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -732,16 +742,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Removed |  -  |
 
 <a id="adminRolesUpdatePermissions"></a>
 # **adminRolesUpdatePermissions**
-> adminRolesUpdatePermissions(orgId, roleId)
+> AdminRolesCreateResponse adminRolesUpdatePermissions(orgId, roleId)
 
 Update role permissions (replaces all)
 
@@ -774,7 +784,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminRolesUpdatePermissions(orgId, roleId);
+      AdminRolesCreateResponse result = apiInstance.adminRolesUpdatePermissions(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#adminRolesUpdatePermissions");
       System.err.println("Status code: " + e.getCode());
@@ -795,7 +806,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -804,16 +815,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
 
 <a id="patchAdminRolesUpdate"></a>
 # **patchAdminRolesUpdate**
-> patchAdminRolesUpdate(orgId, roleId)
+> AdminRolesCreateResponse patchAdminRolesUpdate(orgId, roleId)
 
 Update an existing role
 
@@ -846,7 +857,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.patchAdminRolesUpdate(orgId, roleId);
+      AdminRolesCreateResponse result = apiInstance.patchAdminRolesUpdate(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#patchAdminRolesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -867,7 +879,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -876,16 +888,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
 
 <a id="putAdminRolesUpdate"></a>
 # **putAdminRolesUpdate**
-> putAdminRolesUpdate(orgId, roleId)
+> AdminRolesCreateResponse putAdminRolesUpdate(orgId, roleId)
 
 Update an existing role
 
@@ -918,7 +930,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.putAdminRolesUpdate(orgId, roleId);
+      AdminRolesCreateResponse result = apiInstance.putAdminRolesUpdate(orgId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminRolesApi#putAdminRolesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -939,7 +952,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -948,10 +961,10 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
 

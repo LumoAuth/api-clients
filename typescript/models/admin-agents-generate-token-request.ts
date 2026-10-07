@@ -21,16 +21,16 @@
  */
 export interface AdminAgentsGenerateTokenRequest {
     /**
-     * Optional scopes to embed in the token.
+     * Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+     * @type {number}
+     * @memberof AdminAgentsGenerateTokenRequest
+     */
+    'expiresIn'?: number;
+    /**
+     * Optional subset of the agent\'s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
      * @type {Array<string>}
      * @memberof AdminAgentsGenerateTokenRequest
      */
     'scopes'?: Array<string>;
-    /**
-     * Optional token lifetime in seconds.
-     * @type {number}
-     * @memberof AdminAgentsGenerateTokenRequest
-     */
-    'ttl'?: number;
 }
 

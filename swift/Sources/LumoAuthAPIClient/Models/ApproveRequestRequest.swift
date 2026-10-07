@@ -14,17 +14,21 @@ public struct ApproveRequestRequest: Codable, JSONEncodable, Hashable {
 
     /** Optional TTL override in seconds. */
     public var ttl: Int?
-    /** Optional reviewer notes. */
+    /** Optional reviewer notes (internal; never shown to the agent). */
     public var notes: String?
+    /** Optional message the agent MAY read on the status endpoint / callback. */
+    public var agentMessage: String?
 
-    public init(ttl: Int? = nil, notes: String? = nil) {
+    public init(ttl: Int? = nil, notes: String? = nil, agentMessage: String? = nil) {
         self.ttl = ttl
         self.notes = notes
+        self.agentMessage = agentMessage
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case ttl
         case notes
+        case agentMessage = "agent_message"
     }
 
     // Encodable protocol methods
@@ -33,6 +37,7 @@ public struct ApproveRequestRequest: Codable, JSONEncodable, Hashable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(ttl, forKey: .ttl)
         try container.encodeIfPresent(notes, forKey: .notes)
+        try container.encodeIfPresent(agentMessage, forKey: .agentMessage)
     }
 }
 

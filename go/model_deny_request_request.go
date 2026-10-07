@@ -20,8 +20,10 @@ var _ MappedNullable = &DenyRequestRequest{}
 
 // DenyRequestRequest struct for DenyRequestRequest
 type DenyRequestRequest struct {
-	// Optional denial reason.
+	// Optional denial reason (internal; never shown to the agent).
 	Reason *string `json:"reason,omitempty"`
+	// Optional message the agent MAY read on the status endpoint / callback.
+	AgentMessage *string `json:"agent_message,omitempty"`
 }
 
 // NewDenyRequestRequest instantiates a new DenyRequestRequest object
@@ -73,6 +75,38 @@ func (o *DenyRequestRequest) SetReason(v string) {
 	o.Reason = &v
 }
 
+// GetAgentMessage returns the AgentMessage field value if set, zero value otherwise.
+func (o *DenyRequestRequest) GetAgentMessage() string {
+	if o == nil || IsNil(o.AgentMessage) {
+		var ret string
+		return ret
+	}
+	return *o.AgentMessage
+}
+
+// GetAgentMessageOk returns a tuple with the AgentMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DenyRequestRequest) GetAgentMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.AgentMessage) {
+		return nil, false
+	}
+	return o.AgentMessage, true
+}
+
+// HasAgentMessage returns a boolean if a field has been set.
+func (o *DenyRequestRequest) HasAgentMessage() bool {
+	if o != nil && !IsNil(o.AgentMessage) {
+		return true
+	}
+
+	return false
+}
+
+// SetAgentMessage gets a reference to the given string and assigns it to the AgentMessage field.
+func (o *DenyRequestRequest) SetAgentMessage(v string) {
+	o.AgentMessage = &v
+}
+
 func (o DenyRequestRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -85,6 +119,9 @@ func (o DenyRequestRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Reason) {
 		toSerialize["reason"] = o.Reason
+	}
+	if !IsNil(o.AgentMessage) {
+		toSerialize["agent_message"] = o.AgentMessage
 	}
 	return toSerialize, nil
 }

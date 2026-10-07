@@ -27,6 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminSocialProvidersAvailableResponse;
+import io.lumoauth.client.model.AdminSocialProvidersCallbackUrlsResponse;
+import io.lumoauth.client.model.AdminSocialProvidersCreateResponse;
+import io.lumoauth.client.model.AdminSocialProvidersGetResponse;
+import io.lumoauth.client.model.AdminSocialProvidersListResponse;
+import io.lumoauth.client.model.MessageResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +87,7 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersAvailableCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +117,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,41 +147,44 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Get available social login provider types
+     * List the available social login provider types
      * 
      * @param orgId  (required)
+     * @return AdminSocialProvidersAvailableResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersAvailable(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSocialProvidersAvailableWithHttpInfo(orgId);
+    public AdminSocialProvidersAvailableResponse adminSocialProvidersAvailable(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSocialProvidersAvailableResponse> localVarResp = adminSocialProvidersAvailableWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get available social login provider types
+     * List the available social login provider types
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersAvailableResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersAvailableWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersAvailableResponse> adminSocialProvidersAvailableWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersAvailableValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersAvailableResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get available social login provider types (asynchronously)
+     * List the available social login provider types (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -184,13 +194,14 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersAvailableAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersAvailableAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSocialProvidersAvailableResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersAvailableValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersAvailableResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -203,7 +214,7 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Map of provider name to callback URL </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersCallbackUrlsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -233,6 +244,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -262,41 +274,44 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Get callback URLs for all configured providers
+     * Get the OAuth callback URL of every configured provider
      * 
      * @param orgId  (required)
+     * @return AdminSocialProvidersCallbackUrlsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Map of provider name to callback URL </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersCallbackUrls(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSocialProvidersCallbackUrlsWithHttpInfo(orgId);
+    public AdminSocialProvidersCallbackUrlsResponse adminSocialProvidersCallbackUrls(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSocialProvidersCallbackUrlsResponse> localVarResp = adminSocialProvidersCallbackUrlsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get callback URLs for all configured providers
+     * Get the OAuth callback URL of every configured provider
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersCallbackUrlsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Map of provider name to callback URL </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersCallbackUrlsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersCallbackUrlsResponse> adminSocialProvidersCallbackUrlsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersCallbackUrlsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCallbackUrlsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get callback URLs for all configured providers (asynchronously)
+     * Get the OAuth callback URL of every configured provider (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -306,13 +321,14 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Map of provider name to callback URL </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersCallbackUrlsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersCallbackUrlsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSocialProvidersCallbackUrlsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersCallbackUrlsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCallbackUrlsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -325,7 +341,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -355,6 +372,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -384,41 +402,46 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Create a new social login provider
+     * Create a social login provider
      * 
      * @param orgId  (required)
+     * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSocialProvidersCreateWithHttpInfo(orgId);
+    public AdminSocialProvidersCreateResponse adminSocialProvidersCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = adminSocialProvidersCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Create a new social login provider
+     * Create a social login provider
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersCreateResponse> adminSocialProvidersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Create a new social login provider (asynchronously)
+     * Create a social login provider (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -428,13 +451,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Provider already configured </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -448,7 +473,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
@@ -479,6 +505,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -517,16 +544,19 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        adminSocialProvidersDeleteWithHttpInfo(orgId, providerId);
+    public MessageResponse adminSocialProvidersDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminSocialProvidersDeleteWithHttpInfo(orgId, providerId);
+        return localVarResp.getData();
     }
 
     /**
@@ -534,18 +564,20 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+    public ApiResponse<MessageResponse> adminSocialProvidersDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersDeleteValidateBeforeCall(orgId, providerId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -560,13 +592,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersDeleteValidateBeforeCall(orgId, providerId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -580,7 +614,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersDisableCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
@@ -611,6 +646,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -649,16 +685,19 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersDisable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        adminSocialProvidersDisableWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersCreateResponse adminSocialProvidersDisable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = adminSocialProvidersDisableWithHttpInfo(orgId, providerId);
+        return localVarResp.getData();
     }
 
     /**
@@ -666,18 +705,20 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersDisableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersCreateResponse> adminSocialProvidersDisableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersDisableValidateBeforeCall(orgId, providerId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -692,13 +733,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider disabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersDisableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersDisableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersDisableValidateBeforeCall(orgId, providerId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -712,7 +755,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersEnableCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
@@ -743,6 +787,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -781,16 +826,19 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersEnable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        adminSocialProvidersEnableWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersCreateResponse adminSocialProvidersEnable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = adminSocialProvidersEnableWithHttpInfo(orgId, providerId);
+        return localVarResp.getData();
     }
 
     /**
@@ -798,18 +846,20 @@ public class AdminIdentityProvidersApi {
      * 
      * @param orgId  (required)
      * @param providerId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersEnableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersCreateResponse> adminSocialProvidersEnableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersEnableValidateBeforeCall(orgId, providerId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -824,13 +874,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider enabled (summary fields only) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersEnableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersEnableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersEnableValidateBeforeCall(orgId, providerId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -844,7 +896,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
@@ -875,6 +928,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -909,43 +963,48 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Get a single social login provider (by ID or by provider name)
+     * Get a social login provider
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @return AdminSocialProvidersGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        adminSocialProvidersGetWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersGetResponse adminSocialProvidersGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+        ApiResponse<AdminSocialProvidersGetResponse> localVarResp = adminSocialProvidersGetWithHttpInfo(orgId, providerId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single social login provider (by ID or by provider name)
+     * Get a social login provider
      * 
      * @param orgId  (required)
      * @param providerId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersGetResponse> adminSocialProvidersGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersGetValidateBeforeCall(orgId, providerId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single social login provider (by ID or by provider name) (asynchronously)
+     * Get a social login provider (asynchronously)
      * 
      * @param orgId  (required)
      * @param providerId  (required)
@@ -956,13 +1015,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider (detailed; secrets redacted) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersGetValidateBeforeCall(orgId, providerId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -975,7 +1036,7 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Providers (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1005,6 +1066,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1034,41 +1096,44 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * List all configured social login providers
+     * List social login providers
      * 
      * @param orgId  (required)
+     * @return AdminSocialProvidersListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Providers (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSocialProvidersListWithHttpInfo(orgId);
+    public AdminSocialProvidersListResponse adminSocialProvidersList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSocialProvidersListResponse> localVarResp = adminSocialProvidersListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List all configured social login providers
+     * List social login providers
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Providers (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersListResponse> adminSocialProvidersListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List all configured social login providers (asynchronously)
+     * List social login providers (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1078,13 +1143,14 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Providers (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSocialProvidersListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1097,7 +1163,7 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminSocialProvidersTypesCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1127,6 +1193,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1156,41 +1223,44 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Get available social login provider types
+     * List the available social login provider types
      * 
      * @param orgId  (required)
+     * @return AdminSocialProvidersAvailableResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
-    public void adminSocialProvidersTypes(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminSocialProvidersTypesWithHttpInfo(orgId);
+    public AdminSocialProvidersAvailableResponse adminSocialProvidersTypes(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminSocialProvidersAvailableResponse> localVarResp = adminSocialProvidersTypesWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get available social login provider types
+     * List the available social login provider types
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersAvailableResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminSocialProvidersTypesWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersAvailableResponse> adminSocialProvidersTypesWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminSocialProvidersTypesValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersAvailableResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get available social login provider types (asynchronously)
+     * List the available social login provider types (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1200,13 +1270,14 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Provider types </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminSocialProvidersTypesAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminSocialProvidersTypesAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminSocialProvidersAvailableResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminSocialProvidersTypesValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersAvailableResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1220,7 +1291,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminSocialProvidersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
@@ -1251,6 +1323,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1285,43 +1358,48 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH
+     * Update a social login provider
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        patchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = patchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+        return localVarResp.getData();
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH
+     * Update a social login provider
      * 
      * @param orgId  (required)
      * @param providerId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersCreateResponse> patchAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH (asynchronously)
+     * Update a social login provider (asynchronously)
      * 
      * @param orgId  (required)
      * @param providerId  (required)
@@ -1332,13 +1410,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Social login provider not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1352,7 +1432,8 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminSocialProvidersUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback _callback) throws ApiException {
@@ -1383,6 +1464,7 @@ public class AdminIdentityProvidersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1417,43 +1499,48 @@ public class AdminIdentityProvidersApi {
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH
+     * Create or replace a social login provider
      * 
      * @param orgId  (required)
      * @param providerId  (required)
+     * @return AdminSocialProvidersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
-        putAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    public AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+        ApiResponse<AdminSocialProvidersCreateResponse> localVarResp = putAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+        return localVarResp.getData();
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH
+     * Create or replace a social login provider
      * 
      * @param orgId  (required)
      * @param providerId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminSocialProvidersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
+    public ApiResponse<AdminSocialProvidersCreateResponse> putAdminSocialProvidersUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId) throws ApiException {
         okhttp3.Call localVarCall = putAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH (asynchronously)
+     * Create or replace a social login provider (asynchronously)
      * 
      * @param orgId  (required)
      * @param providerId  (required)
@@ -1464,13 +1551,15 @@ public class AdminIdentityProvidersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated provider (detailed) </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Provider did not exist and was created </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminSocialProvidersUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String providerId, final ApiCallback<AdminSocialProvidersCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminSocialProvidersUpdateValidateBeforeCall(orgId, providerId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminSocialProvidersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

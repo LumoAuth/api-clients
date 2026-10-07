@@ -155,8 +155,9 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Task completed and resources cleaned up. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
-| **403** | Task belongs to a different agent. |  -  |
+| **403** | Task belongs to a different agent, or a JIT token of another task was used. |  -  |
 | **404** | Tenant or task not found. |  -  |
+| **429** | Rate limit exceeded. |  -  |
 
 <a id="createTask"></a>
 # **createTask**
@@ -444,8 +445,9 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Current status of the JIT permission request. |  -  |
 | **401** | Invalid or missing agent token. |  -  |
-| **403** | Request belongs to a different agent. |  -  |
+| **403** | Request belongs to a different agent, or a JIT token of another task was used. |  -  |
 | **404** | Tenant or request not found. |  -  |
+| **429** | Rate limit exceeded. |  -  |
 
 <a id="getRequestToken"></a>
 # **getRequestToken**
@@ -516,9 +518,9 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | A downscoped JIT token (RFC 8693 token exchange). |  -  |
 | **401** | Invalid or missing agent token. |  -  |
-| **403** | Request belongs to a different agent, or is not yet approved. |  -  |
+| **403** | Request belongs to a different agent, is not yet approved, is no longer redeemable (expired window, ended task, inactive agent/organization), or a JIT token was used. |  -  |
 | **404** | Tenant or request not found. |  -  |
-| **429** | Rate limit exceeded. |  -  |
+| **429** | Rate limit or agent budget exceeded. |  -  |
 
 <a id="listPendingRequests"></a>
 # **listPendingRequests**

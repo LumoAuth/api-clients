@@ -154,8 +154,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>MessageResponse</returns>
-        MessageResponse AdminAgentsDelete(string orgId, string agentId);
+        /// <returns>AdminAgentsDeleteResponse</returns>
+        AdminAgentsDeleteResponse AdminAgentsDelete(string orgId, string agentId);
 
         /// <summary>
         /// Delete an agent
@@ -166,8 +166,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>ApiResponse of MessageResponse</returns>
-        ApiResponse<MessageResponse> AdminAgentsDeleteWithHttpInfo(string orgId, string agentId);
+        /// <returns>ApiResponse of AdminAgentsDeleteResponse</returns>
+        ApiResponse<AdminAgentsDeleteResponse> AdminAgentsDeleteWithHttpInfo(string orgId, string agentId);
         /// <summary>
         /// Generate a token for the agent
         /// </summary>
@@ -523,8 +523,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of MessageResponse</returns>
-        System.Threading.Tasks.Task<MessageResponse> AdminAgentsDeleteAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAgentsDeleteResponse</returns>
+        System.Threading.Tasks.Task<AdminAgentsDeleteResponse> AdminAgentsDeleteAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete an agent
@@ -536,8 +536,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminAgentsDeleteWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAgentsDeleteResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAgentsDeleteResponse>> AdminAgentsDeleteWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Generate a token for the agent
         /// </summary>
@@ -1896,10 +1896,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>MessageResponse</returns>
-        public MessageResponse AdminAgentsDelete(string orgId, string agentId)
+        /// <returns>AdminAgentsDeleteResponse</returns>
+        public AdminAgentsDeleteResponse AdminAgentsDelete(string orgId, string agentId)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminAgentsDeleteWithHttpInfo(orgId, agentId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsDeleteResponse> localVarResponse = AdminAgentsDeleteWithHttpInfo(orgId, agentId);
             return localVarResponse.Data;
         }
 
@@ -1909,8 +1909,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>ApiResponse of MessageResponse</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminAgentsDeleteWithHttpInfo(string orgId, string agentId)
+        /// <returns>ApiResponse of AdminAgentsDeleteResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsDeleteResponse> AdminAgentsDeleteWithHttpInfo(string orgId, string agentId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1952,7 +1952,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/agents/{agentId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<AdminAgentsDeleteResponse>("/orgs/{orgId}/api/v1/admin/agents/{agentId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1970,10 +1970,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of MessageResponse</returns>
-        public async System.Threading.Tasks.Task<MessageResponse> AdminAgentsDeleteAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAgentsDeleteResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAgentsDeleteResponse> AdminAgentsDeleteAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
         {
-            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminAgentsDeleteWithHttpInfoAsync(orgId, agentId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsDeleteResponse> localVarResponse = await AdminAgentsDeleteWithHttpInfoAsync(orgId, agentId, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
@@ -1984,8 +1984,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (MessageResponse)</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminAgentsDeleteWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAgentsDeleteResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAgentsDeleteResponse>> AdminAgentsDeleteWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2030,7 +2030,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/agents/{agentId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminAgentsDeleteResponse>("/orgs/{orgId}/api/v1/admin/agents/{agentId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

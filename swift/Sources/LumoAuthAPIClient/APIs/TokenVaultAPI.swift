@@ -13,21 +13,22 @@ import AnyCodable
 open class TokenVaultAPI {
 
     /**
-     Fetch a live third-party access token for a connection.
+     Fetch a live third-party access token for a connection
      
      - parameter orgId: (path)  
      - parameter connectionId: (path)  
-     - returns: Void
+     - parameter getConnectionTokenRequest: (body)  (optional)
+     - returns: GetConnectionTokenResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getConnectionToken(orgId: String, connectionId: String) async throws {
-        return try await getConnectionTokenWithRequestBuilder(orgId: orgId, connectionId: connectionId).execute().body
+    open class func getConnectionToken(orgId: String, connectionId: String, getConnectionTokenRequest: GetConnectionTokenRequest? = nil) async throws -> GetConnectionTokenResponse {
+        return try await getConnectionTokenWithRequestBuilder(orgId: orgId, connectionId: connectionId, getConnectionTokenRequest: getConnectionTokenRequest).execute().body
     }
 
     /**
-     Fetch a live third-party access token for a connection.
+     Fetch a live third-party access token for a connection
      - POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token
-     - POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+     - Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -36,9 +37,10 @@ open class TokenVaultAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter connectionId: (path)  
-     - returns: RequestBuilder<Void> 
+     - parameter getConnectionTokenRequest: (body)  (optional)
+     - returns: RequestBuilder<GetConnectionTokenResponse> 
      */
-    open class func getConnectionTokenWithRequestBuilder(orgId: String, connectionId: String) -> RequestBuilder<Void> {
+    open class func getConnectionTokenWithRequestBuilder(orgId: String, connectionId: String, getConnectionTokenRequest: GetConnectionTokenRequest? = nil) -> RequestBuilder<GetConnectionTokenResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -47,36 +49,36 @@ open class TokenVaultAPI {
         let connectionIdPostEscape = connectionIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{connectionId}", with: connectionIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: getConnectionTokenRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetConnectionTokenResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     List the connections this agent may use, with grant status. No secrets.
+     List the outbound connections this agent may use
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: ListConnectionsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listConnections(orgId: String) async throws {
+    open class func listConnections(orgId: String) async throws -> ListConnectionsResponse {
         return try await listConnectionsWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List the connections this agent may use, with grant status. No secrets.
+     List the outbound connections this agent may use
      - GET /orgs/{orgId}/api/v1/agents/me/connections
-     - GET /orgs/{orgId}/api/v1/agents/me/connections
+     - Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -84,9 +86,9 @@ open class TokenVaultAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<ListConnectionsResponse> 
      */
-    open class func listConnectionsWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func listConnectionsWithRequestBuilder(orgId: String) -> RequestBuilder<ListConnectionsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/agents/me/connections"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -102,7 +104,7 @@ open class TokenVaultAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListConnectionsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

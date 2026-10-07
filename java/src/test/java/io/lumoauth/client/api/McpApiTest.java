@@ -14,8 +14,11 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.GetProtectedResourceMetadataRoot200Response;
+import io.lumoauth.client.model.GetServerChallengeResponse;
 import io.lumoauth.client.model.GetServerResponse;
 import io.lumoauth.client.model.ListServersResponse;
+import io.lumoauth.client.model.ProtectedResourceMetadata;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -33,9 +36,9 @@ public class McpApiTest {
     private final McpApi api = new McpApi();
 
     /**
-     * OAuth 2.0 Protected Resource Metadata (RFC 9728)
+     * MCP server protected resource metadata (RFC 9728)
      *
-     * Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+     * Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
      *
      * @throws ApiException if the Api call fails
      */
@@ -43,21 +46,21 @@ public class McpApiTest {
     public void getProtectedResourceMetadataTest() throws ApiException {
         String orgId = null;
         String serverId = null;
-        api.getProtectedResourceMetadata(orgId, serverId);
+        ProtectedResourceMetadata response = api.getProtectedResourceMetadata(orgId, serverId);
         // TODO: test validations
     }
 
     /**
-     * Root-level Protected Resource Metadata
+     * Organization-level protected resource metadata (RFC 9728)
      *
-     * Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+     * Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getProtectedResourceMetadataRootTest() throws ApiException {
         String orgId = null;
-        api.getProtectedResourceMetadataRoot(orgId);
+        GetProtectedResourceMetadataRoot200Response response = api.getProtectedResourceMetadataRoot(orgId);
         // TODO: test validations
     }
 
@@ -77,9 +80,9 @@ public class McpApiTest {
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint.
+     * Simulated MCP server authorization challenge
      *
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
      *
      * @throws ApiException if the Api call fails
      */
@@ -87,7 +90,7 @@ public class McpApiTest {
     public void getServerChallengeTest() throws ApiException {
         String orgId = null;
         String serverId = null;
-        api.getServerChallenge(orgId, serverId);
+        GetServerChallengeResponse response = api.getServerChallenge(orgId, serverId);
         // TODO: test validations
     }
 
@@ -106,9 +109,9 @@ public class McpApiTest {
     }
 
     /**
-     * Simulated MCP Server 401 challenge endpoint.
+     * Simulated MCP server authorization challenge (POST)
      *
-     * When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     * Identical to GET; the HTTP method is only recorded in the audit trail.
      *
      * @throws ApiException if the Api call fails
      */
@@ -116,7 +119,7 @@ public class McpApiTest {
     public void postServerChallengeTest() throws ApiException {
         String orgId = null;
         String serverId = null;
-        api.postServerChallenge(orgId, serverId);
+        GetServerChallengeResponse response = api.postServerChallenge(orgId, serverId);
         // TODO: test validations
     }
 

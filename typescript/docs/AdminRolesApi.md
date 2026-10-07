@@ -19,7 +19,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**putAdminRolesUpdate**](#putadminrolesupdate) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Update an existing role|
 
 # **adminRolesAddPermissions**
-> adminRolesAddPermissions()
+> MessageResponse adminRolesAddPermissions()
 
 
 ### Example
@@ -52,7 +52,7 @@ const { status, data } = await apiInstance.adminRolesAddPermissions(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -61,18 +61,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Added; message reports how many permissions were added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesAddUser**
-> adminRolesAddUser()
+> MessageResponse adminRolesAddUser()
 
 
 ### Example
@@ -105,7 +105,7 @@ const { status, data } = await apiInstance.adminRolesAddUser(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -114,18 +114,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Assigned |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesCreate**
-> adminRolesCreate()
+> AdminRolesCreateResponse adminRolesCreate()
 
 
 ### Example
@@ -155,7 +155,7 @@ const { status, data } = await apiInstance.adminRolesCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesCreateResponse**
 
 ### Authorization
 
@@ -164,18 +164,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesDelete**
-> adminRolesDelete()
+> MessageResponse adminRolesDelete()
 
 
 ### Example
@@ -208,7 +208,7 @@ const { status, data } = await apiInstance.adminRolesDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -217,18 +217,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesGet**
-> adminRolesGet()
+> AdminRolesGetResponse adminRolesGet()
 
 
 ### Example
@@ -261,7 +261,7 @@ const { status, data } = await apiInstance.adminRolesGet(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesGetResponse**
 
 ### Authorization
 
@@ -270,18 +270,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesGetPermissions**
-> adminRolesGetPermissions()
+> AdminRolesGetPermissionsResponse adminRolesGetPermissions()
 
 
 ### Example
@@ -314,7 +314,7 @@ const { status, data } = await apiInstance.adminRolesGetPermissions(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesGetPermissionsResponse**
 
 ### Authorization
 
@@ -323,18 +323,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Role permissions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesGetUsers**
-> adminRolesGetUsers()
+> AdminRolesGetUsersResponse adminRolesGetUsers()
 
 
 ### Example
@@ -367,7 +367,7 @@ const { status, data } = await apiInstance.adminRolesGetUsers(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesGetUsersResponse**
 
 ### Authorization
 
@@ -376,18 +376,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Role users |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesList**
-> adminRolesList()
+> AdminRolesListResponse adminRolesList()
 
 
 ### Example
@@ -417,7 +417,7 @@ const { status, data } = await apiInstance.adminRolesList(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesListResponse**
 
 ### Authorization
 
@@ -426,18 +426,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesRemovePermission**
-> adminRolesRemovePermission()
+> MessageResponse adminRolesRemovePermission()
 
 
 ### Example
@@ -473,7 +473,7 @@ const { status, data } = await apiInstance.adminRolesRemovePermission(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -482,18 +482,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesRemoveUser**
-> adminRolesRemoveUser()
+> MessageResponse adminRolesRemoveUser()
 
 
 ### Example
@@ -529,7 +529,7 @@ const { status, data } = await apiInstance.adminRolesRemoveUser(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -538,18 +538,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesUpdatePermissions**
-> adminRolesUpdatePermissions()
+> AdminRolesCreateResponse adminRolesUpdatePermissions()
 
 
 ### Example
@@ -582,7 +582,7 @@ const { status, data } = await apiInstance.adminRolesUpdatePermissions(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesCreateResponse**
 
 ### Authorization
 
@@ -591,18 +591,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminRolesUpdate**
-> patchAdminRolesUpdate()
+> AdminRolesCreateResponse patchAdminRolesUpdate()
 
 
 ### Example
@@ -635,7 +635,7 @@ const { status, data } = await apiInstance.patchAdminRolesUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesCreateResponse**
 
 ### Authorization
 
@@ -644,18 +644,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminRolesUpdate**
-> putAdminRolesUpdate()
+> AdminRolesCreateResponse putAdminRolesUpdate()
 
 
 ### Example
@@ -688,7 +688,7 @@ const { status, data } = await apiInstance.putAdminRolesUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminRolesCreateResponse**
 
 ### Authorization
 
@@ -697,13 +697,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

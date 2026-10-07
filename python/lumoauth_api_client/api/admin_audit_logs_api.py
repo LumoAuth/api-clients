@@ -19,6 +19,11 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_audit_logs_actions_response import AdminAuditLogsActionsResponse
+from lumoauth_api_client.models.admin_audit_logs_get_response import AdminAuditLogsGetResponse
+from lumoauth_api_client.models.admin_audit_logs_list_response import AdminAuditLogsListResponse
+from lumoauth_api_client.models.admin_audit_logs_retention_response import AdminAuditLogsRetentionResponse
+from lumoauth_api_client.models.admin_audit_logs_stats_response import AdminAuditLogsStatsResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +59,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List available audit action types for this tenant
+    ) -> AdminAuditLogsActionsResponse:
+        """List the distinct audit action types recorded for the tenant
 
 
         :param org_id: (required)
@@ -91,6 +96,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsActionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -119,8 +125,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List available audit action types for this tenant
+    ) -> ApiResponse[AdminAuditLogsActionsResponse]:
+        """List the distinct audit action types recorded for the tenant
 
 
         :param org_id: (required)
@@ -156,6 +162,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsActionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -185,7 +192,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List available audit action types for this tenant
+        """List the distinct audit action types recorded for the tenant
 
 
         :param org_id: (required)
@@ -221,6 +228,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsActionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -261,6 +269,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -303,8 +318,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Export audit logs as CSV or JSON
+    ) -> str:
+        """Export audit logs as CSV (default) or JSON
 
 
         :param org_id: (required)
@@ -340,6 +355,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -368,8 +384,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Export audit logs as CSV or JSON
+    ) -> ApiResponse[str]:
+        """Export audit logs as CSV (default) or JSON
 
 
         :param org_id: (required)
@@ -405,6 +421,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -434,7 +451,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Export audit logs as CSV or JSON
+        """Export audit logs as CSV (default) or JSON
 
 
         :param org_id: (required)
@@ -470,6 +487,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -510,6 +528,14 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/csv', 
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -553,8 +579,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single audit log entry
+    ) -> AdminAuditLogsGetResponse:
+        """Get an audit log entry
 
 
         :param org_id: (required)
@@ -593,6 +619,8 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -622,8 +650,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single audit log entry
+    ) -> ApiResponse[AdminAuditLogsGetResponse]:
+        """Get an audit log entry
 
 
         :param org_id: (required)
@@ -662,6 +690,8 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -692,7 +722,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single audit log entry
+        """Get an audit log entry
 
 
         :param org_id: (required)
@@ -731,6 +761,8 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -774,6 +806,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -816,8 +855,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List audit logs for the tenant
+    ) -> AdminAuditLogsListResponse:
+        """List audit log entries
 
 
         :param org_id: (required)
@@ -853,6 +892,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -881,8 +921,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List audit logs for the tenant
+    ) -> ApiResponse[AdminAuditLogsListResponse]:
+        """List audit log entries
 
 
         :param org_id: (required)
@@ -918,6 +958,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -947,7 +988,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List audit logs for the tenant
+        """List audit log entries
 
 
         :param org_id: (required)
@@ -983,6 +1024,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1023,6 +1065,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1065,7 +1114,7 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminAuditLogsRetentionResponse:
         """Get audit log retention settings
 
 
@@ -1102,6 +1151,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1130,7 +1180,7 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminAuditLogsRetentionResponse]:
         """Get audit log retention settings
 
 
@@ -1167,6 +1217,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1232,6 +1283,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1272,6 +1324,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1314,8 +1373,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get audit log statistics
+    ) -> AdminAuditLogsStatsResponse:
+        """Audit log statistics for a period (default: last 30 days)
 
 
         :param org_id: (required)
@@ -1351,6 +1410,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsStatsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1379,8 +1439,8 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get audit log statistics
+    ) -> ApiResponse[AdminAuditLogsStatsResponse]:
+        """Audit log statistics for a period (default: last 30 days)
 
 
         :param org_id: (required)
@@ -1416,6 +1476,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsStatsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1445,7 +1506,7 @@ class AdminAuditLogsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get audit log statistics
+        """Audit log statistics for a period (default: last 30 days)
 
 
         :param org_id: (required)
@@ -1481,6 +1542,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsStatsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1521,6 +1583,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1563,7 +1632,7 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminAuditLogsRetentionResponse:
         """Update audit log retention settings
 
 
@@ -1600,6 +1669,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1628,7 +1698,7 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminAuditLogsRetentionResponse]:
         """Update audit log retention settings
 
 
@@ -1665,6 +1735,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1730,6 +1801,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1770,6 +1842,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1812,7 +1891,7 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminAuditLogsRetentionResponse:
         """Update audit log retention settings
 
 
@@ -1849,6 +1928,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1877,7 +1957,7 @@ class AdminAuditLogsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminAuditLogsRetentionResponse]:
         """Update audit log retention settings
 
 
@@ -1914,6 +1994,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1979,6 +2060,7 @@ class AdminAuditLogsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAuditLogsRetentionResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2019,6 +2101,13 @@ class AdminAuditLogsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

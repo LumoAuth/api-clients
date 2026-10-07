@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetServerResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetServerResponse {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -108,6 +108,11 @@ public class GetServerResponse {
   @SerializedName(SERIALIZED_NAME_REQUIRE_PKCE)
   @javax.annotation.Nullable
   private Boolean requirePkce;
+
+  public static final String SERIALIZED_NAME_REQUIRE_DPOP = "require_dpop";
+  @SerializedName(SERIALIZED_NAME_REQUIRE_DPOP)
+  @javax.annotation.Nullable
+  private Boolean requireDpop;
 
   public static final String SERIALIZED_NAME_TOKEN_LIFETIME = "token_lifetime";
   @SerializedName(SERIALIZED_NAME_TOKEN_LIFETIME)
@@ -349,6 +354,25 @@ public class GetServerResponse {
   }
 
 
+  public GetServerResponse requireDpop(@javax.annotation.Nullable Boolean requireDpop) {
+    this.requireDpop = requireDpop;
+    return this;
+  }
+
+  /**
+   * Get requireDpop
+   * @return requireDpop
+   */
+  @javax.annotation.Nullable
+  public Boolean getRequireDpop() {
+    return requireDpop;
+  }
+
+  public void setRequireDpop(@javax.annotation.Nullable Boolean requireDpop) {
+    this.requireDpop = requireDpop;
+  }
+
+
   public GetServerResponse tokenLifetime(@javax.annotation.Nullable Integer tokenLifetime) {
     this.tokenLifetime = tokenLifetime;
     return this;
@@ -446,6 +470,7 @@ public class GetServerResponse {
         Objects.equals(this.status, getServerResponse.status) &&
         Objects.equals(this.scopesSupported, getServerResponse.scopesSupported) &&
         Objects.equals(this.requirePkce, getServerResponse.requirePkce) &&
+        Objects.equals(this.requireDpop, getServerResponse.requireDpop) &&
         Objects.equals(this.tokenLifetime, getServerResponse.tokenLifetime) &&
         Objects.equals(this.createdAt, getServerResponse.createdAt) &&
         Objects.equals(this.updatedAt, getServerResponse.updatedAt) &&
@@ -454,7 +479,7 @@ public class GetServerResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, serverId, name, description, resourceUri, endpointUrl, transport, authMode, status, scopesSupported, requirePkce, tokenLifetime, createdAt, updatedAt, discovery);
+    return Objects.hash(id, serverId, name, description, resourceUri, endpointUrl, transport, authMode, status, scopesSupported, requirePkce, requireDpop, tokenLifetime, createdAt, updatedAt, discovery);
   }
 
   @Override
@@ -472,6 +497,7 @@ public class GetServerResponse {
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    scopesSupported: ").append(toIndentedString(scopesSupported)).append("\n");
     sb.append("    requirePkce: ").append(toIndentedString(requirePkce)).append("\n");
+    sb.append("    requireDpop: ").append(toIndentedString(requireDpop)).append("\n");
     sb.append("    tokenLifetime: ").append(toIndentedString(tokenLifetime)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
@@ -497,7 +523,7 @@ public class GetServerResponse {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "auth_mode", "status", "scopes_supported", "require_pkce", "token_lifetime", "created_at", "updated_at", "discovery"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "auth_mode", "status", "scopes_supported", "require_pkce", "require_dpop", "token_lifetime", "created_at", "updated_at", "discovery"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);

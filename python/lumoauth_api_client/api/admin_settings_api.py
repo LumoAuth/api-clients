@@ -17,7 +17,27 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
+from pydantic import Field, StrictStr
+from typing import Optional
+from typing_extensions import Annotated
+from lumoauth_api_client.models.admin_analytics_dashboard_response import AdminAnalyticsDashboardResponse
+from lumoauth_api_client.models.admin_analytics_logins_response import AdminAnalyticsLoginsResponse
+from lumoauth_api_client.models.admin_analytics_users_response import AdminAnalyticsUsersResponse
+from lumoauth_api_client.models.admin_settings_all_response import AdminSettingsAllResponse
+from lumoauth_api_client.models.admin_settings_authentication_get_response import AdminSettingsAuthenticationGetResponse
+from lumoauth_api_client.models.admin_settings_branding_get_response import AdminSettingsBrandingGetResponse
+from lumoauth_api_client.models.admin_settings_email_get_response import AdminSettingsEmailGetResponse
+from lumoauth_api_client.models.admin_settings_general_get_response import AdminSettingsGeneralGetResponse
+from lumoauth_api_client.models.admin_settings_scim_get_response import AdminSettingsScimGetResponse
+from lumoauth_api_client.models.admin_settings_security_get_response import AdminSettingsSecurityGetResponse
+from lumoauth_api_client.models.admin_tenant_get_response import AdminTenantGetResponse
+from lumoauth_api_client.models.put_admin_settings_authentication_update_response import PutAdminSettingsAuthenticationUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_branding_update_response import PutAdminSettingsBrandingUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_email_update_response import PutAdminSettingsEmailUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_general_update_response import PutAdminSettingsGeneralUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_scim_update_response import PutAdminSettingsScimUpdateResponse
+from lumoauth_api_client.models.put_admin_settings_security_update_response import PutAdminSettingsSecurityUpdateResponse
+from lumoauth_api_client.models.put_admin_tenant_update_response import PutAdminTenantUpdateResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,7 +73,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminAnalyticsDashboardResponse:
         """Get dashboard analytics
 
 
@@ -90,6 +110,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsDashboardResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,7 +139,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminAnalyticsDashboardResponse]:
         """Get dashboard analytics
 
 
@@ -155,6 +176,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsDashboardResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -220,6 +242,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsDashboardResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +283,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -290,6 +320,7 @@ class AdminSettingsApi:
     def admin_analytics_logins(
         self,
         org_id: StrictStr,
+        days: Annotated[Optional[Annotated[int, Field(le=90, strict=True, ge=1)]], Field(description="Window in days (1-90, default 30).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -302,12 +333,14 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminAnalyticsLoginsResponse:
         """Get login analytics
 
 
         :param org_id: (required)
         :type org_id: str
+        :param days: Window in days (1-90, default 30).
+        :type days: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -332,6 +365,7 @@ class AdminSettingsApi:
 
         _param = self._admin_analytics_logins_serialize(
             org_id=org_id,
+            days=days,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -339,6 +373,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsLoginsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -355,6 +390,7 @@ class AdminSettingsApi:
     def admin_analytics_logins_with_http_info(
         self,
         org_id: StrictStr,
+        days: Annotated[Optional[Annotated[int, Field(le=90, strict=True, ge=1)]], Field(description="Window in days (1-90, default 30).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -367,12 +403,14 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminAnalyticsLoginsResponse]:
         """Get login analytics
 
 
         :param org_id: (required)
         :type org_id: str
+        :param days: Window in days (1-90, default 30).
+        :type days: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -397,6 +435,7 @@ class AdminSettingsApi:
 
         _param = self._admin_analytics_logins_serialize(
             org_id=org_id,
+            days=days,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -404,6 +443,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsLoginsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -420,6 +460,7 @@ class AdminSettingsApi:
     def admin_analytics_logins_without_preload_content(
         self,
         org_id: StrictStr,
+        days: Annotated[Optional[Annotated[int, Field(le=90, strict=True, ge=1)]], Field(description="Window in days (1-90, default 30).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -438,6 +479,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param days: Window in days (1-90, default 30).
+        :type days: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -462,6 +505,7 @@ class AdminSettingsApi:
 
         _param = self._admin_analytics_logins_serialize(
             org_id=org_id,
+            days=days,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -469,6 +513,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsLoginsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -480,6 +525,7 @@ class AdminSettingsApi:
     def _admin_analytics_logins_serialize(
         self,
         org_id,
+        days,
         _request_auth,
         _content_type,
         _headers,
@@ -504,11 +550,22 @@ class AdminSettingsApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if days is not None:
+            
+            _query_params.append(('days', days))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -539,6 +596,7 @@ class AdminSettingsApi:
     def admin_analytics_users(
         self,
         org_id: StrictStr,
+        days: Annotated[Optional[Annotated[int, Field(le=90, strict=True, ge=1)]], Field(description="Window in days (1-90, default 30).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -551,12 +609,14 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminAnalyticsUsersResponse:
         """Get user growth analytics
 
 
         :param org_id: (required)
         :type org_id: str
+        :param days: Window in days (1-90, default 30).
+        :type days: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -581,6 +641,7 @@ class AdminSettingsApi:
 
         _param = self._admin_analytics_users_serialize(
             org_id=org_id,
+            days=days,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -588,6 +649,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -604,6 +666,7 @@ class AdminSettingsApi:
     def admin_analytics_users_with_http_info(
         self,
         org_id: StrictStr,
+        days: Annotated[Optional[Annotated[int, Field(le=90, strict=True, ge=1)]], Field(description="Window in days (1-90, default 30).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -616,12 +679,14 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminAnalyticsUsersResponse]:
         """Get user growth analytics
 
 
         :param org_id: (required)
         :type org_id: str
+        :param days: Window in days (1-90, default 30).
+        :type days: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -646,6 +711,7 @@ class AdminSettingsApi:
 
         _param = self._admin_analytics_users_serialize(
             org_id=org_id,
+            days=days,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -653,6 +719,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -669,6 +736,7 @@ class AdminSettingsApi:
     def admin_analytics_users_without_preload_content(
         self,
         org_id: StrictStr,
+        days: Annotated[Optional[Annotated[int, Field(le=90, strict=True, ge=1)]], Field(description="Window in days (1-90, default 30).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -687,6 +755,8 @@ class AdminSettingsApi:
 
         :param org_id: (required)
         :type org_id: str
+        :param days: Window in days (1-90, default 30).
+        :type days: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -711,6 +781,7 @@ class AdminSettingsApi:
 
         _param = self._admin_analytics_users_serialize(
             org_id=org_id,
+            days=days,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -718,6 +789,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminAnalyticsUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -729,6 +801,7 @@ class AdminSettingsApi:
     def _admin_analytics_users_serialize(
         self,
         org_id,
+        days,
         _request_auth,
         _content_type,
         _headers,
@@ -753,11 +826,22 @@ class AdminSettingsApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if days is not None:
+            
+            _query_params.append(('days', days))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -800,8 +884,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get tenant information
+    ) -> AdminTenantGetResponse:
+        """Get organization (tenant) profile
 
 
         :param org_id: (required)
@@ -837,6 +921,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTenantGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -865,8 +950,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get tenant information
+    ) -> ApiResponse[AdminTenantGetResponse]:
+        """Get organization (tenant) profile
 
 
         :param org_id: (required)
@@ -902,6 +987,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTenantGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -931,7 +1017,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get tenant information
+        """Get organization (tenant) profile
 
 
         :param org_id: (required)
@@ -967,6 +1053,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTenantGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1007,6 +1094,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1049,7 +1143,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsAllResponse:
         """Get all settings (combined)
 
 
@@ -1086,6 +1180,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAllResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1114,7 +1209,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsAllResponse]:
         """Get all settings (combined)
 
 
@@ -1151,6 +1246,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAllResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1216,6 +1312,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAllResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1256,6 +1353,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1298,7 +1402,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsAuthenticationGetResponse:
         """Get authentication settings
 
 
@@ -1335,6 +1439,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAuthenticationGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1363,7 +1468,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsAuthenticationGetResponse]:
         """Get authentication settings
 
 
@@ -1400,6 +1505,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAuthenticationGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1465,6 +1571,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAuthenticationGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1505,6 +1612,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1547,7 +1661,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsAuthenticationGetResponse:
         """Get authentication settings (alias for settings/auth)
 
 
@@ -1584,6 +1698,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAuthenticationGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1612,7 +1727,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsAuthenticationGetResponse]:
         """Get authentication settings (alias for settings/auth)
 
 
@@ -1649,6 +1764,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAuthenticationGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1714,6 +1830,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsAuthenticationGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1754,6 +1871,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1796,7 +1920,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsBrandingGetResponse:
         """Get branding/login page settings
 
 
@@ -1833,6 +1957,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsBrandingGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1861,7 +1986,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsBrandingGetResponse]:
         """Get branding/login page settings
 
 
@@ -1898,6 +2023,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsBrandingGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1963,6 +2089,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsBrandingGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2003,6 +2130,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2045,7 +2179,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsEmailGetResponse:
         """Get email settings
 
 
@@ -2082,6 +2216,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsEmailGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2110,7 +2245,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsEmailGetResponse]:
         """Get email settings
 
 
@@ -2147,6 +2282,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsEmailGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2212,6 +2348,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsEmailGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2252,6 +2389,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2294,7 +2438,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsGeneralGetResponse:
         """Get general settings
 
 
@@ -2331,6 +2475,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsGeneralGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2359,7 +2504,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsGeneralGetResponse]:
         """Get general settings
 
 
@@ -2396,6 +2541,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsGeneralGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2461,6 +2607,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsGeneralGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2501,6 +2648,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2543,7 +2697,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsScimGetResponse:
         """Get SCIM settings
 
 
@@ -2580,6 +2734,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsScimGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2608,7 +2763,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsScimGetResponse]:
         """Get SCIM settings
 
 
@@ -2645,6 +2800,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsScimGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2710,6 +2866,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsScimGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2750,6 +2907,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2792,7 +2956,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminSettingsSecurityGetResponse:
         """Get security settings
 
 
@@ -2829,6 +2993,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsSecurityGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2857,7 +3022,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminSettingsSecurityGetResponse]:
         """Get security settings
 
 
@@ -2894,6 +3059,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsSecurityGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2959,6 +3125,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSettingsSecurityGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2999,6 +3166,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3041,8 +3215,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get tenant information
+    ) -> AdminTenantGetResponse:
+        """Get organization (tenant) profile
 
 
         :param org_id: (required)
@@ -3078,6 +3252,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTenantGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3106,8 +3281,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get tenant information
+    ) -> ApiResponse[AdminTenantGetResponse]:
+        """Get organization (tenant) profile
 
 
         :param org_id: (required)
@@ -3143,6 +3318,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTenantGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3172,7 +3348,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get tenant information
+        """Get organization (tenant) profile
 
 
         :param org_id: (required)
@@ -3208,6 +3384,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTenantGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3248,6 +3425,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3290,8 +3474,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update tenant settings
+    ) -> PutAdminTenantUpdateResponse:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -3327,6 +3511,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3355,8 +3540,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update tenant settings
+    ) -> ApiResponse[PutAdminTenantUpdateResponse]:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -3392,6 +3577,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3421,7 +3607,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update tenant settings
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -3457,6 +3643,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3497,6 +3684,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3539,7 +3733,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings
 
 
@@ -3576,6 +3770,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3604,7 +3799,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings
 
 
@@ -3641,6 +3836,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3706,6 +3902,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3746,6 +3943,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3788,7 +3992,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings (alias for settings/auth)
 
 
@@ -3825,6 +4029,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3853,7 +4058,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings (alias for settings/auth)
 
 
@@ -3890,6 +4095,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3955,6 +4161,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3995,6 +4202,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4037,7 +4251,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsBrandingUpdateResponse:
         """Update branding/login page settings
 
 
@@ -4074,6 +4288,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsBrandingUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4102,7 +4317,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsBrandingUpdateResponse]:
         """Update branding/login page settings
 
 
@@ -4139,6 +4354,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsBrandingUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4204,6 +4420,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsBrandingUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4244,6 +4461,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4286,7 +4510,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsEmailUpdateResponse:
         """Update email settings
 
 
@@ -4323,6 +4547,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsEmailUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4351,7 +4576,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsEmailUpdateResponse]:
         """Update email settings
 
 
@@ -4388,6 +4613,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsEmailUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4453,6 +4679,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsEmailUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4493,6 +4720,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4535,7 +4769,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsGeneralUpdateResponse:
         """Update general settings
 
 
@@ -4572,6 +4806,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsGeneralUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4600,7 +4835,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsGeneralUpdateResponse]:
         """Update general settings
 
 
@@ -4637,6 +4872,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsGeneralUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4702,6 +4938,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsGeneralUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4742,6 +4979,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4784,7 +5028,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsScimUpdateResponse:
         """Update SCIM settings
 
 
@@ -4821,6 +5065,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsScimUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4849,7 +5094,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsScimUpdateResponse]:
         """Update SCIM settings
 
 
@@ -4886,6 +5131,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsScimUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4951,6 +5197,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsScimUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4991,6 +5238,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5033,7 +5287,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsSecurityUpdateResponse:
         """Update security settings
 
 
@@ -5070,6 +5324,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsSecurityUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5098,7 +5353,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsSecurityUpdateResponse]:
         """Update security settings
 
 
@@ -5135,6 +5390,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsSecurityUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5200,6 +5456,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsSecurityUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5240,6 +5497,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5282,8 +5546,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update tenant settings
+    ) -> PutAdminTenantUpdateResponse:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -5319,6 +5583,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5347,8 +5612,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update tenant settings
+    ) -> ApiResponse[PutAdminTenantUpdateResponse]:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -5384,6 +5649,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5413,7 +5679,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update tenant settings
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -5449,6 +5715,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5489,6 +5756,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5531,8 +5805,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update tenant settings
+    ) -> PutAdminTenantUpdateResponse:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -5568,6 +5842,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5596,8 +5871,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update tenant settings
+    ) -> ApiResponse[PutAdminTenantUpdateResponse]:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -5633,6 +5908,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5662,7 +5938,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update tenant settings
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -5698,6 +5974,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5738,6 +6015,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -5780,7 +6064,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings
 
 
@@ -5817,6 +6101,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5845,7 +6130,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings
 
 
@@ -5882,6 +6167,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5947,6 +6233,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5987,6 +6274,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6029,7 +6323,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsAuthenticationUpdateResponse:
         """Update authentication settings (alias for settings/auth)
 
 
@@ -6066,6 +6360,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6094,7 +6389,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsAuthenticationUpdateResponse]:
         """Update authentication settings (alias for settings/auth)
 
 
@@ -6131,6 +6426,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6196,6 +6492,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsAuthenticationUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6236,6 +6533,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6278,7 +6582,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsBrandingUpdateResponse:
         """Update branding/login page settings
 
 
@@ -6315,6 +6619,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsBrandingUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6343,7 +6648,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsBrandingUpdateResponse]:
         """Update branding/login page settings
 
 
@@ -6380,6 +6685,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsBrandingUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6445,6 +6751,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsBrandingUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6485,6 +6792,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6527,7 +6841,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsEmailUpdateResponse:
         """Update email settings
 
 
@@ -6564,6 +6878,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsEmailUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6592,7 +6907,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsEmailUpdateResponse]:
         """Update email settings
 
 
@@ -6629,6 +6944,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsEmailUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6694,6 +7010,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsEmailUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6734,6 +7051,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -6776,7 +7100,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsGeneralUpdateResponse:
         """Update general settings
 
 
@@ -6813,6 +7137,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsGeneralUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6841,7 +7166,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsGeneralUpdateResponse]:
         """Update general settings
 
 
@@ -6878,6 +7203,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsGeneralUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6943,6 +7269,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsGeneralUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6983,6 +7310,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7025,7 +7359,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsScimUpdateResponse:
         """Update SCIM settings
 
 
@@ -7062,6 +7396,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsScimUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7090,7 +7425,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsScimUpdateResponse]:
         """Update SCIM settings
 
 
@@ -7127,6 +7462,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsScimUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7192,6 +7528,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsScimUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7232,6 +7569,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7274,7 +7618,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAdminSettingsSecurityUpdateResponse:
         """Update security settings
 
 
@@ -7311,6 +7655,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsSecurityUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7339,7 +7684,7 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAdminSettingsSecurityUpdateResponse]:
         """Update security settings
 
 
@@ -7376,6 +7721,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsSecurityUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7441,6 +7787,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminSettingsSecurityUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7481,6 +7828,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -7523,8 +7877,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update tenant settings
+    ) -> PutAdminTenantUpdateResponse:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -7560,6 +7914,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7588,8 +7943,8 @@ class AdminSettingsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update tenant settings
+    ) -> ApiResponse[PutAdminTenantUpdateResponse]:
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -7625,6 +7980,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7654,7 +8010,7 @@ class AdminSettingsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update tenant settings
+        """Update organization (tenant) name and settings
 
 
         :param org_id: (required)
@@ -7690,6 +8046,7 @@ class AdminSettingsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminTenantUpdateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -7730,6 +8087,13 @@ class AdminSettingsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

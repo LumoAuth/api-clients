@@ -27,6 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminAuditLogsActionsResponse;
+import io.lumoauth.client.model.AdminAuditLogsExportResponse;
+import io.lumoauth.client.model.AdminAuditLogsGetResponse;
+import io.lumoauth.client.model.AdminAuditLogsListResponse;
+import io.lumoauth.client.model.AdminAuditLogsRetentionResponse;
+import io.lumoauth.client.model.AdminAuditLogsStatsResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +87,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Action names </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAuditLogsActionsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +117,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,41 +147,44 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * List available audit action types for this tenant
+     * List the distinct audit action types recorded for the tenant
      * 
      * @param orgId  (required)
+     * @return AdminAuditLogsActionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Action names </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAuditLogsActions(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAuditLogsActionsWithHttpInfo(orgId);
+    public AdminAuditLogsActionsResponse adminAuditLogsActions(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAuditLogsActionsResponse> localVarResp = adminAuditLogsActionsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List available audit action types for this tenant
+     * List the distinct audit action types recorded for the tenant
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsActionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Action names </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAuditLogsActionsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAuditLogsActionsResponse> adminAuditLogsActionsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminAuditLogsActionsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsActionsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List available audit action types for this tenant (asynchronously)
+     * List the distinct audit action types recorded for the tenant (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -184,13 +194,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Action names </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsActionsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsActionsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsActionsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAuditLogsActionsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsActionsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -203,7 +214,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAuditLogsExportCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -233,6 +244,8 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/csv",
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -262,41 +275,44 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * Export audit logs as CSV or JSON
+     * Export audit logs as CSV (default) or JSON
      * 
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAuditLogsExport(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAuditLogsExportWithHttpInfo(orgId);
+    public String adminAuditLogsExport(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = adminAuditLogsExportWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Export audit logs as CSV or JSON
+     * Export audit logs as CSV (default) or JSON
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAuditLogsExportWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> adminAuditLogsExportWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminAuditLogsExportValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Export audit logs as CSV or JSON (asynchronously)
+     * Export audit logs as CSV (default) or JSON (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -306,13 +322,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsExportAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsExportAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAuditLogsExportValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -326,7 +343,8 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entry (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Audit log not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAuditLogsGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId, final ApiCallback _callback) throws ApiException {
@@ -357,6 +375,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -391,43 +410,48 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * Get a single audit log entry
+     * Get an audit log entry
      * 
      * @param orgId  (required)
      * @param logId  (required)
+     * @return AdminAuditLogsGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entry (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Audit log not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAuditLogsGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId) throws ApiException {
-        adminAuditLogsGetWithHttpInfo(orgId, logId);
+    public AdminAuditLogsGetResponse adminAuditLogsGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId) throws ApiException {
+        ApiResponse<AdminAuditLogsGetResponse> localVarResp = adminAuditLogsGetWithHttpInfo(orgId, logId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single audit log entry
+     * Get an audit log entry
      * 
      * @param orgId  (required)
      * @param logId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entry (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Audit log not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAuditLogsGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId) throws ApiException {
+    public ApiResponse<AdminAuditLogsGetResponse> adminAuditLogsGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId) throws ApiException {
         okhttp3.Call localVarCall = adminAuditLogsGetValidateBeforeCall(orgId, logId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single audit log entry (asynchronously)
+     * Get an audit log entry (asynchronously)
      * 
      * @param orgId  (required)
      * @param logId  (required)
@@ -438,13 +462,15 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entry (detailed) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Audit log not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String logId, final ApiCallback<AdminAuditLogsGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAuditLogsGetValidateBeforeCall(orgId, logId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -457,7 +483,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAuditLogsListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -487,6 +513,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -516,41 +543,44 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * List audit logs for the tenant
+     * List audit log entries
      * 
      * @param orgId  (required)
+     * @return AdminAuditLogsListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAuditLogsList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAuditLogsListWithHttpInfo(orgId);
+    public AdminAuditLogsListResponse adminAuditLogsList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAuditLogsListResponse> localVarResp = adminAuditLogsListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List audit logs for the tenant
+     * List audit log entries
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAuditLogsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAuditLogsListResponse> adminAuditLogsListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminAuditLogsListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List audit logs for the tenant (asynchronously)
+     * List audit log entries (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -560,13 +590,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Audit log entries (summary fields only) </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAuditLogsListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -579,7 +610,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Retention settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAuditLogsRetentionCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -609,6 +640,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -641,34 +673,37 @@ public class AdminAuditLogsApi {
      * Get audit log retention settings
      * 
      * @param orgId  (required)
+     * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAuditLogsRetention(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAuditLogsRetentionWithHttpInfo(orgId);
+    public AdminAuditLogsRetentionResponse adminAuditLogsRetention(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = adminAuditLogsRetentionWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Get audit log retention settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAuditLogsRetentionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAuditLogsRetentionResponse> adminAuditLogsRetentionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminAuditLogsRetentionValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -682,13 +717,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsRetentionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsRetentionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAuditLogsRetentionValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -701,7 +737,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Statistics </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminAuditLogsStatsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -731,6 +767,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -760,41 +797,44 @@ public class AdminAuditLogsApi {
     }
 
     /**
-     * Get audit log statistics
+     * Audit log statistics for a period (default: last 30 days)
      * 
      * @param orgId  (required)
+     * @return AdminAuditLogsStatsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Statistics </td><td>  -  </td></tr>
      </table>
      */
-    public void adminAuditLogsStats(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminAuditLogsStatsWithHttpInfo(orgId);
+    public AdminAuditLogsStatsResponse adminAuditLogsStats(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAuditLogsStatsResponse> localVarResp = adminAuditLogsStatsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get audit log statistics
+     * Audit log statistics for a period (default: last 30 days)
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsStatsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Statistics </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminAuditLogsStatsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAuditLogsStatsResponse> adminAuditLogsStatsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminAuditLogsStatsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsStatsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get audit log statistics (asynchronously)
+     * Audit log statistics for a period (default: last 30 days) (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -804,13 +844,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Statistics </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAuditLogsStatsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminAuditLogsStatsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsStatsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAuditLogsStatsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsStatsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -823,7 +864,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminAuditLogsRetentionUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -853,6 +894,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -885,34 +927,37 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings
      * 
      * @param orgId  (required)
+     * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        patchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    public AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = patchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update audit log retention settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAuditLogsRetentionResponse> patchAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -926,13 +971,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -945,7 +991,7 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminAuditLogsRetentionUpdateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -975,6 +1021,7 @@ public class AdminAuditLogsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1007,34 +1054,37 @@ public class AdminAuditLogsApi {
      * Update audit log retention settings
      * 
      * @param orgId  (required)
+     * @return AdminAuditLogsRetentionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        putAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+    public AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminAuditLogsRetentionResponse> localVarResp = putAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Update audit log retention settings
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminAuditLogsRetentionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminAuditLogsRetentionResponse> putAdminAuditLogsRetentionUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = putAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1048,13 +1098,14 @@ public class AdminAuditLogsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated retention settings </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminAuditLogsRetentionUpdateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminAuditLogsRetentionResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminAuditLogsRetentionUpdateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminAuditLogsRetentionResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

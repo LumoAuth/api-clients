@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import type { GetMeResponseTenant } from './get-me-response-tenant';
+import type { GroupRef } from './group-ref';
 
 /**
  * 
@@ -67,10 +67,10 @@ export interface GetMeResponse {
     'capabilities'?: Array<string> | null;
     /**
      * 
-     * @type {GetMeResponseTenant}
+     * @type {GroupRef}
      * @memberof GetMeResponse
      */
-    'tenant'?: GetMeResponseTenant;
+    'tenant'?: GroupRef;
 }
 
 /**

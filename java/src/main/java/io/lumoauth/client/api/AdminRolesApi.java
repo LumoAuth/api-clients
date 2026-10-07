@@ -27,6 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminRolesCreateResponse;
+import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
+import io.lumoauth.client.model.AdminRolesGetResponse;
+import io.lumoauth.client.model.AdminRolesGetUsersResponse;
+import io.lumoauth.client.model.AdminRolesListResponse;
+import io.lumoauth.client.model.MessageResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -82,7 +88,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesAddPermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -113,6 +119,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -151,16 +158,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesAddPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+    public MessageResponse adminRolesAddPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -168,18 +177,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesAddPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<MessageResponse> adminRolesAddPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesAddPermissionsValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -194,13 +204,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Added; message reports how many permissions were added </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesAddPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesAddPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesAddPermissionsValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -214,7 +225,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesAddUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -245,6 +256,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -283,16 +295,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesAddUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesAddUserWithHttpInfo(orgId, roleId);
+    public MessageResponse adminRolesAddUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesAddUserWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -300,18 +314,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesAddUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<MessageResponse> adminRolesAddUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesAddUserValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -326,13 +341,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesAddUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesAddUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesAddUserValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -345,7 +361,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -375,6 +391,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -407,34 +424,37 @@ public class AdminRolesApi {
      * Create a new role
      * 
      * @param orgId  (required)
+     * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminRolesCreateWithHttpInfo(orgId);
+    public AdminRolesCreateResponse adminRolesCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = adminRolesCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * Create a new role
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminRolesCreateResponse> adminRolesCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -448,13 +468,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Created role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -468,7 +489,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -499,6 +520,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -537,16 +559,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesDeleteWithHttpInfo(orgId, roleId);
+    public MessageResponse adminRolesDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesDeleteWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -554,18 +578,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<MessageResponse> adminRolesDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesDeleteValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -580,13 +605,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deleted </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesDeleteValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -600,7 +626,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -631,6 +657,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -669,16 +696,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return AdminRolesGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesGetWithHttpInfo(orgId, roleId);
+    public AdminRolesGetResponse adminRolesGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<AdminRolesGetResponse> localVarResp = adminRolesGetWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -686,18 +715,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<AdminRolesGetResponse> adminRolesGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesGetValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -712,13 +742,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesGetValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -732,7 +763,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role permissions </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesGetPermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -763,6 +794,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -801,16 +833,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return AdminRolesGetPermissionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role permissions </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesGetPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesGetPermissionsWithHttpInfo(orgId, roleId);
+    public AdminRolesGetPermissionsResponse adminRolesGetPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<AdminRolesGetPermissionsResponse> localVarResp = adminRolesGetPermissionsWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -818,18 +852,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesGetPermissionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role permissions </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesGetPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<AdminRolesGetPermissionsResponse> adminRolesGetPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesGetPermissionsValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesGetPermissionsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -844,13 +879,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role permissions </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesGetPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesGetPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesGetPermissionsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesGetPermissionsValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesGetPermissionsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -864,7 +900,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role users </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesGetUsersCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -895,6 +931,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -933,16 +970,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return AdminRolesGetUsersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role users </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesGetUsers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesGetUsersWithHttpInfo(orgId, roleId);
+    public AdminRolesGetUsersResponse adminRolesGetUsers(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<AdminRolesGetUsersResponse> localVarResp = adminRolesGetUsersWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -950,18 +989,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesGetUsersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role users </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesGetUsersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<AdminRolesGetUsersResponse> adminRolesGetUsersWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesGetUsersValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesGetUsersResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -976,13 +1016,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Role users </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesGetUsersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesGetUsersAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesGetUsersResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesGetUsersValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesGetUsersResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -995,7 +1036,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1025,6 +1066,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1057,34 +1099,37 @@ public class AdminRolesApi {
      * List all roles in the tenant
      * 
      * @param orgId  (required)
+     * @return AdminRolesListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminRolesListWithHttpInfo(orgId);
+    public AdminRolesListResponse adminRolesList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminRolesListResponse> localVarResp = adminRolesListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
      * List all roles in the tenant
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminRolesListResponse> adminRolesListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1098,13 +1143,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminRolesListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1119,7 +1165,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesRemovePermissionCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId, final ApiCallback _callback) throws ApiException {
@@ -1151,6 +1197,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1195,16 +1242,18 @@ public class AdminRolesApi {
      * @param orgId  (required)
      * @param roleId  (required)
      * @param permissionId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesRemovePermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId) throws ApiException {
-        adminRolesRemovePermissionWithHttpInfo(orgId, roleId, permissionId);
+    public MessageResponse adminRolesRemovePermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesRemovePermissionWithHttpInfo(orgId, roleId, permissionId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1213,18 +1262,19 @@ public class AdminRolesApi {
      * @param orgId  (required)
      * @param roleId  (required)
      * @param permissionId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesRemovePermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId) throws ApiException {
+    public ApiResponse<MessageResponse> adminRolesRemovePermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesRemovePermissionValidateBeforeCall(orgId, roleId, permissionId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1240,13 +1290,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesRemovePermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesRemovePermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String permissionId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesRemovePermissionValidateBeforeCall(orgId, roleId, permissionId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1261,7 +1312,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesRemoveUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1293,6 +1344,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1337,16 +1389,18 @@ public class AdminRolesApi {
      * @param orgId  (required)
      * @param roleId  (required)
      * @param userId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesRemoveUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId) throws ApiException {
-        adminRolesRemoveUserWithHttpInfo(orgId, roleId, userId);
+    public MessageResponse adminRolesRemoveUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminRolesRemoveUserWithHttpInfo(orgId, roleId, userId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1355,18 +1409,19 @@ public class AdminRolesApi {
      * @param orgId  (required)
      * @param roleId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesRemoveUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<MessageResponse> adminRolesRemoveUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesRemoveUserValidateBeforeCall(orgId, roleId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1382,13 +1437,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesRemoveUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesRemoveUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, @javax.annotation.Nonnull String userId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesRemoveUserValidateBeforeCall(orgId, roleId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1402,7 +1458,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminRolesUpdatePermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -1433,6 +1489,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1471,16 +1528,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public void adminRolesUpdatePermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        adminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+    public AdminRolesCreateResponse adminRolesUpdatePermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = adminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1488,18 +1547,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminRolesUpdatePermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<AdminRolesCreateResponse> adminRolesUpdatePermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = adminRolesUpdatePermissionsValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1514,13 +1574,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminRolesUpdatePermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminRolesUpdatePermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminRolesUpdatePermissionsValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1534,7 +1595,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -1565,6 +1626,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1603,16 +1665,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        patchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    public AdminRolesCreateResponse patchAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = patchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1620,18 +1684,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<AdminRolesCreateResponse> patchAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminRolesUpdateValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1646,13 +1711,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminRolesUpdateValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1666,7 +1732,7 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminRolesUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -1697,6 +1763,7 @@ public class AdminRolesApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1735,16 +1802,18 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
+     * @return AdminRolesCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        putAdminRolesUpdateWithHttpInfo(orgId, roleId);
+    public AdminRolesCreateResponse putAdminRolesUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<AdminRolesCreateResponse> localVarResp = putAdminRolesUpdateWithHttpInfo(orgId, roleId);
+        return localVarResp.getData();
     }
 
     /**
@@ -1752,18 +1821,19 @@ public class AdminRolesApi {
      * 
      * @param orgId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<AdminRolesCreateResponse> putAdminRolesUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = putAdminRolesUpdateValidateBeforeCall(orgId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -1778,13 +1848,14 @@ public class AdminRolesApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated role </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminRolesUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String roleId, final ApiCallback<AdminRolesCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminRolesUpdateValidateBeforeCall(orgId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

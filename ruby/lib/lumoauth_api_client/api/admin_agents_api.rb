@@ -430,7 +430,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [MessageResponse]
+    # @return [AdminAgentsDeleteResponse]
     def admin_agents_delete(org_id, agent_id, opts = {})
       data, _status_code, _headers = admin_agents_delete_with_http_info(org_id, agent_id, opts)
       data
@@ -440,7 +440,7 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
+    # @return [Array<(AdminAgentsDeleteResponse, Integer, Hash)>] AdminAgentsDeleteResponse data, response status code and response headers
     def admin_agents_delete_with_http_info(org_id, agent_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAgentsApi.admin_agents_delete ...'
@@ -471,7 +471,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'MessageResponse'
+      return_type = opts[:debug_return_type] || 'AdminAgentsDeleteResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

@@ -4,20 +4,20 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**GetProtectedResourceMetadata**](McpApi.md#getprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728) |
-| [**GetProtectedResourceMetadataRoot**](McpApi.md#getprotectedresourcemetadataroot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata |
+| [**GetProtectedResourceMetadata**](McpApi.md#getprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728) |
+| [**GetProtectedResourceMetadataRoot**](McpApi.md#getprotectedresourcemetadataroot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728) |
 | [**GetServer**](McpApi.md#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server. |
-| [**GetServerChallenge**](McpApi.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint. |
+| [**GetServerChallenge**](McpApi.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge |
 | [**ListServers**](McpApi.md#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant. |
-| [**PostServerChallenge**](McpApi.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint. |
+| [**PostServerChallenge**](McpApi.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST) |
 
 <a id="getprotectedresourcemetadata"></a>
 # **GetProtectedResourceMetadata**
-> void GetProtectedResourceMetadata (string orgId, string serverId)
+> ProtectedResourceMetadata GetProtectedResourceMetadata (string orgId, string serverId)
 
-OAuth 2.0 Protected Resource Metadata (RFC 9728)
+MCP server protected resource metadata (RFC 9728)
 
-Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 ```csharp
@@ -45,8 +45,9 @@ namespace Example
 
             try
             {
-                // OAuth 2.0 Protected Resource Metadata (RFC 9728)
-                apiInstance.GetProtectedResourceMetadata(orgId, serverId);
+                // MCP server protected resource metadata (RFC 9728)
+                ProtectedResourceMetadata result = apiInstance.GetProtectedResourceMetadata(orgId, serverId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -65,8 +66,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // OAuth 2.0 Protected Resource Metadata (RFC 9728)
-    apiInstance.GetProtectedResourceMetadataWithHttpInfo(orgId, serverId);
+    // MCP server protected resource metadata (RFC 9728)
+    ApiResponse<ProtectedResourceMetadata> response = apiInstance.GetProtectedResourceMetadataWithHttpInfo(orgId, serverId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -85,7 +89,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**ProtectedResourceMetadata**](ProtectedResourceMetadata.md)
 
 ### Authorization
 
@@ -94,23 +98,25 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). |  -  |
+| **400** | not_applicable — the MCP server does not require authorization. |  -  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getprotectedresourcemetadataroot"></a>
 # **GetProtectedResourceMetadataRoot**
-> void GetProtectedResourceMetadataRoot (string orgId)
+> GetProtectedResourceMetadataRoot200Response GetProtectedResourceMetadataRoot (string orgId)
 
-Root-level Protected Resource Metadata
+Organization-level protected resource metadata (RFC 9728)
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 ```csharp
@@ -137,8 +143,9 @@ namespace Example
 
             try
             {
-                // Root-level Protected Resource Metadata
-                apiInstance.GetProtectedResourceMetadataRoot(orgId);
+                // Organization-level protected resource metadata (RFC 9728)
+                GetProtectedResourceMetadataRoot200Response result = apiInstance.GetProtectedResourceMetadataRoot(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -157,8 +164,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Root-level Protected Resource Metadata
-    apiInstance.GetProtectedResourceMetadataRootWithHttpInfo(orgId);
+    // Organization-level protected resource metadata (RFC 9728)
+    ApiResponse<GetProtectedResourceMetadataRoot200Response> response = apiInstance.GetProtectedResourceMetadataRootWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -176,7 +186,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetProtectedResourceMetadataRoot200Response**](GetProtectedResourceMetadataRoot200Response.md)
 
 ### Authorization
 
@@ -185,13 +195,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. |  -  |
+| **404** | not_found — unknown organization, or no protected MCP servers configured. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -303,11 +314,11 @@ catch (ApiException e)
 
 <a id="getserverchallenge"></a>
 # **GetServerChallenge**
-> void GetServerChallenge (string orgId, string serverId)
+> GetServerChallengeResponse GetServerChallenge (string orgId, string serverId)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 ### Example
 ```csharp
@@ -338,8 +349,9 @@ namespace Example
 
             try
             {
-                // Simulated MCP Server 401 challenge endpoint.
-                apiInstance.GetServerChallenge(orgId, serverId);
+                // Simulated MCP server authorization challenge
+                GetServerChallengeResponse result = apiInstance.GetServerChallenge(orgId, serverId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -358,8 +370,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Simulated MCP Server 401 challenge endpoint.
-    apiInstance.GetServerChallengeWithHttpInfo(orgId, serverId);
+    // Simulated MCP server authorization challenge
+    ApiResponse<GetServerChallengeResponse> response = apiInstance.GetServerChallengeWithHttpInfo(orgId, serverId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -378,7 +393,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -387,13 +402,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | The access token is valid for this MCP server. |  -  |
+| **401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+| **403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -503,11 +522,11 @@ catch (ApiException e)
 
 <a id="postserverchallenge"></a>
 # **PostServerChallenge**
-> void PostServerChallenge (string orgId, string serverId)
+> GetServerChallengeResponse PostServerChallenge (string orgId, string serverId)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge (POST)
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
 ### Example
 ```csharp
@@ -538,8 +557,9 @@ namespace Example
 
             try
             {
-                // Simulated MCP Server 401 challenge endpoint.
-                apiInstance.PostServerChallenge(orgId, serverId);
+                // Simulated MCP server authorization challenge (POST)
+                GetServerChallengeResponse result = apiInstance.PostServerChallenge(orgId, serverId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -558,8 +578,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Simulated MCP Server 401 challenge endpoint.
-    apiInstance.PostServerChallengeWithHttpInfo(orgId, serverId);
+    // Simulated MCP server authorization challenge (POST)
+    ApiResponse<GetServerChallengeResponse> response = apiInstance.PostServerChallengeWithHttpInfo(orgId, serverId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -578,7 +601,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -587,13 +610,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | The access token is valid for this MCP server. |  -  |
+| **401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+| **403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

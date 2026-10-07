@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.AdminClientTokensRevokeAll(orgId, clientId);
+            //var response = instance.AdminClientTokensRevokeAll(orgId, clientId);
+            //Assert.IsType<AdminClientTokensRevokeAllResponse>(response);
         }
 
         /// <summary>
@@ -73,7 +76,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.AdminClientTokensRevokePost(orgId, clientId);
+            //var response = instance.AdminClientTokensRevokePost(orgId, clientId);
+            //Assert.IsType<AdminUserTokensRevokePostResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSessionsCount(orgId);
+            //var response = instance.AdminSessionsCount(orgId);
+            //Assert.IsType<AdminSessionsCountResponse>(response);
         }
 
         /// <summary>
@@ -95,7 +100,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSessionsList(orgId);
+            //var response = instance.AdminSessionsList(orgId);
+            //Assert.IsType<AdminSessionsListResponse>(response);
         }
 
         /// <summary>
@@ -107,7 +113,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string sessionId = null;
-            //instance.AdminSessionsRevoke(orgId, sessionId);
+            //var response = instance.AdminSessionsRevoke(orgId, sessionId);
+            //Assert.IsType<AdminSessionsRevokeResponse>(response);
         }
 
         /// <summary>
@@ -118,7 +125,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSessionsRevokeAll(orgId);
+            //AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest = null;
+            //var response = instance.AdminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest);
+            //Assert.IsType<AdminSessionsRevokeAllResponse>(response);
         }
 
         /// <summary>
@@ -129,7 +138,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSessionsStats(orgId);
+            //var response = instance.AdminSessionsStats(orgId);
+            //Assert.IsType<AdminSessionsStatsResponse>(response);
         }
 
         /// <summary>
@@ -140,7 +150,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminTokensList(orgId);
+            //var response = instance.AdminTokensList(orgId);
+            //Assert.IsType<AdminTokensListResponse>(response);
         }
 
         /// <summary>
@@ -152,7 +163,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string tokenId = null;
-            //instance.AdminTokensRevoke(orgId, tokenId);
+            //var response = instance.AdminTokensRevoke(orgId, tokenId);
+            //Assert.IsType<AdminTokensRevokeResponse>(response);
         }
 
         /// <summary>
@@ -164,7 +176,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AdminUserSessionsList(orgId, userId);
+            //var response = instance.AdminUserSessionsList(orgId, userId);
+            //Assert.IsType<AdminUserSessionsListResponse>(response);
         }
 
         /// <summary>
@@ -176,7 +189,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AdminUserSessionsRevokeAll(orgId, userId);
+            //var response = instance.AdminUserSessionsRevokeAll(orgId, userId);
+            //Assert.IsType<AdminUserSessionsRevokeAllResponse>(response);
         }
 
         /// <summary>
@@ -188,7 +202,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AdminUserSessionsRevokePost(orgId, userId);
+            //var response = instance.AdminUserSessionsRevokePost(orgId, userId);
+            //Assert.IsType<AdminUserSessionsRevokePostResponse>(response);
         }
 
         /// <summary>
@@ -200,7 +215,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AdminUserTokensRevokeAll(orgId, userId);
+            //var response = instance.AdminUserTokensRevokeAll(orgId, userId);
+            //Assert.IsType<AdminUserTokensRevokeAllResponse>(response);
         }
 
         /// <summary>
@@ -212,7 +228,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AdminUserTokensRevokePost(orgId, userId);
+            //var response = instance.AdminUserTokensRevokePost(orgId, userId);
+            //Assert.IsType<AdminUserTokensRevokePostResponse>(response);
         }
     }
 }

@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**CreateStreamConfig**](SsfApi.md#createstreamconfig) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; } |
-| [**DeleteStreamConfig**](SsfApi.md#deletestreamconfig) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream |  |
-| [**GetStreamConfig**](SsfApi.md#getstreamconfig) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned. |
-| [**VerifyStream**](SsfApi.md#verifystream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; } |
+| [**CreateStreamConfig**](SsfApi.md#createstreamconfig) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream |
+| [**DeleteStreamConfig**](SsfApi.md#deletestreamconfig) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream |
+| [**GetStreamConfig**](SsfApi.md#getstreamconfig) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s) |
+| [**VerifyStream**](SsfApi.md#verifystream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event |
 
 <a id="createstreamconfig"></a>
 # **CreateStreamConfig**
-> void CreateStreamConfig (string orgId)
+> SsfStream CreateStreamConfig (string orgId)
 
-Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+Create an SSF stream
 
 ### Example
 ```csharp
@@ -47,8 +47,9 @@ namespace Example
 
             try
             {
-                // Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
-                apiInstance.CreateStreamConfig(orgId);
+                // Create an SSF stream
+                SsfStream result = apiInstance.CreateStreamConfig(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -67,8 +68,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
-    apiInstance.CreateStreamConfigWithHttpInfo(orgId);
+    // Create an SSF stream
+    ApiResponse<SsfStream> response = apiInstance.CreateStreamConfigWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -86,7 +90,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SsfStream**](SsfStream.md)
 
 ### Authorization
 
@@ -95,21 +99,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Stream configuration |  -  |
+| **400** | Unsupported delivery method or missing field |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="deletestreamconfig"></a>
 # **DeleteStreamConfig**
-> void DeleteStreamConfig (string orgId)
+> void DeleteStreamConfig (string streamId, string orgId)
 
-
+Delete an SSF stream
 
 ### Example
 ```csharp
@@ -139,11 +144,13 @@ namespace Example
             HttpClient httpClient = new HttpClient();
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new SsfApi(httpClient, config, httpClientHandler);
+            var streamId = "streamId_example";  // string | 
             var orgId = "orgId_example";  // string | 
 
             try
             {
-                apiInstance.DeleteStreamConfig(orgId);
+                // Delete an SSF stream
+                apiInstance.DeleteStreamConfig(streamId, orgId);
             }
             catch (ApiException  e)
             {
@@ -162,7 +169,8 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.DeleteStreamConfigWithHttpInfo(orgId);
+    // Delete an SSF stream
+    apiInstance.DeleteStreamConfigWithHttpInfo(streamId, orgId);
 }
 catch (ApiException e)
 {
@@ -176,6 +184,7 @@ catch (ApiException e)
 
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
+| **streamId** | **string** |  |  |
 | **orgId** | **string** |  |  |
 
 ### Return type
@@ -195,15 +204,17 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **204** | Stream deleted |  -  |
+| **400** | Missing stream_id |  -  |
+| **404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getstreamconfig"></a>
 # **GetStreamConfig**
-> void GetStreamConfig (string orgId)
+> GetStreamConfig200Response GetStreamConfig (string orgId, string? streamId = null)
 
-Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+Read SSF stream configuration(s)
 
 ### Example
 ```csharp
@@ -234,11 +245,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new SsfApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var streamId = "streamId_example";  // string? |  (optional) 
 
             try
             {
-                // Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
-                apiInstance.GetStreamConfig(orgId);
+                // Read SSF stream configuration(s)
+                GetStreamConfig200Response result = apiInstance.GetStreamConfig(orgId, streamId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -257,8 +270,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
-    apiInstance.GetStreamConfigWithHttpInfo(orgId);
+    // Read SSF stream configuration(s)
+    ApiResponse<GetStreamConfig200Response> response = apiInstance.GetStreamConfigWithHttpInfo(orgId, streamId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -273,10 +289,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **streamId** | **string?** |  | [optional]  |
 
 ### Return type
 
-void (empty response body)
+[**GetStreamConfig200Response**](GetStreamConfig200Response.md)
 
 ### Authorization
 
@@ -285,13 +302,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | A single stream (with stream_id) or all of the tenant&#39;s streams |  -  |
+| **404** | Stream not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -299,7 +317,7 @@ void (empty response body)
 # **VerifyStream**
 > void VerifyStream (string orgId)
 
-SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+Request a stream verification event
 
 ### Example
 ```csharp
@@ -333,7 +351,7 @@ namespace Example
 
             try
             {
-                // SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+                // Request a stream verification event
                 apiInstance.VerifyStream(orgId);
             }
             catch (ApiException  e)
@@ -353,7 +371,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+    // Request a stream verification event
     apiInstance.VerifyStreamWithHttpInfo(orgId);
 }
 catch (ApiException e)
@@ -387,7 +405,10 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **204** | Verification event queued |  -  |
+| **400** | Missing stream_id |  -  |
+| **404** | Stream not found |  -  |
+| **409** | Stream is not enabled |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

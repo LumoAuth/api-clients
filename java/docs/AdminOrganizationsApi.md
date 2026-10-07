@@ -4,33 +4,33 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminOrgInvitationsCreate**](AdminOrganizationsApi.md#adminOrgInvitationsCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations |  |
-| [**adminOrgInvitationsList**](AdminOrganizationsApi.md#adminOrgInvitationsList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations |  |
-| [**adminOrgInvitationsResend**](AdminOrganizationsApi.md#adminOrgInvitationsResend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend |  |
-| [**adminOrgInvitationsRevoke**](AdminOrganizationsApi.md#adminOrgInvitationsRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} |  |
-| [**adminOrgMembersAdd**](AdminOrganizationsApi.md#adminOrgMembersAdd) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members |  |
-| [**adminOrgMembersList**](AdminOrganizationsApi.md#adminOrgMembersList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members |  |
-| [**adminOrgMembersRemove**](AdminOrganizationsApi.md#adminOrgMembersRemove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**adminOrgRolesCreate**](AdminOrganizationsApi.md#adminOrgRolesCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles |  |
-| [**adminOrgRolesDelete**](AdminOrganizationsApi.md#adminOrgRolesDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**adminOrgRolesList**](AdminOrganizationsApi.md#adminOrgRolesList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles |  |
-| [**adminOrganizationsCreate**](AdminOrganizationsApi.md#adminOrganizationsCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations |  |
-| [**adminOrganizationsDelete**](AdminOrganizationsApi.md#adminOrganizationsDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**adminOrganizationsGet**](AdminOrganizationsApi.md#adminOrganizationsGet) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**adminOrganizationsList**](AdminOrganizationsApi.md#adminOrganizationsList) | **GET** /orgs/{orgId}/api/v1/admin/organizations |  |
-| [**patchAdminOrgMembersUpdate**](AdminOrganizationsApi.md#patchAdminOrgMembersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**patchAdminOrgRolesUpdate**](AdminOrganizationsApi.md#patchAdminOrgRolesUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**patchAdminOrganizationsUpdate**](AdminOrganizationsApi.md#patchAdminOrganizationsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**putAdminOrgMembersUpdate**](AdminOrganizationsApi.md#putAdminOrgMembersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**putAdminOrgRolesUpdate**](AdminOrganizationsApi.md#putAdminOrgRolesUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**putAdminOrganizationsUpdate**](AdminOrganizationsApi.md#putAdminOrganizationsUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
+| [**adminOrgInvitationsCreate**](AdminOrganizationsApi.md#adminOrgInvitationsCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization |
+| [**adminOrgInvitationsList**](AdminOrganizationsApi.md#adminOrgInvitationsList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations |
+| [**adminOrgInvitationsResend**](AdminOrganizationsApi.md#adminOrgInvitationsResend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation |
+| [**adminOrgInvitationsRevoke**](AdminOrganizationsApi.md#adminOrgInvitationsRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation |
+| [**adminOrgMembersAdd**](AdminOrganizationsApi.md#adminOrgMembersAdd) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization |
+| [**adminOrgMembersList**](AdminOrganizationsApi.md#adminOrgMembersList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members |
+| [**adminOrgMembersRemove**](AdminOrganizationsApi.md#adminOrgMembersRemove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization |
+| [**adminOrgRolesCreate**](AdminOrganizationsApi.md#adminOrgRolesCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role |
+| [**adminOrgRolesDelete**](AdminOrganizationsApi.md#adminOrgRolesDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role |
+| [**adminOrgRolesList**](AdminOrganizationsApi.md#adminOrgRolesList) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles |
+| [**adminOrganizationsCreate**](AdminOrganizationsApi.md#adminOrganizationsCreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization |
+| [**adminOrganizationsDelete**](AdminOrganizationsApi.md#adminOrganizationsDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization |
+| [**adminOrganizationsGet**](AdminOrganizationsApi.md#adminOrganizationsGet) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization |
+| [**adminOrganizationsList**](AdminOrganizationsApi.md#adminOrganizationsList) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations |
+| [**patchAdminOrgMembersUpdate**](AdminOrganizationsApi.md#patchAdminOrgMembersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status |
+| [**patchAdminOrgRolesUpdate**](AdminOrganizationsApi.md#patchAdminOrgRolesUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role |
+| [**patchAdminOrganizationsUpdate**](AdminOrganizationsApi.md#patchAdminOrganizationsUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization |
+| [**putAdminOrgMembersUpdate**](AdminOrganizationsApi.md#putAdminOrgMembersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status |
+| [**putAdminOrgRolesUpdate**](AdminOrganizationsApi.md#putAdminOrgRolesUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role |
+| [**putAdminOrganizationsUpdate**](AdminOrganizationsApi.md#putAdminOrganizationsUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization |
 
 
 <a id="adminOrgInvitationsCreate"></a>
 # **adminOrgInvitationsCreate**
-> adminOrgInvitationsCreate(orgId, organizationId)
+> AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate(orgId, organizationId)
 
-
+Invite a user to an organization
 
 ### Example
 ```java
@@ -61,7 +61,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrgInvitationsCreate(orgId, organizationId);
+      AdminOrgInvitationsCreateResponse result = apiInstance.adminOrgInvitationsCreate(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgInvitationsCreate");
       System.err.println("Status code: " + e.getCode());
@@ -82,7 +83,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgInvitationsCreateResponse**](AdminOrgInvitationsCreateResponse.md)
 
 ### Authorization
 
@@ -91,18 +92,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Invitation sent |  -  |
+| **400** | Invalid role for this organization |  -  |
+| **404** | Organization not found |  -  |
 
 <a id="adminOrgInvitationsList"></a>
 # **adminOrgInvitationsList**
-> adminOrgInvitationsList(orgId, organizationId)
+> AdminOrgInvitationsListResponse adminOrgInvitationsList(orgId, organizationId)
 
-
+List organization invitations
 
 ### Example
 ```java
@@ -133,7 +136,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrgInvitationsList(orgId, organizationId);
+      AdminOrgInvitationsListResponse result = apiInstance.adminOrgInvitationsList(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgInvitationsList");
       System.err.println("Status code: " + e.getCode());
@@ -154,7 +158,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgInvitationsListResponse**](AdminOrgInvitationsListResponse.md)
 
 ### Authorization
 
@@ -163,18 +167,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Invitations |  -  |
+| **404** | Organization not found |  -  |
 
 <a id="adminOrgInvitationsResend"></a>
 # **adminOrgInvitationsResend**
-> adminOrgInvitationsResend(orgId, organizationId, invId)
+> MessageResponse adminOrgInvitationsResend(orgId, organizationId, invId)
 
-
+Resend an invitation
 
 ### Example
 ```java
@@ -206,7 +211,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String invId = "invId_example"; // String | 
     try {
-      apiInstance.adminOrgInvitationsResend(orgId, organizationId, invId);
+      MessageResponse result = apiInstance.adminOrgInvitationsResend(orgId, organizationId, invId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgInvitationsResend");
       System.err.println("Status code: " + e.getCode());
@@ -228,7 +234,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -237,18 +243,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Invitation resent |  -  |
+| **404** | Organization or invitation not found |  -  |
+| **422** | Unable to resend invitation |  -  |
 
 <a id="adminOrgInvitationsRevoke"></a>
 # **adminOrgInvitationsRevoke**
-> adminOrgInvitationsRevoke(orgId, organizationId, invId)
+> MessageResponse adminOrgInvitationsRevoke(orgId, organizationId, invId)
 
-
+Revoke an invitation
 
 ### Example
 ```java
@@ -280,7 +288,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String invId = "invId_example"; // String | 
     try {
-      apiInstance.adminOrgInvitationsRevoke(orgId, organizationId, invId);
+      MessageResponse result = apiInstance.adminOrgInvitationsRevoke(orgId, organizationId, invId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgInvitationsRevoke");
       System.err.println("Status code: " + e.getCode());
@@ -302,7 +311,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -311,18 +320,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Invitation revoked |  -  |
+| **404** | Organization or invitation not found |  -  |
 
 <a id="adminOrgMembersAdd"></a>
 # **adminOrgMembersAdd**
-> adminOrgMembersAdd(orgId, organizationId)
+> AdminOrgMembersAddResponse adminOrgMembersAdd(orgId, organizationId)
 
-
+Add a member to an organization
 
 ### Example
 ```java
@@ -353,7 +363,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrgMembersAdd(orgId, organizationId);
+      AdminOrgMembersAddResponse result = apiInstance.adminOrgMembersAdd(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgMembersAdd");
       System.err.println("Status code: " + e.getCode());
@@ -374,7 +385,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgMembersAddResponse**](AdminOrgMembersAddResponse.md)
 
 ### Authorization
 
@@ -383,18 +394,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Member added |  -  |
+| **404** | Organization, user or role not found |  -  |
+| **409** | User is already a member |  -  |
 
 <a id="adminOrgMembersList"></a>
 # **adminOrgMembersList**
-> adminOrgMembersList(orgId, organizationId)
+> AdminOrgMembersListResponse adminOrgMembersList(orgId, organizationId)
 
-
+List organization members
 
 ### Example
 ```java
@@ -425,7 +438,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrgMembersList(orgId, organizationId);
+      AdminOrgMembersListResponse result = apiInstance.adminOrgMembersList(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgMembersList");
       System.err.println("Status code: " + e.getCode());
@@ -446,7 +460,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgMembersListResponse**](AdminOrgMembersListResponse.md)
 
 ### Authorization
 
@@ -455,18 +469,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Members |  -  |
+| **404** | Organization not found |  -  |
 
 <a id="adminOrgMembersRemove"></a>
 # **adminOrgMembersRemove**
-> adminOrgMembersRemove(orgId, organizationId, userId)
+> MessageResponse adminOrgMembersRemove(orgId, organizationId, userId)
 
-
+Remove a member from an organization
 
 ### Example
 ```java
@@ -498,7 +513,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminOrgMembersRemove(orgId, organizationId, userId);
+      MessageResponse result = apiInstance.adminOrgMembersRemove(orgId, organizationId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgMembersRemove");
       System.err.println("Status code: " + e.getCode());
@@ -520,7 +536,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -529,18 +545,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Member removed |  -  |
+| **404** | Organization or user not found |  -  |
+| **422** | Unable to remove member |  -  |
 
 <a id="adminOrgRolesCreate"></a>
 # **adminOrgRolesCreate**
-> adminOrgRolesCreate(orgId, organizationId)
+> AdminOrgRolesCreateResponse adminOrgRolesCreate(orgId, organizationId)
 
-
+Create an organization role
 
 ### Example
 ```java
@@ -571,7 +589,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrgRolesCreate(orgId, organizationId);
+      AdminOrgRolesCreateResponse result = apiInstance.adminOrgRolesCreate(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgRolesCreate");
       System.err.println("Status code: " + e.getCode());
@@ -592,7 +611,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -601,18 +620,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Role created |  -  |
+| **404** | Organization not found |  -  |
+| **409** | A role with this name or slug already exists |  -  |
 
 <a id="adminOrgRolesDelete"></a>
 # **adminOrgRolesDelete**
-> adminOrgRolesDelete(orgId, organizationId, roleId)
+> MessageResponse adminOrgRolesDelete(orgId, organizationId, roleId)
 
-
+Delete an organization role
 
 ### Example
 ```java
@@ -644,7 +665,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.adminOrgRolesDelete(orgId, organizationId, roleId);
+      MessageResponse result = apiInstance.adminOrgRolesDelete(orgId, organizationId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgRolesDelete");
       System.err.println("Status code: " + e.getCode());
@@ -666,7 +688,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -675,18 +697,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role deleted |  -  |
+| **404** | Organization or role not found |  -  |
+| **422** | Role still in use |  -  |
 
 <a id="adminOrgRolesList"></a>
 # **adminOrgRolesList**
-> adminOrgRolesList(orgId, organizationId)
+> AdminOrgRolesListResponse adminOrgRolesList(orgId, organizationId)
 
-
+List organization roles
 
 ### Example
 ```java
@@ -717,7 +741,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrgRolesList(orgId, organizationId);
+      AdminOrgRolesListResponse result = apiInstance.adminOrgRolesList(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrgRolesList");
       System.err.println("Status code: " + e.getCode());
@@ -738,7 +763,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgRolesListResponse**](AdminOrgRolesListResponse.md)
 
 ### Authorization
 
@@ -747,18 +772,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Roles |  -  |
+| **404** | Organization not found |  -  |
 
 <a id="adminOrganizationsCreate"></a>
 # **adminOrganizationsCreate**
-> adminOrganizationsCreate(orgId)
+> AdminOrganizationsCreateResponse adminOrganizationsCreate(orgId)
 
-
+Create an organization
 
 ### Example
 ```java
@@ -788,7 +814,8 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminOrganizationsCreate(orgId);
+      AdminOrganizationsCreateResponse result = apiInstance.adminOrganizationsCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrganizationsCreate");
       System.err.println("Status code: " + e.getCode());
@@ -808,7 +835,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrganizationsCreateResponse**](AdminOrganizationsCreateResponse.md)
 
 ### Authorization
 
@@ -817,18 +844,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Organization created |  -  |
+| **409** | Organization already exists or data invalid |  -  |
 
 <a id="adminOrganizationsDelete"></a>
 # **adminOrganizationsDelete**
-> adminOrganizationsDelete(orgId, organizationId)
+> MessageResponse adminOrganizationsDelete(orgId, organizationId)
 
-
+Delete an organization
 
 ### Example
 ```java
@@ -859,7 +887,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrganizationsDelete(orgId, organizationId);
+      MessageResponse result = apiInstance.adminOrganizationsDelete(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrganizationsDelete");
       System.err.println("Status code: " + e.getCode());
@@ -880,7 +909,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -889,18 +918,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization deleted |  -  |
+| **404** | Organization not found |  -  |
 
 <a id="adminOrganizationsGet"></a>
 # **adminOrganizationsGet**
-> adminOrganizationsGet(orgId, organizationId)
+> AdminOrganizationsGetResponse adminOrganizationsGet(orgId, organizationId)
 
-
+Get an organization
 
 ### Example
 ```java
@@ -931,7 +961,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.adminOrganizationsGet(orgId, organizationId);
+      AdminOrganizationsGetResponse result = apiInstance.adminOrganizationsGet(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrganizationsGet");
       System.err.println("Status code: " + e.getCode());
@@ -952,7 +983,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -961,18 +992,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization |  -  |
+| **404** | Organization not found |  -  |
 
 <a id="adminOrganizationsList"></a>
 # **adminOrganizationsList**
-> adminOrganizationsList(orgId)
+> AdminOrganizationsListResponse adminOrganizationsList(orgId)
 
-
+List organizations
 
 ### Example
 ```java
@@ -1002,7 +1034,8 @@ public class Example {
     AdminOrganizationsApi apiInstance = new AdminOrganizationsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminOrganizationsList(orgId);
+      AdminOrganizationsListResponse result = apiInstance.adminOrganizationsList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#adminOrganizationsList");
       System.err.println("Status code: " + e.getCode());
@@ -1022,7 +1055,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrganizationsListResponse**](AdminOrganizationsListResponse.md)
 
 ### Authorization
 
@@ -1031,18 +1064,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organizations |  -  |
 
 <a id="patchAdminOrgMembersUpdate"></a>
 # **patchAdminOrgMembersUpdate**
-> patchAdminOrgMembersUpdate(orgId, organizationId, userId)
+> PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate(orgId, organizationId, userId)
 
-
+Update a member&#39;s role or status
 
 ### Example
 ```java
@@ -1074,7 +1107,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.patchAdminOrgMembersUpdate(orgId, organizationId, userId);
+      PutAdminOrgMembersUpdateResponse result = apiInstance.patchAdminOrgMembersUpdate(orgId, organizationId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#patchAdminOrgMembersUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1096,7 +1130,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1105,18 +1139,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated member |  -  |
+| **404** | Organization, member or role not found |  -  |
+| **422** | Unable to update member role |  -  |
 
 <a id="patchAdminOrgRolesUpdate"></a>
 # **patchAdminOrgRolesUpdate**
-> patchAdminOrgRolesUpdate(orgId, organizationId, roleId)
+> AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate(orgId, organizationId, roleId)
 
-
+Update an organization role
 
 ### Example
 ```java
@@ -1148,7 +1184,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.patchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+      AdminOrgRolesCreateResponse result = apiInstance.patchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#patchAdminOrgRolesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1170,7 +1207,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1179,18 +1216,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
+| **404** | Organization or role not found |  -  |
+| **422** | Unable to update role |  -  |
 
 <a id="patchAdminOrganizationsUpdate"></a>
 # **patchAdminOrganizationsUpdate**
-> patchAdminOrganizationsUpdate(orgId, organizationId)
+> AdminOrganizationsGetResponse patchAdminOrganizationsUpdate(orgId, organizationId)
 
-
+Update an organization
 
 ### Example
 ```java
@@ -1221,7 +1260,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.patchAdminOrganizationsUpdate(orgId, organizationId);
+      AdminOrganizationsGetResponse result = apiInstance.patchAdminOrganizationsUpdate(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#patchAdminOrganizationsUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1242,7 +1282,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1251,18 +1291,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization |  -  |
+| **404** | Organization not found |  -  |
+| **409** | Data invalid or conflicts with an existing record |  -  |
 
 <a id="putAdminOrgMembersUpdate"></a>
 # **putAdminOrgMembersUpdate**
-> putAdminOrgMembersUpdate(orgId, organizationId, userId)
+> PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate(orgId, organizationId, userId)
 
-
+Update a member&#39;s role or status
 
 ### Example
 ```java
@@ -1294,7 +1336,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.putAdminOrgMembersUpdate(orgId, organizationId, userId);
+      PutAdminOrgMembersUpdateResponse result = apiInstance.putAdminOrgMembersUpdate(orgId, organizationId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#putAdminOrgMembersUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1316,7 +1359,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1325,18 +1368,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated member |  -  |
+| **404** | Organization, member or role not found |  -  |
+| **422** | Unable to update member role |  -  |
 
 <a id="putAdminOrgRolesUpdate"></a>
 # **putAdminOrgRolesUpdate**
-> putAdminOrgRolesUpdate(orgId, organizationId, roleId)
+> AdminOrgRolesCreateResponse putAdminOrgRolesUpdate(orgId, organizationId, roleId)
 
-
+Update an organization role
 
 ### Example
 ```java
@@ -1368,7 +1413,8 @@ public class Example {
     String organizationId = "organizationId_example"; // String | 
     String roleId = "roleId_example"; // String | 
     try {
-      apiInstance.putAdminOrgRolesUpdate(orgId, organizationId, roleId);
+      AdminOrgRolesCreateResponse result = apiInstance.putAdminOrgRolesUpdate(orgId, organizationId, roleId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#putAdminOrgRolesUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1390,7 +1436,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1399,18 +1445,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
+| **404** | Organization or role not found |  -  |
+| **422** | Unable to update role |  -  |
 
 <a id="putAdminOrganizationsUpdate"></a>
 # **putAdminOrganizationsUpdate**
-> putAdminOrganizationsUpdate(orgId, organizationId)
+> AdminOrganizationsGetResponse putAdminOrganizationsUpdate(orgId, organizationId)
 
-
+Update an organization
 
 ### Example
 ```java
@@ -1441,7 +1489,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String organizationId = "organizationId_example"; // String | 
     try {
-      apiInstance.putAdminOrganizationsUpdate(orgId, organizationId);
+      AdminOrganizationsGetResponse result = apiInstance.putAdminOrganizationsUpdate(orgId, organizationId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminOrganizationsApi#putAdminOrganizationsUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1462,7 +1511,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1471,10 +1520,12 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization |  -  |
+| **404** | Organization not found |  -  |
+| **409** | Data invalid or conflicts with an existing record |  -  |
 

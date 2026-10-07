@@ -19,7 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import io.lumoauth.client.model.GetMeResponseTenant;
+import io.lumoauth.client.model.GroupRef;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +52,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetMeResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetMeResponse {
   /**
    * Gets or Sets subjectType
@@ -144,7 +144,7 @@ public class GetMeResponse {
   public static final String SERIALIZED_NAME_TENANT = "tenant";
   @SerializedName(SERIALIZED_NAME_TENANT)
   @javax.annotation.Nullable
-  private GetMeResponseTenant tenant;
+  private GroupRef tenant;
 
   public GetMeResponse() {
   }
@@ -298,7 +298,7 @@ public class GetMeResponse {
   }
 
 
-  public GetMeResponse tenant(@javax.annotation.Nullable GetMeResponseTenant tenant) {
+  public GetMeResponse tenant(@javax.annotation.Nullable GroupRef tenant) {
     this.tenant = tenant;
     return this;
   }
@@ -308,11 +308,11 @@ public class GetMeResponse {
    * @return tenant
    */
   @javax.annotation.Nullable
-  public GetMeResponseTenant getTenant() {
+  public GroupRef getTenant() {
     return tenant;
   }
 
-  public void setTenant(@javax.annotation.Nullable GetMeResponseTenant tenant) {
+  public void setTenant(@javax.annotation.Nullable GroupRef tenant) {
     this.tenant = tenant;
   }
 
@@ -439,7 +439,7 @@ public class GetMeResponse {
       }
       // validate the optional field `tenant`
       if (jsonObj.get("tenant") != null && !jsonObj.get("tenant").isJsonNull()) {
-        GetMeResponseTenant.validateJsonElement(jsonObj.get("tenant"));
+        GroupRef.validateJsonElement(jsonObj.get("tenant"));
       }
   }
 

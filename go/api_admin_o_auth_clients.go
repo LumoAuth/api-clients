@@ -24,7 +24,7 @@ import (
 type AdminOAuthClientsAPI interface {
 
 	/*
-	CreateClient Create a new OAuth client
+	CreateClient Create an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,7 +33,8 @@ type AdminOAuthClientsAPI interface {
 	CreateClient(ctx context.Context, orgId string) ApiCreateClientRequest
 
 	// CreateClientExecute executes the request
-	CreateClientExecute(r ApiCreateClientRequest) (*http.Response, error)
+	//  @return CreateClientResponse
+	CreateClientExecute(r ApiCreateClientRequest) (*CreateClientResponse, *http.Response, error)
 
 	/*
 	DeleteClient Delete an OAuth client
@@ -46,10 +47,11 @@ type AdminOAuthClientsAPI interface {
 	DeleteClient(ctx context.Context, orgId string, clientId string) ApiDeleteClientRequest
 
 	// DeleteClientExecute executes the request
-	DeleteClientExecute(r ApiDeleteClientRequest) (*http.Response, error)
+	//  @return MessageResponse
+	DeleteClientExecute(r ApiDeleteClientRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	DisableClient Disable OAuth client
+	DisableClient Disable an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -59,10 +61,11 @@ type AdminOAuthClientsAPI interface {
 	DisableClient(ctx context.Context, orgId string, clientId string) ApiDisableClientRequest
 
 	// DisableClientExecute executes the request
-	DisableClientExecute(r ApiDisableClientRequest) (*http.Response, error)
+	//  @return UpdateClientResponse
+	DisableClientExecute(r ApiDisableClientRequest) (*UpdateClientResponse, *http.Response, error)
 
 	/*
-	EnableClient Enable OAuth client
+	EnableClient Enable an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -72,10 +75,11 @@ type AdminOAuthClientsAPI interface {
 	EnableClient(ctx context.Context, orgId string, clientId string) ApiEnableClientRequest
 
 	// EnableClientExecute executes the request
-	EnableClientExecute(r ApiEnableClientRequest) (*http.Response, error)
+	//  @return UpdateClientResponse
+	EnableClientExecute(r ApiEnableClientRequest) (*UpdateClientResponse, *http.Response, error)
 
 	/*
-	GetClient Get a single OAuth client by ID or clientId
+	GetClient Get an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -85,10 +89,11 @@ type AdminOAuthClientsAPI interface {
 	GetClient(ctx context.Context, orgId string, clientId string) ApiGetClientRequest
 
 	// GetClientExecute executes the request
-	GetClientExecute(r ApiGetClientRequest) (*http.Response, error)
+	//  @return GetClientResponse
+	GetClientExecute(r ApiGetClientRequest) (*GetClientResponse, *http.Response, error)
 
 	/*
-	ListClientScopes Get client scopes
+	ListClientScopes List the scopes granted to an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -98,10 +103,11 @@ type AdminOAuthClientsAPI interface {
 	ListClientScopes(ctx context.Context, orgId string, clientId string) ApiListClientScopesRequest
 
 	// ListClientScopesExecute executes the request
-	ListClientScopesExecute(r ApiListClientScopesRequest) (*http.Response, error)
+	//  @return ListClientScopesResponse
+	ListClientScopesExecute(r ApiListClientScopesRequest) (*ListClientScopesResponse, *http.Response, error)
 
 	/*
-	ListClients List all OAuth clients in the tenant
+	ListClients List OAuth clients
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -110,10 +116,11 @@ type AdminOAuthClientsAPI interface {
 	ListClients(ctx context.Context, orgId string) ApiListClientsRequest
 
 	// ListClientsExecute executes the request
-	ListClientsExecute(r ApiListClientsRequest) (*http.Response, error)
+	//  @return ListClientsResponse
+	ListClientsExecute(r ApiListClientsRequest) (*ListClientsResponse, *http.Response, error)
 
 	/*
-	PatchClient Update an existing OAuth client
+	PatchClient Update an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -123,10 +130,11 @@ type AdminOAuthClientsAPI interface {
 	PatchClient(ctx context.Context, orgId string, clientId string) ApiPatchClientRequest
 
 	// PatchClientExecute executes the request
-	PatchClientExecute(r ApiPatchClientRequest) (*http.Response, error)
+	//  @return UpdateClientResponse
+	PatchClientExecute(r ApiPatchClientRequest) (*UpdateClientResponse, *http.Response, error)
 
 	/*
-	RotateClientSecret Rotate client secret
+	RotateClientSecret Rotate an OAuth client secret
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -136,10 +144,11 @@ type AdminOAuthClientsAPI interface {
 	RotateClientSecret(ctx context.Context, orgId string, clientId string) ApiRotateClientSecretRequest
 
 	// RotateClientSecretExecute executes the request
-	RotateClientSecretExecute(r ApiRotateClientSecretRequest) (*http.Response, error)
+	//  @return RotateClientSecretResponse
+	RotateClientSecretExecute(r ApiRotateClientSecretRequest) (*RotateClientSecretResponse, *http.Response, error)
 
 	/*
-	SetClientScopes Set client scopes
+	SetClientScopes Replace the scopes granted to an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -149,10 +158,11 @@ type AdminOAuthClientsAPI interface {
 	SetClientScopes(ctx context.Context, orgId string, clientId string) ApiSetClientScopesRequest
 
 	// SetClientScopesExecute executes the request
-	SetClientScopesExecute(r ApiSetClientScopesRequest) (*http.Response, error)
+	//  @return SetClientScopesResponse
+	SetClientScopesExecute(r ApiSetClientScopesRequest) (*SetClientScopesResponse, *http.Response, error)
 
 	/*
-	UpdateClient Update an existing OAuth client
+	UpdateClient Replace an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -162,7 +172,8 @@ type AdminOAuthClientsAPI interface {
 	UpdateClient(ctx context.Context, orgId string, clientId string) ApiUpdateClientRequest
 
 	// UpdateClientExecute executes the request
-	UpdateClientExecute(r ApiUpdateClientRequest) (*http.Response, error)
+	//  @return UpdateClientResponse
+	UpdateClientExecute(r ApiUpdateClientRequest) (*UpdateClientResponse, *http.Response, error)
 }
 
 // AdminOAuthClientsAPIService AdminOAuthClientsAPI service
@@ -174,12 +185,12 @@ type ApiCreateClientRequest struct {
 	orgId string
 }
 
-func (r ApiCreateClientRequest) Execute() (*http.Response, error) {
+func (r ApiCreateClientRequest) Execute() (*CreateClientResponse, *http.Response, error) {
 	return r.ApiService.CreateClientExecute(r)
 }
 
 /*
-CreateClient Create a new OAuth client
+CreateClient Create an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -194,16 +205,18 @@ func (a *AdminOAuthClientsAPIService) CreateClient(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientRequest) (*http.Response, error) {
+//  @return CreateClientResponse
+func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientRequest) (*CreateClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CreateClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.CreateClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients"
@@ -223,7 +236,7 @@ func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -246,19 +259,19 @@ func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -266,10 +279,19 @@ func (a *AdminOAuthClientsAPIService) CreateClientExecute(r ApiCreateClientReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiDeleteClientRequest struct {
@@ -279,7 +301,7 @@ type ApiDeleteClientRequest struct {
 	clientId string
 }
 
-func (r ApiDeleteClientRequest) Execute() (*http.Response, error) {
+func (r ApiDeleteClientRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.DeleteClientExecute(r)
 }
 
@@ -301,16 +323,18 @@ func (a *AdminOAuthClientsAPIService) DeleteClient(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) DeleteClientExecute(r ApiDeleteClientRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminOAuthClientsAPIService) DeleteClientExecute(r ApiDeleteClientRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.DeleteClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
@@ -331,7 +355,7 @@ func (a *AdminOAuthClientsAPIService) DeleteClientExecute(r ApiDeleteClientReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -354,19 +378,19 @@ func (a *AdminOAuthClientsAPIService) DeleteClientExecute(r ApiDeleteClientReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -374,10 +398,19 @@ func (a *AdminOAuthClientsAPIService) DeleteClientExecute(r ApiDeleteClientReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiDisableClientRequest struct {
@@ -387,12 +420,12 @@ type ApiDisableClientRequest struct {
 	clientId string
 }
 
-func (r ApiDisableClientRequest) Execute() (*http.Response, error) {
+func (r ApiDisableClientRequest) Execute() (*UpdateClientResponse, *http.Response, error) {
 	return r.ApiService.DisableClientExecute(r)
 }
 
 /*
-DisableClient Disable OAuth client
+DisableClient Disable an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -409,16 +442,18 @@ func (a *AdminOAuthClientsAPIService) DisableClient(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) DisableClientExecute(r ApiDisableClientRequest) (*http.Response, error) {
+//  @return UpdateClientResponse
+func (a *AdminOAuthClientsAPIService) DisableClientExecute(r ApiDisableClientRequest) (*UpdateClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UpdateClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.DisableClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable"
@@ -439,7 +474,7 @@ func (a *AdminOAuthClientsAPIService) DisableClientExecute(r ApiDisableClientReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -462,19 +497,19 @@ func (a *AdminOAuthClientsAPIService) DisableClientExecute(r ApiDisableClientReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -482,10 +517,19 @@ func (a *AdminOAuthClientsAPIService) DisableClientExecute(r ApiDisableClientReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiEnableClientRequest struct {
@@ -495,12 +539,12 @@ type ApiEnableClientRequest struct {
 	clientId string
 }
 
-func (r ApiEnableClientRequest) Execute() (*http.Response, error) {
+func (r ApiEnableClientRequest) Execute() (*UpdateClientResponse, *http.Response, error) {
 	return r.ApiService.EnableClientExecute(r)
 }
 
 /*
-EnableClient Enable OAuth client
+EnableClient Enable an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -517,16 +561,18 @@ func (a *AdminOAuthClientsAPIService) EnableClient(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) EnableClientExecute(r ApiEnableClientRequest) (*http.Response, error) {
+//  @return UpdateClientResponse
+func (a *AdminOAuthClientsAPIService) EnableClientExecute(r ApiEnableClientRequest) (*UpdateClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UpdateClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.EnableClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable"
@@ -547,7 +593,7 @@ func (a *AdminOAuthClientsAPIService) EnableClientExecute(r ApiEnableClientReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -570,19 +616,19 @@ func (a *AdminOAuthClientsAPIService) EnableClientExecute(r ApiEnableClientReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -590,10 +636,19 @@ func (a *AdminOAuthClientsAPIService) EnableClientExecute(r ApiEnableClientReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetClientRequest struct {
@@ -603,12 +658,12 @@ type ApiGetClientRequest struct {
 	clientId string
 }
 
-func (r ApiGetClientRequest) Execute() (*http.Response, error) {
+func (r ApiGetClientRequest) Execute() (*GetClientResponse, *http.Response, error) {
 	return r.ApiService.GetClientExecute(r)
 }
 
 /*
-GetClient Get a single OAuth client by ID or clientId
+GetClient Get an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -625,16 +680,18 @@ func (a *AdminOAuthClientsAPIService) GetClient(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) GetClientExecute(r ApiGetClientRequest) (*http.Response, error) {
+//  @return GetClientResponse
+func (a *AdminOAuthClientsAPIService) GetClientExecute(r ApiGetClientRequest) (*GetClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.GetClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
@@ -655,7 +712,7 @@ func (a *AdminOAuthClientsAPIService) GetClientExecute(r ApiGetClientRequest) (*
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -678,19 +735,19 @@ func (a *AdminOAuthClientsAPIService) GetClientExecute(r ApiGetClientRequest) (*
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -698,10 +755,19 @@ func (a *AdminOAuthClientsAPIService) GetClientExecute(r ApiGetClientRequest) (*
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiListClientScopesRequest struct {
@@ -711,12 +777,12 @@ type ApiListClientScopesRequest struct {
 	clientId string
 }
 
-func (r ApiListClientScopesRequest) Execute() (*http.Response, error) {
+func (r ApiListClientScopesRequest) Execute() (*ListClientScopesResponse, *http.Response, error) {
 	return r.ApiService.ListClientScopesExecute(r)
 }
 
 /*
-ListClientScopes Get client scopes
+ListClientScopes List the scopes granted to an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -733,16 +799,18 @@ func (a *AdminOAuthClientsAPIService) ListClientScopes(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) ListClientScopesExecute(r ApiListClientScopesRequest) (*http.Response, error) {
+//  @return ListClientScopesResponse
+func (a *AdminOAuthClientsAPIService) ListClientScopesExecute(r ApiListClientScopesRequest) (*ListClientScopesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ListClientScopesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.ListClientScopes")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes"
@@ -763,7 +831,7 @@ func (a *AdminOAuthClientsAPIService) ListClientScopesExecute(r ApiListClientSco
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -786,19 +854,19 @@ func (a *AdminOAuthClientsAPIService) ListClientScopesExecute(r ApiListClientSco
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -806,10 +874,19 @@ func (a *AdminOAuthClientsAPIService) ListClientScopesExecute(r ApiListClientSco
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiListClientsRequest struct {
@@ -818,12 +895,12 @@ type ApiListClientsRequest struct {
 	orgId string
 }
 
-func (r ApiListClientsRequest) Execute() (*http.Response, error) {
+func (r ApiListClientsRequest) Execute() (*ListClientsResponse, *http.Response, error) {
 	return r.ApiService.ListClientsExecute(r)
 }
 
 /*
-ListClients List all OAuth clients in the tenant
+ListClients List OAuth clients
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -838,16 +915,18 @@ func (a *AdminOAuthClientsAPIService) ListClients(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) ListClientsExecute(r ApiListClientsRequest) (*http.Response, error) {
+//  @return ListClientsResponse
+func (a *AdminOAuthClientsAPIService) ListClientsExecute(r ApiListClientsRequest) (*ListClientsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ListClientsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.ListClients")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients"
@@ -867,7 +946,7 @@ func (a *AdminOAuthClientsAPIService) ListClientsExecute(r ApiListClientsRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -890,19 +969,19 @@ func (a *AdminOAuthClientsAPIService) ListClientsExecute(r ApiListClientsRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -910,10 +989,19 @@ func (a *AdminOAuthClientsAPIService) ListClientsExecute(r ApiListClientsRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchClientRequest struct {
@@ -923,12 +1011,12 @@ type ApiPatchClientRequest struct {
 	clientId string
 }
 
-func (r ApiPatchClientRequest) Execute() (*http.Response, error) {
+func (r ApiPatchClientRequest) Execute() (*UpdateClientResponse, *http.Response, error) {
 	return r.ApiService.PatchClientExecute(r)
 }
 
 /*
-PatchClient Update an existing OAuth client
+PatchClient Update an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -945,16 +1033,18 @@ func (a *AdminOAuthClientsAPIService) PatchClient(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest) (*http.Response, error) {
+//  @return UpdateClientResponse
+func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest) (*UpdateClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UpdateClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.PatchClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
@@ -975,7 +1065,7 @@ func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -998,19 +1088,19 @@ func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1018,10 +1108,19 @@ func (a *AdminOAuthClientsAPIService) PatchClientExecute(r ApiPatchClientRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiRotateClientSecretRequest struct {
@@ -1031,12 +1130,12 @@ type ApiRotateClientSecretRequest struct {
 	clientId string
 }
 
-func (r ApiRotateClientSecretRequest) Execute() (*http.Response, error) {
+func (r ApiRotateClientSecretRequest) Execute() (*RotateClientSecretResponse, *http.Response, error) {
 	return r.ApiService.RotateClientSecretExecute(r)
 }
 
 /*
-RotateClientSecret Rotate client secret
+RotateClientSecret Rotate an OAuth client secret
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1053,16 +1152,18 @@ func (a *AdminOAuthClientsAPIService) RotateClientSecret(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) RotateClientSecretExecute(r ApiRotateClientSecretRequest) (*http.Response, error) {
+//  @return RotateClientSecretResponse
+func (a *AdminOAuthClientsAPIService) RotateClientSecretExecute(r ApiRotateClientSecretRequest) (*RotateClientSecretResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *RotateClientSecretResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.RotateClientSecret")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret"
@@ -1083,7 +1184,7 @@ func (a *AdminOAuthClientsAPIService) RotateClientSecretExecute(r ApiRotateClien
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1106,19 +1207,19 @@ func (a *AdminOAuthClientsAPIService) RotateClientSecretExecute(r ApiRotateClien
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1126,10 +1227,19 @@ func (a *AdminOAuthClientsAPIService) RotateClientSecretExecute(r ApiRotateClien
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSetClientScopesRequest struct {
@@ -1139,12 +1249,12 @@ type ApiSetClientScopesRequest struct {
 	clientId string
 }
 
-func (r ApiSetClientScopesRequest) Execute() (*http.Response, error) {
+func (r ApiSetClientScopesRequest) Execute() (*SetClientScopesResponse, *http.Response, error) {
 	return r.ApiService.SetClientScopesExecute(r)
 }
 
 /*
-SetClientScopes Set client scopes
+SetClientScopes Replace the scopes granted to an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1161,16 +1271,18 @@ func (a *AdminOAuthClientsAPIService) SetClientScopes(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScopesRequest) (*http.Response, error) {
+//  @return SetClientScopesResponse
+func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScopesRequest) (*SetClientScopesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SetClientScopesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.SetClientScopes")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes"
@@ -1191,7 +1303,7 @@ func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScope
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1214,19 +1326,19 @@ func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScope
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1234,10 +1346,19 @@ func (a *AdminOAuthClientsAPIService) SetClientScopesExecute(r ApiSetClientScope
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiUpdateClientRequest struct {
@@ -1247,12 +1368,12 @@ type ApiUpdateClientRequest struct {
 	clientId string
 }
 
-func (r ApiUpdateClientRequest) Execute() (*http.Response, error) {
+func (r ApiUpdateClientRequest) Execute() (*UpdateClientResponse, *http.Response, error) {
 	return r.ApiService.UpdateClientExecute(r)
 }
 
 /*
-UpdateClient Update an existing OAuth client
+UpdateClient Replace an OAuth client
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1269,16 +1390,18 @@ func (a *AdminOAuthClientsAPIService) UpdateClient(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientRequest) (*http.Response, error) {
+//  @return UpdateClientResponse
+func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientRequest) (*UpdateClientResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UpdateClientResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.UpdateClient")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
@@ -1299,7 +1422,7 @@ func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1322,19 +1445,19 @@ func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1342,8 +1465,17 @@ func (a *AdminOAuthClientsAPIService) UpdateClientExecute(r ApiUpdateClientReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -20,19 +20,25 @@ public struct GetRequestStatusResponse: Codable, JSONEncodable, Hashable {
     public var tokenUrl: String?
     /** Present when approved. */
     public var grantedTtl: Int?
-    /** Present when denied. */
-    public var reviewNotes: String?
+    /** Present when decided: whether the reviewer left notes (the notes themselves are never returned). */
+    public var hasNotes: Bool?
+    /** Present when decided: message the reviewer explicitly wrote for the agent. */
+    public var agentMessage: String?
+    /** Present when pending: the on_behalf_of user must consent. */
+    public var delegationConsentRequired: Bool?
     /** Present when pending. */
     public var expiresAt: Date?
 
-    public init(requestId: String? = nil, status: String? = nil, riskLevel: String? = nil, taskId: String? = nil, tokenUrl: String? = nil, grantedTtl: Int? = nil, reviewNotes: String? = nil, expiresAt: Date? = nil) {
+    public init(requestId: String? = nil, status: String? = nil, riskLevel: String? = nil, taskId: String? = nil, tokenUrl: String? = nil, grantedTtl: Int? = nil, hasNotes: Bool? = nil, agentMessage: String? = nil, delegationConsentRequired: Bool? = nil, expiresAt: Date? = nil) {
         self.requestId = requestId
         self.status = status
         self.riskLevel = riskLevel
         self.taskId = taskId
         self.tokenUrl = tokenUrl
         self.grantedTtl = grantedTtl
-        self.reviewNotes = reviewNotes
+        self.hasNotes = hasNotes
+        self.agentMessage = agentMessage
+        self.delegationConsentRequired = delegationConsentRequired
         self.expiresAt = expiresAt
     }
 
@@ -43,7 +49,9 @@ public struct GetRequestStatusResponse: Codable, JSONEncodable, Hashable {
         case taskId = "task_id"
         case tokenUrl = "token_url"
         case grantedTtl = "granted_ttl"
-        case reviewNotes = "review_notes"
+        case hasNotes = "has_notes"
+        case agentMessage = "agent_message"
+        case delegationConsentRequired = "delegation_consent_required"
         case expiresAt = "expires_at"
     }
 
@@ -57,7 +65,9 @@ public struct GetRequestStatusResponse: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(taskId, forKey: .taskId)
         try container.encodeIfPresent(tokenUrl, forKey: .tokenUrl)
         try container.encodeIfPresent(grantedTtl, forKey: .grantedTtl)
-        try container.encodeIfPresent(reviewNotes, forKey: .reviewNotes)
+        try container.encodeIfPresent(hasNotes, forKey: .hasNotes)
+        try container.encodeIfPresent(agentMessage, forKey: .agentMessage)
+        try container.encodeIfPresent(delegationConsentRequired, forKey: .delegationConsentRequired)
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
     }
 }

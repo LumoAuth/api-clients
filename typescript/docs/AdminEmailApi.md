@@ -4,15 +4,15 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminEmailTemplatesDelete**](#adminemailtemplatesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | |
-|[**adminEmailTemplatesGet**](#adminemailtemplatesget) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | |
-|[**adminEmailTemplatesList**](#adminemailtemplateslist) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | |
-|[**adminEmailTemplatesPreview**](#adminemailtemplatespreview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | |
-|[**adminEmailTemplatesUpsert**](#adminemailtemplatesupsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | |
-|[**adminEmailTemplatesVariables**](#adminemailtemplatesvariables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | |
+|[**adminEmailTemplatesDelete**](#adminemailtemplatesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Remove the custom email template so the built-in default is used|
+|[**adminEmailTemplatesGet**](#adminemailtemplatesget) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Get an email template (custom or built-in default)|
+|[**adminEmailTemplatesList**](#adminemailtemplateslist) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | List every email template type with its current (custom or built-in) template|
+|[**adminEmailTemplatesPreview**](#adminemailtemplatespreview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | Render an email template with sample data|
+|[**adminEmailTemplatesUpsert**](#adminemailtemplatesupsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Create or replace the custom email template for a type|
+|[**adminEmailTemplatesVariables**](#adminemailtemplatesvariables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | List the placeholders available to an email template type|
 
 # **adminEmailTemplatesDelete**
-> adminEmailTemplatesDelete()
+> MessageResponse adminEmailTemplatesDelete()
 
 
 ### Example
@@ -45,7 +45,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -54,18 +54,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Reverted to default |  -  |
+|**404** | Unknown template type, or no custom template exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesGet**
-> adminEmailTemplatesGet()
+> EmailTemplate adminEmailTemplatesGet()
 
 
 ### Example
@@ -98,7 +99,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesGet(
 
 ### Return type
 
-void (empty response body)
+**EmailTemplate**
 
 ### Authorization
 
@@ -107,18 +108,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Template including body_html |  -  |
+|**404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesList**
-> adminEmailTemplatesList()
+> AdminEmailTemplatesListResponse adminEmailTemplatesList()
 
 
 ### Example
@@ -148,7 +150,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesList(
 
 ### Return type
 
-void (empty response body)
+**AdminEmailTemplatesListResponse**
 
 ### Authorization
 
@@ -157,18 +159,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Templates without body_html; &#x60;email_templates&#x60; duplicates &#x60;data&#x60; |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesPreview**
-> adminEmailTemplatesPreview()
+> AdminEmailTemplatesPreviewResponse adminEmailTemplatesPreview()
 
 
 ### Example
@@ -201,7 +203,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesPreview(
 
 ### Return type
 
-void (empty response body)
+**AdminEmailTemplatesPreviewResponse**
 
 ### Authorization
 
@@ -210,18 +212,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Rendered preview |  -  |
+|**404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesUpsert**
-> adminEmailTemplatesUpsert()
+> EmailTemplate adminEmailTemplatesUpsert()
 
 
 ### Example
@@ -254,7 +257,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesUpsert(
 
 ### Return type
 
-void (empty response body)
+**EmailTemplate**
 
 ### Authorization
 
@@ -263,18 +266,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Saved template including body_html |  -  |
+|**404** | Unknown template type |  -  |
+|**422** | Validation failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminEmailTemplatesVariables**
-> adminEmailTemplatesVariables()
+> AdminEmailTemplatesVariablesResponse adminEmailTemplatesVariables()
 
 
 ### Example
@@ -307,7 +312,7 @@ const { status, data } = await apiInstance.adminEmailTemplatesVariables(
 
 ### Return type
 
-void (empty response body)
+**AdminEmailTemplatesVariablesResponse**
 
 ### Authorization
 
@@ -316,13 +321,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Placeholder to description map |  -  |
+|**404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

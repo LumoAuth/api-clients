@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -33,8 +34,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesAddPermissions(string orgId, string roleId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminRolesAddPermissions(string orgId, string roleId);
 
         /// <summary>
         /// Add permission(s) to a role
@@ -45,16 +46,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Assign a user to a role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesAddUser(string orgId, string roleId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminRolesAddUser(string orgId, string roleId);
 
         /// <summary>
         /// Assign a user to a role
@@ -65,15 +66,15 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesAddUserWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminRolesAddUserWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Create a new role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminRolesCreate(string orgId);
+        /// <returns>AdminRolesCreateResponse</returns>
+        AdminRolesCreateResponse AdminRolesCreate(string orgId);
 
         /// <summary>
         /// Create a new role
@@ -83,16 +84,16 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesCreateWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        ApiResponse<AdminRolesCreateResponse> AdminRolesCreateWithHttpInfo(string orgId);
         /// <summary>
         /// Delete a role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesDelete(string orgId, string roleId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminRolesDelete(string orgId, string roleId);
 
         /// <summary>
         /// Delete a role
@@ -103,16 +104,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesDeleteWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminRolesDeleteWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Get a single role by ID or slug
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesGet(string orgId, string roleId);
+        /// <returns>AdminRolesGetResponse</returns>
+        AdminRolesGetResponse AdminRolesGet(string orgId, string roleId);
 
         /// <summary>
         /// Get a single role by ID or slug
@@ -123,16 +124,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesGetWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of AdminRolesGetResponse</returns>
+        ApiResponse<AdminRolesGetResponse> AdminRolesGetWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Get role permissions
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesGetPermissions(string orgId, string roleId);
+        /// <returns>AdminRolesGetPermissionsResponse</returns>
+        AdminRolesGetPermissionsResponse AdminRolesGetPermissions(string orgId, string roleId);
 
         /// <summary>
         /// Get role permissions
@@ -143,16 +144,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesGetPermissionsWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of AdminRolesGetPermissionsResponse</returns>
+        ApiResponse<AdminRolesGetPermissionsResponse> AdminRolesGetPermissionsWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Get users assigned to a role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesGetUsers(string orgId, string roleId);
+        /// <returns>AdminRolesGetUsersResponse</returns>
+        AdminRolesGetUsersResponse AdminRolesGetUsers(string orgId, string roleId);
 
         /// <summary>
         /// Get users assigned to a role
@@ -163,15 +164,15 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesGetUsersWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of AdminRolesGetUsersResponse</returns>
+        ApiResponse<AdminRolesGetUsersResponse> AdminRolesGetUsersWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// List all roles in the tenant
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminRolesList(string orgId);
+        /// <returns>AdminRolesListResponse</returns>
+        AdminRolesListResponse AdminRolesList(string orgId);
 
         /// <summary>
         /// List all roles in the tenant
@@ -181,8 +182,8 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminRolesListResponse</returns>
+        ApiResponse<AdminRolesListResponse> AdminRolesListWithHttpInfo(string orgId);
         /// <summary>
         /// Remove a permission from a role
         /// </summary>
@@ -190,8 +191,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
-        /// <returns></returns>
-        void AdminRolesRemovePermission(string orgId, string roleId, string permissionId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminRolesRemovePermission(string orgId, string roleId, string permissionId);
 
         /// <summary>
         /// Remove a permission from a role
@@ -203,8 +204,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesRemovePermissionWithHttpInfo(string orgId, string roleId, string permissionId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminRolesRemovePermissionWithHttpInfo(string orgId, string roleId, string permissionId);
         /// <summary>
         /// Remove a user from a role
         /// </summary>
@@ -212,8 +213,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        void AdminRolesRemoveUser(string orgId, string roleId, string userId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AdminRolesRemoveUser(string orgId, string roleId, string userId);
 
         /// <summary>
         /// Remove a user from a role
@@ -225,16 +226,16 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesRemoveUserWithHttpInfo(string orgId, string roleId, string userId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AdminRolesRemoveUserWithHttpInfo(string orgId, string roleId, string userId);
         /// <summary>
         /// Update role permissions (replaces all)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void AdminRolesUpdatePermissions(string orgId, string roleId);
+        /// <returns>AdminRolesCreateResponse</returns>
+        AdminRolesCreateResponse AdminRolesUpdatePermissions(string orgId, string roleId);
 
         /// <summary>
         /// Update role permissions (replaces all)
@@ -245,16 +246,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        ApiResponse<AdminRolesCreateResponse> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Update an existing role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void PatchAdminRolesUpdate(string orgId, string roleId);
+        /// <returns>AdminRolesCreateResponse</returns>
+        AdminRolesCreateResponse PatchAdminRolesUpdate(string orgId, string roleId);
 
         /// <summary>
         /// Update an existing role
@@ -265,16 +266,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        ApiResponse<AdminRolesCreateResponse> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId);
         /// <summary>
         /// Update an existing role
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        void PutAdminRolesUpdate(string orgId, string roleId);
+        /// <returns>AdminRolesCreateResponse</returns>
+        AdminRolesCreateResponse PutAdminRolesUpdate(string orgId, string roleId);
 
         /// <summary>
         /// Update an existing role
@@ -285,8 +286,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId);
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        ApiResponse<AdminRolesCreateResponse> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId);
         #endregion Synchronous Operations
     }
 
@@ -306,8 +307,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesAddPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesAddPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Add permission(s) to a role
@@ -319,8 +320,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Assign a user to a role
         /// </summary>
@@ -331,8 +332,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesAddUserAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesAddUserAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Assign a user to a role
@@ -344,8 +345,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create a new role
         /// </summary>
@@ -355,8 +356,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Create a new role
@@ -367,8 +368,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> AdminRolesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete a role
         /// </summary>
@@ -379,8 +380,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesDeleteAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesDeleteAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete a role
@@ -392,8 +393,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesDeleteWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesDeleteWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get a single role by ID or slug
         /// </summary>
@@ -404,8 +405,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesGetAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesGetResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesGetResponse> AdminRolesGetAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get a single role by ID or slug
@@ -417,8 +418,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesGetWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesGetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesGetResponse>> AdminRolesGetWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get role permissions
         /// </summary>
@@ -429,8 +430,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesGetPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesGetPermissionsResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesGetPermissionsResponse> AdminRolesGetPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get role permissions
@@ -442,8 +443,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesGetPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesGetPermissionsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesGetPermissionsResponse>> AdminRolesGetPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get users assigned to a role
         /// </summary>
@@ -454,8 +455,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesGetUsersAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesGetUsersResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesGetUsersResponse> AdminRolesGetUsersAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get users assigned to a role
@@ -467,8 +468,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesGetUsersWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesGetUsersResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesGetUsersResponse>> AdminRolesGetUsersWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// List all roles in the tenant
         /// </summary>
@@ -478,8 +479,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesListResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesListResponse> AdminRolesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// List all roles in the tenant
@@ -490,8 +491,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesListResponse>> AdminRolesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Remove a permission from a role
         /// </summary>
@@ -503,8 +504,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesRemovePermissionAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesRemovePermissionAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove a permission from a role
@@ -517,8 +518,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesRemovePermissionWithHttpInfoAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesRemovePermissionWithHttpInfoAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Remove a user from a role
         /// </summary>
@@ -530,8 +531,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesRemoveUserAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AdminRolesRemoveUserAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Remove a user from a role
@@ -544,8 +545,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesRemoveUserWithHttpInfoAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AdminRolesRemoveUserWithHttpInfoAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update role permissions (replaces all)
         /// </summary>
@@ -556,8 +557,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminRolesUpdatePermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesUpdatePermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update role permissions (replaces all)
@@ -569,8 +570,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an existing role
         /// </summary>
@@ -581,8 +582,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PatchAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> PatchAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an existing role
@@ -594,8 +595,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an existing role
         /// </summary>
@@ -606,8 +607,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PutAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        System.Threading.Tasks.Task<AdminRolesCreateResponse> PutAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an existing role
@@ -619,8 +620,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminRolesCreateResponse>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -840,10 +841,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesAddPermissions(string orgId, string roleId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminRolesAddPermissions(string orgId, string roleId)
         {
-            AdminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesAddPermissionsWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -852,8 +854,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesAddPermissionsWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -870,6 +872,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -894,7 +897,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -912,10 +915,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesAddPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesAddPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesAddPermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesAddPermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -925,8 +929,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesAddPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -944,6 +948,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -970,7 +975,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -987,10 +992,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesAddUser(string orgId, string roleId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminRolesAddUser(string orgId, string roleId)
         {
-            AdminRolesAddUserWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesAddUserWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -999,8 +1005,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesAddUserWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesAddUserWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1017,6 +1023,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1041,7 +1048,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1059,10 +1066,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesAddUserAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesAddUserAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesAddUserWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesAddUserWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1072,8 +1080,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesAddUserWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1091,6 +1099,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1117,7 +1126,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1133,10 +1142,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminRolesCreate(string orgId)
+        /// <returns>AdminRolesCreateResponse</returns>
+        public AdminRolesCreateResponse AdminRolesCreate(string orgId)
         {
-            AdminRolesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = AdminRolesCreateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1144,8 +1154,8 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesCreateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> AdminRolesCreateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1158,6 +1168,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1181,7 +1192,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1198,10 +1209,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await AdminRolesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1210,8 +1222,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> AdminRolesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1225,6 +1237,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1250,7 +1263,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1267,10 +1280,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesDelete(string orgId, string roleId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminRolesDelete(string orgId, string roleId)
         {
-            AdminRolesDeleteWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesDeleteWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1279,8 +1293,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesDeleteWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesDeleteWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1297,6 +1311,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1321,7 +1336,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1339,10 +1354,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesDeleteAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesDeleteAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesDeleteWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesDeleteWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1352,8 +1368,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesDeleteWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesDeleteWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1371,6 +1387,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1397,7 +1414,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1414,10 +1431,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesGet(string orgId, string roleId)
+        /// <returns>AdminRolesGetResponse</returns>
+        public AdminRolesGetResponse AdminRolesGet(string orgId, string roleId)
         {
-            AdminRolesGetWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetResponse> localVarResponse = AdminRolesGetWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1426,8 +1444,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesGetWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of AdminRolesGetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetResponse> AdminRolesGetWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1444,6 +1462,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1468,7 +1487,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminRolesGetResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1486,10 +1505,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesGetAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesGetResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesGetResponse> AdminRolesGetAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesGetWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetResponse> localVarResponse = await AdminRolesGetWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1499,8 +1519,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesGetWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesGetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetResponse>> AdminRolesGetWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1518,6 +1538,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1544,7 +1565,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminRolesGetResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1561,10 +1582,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesGetPermissions(string orgId, string roleId)
+        /// <returns>AdminRolesGetPermissionsResponse</returns>
+        public AdminRolesGetPermissionsResponse AdminRolesGetPermissions(string orgId, string roleId)
         {
-            AdminRolesGetPermissionsWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetPermissionsResponse> localVarResponse = AdminRolesGetPermissionsWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1573,8 +1595,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesGetPermissionsWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of AdminRolesGetPermissionsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetPermissionsResponse> AdminRolesGetPermissionsWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1591,6 +1613,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1615,7 +1638,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminRolesGetPermissionsResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1633,10 +1656,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesGetPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesGetPermissionsResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesGetPermissionsResponse> AdminRolesGetPermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesGetPermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetPermissionsResponse> localVarResponse = await AdminRolesGetPermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1646,8 +1670,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesGetPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesGetPermissionsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetPermissionsResponse>> AdminRolesGetPermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1665,6 +1689,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1691,7 +1716,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminRolesGetPermissionsResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1708,10 +1733,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesGetUsers(string orgId, string roleId)
+        /// <returns>AdminRolesGetUsersResponse</returns>
+        public AdminRolesGetUsersResponse AdminRolesGetUsers(string orgId, string roleId)
         {
-            AdminRolesGetUsersWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetUsersResponse> localVarResponse = AdminRolesGetUsersWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1720,8 +1746,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesGetUsersWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of AdminRolesGetUsersResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetUsersResponse> AdminRolesGetUsersWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1738,6 +1764,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1762,7 +1789,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminRolesGetUsersResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1780,10 +1807,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesGetUsersAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesGetUsersResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesGetUsersResponse> AdminRolesGetUsersAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesGetUsersWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetUsersResponse> localVarResponse = await AdminRolesGetUsersWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1793,8 +1821,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesGetUsersWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesGetUsersResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesGetUsersResponse>> AdminRolesGetUsersWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1812,6 +1840,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1838,7 +1867,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminRolesGetUsersResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1854,10 +1883,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminRolesList(string orgId)
+        /// <returns>AdminRolesListResponse</returns>
+        public AdminRolesListResponse AdminRolesList(string orgId)
         {
-            AdminRolesListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesListResponse> localVarResponse = AdminRolesListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1865,8 +1895,8 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminRolesListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesListResponse> AdminRolesListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1879,6 +1909,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1902,7 +1933,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminRolesListResponse>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1919,10 +1950,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesListResponse> AdminRolesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesListResponse> localVarResponse = await AdminRolesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1931,8 +1963,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesListResponse>> AdminRolesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1946,6 +1978,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1971,7 +2004,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminRolesListResponse>("/orgs/{orgId}/api/v1/admin/roles", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1989,10 +2022,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
-        /// <returns></returns>
-        public void AdminRolesRemovePermission(string orgId, string roleId, string permissionId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminRolesRemovePermission(string orgId, string roleId, string permissionId)
         {
-            AdminRolesRemovePermissionWithHttpInfo(orgId, roleId, permissionId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesRemovePermissionWithHttpInfo(orgId, roleId, permissionId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2002,8 +2036,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesRemovePermissionWithHttpInfo(string orgId, string roleId, string permissionId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesRemovePermissionWithHttpInfo(string orgId, string roleId, string permissionId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2024,6 +2058,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2049,7 +2084,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2068,10 +2103,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesRemovePermissionAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesRemovePermissionAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesRemovePermissionWithHttpInfoAsync(orgId, roleId, permissionId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesRemovePermissionWithHttpInfoAsync(orgId, roleId, permissionId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2082,8 +2118,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="permissionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesRemovePermissionWithHttpInfoAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesRemovePermissionWithHttpInfoAsync(string orgId, string roleId, string permissionId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2105,6 +2141,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2132,7 +2169,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2150,10 +2187,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        public void AdminRolesRemoveUser(string orgId, string roleId, string userId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AdminRolesRemoveUser(string orgId, string roleId, string userId)
         {
-            AdminRolesRemoveUserWithHttpInfo(orgId, roleId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AdminRolesRemoveUserWithHttpInfo(orgId, roleId, userId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2163,8 +2201,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesRemoveUserWithHttpInfo(string orgId, string roleId, string userId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AdminRolesRemoveUserWithHttpInfo(string orgId, string roleId, string userId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2185,6 +2223,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2210,7 +2249,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2229,10 +2268,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesRemoveUserAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AdminRolesRemoveUserAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesRemoveUserWithHttpInfoAsync(orgId, roleId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AdminRolesRemoveUserWithHttpInfoAsync(orgId, roleId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2243,8 +2283,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="roleId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesRemoveUserWithHttpInfoAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AdminRolesRemoveUserWithHttpInfoAsync(string orgId, string roleId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2266,6 +2306,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2293,7 +2334,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2310,10 +2351,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void AdminRolesUpdatePermissions(string orgId, string roleId)
+        /// <returns>AdminRolesCreateResponse</returns>
+        public AdminRolesCreateResponse AdminRolesUpdatePermissions(string orgId, string roleId)
         {
-            AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = AdminRolesUpdatePermissionsWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2322,8 +2364,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> AdminRolesUpdatePermissionsWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2340,6 +2382,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2364,7 +2407,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2382,10 +2425,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminRolesUpdatePermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> AdminRolesUpdatePermissionsAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminRolesUpdatePermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await AdminRolesUpdatePermissionsWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2395,8 +2439,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> AdminRolesUpdatePermissionsWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2414,6 +2458,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2440,7 +2485,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2457,10 +2502,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void PatchAdminRolesUpdate(string orgId, string roleId)
+        /// <returns>AdminRolesCreateResponse</returns>
+        public AdminRolesCreateResponse PatchAdminRolesUpdate(string orgId, string roleId)
         {
-            PatchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = PatchAdminRolesUpdateWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2469,8 +2515,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> PatchAdminRolesUpdateWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2487,6 +2533,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2511,7 +2558,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2529,10 +2576,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PatchAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> PatchAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PatchAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await PatchAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2542,8 +2590,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> PatchAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2561,6 +2609,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2587,7 +2636,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2604,10 +2653,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns></returns>
-        public void PutAdminRolesUpdate(string orgId, string roleId)
+        /// <returns>AdminRolesCreateResponse</returns>
+        public AdminRolesCreateResponse PutAdminRolesUpdate(string orgId, string roleId)
         {
-            PutAdminRolesUpdateWithHttpInfo(orgId, roleId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = PutAdminRolesUpdateWithHttpInfo(orgId, roleId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2616,8 +2666,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId)
+        /// <returns>ApiResponse of AdminRolesCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> PutAdminRolesUpdateWithHttpInfo(string orgId, string roleId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2634,6 +2684,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2658,7 +2709,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2676,10 +2727,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PutAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminRolesCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AdminRolesCreateResponse> PutAdminRolesUpdateAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PutAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse> localVarResponse = await PutAdminRolesUpdateWithHttpInfoAsync(orgId, roleId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2689,8 +2741,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="roleId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminRolesCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminRolesCreateResponse>> PutAdminRolesUpdateWithHttpInfoAsync(string orgId, string roleId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2708,6 +2760,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2734,7 +2787,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<AdminRolesCreateResponse>("/orgs/{orgId}/api/v1/admin/roles/{roleId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

@@ -20,10 +20,10 @@ var _ MappedNullable = &AdminAgentsGenerateTokenRequest{}
 
 // AdminAgentsGenerateTokenRequest struct for AdminAgentsGenerateTokenRequest
 type AdminAgentsGenerateTokenRequest struct {
-	// Optional scopes to embed in the token.
+	// Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
+	ExpiresIn *int32 `json:"expiresIn,omitempty"`
+	// Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
 	Scopes []string `json:"scopes,omitempty"`
-	// Optional token lifetime in seconds.
-	Ttl *int32 `json:"ttl,omitempty"`
 }
 
 // NewAdminAgentsGenerateTokenRequest instantiates a new AdminAgentsGenerateTokenRequest object
@@ -41,6 +41,38 @@ func NewAdminAgentsGenerateTokenRequest() *AdminAgentsGenerateTokenRequest {
 func NewAdminAgentsGenerateTokenRequestWithDefaults() *AdminAgentsGenerateTokenRequest {
 	this := AdminAgentsGenerateTokenRequest{}
 	return &this
+}
+
+// GetExpiresIn returns the ExpiresIn field value if set, zero value otherwise.
+func (o *AdminAgentsGenerateTokenRequest) GetExpiresIn() int32 {
+	if o == nil || IsNil(o.ExpiresIn) {
+		var ret int32
+		return ret
+	}
+	return *o.ExpiresIn
+}
+
+// GetExpiresInOk returns a tuple with the ExpiresIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsGenerateTokenRequest) GetExpiresInOk() (*int32, bool) {
+	if o == nil || IsNil(o.ExpiresIn) {
+		return nil, false
+	}
+	return o.ExpiresIn, true
+}
+
+// HasExpiresIn returns a boolean if a field has been set.
+func (o *AdminAgentsGenerateTokenRequest) HasExpiresIn() bool {
+	if o != nil && !IsNil(o.ExpiresIn) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresIn gets a reference to the given int32 and assigns it to the ExpiresIn field.
+func (o *AdminAgentsGenerateTokenRequest) SetExpiresIn(v int32) {
+	o.ExpiresIn = &v
 }
 
 // GetScopes returns the Scopes field value if set, zero value otherwise.
@@ -75,38 +107,6 @@ func (o *AdminAgentsGenerateTokenRequest) SetScopes(v []string) {
 	o.Scopes = v
 }
 
-// GetTtl returns the Ttl field value if set, zero value otherwise.
-func (o *AdminAgentsGenerateTokenRequest) GetTtl() int32 {
-	if o == nil || IsNil(o.Ttl) {
-		var ret int32
-		return ret
-	}
-	return *o.Ttl
-}
-
-// GetTtlOk returns a tuple with the Ttl field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AdminAgentsGenerateTokenRequest) GetTtlOk() (*int32, bool) {
-	if o == nil || IsNil(o.Ttl) {
-		return nil, false
-	}
-	return o.Ttl, true
-}
-
-// HasTtl returns a boolean if a field has been set.
-func (o *AdminAgentsGenerateTokenRequest) HasTtl() bool {
-	if o != nil && !IsNil(o.Ttl) {
-		return true
-	}
-
-	return false
-}
-
-// SetTtl gets a reference to the given int32 and assigns it to the Ttl field.
-func (o *AdminAgentsGenerateTokenRequest) SetTtl(v int32) {
-	o.Ttl = &v
-}
-
 func (o AdminAgentsGenerateTokenRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -117,11 +117,11 @@ func (o AdminAgentsGenerateTokenRequest) MarshalJSON() ([]byte, error) {
 
 func (o AdminAgentsGenerateTokenRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ExpiresIn) {
+		toSerialize["expiresIn"] = o.ExpiresIn
+	}
 	if !IsNil(o.Scopes) {
 		toSerialize["scopes"] = o.Scopes
-	}
-	if !IsNil(o.Ttl) {
-		toSerialize["ttl"] = o.Ttl
 	}
 	return toSerialize, nil
 }

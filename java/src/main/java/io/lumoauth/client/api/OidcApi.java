@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.UserinfoResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page containing the session-state comparison script. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call checkSessionCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +112,7 @@ public class OidcApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,42 +142,45 @@ public class OidcApi {
     }
 
     /**
-     * 
-     * 
+     * OP session-check iframe (OIDC Session Management 1.0)
+     * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page containing the session-state comparison script. </td><td>  -  </td></tr>
      </table>
      */
-    public void checkSession(@javax.annotation.Nonnull String orgId) throws ApiException {
-        checkSessionWithHttpInfo(orgId);
+    public String checkSession(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = checkSessionWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * OP session-check iframe (OIDC Session Management 1.0)
+     * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page containing the session-state comparison script. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> checkSessionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> checkSessionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = checkSessionValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * OP session-check iframe (OIDC Session Management 1.0) (asynchronously)
+     * The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -184,13 +189,14 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page containing the session-state comparison script. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkSessionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call checkSessionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = checkSessionValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -203,7 +209,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call logoutCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -233,6 +241,7 @@ public class OidcApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -262,42 +271,49 @@ public class OidcApi {
     }
 
     /**
-     * 
-     * 
+     * RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+     * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public void logout(@javax.annotation.Nonnull String orgId) throws ApiException {
-        logoutWithHttpInfo(orgId);
+    public String logout(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = logoutWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+     * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> logoutWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> logoutWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = logoutValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * RP-initiated logout (OIDC RP-Initiated Logout 1.0) (asynchronously)
+     * end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -306,13 +322,16 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call logoutAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call logoutAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = logoutValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -325,7 +344,9 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call logoutPostCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -355,6 +376,7 @@ public class OidcApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -384,42 +406,49 @@ public class OidcApi {
     }
 
     /**
-     * 
-     * 
+     * RP-initiated logout (confirmation submission)
+     * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public void logoutPost(@javax.annotation.Nonnull String orgId) throws ApiException {
-        logoutPostWithHttpInfo(orgId);
+    public String logoutPost(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = logoutPostWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * RP-initiated logout (confirmation submission)
+     * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> logoutPostWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> logoutPostWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = logoutPostValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * RP-initiated logout (confirmation submission) (asynchronously)
+     * Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -428,13 +457,16 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the logout confirmation prompt (signed-in user without a matching id_token_hint), or the logout result page that embeds the front-channel logout iframes for the session&#39;s clients. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the validated post_logout_redirect_uri (state appended when given). </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call logoutPostAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call logoutPostAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = logoutPostValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -447,7 +479,10 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call userinfoCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -477,6 +512,7 @@ public class OidcApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -506,42 +542,51 @@ public class OidcApi {
     }
 
     /**
-     * OIDC UserInfo Endpoint
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * OpenID Connect UserInfo endpoint
+     * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
      * @param orgId  (required)
+     * @return UserinfoResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
-    public void userinfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        userinfoWithHttpInfo(orgId);
+    public UserinfoResponse userinfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<UserinfoResponse> localVarResp = userinfoWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * OIDC UserInfo Endpoint
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * OpenID Connect UserInfo endpoint
+     * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UserinfoResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> userinfoWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<UserinfoResponse> userinfoWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = userinfoValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UserinfoResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * OIDC UserInfo Endpoint (asynchronously)
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * OpenID Connect UserInfo endpoint (asynchronously)
+     * Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -550,13 +595,17 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call userinfoAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call userinfoAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<UserinfoResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = userinfoValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UserinfoResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -569,7 +618,10 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call userinfoPostCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -599,6 +651,7 @@ public class OidcApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -628,42 +681,51 @@ public class OidcApi {
     }
 
     /**
-     * OIDC UserInfo Endpoint
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * OpenID Connect UserInfo endpoint (POST)
+     * Identical to GET.
      * @param orgId  (required)
+     * @return UserinfoResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
-    public void userinfoPost(@javax.annotation.Nonnull String orgId) throws ApiException {
-        userinfoPostWithHttpInfo(orgId);
+    public UserinfoResponse userinfoPost(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<UserinfoResponse> localVarResp = userinfoPostWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * OIDC UserInfo Endpoint
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * OpenID Connect UserInfo endpoint (POST)
+     * Identical to GET.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UserinfoResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> userinfoPostWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<UserinfoResponse> userinfoPostWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = userinfoPostValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UserinfoResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * OIDC UserInfo Endpoint (asynchronously)
-     * Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     * OpenID Connect UserInfo endpoint (POST) (asynchronously)
+     * Identical to GET.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -672,13 +734,17 @@ public class OidcApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Claims for the token&#39;s principal. The shape depends on the identity type: a user token yields standard OIDC claims gated by scope (profile, email, phone, address), roles only when the client enabled the roles claim, plus tenant — null-valued claims are omitted; an agent token yields sub&#x3D;agent_&lt;id&gt;, name, agent_id, workload_identity, capabilities, tenant, identity_type&#x3D;agent; a client token yields sub&#x3D;client_&lt;id&gt;, client_id, name, tenant, identity_type&#x3D;client. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — Authorization header missing or malformed. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token (invalid, expired, or wrong DPoP binding) or invalid_dpop_proof. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> insufficient_scope — the openid scope is required. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call userinfoPostAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call userinfoPostAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<UserinfoResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = userinfoPostValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UserinfoResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

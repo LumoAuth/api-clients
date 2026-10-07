@@ -4,17 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_connection_token**](TokenVaultApi.md#get_connection_token) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection.
-[**list_connections**](TokenVaultApi.md#list_connections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the connections this agent may use, with grant status. No secrets.
+[**get_connection_token**](TokenVaultApi.md#get_connection_token) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection
+[**list_connections**](TokenVaultApi.md#list_connections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the outbound connections this agent may use
 
 
 # **get_connection_token**
-> get_connection_token(org_id, connection_id)
+> GetConnectionTokenResponse get_connection_token(org_id, connection_id, get_connection_token_request=get_connection_token_request)
 
-Fetch a live third-party access token for a connection.
+Fetch a live third-party access token for a connection
 
-POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token
-Body (optional): {"user_id": "<uuid or email>"} for user-delegated grants.
+Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {"user_id": "<uuid or email>"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
 ### Example
 
@@ -23,6 +22,8 @@ Body (optional): {"user_id": "<uuid or email>"} for user-delegated grants.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_connection_token_request import GetConnectionTokenRequest
+from lumoauth_api_client.models.get_connection_token_response import GetConnectionTokenResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -54,10 +55,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.TokenVaultApi(api_client)
     org_id = 'org_id_example' # str | 
     connection_id = 'connection_id_example' # str | 
+    get_connection_token_request = lumoauth_api_client.GetConnectionTokenRequest() # GetConnectionTokenRequest |  (optional)
 
     try:
-        # Fetch a live third-party access token for a connection.
-        api_instance.get_connection_token(org_id, connection_id)
+        # Fetch a live third-party access token for a connection
+        api_response = api_instance.get_connection_token(org_id, connection_id, get_connection_token_request=get_connection_token_request)
+        print("The response of TokenVaultApi->get_connection_token:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling TokenVaultApi->get_connection_token: %s\n" % e)
 ```
@@ -71,10 +75,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **connection_id** | **str**|  | 
+ **get_connection_token_request** | [**GetConnectionTokenRequest**](GetConnectionTokenRequest.md)|  | [optional] 
 
 ### Return type
 
-void (empty response body)
+[**GetConnectionTokenResponse**](GetConnectionTokenResponse.md)
 
 ### Authorization
 
@@ -82,23 +87,29 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | The provider access token. |  -  |
+**400** | invalid_user_id. |  -  |
+**403** | agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. |  -  |
+**404** | tenant_not_found, connection_not_found or grant_not_found. |  -  |
+**409** | grant_revoked, grant_expired or refresh_failed. |  -  |
+**429** | rate_limited. |  -  |
+**503** | refresh_in_progress (Retry-After: 2) or provider_unavailable. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_connections**
-> list_connections(org_id)
+> ListConnectionsResponse list_connections(org_id)
 
-List the connections this agent may use, with grant status. No secrets.
+List the outbound connections this agent may use
 
-GET /orgs/{orgId}/api/v1/agents/me/connections
+Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
 ### Example
 
@@ -107,6 +118,7 @@ GET /orgs/{orgId}/api/v1/agents/me/connections
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.list_connections_response import ListConnectionsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -139,8 +151,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List the connections this agent may use, with grant status. No secrets.
-        api_instance.list_connections(org_id)
+        # List the outbound connections this agent may use
+        api_response = api_instance.list_connections(org_id)
+        print("The response of TokenVaultApi->list_connections:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling TokenVaultApi->list_connections: %s\n" % e)
 ```
@@ -156,7 +170,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ListConnectionsResponse**](ListConnectionsResponse.md)
 
 ### Authorization
 
@@ -165,13 +179,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Connections available to the agent. connections and data hold the same list (data + pagination is the standard list envelope). |  -  |
+**403** | agent_token_required (caller is not an agent) or cross_tenant. |  -  |
+**404** | tenant_not_found. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

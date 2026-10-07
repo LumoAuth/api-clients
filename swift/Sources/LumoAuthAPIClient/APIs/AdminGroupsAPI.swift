@@ -13,19 +13,19 @@ import AnyCodable
 open class AdminGroupsAPI {
 
     /**
-     Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     Add member(s) to group
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsAddMembers(orgId: String, groupId: String) async throws {
+    open class func adminGroupsAddMembers(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
         return try await adminGroupsAddMembersWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
     /**
-     Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     Add member(s) to group
      - POST /orgs/{orgId}/api/v1/admin/groups/{groupId}/members
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -35,9 +35,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func adminGroupsAddMembersWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsAddMembersWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -56,7 +56,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -66,10 +66,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsAddRole(orgId: String, groupId: String) async throws {
+    open class func adminGroupsAddRole(orgId: String, groupId: String) async throws -> MessageResponse {
         return try await adminGroupsAddRoleWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -84,9 +84,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminGroupsAddRoleWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsAddRoleWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -105,7 +105,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -114,10 +114,10 @@ open class AdminGroupsAPI {
      Create a new group
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsCreate(orgId: String) async throws {
+    open class func adminGroupsCreate(orgId: String) async throws -> AdminGroupsCreateResponse {
         return try await adminGroupsCreateWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -131,9 +131,9 @@ open class AdminGroupsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func adminGroupsCreateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -149,7 +149,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -159,10 +159,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsDelete(orgId: String, groupId: String) async throws {
+    open class func adminGroupsDelete(orgId: String, groupId: String) async throws -> MessageResponse {
         return try await adminGroupsDeleteWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -177,9 +177,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminGroupsDeleteWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsDeleteWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -198,7 +198,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -208,10 +208,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsGetResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsGet(orgId: String, groupId: String) async throws {
+    open class func adminGroupsGet(orgId: String, groupId: String) async throws -> AdminGroupsGetResponse {
         return try await adminGroupsGetWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -226,9 +226,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsGetResponse> 
      */
-    open class func adminGroupsGetWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsGetWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsGetResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -247,7 +247,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -257,10 +257,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsGetMembersResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsGetMembers(orgId: String, groupId: String) async throws {
+    open class func adminGroupsGetMembers(orgId: String, groupId: String) async throws -> AdminGroupsGetMembersResponse {
         return try await adminGroupsGetMembersWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -275,9 +275,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsGetMembersResponse> 
      */
-    open class func adminGroupsGetMembersWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsGetMembersWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsGetMembersResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -296,7 +296,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsGetMembersResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -306,10 +306,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsGroupsGetRolesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsGroupsGetRoles(orgId: String, groupId: String) async throws {
+    open class func adminGroupsGroupsGetRoles(orgId: String, groupId: String) async throws -> AdminGroupsGroupsGetRolesResponse {
         return try await adminGroupsGroupsGetRolesWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -324,9 +324,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsGroupsGetRolesResponse> 
      */
-    open class func adminGroupsGroupsGetRolesWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsGroupsGetRolesWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsGroupsGetRolesResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -345,7 +345,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsGroupsGetRolesResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -354,10 +354,10 @@ open class AdminGroupsAPI {
      List all groups in the tenant
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminGroupsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsList(orgId: String) async throws {
+    open class func adminGroupsList(orgId: String) async throws -> AdminGroupsListResponse {
         return try await adminGroupsListWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -371,9 +371,9 @@ open class AdminGroupsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsListResponse> 
      */
-    open class func adminGroupsListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminGroupsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -389,26 +389,26 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Remove member from group — userId is a UUID or email
+     Remove member from group
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
      - parameter userId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsRemoveMember(orgId: String, groupId: String, userId: String) async throws {
+    open class func adminGroupsRemoveMember(orgId: String, groupId: String, userId: String) async throws -> MessageResponse {
         return try await adminGroupsRemoveMemberWithRequestBuilder(orgId: orgId, groupId: groupId, userId: userId).execute().body
     }
 
     /**
-     Remove member from group — userId is a UUID or email
+     Remove member from group
      - DELETE /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -419,9 +419,9 @@ open class AdminGroupsAPI {
      - parameter orgId: (path)  
      - parameter groupId: (path)  
      - parameter userId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminGroupsRemoveMemberWithRequestBuilder(orgId: String, groupId: String, userId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsRemoveMemberWithRequestBuilder(orgId: String, groupId: String, userId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -443,7 +443,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -454,10 +454,10 @@ open class AdminGroupsAPI {
      - parameter orgId: (path)  
      - parameter groupId: (path)  
      - parameter roleId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsRemoveRole(orgId: String, groupId: String, roleId: String) async throws {
+    open class func adminGroupsRemoveRole(orgId: String, groupId: String, roleId: String) async throws -> MessageResponse {
         return try await adminGroupsRemoveRoleWithRequestBuilder(orgId: orgId, groupId: groupId, roleId: roleId).execute().body
     }
 
@@ -473,9 +473,9 @@ open class AdminGroupsAPI {
      - parameter orgId: (path)  
      - parameter groupId: (path)  
      - parameter roleId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminGroupsRemoveRoleWithRequestBuilder(orgId: String, groupId: String, roleId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsRemoveRoleWithRequestBuilder(orgId: String, groupId: String, roleId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -497,7 +497,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -507,10 +507,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminGroupsUpdateRoles(orgId: String, groupId: String) async throws {
+    open class func adminGroupsUpdateRoles(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
         return try await adminGroupsUpdateRolesWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -525,9 +525,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func adminGroupsUpdateRolesWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func adminGroupsUpdateRolesWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -546,7 +546,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -556,10 +556,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminGroupsUpdate(orgId: String, groupId: String) async throws {
+    open class func patchAdminGroupsUpdate(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
         return try await patchAdminGroupsUpdateWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -574,9 +574,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func patchAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func patchAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -595,7 +595,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -605,10 +605,10 @@ open class AdminGroupsAPI {
      
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: Void
+     - returns: AdminGroupsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminGroupsUpdate(orgId: String, groupId: String) async throws {
+    open class func putAdminGroupsUpdate(orgId: String, groupId: String) async throws -> AdminGroupsCreateResponse {
         return try await putAdminGroupsUpdateWithRequestBuilder(orgId: orgId, groupId: groupId).execute().body
     }
 
@@ -623,9 +623,9 @@ open class AdminGroupsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter groupId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminGroupsCreateResponse> 
      */
-    open class func putAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<Void> {
+    open class func putAdminGroupsUpdateWithRequestBuilder(orgId: String, groupId: String) -> RequestBuilder<AdminGroupsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/groups/{groupId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -644,7 +644,7 @@ open class AdminGroupsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminGroupsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

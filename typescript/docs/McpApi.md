@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**getProtectedResourceMetadata**](#getprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728)|
-|[**getProtectedResourceMetadataRoot**](#getprotectedresourcemetadataroot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata|
+|[**getProtectedResourceMetadata**](#getprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728)|
+|[**getProtectedResourceMetadataRoot**](#getprotectedresourcemetadataroot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728)|
 |[**getServer**](#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.|
-|[**getServerChallenge**](#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.|
+|[**getServerChallenge**](#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge|
 |[**listServers**](#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.|
-|[**postServerChallenge**](#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.|
+|[**postServerChallenge**](#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)|
 
 # **getProtectedResourceMetadata**
-> getProtectedResourceMetadata()
+> ProtectedResourceMetadata getProtectedResourceMetadata()
 
-Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 
@@ -46,7 +46,7 @@ const { status, data } = await apiInstance.getProtectedResourceMetadata(
 
 ### Return type
 
-void (empty response body)
+**ProtectedResourceMetadata**
 
 ### Authorization
 
@@ -55,20 +55,22 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). |  -  |
+|**400** | not_applicable — the MCP server does not require authorization. |  -  |
+|**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getProtectedResourceMetadataRoot**
-> getProtectedResourceMetadataRoot()
+> GetProtectedResourceMetadataRoot200Response getProtectedResourceMetadataRoot()
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 
@@ -97,7 +99,7 @@ const { status, data } = await apiInstance.getProtectedResourceMetadataRoot(
 
 ### Return type
 
-void (empty response body)
+**GetProtectedResourceMetadataRoot200Response**
 
 ### Authorization
 
@@ -106,13 +108,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Either a single server\&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. |  -  |
+|**404** | not_found — unknown organization, or no protected MCP servers configured. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -173,9 +176,9 @@ const { status, data } = await apiInstance.getServer(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getServerChallenge**
-> getServerChallenge()
+> GetServerChallengeResponse getServerChallenge()
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server\'s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 ### Example
 
@@ -207,7 +210,7 @@ const { status, data } = await apiInstance.getServerChallenge(
 
 ### Return type
 
-void (empty response body)
+**GetServerChallengeResponse**
 
 ### Authorization
 
@@ -216,13 +219,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | The access token is valid for this MCP server. |  -  |
+|**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+|**403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+|**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+|**429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -280,9 +287,9 @@ const { status, data } = await apiInstance.listServers(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **postServerChallenge**
-> postServerChallenge()
+> GetServerChallengeResponse postServerChallenge()
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
 ### Example
 
@@ -314,7 +321,7 @@ const { status, data } = await apiInstance.postServerChallenge(
 
 ### Return type
 
-void (empty response body)
+**GetServerChallengeResponse**
 
 ### Authorization
 
@@ -323,13 +330,17 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | The access token is valid for this MCP server. |  -  |
+|**401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+|**403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+|**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+|**429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

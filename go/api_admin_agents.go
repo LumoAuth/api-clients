@@ -117,8 +117,8 @@ type AdminAgentsAPI interface {
 	AdminAgentsDelete(ctx context.Context, orgId string, agentId string) ApiAdminAgentsDeleteRequest
 
 	// AdminAgentsDeleteExecute executes the request
-	//  @return MessageResponse
-	AdminAgentsDeleteExecute(r ApiAdminAgentsDeleteRequest) (*MessageResponse, *http.Response, error)
+	//  @return AdminAgentsDeleteResponse
+	AdminAgentsDeleteExecute(r ApiAdminAgentsDeleteRequest) (*AdminAgentsDeleteResponse, *http.Response, error)
 
 	/*
 	AdminAgentsGenerateToken Generate a token for the agent
@@ -977,7 +977,7 @@ type ApiAdminAgentsDeleteRequest struct {
 	agentId string
 }
 
-func (r ApiAdminAgentsDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
+func (r ApiAdminAgentsDeleteRequest) Execute() (*AdminAgentsDeleteResponse, *http.Response, error) {
 	return r.ApiService.AdminAgentsDeleteExecute(r)
 }
 
@@ -999,13 +999,13 @@ func (a *AdminAgentsAPIService) AdminAgentsDelete(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-//  @return MessageResponse
-func (a *AdminAgentsAPIService) AdminAgentsDeleteExecute(r ApiAdminAgentsDeleteRequest) (*MessageResponse, *http.Response, error) {
+//  @return AdminAgentsDeleteResponse
+func (a *AdminAgentsAPIService) AdminAgentsDeleteExecute(r ApiAdminAgentsDeleteRequest) (*AdminAgentsDeleteResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *MessageResponse
+		localVarReturnValue  *AdminAgentsDeleteResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAgentsAPIService.AdminAgentsDelete")

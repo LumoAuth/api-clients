@@ -14,6 +14,33 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AddUserGroupResponse;
+import io.lumoauth.client.model.AddUserPermissionResponse;
+import io.lumoauth.client.model.AddUserRoleResponse;
+import io.lumoauth.client.model.AdminAgentsGetResponse;
+import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
+import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkRequest;
+import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkResponse;
+import io.lumoauth.client.model.AdminIdentitiesLegacySamlReportResponse;
+import io.lumoauth.client.model.AdminIdentitiesLinkRequest;
+import io.lumoauth.client.model.AdminIdentitiesListResponse;
+import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
+import io.lumoauth.client.model.BlockUserResponse;
+import io.lumoauth.client.model.CreateUserResponse;
+import io.lumoauth.client.model.DeleteUserResponse;
+import io.lumoauth.client.model.GetUserResponse;
+import io.lumoauth.client.model.ListUsersResponse;
+import io.lumoauth.client.model.MarkUserVerifiedResponse;
+import io.lumoauth.client.model.RemoveUserGroupResponse;
+import io.lumoauth.client.model.RemoveUserPermissionResponse;
+import io.lumoauth.client.model.RemoveUserRoleResponse;
+import io.lumoauth.client.model.SendUserVerificationEmailResponse;
+import io.lumoauth.client.model.SetUserPasswordPostResponse;
+import io.lumoauth.client.model.TriggerUserPasswordResetResponse;
+import io.lumoauth.client.model.UnblockUserResponse;
+import io.lumoauth.client.model.UpdateUserGroupsResponse;
+import io.lumoauth.client.model.UpdateUserResponse;
+import io.lumoauth.client.model.UpdateUserRolesResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,147 +58,252 @@ public class AdminUsersApiTest {
     private final AdminUsersApi api = new AdminUsersApi();
 
     /**
+     * Add a user to a group
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void addUserGroupTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.addUserGroup(orgId, userId);
+        AddUserGroupResponse response = api.addUserGroup(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Assign a permission to a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void addUserPermissionTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.addUserPermission(orgId, userId);
+        AddUserPermissionResponse response = api.addUserPermission(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Assign a role to a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void addUserRoleTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.addUserRole(orgId, userId);
+        AddUserRoleResponse response = api.addUserRole(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Relink legacy SAML users to an IdP
+     *
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminIdentitiesLegacySamlRelinkTest() throws ApiException {
+        String orgId = null;
+        AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest = null;
+        AdminIdentitiesLegacySamlRelinkResponse response = api.adminIdentitiesLegacySamlRelink(orgId, adminIdentitiesLegacySamlRelinkRequest);
+        // TODO: test validations
+    }
+
+    /**
+     * Legacy SAML bindings report
+     *
+     * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (&#x60;ambiguous: true&#x60;) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; &#x60;suggested_idp_id&#x60; is set when exactly one does. Filter with &#x60;idp_id&#x60;.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminIdentitiesLegacySamlReportTest() throws ApiException {
+        String orgId = null;
+        Integer idpId = null;
+        AdminIdentitiesLegacySamlReportResponse response = api.adminIdentitiesLegacySamlReport(orgId, idpId);
+        // TODO: test validations
+    }
+
+    /**
+     * Link a SAML or LDAP identity to a user
+     *
+     * Sets (or replaces) the user&#39;s SAML binding (&#x60;idp_id&#x60; + &#x60;name_id&#x60;) or LDAP binding (&#x60;ldap_config_id&#x60; + &#x60;dn&#x60;; omit &#x60;dn&#x60; to look the entry up in the directory by the user&#39;s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminIdentitiesLinkTest() throws ApiException {
+        String orgId = null;
+        String userId = null;
+        AdminIdentitiesLinkRequest adminIdentitiesLinkRequest = null;
+        AdminAgentsGetResponse response = api.adminIdentitiesLink(orgId, userId, adminIdentitiesLinkRequest);
+        // TODO: test validations
+    }
+
+    /**
+     * List a user&#39;s federated identity links
+     *
+     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with &#x60;legacy: true&#x60; stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminIdentitiesListTest() throws ApiException {
+        String orgId = null;
+        String userId = null;
+        AdminIdentitiesListResponse response = api.adminIdentitiesList(orgId, userId);
+        // TODO: test validations
+    }
+
+    /**
+     * Unlink a user&#39;s SAML, LDAP or social identity
+     *
+     * Removes the binding of the given type (&#x60;saml&#x60;, &#x60;ldap&#x60; or &#x60;social&#x60;). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminIdentitiesUnlinkTest() throws ApiException {
+        String type = null;
+        String orgId = null;
+        String userId = null;
+        AdminAgentsGetResponse response = api.adminIdentitiesUnlink(type, orgId, userId);
+        // TODO: test validations
+    }
+
+    /**
+     * Block a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void blockUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.blockUser(orgId, userId);
+        BlockUserResponse response = api.blockUser(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Create a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void createUserTest() throws ApiException {
         String orgId = null;
-        api.createUser(orgId);
+        CreateUserResponse response = api.createUser(orgId);
         // TODO: test validations
     }
 
     /**
+     * Delete a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void deleteUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.deleteUser(orgId, userId);
+        DeleteUserResponse response = api.deleteUser(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Get a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.getUser(orgId, userId);
+        GetUserResponse response = api.getUser(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * List a user&#39;s groups
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void listUserGroupsTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.listUserGroups(orgId, userId);
+        AdminGroupsGroupsGetRolesResponse response = api.listUserGroups(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * List a user&#39;s direct permissions
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void listUserPermissionsTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.listUserPermissions(orgId, userId);
+        AdminRolesGetPermissionsResponse response = api.listUserPermissions(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * List a user&#39;s roles
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void listUserRolesTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.listUserRoles(orgId, userId);
+        AdminGroupsGroupsGetRolesResponse response = api.listUserRoles(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * List users
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void listUsersTest() throws ApiException {
         String orgId = null;
-        api.listUsers(orgId);
+        ListUsersResponse response = api.listUsers(orgId);
         // TODO: test validations
     }
 
     /**
+     * Mark a user&#39;s email as verified
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void markUserVerifiedTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.markUserVerified(orgId, userId);
+        MarkUserVerifiedResponse response = api.markUserVerified(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Update a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.patchUser(orgId, userId);
+        UpdateUserResponse response = api.patchUser(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Remove a user from a group
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -179,11 +311,13 @@ public class AdminUsersApiTest {
         String orgId = null;
         String userId = null;
         String groupId = null;
-        api.removeUserGroup(orgId, userId, groupId);
+        RemoveUserGroupResponse response = api.removeUserGroup(orgId, userId, groupId);
         // TODO: test validations
     }
 
     /**
+     * Remove a permission from a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -191,11 +325,13 @@ public class AdminUsersApiTest {
         String orgId = null;
         String userId = null;
         String permissionId = null;
-        api.removeUserPermission(orgId, userId, permissionId);
+        RemoveUserPermissionResponse response = api.removeUserPermission(orgId, userId, permissionId);
         // TODO: test validations
     }
 
     /**
+     * Remove a role from a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -203,11 +339,15 @@ public class AdminUsersApiTest {
         String orgId = null;
         String userId = null;
         String roleId = null;
-        api.removeUserRole(orgId, userId, roleId);
+        RemoveUserRoleResponse response = api.removeUserRole(orgId, userId, roleId);
         // TODO: test validations
     }
 
     /**
+     * Reset MFA (removed)
+     *
+     * Removed: admins cannot disable a user&#39;s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -219,90 +359,106 @@ public class AdminUsersApiTest {
     }
 
     /**
+     * Send a verification email
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void sendUserVerificationEmailTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.sendUserVerificationEmail(orgId, userId);
+        SendUserVerificationEmailResponse response = api.sendUserVerificationEmail(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Set a user&#39;s password
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void setUserPasswordTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.setUserPassword(orgId, userId);
+        SetUserPasswordPostResponse response = api.setUserPassword(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Set a user&#39;s password
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void setUserPasswordPostTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.setUserPasswordPost(orgId, userId);
+        SetUserPasswordPostResponse response = api.setUserPasswordPost(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Send a password reset email
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void triggerUserPasswordResetTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.triggerUserPasswordReset(orgId, userId);
+        TriggerUserPasswordResetResponse response = api.triggerUserPasswordReset(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Unblock a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void unblockUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.unblockUser(orgId, userId);
+        UnblockUserResponse response = api.unblockUser(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Update a user
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void updateUserTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.updateUser(orgId, userId);
+        UpdateUserResponse response = api.updateUser(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Replace a user&#39;s groups
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void updateUserGroupsTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.updateUserGroups(orgId, userId);
+        UpdateUserGroupsResponse response = api.updateUserGroups(orgId, userId);
         // TODO: test validations
     }
 
     /**
+     * Replace a user&#39;s roles
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void updateUserRolesTest() throws ApiException {
         String orgId = null;
         String userId = null;
-        api.updateUserRoles(orgId, userId);
+        UpdateUserRolesResponse response = api.updateUserRoles(orgId, userId);
         // TODO: test validations
     }
 

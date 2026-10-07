@@ -27,6 +27,20 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminWebhooksCreateResponse;
+import io.lumoauth.client.model.AdminWebhooksDeliveriesListResponse;
+import io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponse;
+import io.lumoauth.client.model.AdminWebhooksDeliveryShowResponse;
+import io.lumoauth.client.model.AdminWebhooksEventsResponse;
+import io.lumoauth.client.model.AdminWebhooksGetResponse;
+import io.lumoauth.client.model.AdminWebhooksListResponse;
+import io.lumoauth.client.model.AdminWebhooksRotateSecretResponse;
+import io.lumoauth.client.model.AdminWebhooksTestResponse;
+import io.lumoauth.client.model.AdminWebhooksTunnelStartResponse;
+import io.lumoauth.client.model.AdminWebhooksWebhooksDisableResponse;
+import io.lumoauth.client.model.AdminWebhooksWebhooksEnableResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminWebhooksUpdateResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +95,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +125,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,42 +155,45 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Create a new webhook
-     * 
+     * Create a webhook
+     * The signing secret is generated server-side and returned once in this response only.
      * @param orgId  (required)
+     * @return AdminWebhooksCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminWebhooksCreateWithHttpInfo(orgId);
+    public AdminWebhooksCreateResponse adminWebhooksCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminWebhooksCreateResponse> localVarResp = adminWebhooksCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Create a new webhook
-     * 
+     * Create a webhook
+     * The signing secret is generated server-side and returned once in this response only.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminWebhooksCreateResponse> adminWebhooksCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Create a new webhook (asynchronously)
-     * 
+     * Create a webhook (asynchronously)
+     * The signing secret is generated server-side and returned once in this response only.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -184,13 +202,14 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Webhook created; the secret is shown once </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminWebhooksCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -204,7 +223,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -235,6 +255,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -273,16 +294,19 @@ public class AdminWebhooksApi {
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksDeleteWithHttpInfo(orgId, webhookId);
+    public MessageResponse adminWebhooksDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminWebhooksDeleteWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
@@ -290,18 +314,20 @@ public class AdminWebhooksApi {
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<MessageResponse> adminWebhooksDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksDeleteValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
@@ -316,13 +342,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksDeleteValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -336,7 +364,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deliveries </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksDeliveriesListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -367,6 +396,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -401,44 +431,49 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * List recent delivery attempts for a webhook.
-     * Optional query params: - status: filter by &#x60;pending|success|failed|dead_lettered&#x60; - limit: 1–200, default 50
+     * List recent deliveries
+     * Most recent delivery attempts for the webhook (single page, newest first). Optional &#x60;status&#x60; filter (pending|success|failed|dead_lettered) and &#x60;limit&#x60; (1-200, default 50).
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return AdminWebhooksDeliveriesListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deliveries </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksDeliveriesList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksDeliveriesListWithHttpInfo(orgId, webhookId);
+    public AdminWebhooksDeliveriesListResponse adminWebhooksDeliveriesList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<AdminWebhooksDeliveriesListResponse> localVarResp = adminWebhooksDeliveriesListWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * List recent delivery attempts for a webhook.
-     * Optional query params: - status: filter by &#x60;pending|success|failed|dead_lettered&#x60; - limit: 1–200, default 50
+     * List recent deliveries
+     * Most recent delivery attempts for the webhook (single page, newest first). Optional &#x60;status&#x60; filter (pending|success|failed|dead_lettered) and &#x60;limit&#x60; (1-200, default 50).
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksDeliveriesListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deliveries </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksDeliveriesListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<AdminWebhooksDeliveriesListResponse> adminWebhooksDeliveriesListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksDeliveriesListValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksDeliveriesListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List recent delivery attempts for a webhook. (asynchronously)
-     * Optional query params: - status: filter by &#x60;pending|success|failed|dead_lettered&#x60; - limit: 1–200, default 50
+     * List recent deliveries (asynchronously)
+     * Most recent delivery attempts for the webhook (single page, newest first). Optional &#x60;status&#x60; filter (pending|success|failed|dead_lettered) and &#x60;limit&#x60; (1-200, default 50).
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -448,13 +483,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Deliveries </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksDeliveriesListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksDeliveriesListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<AdminWebhooksDeliveriesListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksDeliveriesListValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksDeliveriesListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -469,7 +506,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery re-enqueued </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksDeliveryReplayCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId, final ApiCallback _callback) throws ApiException {
@@ -501,6 +539,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -540,46 +579,51 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-     * Resets the delivery&#39;s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+     * Replay a delivery
+     * Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param deliveryId  (required)
+     * @return AdminWebhooksDeliveryReplayResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery re-enqueued </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksDeliveryReplay(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
-        adminWebhooksDeliveryReplayWithHttpInfo(orgId, webhookId, deliveryId);
+    public AdminWebhooksDeliveryReplayResponse adminWebhooksDeliveryReplay(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
+        ApiResponse<AdminWebhooksDeliveryReplayResponse> localVarResp = adminWebhooksDeliveryReplayWithHttpInfo(orgId, webhookId, deliveryId);
+        return localVarResp.getData();
     }
 
     /**
-     * Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-     * Resets the delivery&#39;s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+     * Replay a delivery
+     * Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param deliveryId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksDeliveryReplayResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery re-enqueued </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksDeliveryReplayWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
+    public ApiResponse<AdminWebhooksDeliveryReplayResponse> adminWebhooksDeliveryReplayWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksDeliveryReplayValidateBeforeCall(orgId, webhookId, deliveryId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksDeliveryReplayResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage (asynchronously)
-     * Resets the delivery&#39;s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+     * Replay a delivery (asynchronously)
+     * Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param deliveryId  (required)
@@ -590,13 +634,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery re-enqueued </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksDeliveryReplayAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksDeliveryReplayAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId, final ApiCallback<AdminWebhooksDeliveryReplayResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksDeliveryReplayValidateBeforeCall(orgId, webhookId, deliveryId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksDeliveryReplayResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -611,7 +657,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery with payload and attempts </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksDeliveryShowCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId, final ApiCallback _callback) throws ApiException {
@@ -643,6 +690,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -682,46 +730,51 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.
-     * 
+     * Get a delivery
+     * A single delivery including the event payload and the per-attempt history.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param deliveryId  (required)
+     * @return AdminWebhooksDeliveryShowResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery with payload and attempts </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksDeliveryShow(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
-        adminWebhooksDeliveryShowWithHttpInfo(orgId, webhookId, deliveryId);
+    public AdminWebhooksDeliveryShowResponse adminWebhooksDeliveryShow(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
+        ApiResponse<AdminWebhooksDeliveryShowResponse> localVarResp = adminWebhooksDeliveryShowWithHttpInfo(orgId, webhookId, deliveryId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.
-     * 
+     * Get a delivery
+     * A single delivery including the event payload and the per-attempt history.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param deliveryId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksDeliveryShowResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery with payload and attempts </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksDeliveryShowWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
+    public ApiResponse<AdminWebhooksDeliveryShowResponse> adminWebhooksDeliveryShowWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksDeliveryShowValidateBeforeCall(orgId, webhookId, deliveryId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksDeliveryShowResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis. (asynchronously)
-     * 
+     * Get a delivery (asynchronously)
+     * A single delivery including the event payload and the per-attempt history.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param deliveryId  (required)
@@ -732,13 +785,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Delivery with payload and attempts </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook or delivery not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksDeliveryShowAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksDeliveryShowAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, @javax.annotation.Nonnull String deliveryId, final ApiCallback<AdminWebhooksDeliveryShowResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksDeliveryShowValidateBeforeCall(orgId, webhookId, deliveryId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksDeliveryShowResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -751,7 +806,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Event types keyed by name, with a human-readable description </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksEventsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -781,6 +836,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -810,41 +866,44 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Get available webhook event types
+     * List available webhook event types
      * 
      * @param orgId  (required)
+     * @return AdminWebhooksEventsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Event types keyed by name, with a human-readable description </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksEvents(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminWebhooksEventsWithHttpInfo(orgId);
+    public AdminWebhooksEventsResponse adminWebhooksEvents(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminWebhooksEventsResponse> localVarResp = adminWebhooksEventsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get available webhook event types
+     * List available webhook event types
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksEventsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Event types keyed by name, with a human-readable description </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksEventsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminWebhooksEventsResponse> adminWebhooksEventsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksEventsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksEventsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get available webhook event types (asynchronously)
+     * List available webhook event types (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -854,13 +913,14 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Event types keyed by name, with a human-readable description </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksEventsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksEventsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminWebhooksEventsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksEventsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksEventsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -874,7 +934,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -905,6 +966,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -939,43 +1001,48 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Get a single webhook by ID
+     * Get a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return AdminWebhooksGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksGetWithHttpInfo(orgId, webhookId);
+    public AdminWebhooksGetResponse adminWebhooksGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<AdminWebhooksGetResponse> localVarResp = adminWebhooksGetWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Get a single webhook by ID
+     * Get a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<AdminWebhooksGetResponse> adminWebhooksGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksGetValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Get a single webhook by ID (asynchronously)
+     * Get a webhook (asynchronously)
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
@@ -986,13 +1053,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<AdminWebhooksGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksGetValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1005,7 +1074,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhooks </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1035,6 +1104,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1064,42 +1134,45 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * List all webhooks in the tenant
-     * 
+     * List webhooks
+     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      * @param orgId  (required)
+     * @return AdminWebhooksListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhooks </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminWebhooksListWithHttpInfo(orgId);
+    public AdminWebhooksListResponse adminWebhooksList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminWebhooksListResponse> localVarResp = adminWebhooksListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List all webhooks in the tenant
-     * 
+     * List webhooks
+     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhooks </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminWebhooksListResponse> adminWebhooksListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List all webhooks in the tenant (asynchronously)
-     * 
+     * List webhooks (asynchronously)
+     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1108,13 +1181,14 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhooks </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminWebhooksListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1128,7 +1202,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Secret rotated; the new secret is shown once </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksRotateSecretCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -1159,6 +1234,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1193,44 +1269,49 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Rotate webhook secret
-     * 
+     * Rotate the signing secret
+     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return AdminWebhooksRotateSecretResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Secret rotated; the new secret is shown once </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksRotateSecret(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksRotateSecretWithHttpInfo(orgId, webhookId);
+    public AdminWebhooksRotateSecretResponse adminWebhooksRotateSecret(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<AdminWebhooksRotateSecretResponse> localVarResp = adminWebhooksRotateSecretWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Rotate webhook secret
-     * 
+     * Rotate the signing secret
+     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksRotateSecretResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Secret rotated; the new secret is shown once </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksRotateSecretWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<AdminWebhooksRotateSecretResponse> adminWebhooksRotateSecretWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksRotateSecretValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksRotateSecretResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Rotate webhook secret (asynchronously)
-     * 
+     * Rotate the signing secret (asynchronously)
+     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1240,13 +1321,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Secret rotated; the new secret is shown once </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksRotateSecretAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksRotateSecretAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<AdminWebhooksRotateSecretResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksRotateSecretValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksRotateSecretResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1260,7 +1343,9 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Test result </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
+        <tr><td> 502 </td><td> Failed to deliver test webhook </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksTestCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -1291,6 +1376,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1325,44 +1411,51 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Test a webhook by sending a test payload
-     * 
+     * Send a test delivery
+     * POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return AdminWebhooksTestResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Test result </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
+        <tr><td> 502 </td><td> Failed to deliver test webhook </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksTest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksTestWithHttpInfo(orgId, webhookId);
+    public AdminWebhooksTestResponse adminWebhooksTest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<AdminWebhooksTestResponse> localVarResp = adminWebhooksTestWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Test a webhook by sending a test payload
-     * 
+     * Send a test delivery
+     * POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksTestResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Test result </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
+        <tr><td> 502 </td><td> Failed to deliver test webhook </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksTestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<AdminWebhooksTestResponse> adminWebhooksTestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksTestValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksTestResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Test a webhook by sending a test payload (asynchronously)
-     * 
+     * Send a test delivery (asynchronously)
+     * POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1372,13 +1465,16 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Test result </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
+        <tr><td> 502 </td><td> Failed to deliver test webhook </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksTestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksTestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<AdminWebhooksTestResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksTestValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksTestResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1391,7 +1487,7 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel started </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksTunnelStartCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1421,6 +1517,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1450,42 +1547,45 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * 
-     * 
+     * Start a webhook tunnel
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
      * @param orgId  (required)
+     * @return AdminWebhooksTunnelStartResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel started </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksTunnelStart(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminWebhooksTunnelStartWithHttpInfo(orgId);
+    public AdminWebhooksTunnelStartResponse adminWebhooksTunnelStart(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminWebhooksTunnelStartResponse> localVarResp = adminWebhooksTunnelStartWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Start a webhook tunnel
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksTunnelStartResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel started </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksTunnelStartWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminWebhooksTunnelStartResponse> adminWebhooksTunnelStartWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksTunnelStartValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksTunnelStartResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Start a webhook tunnel (asynchronously)
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1494,13 +1594,14 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel started </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksTunnelStartAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksTunnelStartAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminWebhooksTunnelStartResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksTunnelStartValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksTunnelStartResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1514,7 +1615,9 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel closed </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksTunnelStopCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -1545,6 +1648,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1579,44 +1683,51 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * 
-     * 
+     * Stop a webhook tunnel
+     * Deletes the tunnel webhook and its pending deliveries. Only &#x60;tunnel://&#x60; webhooks can be stopped here.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel closed </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksTunnelStop(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksTunnelStopWithHttpInfo(orgId, webhookId);
+    public MessageResponse adminWebhooksTunnelStop(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminWebhooksTunnelStopWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Stop a webhook tunnel
+     * Deletes the tunnel webhook and its pending deliveries. Only &#x60;tunnel://&#x60; webhooks can be stopped here.
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel closed </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksTunnelStopWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<MessageResponse> adminWebhooksTunnelStopWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksTunnelStopValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Stop a webhook tunnel (asynchronously)
+     * Deletes the tunnel webhook and its pending deliveries. Only &#x60;tunnel://&#x60; webhooks can be stopped here.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1626,13 +1737,16 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Tunnel closed </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksTunnelStopAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksTunnelStopAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksTunnelStopValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1646,7 +1760,9 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksTunnelStreamCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -1677,6 +1793,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/event-stream"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1711,44 +1828,51 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * 
-     * 
+     * Stream tunnel deliveries (SSE)
+     * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksTunnelStream(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksTunnelStreamWithHttpInfo(orgId, webhookId);
+    public String adminWebhooksTunnelStream(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<String> localVarResp = adminWebhooksTunnelStreamWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Stream tunnel deliveries (SSE)
+     * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksTunnelStreamWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<String> adminWebhooksTunnelStreamWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksTunnelStreamValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Stream tunnel deliveries (SSE) (asynchronously)
+     * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
      * @param orgId  (required)
      * @param webhookId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1758,13 +1882,16 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Not a tunnel webhook </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksTunnelStreamAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksTunnelStreamAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksTunnelStreamValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1778,7 +1905,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook disabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksWebhooksDisableCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -1809,6 +1937,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1843,43 +1972,48 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Disable webhook
+     * Disable a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return AdminWebhooksWebhooksDisableResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook disabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksWebhooksDisable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksWebhooksDisableWithHttpInfo(orgId, webhookId);
+    public AdminWebhooksWebhooksDisableResponse adminWebhooksWebhooksDisable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<AdminWebhooksWebhooksDisableResponse> localVarResp = adminWebhooksWebhooksDisableWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Disable webhook
+     * Disable a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksWebhooksDisableResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook disabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksWebhooksDisableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<AdminWebhooksWebhooksDisableResponse> adminWebhooksWebhooksDisableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksWebhooksDisableValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksWebhooksDisableResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Disable webhook (asynchronously)
+     * Disable a webhook (asynchronously)
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
@@ -1890,13 +2024,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook disabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksWebhooksDisableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksWebhooksDisableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<AdminWebhooksWebhooksDisableResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksWebhooksDisableValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksWebhooksDisableResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1910,7 +2046,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook enabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminWebhooksWebhooksEnableCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -1941,6 +2078,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1975,43 +2113,48 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Enable webhook
+     * Enable a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return AdminWebhooksWebhooksEnableResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook enabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminWebhooksWebhooksEnable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        adminWebhooksWebhooksEnableWithHttpInfo(orgId, webhookId);
+    public AdminWebhooksWebhooksEnableResponse adminWebhooksWebhooksEnable(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<AdminWebhooksWebhooksEnableResponse> localVarResp = adminWebhooksWebhooksEnableWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Enable webhook
+     * Enable a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminWebhooksWebhooksEnableResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook enabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminWebhooksWebhooksEnableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<AdminWebhooksWebhooksEnableResponse> adminWebhooksWebhooksEnableWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = adminWebhooksWebhooksEnableValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminWebhooksWebhooksEnableResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Enable webhook (asynchronously)
+     * Enable a webhook (asynchronously)
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
@@ -2022,13 +2165,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Webhook enabled </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminWebhooksWebhooksEnableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminWebhooksWebhooksEnableAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<AdminWebhooksWebhooksEnableResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminWebhooksWebhooksEnableValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminWebhooksWebhooksEnableResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2042,7 +2187,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchAdminWebhooksUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -2073,6 +2219,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2107,43 +2254,48 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Update an existing webhook
+     * Partially update a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return PutAdminWebhooksUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void patchAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        patchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    public PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<PutAdminWebhooksUpdateResponse> localVarResp = patchAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update an existing webhook
+     * Partially update a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminWebhooksUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<PutAdminWebhooksUpdateResponse> patchAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = patchAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update an existing webhook (asynchronously)
+     * Partially update a webhook (asynchronously)
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
@@ -2154,13 +2306,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<PutAdminWebhooksUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2174,7 +2328,8 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call putAdminWebhooksUpdateCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback _callback) throws ApiException {
@@ -2205,6 +2360,7 @@ public class AdminWebhooksApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2239,43 +2395,48 @@ public class AdminWebhooksApi {
     }
 
     /**
-     * Update an existing webhook
+     * Update a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
+     * @return PutAdminWebhooksUpdateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public void putAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
-        putAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+    public PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+        ApiResponse<PutAdminWebhooksUpdateResponse> localVarResp = putAdminWebhooksUpdateWithHttpInfo(orgId, webhookId);
+        return localVarResp.getData();
     }
 
     /**
-     * Update an existing webhook
+     * Update a webhook
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;PutAdminWebhooksUpdateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> putAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
+    public ApiResponse<PutAdminWebhooksUpdateResponse> putAdminWebhooksUpdateWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId) throws ApiException {
         okhttp3.Call localVarCall = putAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update an existing webhook (asynchronously)
+     * Update a webhook (asynchronously)
      * 
      * @param orgId  (required)
      * @param webhookId  (required)
@@ -2286,13 +2447,15 @@ public class AdminWebhooksApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Updated webhook (detailed, includes &#x60;configuration&#x60;) </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Webhook not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call putAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call putAdminWebhooksUpdateAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String webhookId, final ApiCallback<PutAdminWebhooksUpdateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = putAdminWebhooksUpdateValidateBeforeCall(orgId, webhookId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<PutAdminWebhooksUpdateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

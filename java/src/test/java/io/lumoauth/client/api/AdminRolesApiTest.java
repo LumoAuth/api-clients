@@ -14,6 +14,12 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminRolesCreateResponse;
+import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
+import io.lumoauth.client.model.AdminRolesGetResponse;
+import io.lumoauth.client.model.AdminRolesGetUsersResponse;
+import io.lumoauth.client.model.AdminRolesListResponse;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +45,7 @@ public class AdminRolesApiTest {
     public void adminRolesAddPermissionsTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesAddPermissions(orgId, roleId);
+        MessageResponse response = api.adminRolesAddPermissions(orgId, roleId);
         // TODO: test validations
     }
 
@@ -52,7 +58,7 @@ public class AdminRolesApiTest {
     public void adminRolesAddUserTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesAddUser(orgId, roleId);
+        MessageResponse response = api.adminRolesAddUser(orgId, roleId);
         // TODO: test validations
     }
 
@@ -64,7 +70,7 @@ public class AdminRolesApiTest {
     @Test
     public void adminRolesCreateTest() throws ApiException {
         String orgId = null;
-        api.adminRolesCreate(orgId);
+        AdminRolesCreateResponse response = api.adminRolesCreate(orgId);
         // TODO: test validations
     }
 
@@ -77,7 +83,7 @@ public class AdminRolesApiTest {
     public void adminRolesDeleteTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesDelete(orgId, roleId);
+        MessageResponse response = api.adminRolesDelete(orgId, roleId);
         // TODO: test validations
     }
 
@@ -90,7 +96,7 @@ public class AdminRolesApiTest {
     public void adminRolesGetTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesGet(orgId, roleId);
+        AdminRolesGetResponse response = api.adminRolesGet(orgId, roleId);
         // TODO: test validations
     }
 
@@ -103,7 +109,7 @@ public class AdminRolesApiTest {
     public void adminRolesGetPermissionsTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesGetPermissions(orgId, roleId);
+        AdminRolesGetPermissionsResponse response = api.adminRolesGetPermissions(orgId, roleId);
         // TODO: test validations
     }
 
@@ -116,7 +122,7 @@ public class AdminRolesApiTest {
     public void adminRolesGetUsersTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesGetUsers(orgId, roleId);
+        AdminRolesGetUsersResponse response = api.adminRolesGetUsers(orgId, roleId);
         // TODO: test validations
     }
 
@@ -128,7 +134,7 @@ public class AdminRolesApiTest {
     @Test
     public void adminRolesListTest() throws ApiException {
         String orgId = null;
-        api.adminRolesList(orgId);
+        AdminRolesListResponse response = api.adminRolesList(orgId);
         // TODO: test validations
     }
 
@@ -142,7 +148,7 @@ public class AdminRolesApiTest {
         String orgId = null;
         String roleId = null;
         String permissionId = null;
-        api.adminRolesRemovePermission(orgId, roleId, permissionId);
+        MessageResponse response = api.adminRolesRemovePermission(orgId, roleId, permissionId);
         // TODO: test validations
     }
 
@@ -156,7 +162,7 @@ public class AdminRolesApiTest {
         String orgId = null;
         String roleId = null;
         String userId = null;
-        api.adminRolesRemoveUser(orgId, roleId, userId);
+        MessageResponse response = api.adminRolesRemoveUser(orgId, roleId, userId);
         // TODO: test validations
     }
 
@@ -169,7 +175,7 @@ public class AdminRolesApiTest {
     public void adminRolesUpdatePermissionsTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.adminRolesUpdatePermissions(orgId, roleId);
+        AdminRolesCreateResponse response = api.adminRolesUpdatePermissions(orgId, roleId);
         // TODO: test validations
     }
 
@@ -182,7 +188,7 @@ public class AdminRolesApiTest {
     public void patchAdminRolesUpdateTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.patchAdminRolesUpdate(orgId, roleId);
+        AdminRolesCreateResponse response = api.patchAdminRolesUpdate(orgId, roleId);
         // TODO: test validations
     }
 
@@ -195,7 +201,7 @@ public class AdminRolesApiTest {
     public void putAdminRolesUpdateTest() throws ApiException {
         String orgId = null;
         String roleId = null;
-        api.putAdminRolesUpdate(orgId, roleId);
+        AdminRolesCreateResponse response = api.putAdminRolesUpdate(orgId, roleId);
         // TODO: test validations
     }
 

@@ -34,7 +34,8 @@ type AdminRolesAPI interface {
 	AdminRolesAddPermissions(ctx context.Context, orgId string, roleId string) ApiAdminRolesAddPermissionsRequest
 
 	// AdminRolesAddPermissionsExecute executes the request
-	AdminRolesAddPermissionsExecute(r ApiAdminRolesAddPermissionsRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminRolesAddPermissionsExecute(r ApiAdminRolesAddPermissionsRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminRolesAddUser Assign a user to a role
@@ -47,7 +48,8 @@ type AdminRolesAPI interface {
 	AdminRolesAddUser(ctx context.Context, orgId string, roleId string) ApiAdminRolesAddUserRequest
 
 	// AdminRolesAddUserExecute executes the request
-	AdminRolesAddUserExecute(r ApiAdminRolesAddUserRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminRolesAddUserExecute(r ApiAdminRolesAddUserRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminRolesCreate Create a new role
@@ -59,7 +61,8 @@ type AdminRolesAPI interface {
 	AdminRolesCreate(ctx context.Context, orgId string) ApiAdminRolesCreateRequest
 
 	// AdminRolesCreateExecute executes the request
-	AdminRolesCreateExecute(r ApiAdminRolesCreateRequest) (*http.Response, error)
+	//  @return AdminRolesCreateResponse
+	AdminRolesCreateExecute(r ApiAdminRolesCreateRequest) (*AdminRolesCreateResponse, *http.Response, error)
 
 	/*
 	AdminRolesDelete Delete a role
@@ -72,7 +75,8 @@ type AdminRolesAPI interface {
 	AdminRolesDelete(ctx context.Context, orgId string, roleId string) ApiAdminRolesDeleteRequest
 
 	// AdminRolesDeleteExecute executes the request
-	AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminRolesGet Get a single role by ID or slug
@@ -85,7 +89,8 @@ type AdminRolesAPI interface {
 	AdminRolesGet(ctx context.Context, orgId string, roleId string) ApiAdminRolesGetRequest
 
 	// AdminRolesGetExecute executes the request
-	AdminRolesGetExecute(r ApiAdminRolesGetRequest) (*http.Response, error)
+	//  @return AdminRolesGetResponse
+	AdminRolesGetExecute(r ApiAdminRolesGetRequest) (*AdminRolesGetResponse, *http.Response, error)
 
 	/*
 	AdminRolesGetPermissions Get role permissions
@@ -98,7 +103,8 @@ type AdminRolesAPI interface {
 	AdminRolesGetPermissions(ctx context.Context, orgId string, roleId string) ApiAdminRolesGetPermissionsRequest
 
 	// AdminRolesGetPermissionsExecute executes the request
-	AdminRolesGetPermissionsExecute(r ApiAdminRolesGetPermissionsRequest) (*http.Response, error)
+	//  @return AdminRolesGetPermissionsResponse
+	AdminRolesGetPermissionsExecute(r ApiAdminRolesGetPermissionsRequest) (*AdminRolesGetPermissionsResponse, *http.Response, error)
 
 	/*
 	AdminRolesGetUsers Get users assigned to a role
@@ -111,7 +117,8 @@ type AdminRolesAPI interface {
 	AdminRolesGetUsers(ctx context.Context, orgId string, roleId string) ApiAdminRolesGetUsersRequest
 
 	// AdminRolesGetUsersExecute executes the request
-	AdminRolesGetUsersExecute(r ApiAdminRolesGetUsersRequest) (*http.Response, error)
+	//  @return AdminRolesGetUsersResponse
+	AdminRolesGetUsersExecute(r ApiAdminRolesGetUsersRequest) (*AdminRolesGetUsersResponse, *http.Response, error)
 
 	/*
 	AdminRolesList List all roles in the tenant
@@ -123,7 +130,8 @@ type AdminRolesAPI interface {
 	AdminRolesList(ctx context.Context, orgId string) ApiAdminRolesListRequest
 
 	// AdminRolesListExecute executes the request
-	AdminRolesListExecute(r ApiAdminRolesListRequest) (*http.Response, error)
+	//  @return AdminRolesListResponse
+	AdminRolesListExecute(r ApiAdminRolesListRequest) (*AdminRolesListResponse, *http.Response, error)
 
 	/*
 	AdminRolesRemovePermission Remove a permission from a role
@@ -137,7 +145,8 @@ type AdminRolesAPI interface {
 	AdminRolesRemovePermission(ctx context.Context, orgId string, roleId string, permissionId string) ApiAdminRolesRemovePermissionRequest
 
 	// AdminRolesRemovePermissionExecute executes the request
-	AdminRolesRemovePermissionExecute(r ApiAdminRolesRemovePermissionRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminRolesRemovePermissionExecute(r ApiAdminRolesRemovePermissionRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminRolesRemoveUser Remove a user from a role
@@ -151,7 +160,8 @@ type AdminRolesAPI interface {
 	AdminRolesRemoveUser(ctx context.Context, orgId string, roleId string, userId string) ApiAdminRolesRemoveUserRequest
 
 	// AdminRolesRemoveUserExecute executes the request
-	AdminRolesRemoveUserExecute(r ApiAdminRolesRemoveUserRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminRolesRemoveUserExecute(r ApiAdminRolesRemoveUserRequest) (*MessageResponse, *http.Response, error)
 
 	/*
 	AdminRolesUpdatePermissions Update role permissions (replaces all)
@@ -164,7 +174,8 @@ type AdminRolesAPI interface {
 	AdminRolesUpdatePermissions(ctx context.Context, orgId string, roleId string) ApiAdminRolesUpdatePermissionsRequest
 
 	// AdminRolesUpdatePermissionsExecute executes the request
-	AdminRolesUpdatePermissionsExecute(r ApiAdminRolesUpdatePermissionsRequest) (*http.Response, error)
+	//  @return AdminRolesCreateResponse
+	AdminRolesUpdatePermissionsExecute(r ApiAdminRolesUpdatePermissionsRequest) (*AdminRolesCreateResponse, *http.Response, error)
 
 	/*
 	PatchAdminRolesUpdate Update an existing role
@@ -177,7 +188,8 @@ type AdminRolesAPI interface {
 	PatchAdminRolesUpdate(ctx context.Context, orgId string, roleId string) ApiPatchAdminRolesUpdateRequest
 
 	// PatchAdminRolesUpdateExecute executes the request
-	PatchAdminRolesUpdateExecute(r ApiPatchAdminRolesUpdateRequest) (*http.Response, error)
+	//  @return AdminRolesCreateResponse
+	PatchAdminRolesUpdateExecute(r ApiPatchAdminRolesUpdateRequest) (*AdminRolesCreateResponse, *http.Response, error)
 
 	/*
 	PutAdminRolesUpdate Update an existing role
@@ -190,7 +202,8 @@ type AdminRolesAPI interface {
 	PutAdminRolesUpdate(ctx context.Context, orgId string, roleId string) ApiPutAdminRolesUpdateRequest
 
 	// PutAdminRolesUpdateExecute executes the request
-	PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpdateRequest) (*http.Response, error)
+	//  @return AdminRolesCreateResponse
+	PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpdateRequest) (*AdminRolesCreateResponse, *http.Response, error)
 }
 
 // AdminRolesAPIService AdminRolesAPI service
@@ -203,7 +216,7 @@ type ApiAdminRolesAddPermissionsRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesAddPermissionsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesAddPermissionsRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesAddPermissionsExecute(r)
 }
 
@@ -225,16 +238,18 @@ func (a *AdminRolesAPIService) AdminRolesAddPermissions(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAddPermissionsRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAddPermissionsRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesAddPermissions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
@@ -255,7 +270,7 @@ func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAd
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -278,19 +293,19 @@ func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAd
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -298,10 +313,19 @@ func (a *AdminRolesAPIService) AdminRolesAddPermissionsExecute(r ApiAdminRolesAd
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesAddUserRequest struct {
@@ -311,7 +335,7 @@ type ApiAdminRolesAddUserRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesAddUserRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesAddUserRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesAddUserExecute(r)
 }
 
@@ -333,16 +357,18 @@ func (a *AdminRolesAPIService) AdminRolesAddUser(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesAddUser")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users"
@@ -363,7 +389,7 @@ func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -386,19 +412,19 @@ func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRe
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -406,10 +432,19 @@ func (a *AdminRolesAPIService) AdminRolesAddUserExecute(r ApiAdminRolesAddUserRe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesCreateRequest struct {
@@ -418,7 +453,7 @@ type ApiAdminRolesCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAdminRolesCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesCreateRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesCreateExecute(r)
 }
 
@@ -438,16 +473,18 @@ func (a *AdminRolesAPIService) AdminRolesCreate(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequest) (*http.Response, error) {
+//  @return AdminRolesCreateResponse
+func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequest) (*AdminRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles"
@@ -467,7 +504,7 @@ func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequ
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -490,19 +527,19 @@ func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequ
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -510,10 +547,19 @@ func (a *AdminRolesAPIService) AdminRolesCreateExecute(r ApiAdminRolesCreateRequ
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesDeleteRequest struct {
@@ -523,7 +569,7 @@ type ApiAdminRolesDeleteRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesDeleteExecute(r)
 }
 
@@ -545,16 +591,18 @@ func (a *AdminRolesAPIService) AdminRolesDelete(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminRolesAPIService) AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
@@ -575,7 +623,7 @@ func (a *AdminRolesAPIService) AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequ
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -598,19 +646,19 @@ func (a *AdminRolesAPIService) AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequ
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -618,10 +666,19 @@ func (a *AdminRolesAPIService) AdminRolesDeleteExecute(r ApiAdminRolesDeleteRequ
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesGetRequest struct {
@@ -631,7 +688,7 @@ type ApiAdminRolesGetRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesGetRequest) Execute() (*AdminRolesGetResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesGetExecute(r)
 }
 
@@ -653,16 +710,18 @@ func (a *AdminRolesAPIService) AdminRolesGet(ctx context.Context, orgId string, 
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesGetExecute(r ApiAdminRolesGetRequest) (*http.Response, error) {
+//  @return AdminRolesGetResponse
+func (a *AdminRolesAPIService) AdminRolesGetExecute(r ApiAdminRolesGetRequest) (*AdminRolesGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
@@ -683,7 +742,7 @@ func (a *AdminRolesAPIService) AdminRolesGetExecute(r ApiAdminRolesGetRequest) (
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -706,19 +765,19 @@ func (a *AdminRolesAPIService) AdminRolesGetExecute(r ApiAdminRolesGetRequest) (
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -726,10 +785,19 @@ func (a *AdminRolesAPIService) AdminRolesGetExecute(r ApiAdminRolesGetRequest) (
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesGetPermissionsRequest struct {
@@ -739,7 +807,7 @@ type ApiAdminRolesGetPermissionsRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesGetPermissionsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesGetPermissionsRequest) Execute() (*AdminRolesGetPermissionsResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesGetPermissionsExecute(r)
 }
 
@@ -761,16 +829,18 @@ func (a *AdminRolesAPIService) AdminRolesGetPermissions(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesGetPermissionsExecute(r ApiAdminRolesGetPermissionsRequest) (*http.Response, error) {
+//  @return AdminRolesGetPermissionsResponse
+func (a *AdminRolesAPIService) AdminRolesGetPermissionsExecute(r ApiAdminRolesGetPermissionsRequest) (*AdminRolesGetPermissionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesGetPermissionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesGetPermissions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
@@ -791,7 +861,7 @@ func (a *AdminRolesAPIService) AdminRolesGetPermissionsExecute(r ApiAdminRolesGe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -814,19 +884,19 @@ func (a *AdminRolesAPIService) AdminRolesGetPermissionsExecute(r ApiAdminRolesGe
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -834,10 +904,19 @@ func (a *AdminRolesAPIService) AdminRolesGetPermissionsExecute(r ApiAdminRolesGe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesGetUsersRequest struct {
@@ -847,7 +926,7 @@ type ApiAdminRolesGetUsersRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesGetUsersRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesGetUsersRequest) Execute() (*AdminRolesGetUsersResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesGetUsersExecute(r)
 }
 
@@ -869,16 +948,18 @@ func (a *AdminRolesAPIService) AdminRolesGetUsers(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesGetUsersExecute(r ApiAdminRolesGetUsersRequest) (*http.Response, error) {
+//  @return AdminRolesGetUsersResponse
+func (a *AdminRolesAPIService) AdminRolesGetUsersExecute(r ApiAdminRolesGetUsersRequest) (*AdminRolesGetUsersResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesGetUsersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesGetUsers")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users"
@@ -899,7 +980,7 @@ func (a *AdminRolesAPIService) AdminRolesGetUsersExecute(r ApiAdminRolesGetUsers
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -922,19 +1003,19 @@ func (a *AdminRolesAPIService) AdminRolesGetUsersExecute(r ApiAdminRolesGetUsers
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -942,10 +1023,19 @@ func (a *AdminRolesAPIService) AdminRolesGetUsersExecute(r ApiAdminRolesGetUsers
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesListRequest struct {
@@ -954,7 +1044,7 @@ type ApiAdminRolesListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminRolesListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesListRequest) Execute() (*AdminRolesListResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesListExecute(r)
 }
 
@@ -974,16 +1064,18 @@ func (a *AdminRolesAPIService) AdminRolesList(ctx context.Context, orgId string)
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesListExecute(r ApiAdminRolesListRequest) (*http.Response, error) {
+//  @return AdminRolesListResponse
+func (a *AdminRolesAPIService) AdminRolesListExecute(r ApiAdminRolesListRequest) (*AdminRolesListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles"
@@ -1003,7 +1095,7 @@ func (a *AdminRolesAPIService) AdminRolesListExecute(r ApiAdminRolesListRequest)
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1026,19 +1118,19 @@ func (a *AdminRolesAPIService) AdminRolesListExecute(r ApiAdminRolesListRequest)
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1046,10 +1138,19 @@ func (a *AdminRolesAPIService) AdminRolesListExecute(r ApiAdminRolesListRequest)
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesRemovePermissionRequest struct {
@@ -1060,7 +1161,7 @@ type ApiAdminRolesRemovePermissionRequest struct {
 	permissionId string
 }
 
-func (r ApiAdminRolesRemovePermissionRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesRemovePermissionRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesRemovePermissionExecute(r)
 }
 
@@ -1084,16 +1185,18 @@ func (a *AdminRolesAPIService) AdminRolesRemovePermission(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesRemovePermissionExecute(r ApiAdminRolesRemovePermissionRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminRolesAPIService) AdminRolesRemovePermissionExecute(r ApiAdminRolesRemovePermissionRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesRemovePermission")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}"
@@ -1115,7 +1218,7 @@ func (a *AdminRolesAPIService) AdminRolesRemovePermissionExecute(r ApiAdminRoles
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1138,19 +1241,19 @@ func (a *AdminRolesAPIService) AdminRolesRemovePermissionExecute(r ApiAdminRoles
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1158,10 +1261,19 @@ func (a *AdminRolesAPIService) AdminRolesRemovePermissionExecute(r ApiAdminRoles
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesRemoveUserRequest struct {
@@ -1172,7 +1284,7 @@ type ApiAdminRolesRemoveUserRequest struct {
 	userId string
 }
 
-func (r ApiAdminRolesRemoveUserRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesRemoveUserRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesRemoveUserExecute(r)
 }
 
@@ -1196,16 +1308,18 @@ func (a *AdminRolesAPIService) AdminRolesRemoveUser(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesRemoveUserExecute(r ApiAdminRolesRemoveUserRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminRolesAPIService) AdminRolesRemoveUserExecute(r ApiAdminRolesRemoveUserRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesRemoveUser")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId}"
@@ -1227,7 +1341,7 @@ func (a *AdminRolesAPIService) AdminRolesRemoveUserExecute(r ApiAdminRolesRemove
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1250,19 +1364,19 @@ func (a *AdminRolesAPIService) AdminRolesRemoveUserExecute(r ApiAdminRolesRemove
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1270,10 +1384,19 @@ func (a *AdminRolesAPIService) AdminRolesRemoveUserExecute(r ApiAdminRolesRemove
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminRolesUpdatePermissionsRequest struct {
@@ -1283,7 +1406,7 @@ type ApiAdminRolesUpdatePermissionsRequest struct {
 	roleId string
 }
 
-func (r ApiAdminRolesUpdatePermissionsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminRolesUpdatePermissionsRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminRolesUpdatePermissionsExecute(r)
 }
 
@@ -1305,16 +1428,18 @@ func (a *AdminRolesAPIService) AdminRolesUpdatePermissions(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRolesUpdatePermissionsRequest) (*http.Response, error) {
+//  @return AdminRolesCreateResponse
+func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRolesUpdatePermissionsRequest) (*AdminRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.AdminRolesUpdatePermissions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions"
@@ -1335,7 +1460,7 @@ func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRole
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1358,19 +1483,19 @@ func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRole
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1378,10 +1503,19 @@ func (a *AdminRolesAPIService) AdminRolesUpdatePermissionsExecute(r ApiAdminRole
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminRolesUpdateRequest struct {
@@ -1391,7 +1525,7 @@ type ApiPatchAdminRolesUpdateRequest struct {
 	roleId string
 }
 
-func (r ApiPatchAdminRolesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminRolesUpdateRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminRolesUpdateExecute(r)
 }
 
@@ -1413,16 +1547,18 @@ func (a *AdminRolesAPIService) PatchAdminRolesUpdate(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRolesUpdateRequest) (*http.Response, error) {
+//  @return AdminRolesCreateResponse
+func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRolesUpdateRequest) (*AdminRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.PatchAdminRolesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
@@ -1443,7 +1579,7 @@ func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRoles
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1466,19 +1602,19 @@ func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRoles
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1486,10 +1622,19 @@ func (a *AdminRolesAPIService) PatchAdminRolesUpdateExecute(r ApiPatchAdminRoles
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminRolesUpdateRequest struct {
@@ -1499,7 +1644,7 @@ type ApiPutAdminRolesUpdateRequest struct {
 	roleId string
 }
 
-func (r ApiPutAdminRolesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminRolesUpdateRequest) Execute() (*AdminRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminRolesUpdateExecute(r)
 }
 
@@ -1521,16 +1666,18 @@ func (a *AdminRolesAPIService) PutAdminRolesUpdate(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpdateRequest) (*http.Response, error) {
+//  @return AdminRolesCreateResponse
+func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpdateRequest) (*AdminRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminRolesAPIService.PutAdminRolesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/roles/{roleId}"
@@ -1551,7 +1698,7 @@ func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpda
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1574,19 +1721,19 @@ func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpda
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1594,8 +1741,17 @@ func (a *AdminRolesAPIService) PutAdminRolesUpdateExecute(r ApiPutAdminRolesUpda
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * ApproveRequestRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class ApproveRequestRequest {
   public static final String SERIALIZED_NAME_TTL = "ttl";
   @SerializedName(SERIALIZED_NAME_TTL)
@@ -59,6 +59,11 @@ public class ApproveRequestRequest {
   @SerializedName(SERIALIZED_NAME_NOTES)
   @javax.annotation.Nullable
   private String notes;
+
+  public static final String SERIALIZED_NAME_AGENT_MESSAGE = "agent_message";
+  @SerializedName(SERIALIZED_NAME_AGENT_MESSAGE)
+  @javax.annotation.Nullable
+  private String agentMessage;
 
   public ApproveRequestRequest() {
   }
@@ -88,7 +93,7 @@ public class ApproveRequestRequest {
   }
 
   /**
-   * Optional reviewer notes.
+   * Optional reviewer notes (internal; never shown to the agent).
    * @return notes
    */
   @javax.annotation.Nullable
@@ -98,6 +103,25 @@ public class ApproveRequestRequest {
 
   public void setNotes(@javax.annotation.Nullable String notes) {
     this.notes = notes;
+  }
+
+
+  public ApproveRequestRequest agentMessage(@javax.annotation.Nullable String agentMessage) {
+    this.agentMessage = agentMessage;
+    return this;
+  }
+
+  /**
+   * Optional message the agent MAY read on the status endpoint / callback.
+   * @return agentMessage
+   */
+  @javax.annotation.Nullable
+  public String getAgentMessage() {
+    return agentMessage;
+  }
+
+  public void setAgentMessage(@javax.annotation.Nullable String agentMessage) {
+    this.agentMessage = agentMessage;
   }
 
 
@@ -112,12 +136,13 @@ public class ApproveRequestRequest {
     }
     ApproveRequestRequest approveRequestRequest = (ApproveRequestRequest) o;
     return Objects.equals(this.ttl, approveRequestRequest.ttl) &&
-        Objects.equals(this.notes, approveRequestRequest.notes);
+        Objects.equals(this.notes, approveRequestRequest.notes) &&
+        Objects.equals(this.agentMessage, approveRequestRequest.agentMessage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(ttl, notes);
+    return Objects.hash(ttl, notes, agentMessage);
   }
 
   @Override
@@ -126,6 +151,7 @@ public class ApproveRequestRequest {
     sb.append("class ApproveRequestRequest {\n");
     sb.append("    ttl: ").append(toIndentedString(ttl)).append("\n");
     sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
+    sb.append("    agentMessage: ").append(toIndentedString(agentMessage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,7 +173,7 @@ public class ApproveRequestRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("ttl", "notes"));
+    openapiFields = new HashSet<String>(Arrays.asList("ttl", "notes", "agent_message"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -176,6 +202,9 @@ public class ApproveRequestRequest {
         JsonObject jsonObj = jsonElement.getAsJsonObject();
       if ((jsonObj.get("notes") != null && !jsonObj.get("notes").isJsonNull()) && !jsonObj.get("notes").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `notes` to be a primitive type in the JSON string but got `%s`", jsonObj.get("notes").toString()));
+      }
+      if ((jsonObj.get("agent_message") != null && !jsonObj.get("agent_message").isJsonNull()) && !jsonObj.get("agent_message").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `agent_message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("agent_message").toString()));
       }
   }
 

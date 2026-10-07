@@ -27,8 +27,9 @@ class DenyRequestRequest(BaseModel):
     """
     DenyRequestRequest
     """ # noqa: E501
-    reason: Optional[StrictStr] = Field(default=None, description="Optional denial reason.")
-    __properties: ClassVar[List[str]] = ["reason"]
+    reason: Optional[StrictStr] = Field(default=None, description="Optional denial reason (internal; never shown to the agent).")
+    agent_message: Optional[StrictStr] = Field(default=None, description="Optional message the agent MAY read on the status endpoint / callback.")
+    __properties: ClassVar[List[str]] = ["reason", "agent_message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,7 +82,8 @@ class DenyRequestRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "reason": obj.get("reason")
+            "reason": obj.get("reason"),
+            "agent_message": obj.get("agent_message")
         })
         return _obj
 

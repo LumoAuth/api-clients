@@ -19,21 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+    # Destroy a sandbox tenant
     # @param org_id [String] 
     # @param sandbox_slug [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_sandbox_destroy(org_id, sandbox_slug, opts = {})
-      admin_sandbox_destroy_with_http_info(org_id, sandbox_slug, opts)
-      nil
+      data, _status_code, _headers = admin_sandbox_destroy_with_http_info(org_id, sandbox_slug, opts)
+      data
     end
 
-    # POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+    # Destroy a sandbox tenant
     # @param org_id [String] 
     # @param sandbox_slug [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_sandbox_destroy_with_http_info(org_id, sandbox_slug, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSandboxApi.admin_sandbox_destroy ...'
@@ -54,6 +54,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -62,7 +64,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -84,19 +86,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # GET / Lists the caller's active sandbox tenants (their own only).
+    # List the caller's sandbox tenants
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSandboxListResponse]
     def admin_sandbox_list(org_id, opts = {})
-      admin_sandbox_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_sandbox_list_with_http_info(org_id, opts)
+      data
     end
 
-    # GET / Lists the caller&#39;s active sandbox tenants (their own only).
+    # List the caller&#39;s sandbox tenants
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSandboxListResponse, Integer, Hash)>] AdminSandboxListResponse data, response status code and response headers
     def admin_sandbox_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSandboxApi.admin_sandbox_list ...'
@@ -113,6 +115,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -121,7 +125,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSandboxListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -143,19 +147,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+    # Spawn a sandbox tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @option opts [AdminSandboxSpawnRequest] :admin_sandbox_spawn_request 
+    # @return [AdminSandboxSpawnResponse]
     def admin_sandbox_spawn(org_id, opts = {})
-      admin_sandbox_spawn_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_sandbox_spawn_with_http_info(org_id, opts)
+      data
     end
 
-    # POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+    # Spawn a sandbox tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @option opts [AdminSandboxSpawnRequest] :admin_sandbox_spawn_request 
+    # @return [Array<(AdminSandboxSpawnResponse, Integer, Hash)>] AdminSandboxSpawnResponse data, response status code and response headers
     def admin_sandbox_spawn_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSandboxApi.admin_sandbox_spawn ...'
@@ -172,15 +178,22 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'admin_sandbox_spawn_request'])
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSandboxSpawnResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

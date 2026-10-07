@@ -18,14 +18,20 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from typing import Any, Dict
 from lumoauth_api_client.models.ask_request import AskRequest
 from lumoauth_api_client.models.ask_response import AskResponse
+from lumoauth_api_client.models.attest_request import AttestRequest
+from lumoauth_api_client.models.attest_response import AttestResponse
 from lumoauth_api_client.models.authorize_mcp_request import AuthorizeMcpRequest
 from lumoauth_api_client.models.authorize_mcp_response import AuthorizeMcpResponse
 from lumoauth_api_client.models.create_approval_request import CreateApprovalRequest
 from lumoauth_api_client.models.create_approval_response import CreateApprovalResponse
 from lumoauth_api_client.models.get_approval_status_response import GetApprovalStatusResponse
 from lumoauth_api_client.models.get_current_agent_response import GetCurrentAgentResponse
+from lumoauth_api_client.models.register_agent_response import RegisterAgentResponse
+from lumoauth_api_client.models.signed_agent_card import SignedAgentCard
+from lumoauth_api_client.models.verify_agent_card_response import VerifyAgentCardResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -346,6 +352,7 @@ class AgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        attest_request: AttestRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -358,14 +365,17 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """attest
+    ) -> AttestResponse:
+        """Workload attestation: exchange a cloud OIDC token for an agent access token
 
+        Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
         :param org_id: (required)
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param attest_request: (required)
+        :type attest_request: AttestRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -391,6 +401,7 @@ class AgentsApi:
         _param = self._attest_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            attest_request=attest_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -398,6 +409,12 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AttestResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -415,6 +432,7 @@ class AgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        attest_request: AttestRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -427,14 +445,17 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """attest
+    ) -> ApiResponse[AttestResponse]:
+        """Workload attestation: exchange a cloud OIDC token for an agent access token
 
+        Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
         :param org_id: (required)
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param attest_request: (required)
+        :type attest_request: AttestRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -460,6 +481,7 @@ class AgentsApi:
         _param = self._attest_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            attest_request=attest_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -467,6 +489,12 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AttestResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -484,6 +512,7 @@ class AgentsApi:
         self,
         org_id: StrictStr,
         agent_id: StrictStr,
+        attest_request: AttestRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -497,13 +526,16 @@ class AgentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """attest
+        """Workload attestation: exchange a cloud OIDC token for an agent access token
 
+        Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
         :param org_id: (required)
         :type org_id: str
         :param agent_id: (required)
         :type agent_id: str
+        :param attest_request: (required)
+        :type attest_request: AttestRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -529,6 +561,7 @@ class AgentsApi:
         _param = self._attest_serialize(
             org_id=org_id,
             agent_id=agent_id,
+            attest_request=attest_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -536,6 +569,12 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AttestResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -548,6 +587,7 @@ class AgentsApi:
         self,
         org_id,
         agent_id,
+        attest_request,
         _request_auth,
         _content_type,
         _headers,
@@ -577,9 +617,31 @@ class AgentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if attest_request is not None:
+            _body_params = attest_request
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1223,9 +1285,10 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """get_agent_card
+    ) -> SignedAgentCard:
+        """Signed A2A agent card
 
+        Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
         :param org_id: (required)
         :type org_id: str
@@ -1263,6 +1326,8 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SignedAgentCard",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1292,9 +1357,10 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """get_agent_card
+    ) -> ApiResponse[SignedAgentCard]:
+        """Signed A2A agent card
 
+        Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
         :param org_id: (required)
         :type org_id: str
@@ -1332,6 +1398,8 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SignedAgentCard",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1362,8 +1430,9 @@ class AgentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """get_agent_card
+        """Signed A2A agent card
 
+        Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
         :param org_id: (required)
         :type org_id: str
@@ -1401,6 +1470,8 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SignedAgentCard",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1444,6 +1515,13 @@ class AgentsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2029,8 +2107,8 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """register_agent
+    ) -> RegisterAgentResponse:
+        """Register (or re-register) an agent
 
 
         :param org_id: (required)
@@ -2066,6 +2144,7 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RegisterAgentResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2094,8 +2173,8 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """register_agent
+    ) -> ApiResponse[RegisterAgentResponse]:
+        """Register (or re-register) an agent
 
 
         :param org_id: (required)
@@ -2131,6 +2210,7 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RegisterAgentResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2160,7 +2240,7 @@ class AgentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """register_agent
+        """Register (or re-register) an agent
 
 
         :param org_id: (required)
@@ -2196,6 +2276,7 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RegisterAgentResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2236,6 +2317,13 @@ class AgentsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2266,6 +2354,7 @@ class AgentsApi:
     def verify_agent_card(
         self,
         org_id: StrictStr,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2278,12 +2367,15 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """verify_agent_card
+    ) -> VerifyAgentCardResponse:
+        """Verify a signed A2A agent card
 
+        Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
         :param org_id: (required)
         :type org_id: str
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2308,6 +2400,7 @@ class AgentsApi:
 
         _param = self._verify_agent_card_serialize(
             org_id=org_id,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2315,6 +2408,10 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "VerifyAgentCardResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2331,6 +2428,7 @@ class AgentsApi:
     def verify_agent_card_with_http_info(
         self,
         org_id: StrictStr,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2343,12 +2441,15 @@ class AgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """verify_agent_card
+    ) -> ApiResponse[VerifyAgentCardResponse]:
+        """Verify a signed A2A agent card
 
+        Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
         :param org_id: (required)
         :type org_id: str
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2373,6 +2474,7 @@ class AgentsApi:
 
         _param = self._verify_agent_card_serialize(
             org_id=org_id,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2380,6 +2482,10 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "VerifyAgentCardResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2396,6 +2502,7 @@ class AgentsApi:
     def verify_agent_card_without_preload_content(
         self,
         org_id: StrictStr,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2409,11 +2516,14 @@ class AgentsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """verify_agent_card
+        """Verify a signed A2A agent card
 
+        Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
         :param org_id: (required)
         :type org_id: str
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2438,6 +2548,7 @@ class AgentsApi:
 
         _param = self._verify_agent_card_serialize(
             org_id=org_id,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2445,6 +2556,10 @@ class AgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "VerifyAgentCardResponse",
+            '400': None,
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2456,6 +2571,7 @@ class AgentsApi:
     def _verify_agent_card_serialize(
         self,
         org_id,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -2483,9 +2599,31 @@ class AgentsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if request_body is not None:
+            _body_params = request_body
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

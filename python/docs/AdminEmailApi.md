@@ -4,16 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_email_templates_delete**](AdminEmailApi.md#admin_email_templates_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | 
-[**admin_email_templates_get**](AdminEmailApi.md#admin_email_templates_get) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | 
-[**admin_email_templates_list**](AdminEmailApi.md#admin_email_templates_list) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | 
-[**admin_email_templates_preview**](AdminEmailApi.md#admin_email_templates_preview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | 
-[**admin_email_templates_upsert**](AdminEmailApi.md#admin_email_templates_upsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | 
-[**admin_email_templates_variables**](AdminEmailApi.md#admin_email_templates_variables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | 
+[**admin_email_templates_delete**](AdminEmailApi.md#admin_email_templates_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Remove the custom email template so the built-in default is used
+[**admin_email_templates_get**](AdminEmailApi.md#admin_email_templates_get) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Get an email template (custom or built-in default)
+[**admin_email_templates_list**](AdminEmailApi.md#admin_email_templates_list) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | List every email template type with its current (custom or built-in) template
+[**admin_email_templates_preview**](AdminEmailApi.md#admin_email_templates_preview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | Render an email template with sample data
+[**admin_email_templates_upsert**](AdminEmailApi.md#admin_email_templates_upsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Create or replace the custom email template for a type
+[**admin_email_templates_variables**](AdminEmailApi.md#admin_email_templates_variables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | List the placeholders available to an email template type
 
 
 # **admin_email_templates_delete**
-> admin_email_templates_delete(org_id, type)
+> MessageResponse admin_email_templates_delete(org_id, type)
+
+Remove the custom email template so the built-in default is used
 
 ### Example
 
@@ -22,6 +24,7 @@ Method | HTTP request | Description
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -55,7 +58,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     type = 'type_example' # str | 
 
     try:
-        api_instance.admin_email_templates_delete(org_id, type)
+        # Remove the custom email template so the built-in default is used
+        api_response = api_instance.admin_email_templates_delete(org_id, type)
+        print("The response of AdminEmailApi->admin_email_templates_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminEmailApi->admin_email_templates_delete: %s\n" % e)
 ```
@@ -72,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -81,18 +87,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Reverted to default |  -  |
+**404** | Unknown template type, or no custom template exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_get**
-> admin_email_templates_get(org_id, type)
+> EmailTemplate admin_email_templates_get(org_id, type)
+
+Get an email template (custom or built-in default)
 
 ### Example
 
@@ -101,6 +110,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.email_template import EmailTemplate
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -134,7 +144,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     type = 'type_example' # str | 
 
     try:
-        api_instance.admin_email_templates_get(org_id, type)
+        # Get an email template (custom or built-in default)
+        api_response = api_instance.admin_email_templates_get(org_id, type)
+        print("The response of AdminEmailApi->admin_email_templates_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminEmailApi->admin_email_templates_get: %s\n" % e)
 ```
@@ -151,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -160,18 +173,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Template including body_html |  -  |
+**404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_list**
-> admin_email_templates_list(org_id)
+> AdminEmailTemplatesListResponse admin_email_templates_list(org_id)
+
+List every email template type with its current (custom or built-in) template
 
 ### Example
 
@@ -180,6 +196,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -212,7 +229,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.admin_email_templates_list(org_id)
+        # List every email template type with its current (custom or built-in) template
+        api_response = api_instance.admin_email_templates_list(org_id)
+        print("The response of AdminEmailApi->admin_email_templates_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminEmailApi->admin_email_templates_list: %s\n" % e)
 ```
@@ -228,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminEmailTemplatesListResponse**](AdminEmailTemplatesListResponse.md)
 
 ### Authorization
 
@@ -237,18 +257,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Templates without body_html; &#x60;email_templates&#x60; duplicates &#x60;data&#x60; |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_preview**
-> admin_email_templates_preview(org_id, type)
+> AdminEmailTemplatesPreviewResponse admin_email_templates_preview(org_id, type)
+
+Render an email template with sample data
 
 ### Example
 
@@ -257,6 +279,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -290,7 +313,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     type = 'type_example' # str | 
 
     try:
-        api_instance.admin_email_templates_preview(org_id, type)
+        # Render an email template with sample data
+        api_response = api_instance.admin_email_templates_preview(org_id, type)
+        print("The response of AdminEmailApi->admin_email_templates_preview:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminEmailApi->admin_email_templates_preview: %s\n" % e)
 ```
@@ -307,7 +333,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminEmailTemplatesPreviewResponse**](AdminEmailTemplatesPreviewResponse.md)
 
 ### Authorization
 
@@ -316,18 +342,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Rendered preview |  -  |
+**404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_upsert**
-> admin_email_templates_upsert(org_id, type)
+> EmailTemplate admin_email_templates_upsert(org_id, type)
+
+Create or replace the custom email template for a type
 
 ### Example
 
@@ -336,6 +365,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.email_template import EmailTemplate
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -369,7 +399,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     type = 'type_example' # str | 
 
     try:
-        api_instance.admin_email_templates_upsert(org_id, type)
+        # Create or replace the custom email template for a type
+        api_response = api_instance.admin_email_templates_upsert(org_id, type)
+        print("The response of AdminEmailApi->admin_email_templates_upsert:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminEmailApi->admin_email_templates_upsert: %s\n" % e)
 ```
@@ -386,7 +419,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -395,18 +428,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Saved template including body_html |  -  |
+**404** | Unknown template type |  -  |
+**422** | Validation failed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_email_templates_variables**
-> admin_email_templates_variables(org_id, type)
+> AdminEmailTemplatesVariablesResponse admin_email_templates_variables(org_id, type)
+
+List the placeholders available to an email template type
 
 ### Example
 
@@ -415,6 +452,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -448,7 +486,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     type = 'type_example' # str | 
 
     try:
-        api_instance.admin_email_templates_variables(org_id, type)
+        # List the placeholders available to an email template type
+        api_response = api_instance.admin_email_templates_variables(org_id, type)
+        print("The response of AdminEmailApi->admin_email_templates_variables:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminEmailApi->admin_email_templates_variables: %s\n" % e)
 ```
@@ -465,7 +506,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminEmailTemplatesVariablesResponse**](AdminEmailTemplatesVariablesResponse.md)
 
 ### Authorization
 
@@ -474,13 +515,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Placeholder to description map |  -  |
+**404** | Unknown template type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

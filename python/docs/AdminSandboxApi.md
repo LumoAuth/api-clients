@@ -4,15 +4,15 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
-[**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller&#39;s active sandbox tenants (their own only).
-[**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+[**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
+[**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
+[**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
 
 
 # **admin_sandbox_destroy**
-> admin_sandbox_destroy(org_id, sandbox_slug)
+> MessageResponse admin_sandbox_destroy(org_id, sandbox_slug)
 
-POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+Destroy a sandbox tenant
 
 ### Example
 
@@ -21,6 +21,7 @@ POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -54,8 +55,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     sandbox_slug = 'sandbox_slug_example' # str | 
 
     try:
-        # POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
-        api_instance.admin_sandbox_destroy(org_id, sandbox_slug)
+        # Destroy a sandbox tenant
+        api_response = api_instance.admin_sandbox_destroy(org_id, sandbox_slug)
+        print("The response of AdminSandboxApi->admin_sandbox_destroy:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSandboxApi->admin_sandbox_destroy: %s\n" % e)
 ```
@@ -72,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -81,20 +84,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Sandbox destroyed |  -  |
+**404** | Sandbox not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_sandbox_list**
-> admin_sandbox_list(org_id)
+> AdminSandboxListResponse admin_sandbox_list(org_id)
 
-GET / Lists the caller's active sandbox tenants (their own only).
+List the caller's sandbox tenants
 
 ### Example
 
@@ -103,6 +107,7 @@ GET / Lists the caller's active sandbox tenants (their own only).
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_sandbox_list_response import AdminSandboxListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -135,8 +140,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # GET / Lists the caller's active sandbox tenants (their own only).
-        api_instance.admin_sandbox_list(org_id)
+        # List the caller's sandbox tenants
+        api_response = api_instance.admin_sandbox_list(org_id)
+        print("The response of AdminSandboxApi->admin_sandbox_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSandboxApi->admin_sandbox_list: %s\n" % e)
 ```
@@ -152,7 +159,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSandboxListResponse**](AdminSandboxListResponse.md)
 
 ### Authorization
 
@@ -161,20 +168,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Sandboxes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_sandbox_spawn**
-> admin_sandbox_spawn(org_id)
+> AdminSandboxSpawnResponse admin_sandbox_spawn(org_id, admin_sandbox_spawn_request=admin_sandbox_spawn_request)
 
-POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+Spawn a sandbox tenant
 
 ### Example
 
@@ -183,6 +190,8 @@ POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_sandbox_spawn_request import AdminSandboxSpawnRequest
+from lumoauth_api_client.models.admin_sandbox_spawn_response import AdminSandboxSpawnResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -213,10 +222,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AdminSandboxApi(api_client)
     org_id = 'org_id_example' # str | 
+    admin_sandbox_spawn_request = lumoauth_api_client.AdminSandboxSpawnRequest() # AdminSandboxSpawnRequest |  (optional)
 
     try:
-        # POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
-        api_instance.admin_sandbox_spawn(org_id)
+        # Spawn a sandbox tenant
+        api_response = api_instance.admin_sandbox_spawn(org_id, admin_sandbox_spawn_request=admin_sandbox_spawn_request)
+        print("The response of AdminSandboxApi->admin_sandbox_spawn:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminSandboxApi->admin_sandbox_spawn: %s\n" % e)
 ```
@@ -229,10 +241,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **admin_sandbox_spawn_request** | [**AdminSandboxSpawnRequest**](AdminSandboxSpawnRequest.md)|  | [optional] 
 
 ### Return type
 
-void (empty response body)
+[**AdminSandboxSpawnResponse**](AdminSandboxSpawnResponse.md)
 
 ### Authorization
 
@@ -240,14 +253,15 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Sandbox created |  -  |
+**429** | Per-owner active-sandbox cap reached |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

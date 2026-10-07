@@ -33,6 +33,7 @@ pub enum CompleteTaskError {
     Status401(),
     Status403(),
     Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 
@@ -76,6 +77,7 @@ pub enum GetRequestStatusError {
     Status401(),
     Status403(),
     Status404(),
+    Status429(),
     UnknownValue(serde_json::Value),
 }
 

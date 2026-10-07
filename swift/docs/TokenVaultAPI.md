@@ -4,18 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getConnectionToken**](TokenVaultAPI.md#getconnectiontoken) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection.
-[**listConnections**](TokenVaultAPI.md#listconnections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the connections this agent may use, with grant status. No secrets.
+[**getConnectionToken**](TokenVaultAPI.md#getconnectiontoken) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection
+[**listConnections**](TokenVaultAPI.md#listconnections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the outbound connections this agent may use
 
 
 # **getConnectionToken**
 ```swift
-    open class func getConnectionToken(orgId: String, connectionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func getConnectionToken(orgId: String, connectionId: String, getConnectionTokenRequest: GetConnectionTokenRequest? = nil, completion: @escaping (_ data: GetConnectionTokenResponse?, _ error: Error?) -> Void)
 ```
 
-Fetch a live third-party access token for a connection.
+Fetch a live third-party access token for a connection
 
-POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
 ### Example
 ```swift
@@ -24,9 +24,10 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let connectionId = "connectionId_example" // String | 
+let getConnectionTokenRequest = GetConnectionTokenRequest(userId: "userId_example") // GetConnectionTokenRequest |  (optional)
 
-// Fetch a live third-party access token for a connection.
-TokenVaultAPI.getConnectionToken(orgId: orgId, connectionId: connectionId) { (response, error) in
+// Fetch a live third-party access token for a connection
+TokenVaultAPI.getConnectionToken(orgId: orgId, connectionId: connectionId, getConnectionTokenRequest: getConnectionTokenRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -44,10 +45,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
  **connectionId** | **String** |  | 
+ **getConnectionTokenRequest** | [**GetConnectionTokenRequest**](GetConnectionTokenRequest.md) |  | [optional] 
 
 ### Return type
 
-Void (empty response body)
+[**GetConnectionTokenResponse**](GetConnectionTokenResponse.md)
 
 ### Authorization
 
@@ -55,19 +57,19 @@ Void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listConnections**
 ```swift
-    open class func listConnections(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func listConnections(orgId: String, completion: @escaping (_ data: ListConnectionsResponse?, _ error: Error?) -> Void)
 ```
 
-List the connections this agent may use, with grant status. No secrets.
+List the outbound connections this agent may use
 
-GET /orgs/{orgId}/api/v1/agents/me/connections
+Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
 ### Example
 ```swift
@@ -76,7 +78,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List the connections this agent may use, with grant status. No secrets.
+// List the outbound connections this agent may use
 TokenVaultAPI.listConnections(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -97,7 +99,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**ListConnectionsResponse**](ListConnectionsResponse.md)
 
 ### Authorization
 
@@ -106,7 +108,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

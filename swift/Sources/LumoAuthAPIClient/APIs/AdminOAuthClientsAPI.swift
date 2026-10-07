@@ -13,18 +13,18 @@ import AnyCodable
 open class AdminOAuthClientsAPI {
 
     /**
-     Create a new OAuth client
+     Create an OAuth client
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: CreateClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createClient(orgId: String) async throws {
+    open class func createClient(orgId: String) async throws -> CreateClientResponse {
         return try await createClientWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Create a new OAuth client
+     Create an OAuth client
      - POST /orgs/{orgId}/api/v1/admin/clients
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -33,9 +33,9 @@ open class AdminOAuthClientsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<CreateClientResponse> 
      */
-    open class func createClientWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func createClientWithRequestBuilder(orgId: String) -> RequestBuilder<CreateClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -51,7 +51,7 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<CreateClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -61,10 +61,10 @@ open class AdminOAuthClientsAPI {
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func deleteClient(orgId: String, clientId: String) async throws {
+    open class func deleteClient(orgId: String, clientId: String) async throws -> MessageResponse {
         return try await deleteClientWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
@@ -79,9 +79,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func deleteClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func deleteClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -100,25 +100,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Disable OAuth client
+     Disable an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: UpdateClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func disableClient(orgId: String, clientId: String) async throws {
+    open class func disableClient(orgId: String, clientId: String) async throws -> UpdateClientResponse {
         return try await disableClientWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Disable OAuth client
+     Disable an OAuth client
      - POST /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -128,9 +128,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<UpdateClientResponse> 
      */
-    open class func disableClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func disableClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<UpdateClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -149,25 +149,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UpdateClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Enable OAuth client
+     Enable an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: UpdateClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func enableClient(orgId: String, clientId: String) async throws {
+    open class func enableClient(orgId: String, clientId: String) async throws -> UpdateClientResponse {
         return try await enableClientWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Enable OAuth client
+     Enable an OAuth client
      - POST /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -177,9 +177,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<UpdateClientResponse> 
      */
-    open class func enableClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func enableClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<UpdateClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -198,25 +198,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UpdateClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get a single OAuth client by ID or clientId
+     Get an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: GetClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getClient(orgId: String, clientId: String) async throws {
+    open class func getClient(orgId: String, clientId: String) async throws -> GetClientResponse {
         return try await getClientWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Get a single OAuth client by ID or clientId
+     Get an OAuth client
      - GET /orgs/{orgId}/api/v1/admin/clients/{clientId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -226,9 +226,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<GetClientResponse> 
      */
-    open class func getClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func getClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<GetClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -247,25 +247,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get client scopes
+     List the scopes granted to an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: ListClientScopesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listClientScopes(orgId: String, clientId: String) async throws {
+    open class func listClientScopes(orgId: String, clientId: String) async throws -> ListClientScopesResponse {
         return try await listClientScopesWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Get client scopes
+     List the scopes granted to an OAuth client
      - GET /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -275,9 +275,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<ListClientScopesResponse> 
      */
-    open class func listClientScopesWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func listClientScopesWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<ListClientScopesResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -296,24 +296,24 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListClientScopesResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     List all OAuth clients in the tenant
+     List OAuth clients
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: ListClientsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func listClients(orgId: String) async throws {
+    open class func listClients(orgId: String) async throws -> ListClientsResponse {
         return try await listClientsWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List all OAuth clients in the tenant
+     List OAuth clients
      - GET /orgs/{orgId}/api/v1/admin/clients
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -322,9 +322,9 @@ open class AdminOAuthClientsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<ListClientsResponse> 
      */
-    open class func listClientsWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func listClientsWithRequestBuilder(orgId: String) -> RequestBuilder<ListClientsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -340,25 +340,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ListClientsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Update an existing OAuth client
+     Update an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: UpdateClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchClient(orgId: String, clientId: String) async throws {
+    open class func patchClient(orgId: String, clientId: String) async throws -> UpdateClientResponse {
         return try await patchClientWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Update an existing OAuth client
+     Update an OAuth client
      - PATCH /orgs/{orgId}/api/v1/admin/clients/{clientId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -368,9 +368,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<UpdateClientResponse> 
      */
-    open class func patchClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func patchClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<UpdateClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -389,25 +389,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UpdateClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Rotate client secret
+     Rotate an OAuth client secret
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: RotateClientSecretResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func rotateClientSecret(orgId: String, clientId: String) async throws {
+    open class func rotateClientSecret(orgId: String, clientId: String) async throws -> RotateClientSecretResponse {
         return try await rotateClientSecretWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Rotate client secret
+     Rotate an OAuth client secret
      - POST /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -417,9 +417,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<RotateClientSecretResponse> 
      */
-    open class func rotateClientSecretWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func rotateClientSecretWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<RotateClientSecretResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -438,25 +438,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<RotateClientSecretResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Set client scopes
+     Replace the scopes granted to an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: SetClientScopesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func setClientScopes(orgId: String, clientId: String) async throws {
+    open class func setClientScopes(orgId: String, clientId: String) async throws -> SetClientScopesResponse {
         return try await setClientScopesWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Set client scopes
+     Replace the scopes granted to an OAuth client
      - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -466,9 +466,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<SetClientScopesResponse> 
      */
-    open class func setClientScopesWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func setClientScopesWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<SetClientScopesResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -487,25 +487,25 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SetClientScopesResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Update an existing OAuth client
+     Replace an OAuth client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: UpdateClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func updateClient(orgId: String, clientId: String) async throws {
+    open class func updateClient(orgId: String, clientId: String) async throws -> UpdateClientResponse {
         return try await updateClientWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Update an existing OAuth client
+     Replace an OAuth client
      - PUT /orgs/{orgId}/api/v1/admin/clients/{clientId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -515,9 +515,9 @@ open class AdminOAuthClientsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<UpdateClientResponse> 
      */
-    open class func updateClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func updateClientWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<UpdateClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -536,7 +536,7 @@ open class AdminOAuthClientsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UpdateClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksCreateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,7 @@ pub enum AdminWebhooksCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksDeleteError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +34,7 @@ pub enum AdminWebhooksDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksDeliveriesListError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +42,7 @@ pub enum AdminWebhooksDeliveriesListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksDeliveryReplayError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +50,7 @@ pub enum AdminWebhooksDeliveryReplayError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksDeliveryShowError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +58,6 @@ pub enum AdminWebhooksDeliveryShowError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksEventsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +65,7 @@ pub enum AdminWebhooksEventsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +73,6 @@ pub enum AdminWebhooksGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +80,7 @@ pub enum AdminWebhooksListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksRotateSecretError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +88,8 @@ pub enum AdminWebhooksRotateSecretError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksTestError {
-    DefaultResponse(),
+    Status404(),
+    Status502(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +97,6 @@ pub enum AdminWebhooksTestError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksTunnelStartError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +104,8 @@ pub enum AdminWebhooksTunnelStartError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksTunnelStopError {
-    DefaultResponse(),
+    Status400(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,7 +113,8 @@ pub enum AdminWebhooksTunnelStopError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksTunnelStreamError {
-    DefaultResponse(),
+    Status400(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -123,7 +122,7 @@ pub enum AdminWebhooksTunnelStreamError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksWebhooksDisableError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -131,7 +130,7 @@ pub enum AdminWebhooksWebhooksDisableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminWebhooksWebhooksEnableError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -139,7 +138,7 @@ pub enum AdminWebhooksWebhooksEnableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminWebhooksUpdateError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -147,12 +146,13 @@ pub enum PatchAdminWebhooksUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminWebhooksUpdateError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_webhooks_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminWebhooksCreateError>> {
+/// The signing secret is generated server-side and returned once in this response only.
+pub async fn admin_webhooks_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksCreateResponse, Error<AdminWebhooksCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -178,9 +178,20 @@ pub async fn admin_webhooks_create(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksCreateError> = serde_json::from_str(&content).ok();
@@ -188,7 +199,7 @@ pub async fn admin_webhooks_create(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_webhooks_delete(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksDeleteError>> {
+pub async fn admin_webhooks_delete(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::MessageResponse, Error<AdminWebhooksDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -215,9 +226,20 @@ pub async fn admin_webhooks_delete(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksDeleteError> = serde_json::from_str(&content).ok();
@@ -225,8 +247,8 @@ pub async fn admin_webhooks_delete(configuration: &configuration::Configuration,
     }
 }
 
-/// Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
-pub async fn admin_webhooks_deliveries_list(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksDeliveriesListError>> {
+/// Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
+pub async fn admin_webhooks_deliveries_list(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksDeliveriesListResponse, Error<AdminWebhooksDeliveriesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -253,9 +275,20 @@ pub async fn admin_webhooks_deliveries_list(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksDeliveriesListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksDeliveriesListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksDeliveriesListError> = serde_json::from_str(&content).ok();
@@ -263,8 +296,8 @@ pub async fn admin_webhooks_deliveries_list(configuration: &configuration::Confi
     }
 }
 
-/// Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
-pub async fn admin_webhooks_delivery_replay(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, delivery_id: &str) -> Result<(), Error<AdminWebhooksDeliveryReplayError>> {
+/// Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
+pub async fn admin_webhooks_delivery_replay(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, delivery_id: &str) -> Result<models::AdminWebhooksDeliveryReplayResponse, Error<AdminWebhooksDeliveryReplayError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -292,9 +325,20 @@ pub async fn admin_webhooks_delivery_replay(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksDeliveryReplayResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksDeliveryReplayResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksDeliveryReplayError> = serde_json::from_str(&content).ok();
@@ -302,7 +346,8 @@ pub async fn admin_webhooks_delivery_replay(configuration: &configuration::Confi
     }
 }
 
-pub async fn admin_webhooks_delivery_show(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, delivery_id: &str) -> Result<(), Error<AdminWebhooksDeliveryShowError>> {
+/// A single delivery including the event payload and the per-attempt history.
+pub async fn admin_webhooks_delivery_show(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str, delivery_id: &str) -> Result<models::AdminWebhooksDeliveryShowResponse, Error<AdminWebhooksDeliveryShowError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -330,9 +375,20 @@ pub async fn admin_webhooks_delivery_show(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksDeliveryShowResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksDeliveryShowResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksDeliveryShowError> = serde_json::from_str(&content).ok();
@@ -340,7 +396,7 @@ pub async fn admin_webhooks_delivery_show(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_webhooks_events(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminWebhooksEventsError>> {
+pub async fn admin_webhooks_events(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksEventsResponse, Error<AdminWebhooksEventsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -366,9 +422,20 @@ pub async fn admin_webhooks_events(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksEventsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksEventsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksEventsError> = serde_json::from_str(&content).ok();
@@ -376,7 +443,7 @@ pub async fn admin_webhooks_events(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_webhooks_get(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksGetError>> {
+pub async fn admin_webhooks_get(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksGetResponse, Error<AdminWebhooksGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -403,9 +470,20 @@ pub async fn admin_webhooks_get(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksGetError> = serde_json::from_str(&content).ok();
@@ -413,7 +491,8 @@ pub async fn admin_webhooks_get(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn admin_webhooks_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminWebhooksListError>> {
+/// Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
+pub async fn admin_webhooks_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksListResponse, Error<AdminWebhooksListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -439,9 +518,20 @@ pub async fn admin_webhooks_list(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksListError> = serde_json::from_str(&content).ok();
@@ -449,7 +539,8 @@ pub async fn admin_webhooks_list(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_webhooks_rotate_secret(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksRotateSecretError>> {
+/// Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
+pub async fn admin_webhooks_rotate_secret(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksRotateSecretResponse, Error<AdminWebhooksRotateSecretError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -476,9 +567,20 @@ pub async fn admin_webhooks_rotate_secret(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksRotateSecretResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksRotateSecretResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksRotateSecretError> = serde_json::from_str(&content).ok();
@@ -486,7 +588,8 @@ pub async fn admin_webhooks_rotate_secret(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_webhooks_test(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksTestError>> {
+/// POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
+pub async fn admin_webhooks_test(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksTestResponse, Error<AdminWebhooksTestError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -513,9 +616,20 @@ pub async fn admin_webhooks_test(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksTestResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksTestResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksTestError> = serde_json::from_str(&content).ok();
@@ -523,7 +637,8 @@ pub async fn admin_webhooks_test(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_webhooks_tunnel_start(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminWebhooksTunnelStartError>> {
+/// Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+pub async fn admin_webhooks_tunnel_start(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminWebhooksTunnelStartResponse, Error<AdminWebhooksTunnelStartError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -549,9 +664,20 @@ pub async fn admin_webhooks_tunnel_start(configuration: &configuration::Configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksTunnelStartResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksTunnelStartResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksTunnelStartError> = serde_json::from_str(&content).ok();
@@ -559,7 +685,8 @@ pub async fn admin_webhooks_tunnel_start(configuration: &configuration::Configur
     }
 }
 
-pub async fn admin_webhooks_tunnel_stop(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksTunnelStopError>> {
+/// Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
+pub async fn admin_webhooks_tunnel_stop(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::MessageResponse, Error<AdminWebhooksTunnelStopError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -586,9 +713,20 @@ pub async fn admin_webhooks_tunnel_stop(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksTunnelStopError> = serde_json::from_str(&content).ok();
@@ -596,7 +734,8 @@ pub async fn admin_webhooks_tunnel_stop(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_webhooks_tunnel_stream(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksTunnelStreamError>> {
+/// Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+pub async fn admin_webhooks_tunnel_stream(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<String, Error<AdminWebhooksTunnelStreamError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -623,9 +762,20 @@ pub async fn admin_webhooks_tunnel_stream(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksTunnelStreamError> = serde_json::from_str(&content).ok();
@@ -633,7 +783,7 @@ pub async fn admin_webhooks_tunnel_stream(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_webhooks_webhooks_disable(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksWebhooksDisableError>> {
+pub async fn admin_webhooks_webhooks_disable(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksWebhooksDisableResponse, Error<AdminWebhooksWebhooksDisableError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -660,9 +810,20 @@ pub async fn admin_webhooks_webhooks_disable(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksWebhooksDisableResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksWebhooksDisableResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksWebhooksDisableError> = serde_json::from_str(&content).ok();
@@ -670,7 +831,7 @@ pub async fn admin_webhooks_webhooks_disable(configuration: &configuration::Conf
     }
 }
 
-pub async fn admin_webhooks_webhooks_enable(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<AdminWebhooksWebhooksEnableError>> {
+pub async fn admin_webhooks_webhooks_enable(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::AdminWebhooksWebhooksEnableResponse, Error<AdminWebhooksWebhooksEnableError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -697,9 +858,20 @@ pub async fn admin_webhooks_webhooks_enable(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminWebhooksWebhooksEnableResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminWebhooksWebhooksEnableResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminWebhooksWebhooksEnableError> = serde_json::from_str(&content).ok();
@@ -707,7 +879,7 @@ pub async fn admin_webhooks_webhooks_enable(configuration: &configuration::Confi
     }
 }
 
-pub async fn patch_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<PatchAdminWebhooksUpdateError>> {
+pub async fn patch_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PatchAdminWebhooksUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -734,9 +906,20 @@ pub async fn patch_admin_webhooks_update(configuration: &configuration::Configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminWebhooksUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminWebhooksUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminWebhooksUpdateError> = serde_json::from_str(&content).ok();
@@ -744,7 +927,7 @@ pub async fn patch_admin_webhooks_update(configuration: &configuration::Configur
     }
 }
 
-pub async fn put_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<(), Error<PutAdminWebhooksUpdateError>> {
+pub async fn put_admin_webhooks_update(configuration: &configuration::Configuration, org_id: &str, webhook_id: &str) -> Result<models::PutAdminWebhooksUpdateResponse, Error<PutAdminWebhooksUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_webhook_id = webhook_id;
@@ -771,9 +954,20 @@ pub async fn put_admin_webhooks_update(configuration: &configuration::Configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::PutAdminWebhooksUpdateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::PutAdminWebhooksUpdateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminWebhooksUpdateError> = serde_json::from_str(&content).ok();

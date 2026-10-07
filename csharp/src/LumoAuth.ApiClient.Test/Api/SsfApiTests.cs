@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CreateStreamConfig(orgId);
+            //var response = instance.CreateStreamConfig(orgId);
+            //Assert.IsType<SsfStream>(response);
         }
 
         /// <summary>
@@ -70,8 +73,9 @@ namespace LumoAuth.ApiClient.Test.Api
         public void DeleteStreamConfigTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
+            //string streamId = null;
             //string orgId = null;
-            //instance.DeleteStreamConfig(orgId);
+            //instance.DeleteStreamConfig(streamId, orgId);
         }
 
         /// <summary>
@@ -82,7 +86,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetStreamConfig(orgId);
+            //string? streamId = null;
+            //var response = instance.GetStreamConfig(orgId, streamId);
+            //Assert.IsType<GetStreamConfig200Response>(response);
         }
 
         /// <summary>

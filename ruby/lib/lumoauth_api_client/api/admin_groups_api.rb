@@ -19,21 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+    # Add member(s) to group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsCreateResponse]
     def admin_groups_add_members(org_id, group_id, opts = {})
-      admin_groups_add_members_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_add_members_with_http_info(org_id, group_id, opts)
+      data
     end
 
-    # Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+    # Add member(s) to group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
     def admin_groups_add_members_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_add_members ...'
@@ -54,6 +54,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -62,7 +64,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -88,17 +90,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_groups_add_role(org_id, group_id, opts = {})
-      admin_groups_add_role_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_add_role_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Add a single role to a group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_groups_add_role_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_add_role ...'
@@ -119,6 +121,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -127,7 +131,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -152,16 +156,16 @@ module LumoAuthApiClient
     # Create a new group
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsCreateResponse]
     def admin_groups_create(org_id, opts = {})
-      admin_groups_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_create_with_http_info(org_id, opts)
+      data
     end
 
     # Create a new group
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
     def admin_groups_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_create ...'
@@ -178,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -186,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -212,17 +218,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_groups_delete(org_id, group_id, opts = {})
-      admin_groups_delete_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_delete_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Delete a group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_groups_delete_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_delete ...'
@@ -243,6 +249,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -251,7 +259,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -277,17 +285,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsGetResponse]
     def admin_groups_get(org_id, group_id, opts = {})
-      admin_groups_get_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_get_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Get a single group by ID or slug
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsGetResponse, Integer, Hash)>] AdminGroupsGetResponse data, response status code and response headers
     def admin_groups_get_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_get ...'
@@ -308,6 +316,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -316,7 +326,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -342,17 +352,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsGetMembersResponse]
     def admin_groups_get_members(org_id, group_id, opts = {})
-      admin_groups_get_members_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_get_members_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Get group members
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsGetMembersResponse, Integer, Hash)>] AdminGroupsGetMembersResponse data, response status code and response headers
     def admin_groups_get_members_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_get_members ...'
@@ -373,6 +383,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -381,7 +393,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsGetMembersResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -407,17 +419,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsGroupsGetRolesResponse]
     def admin_groups_groups_get_roles(org_id, group_id, opts = {})
-      admin_groups_groups_get_roles_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_groups_get_roles_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Get group roles
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsGroupsGetRolesResponse, Integer, Hash)>] AdminGroupsGroupsGetRolesResponse data, response status code and response headers
     def admin_groups_groups_get_roles_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_groups_get_roles ...'
@@ -438,6 +450,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -446,7 +460,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsGroupsGetRolesResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -471,16 +485,16 @@ module LumoAuthApiClient
     # List all groups in the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsListResponse]
     def admin_groups_list(org_id, opts = {})
-      admin_groups_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_list_with_http_info(org_id, opts)
+      data
     end
 
     # List all groups in the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsListResponse, Integer, Hash)>] AdminGroupsListResponse data, response status code and response headers
     def admin_groups_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_list ...'
@@ -497,6 +511,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -505,7 +521,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -527,23 +543,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Remove member from group — userId is a UUID or email
+    # Remove member from group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_groups_remove_member(org_id, group_id, user_id, opts = {})
-      admin_groups_remove_member_with_http_info(org_id, group_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_remove_member_with_http_info(org_id, group_id, user_id, opts)
+      data
     end
 
-    # Remove member from group — userId is a UUID or email
+    # Remove member from group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_groups_remove_member_with_http_info(org_id, group_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_remove_member ...'
@@ -568,6 +584,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -576,7 +594,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -603,10 +621,10 @@ module LumoAuthApiClient
     # @param group_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_groups_remove_role(org_id, group_id, role_id, opts = {})
-      admin_groups_remove_role_with_http_info(org_id, group_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_remove_role_with_http_info(org_id, group_id, role_id, opts)
+      data
     end
 
     # Remove a role from a group
@@ -614,7 +632,7 @@ module LumoAuthApiClient
     # @param group_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_groups_remove_role_with_http_info(org_id, group_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_remove_role ...'
@@ -639,6 +657,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -647,7 +667,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -673,17 +693,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsCreateResponse]
     def admin_groups_update_roles(org_id, group_id, opts = {})
-      admin_groups_update_roles_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = admin_groups_update_roles_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Update group roles (replaces all existing roles)
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
     def admin_groups_update_roles_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.admin_groups_update_roles ...'
@@ -704,6 +724,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -712,7 +734,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -738,17 +760,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsCreateResponse]
     def patch_admin_groups_update(org_id, group_id, opts = {})
-      patch_admin_groups_update_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = patch_admin_groups_update_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Update an existing group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
     def patch_admin_groups_update_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.patch_admin_groups_update ...'
@@ -769,6 +791,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -777,7 +801,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -803,17 +827,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminGroupsCreateResponse]
     def put_admin_groups_update(org_id, group_id, opts = {})
-      put_admin_groups_update_with_http_info(org_id, group_id, opts)
-      nil
+      data, _status_code, _headers = put_admin_groups_update_with_http_info(org_id, group_id, opts)
+      data
     end
 
     # Update an existing group
     # @param org_id [String] 
     # @param group_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminGroupsCreateResponse, Integer, Hash)>] AdminGroupsCreateResponse data, response status code and response headers
     def put_admin_groups_update_with_http_info(org_id, group_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminGroupsApi.put_admin_groups_update ...'
@@ -834,6 +858,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -842,7 +868,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminGroupsCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

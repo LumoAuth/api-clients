@@ -4,20 +4,20 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createClient**](#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create a new OAuth client|
+|[**createClient**](#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client|
 |[**deleteClient**](#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client|
-|[**disableClient**](#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable OAuth client|
-|[**enableClient**](#enableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable OAuth client|
-|[**getClient**](#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get a single OAuth client by ID or clientId|
-|[**listClientScopes**](#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Get client scopes|
-|[**listClients**](#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List all OAuth clients in the tenant|
-|[**patchClient**](#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client|
-|[**rotateClientSecret**](#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate client secret|
-|[**setClientScopes**](#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Set client scopes|
-|[**updateClient**](#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client|
+|[**disableClient**](#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client|
+|[**enableClient**](#enableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable an OAuth client|
+|[**getClient**](#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client|
+|[**listClientScopes**](#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client|
+|[**listClients**](#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients|
+|[**patchClient**](#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client|
+|[**rotateClientSecret**](#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret|
+|[**setClientScopes**](#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client|
+|[**updateClient**](#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client|
 
 # **createClient**
-> createClient()
+> CreateClientResponse createClient()
 
 
 ### Example
@@ -47,7 +47,7 @@ const { status, data } = await apiInstance.createClient(
 
 ### Return type
 
-void (empty response body)
+**CreateClientResponse**
 
 ### Authorization
 
@@ -56,18 +56,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created — the plaintext secret is included once and never shown again |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteClient**
-> deleteClient()
+> MessageResponse deleteClient()
 
 
 ### Example
@@ -100,7 +100,7 @@ const { status, data } = await apiInstance.deleteClient(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -109,18 +109,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **disableClient**
-> disableClient()
+> UpdateClientResponse disableClient()
 
 
 ### Example
@@ -153,7 +154,7 @@ const { status, data } = await apiInstance.disableClient(
 
 ### Return type
 
-void (empty response body)
+**UpdateClientResponse**
 
 ### Authorization
 
@@ -162,18 +163,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Client disabled (summary fields only) |  -  |
+|**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **enableClient**
-> enableClient()
+> UpdateClientResponse enableClient()
 
 
 ### Example
@@ -206,7 +208,7 @@ const { status, data } = await apiInstance.enableClient(
 
 ### Return type
 
-void (empty response body)
+**UpdateClientResponse**
 
 ### Authorization
 
@@ -215,18 +217,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Client enabled (summary fields only) |  -  |
+|**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getClient**
-> getClient()
+> GetClientResponse getClient()
 
 
 ### Example
@@ -259,7 +262,7 @@ const { status, data } = await apiInstance.getClient(
 
 ### Return type
 
-void (empty response body)
+**GetClientResponse**
 
 ### Authorization
 
@@ -268,18 +271,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | OAuth client (detailed) |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listClientScopes**
-> listClientScopes()
+> ListClientScopesResponse listClientScopes()
 
 
 ### Example
@@ -312,7 +316,7 @@ const { status, data } = await apiInstance.listClientScopes(
 
 ### Return type
 
-void (empty response body)
+**ListClientScopesResponse**
 
 ### Authorization
 
@@ -321,18 +325,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Scope names |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **listClients**
-> listClients()
+> ListClientsResponse listClients()
 
 
 ### Example
@@ -362,7 +367,7 @@ const { status, data } = await apiInstance.listClients(
 
 ### Return type
 
-void (empty response body)
+**ListClientsResponse**
 
 ### Authorization
 
@@ -371,18 +376,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | OAuth clients (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchClient**
-> patchClient()
+> UpdateClientResponse patchClient()
 
 
 ### Example
@@ -415,7 +420,7 @@ const { status, data } = await apiInstance.patchClient(
 
 ### Return type
 
-void (empty response body)
+**UpdateClientResponse**
 
 ### Authorization
 
@@ -424,18 +429,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated OAuth client (detailed) |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **rotateClientSecret**
-> rotateClientSecret()
+> RotateClientSecretResponse rotateClientSecret()
 
 
 ### Example
@@ -468,7 +474,7 @@ const { status, data } = await apiInstance.rotateClientSecret(
 
 ### Return type
 
-void (empty response body)
+**RotateClientSecretResponse**
 
 ### Authorization
 
@@ -477,18 +483,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **setClientScopes**
-> setClientScopes()
+> SetClientScopesResponse setClientScopes()
 
 
 ### Example
@@ -521,7 +528,7 @@ const { status, data } = await apiInstance.setClientScopes(
 
 ### Return type
 
-void (empty response body)
+**SetClientScopesResponse**
 
 ### Authorization
 
@@ -530,18 +537,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated scope names |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateClient**
-> updateClient()
+> UpdateClientResponse updateClient()
 
 
 ### Example
@@ -574,7 +582,7 @@ const { status, data } = await apiInstance.updateClient(
 
 ### Return type
 
-void (empty response body)
+**UpdateClientResponse**
 
 ### Authorization
 
@@ -583,13 +591,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated OAuth client (detailed) |  -  |
+|**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

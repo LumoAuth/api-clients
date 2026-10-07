@@ -19,21 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Revoke all tokens for a client
+    # Revoke all tokens of a client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminClientTokensRevokeAllResponse]
     def admin_client_tokens_revoke_all(org_id, client_id, opts = {})
-      admin_client_tokens_revoke_all_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = admin_client_tokens_revoke_all_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Revoke all tokens for a client
+    # Revoke all tokens of a client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminClientTokensRevokeAllResponse, Integer, Hash)>] AdminClientTokensRevokeAllResponse data, response status code and response headers
     def admin_client_tokens_revoke_all_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_client_tokens_revoke_all ...'
@@ -54,6 +54,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -62,7 +64,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminClientTokensRevokeAllResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -84,21 +86,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke all tokens for a client via POST
+    # Revoke all tokens of a client (POST alias)
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminUserTokensRevokePostResponse]
     def admin_client_tokens_revoke_post(org_id, client_id, opts = {})
-      admin_client_tokens_revoke_post_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = admin_client_tokens_revoke_post_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Revoke all tokens for a client via POST
+    # Revoke all tokens of a client (POST alias)
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminUserTokensRevokePostResponse, Integer, Hash)>] AdminUserTokensRevokePostResponse data, response status code and response headers
     def admin_client_tokens_revoke_post_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_client_tokens_revoke_post ...'
@@ -119,6 +121,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -127,7 +131,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminUserTokensRevokePostResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -149,19 +153,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get active session count for the tenant
+    # Active session count
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSessionsCountResponse]
     def admin_sessions_count(org_id, opts = {})
-      admin_sessions_count_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_sessions_count_with_http_info(org_id, opts)
+      data
     end
 
-    # Get active session count for the tenant
+    # Active session count
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSessionsCountResponse, Integer, Hash)>] AdminSessionsCountResponse data, response status code and response headers
     def admin_sessions_count_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_sessions_count ...'
@@ -178,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -186,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSessionsCountResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -208,19 +214,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List active sessions for the tenant
+    # List active sessions
+    # Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSessionsListResponse]
     def admin_sessions_list(org_id, opts = {})
-      admin_sessions_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_sessions_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List active sessions for the tenant
+    # List active sessions
+    # Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSessionsListResponse, Integer, Hash)>] AdminSessionsListResponse data, response status code and response headers
     def admin_sessions_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_sessions_list ...'
@@ -237,6 +245,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -245,7 +255,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSessionsListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -267,21 +277,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke a specific session
+    # Revoke a session
     # @param org_id [String] 
     # @param session_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSessionsRevokeResponse]
     def admin_sessions_revoke(org_id, session_id, opts = {})
-      admin_sessions_revoke_with_http_info(org_id, session_id, opts)
-      nil
+      data, _status_code, _headers = admin_sessions_revoke_with_http_info(org_id, session_id, opts)
+      data
     end
 
-    # Revoke a specific session
+    # Revoke a session
     # @param org_id [String] 
     # @param session_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSessionsRevokeResponse, Integer, Hash)>] AdminSessionsRevokeResponse data, response status code and response headers
     def admin_sessions_revoke_with_http_info(org_id, session_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_sessions_revoke ...'
@@ -302,6 +312,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -310,7 +322,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSessionsRevokeResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -332,26 +344,34 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke all tenant sessions via POST
+    # Revoke every session in the tenant
+    # Signs out all users. Requires `confirm: true` in the body.
     # @param org_id [String] 
+    # @param admin_sessions_revoke_all_request [AdminSessionsRevokeAllRequest] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
-    def admin_sessions_revoke_all(org_id, opts = {})
-      admin_sessions_revoke_all_with_http_info(org_id, opts)
-      nil
+    # @return [AdminSessionsRevokeAllResponse]
+    def admin_sessions_revoke_all(org_id, admin_sessions_revoke_all_request, opts = {})
+      data, _status_code, _headers = admin_sessions_revoke_all_with_http_info(org_id, admin_sessions_revoke_all_request, opts)
+      data
     end
 
-    # Revoke all tenant sessions via POST
+    # Revoke every session in the tenant
+    # Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
     # @param org_id [String] 
+    # @param admin_sessions_revoke_all_request [AdminSessionsRevokeAllRequest] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def admin_sessions_revoke_all_with_http_info(org_id, opts = {})
+    # @return [Array<(AdminSessionsRevokeAllResponse, Integer, Hash)>] AdminSessionsRevokeAllResponse data, response status code and response headers
+    def admin_sessions_revoke_all_with_http_info(org_id, admin_sessions_revoke_all_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_sessions_revoke_all ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminSessionsApi.admin_sessions_revoke_all"
+      end
+      # verify the required parameter 'admin_sessions_revoke_all_request' is set
+      if @api_client.config.client_side_validation && admin_sessions_revoke_all_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_sessions_revoke_all_request' when calling AdminSessionsApi.admin_sessions_revoke_all"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/admin/sessions/revoke-all'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -361,15 +381,22 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_sessions_revoke_all_request)
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSessionsRevokeAllResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -391,19 +418,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get session statistics for the tenant
+    # Session statistics
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminSessionsStatsResponse]
     def admin_sessions_stats(org_id, opts = {})
-      admin_sessions_stats_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_sessions_stats_with_http_info(org_id, opts)
+      data
     end
 
-    # Get session statistics for the tenant
+    # Session statistics
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminSessionsStatsResponse, Integer, Hash)>] AdminSessionsStatsResponse data, response status code and response headers
     def admin_sessions_stats_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_sessions_stats ...'
@@ -420,6 +447,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -428,7 +457,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminSessionsStatsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -450,19 +479,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List access tokens for the tenant
+    # List access tokens
+    # Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminTokensListResponse]
     def admin_tokens_list(org_id, opts = {})
-      admin_tokens_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_tokens_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List access tokens for the tenant
+    # List access tokens
+    # Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminTokensListResponse, Integer, Hash)>] AdminTokensListResponse data, response status code and response headers
     def admin_tokens_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_tokens_list ...'
@@ -479,6 +510,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -487,7 +520,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminTokensListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -513,17 +546,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param token_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminTokensRevokeResponse]
     def admin_tokens_revoke(org_id, token_id, opts = {})
-      admin_tokens_revoke_with_http_info(org_id, token_id, opts)
-      nil
+      data, _status_code, _headers = admin_tokens_revoke_with_http_info(org_id, token_id, opts)
+      data
     end
 
     # Revoke a token
     # @param org_id [String] 
     # @param token_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminTokensRevokeResponse, Integer, Hash)>] AdminTokensRevokeResponse data, response status code and response headers
     def admin_tokens_revoke_with_http_info(org_id, token_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_tokens_revoke ...'
@@ -544,6 +577,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -552,7 +587,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminTokensRevokeResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -574,21 +609,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get sessions for a specific user
+    # List a user's active sessions
+    # All active sessions of one user (UUID or email), returned as a single page.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminUserSessionsListResponse]
     def admin_user_sessions_list(org_id, user_id, opts = {})
-      admin_user_sessions_list_with_http_info(org_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_user_sessions_list_with_http_info(org_id, user_id, opts)
+      data
     end
 
-    # Get sessions for a specific user
+    # List a user&#39;s active sessions
+    # All active sessions of one user (UUID or email), returned as a single page.
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminUserSessionsListResponse, Integer, Hash)>] AdminUserSessionsListResponse data, response status code and response headers
     def admin_user_sessions_list_with_http_info(org_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_user_sessions_list ...'
@@ -609,6 +646,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -617,7 +656,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminUserSessionsListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -639,21 +678,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke all sessions for a user
+    # Revoke all sessions of a user
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminUserSessionsRevokeAllResponse]
     def admin_user_sessions_revoke_all(org_id, user_id, opts = {})
-      admin_user_sessions_revoke_all_with_http_info(org_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_user_sessions_revoke_all_with_http_info(org_id, user_id, opts)
+      data
     end
 
-    # Revoke all sessions for a user
+    # Revoke all sessions of a user
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminUserSessionsRevokeAllResponse, Integer, Hash)>] AdminUserSessionsRevokeAllResponse data, response status code and response headers
     def admin_user_sessions_revoke_all_with_http_info(org_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_user_sessions_revoke_all ...'
@@ -674,6 +713,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -682,7 +723,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminUserSessionsRevokeAllResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -704,21 +745,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke all sessions for a user via POST
+    # Revoke all sessions of a user (POST alias)
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminUserSessionsRevokePostResponse]
     def admin_user_sessions_revoke_post(org_id, user_id, opts = {})
-      admin_user_sessions_revoke_post_with_http_info(org_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_user_sessions_revoke_post_with_http_info(org_id, user_id, opts)
+      data
     end
 
-    # Revoke all sessions for a user via POST
+    # Revoke all sessions of a user (POST alias)
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminUserSessionsRevokePostResponse, Integer, Hash)>] AdminUserSessionsRevokePostResponse data, response status code and response headers
     def admin_user_sessions_revoke_post_with_http_info(org_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_user_sessions_revoke_post ...'
@@ -739,6 +780,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -747,7 +790,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminUserSessionsRevokePostResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -769,21 +812,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke all tokens for a user
+    # Revoke all tokens of a user
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminUserTokensRevokeAllResponse]
     def admin_user_tokens_revoke_all(org_id, user_id, opts = {})
-      admin_user_tokens_revoke_all_with_http_info(org_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_user_tokens_revoke_all_with_http_info(org_id, user_id, opts)
+      data
     end
 
-    # Revoke all tokens for a user
+    # Revoke all tokens of a user
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminUserTokensRevokeAllResponse, Integer, Hash)>] AdminUserTokensRevokeAllResponse data, response status code and response headers
     def admin_user_tokens_revoke_all_with_http_info(org_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_user_tokens_revoke_all ...'
@@ -804,6 +847,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -812,7 +857,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminUserTokensRevokeAllResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -834,21 +879,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Revoke all tokens for a user via POST
+    # Revoke all tokens of a user (POST alias)
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminUserTokensRevokePostResponse]
     def admin_user_tokens_revoke_post(org_id, user_id, opts = {})
-      admin_user_tokens_revoke_post_with_http_info(org_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_user_tokens_revoke_post_with_http_info(org_id, user_id, opts)
+      data
     end
 
-    # Revoke all tokens for a user via POST
+    # Revoke all tokens of a user (POST alias)
     # @param org_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminUserTokensRevokePostResponse, Integer, Hash)>] AdminUserTokensRevokePostResponse data, response status code and response headers
     def admin_user_tokens_revoke_post_with_http_info(org_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminSessionsApi.admin_user_tokens_revoke_post ...'
@@ -869,6 +914,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -877,7 +924,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminUserTokensRevokePostResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

@@ -4,23 +4,23 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**create_client**](AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create a new OAuth client
+[**create_client**](AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**delete_client**](AdminOAuthClientsApi.md#delete_client) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
-[**disable_client**](AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable OAuth client
-[**enable_client**](AdminOAuthClientsApi.md#enable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable OAuth client
-[**get_client**](AdminOAuthClientsApi.md#get_client) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get a single OAuth client by ID or clientId
-[**list_client_scopes**](AdminOAuthClientsApi.md#list_client_scopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Get client scopes
-[**list_clients**](AdminOAuthClientsApi.md#list_clients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List all OAuth clients in the tenant
-[**patch_client**](AdminOAuthClientsApi.md#patch_client) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client
-[**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate client secret
-[**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Set client scopes
-[**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client
+[**disable_client**](AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
+[**enable_client**](AdminOAuthClientsApi.md#enable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable an OAuth client
+[**get_client**](AdminOAuthClientsApi.md#get_client) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
+[**list_client_scopes**](AdminOAuthClientsApi.md#list_client_scopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
+[**list_clients**](AdminOAuthClientsApi.md#list_clients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+[**patch_client**](AdminOAuthClientsApi.md#patch_client) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+[**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
+[**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
+[**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
 
 
 # **create_client**
-> create_client(org_id)
+> CreateClientResponse create_client(org_id)
 
-Create a new OAuth client
+Create an OAuth client
 
 ### Example
 
@@ -29,6 +29,7 @@ Create a new OAuth client
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.create_client_response import CreateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -61,8 +62,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Create a new OAuth client
-        api_instance.create_client(org_id)
+        # Create an OAuth client
+        api_response = api_instance.create_client(org_id)
+        print("The response of AdminOAuthClientsApi->create_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->create_client: %s\n" % e)
 ```
@@ -78,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**CreateClientResponse**](CreateClientResponse.md)
 
 ### Authorization
 
@@ -87,18 +90,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created — the plaintext secret is included once and never shown again |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **delete_client**
-> delete_client(org_id, client_id)
+> MessageResponse delete_client(org_id, client_id)
 
 Delete an OAuth client
 
@@ -109,6 +112,7 @@ Delete an OAuth client
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -143,7 +147,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete an OAuth client
-        api_instance.delete_client(org_id, client_id)
+        api_response = api_instance.delete_client(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->delete_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->delete_client: %s\n" % e)
 ```
@@ -160,7 +166,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -169,20 +175,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **disable_client**
-> disable_client(org_id, client_id)
+> UpdateClientResponse disable_client(org_id, client_id)
 
-Disable OAuth client
+Disable an OAuth client
 
 ### Example
 
@@ -191,6 +198,7 @@ Disable OAuth client
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -224,8 +232,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Disable OAuth client
-        api_instance.disable_client(org_id, client_id)
+        # Disable an OAuth client
+        api_response = api_instance.disable_client(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->disable_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->disable_client: %s\n" % e)
 ```
@@ -242,7 +252,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -251,20 +261,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Client disabled (summary fields only) |  -  |
+**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **enable_client**
-> enable_client(org_id, client_id)
+> UpdateClientResponse enable_client(org_id, client_id)
 
-Enable OAuth client
+Enable an OAuth client
 
 ### Example
 
@@ -273,6 +284,7 @@ Enable OAuth client
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -306,8 +318,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Enable OAuth client
-        api_instance.enable_client(org_id, client_id)
+        # Enable an OAuth client
+        api_response = api_instance.enable_client(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->enable_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->enable_client: %s\n" % e)
 ```
@@ -324,7 +338,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -333,20 +347,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Client enabled (summary fields only) |  -  |
+**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_client**
-> get_client(org_id, client_id)
+> GetClientResponse get_client(org_id, client_id)
 
-Get a single OAuth client by ID or clientId
+Get an OAuth client
 
 ### Example
 
@@ -355,6 +370,7 @@ Get a single OAuth client by ID or clientId
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_client_response import GetClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -388,8 +404,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Get a single OAuth client by ID or clientId
-        api_instance.get_client(org_id, client_id)
+        # Get an OAuth client
+        api_response = api_instance.get_client(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->get_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->get_client: %s\n" % e)
 ```
@@ -406,7 +424,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**GetClientResponse**](GetClientResponse.md)
 
 ### Authorization
 
@@ -415,20 +433,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | OAuth client (detailed) |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_client_scopes**
-> list_client_scopes(org_id, client_id)
+> ListClientScopesResponse list_client_scopes(org_id, client_id)
 
-Get client scopes
+List the scopes granted to an OAuth client
 
 ### Example
 
@@ -437,6 +456,7 @@ Get client scopes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.list_client_scopes_response import ListClientScopesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -470,8 +490,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Get client scopes
-        api_instance.list_client_scopes(org_id, client_id)
+        # List the scopes granted to an OAuth client
+        api_response = api_instance.list_client_scopes(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->list_client_scopes:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->list_client_scopes: %s\n" % e)
 ```
@@ -488,7 +510,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ListClientScopesResponse**](ListClientScopesResponse.md)
 
 ### Authorization
 
@@ -497,20 +519,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Scope names |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_clients**
-> list_clients(org_id)
+> ListClientsResponse list_clients(org_id)
 
-List all OAuth clients in the tenant
+List OAuth clients
 
 ### Example
 
@@ -519,6 +542,7 @@ List all OAuth clients in the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.list_clients_response import ListClientsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -551,8 +575,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all OAuth clients in the tenant
-        api_instance.list_clients(org_id)
+        # List OAuth clients
+        api_response = api_instance.list_clients(org_id)
+        print("The response of AdminOAuthClientsApi->list_clients:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->list_clients: %s\n" % e)
 ```
@@ -568,7 +594,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ListClientsResponse**](ListClientsResponse.md)
 
 ### Authorization
 
@@ -577,20 +603,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | OAuth clients (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_client**
-> patch_client(org_id, client_id)
+> UpdateClientResponse patch_client(org_id, client_id)
 
-Update an existing OAuth client
+Update an OAuth client
 
 ### Example
 
@@ -599,6 +625,7 @@ Update an existing OAuth client
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -632,8 +659,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Update an existing OAuth client
-        api_instance.patch_client(org_id, client_id)
+        # Update an OAuth client
+        api_response = api_instance.patch_client(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->patch_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->patch_client: %s\n" % e)
 ```
@@ -650,7 +679,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -659,20 +688,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated OAuth client (detailed) |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **rotate_client_secret**
-> rotate_client_secret(org_id, client_id)
+> RotateClientSecretResponse rotate_client_secret(org_id, client_id)
 
-Rotate client secret
+Rotate an OAuth client secret
 
 ### Example
 
@@ -681,6 +711,7 @@ Rotate client secret
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.rotate_client_secret_response import RotateClientSecretResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -714,8 +745,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Rotate client secret
-        api_instance.rotate_client_secret(org_id, client_id)
+        # Rotate an OAuth client secret
+        api_response = api_instance.rotate_client_secret(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->rotate_client_secret:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->rotate_client_secret: %s\n" % e)
 ```
@@ -732,7 +765,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**RotateClientSecretResponse**](RotateClientSecretResponse.md)
 
 ### Authorization
 
@@ -741,20 +774,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_client_scopes**
-> set_client_scopes(org_id, client_id)
+> SetClientScopesResponse set_client_scopes(org_id, client_id)
 
-Set client scopes
+Replace the scopes granted to an OAuth client
 
 ### Example
 
@@ -763,6 +797,7 @@ Set client scopes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_client_scopes_response import SetClientScopesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -796,8 +831,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Set client scopes
-        api_instance.set_client_scopes(org_id, client_id)
+        # Replace the scopes granted to an OAuth client
+        api_response = api_instance.set_client_scopes(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->set_client_scopes:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->set_client_scopes: %s\n" % e)
 ```
@@ -814,7 +851,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**SetClientScopesResponse**](SetClientScopesResponse.md)
 
 ### Authorization
 
@@ -823,20 +860,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated scope names |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **update_client**
-> update_client(org_id, client_id)
+> UpdateClientResponse update_client(org_id, client_id)
 
-Update an existing OAuth client
+Replace an OAuth client
 
 ### Example
 
@@ -845,6 +883,7 @@ Update an existing OAuth client
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -878,8 +917,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     client_id = 'client_id_example' # str | 
 
     try:
-        # Update an existing OAuth client
-        api_instance.update_client(org_id, client_id)
+        # Replace an OAuth client
+        api_response = api_instance.update_client(org_id, client_id)
+        print("The response of AdminOAuthClientsApi->update_client:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOAuthClientsApi->update_client: %s\n" % e)
 ```
@@ -896,7 +937,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -905,13 +946,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated OAuth client (detailed) |  -  |
+**404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

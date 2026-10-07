@@ -52,25 +52,30 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of AskResponse</returns>
         ApiResponse<AskResponse> AskWithHttpInfo(string orgId, AskRequest askRequest);
         /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="agentId"></param>
-        /// <returns></returns>
-        void Attest(string orgId, string agentId);
-
-        /// <summary>
-        /// 
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AttestWithHttpInfo(string orgId, string agentId);
+        /// <param name="attestRequest"></param>
+        /// <returns>AttestResponse</returns>
+        AttestResponse Attest(string orgId, string agentId, AttestRequest attestRequest);
+
+        /// <summary>
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token
+        /// </summary>
+        /// <remarks>
+        /// Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <param name="attestRequest"></param>
+        /// <returns>ApiResponse of AttestResponse</returns>
+        ApiResponse<AttestResponse> AttestWithHttpInfo(string orgId, string agentId, AttestRequest attestRequest);
         /// <summary>
         /// Per-MCP-tool authorization for the authenticated agent (dx B3).
         /// </summary>
@@ -115,25 +120,28 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of CreateApprovalResponse</returns>
         ApiResponse<CreateApprovalResponse> CreateApprovalWithHttpInfo(string orgId, CreateApprovalRequest createApprovalRequest);
         /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="agentId"></param>
-        /// <returns></returns>
-        void GetAgentCard(string orgId, string agentId);
-
-        /// <summary>
-        /// 
+        /// Signed A2A agent card
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetAgentCardWithHttpInfo(string orgId, string agentId);
+        /// <returns>SignedAgentCard</returns>
+        SignedAgentCard GetAgentCard(string orgId, string agentId);
+
+        /// <summary>
+        /// Signed A2A agent card
+        /// </summary>
+        /// <remarks>
+        /// Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="agentId"></param>
+        /// <returns>ApiResponse of SignedAgentCard</returns>
+        ApiResponse<SignedAgentCard> GetAgentCardWithHttpInfo(string orgId, string agentId);
         /// <summary>
         /// 
         /// </summary>
@@ -176,41 +184,46 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of GetCurrentAgentResponse</returns>
         ApiResponse<GetCurrentAgentResponse> GetCurrentAgentWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// Register (or re-register) an agent
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void RegisterAgent(string orgId);
+        /// <returns>RegisterAgentResponse</returns>
+        RegisterAgentResponse RegisterAgent(string orgId);
 
         /// <summary>
-        /// 
+        /// Register (or re-register) an agent
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> RegisterAgentWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of RegisterAgentResponse</returns>
+        ApiResponse<RegisterAgentResponse> RegisterAgentWithHttpInfo(string orgId);
         /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void VerifyAgentCard(string orgId);
-
-        /// <summary>
-        /// 
+        /// Verify a signed A2A agent card
         /// </summary>
         /// <remarks>
-        /// 
+        /// Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> VerifyAgentCardWithHttpInfo(string orgId);
+        /// <param name="requestBody"></param>
+        /// <returns>VerifyAgentCardResponse</returns>
+        VerifyAgentCardResponse VerifyAgentCard(string orgId, Dictionary<string, Object> requestBody);
+
+        /// <summary>
+        /// Verify a signed A2A agent card
+        /// </summary>
+        /// <remarks>
+        /// Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="requestBody"></param>
+        /// <returns>ApiResponse of VerifyAgentCardResponse</returns>
+        ApiResponse<VerifyAgentCardResponse> VerifyAgentCardWithHttpInfo(string orgId, Dictionary<string, Object> requestBody);
         #endregion Synchronous Operations
     }
 
@@ -246,30 +259,32 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (AskResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<AskResponse>> AskWithHttpInfoAsync(string orgId, AskRequest askRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
+        /// <param name="attestRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AttestAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AttestResponse</returns>
+        System.Threading.Tasks.Task<AttestResponse> AttestAsync(string orgId, string agentId, AttestRequest attestRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
+        /// <param name="attestRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AttestWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AttestResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AttestResponse>> AttestWithHttpInfoAsync(string orgId, string agentId, AttestRequest attestRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Per-MCP-tool authorization for the authenticated agent (dx B3).
         /// </summary>
@@ -321,30 +336,30 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (CreateApprovalResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<CreateApprovalResponse>> CreateApprovalWithHttpInfoAsync(string orgId, CreateApprovalRequest createApprovalRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Signed A2A agent card
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetAgentCardAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of SignedAgentCard</returns>
+        System.Threading.Tasks.Task<SignedAgentCard> GetAgentCardAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Signed A2A agent card
         /// </summary>
         /// <remarks>
-        /// 
+        /// Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetAgentCardWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (SignedAgentCard)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SignedAgentCard>> GetAgentCardWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// 
         /// </summary>
@@ -394,7 +409,7 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (GetCurrentAgentResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<GetCurrentAgentResponse>> GetCurrentAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Register (or re-register) an agent
         /// </summary>
         /// <remarks>
         /// 
@@ -402,11 +417,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RegisterAgentAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of RegisterAgentResponse</returns>
+        System.Threading.Tasks.Task<RegisterAgentResponse> RegisterAgentAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Register (or re-register) an agent
         /// </summary>
         /// <remarks>
         /// 
@@ -414,31 +429,33 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RegisterAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (RegisterAgentResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RegisterAgentResponse>> RegisterAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// Verify a signed A2A agent card
         /// </summary>
         /// <remarks>
-        /// 
+        /// Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="requestBody"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task VerifyAgentCardAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of VerifyAgentCardResponse</returns>
+        System.Threading.Tasks.Task<VerifyAgentCardResponse> VerifyAgentCardAsync(string orgId, Dictionary<string, Object> requestBody, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// Verify a signed A2A agent card
         /// </summary>
         /// <remarks>
-        /// 
+        /// Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="requestBody"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> VerifyAgentCardWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (VerifyAgentCardResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<VerifyAgentCardResponse>> VerifyAgentCardWithHttpInfoAsync(string orgId, Dictionary<string, Object> requestBody, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -806,25 +823,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns></returns>
-        public void Attest(string orgId, string agentId)
+        /// <param name="attestRequest"></param>
+        /// <returns>AttestResponse</returns>
+        public AttestResponse Attest(string orgId, string agentId, AttestRequest attestRequest)
         {
-            AttestWithHttpInfo(orgId, agentId);
+            LumoAuth.ApiClient.Client.ApiResponse<AttestResponse> localVarResponse = AttestWithHttpInfo(orgId, agentId, attestRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AttestWithHttpInfo(string orgId, string agentId)
+        /// <param name="attestRequest"></param>
+        /// <returns>ApiResponse of AttestResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AttestResponse> AttestWithHttpInfo(string orgId, string agentId, AttestRequest attestRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -834,13 +854,19 @@ namespace LumoAuth.ApiClient.Api
             if (agentId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AgentsApi->Attest");
 
+            // verify the required parameter 'attestRequest' is set
+            if (attestRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'attestRequest' when calling AgentsApi->Attest");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -851,6 +877,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+            localVarRequestOptions.Data = attestRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -865,7 +892,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/agents/{agentId}/attest", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AttestResponse>("/orgs/{orgId}/api/v1/agents/{agentId}/attest", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -877,27 +904,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
+        /// <param name="attestRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AttestAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AttestResponse</returns>
+        public async System.Threading.Tasks.Task<AttestResponse> AttestAsync(string orgId, string agentId, AttestRequest attestRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AttestWithHttpInfoAsync(orgId, agentId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AttestResponse> localVarResponse = await AttestWithHttpInfoAsync(orgId, agentId, attestRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Workload attestation: exchange a cloud OIDC token for an agent access token Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
+        /// <param name="attestRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AttestWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AttestResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AttestResponse>> AttestWithHttpInfoAsync(string orgId, string agentId, AttestRequest attestRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -907,14 +937,20 @@ namespace LumoAuth.ApiClient.Api
             if (agentId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'agentId' when calling AgentsApi->Attest");
 
+            // verify the required parameter 'attestRequest' is set
+            if (attestRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'attestRequest' when calling AgentsApi->Attest");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -926,6 +962,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("agentId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(agentId)); // path parameter
+            localVarRequestOptions.Data = attestRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -941,7 +978,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/agents/{agentId}/attest", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AttestResponse>("/orgs/{orgId}/api/v1/agents/{agentId}/attest", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1259,25 +1296,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Signed A2A agent card Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns></returns>
-        public void GetAgentCard(string orgId, string agentId)
+        /// <returns>SignedAgentCard</returns>
+        public SignedAgentCard GetAgentCard(string orgId, string agentId)
         {
-            GetAgentCardWithHttpInfo(orgId, agentId);
+            LumoAuth.ApiClient.Client.ApiResponse<SignedAgentCard> localVarResponse = GetAgentCardWithHttpInfo(orgId, agentId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Signed A2A agent card Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetAgentCardWithHttpInfo(string orgId, string agentId)
+        /// <returns>ApiResponse of SignedAgentCard</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<SignedAgentCard> GetAgentCardWithHttpInfo(string orgId, string agentId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1294,6 +1332,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1307,7 +1346,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/agents/{agentId}/agent-card", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<SignedAgentCard>("/orgs/{orgId}/api/v1/agents/{agentId}/agent-card", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1319,27 +1358,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Signed A2A agent card Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetAgentCardAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of SignedAgentCard</returns>
+        public async System.Threading.Tasks.Task<SignedAgentCard> GetAgentCardAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetAgentCardWithHttpInfoAsync(orgId, agentId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SignedAgentCard> localVarResponse = await GetAgentCardWithHttpInfoAsync(orgId, agentId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Signed A2A agent card Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="agentId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetAgentCardWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (SignedAgentCard)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SignedAgentCard>> GetAgentCardWithHttpInfoAsync(string orgId, string agentId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1357,6 +1397,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1372,7 +1413,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/agents/{agentId}/agent-card", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<SignedAgentCard>("/orgs/{orgId}/api/v1/agents/{agentId}/agent-card", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1672,23 +1713,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Register (or re-register) an agent 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void RegisterAgent(string orgId)
+        /// <returns>RegisterAgentResponse</returns>
+        public RegisterAgentResponse RegisterAgent(string orgId)
         {
-            RegisterAgentWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> localVarResponse = RegisterAgentWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Register (or re-register) an agent 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> RegisterAgentWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of RegisterAgentResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> RegisterAgentWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1701,6 +1743,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1724,7 +1767,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/agents/register", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<RegisterAgentResponse>("/orgs/{orgId}/api/v1/agents/register", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1736,25 +1779,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Register (or re-register) an agent 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RegisterAgentAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of RegisterAgentResponse</returns>
+        public async System.Threading.Tasks.Task<RegisterAgentResponse> RegisterAgentAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await RegisterAgentWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse> localVarResponse = await RegisterAgentWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Register (or re-register) an agent 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> RegisterAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (RegisterAgentResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RegisterAgentResponse>> RegisterAgentWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1768,6 +1812,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1793,7 +1838,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/agents/register", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<RegisterAgentResponse>("/orgs/{orgId}/api/v1/agents/register", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1805,35 +1850,44 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Verify a signed A2A agent card Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void VerifyAgentCard(string orgId)
+        /// <param name="requestBody"></param>
+        /// <returns>VerifyAgentCardResponse</returns>
+        public VerifyAgentCardResponse VerifyAgentCard(string orgId, Dictionary<string, Object> requestBody)
         {
-            VerifyAgentCardWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<VerifyAgentCardResponse> localVarResponse = VerifyAgentCardWithHttpInfo(orgId, requestBody);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Verify a signed A2A agent card Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> VerifyAgentCardWithHttpInfo(string orgId)
+        /// <param name="requestBody"></param>
+        /// <returns>ApiResponse of VerifyAgentCardResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<VerifyAgentCardResponse> VerifyAgentCardWithHttpInfo(string orgId, Dictionary<string, Object> requestBody)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->VerifyAgentCard");
 
+            // verify the required parameter 'requestBody' is set
+            if (requestBody == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'requestBody' when calling AgentsApi->VerifyAgentCard");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1843,6 +1897,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = requestBody;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1857,7 +1912,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/agents/agent-card/verify", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<VerifyAgentCardResponse>("/orgs/{orgId}/api/v1/agents/agent-card/verify", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1869,38 +1924,47 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// Verify a signed A2A agent card Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="requestBody"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task VerifyAgentCardAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of VerifyAgentCardResponse</returns>
+        public async System.Threading.Tasks.Task<VerifyAgentCardResponse> VerifyAgentCardAsync(string orgId, Dictionary<string, Object> requestBody, System.Threading.CancellationToken cancellationToken = default)
         {
-            await VerifyAgentCardWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<VerifyAgentCardResponse> localVarResponse = await VerifyAgentCardWithHttpInfoAsync(orgId, requestBody, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Verify a signed A2A agent card Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="requestBody"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> VerifyAgentCardWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (VerifyAgentCardResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<VerifyAgentCardResponse>> VerifyAgentCardWithHttpInfoAsync(string orgId, Dictionary<string, Object> requestBody, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AgentsApi->VerifyAgentCard");
 
+            // verify the required parameter 'requestBody' is set
+            if (requestBody == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'requestBody' when calling AgentsApi->VerifyAgentCard");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1911,6 +1975,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = requestBody;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1926,7 +1991,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/agents/agent-card/verify", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<VerifyAgentCardResponse>("/orgs/{orgId}/api/v1/agents/agent-card/verify", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

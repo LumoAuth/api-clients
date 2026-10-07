@@ -4,28 +4,28 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adminClientTokensRevokeAll**](AdminSessionsAPI.md#adminclienttokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens for a client
-[**adminClientTokensRevokePost**](AdminSessionsAPI.md#adminclienttokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens for a client via POST
-[**adminSessionsCount**](AdminSessionsAPI.md#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Get active session count for the tenant
-[**adminSessionsList**](AdminSessionsAPI.md#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions for the tenant
-[**adminSessionsRevoke**](AdminSessionsAPI.md#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a specific session
-[**adminSessionsRevokeAll**](AdminSessionsAPI.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke all tenant sessions via POST
-[**adminSessionsStats**](AdminSessionsAPI.md#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Get session statistics for the tenant
-[**adminTokensList**](AdminSessionsAPI.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens for the tenant
+[**adminClientTokensRevokeAll**](AdminSessionsAPI.md#adminclienttokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client
+[**adminClientTokensRevokePost**](AdminSessionsAPI.md#adminclienttokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias)
+[**adminSessionsCount**](AdminSessionsAPI.md#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
+[**adminSessionsList**](AdminSessionsAPI.md#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
+[**adminSessionsRevoke**](AdminSessionsAPI.md#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
+[**adminSessionsRevokeAll**](AdminSessionsAPI.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+[**adminSessionsStats**](AdminSessionsAPI.md#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
+[**adminTokensList**](AdminSessionsAPI.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
 [**adminTokensRevoke**](AdminSessionsAPI.md#admintokensrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
-[**adminUserSessionsList**](AdminSessionsAPI.md#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Get sessions for a specific user
-[**adminUserSessionsRevokeAll**](AdminSessionsAPI.md#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions for a user
-[**adminUserSessionsRevokePost**](AdminSessionsAPI.md#adminusersessionsrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions for a user via POST
-[**adminUserTokensRevokeAll**](AdminSessionsAPI.md#adminusertokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens for a user
-[**adminUserTokensRevokePost**](AdminSessionsAPI.md#adminusertokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens for a user via POST
+[**adminUserSessionsList**](AdminSessionsAPI.md#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions
+[**adminUserSessionsRevokeAll**](AdminSessionsAPI.md#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
+[**adminUserSessionsRevokePost**](AdminSessionsAPI.md#adminusersessionsrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions of a user (POST alias)
+[**adminUserTokensRevokeAll**](AdminSessionsAPI.md#adminusertokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens of a user
+[**adminUserTokensRevokePost**](AdminSessionsAPI.md#adminusertokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens of a user (POST alias)
 
 
 # **adminClientTokensRevokeAll**
 ```swift
-    open class func adminClientTokensRevokeAll(orgId: String, clientId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminClientTokensRevokeAll(orgId: String, clientId: String, completion: @escaping (_ data: AdminClientTokensRevokeAllResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all tokens for a client
+Revoke all tokens of a client
 
 ### Example
 ```swift
@@ -35,7 +35,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let clientId = "clientId_example" // String | 
 
-// Revoke all tokens for a client
+// Revoke all tokens of a client
 AdminSessionsAPI.adminClientTokensRevokeAll(orgId: orgId, clientId: clientId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -57,7 +57,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminClientTokensRevokeAllResponse**](AdminClientTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -66,16 +66,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminClientTokensRevokePost**
 ```swift
-    open class func adminClientTokensRevokePost(orgId: String, clientId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminClientTokensRevokePost(orgId: String, clientId: String, completion: @escaping (_ data: AdminUserTokensRevokePostResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all tokens for a client via POST
+Revoke all tokens of a client (POST alias)
 
 ### Example
 ```swift
@@ -85,7 +85,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let clientId = "clientId_example" // String | 
 
-// Revoke all tokens for a client via POST
+// Revoke all tokens of a client (POST alias)
 AdminSessionsAPI.adminClientTokensRevokePost(orgId: orgId, clientId: clientId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -107,7 +107,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -116,16 +116,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsCount**
 ```swift
-    open class func adminSessionsCount(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSessionsCount(orgId: String, completion: @escaping (_ data: AdminSessionsCountResponse?, _ error: Error?) -> Void)
 ```
 
-Get active session count for the tenant
+Active session count
 
 ### Example
 ```swift
@@ -134,7 +134,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Get active session count for the tenant
+// Active session count
 AdminSessionsAPI.adminSessionsCount(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -155,7 +155,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSessionsCountResponse**](AdminSessionsCountResponse.md)
 
 ### Authorization
 
@@ -164,16 +164,18 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsList**
 ```swift
-    open class func adminSessionsList(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSessionsList(orgId: String, completion: @escaping (_ data: AdminSessionsListResponse?, _ error: Error?) -> Void)
 ```
 
-List active sessions for the tenant
+List active sessions
+
+Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 ```swift
@@ -182,7 +184,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List active sessions for the tenant
+// List active sessions
 AdminSessionsAPI.adminSessionsList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -203,7 +205,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSessionsListResponse**](AdminSessionsListResponse.md)
 
 ### Authorization
 
@@ -212,16 +214,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsRevoke**
 ```swift
-    open class func adminSessionsRevoke(orgId: String, sessionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSessionsRevoke(orgId: String, sessionId: String, completion: @escaping (_ data: AdminSessionsRevokeResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke a specific session
+Revoke a session
 
 ### Example
 ```swift
@@ -231,7 +233,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let sessionId = "sessionId_example" // String | 
 
-// Revoke a specific session
+// Revoke a session
 AdminSessionsAPI.adminSessionsRevoke(orgId: orgId, sessionId: sessionId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -253,7 +255,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSessionsRevokeResponse**](AdminSessionsRevokeResponse.md)
 
 ### Authorization
 
@@ -262,16 +264,18 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsRevokeAll**
 ```swift
-    open class func adminSessionsRevokeAll(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSessionsRevokeAll(orgId: String, adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest, completion: @escaping (_ data: AdminSessionsRevokeAllResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all tenant sessions via POST
+Revoke every session in the tenant
+
+Signs out all users. Requires `confirm: true` in the body.
 
 ### Example
 ```swift
@@ -279,9 +283,10 @@ Revoke all tenant sessions via POST
 import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
+let adminSessionsRevokeAllRequest = AdminSessionsRevokeAllRequest(confirm: true) // AdminSessionsRevokeAllRequest | 
 
-// Revoke all tenant sessions via POST
-AdminSessionsAPI.adminSessionsRevokeAll(orgId: orgId) { (response, error) in
+// Revoke every session in the tenant
+AdminSessionsAPI.adminSessionsRevokeAll(orgId: orgId, adminSessionsRevokeAllRequest: adminSessionsRevokeAllRequest) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -298,10 +303,11 @@ AdminSessionsAPI.adminSessionsRevokeAll(orgId: orgId) { (response, error) in
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgId** | **String** |  | 
+ **adminSessionsRevokeAllRequest** | [**AdminSessionsRevokeAllRequest**](AdminSessionsRevokeAllRequest.md) |  | 
 
 ### Return type
 
-Void (empty response body)
+[**AdminSessionsRevokeAllResponse**](AdminSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -309,17 +315,17 @@ Void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsStats**
 ```swift
-    open class func adminSessionsStats(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminSessionsStats(orgId: String, completion: @escaping (_ data: AdminSessionsStatsResponse?, _ error: Error?) -> Void)
 ```
 
-Get session statistics for the tenant
+Session statistics
 
 ### Example
 ```swift
@@ -328,7 +334,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Get session statistics for the tenant
+// Session statistics
 AdminSessionsAPI.adminSessionsStats(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -349,7 +355,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminSessionsStatsResponse**](AdminSessionsStatsResponse.md)
 
 ### Authorization
 
@@ -358,16 +364,18 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminTokensList**
 ```swift
-    open class func adminTokensList(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminTokensList(orgId: String, completion: @escaping (_ data: AdminTokensListResponse?, _ error: Error?) -> Void)
 ```
 
-List access tokens for the tenant
+List access tokens
+
+Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 ```swift
@@ -376,7 +384,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// List access tokens for the tenant
+// List access tokens
 AdminSessionsAPI.adminTokensList(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -397,7 +405,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminTokensListResponse**](AdminTokensListResponse.md)
 
 ### Authorization
 
@@ -406,13 +414,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminTokensRevoke**
 ```swift
-    open class func adminTokensRevoke(orgId: String, tokenId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminTokensRevoke(orgId: String, tokenId: String, completion: @escaping (_ data: AdminTokensRevokeResponse?, _ error: Error?) -> Void)
 ```
 
 Revoke a token
@@ -447,7 +455,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminTokensRevokeResponse**](AdminTokensRevokeResponse.md)
 
 ### Authorization
 
@@ -456,16 +464,18 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserSessionsList**
 ```swift
-    open class func adminUserSessionsList(orgId: String, userId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminUserSessionsList(orgId: String, userId: String, completion: @escaping (_ data: AdminUserSessionsListResponse?, _ error: Error?) -> Void)
 ```
 
-Get sessions for a specific user
+List a user's active sessions
+
+All active sessions of one user (UUID or email), returned as a single page.
 
 ### Example
 ```swift
@@ -475,7 +485,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 
-// Get sessions for a specific user
+// List a user's active sessions
 AdminSessionsAPI.adminUserSessionsList(orgId: orgId, userId: userId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -497,7 +507,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminUserSessionsListResponse**](AdminUserSessionsListResponse.md)
 
 ### Authorization
 
@@ -506,16 +516,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserSessionsRevokeAll**
 ```swift
-    open class func adminUserSessionsRevokeAll(orgId: String, userId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminUserSessionsRevokeAll(orgId: String, userId: String, completion: @escaping (_ data: AdminUserSessionsRevokeAllResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all sessions for a user
+Revoke all sessions of a user
 
 ### Example
 ```swift
@@ -525,7 +535,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 
-// Revoke all sessions for a user
+// Revoke all sessions of a user
 AdminSessionsAPI.adminUserSessionsRevokeAll(orgId: orgId, userId: userId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -547,7 +557,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminUserSessionsRevokeAllResponse**](AdminUserSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -556,16 +566,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserSessionsRevokePost**
 ```swift
-    open class func adminUserSessionsRevokePost(orgId: String, userId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminUserSessionsRevokePost(orgId: String, userId: String, completion: @escaping (_ data: AdminUserSessionsRevokePostResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all sessions for a user via POST
+Revoke all sessions of a user (POST alias)
 
 ### Example
 ```swift
@@ -575,7 +585,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 
-// Revoke all sessions for a user via POST
+// Revoke all sessions of a user (POST alias)
 AdminSessionsAPI.adminUserSessionsRevokePost(orgId: orgId, userId: userId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -597,7 +607,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminUserSessionsRevokePostResponse**](AdminUserSessionsRevokePostResponse.md)
 
 ### Authorization
 
@@ -606,16 +616,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserTokensRevokeAll**
 ```swift
-    open class func adminUserTokensRevokeAll(orgId: String, userId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminUserTokensRevokeAll(orgId: String, userId: String, completion: @escaping (_ data: AdminUserTokensRevokeAllResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all tokens for a user
+Revoke all tokens of a user
 
 ### Example
 ```swift
@@ -625,7 +635,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 
-// Revoke all tokens for a user
+// Revoke all tokens of a user
 AdminSessionsAPI.adminUserTokensRevokeAll(orgId: orgId, userId: userId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -647,7 +657,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminUserTokensRevokeAllResponse**](AdminUserTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -656,16 +666,16 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserTokensRevokePost**
 ```swift
-    open class func adminUserTokensRevokePost(orgId: String, userId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminUserTokensRevokePost(orgId: String, userId: String, completion: @escaping (_ data: AdminUserTokensRevokePostResponse?, _ error: Error?) -> Void)
 ```
 
-Revoke all tokens for a user via POST
+Revoke all tokens of a user (POST alias)
 
 ### Example
 ```swift
@@ -675,7 +685,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let userId = "userId_example" // String | 
 
-// Revoke all tokens for a user via POST
+// Revoke all tokens of a user (POST alias)
 AdminSessionsAPI.adminUserTokensRevokePost(orgId: orgId, userId: userId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -697,7 +707,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -706,7 +716,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

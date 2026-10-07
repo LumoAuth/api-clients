@@ -1,0 +1,40 @@
+{
+  "name": "lumoauth/api-client",
+  "description": "Generated LumoAuth API client (raw HTTP client + typed models). Use for full raw API coverage; ergonomic wrapper next.",
+  "keywords": [
+    "lumoauth",
+    "auth",
+    "oauth",
+    "oidc",
+    "agents",
+    "mcp",
+    "openapi",
+    "sdk"
+  ],
+  "homepage": "https://github.com/lumoauth/api-clients",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "LumoAuth LLC",
+      "homepage": "https://lumoauth.dev"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "guzzlehttp/guzzle": "^7.3",
+    "guzzlehttp/psr7": "^1.7 || ^2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "LumoAuth\\ApiClient\\": "lib/"
+    }
+  },
+  "support": {
+    "issues": "https://github.com/lumoauth/api-clients/issues",
+    "source": "https://github.com/lumoauth/api-clients/tree/main/php",
+    "docs": "https://docs.lumoauth.dev/developer/sdks"
+  }
+}

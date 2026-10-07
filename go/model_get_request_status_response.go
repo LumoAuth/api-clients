@@ -29,8 +29,12 @@ type GetRequestStatusResponse struct {
 	TokenUrl *string `json:"token_url,omitempty"`
 	// Present when approved.
 	GrantedTtl *int32 `json:"granted_ttl,omitempty"`
-	// Present when denied.
-	ReviewNotes *string `json:"review_notes,omitempty"`
+	// Present when decided: whether the reviewer left notes (the notes themselves are never returned).
+	HasNotes *bool `json:"has_notes,omitempty"`
+	// Present when decided: message the reviewer explicitly wrote for the agent.
+	AgentMessage NullableString `json:"agent_message,omitempty"`
+	// Present when pending: the on_behalf_of user must consent.
+	DelegationConsentRequired *bool `json:"delegation_consent_required,omitempty"`
 	// Present when pending.
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 }
@@ -244,36 +248,110 @@ func (o *GetRequestStatusResponse) SetGrantedTtl(v int32) {
 	o.GrantedTtl = &v
 }
 
-// GetReviewNotes returns the ReviewNotes field value if set, zero value otherwise.
-func (o *GetRequestStatusResponse) GetReviewNotes() string {
-	if o == nil || IsNil(o.ReviewNotes) {
-		var ret string
+// GetHasNotes returns the HasNotes field value if set, zero value otherwise.
+func (o *GetRequestStatusResponse) GetHasNotes() bool {
+	if o == nil || IsNil(o.HasNotes) {
+		var ret bool
 		return ret
 	}
-	return *o.ReviewNotes
+	return *o.HasNotes
 }
 
-// GetReviewNotesOk returns a tuple with the ReviewNotes field value if set, nil otherwise
+// GetHasNotesOk returns a tuple with the HasNotes field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetRequestStatusResponse) GetReviewNotesOk() (*string, bool) {
-	if o == nil || IsNil(o.ReviewNotes) {
+func (o *GetRequestStatusResponse) GetHasNotesOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasNotes) {
 		return nil, false
 	}
-	return o.ReviewNotes, true
+	return o.HasNotes, true
 }
 
-// HasReviewNotes returns a boolean if a field has been set.
-func (o *GetRequestStatusResponse) HasReviewNotes() bool {
-	if o != nil && !IsNil(o.ReviewNotes) {
+// HasHasNotes returns a boolean if a field has been set.
+func (o *GetRequestStatusResponse) HasHasNotes() bool {
+	if o != nil && !IsNil(o.HasNotes) {
 		return true
 	}
 
 	return false
 }
 
-// SetReviewNotes gets a reference to the given string and assigns it to the ReviewNotes field.
-func (o *GetRequestStatusResponse) SetReviewNotes(v string) {
-	o.ReviewNotes = &v
+// SetHasNotes gets a reference to the given bool and assigns it to the HasNotes field.
+func (o *GetRequestStatusResponse) SetHasNotes(v bool) {
+	o.HasNotes = &v
+}
+
+// GetAgentMessage returns the AgentMessage field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetRequestStatusResponse) GetAgentMessage() string {
+	if o == nil || IsNil(o.AgentMessage.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AgentMessage.Get()
+}
+
+// GetAgentMessageOk returns a tuple with the AgentMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetRequestStatusResponse) GetAgentMessageOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AgentMessage.Get(), o.AgentMessage.IsSet()
+}
+
+// HasAgentMessage returns a boolean if a field has been set.
+func (o *GetRequestStatusResponse) HasAgentMessage() bool {
+	if o != nil && o.AgentMessage.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAgentMessage gets a reference to the given NullableString and assigns it to the AgentMessage field.
+func (o *GetRequestStatusResponse) SetAgentMessage(v string) {
+	o.AgentMessage.Set(&v)
+}
+// SetAgentMessageNil sets the value for AgentMessage to be an explicit nil
+func (o *GetRequestStatusResponse) SetAgentMessageNil() {
+	o.AgentMessage.Set(nil)
+}
+
+// UnsetAgentMessage ensures that no value is present for AgentMessage, not even an explicit nil
+func (o *GetRequestStatusResponse) UnsetAgentMessage() {
+	o.AgentMessage.Unset()
+}
+
+// GetDelegationConsentRequired returns the DelegationConsentRequired field value if set, zero value otherwise.
+func (o *GetRequestStatusResponse) GetDelegationConsentRequired() bool {
+	if o == nil || IsNil(o.DelegationConsentRequired) {
+		var ret bool
+		return ret
+	}
+	return *o.DelegationConsentRequired
+}
+
+// GetDelegationConsentRequiredOk returns a tuple with the DelegationConsentRequired field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetRequestStatusResponse) GetDelegationConsentRequiredOk() (*bool, bool) {
+	if o == nil || IsNil(o.DelegationConsentRequired) {
+		return nil, false
+	}
+	return o.DelegationConsentRequired, true
+}
+
+// HasDelegationConsentRequired returns a boolean if a field has been set.
+func (o *GetRequestStatusResponse) HasDelegationConsentRequired() bool {
+	if o != nil && !IsNil(o.DelegationConsentRequired) {
+		return true
+	}
+
+	return false
+}
+
+// SetDelegationConsentRequired gets a reference to the given bool and assigns it to the DelegationConsentRequired field.
+func (o *GetRequestStatusResponse) SetDelegationConsentRequired(v bool) {
+	o.DelegationConsentRequired = &v
 }
 
 // GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise.
@@ -336,8 +414,14 @@ func (o GetRequestStatusResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.GrantedTtl) {
 		toSerialize["granted_ttl"] = o.GrantedTtl
 	}
-	if !IsNil(o.ReviewNotes) {
-		toSerialize["review_notes"] = o.ReviewNotes
+	if !IsNil(o.HasNotes) {
+		toSerialize["has_notes"] = o.HasNotes
+	}
+	if o.AgentMessage.IsSet() {
+		toSerialize["agent_message"] = o.AgentMessage.Get()
+	}
+	if !IsNil(o.DelegationConsentRequired) {
+		toSerialize["delegation_consent_required"] = o.DelegationConsentRequired
 	}
 	if !IsNil(o.ExpiresAt) {
 		toSerialize["expires_at"] = o.ExpiresAt

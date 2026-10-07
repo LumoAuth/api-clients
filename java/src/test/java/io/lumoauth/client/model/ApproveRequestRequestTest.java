@@ -53,4 +53,12 @@ public class ApproveRequestRequestTest {
         // TODO: test notes
     }
 
+    /**
+     * Test the property 'agentMessage'
+     */
+    @Test
+    public void agentMessageTest() {
+        // TODO: test agentMessage
+    }
+
 }

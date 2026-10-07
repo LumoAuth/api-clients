@@ -33,7 +33,8 @@ type AdminSettingsAPI interface {
 	AdminAnalyticsDashboard(ctx context.Context, orgId string) ApiAdminAnalyticsDashboardRequest
 
 	// AdminAnalyticsDashboardExecute executes the request
-	AdminAnalyticsDashboardExecute(r ApiAdminAnalyticsDashboardRequest) (*http.Response, error)
+	//  @return AdminAnalyticsDashboardResponse
+	AdminAnalyticsDashboardExecute(r ApiAdminAnalyticsDashboardRequest) (*AdminAnalyticsDashboardResponse, *http.Response, error)
 
 	/*
 	AdminAnalyticsLogins Get login analytics
@@ -45,7 +46,8 @@ type AdminSettingsAPI interface {
 	AdminAnalyticsLogins(ctx context.Context, orgId string) ApiAdminAnalyticsLoginsRequest
 
 	// AdminAnalyticsLoginsExecute executes the request
-	AdminAnalyticsLoginsExecute(r ApiAdminAnalyticsLoginsRequest) (*http.Response, error)
+	//  @return AdminAnalyticsLoginsResponse
+	AdminAnalyticsLoginsExecute(r ApiAdminAnalyticsLoginsRequest) (*AdminAnalyticsLoginsResponse, *http.Response, error)
 
 	/*
 	AdminAnalyticsUsers Get user growth analytics
@@ -57,10 +59,11 @@ type AdminSettingsAPI interface {
 	AdminAnalyticsUsers(ctx context.Context, orgId string) ApiAdminAnalyticsUsersRequest
 
 	// AdminAnalyticsUsersExecute executes the request
-	AdminAnalyticsUsersExecute(r ApiAdminAnalyticsUsersRequest) (*http.Response, error)
+	//  @return AdminAnalyticsUsersResponse
+	AdminAnalyticsUsersExecute(r ApiAdminAnalyticsUsersRequest) (*AdminAnalyticsUsersResponse, *http.Response, error)
 
 	/*
-	AdminOrganizationGet Get tenant information
+	AdminOrganizationGet Get organization (tenant) profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -69,7 +72,8 @@ type AdminSettingsAPI interface {
 	AdminOrganizationGet(ctx context.Context, orgId string) ApiAdminOrganizationGetRequest
 
 	// AdminOrganizationGetExecute executes the request
-	AdminOrganizationGetExecute(r ApiAdminOrganizationGetRequest) (*http.Response, error)
+	//  @return AdminTenantGetResponse
+	AdminOrganizationGetExecute(r ApiAdminOrganizationGetRequest) (*AdminTenantGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsAll Get all settings (combined)
@@ -81,7 +85,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsAll(ctx context.Context, orgId string) ApiAdminSettingsAllRequest
 
 	// AdminSettingsAllExecute executes the request
-	AdminSettingsAllExecute(r ApiAdminSettingsAllRequest) (*http.Response, error)
+	//  @return AdminSettingsAllResponse
+	AdminSettingsAllExecute(r ApiAdminSettingsAllRequest) (*AdminSettingsAllResponse, *http.Response, error)
 
 	/*
 	AdminSettingsAuthGet Get authentication settings
@@ -93,7 +98,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsAuthGet(ctx context.Context, orgId string) ApiAdminSettingsAuthGetRequest
 
 	// AdminSettingsAuthGetExecute executes the request
-	AdminSettingsAuthGetExecute(r ApiAdminSettingsAuthGetRequest) (*http.Response, error)
+	//  @return AdminSettingsAuthenticationGetResponse
+	AdminSettingsAuthGetExecute(r ApiAdminSettingsAuthGetRequest) (*AdminSettingsAuthenticationGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsAuthenticationGet Get authentication settings (alias for settings/auth)
@@ -105,7 +111,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsAuthenticationGet(ctx context.Context, orgId string) ApiAdminSettingsAuthenticationGetRequest
 
 	// AdminSettingsAuthenticationGetExecute executes the request
-	AdminSettingsAuthenticationGetExecute(r ApiAdminSettingsAuthenticationGetRequest) (*http.Response, error)
+	//  @return AdminSettingsAuthenticationGetResponse
+	AdminSettingsAuthenticationGetExecute(r ApiAdminSettingsAuthenticationGetRequest) (*AdminSettingsAuthenticationGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsBrandingGet Get branding/login page settings
@@ -117,7 +124,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsBrandingGet(ctx context.Context, orgId string) ApiAdminSettingsBrandingGetRequest
 
 	// AdminSettingsBrandingGetExecute executes the request
-	AdminSettingsBrandingGetExecute(r ApiAdminSettingsBrandingGetRequest) (*http.Response, error)
+	//  @return AdminSettingsBrandingGetResponse
+	AdminSettingsBrandingGetExecute(r ApiAdminSettingsBrandingGetRequest) (*AdminSettingsBrandingGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsEmailGet Get email settings
@@ -129,7 +137,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsEmailGet(ctx context.Context, orgId string) ApiAdminSettingsEmailGetRequest
 
 	// AdminSettingsEmailGetExecute executes the request
-	AdminSettingsEmailGetExecute(r ApiAdminSettingsEmailGetRequest) (*http.Response, error)
+	//  @return AdminSettingsEmailGetResponse
+	AdminSettingsEmailGetExecute(r ApiAdminSettingsEmailGetRequest) (*AdminSettingsEmailGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsGeneralGet Get general settings
@@ -141,7 +150,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsGeneralGet(ctx context.Context, orgId string) ApiAdminSettingsGeneralGetRequest
 
 	// AdminSettingsGeneralGetExecute executes the request
-	AdminSettingsGeneralGetExecute(r ApiAdminSettingsGeneralGetRequest) (*http.Response, error)
+	//  @return AdminSettingsGeneralGetResponse
+	AdminSettingsGeneralGetExecute(r ApiAdminSettingsGeneralGetRequest) (*AdminSettingsGeneralGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsScimGet Get SCIM settings
@@ -153,7 +163,8 @@ type AdminSettingsAPI interface {
 	AdminSettingsScimGet(ctx context.Context, orgId string) ApiAdminSettingsScimGetRequest
 
 	// AdminSettingsScimGetExecute executes the request
-	AdminSettingsScimGetExecute(r ApiAdminSettingsScimGetRequest) (*http.Response, error)
+	//  @return AdminSettingsScimGetResponse
+	AdminSettingsScimGetExecute(r ApiAdminSettingsScimGetRequest) (*AdminSettingsScimGetResponse, *http.Response, error)
 
 	/*
 	AdminSettingsSecurityGet Get security settings
@@ -165,10 +176,11 @@ type AdminSettingsAPI interface {
 	AdminSettingsSecurityGet(ctx context.Context, orgId string) ApiAdminSettingsSecurityGetRequest
 
 	// AdminSettingsSecurityGetExecute executes the request
-	AdminSettingsSecurityGetExecute(r ApiAdminSettingsSecurityGetRequest) (*http.Response, error)
+	//  @return AdminSettingsSecurityGetResponse
+	AdminSettingsSecurityGetExecute(r ApiAdminSettingsSecurityGetRequest) (*AdminSettingsSecurityGetResponse, *http.Response, error)
 
 	/*
-	AdminTenantGet Get tenant information
+	AdminTenantGet Get organization (tenant) profile
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -177,10 +189,11 @@ type AdminSettingsAPI interface {
 	AdminTenantGet(ctx context.Context, orgId string) ApiAdminTenantGetRequest
 
 	// AdminTenantGetExecute executes the request
-	AdminTenantGetExecute(r ApiAdminTenantGetRequest) (*http.Response, error)
+	//  @return AdminTenantGetResponse
+	AdminTenantGetExecute(r ApiAdminTenantGetRequest) (*AdminTenantGetResponse, *http.Response, error)
 
 	/*
-	PatchAdminOrganizationUpdate Update tenant settings
+	PatchAdminOrganizationUpdate Update organization (tenant) name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -189,7 +202,8 @@ type AdminSettingsAPI interface {
 	PatchAdminOrganizationUpdate(ctx context.Context, orgId string) ApiPatchAdminOrganizationUpdateRequest
 
 	// PatchAdminOrganizationUpdateExecute executes the request
-	PatchAdminOrganizationUpdateExecute(r ApiPatchAdminOrganizationUpdateRequest) (*http.Response, error)
+	//  @return PutAdminTenantUpdateResponse
+	PatchAdminOrganizationUpdateExecute(r ApiPatchAdminOrganizationUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsAuthUpdate Update authentication settings
@@ -201,7 +215,8 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsAuthUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsAuthUpdateRequest
 
 	// PatchAdminSettingsAuthUpdateExecute executes the request
-	PatchAdminSettingsAuthUpdateExecute(r ApiPatchAdminSettingsAuthUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsAuthenticationUpdateResponse
+	PatchAdminSettingsAuthUpdateExecute(r ApiPatchAdminSettingsAuthUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsAuthenticationUpdate Update authentication settings (alias for settings/auth)
@@ -213,7 +228,8 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsAuthenticationUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsAuthenticationUpdateRequest
 
 	// PatchAdminSettingsAuthenticationUpdateExecute executes the request
-	PatchAdminSettingsAuthenticationUpdateExecute(r ApiPatchAdminSettingsAuthenticationUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsAuthenticationUpdateResponse
+	PatchAdminSettingsAuthenticationUpdateExecute(r ApiPatchAdminSettingsAuthenticationUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsBrandingUpdate Update branding/login page settings
@@ -225,7 +241,8 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsBrandingUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsBrandingUpdateRequest
 
 	// PatchAdminSettingsBrandingUpdateExecute executes the request
-	PatchAdminSettingsBrandingUpdateExecute(r ApiPatchAdminSettingsBrandingUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsBrandingUpdateResponse
+	PatchAdminSettingsBrandingUpdateExecute(r ApiPatchAdminSettingsBrandingUpdateRequest) (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsEmailUpdate Update email settings
@@ -237,7 +254,8 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsEmailUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsEmailUpdateRequest
 
 	// PatchAdminSettingsEmailUpdateExecute executes the request
-	PatchAdminSettingsEmailUpdateExecute(r ApiPatchAdminSettingsEmailUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsEmailUpdateResponse
+	PatchAdminSettingsEmailUpdateExecute(r ApiPatchAdminSettingsEmailUpdateRequest) (*PutAdminSettingsEmailUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsGeneralUpdate Update general settings
@@ -249,7 +267,8 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsGeneralUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsGeneralUpdateRequest
 
 	// PatchAdminSettingsGeneralUpdateExecute executes the request
-	PatchAdminSettingsGeneralUpdateExecute(r ApiPatchAdminSettingsGeneralUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsGeneralUpdateResponse
+	PatchAdminSettingsGeneralUpdateExecute(r ApiPatchAdminSettingsGeneralUpdateRequest) (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsScimUpdate Update SCIM settings
@@ -261,7 +280,8 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsScimUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsScimUpdateRequest
 
 	// PatchAdminSettingsScimUpdateExecute executes the request
-	PatchAdminSettingsScimUpdateExecute(r ApiPatchAdminSettingsScimUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsScimUpdateResponse
+	PatchAdminSettingsScimUpdateExecute(r ApiPatchAdminSettingsScimUpdateRequest) (*PutAdminSettingsScimUpdateResponse, *http.Response, error)
 
 	/*
 	PatchAdminSettingsSecurityUpdate Update security settings
@@ -273,10 +293,11 @@ type AdminSettingsAPI interface {
 	PatchAdminSettingsSecurityUpdate(ctx context.Context, orgId string) ApiPatchAdminSettingsSecurityUpdateRequest
 
 	// PatchAdminSettingsSecurityUpdateExecute executes the request
-	PatchAdminSettingsSecurityUpdateExecute(r ApiPatchAdminSettingsSecurityUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsSecurityUpdateResponse
+	PatchAdminSettingsSecurityUpdateExecute(r ApiPatchAdminSettingsSecurityUpdateRequest) (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error)
 
 	/*
-	PatchAdminTenantUpdate Update tenant settings
+	PatchAdminTenantUpdate Update organization (tenant) name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -285,10 +306,11 @@ type AdminSettingsAPI interface {
 	PatchAdminTenantUpdate(ctx context.Context, orgId string) ApiPatchAdminTenantUpdateRequest
 
 	// PatchAdminTenantUpdateExecute executes the request
-	PatchAdminTenantUpdateExecute(r ApiPatchAdminTenantUpdateRequest) (*http.Response, error)
+	//  @return PutAdminTenantUpdateResponse
+	PatchAdminTenantUpdateExecute(r ApiPatchAdminTenantUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error)
 
 	/*
-	PutAdminOrganizationUpdate Update tenant settings
+	PutAdminOrganizationUpdate Update organization (tenant) name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -297,7 +319,8 @@ type AdminSettingsAPI interface {
 	PutAdminOrganizationUpdate(ctx context.Context, orgId string) ApiPutAdminOrganizationUpdateRequest
 
 	// PutAdminOrganizationUpdateExecute executes the request
-	PutAdminOrganizationUpdateExecute(r ApiPutAdminOrganizationUpdateRequest) (*http.Response, error)
+	//  @return PutAdminTenantUpdateResponse
+	PutAdminOrganizationUpdateExecute(r ApiPutAdminOrganizationUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsAuthUpdate Update authentication settings
@@ -309,7 +332,8 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsAuthUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsAuthUpdateRequest
 
 	// PutAdminSettingsAuthUpdateExecute executes the request
-	PutAdminSettingsAuthUpdateExecute(r ApiPutAdminSettingsAuthUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsAuthenticationUpdateResponse
+	PutAdminSettingsAuthUpdateExecute(r ApiPutAdminSettingsAuthUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsAuthenticationUpdate Update authentication settings (alias for settings/auth)
@@ -321,7 +345,8 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsAuthenticationUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsAuthenticationUpdateRequest
 
 	// PutAdminSettingsAuthenticationUpdateExecute executes the request
-	PutAdminSettingsAuthenticationUpdateExecute(r ApiPutAdminSettingsAuthenticationUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsAuthenticationUpdateResponse
+	PutAdminSettingsAuthenticationUpdateExecute(r ApiPutAdminSettingsAuthenticationUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsBrandingUpdate Update branding/login page settings
@@ -333,7 +358,8 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsBrandingUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsBrandingUpdateRequest
 
 	// PutAdminSettingsBrandingUpdateExecute executes the request
-	PutAdminSettingsBrandingUpdateExecute(r ApiPutAdminSettingsBrandingUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsBrandingUpdateResponse
+	PutAdminSettingsBrandingUpdateExecute(r ApiPutAdminSettingsBrandingUpdateRequest) (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsEmailUpdate Update email settings
@@ -345,7 +371,8 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsEmailUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsEmailUpdateRequest
 
 	// PutAdminSettingsEmailUpdateExecute executes the request
-	PutAdminSettingsEmailUpdateExecute(r ApiPutAdminSettingsEmailUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsEmailUpdateResponse
+	PutAdminSettingsEmailUpdateExecute(r ApiPutAdminSettingsEmailUpdateRequest) (*PutAdminSettingsEmailUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsGeneralUpdate Update general settings
@@ -357,7 +384,8 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsGeneralUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsGeneralUpdateRequest
 
 	// PutAdminSettingsGeneralUpdateExecute executes the request
-	PutAdminSettingsGeneralUpdateExecute(r ApiPutAdminSettingsGeneralUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsGeneralUpdateResponse
+	PutAdminSettingsGeneralUpdateExecute(r ApiPutAdminSettingsGeneralUpdateRequest) (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsScimUpdate Update SCIM settings
@@ -369,7 +397,8 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsScimUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsScimUpdateRequest
 
 	// PutAdminSettingsScimUpdateExecute executes the request
-	PutAdminSettingsScimUpdateExecute(r ApiPutAdminSettingsScimUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsScimUpdateResponse
+	PutAdminSettingsScimUpdateExecute(r ApiPutAdminSettingsScimUpdateRequest) (*PutAdminSettingsScimUpdateResponse, *http.Response, error)
 
 	/*
 	PutAdminSettingsSecurityUpdate Update security settings
@@ -381,10 +410,11 @@ type AdminSettingsAPI interface {
 	PutAdminSettingsSecurityUpdate(ctx context.Context, orgId string) ApiPutAdminSettingsSecurityUpdateRequest
 
 	// PutAdminSettingsSecurityUpdateExecute executes the request
-	PutAdminSettingsSecurityUpdateExecute(r ApiPutAdminSettingsSecurityUpdateRequest) (*http.Response, error)
+	//  @return PutAdminSettingsSecurityUpdateResponse
+	PutAdminSettingsSecurityUpdateExecute(r ApiPutAdminSettingsSecurityUpdateRequest) (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error)
 
 	/*
-	PutAdminTenantUpdate Update tenant settings
+	PutAdminTenantUpdate Update organization (tenant) name and settings
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -393,7 +423,8 @@ type AdminSettingsAPI interface {
 	PutAdminTenantUpdate(ctx context.Context, orgId string) ApiPutAdminTenantUpdateRequest
 
 	// PutAdminTenantUpdateExecute executes the request
-	PutAdminTenantUpdateExecute(r ApiPutAdminTenantUpdateRequest) (*http.Response, error)
+	//  @return PutAdminTenantUpdateResponse
+	PutAdminTenantUpdateExecute(r ApiPutAdminTenantUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error)
 }
 
 // AdminSettingsAPIService AdminSettingsAPI service
@@ -405,7 +436,7 @@ type ApiAdminAnalyticsDashboardRequest struct {
 	orgId string
 }
 
-func (r ApiAdminAnalyticsDashboardRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAnalyticsDashboardRequest) Execute() (*AdminAnalyticsDashboardResponse, *http.Response, error) {
 	return r.ApiService.AdminAnalyticsDashboardExecute(r)
 }
 
@@ -425,16 +456,18 @@ func (a *AdminSettingsAPIService) AdminAnalyticsDashboard(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminAnalyticsDashboardExecute(r ApiAdminAnalyticsDashboardRequest) (*http.Response, error) {
+//  @return AdminAnalyticsDashboardResponse
+func (a *AdminSettingsAPIService) AdminAnalyticsDashboardExecute(r ApiAdminAnalyticsDashboardRequest) (*AdminAnalyticsDashboardResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAnalyticsDashboardResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminAnalyticsDashboard")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/analytics/dashboard"
@@ -454,7 +487,7 @@ func (a *AdminSettingsAPIService) AdminAnalyticsDashboardExecute(r ApiAdminAnaly
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -477,19 +510,19 @@ func (a *AdminSettingsAPIService) AdminAnalyticsDashboardExecute(r ApiAdminAnaly
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -497,19 +530,35 @@ func (a *AdminSettingsAPIService) AdminAnalyticsDashboardExecute(r ApiAdminAnaly
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAnalyticsLoginsRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	days *int32
 }
 
-func (r ApiAdminAnalyticsLoginsRequest) Execute() (*http.Response, error) {
+// Window in days (1-90, default 30).
+func (r ApiAdminAnalyticsLoginsRequest) Days(days int32) ApiAdminAnalyticsLoginsRequest {
+	r.days = &days
+	return r
+}
+
+func (r ApiAdminAnalyticsLoginsRequest) Execute() (*AdminAnalyticsLoginsResponse, *http.Response, error) {
 	return r.ApiService.AdminAnalyticsLoginsExecute(r)
 }
 
@@ -529,16 +578,18 @@ func (a *AdminSettingsAPIService) AdminAnalyticsLogins(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminAnalyticsLoginsExecute(r ApiAdminAnalyticsLoginsRequest) (*http.Response, error) {
+//  @return AdminAnalyticsLoginsResponse
+func (a *AdminSettingsAPIService) AdminAnalyticsLoginsExecute(r ApiAdminAnalyticsLoginsRequest) (*AdminAnalyticsLoginsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAnalyticsLoginsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminAnalyticsLogins")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/analytics/logins"
@@ -548,6 +599,12 @@ func (a *AdminSettingsAPIService) AdminAnalyticsLoginsExecute(r ApiAdminAnalytic
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.days != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "days", r.days, "form", "")
+	} else {
+		var defaultValue int32 = 30
+		r.days = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -558,7 +615,7 @@ func (a *AdminSettingsAPIService) AdminAnalyticsLoginsExecute(r ApiAdminAnalytic
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -581,19 +638,19 @@ func (a *AdminSettingsAPIService) AdminAnalyticsLoginsExecute(r ApiAdminAnalytic
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -601,19 +658,35 @@ func (a *AdminSettingsAPIService) AdminAnalyticsLoginsExecute(r ApiAdminAnalytic
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAnalyticsUsersRequest struct {
 	ctx context.Context
 	ApiService AdminSettingsAPI
 	orgId string
+	days *int32
 }
 
-func (r ApiAdminAnalyticsUsersRequest) Execute() (*http.Response, error) {
+// Window in days (1-90, default 30).
+func (r ApiAdminAnalyticsUsersRequest) Days(days int32) ApiAdminAnalyticsUsersRequest {
+	r.days = &days
+	return r
+}
+
+func (r ApiAdminAnalyticsUsersRequest) Execute() (*AdminAnalyticsUsersResponse, *http.Response, error) {
 	return r.ApiService.AdminAnalyticsUsersExecute(r)
 }
 
@@ -633,16 +706,18 @@ func (a *AdminSettingsAPIService) AdminAnalyticsUsers(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalyticsUsersRequest) (*http.Response, error) {
+//  @return AdminAnalyticsUsersResponse
+func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalyticsUsersRequest) (*AdminAnalyticsUsersResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAnalyticsUsersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminAnalyticsUsers")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/analytics/users"
@@ -652,6 +727,12 @@ func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalytics
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.days != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "days", r.days, "form", "")
+	} else {
+		var defaultValue int32 = 30
+		r.days = &defaultValue
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -662,7 +743,7 @@ func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalytics
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -685,19 +766,19 @@ func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalytics
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -705,10 +786,19 @@ func (a *AdminSettingsAPIService) AdminAnalyticsUsersExecute(r ApiAdminAnalytics
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrganizationGetRequest struct {
@@ -717,12 +807,12 @@ type ApiAdminOrganizationGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminOrganizationGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrganizationGetRequest) Execute() (*AdminTenantGetResponse, *http.Response, error) {
 	return r.ApiService.AdminOrganizationGetExecute(r)
 }
 
 /*
-AdminOrganizationGet Get tenant information
+AdminOrganizationGet Get organization (tenant) profile
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -737,16 +827,18 @@ func (a *AdminSettingsAPIService) AdminOrganizationGet(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminOrganizationGetExecute(r ApiAdminOrganizationGetRequest) (*http.Response, error) {
+//  @return AdminTenantGetResponse
+func (a *AdminSettingsAPIService) AdminOrganizationGetExecute(r ApiAdminOrganizationGetRequest) (*AdminTenantGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminTenantGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminOrganizationGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organization"
@@ -766,7 +858,7 @@ func (a *AdminSettingsAPIService) AdminOrganizationGetExecute(r ApiAdminOrganiza
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -789,19 +881,19 @@ func (a *AdminSettingsAPIService) AdminOrganizationGetExecute(r ApiAdminOrganiza
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -809,10 +901,19 @@ func (a *AdminSettingsAPIService) AdminOrganizationGetExecute(r ApiAdminOrganiza
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsAllRequest struct {
@@ -821,7 +922,7 @@ type ApiAdminSettingsAllRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsAllRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsAllRequest) Execute() (*AdminSettingsAllResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsAllExecute(r)
 }
 
@@ -841,16 +942,18 @@ func (a *AdminSettingsAPIService) AdminSettingsAll(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsAllExecute(r ApiAdminSettingsAllRequest) (*http.Response, error) {
+//  @return AdminSettingsAllResponse
+func (a *AdminSettingsAPIService) AdminSettingsAllExecute(r ApiAdminSettingsAllRequest) (*AdminSettingsAllResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsAllResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsAll")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings"
@@ -870,7 +973,7 @@ func (a *AdminSettingsAPIService) AdminSettingsAllExecute(r ApiAdminSettingsAllR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -893,19 +996,19 @@ func (a *AdminSettingsAPIService) AdminSettingsAllExecute(r ApiAdminSettingsAllR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -913,10 +1016,19 @@ func (a *AdminSettingsAPIService) AdminSettingsAllExecute(r ApiAdminSettingsAllR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsAuthGetRequest struct {
@@ -925,7 +1037,7 @@ type ApiAdminSettingsAuthGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsAuthGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsAuthGetRequest) Execute() (*AdminSettingsAuthenticationGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsAuthGetExecute(r)
 }
 
@@ -945,16 +1057,18 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthGet(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsAuthGetExecute(r ApiAdminSettingsAuthGetRequest) (*http.Response, error) {
+//  @return AdminSettingsAuthenticationGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsAuthGetExecute(r ApiAdminSettingsAuthGetRequest) (*AdminSettingsAuthenticationGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsAuthenticationGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsAuthGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/auth"
@@ -974,7 +1088,7 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthGetExecute(r ApiAdminSettings
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -997,19 +1111,19 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthGetExecute(r ApiAdminSettings
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1017,10 +1131,19 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthGetExecute(r ApiAdminSettings
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsAuthenticationGetRequest struct {
@@ -1029,7 +1152,7 @@ type ApiAdminSettingsAuthenticationGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsAuthenticationGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsAuthenticationGetRequest) Execute() (*AdminSettingsAuthenticationGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsAuthenticationGetExecute(r)
 }
 
@@ -1049,16 +1172,18 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthenticationGet(ctx context.Con
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsAuthenticationGetExecute(r ApiAdminSettingsAuthenticationGetRequest) (*http.Response, error) {
+//  @return AdminSettingsAuthenticationGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsAuthenticationGetExecute(r ApiAdminSettingsAuthenticationGetRequest) (*AdminSettingsAuthenticationGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsAuthenticationGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsAuthenticationGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/authentication"
@@ -1078,7 +1203,7 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthenticationGetExecute(r ApiAdm
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1101,19 +1226,19 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthenticationGetExecute(r ApiAdm
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1121,10 +1246,19 @@ func (a *AdminSettingsAPIService) AdminSettingsAuthenticationGetExecute(r ApiAdm
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsBrandingGetRequest struct {
@@ -1133,7 +1267,7 @@ type ApiAdminSettingsBrandingGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsBrandingGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsBrandingGetRequest) Execute() (*AdminSettingsBrandingGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsBrandingGetExecute(r)
 }
 
@@ -1153,16 +1287,18 @@ func (a *AdminSettingsAPIService) AdminSettingsBrandingGet(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsBrandingGetExecute(r ApiAdminSettingsBrandingGetRequest) (*http.Response, error) {
+//  @return AdminSettingsBrandingGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsBrandingGetExecute(r ApiAdminSettingsBrandingGetRequest) (*AdminSettingsBrandingGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsBrandingGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsBrandingGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/branding"
@@ -1182,7 +1318,7 @@ func (a *AdminSettingsAPIService) AdminSettingsBrandingGetExecute(r ApiAdminSett
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1205,19 +1341,19 @@ func (a *AdminSettingsAPIService) AdminSettingsBrandingGetExecute(r ApiAdminSett
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1225,10 +1361,19 @@ func (a *AdminSettingsAPIService) AdminSettingsBrandingGetExecute(r ApiAdminSett
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsEmailGetRequest struct {
@@ -1237,7 +1382,7 @@ type ApiAdminSettingsEmailGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsEmailGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsEmailGetRequest) Execute() (*AdminSettingsEmailGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsEmailGetExecute(r)
 }
 
@@ -1257,16 +1402,18 @@ func (a *AdminSettingsAPIService) AdminSettingsEmailGet(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsEmailGetExecute(r ApiAdminSettingsEmailGetRequest) (*http.Response, error) {
+//  @return AdminSettingsEmailGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsEmailGetExecute(r ApiAdminSettingsEmailGetRequest) (*AdminSettingsEmailGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsEmailGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsEmailGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/email"
@@ -1286,7 +1433,7 @@ func (a *AdminSettingsAPIService) AdminSettingsEmailGetExecute(r ApiAdminSetting
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1309,19 +1456,19 @@ func (a *AdminSettingsAPIService) AdminSettingsEmailGetExecute(r ApiAdminSetting
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1329,10 +1476,19 @@ func (a *AdminSettingsAPIService) AdminSettingsEmailGetExecute(r ApiAdminSetting
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsGeneralGetRequest struct {
@@ -1341,7 +1497,7 @@ type ApiAdminSettingsGeneralGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsGeneralGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsGeneralGetRequest) Execute() (*AdminSettingsGeneralGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsGeneralGetExecute(r)
 }
 
@@ -1361,16 +1517,18 @@ func (a *AdminSettingsAPIService) AdminSettingsGeneralGet(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsGeneralGetExecute(r ApiAdminSettingsGeneralGetRequest) (*http.Response, error) {
+//  @return AdminSettingsGeneralGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsGeneralGetExecute(r ApiAdminSettingsGeneralGetRequest) (*AdminSettingsGeneralGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsGeneralGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsGeneralGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/general"
@@ -1390,7 +1548,7 @@ func (a *AdminSettingsAPIService) AdminSettingsGeneralGetExecute(r ApiAdminSetti
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1413,19 +1571,19 @@ func (a *AdminSettingsAPIService) AdminSettingsGeneralGetExecute(r ApiAdminSetti
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1433,10 +1591,19 @@ func (a *AdminSettingsAPIService) AdminSettingsGeneralGetExecute(r ApiAdminSetti
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsScimGetRequest struct {
@@ -1445,7 +1612,7 @@ type ApiAdminSettingsScimGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsScimGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsScimGetRequest) Execute() (*AdminSettingsScimGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsScimGetExecute(r)
 }
 
@@ -1465,16 +1632,18 @@ func (a *AdminSettingsAPIService) AdminSettingsScimGet(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsScimGetExecute(r ApiAdminSettingsScimGetRequest) (*http.Response, error) {
+//  @return AdminSettingsScimGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsScimGetExecute(r ApiAdminSettingsScimGetRequest) (*AdminSettingsScimGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsScimGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsScimGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/scim"
@@ -1494,7 +1663,7 @@ func (a *AdminSettingsAPIService) AdminSettingsScimGetExecute(r ApiAdminSettings
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1517,19 +1686,19 @@ func (a *AdminSettingsAPIService) AdminSettingsScimGetExecute(r ApiAdminSettings
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1537,10 +1706,19 @@ func (a *AdminSettingsAPIService) AdminSettingsScimGetExecute(r ApiAdminSettings
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSettingsSecurityGetRequest struct {
@@ -1549,7 +1727,7 @@ type ApiAdminSettingsSecurityGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSettingsSecurityGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSettingsSecurityGetRequest) Execute() (*AdminSettingsSecurityGetResponse, *http.Response, error) {
 	return r.ApiService.AdminSettingsSecurityGetExecute(r)
 }
 
@@ -1569,16 +1747,18 @@ func (a *AdminSettingsAPIService) AdminSettingsSecurityGet(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminSettingsSecurityGetExecute(r ApiAdminSettingsSecurityGetRequest) (*http.Response, error) {
+//  @return AdminSettingsSecurityGetResponse
+func (a *AdminSettingsAPIService) AdminSettingsSecurityGetExecute(r ApiAdminSettingsSecurityGetRequest) (*AdminSettingsSecurityGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSettingsSecurityGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminSettingsSecurityGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/security"
@@ -1598,7 +1778,7 @@ func (a *AdminSettingsAPIService) AdminSettingsSecurityGetExecute(r ApiAdminSett
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1621,19 +1801,19 @@ func (a *AdminSettingsAPIService) AdminSettingsSecurityGetExecute(r ApiAdminSett
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1641,10 +1821,19 @@ func (a *AdminSettingsAPIService) AdminSettingsSecurityGetExecute(r ApiAdminSett
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminTenantGetRequest struct {
@@ -1653,12 +1842,12 @@ type ApiAdminTenantGetRequest struct {
 	orgId string
 }
 
-func (r ApiAdminTenantGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminTenantGetRequest) Execute() (*AdminTenantGetResponse, *http.Response, error) {
 	return r.ApiService.AdminTenantGetExecute(r)
 }
 
 /*
-AdminTenantGet Get tenant information
+AdminTenantGet Get organization (tenant) profile
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1673,16 +1862,18 @@ func (a *AdminSettingsAPIService) AdminTenantGet(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) AdminTenantGetExecute(r ApiAdminTenantGetRequest) (*http.Response, error) {
+//  @return AdminTenantGetResponse
+func (a *AdminSettingsAPIService) AdminTenantGetExecute(r ApiAdminTenantGetRequest) (*AdminTenantGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminTenantGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.AdminTenantGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/tenant"
@@ -1702,7 +1893,7 @@ func (a *AdminSettingsAPIService) AdminTenantGetExecute(r ApiAdminTenantGetReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1725,19 +1916,19 @@ func (a *AdminSettingsAPIService) AdminTenantGetExecute(r ApiAdminTenantGetReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1745,10 +1936,19 @@ func (a *AdminSettingsAPIService) AdminTenantGetExecute(r ApiAdminTenantGetReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminOrganizationUpdateRequest struct {
@@ -1757,12 +1957,12 @@ type ApiPatchAdminOrganizationUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminOrganizationUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminOrganizationUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminOrganizationUpdateExecute(r)
 }
 
 /*
-PatchAdminOrganizationUpdate Update tenant settings
+PatchAdminOrganizationUpdate Update organization (tenant) name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1777,16 +1977,18 @@ func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdate(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatchAdminOrganizationUpdateRequest) (*http.Response, error) {
+//  @return PutAdminTenantUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatchAdminOrganizationUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminTenantUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminOrganizationUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organization"
@@ -1806,7 +2008,7 @@ func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatch
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1829,19 +2031,19 @@ func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatch
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1849,10 +2051,19 @@ func (a *AdminSettingsAPIService) PatchAdminOrganizationUpdateExecute(r ApiPatch
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsAuthUpdateRequest struct {
@@ -1861,7 +2072,7 @@ type ApiPatchAdminSettingsAuthUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsAuthUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsAuthUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsAuthUpdateExecute(r)
 }
 
@@ -1881,16 +2092,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdate(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatchAdminSettingsAuthUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsAuthenticationUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatchAdminSettingsAuthUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsAuthenticationUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsAuthUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/auth"
@@ -1910,7 +2123,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatch
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1933,19 +2146,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatch
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1953,10 +2166,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthUpdateExecute(r ApiPatch
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsAuthenticationUpdateRequest struct {
@@ -1965,7 +2187,7 @@ type ApiPatchAdminSettingsAuthenticationUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsAuthenticationUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsAuthenticationUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsAuthenticationUpdateExecute(r)
 }
 
@@ -1985,16 +2207,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdate(ctx con
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(r ApiPatchAdminSettingsAuthenticationUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsAuthenticationUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(r ApiPatchAdminSettingsAuthenticationUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsAuthenticationUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsAuthenticationUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/authentication"
@@ -2014,7 +2238,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2037,19 +2261,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2057,10 +2281,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsAuthenticationUpdateExecute(
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsBrandingUpdateRequest struct {
@@ -2069,7 +2302,7 @@ type ApiPatchAdminSettingsBrandingUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsBrandingUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsBrandingUpdateRequest) Execute() (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsBrandingUpdateExecute(r)
 }
 
@@ -2089,16 +2322,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdate(ctx context.C
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiPatchAdminSettingsBrandingUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsBrandingUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiPatchAdminSettingsBrandingUpdateRequest) (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsBrandingUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsBrandingUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/branding"
@@ -2118,7 +2353,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiP
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2141,19 +2376,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiP
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2161,10 +2396,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsBrandingUpdateExecute(r ApiP
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsEmailUpdateRequest struct {
@@ -2173,7 +2417,7 @@ type ApiPatchAdminSettingsEmailUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsEmailUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsEmailUpdateRequest) Execute() (*PutAdminSettingsEmailUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsEmailUpdateExecute(r)
 }
 
@@ -2193,16 +2437,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdate(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatchAdminSettingsEmailUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsEmailUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatchAdminSettingsEmailUpdateRequest) (*PutAdminSettingsEmailUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsEmailUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsEmailUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/email"
@@ -2222,7 +2468,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatc
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2245,19 +2491,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatc
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2265,10 +2511,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsEmailUpdateExecute(r ApiPatc
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsGeneralUpdateRequest struct {
@@ -2277,7 +2532,7 @@ type ApiPatchAdminSettingsGeneralUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsGeneralUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsGeneralUpdateRequest) Execute() (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsGeneralUpdateExecute(r)
 }
 
@@ -2297,16 +2552,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdate(ctx context.Co
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPatchAdminSettingsGeneralUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsGeneralUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPatchAdminSettingsGeneralUpdateRequest) (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsGeneralUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsGeneralUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/general"
@@ -2326,7 +2583,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPa
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2349,19 +2606,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPa
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2369,10 +2626,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsGeneralUpdateExecute(r ApiPa
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsScimUpdateRequest struct {
@@ -2381,7 +2647,7 @@ type ApiPatchAdminSettingsScimUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsScimUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsScimUpdateRequest) Execute() (*PutAdminSettingsScimUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsScimUpdateExecute(r)
 }
 
@@ -2401,16 +2667,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdate(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatchAdminSettingsScimUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsScimUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatchAdminSettingsScimUpdateRequest) (*PutAdminSettingsScimUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsScimUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsScimUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/scim"
@@ -2430,7 +2698,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatch
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2453,19 +2721,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatch
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2473,10 +2741,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsScimUpdateExecute(r ApiPatch
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminSettingsSecurityUpdateRequest struct {
@@ -2485,7 +2762,7 @@ type ApiPatchAdminSettingsSecurityUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminSettingsSecurityUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminSettingsSecurityUpdateRequest) Execute() (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminSettingsSecurityUpdateExecute(r)
 }
 
@@ -2505,16 +2782,18 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdate(ctx context.C
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiPatchAdminSettingsSecurityUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsSecurityUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiPatchAdminSettingsSecurityUpdateRequest) (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsSecurityUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminSettingsSecurityUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/security"
@@ -2534,7 +2813,7 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiP
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2557,19 +2836,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiP
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2577,10 +2856,19 @@ func (a *AdminSettingsAPIService) PatchAdminSettingsSecurityUpdateExecute(r ApiP
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminTenantUpdateRequest struct {
@@ -2589,12 +2877,12 @@ type ApiPatchAdminTenantUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminTenantUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminTenantUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminTenantUpdateExecute(r)
 }
 
 /*
-PatchAdminTenantUpdate Update tenant settings
+PatchAdminTenantUpdate Update organization (tenant) name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2609,16 +2897,18 @@ func (a *AdminSettingsAPIService) PatchAdminTenantUpdate(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminTenantUpdateRequest) (*http.Response, error) {
+//  @return PutAdminTenantUpdateResponse
+func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminTenantUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminTenantUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PatchAdminTenantUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/tenant"
@@ -2638,7 +2928,7 @@ func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminT
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2661,19 +2951,19 @@ func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminT
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2681,10 +2971,19 @@ func (a *AdminSettingsAPIService) PatchAdminTenantUpdateExecute(r ApiPatchAdminT
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminOrganizationUpdateRequest struct {
@@ -2693,12 +2992,12 @@ type ApiPutAdminOrganizationUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminOrganizationUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminOrganizationUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminOrganizationUpdateExecute(r)
 }
 
 /*
-PutAdminOrganizationUpdate Update tenant settings
+PutAdminOrganizationUpdate Update organization (tenant) name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2713,16 +3012,18 @@ func (a *AdminSettingsAPIService) PutAdminOrganizationUpdate(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdminOrganizationUpdateRequest) (*http.Response, error) {
+//  @return PutAdminTenantUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdminOrganizationUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminTenantUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminOrganizationUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organization"
@@ -2742,7 +3043,7 @@ func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdmi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2765,19 +3066,19 @@ func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdmi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2785,10 +3086,19 @@ func (a *AdminSettingsAPIService) PutAdminOrganizationUpdateExecute(r ApiPutAdmi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsAuthUpdateRequest struct {
@@ -2797,7 +3107,7 @@ type ApiPutAdminSettingsAuthUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsAuthUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsAuthUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsAuthUpdateExecute(r)
 }
 
@@ -2817,16 +3127,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdate(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdminSettingsAuthUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsAuthenticationUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdminSettingsAuthUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsAuthenticationUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsAuthUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/auth"
@@ -2846,7 +3158,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdmi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2869,19 +3181,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdmi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2889,10 +3201,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthUpdateExecute(r ApiPutAdmi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsAuthenticationUpdateRequest struct {
@@ -2901,7 +3222,7 @@ type ApiPutAdminSettingsAuthenticationUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsAuthenticationUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsAuthenticationUpdateRequest) Execute() (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsAuthenticationUpdateExecute(r)
 }
 
@@ -2921,16 +3242,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdate(ctx conte
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r ApiPutAdminSettingsAuthenticationUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsAuthenticationUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r ApiPutAdminSettingsAuthenticationUpdateRequest) (*PutAdminSettingsAuthenticationUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsAuthenticationUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsAuthenticationUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/authentication"
@@ -2950,7 +3273,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2973,19 +3296,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r 
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2993,10 +3316,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsAuthenticationUpdateExecute(r 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsBrandingUpdateRequest struct {
@@ -3005,7 +3337,7 @@ type ApiPutAdminSettingsBrandingUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsBrandingUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsBrandingUpdateRequest) Execute() (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsBrandingUpdateExecute(r)
 }
 
@@ -3025,16 +3357,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdate(ctx context.Con
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPutAdminSettingsBrandingUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsBrandingUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPutAdminSettingsBrandingUpdateRequest) (*PutAdminSettingsBrandingUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsBrandingUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsBrandingUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/branding"
@@ -3054,7 +3388,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPut
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3077,19 +3411,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPut
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -3097,10 +3431,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsBrandingUpdateExecute(r ApiPut
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsEmailUpdateRequest struct {
@@ -3109,7 +3452,7 @@ type ApiPutAdminSettingsEmailUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsEmailUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsEmailUpdateRequest) Execute() (*PutAdminSettingsEmailUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsEmailUpdateExecute(r)
 }
 
@@ -3129,16 +3472,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdate(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdminSettingsEmailUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsEmailUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdminSettingsEmailUpdateRequest) (*PutAdminSettingsEmailUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsEmailUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsEmailUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/email"
@@ -3158,7 +3503,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdm
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3181,19 +3526,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdm
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -3201,10 +3546,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsEmailUpdateExecute(r ApiPutAdm
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsGeneralUpdateRequest struct {
@@ -3213,7 +3567,7 @@ type ApiPutAdminSettingsGeneralUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsGeneralUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsGeneralUpdateRequest) Execute() (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsGeneralUpdateExecute(r)
 }
 
@@ -3233,16 +3587,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdate(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutAdminSettingsGeneralUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsGeneralUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutAdminSettingsGeneralUpdateRequest) (*PutAdminSettingsGeneralUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsGeneralUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsGeneralUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/general"
@@ -3262,7 +3618,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutA
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3285,19 +3641,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutA
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -3305,10 +3661,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsGeneralUpdateExecute(r ApiPutA
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsScimUpdateRequest struct {
@@ -3317,7 +3682,7 @@ type ApiPutAdminSettingsScimUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsScimUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsScimUpdateRequest) Execute() (*PutAdminSettingsScimUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsScimUpdateExecute(r)
 }
 
@@ -3337,16 +3702,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdate(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdminSettingsScimUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsScimUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdminSettingsScimUpdateRequest) (*PutAdminSettingsScimUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsScimUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsScimUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/scim"
@@ -3366,7 +3733,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdmi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3389,19 +3756,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdmi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -3409,10 +3776,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsScimUpdateExecute(r ApiPutAdmi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminSettingsSecurityUpdateRequest struct {
@@ -3421,7 +3797,7 @@ type ApiPutAdminSettingsSecurityUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminSettingsSecurityUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminSettingsSecurityUpdateRequest) Execute() (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminSettingsSecurityUpdateExecute(r)
 }
 
@@ -3441,16 +3817,18 @@ func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdate(ctx context.Con
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPutAdminSettingsSecurityUpdateRequest) (*http.Response, error) {
+//  @return PutAdminSettingsSecurityUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPutAdminSettingsSecurityUpdateRequest) (*PutAdminSettingsSecurityUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminSettingsSecurityUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminSettingsSecurityUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/settings/security"
@@ -3470,7 +3848,7 @@ func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPut
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3493,19 +3871,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPut
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -3513,10 +3891,19 @@ func (a *AdminSettingsAPIService) PutAdminSettingsSecurityUpdateExecute(r ApiPut
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminTenantUpdateRequest struct {
@@ -3525,12 +3912,12 @@ type ApiPutAdminTenantUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminTenantUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminTenantUpdateRequest) Execute() (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminTenantUpdateExecute(r)
 }
 
 /*
-PutAdminTenantUpdate Update tenant settings
+PutAdminTenantUpdate Update organization (tenant) name and settings
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -3545,16 +3932,18 @@ func (a *AdminSettingsAPIService) PutAdminTenantUpdate(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenantUpdateRequest) (*http.Response, error) {
+//  @return PutAdminTenantUpdateResponse
+func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenantUpdateRequest) (*PutAdminTenantUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminTenantUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSettingsAPIService.PutAdminTenantUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/tenant"
@@ -3574,7 +3963,7 @@ func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenan
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -3597,19 +3986,19 @@ func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenan
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -3617,8 +4006,17 @@ func (a *AdminSettingsAPIService) PutAdminTenantUpdateExecute(r ApiPutAdminTenan
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -87,7 +87,7 @@ module LumoAuthApiClient
         :'mfa_enabled' => :'Boolean',
         :'roles' => :'Array<String>',
         :'capabilities' => :'Array<String>',
-        :'tenant' => :'GetMeResponseTenant'
+        :'tenant' => :'GroupRef'
       }
     end
 

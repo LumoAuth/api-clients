@@ -9,6 +9,7 @@ from lumoauth_api_client.api.admin_email_api import AdminEmailApi
 from lumoauth_api_client.api.admin_groups_api import AdminGroupsApi
 from lumoauth_api_client.api.admin_identity_providers_api import AdminIdentityProvidersApi
 from lumoauth_api_client.api.admin_mcp_api import AdminMcpApi
+from lumoauth_api_client.api.admin_mfa_api import AdminMfaApi
 from lumoauth_api_client.api.admin_o_auth_clients_api import AdminOAuthClientsApi
 from lumoauth_api_client.api.admin_organizations_api import AdminOrganizationsApi
 from lumoauth_api_client.api.admin_permissions_api import AdminPermissionsApi
@@ -23,6 +24,7 @@ from lumoauth_api_client.api.authorization_api import AuthorizationApi
 from lumoauth_api_client.api.identity_api import IdentityApi
 from lumoauth_api_client.api.jit_api import JitApi
 from lumoauth_api_client.api.mcp_api import McpApi
+from lumoauth_api_client.api.mfa_api import MfaApi
 from lumoauth_api_client.api.o_auth_api import OAuthApi
 from lumoauth_api_client.api.oidc_api import OIDCApi
 from lumoauth_api_client.api.ssf_api import SsfApi

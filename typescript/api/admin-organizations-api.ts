@@ -21,6 +21,28 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminOrgInvitationsCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminOrgInvitationsListResponse } from '../models';
+// @ts-ignore
+import type { AdminOrgMembersAddResponse } from '../models';
+// @ts-ignore
+import type { AdminOrgMembersListResponse } from '../models';
+// @ts-ignore
+import type { AdminOrgRolesCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminOrgRolesListResponse } from '../models';
+// @ts-ignore
+import type { AdminOrganizationsCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminOrganizationsGetResponse } from '../models';
+// @ts-ignore
+import type { AdminOrganizationsListResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PutAdminOrgMembersUpdateResponse } from '../models';
 /**
  * AdminOrganizationsApi - axios parameter creator
  * @export
@@ -29,6 +51,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
     return {
         /**
          * 
+         * @summary Invite a user to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -73,6 +96,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary List organization invitations
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -117,6 +141,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Resend an invitation
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} invId 
@@ -165,6 +190,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Revoke an invitation
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} invId 
@@ -213,6 +239,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Add a member to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -257,6 +284,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary List organization members
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -301,6 +329,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Remove a member from an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
@@ -349,6 +378,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Create an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -393,6 +423,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Delete an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
@@ -441,6 +472,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary List organization roles
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -485,6 +517,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Create an organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -525,6 +558,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Delete an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -569,6 +603,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Get an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -613,6 +648,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary List organizations
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -653,6 +689,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Update a member\'s role or status
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
@@ -701,6 +738,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Update an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
@@ -749,6 +787,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -793,6 +832,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Update a member\'s role or status
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
@@ -841,6 +881,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Update an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
@@ -889,6 +930,7 @@ export const AdminOrganizationsApiAxiosParamCreator = function (configuration?: 
         },
         /**
          * 
+         * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
@@ -943,12 +985,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Invite a user to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgInvitationsCreate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgInvitationsCreate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgInvitationsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgInvitationsCreate(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgInvitationsCreate']?.[localVarOperationServerIndex]?.url;
@@ -956,12 +999,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List organization invitations
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgInvitationsList(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgInvitationsList(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgInvitationsListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgInvitationsList(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgInvitationsList']?.[localVarOperationServerIndex]?.url;
@@ -969,13 +1013,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Resend an invitation
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} invId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgInvitationsResend(orgId: string, organizationId: string, invId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgInvitationsResend(orgId: string, organizationId: string, invId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgInvitationsResend(orgId, organizationId, invId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgInvitationsResend']?.[localVarOperationServerIndex]?.url;
@@ -983,13 +1028,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Revoke an invitation
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} invId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgInvitationsRevoke(orgId: string, organizationId: string, invId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgInvitationsRevoke(orgId: string, organizationId: string, invId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgInvitationsRevoke(orgId, organizationId, invId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgInvitationsRevoke']?.[localVarOperationServerIndex]?.url;
@@ -997,12 +1043,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Add a member to an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgMembersAdd(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgMembersAdd(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgMembersAddResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgMembersAdd(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgMembersAdd']?.[localVarOperationServerIndex]?.url;
@@ -1010,12 +1057,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List organization members
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgMembersList(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgMembersList(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgMembersListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgMembersList(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgMembersList']?.[localVarOperationServerIndex]?.url;
@@ -1023,13 +1071,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Remove a member from an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgMembersRemove(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgMembersRemove(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgMembersRemove(orgId, organizationId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgMembersRemove']?.[localVarOperationServerIndex]?.url;
@@ -1037,12 +1086,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgRolesCreate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgRolesCreate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgRolesCreate(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgRolesCreate']?.[localVarOperationServerIndex]?.url;
@@ -1050,13 +1100,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgRolesDelete(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgRolesDelete(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgRolesDelete(orgId, organizationId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgRolesDelete']?.[localVarOperationServerIndex]?.url;
@@ -1064,12 +1115,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List organization roles
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrgRolesList(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrgRolesList(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrgRolesList(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrgRolesList']?.[localVarOperationServerIndex]?.url;
@@ -1077,11 +1129,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create an organization
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrganizationsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrganizationsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationsCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrganizationsCreate']?.[localVarOperationServerIndex]?.url;
@@ -1089,12 +1142,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrganizationsDelete(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrganizationsDelete(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationsDelete(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrganizationsDelete']?.[localVarOperationServerIndex]?.url;
@@ -1102,12 +1156,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrganizationsGet(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrganizationsGet(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationsGet(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrganizationsGet']?.[localVarOperationServerIndex]?.url;
@@ -1115,11 +1170,12 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List organizations
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminOrganizationsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminOrganizationsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminOrganizationsList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.adminOrganizationsList']?.[localVarOperationServerIndex]?.url;
@@ -1127,13 +1183,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update a member\'s role or status
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminOrgMembersUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrgMembersUpdate(orgId, organizationId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.patchAdminOrgMembersUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1141,13 +1198,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrgRolesUpdate(orgId, organizationId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.patchAdminOrgRolesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1155,12 +1213,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminOrganizationsUpdate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminOrganizationsUpdate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminOrganizationsUpdate(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.patchAdminOrganizationsUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1168,13 +1227,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update a member\'s role or status
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminOrgMembersUpdate(orgId: string, organizationId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAdminOrgMembersUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrgMembersUpdate(orgId, organizationId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.putAdminOrgMembersUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1182,13 +1242,14 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update an organization role
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {string} roleId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminOrgRolesUpdate(orgId: string, organizationId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrgRolesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrgRolesUpdate(orgId, organizationId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.putAdminOrgRolesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1196,12 +1257,13 @@ export const AdminOrganizationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update an organization
          * @param {string} orgId 
          * @param {string} organizationId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminOrganizationsUpdate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminOrganizationsUpdate(orgId: string, organizationId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminOrganizationsGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminOrganizationsUpdate(orgId, organizationId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminOrganizationsApi.putAdminOrganizationsUpdate']?.[localVarOperationServerIndex]?.url;
@@ -1219,182 +1281,202 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
     return {
         /**
          * 
+         * @summary Invite a user to an organization
          * @param {AdminOrganizationsApiAdminOrgInvitationsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgInvitationsCreate(requestParameters: AdminOrganizationsApiAdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgInvitationsCreate(requestParameters: AdminOrganizationsApiAdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgInvitationsCreateResponse> {
             return localVarFp.adminOrgInvitationsCreate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List organization invitations
          * @param {AdminOrganizationsApiAdminOrgInvitationsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgInvitationsList(requestParameters: AdminOrganizationsApiAdminOrgInvitationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgInvitationsList(requestParameters: AdminOrganizationsApiAdminOrgInvitationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgInvitationsListResponse> {
             return localVarFp.adminOrgInvitationsList(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Resend an invitation
          * @param {AdminOrganizationsApiAdminOrgInvitationsResendRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgInvitationsResend(requestParameters: AdminOrganizationsApiAdminOrgInvitationsResendRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgInvitationsResend(requestParameters: AdminOrganizationsApiAdminOrgInvitationsResendRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminOrgInvitationsResend(requestParameters.orgId, requestParameters.organizationId, requestParameters.invId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Revoke an invitation
          * @param {AdminOrganizationsApiAdminOrgInvitationsRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgInvitationsRevoke(requestParameters: AdminOrganizationsApiAdminOrgInvitationsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgInvitationsRevoke(requestParameters: AdminOrganizationsApiAdminOrgInvitationsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminOrgInvitationsRevoke(requestParameters.orgId, requestParameters.organizationId, requestParameters.invId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Add a member to an organization
          * @param {AdminOrganizationsApiAdminOrgMembersAddRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgMembersAdd(requestParameters: AdminOrganizationsApiAdminOrgMembersAddRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgMembersAdd(requestParameters: AdminOrganizationsApiAdminOrgMembersAddRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgMembersAddResponse> {
             return localVarFp.adminOrgMembersAdd(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List organization members
          * @param {AdminOrganizationsApiAdminOrgMembersListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgMembersList(requestParameters: AdminOrganizationsApiAdminOrgMembersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgMembersList(requestParameters: AdminOrganizationsApiAdminOrgMembersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgMembersListResponse> {
             return localVarFp.adminOrgMembersList(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Remove a member from an organization
          * @param {AdminOrganizationsApiAdminOrgMembersRemoveRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgMembersRemove(requestParameters: AdminOrganizationsApiAdminOrgMembersRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgMembersRemove(requestParameters: AdminOrganizationsApiAdminOrgMembersRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminOrgMembersRemove(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Create an organization role
          * @param {AdminOrganizationsApiAdminOrgRolesCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgRolesCreate(requestParameters: AdminOrganizationsApiAdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgRolesCreate(requestParameters: AdminOrganizationsApiAdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse> {
             return localVarFp.adminOrgRolesCreate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Delete an organization role
          * @param {AdminOrganizationsApiAdminOrgRolesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgRolesDelete(requestParameters: AdminOrganizationsApiAdminOrgRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgRolesDelete(requestParameters: AdminOrganizationsApiAdminOrgRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminOrgRolesDelete(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List organization roles
          * @param {AdminOrganizationsApiAdminOrgRolesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrgRolesList(requestParameters: AdminOrganizationsApiAdminOrgRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrgRolesList(requestParameters: AdminOrganizationsApiAdminOrgRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesListResponse> {
             return localVarFp.adminOrgRolesList(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Create an organization
          * @param {AdminOrganizationsApiAdminOrganizationsCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrganizationsCreate(requestParameters: AdminOrganizationsApiAdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrganizationsCreate(requestParameters: AdminOrganizationsApiAdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsCreateResponse> {
             return localVarFp.adminOrganizationsCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Delete an organization
          * @param {AdminOrganizationsApiAdminOrganizationsDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrganizationsDelete(requestParameters: AdminOrganizationsApiAdminOrganizationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrganizationsDelete(requestParameters: AdminOrganizationsApiAdminOrganizationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminOrganizationsDelete(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Get an organization
          * @param {AdminOrganizationsApiAdminOrganizationsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrganizationsGet(requestParameters: AdminOrganizationsApiAdminOrganizationsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrganizationsGet(requestParameters: AdminOrganizationsApiAdminOrganizationsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse> {
             return localVarFp.adminOrganizationsGet(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List organizations
          * @param {AdminOrganizationsApiAdminOrganizationsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminOrganizationsList(requestParameters: AdminOrganizationsApiAdminOrganizationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminOrganizationsList(requestParameters: AdminOrganizationsApiAdminOrganizationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsListResponse> {
             return localVarFp.adminOrganizationsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update a member\'s role or status
          * @param {AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminOrgMembersUpdateResponse> {
             return localVarFp.patchAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update an organization role
          * @param {AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse> {
             return localVarFp.patchAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update an organization
          * @param {AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse> {
             return localVarFp.patchAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update a member\'s role or status
          * @param {AdminOrganizationsApiPutAdminOrgMembersUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminOrgMembersUpdateResponse> {
             return localVarFp.putAdminOrgMembersUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update an organization role
          * @param {AdminOrganizationsApiPutAdminOrgRolesUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse> {
             return localVarFp.putAdminOrgRolesUpdate(requestParameters.orgId, requestParameters.organizationId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update an organization
          * @param {AdminOrganizationsApiPutAdminOrganizationsUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse> {
             return localVarFp.putAdminOrganizationsUpdate(requestParameters.orgId, requestParameters.organizationId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1408,183 +1490,203 @@ export const AdminOrganizationsApiFactory = function (configuration?: Configurat
 export interface AdminOrganizationsApiInterface {
     /**
      * 
+     * @summary Invite a user to an organization
      * @param {AdminOrganizationsApiAdminOrgInvitationsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgInvitationsCreate(requestParameters: AdminOrganizationsApiAdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgInvitationsCreate(requestParameters: AdminOrganizationsApiAdminOrgInvitationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgInvitationsCreateResponse>;
 
     /**
      * 
+     * @summary List organization invitations
      * @param {AdminOrganizationsApiAdminOrgInvitationsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgInvitationsList(requestParameters: AdminOrganizationsApiAdminOrgInvitationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgInvitationsList(requestParameters: AdminOrganizationsApiAdminOrgInvitationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgInvitationsListResponse>;
 
     /**
      * 
+     * @summary Resend an invitation
      * @param {AdminOrganizationsApiAdminOrgInvitationsResendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgInvitationsResend(requestParameters: AdminOrganizationsApiAdminOrgInvitationsResendRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgInvitationsResend(requestParameters: AdminOrganizationsApiAdminOrgInvitationsResendRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary Revoke an invitation
      * @param {AdminOrganizationsApiAdminOrgInvitationsRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgInvitationsRevoke(requestParameters: AdminOrganizationsApiAdminOrgInvitationsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgInvitationsRevoke(requestParameters: AdminOrganizationsApiAdminOrgInvitationsRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary Add a member to an organization
      * @param {AdminOrganizationsApiAdminOrgMembersAddRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgMembersAdd(requestParameters: AdminOrganizationsApiAdminOrgMembersAddRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgMembersAdd(requestParameters: AdminOrganizationsApiAdminOrgMembersAddRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgMembersAddResponse>;
 
     /**
      * 
+     * @summary List organization members
      * @param {AdminOrganizationsApiAdminOrgMembersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgMembersList(requestParameters: AdminOrganizationsApiAdminOrgMembersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgMembersList(requestParameters: AdminOrganizationsApiAdminOrgMembersListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgMembersListResponse>;
 
     /**
      * 
+     * @summary Remove a member from an organization
      * @param {AdminOrganizationsApiAdminOrgMembersRemoveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgMembersRemove(requestParameters: AdminOrganizationsApiAdminOrgMembersRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgMembersRemove(requestParameters: AdminOrganizationsApiAdminOrgMembersRemoveRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary Create an organization role
      * @param {AdminOrganizationsApiAdminOrgRolesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgRolesCreate(requestParameters: AdminOrganizationsApiAdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgRolesCreate(requestParameters: AdminOrganizationsApiAdminOrgRolesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse>;
 
     /**
      * 
+     * @summary Delete an organization role
      * @param {AdminOrganizationsApiAdminOrgRolesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgRolesDelete(requestParameters: AdminOrganizationsApiAdminOrgRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgRolesDelete(requestParameters: AdminOrganizationsApiAdminOrgRolesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary List organization roles
      * @param {AdminOrganizationsApiAdminOrgRolesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrgRolesList(requestParameters: AdminOrganizationsApiAdminOrgRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrgRolesList(requestParameters: AdminOrganizationsApiAdminOrgRolesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesListResponse>;
 
     /**
      * 
+     * @summary Create an organization
      * @param {AdminOrganizationsApiAdminOrganizationsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrganizationsCreate(requestParameters: AdminOrganizationsApiAdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrganizationsCreate(requestParameters: AdminOrganizationsApiAdminOrganizationsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsCreateResponse>;
 
     /**
      * 
+     * @summary Delete an organization
      * @param {AdminOrganizationsApiAdminOrganizationsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrganizationsDelete(requestParameters: AdminOrganizationsApiAdminOrganizationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrganizationsDelete(requestParameters: AdminOrganizationsApiAdminOrganizationsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary Get an organization
      * @param {AdminOrganizationsApiAdminOrganizationsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrganizationsGet(requestParameters: AdminOrganizationsApiAdminOrganizationsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrganizationsGet(requestParameters: AdminOrganizationsApiAdminOrganizationsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse>;
 
     /**
      * 
+     * @summary List organizations
      * @param {AdminOrganizationsApiAdminOrganizationsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    adminOrganizationsList(requestParameters: AdminOrganizationsApiAdminOrganizationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminOrganizationsList(requestParameters: AdminOrganizationsApiAdminOrganizationsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsListResponse>;
 
     /**
      * 
+     * @summary Update a member\'s role or status
      * @param {AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    patchAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminOrgMembersUpdateResponse>;
 
     /**
      * 
+     * @summary Update an organization role
      * @param {AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    patchAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse>;
 
     /**
      * 
+     * @summary Update an organization
      * @param {AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    patchAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse>;
 
     /**
      * 
+     * @summary Update a member\'s role or status
      * @param {AdminOrganizationsApiPutAdminOrgMembersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    putAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminOrgMembersUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgMembersUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAdminOrgMembersUpdateResponse>;
 
     /**
      * 
+     * @summary Update an organization role
      * @param {AdminOrganizationsApiPutAdminOrgRolesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    putAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminOrgRolesUpdate(requestParameters: AdminOrganizationsApiPutAdminOrgRolesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrgRolesCreateResponse>;
 
     /**
      * 
+     * @summary Update an organization
      * @param {AdminOrganizationsApiPutAdminOrganizationsUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminOrganizationsApiInterface
      */
-    putAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminOrganizationsUpdate(requestParameters: AdminOrganizationsApiPutAdminOrganizationsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminOrganizationsGetResponse>;
 
 }
 
@@ -2059,6 +2161,7 @@ export interface AdminOrganizationsApiPutAdminOrganizationsUpdateRequest {
 export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizationsApiInterface {
     /**
      * 
+     * @summary Invite a user to an organization
      * @param {AdminOrganizationsApiAdminOrgInvitationsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2070,6 +2173,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary List organization invitations
      * @param {AdminOrganizationsApiAdminOrgInvitationsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2081,6 +2185,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Resend an invitation
      * @param {AdminOrganizationsApiAdminOrgInvitationsResendRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2092,6 +2197,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Revoke an invitation
      * @param {AdminOrganizationsApiAdminOrgInvitationsRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2103,6 +2209,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Add a member to an organization
      * @param {AdminOrganizationsApiAdminOrgMembersAddRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2114,6 +2221,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary List organization members
      * @param {AdminOrganizationsApiAdminOrgMembersListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2125,6 +2233,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Remove a member from an organization
      * @param {AdminOrganizationsApiAdminOrgMembersRemoveRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2136,6 +2245,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Create an organization role
      * @param {AdminOrganizationsApiAdminOrgRolesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2147,6 +2257,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Delete an organization role
      * @param {AdminOrganizationsApiAdminOrgRolesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2158,6 +2269,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary List organization roles
      * @param {AdminOrganizationsApiAdminOrgRolesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2169,6 +2281,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Create an organization
      * @param {AdminOrganizationsApiAdminOrganizationsCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2180,6 +2293,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Delete an organization
      * @param {AdminOrganizationsApiAdminOrganizationsDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2191,6 +2305,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Get an organization
      * @param {AdminOrganizationsApiAdminOrganizationsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2202,6 +2317,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary List organizations
      * @param {AdminOrganizationsApiAdminOrganizationsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2213,6 +2329,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Update a member\'s role or status
      * @param {AdminOrganizationsApiPatchAdminOrgMembersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2224,6 +2341,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Update an organization role
      * @param {AdminOrganizationsApiPatchAdminOrgRolesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2235,6 +2353,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Update an organization
      * @param {AdminOrganizationsApiPatchAdminOrganizationsUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2246,6 +2365,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Update a member\'s role or status
      * @param {AdminOrganizationsApiPutAdminOrgMembersUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2257,6 +2377,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Update an organization role
      * @param {AdminOrganizationsApiPutAdminOrgRolesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2268,6 +2389,7 @@ export class AdminOrganizationsApi extends BaseAPI implements AdminOrganizations
 
     /**
      * 
+     * @summary Update an organization
      * @param {AdminOrganizationsApiPutAdminOrganizationsUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

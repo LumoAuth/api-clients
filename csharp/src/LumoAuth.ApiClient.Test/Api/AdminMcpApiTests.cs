@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminMcpServersCreate(orgId);
+            //var response = instance.AdminMcpServersCreate(orgId);
+            //Assert.IsType<AdminMcpServersCreateResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string serverId = null;
-            //instance.AdminMcpServersDelete(orgId, serverId);
+            //var response = instance.AdminMcpServersDelete(orgId, serverId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string serverId = null;
-            //instance.AdminMcpServersGet(orgId, serverId);
+            //var response = instance.AdminMcpServersGet(orgId, serverId);
+            //Assert.IsType<AdminMcpServersGetResponse>(response);
         }
 
         /// <summary>
@@ -95,7 +100,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminMcpServersList(orgId);
+            //var response = instance.AdminMcpServersList(orgId);
+            //Assert.IsType<AdminMcpServersListResponse>(response);
         }
     }
 }

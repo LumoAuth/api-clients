@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetAuthorizationServerMetadataError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +27,7 @@ pub enum GetAuthorizationServerMetadataError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetJwksError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +35,7 @@ pub enum GetJwksError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetOpenidConfigurationError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,12 +43,13 @@ pub enum GetOpenidConfigurationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetSsfConfigurationError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn get_authorization_server_metadata(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetAuthorizationServerMetadataError>> {
+/// Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+pub async fn get_authorization_server_metadata(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AuthorizationServerMetadata, Error<GetAuthorizationServerMetadataError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -63,9 +64,20 @@ pub async fn get_authorization_server_metadata(configuration: &configuration::Co
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AuthorizationServerMetadata`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AuthorizationServerMetadata`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetAuthorizationServerMetadataError> = serde_json::from_str(&content).ok();
@@ -73,7 +85,8 @@ pub async fn get_authorization_server_metadata(configuration: &configuration::Co
     }
 }
 
-pub async fn get_jwks(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetJwksError>> {
+/// Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+pub async fn get_jwks(configuration: &configuration::Configuration, org_id: &str) -> Result<models::JsonWebKeySet, Error<GetJwksError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -88,9 +101,20 @@ pub async fn get_jwks(configuration: &configuration::Configuration, org_id: &str
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::JsonWebKeySet`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::JsonWebKeySet`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetJwksError> = serde_json::from_str(&content).ok();
@@ -98,7 +122,8 @@ pub async fn get_jwks(configuration: &configuration::Configuration, org_id: &str
     }
 }
 
-pub async fn get_openid_configuration(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetOpenidConfigurationError>> {
+/// Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
+pub async fn get_openid_configuration(configuration: &configuration::Configuration, org_id: &str) -> Result<models::OpenIdConfiguration, Error<GetOpenidConfigurationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -113,9 +138,20 @@ pub async fn get_openid_configuration(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::OpenIdConfiguration`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::OpenIdConfiguration`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetOpenidConfigurationError> = serde_json::from_str(&content).ok();
@@ -123,7 +159,7 @@ pub async fn get_openid_configuration(configuration: &configuration::Configurati
     }
 }
 
-pub async fn get_ssf_configuration(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetSsfConfigurationError>> {
+pub async fn get_ssf_configuration(configuration: &configuration::Configuration, org_id: &str) -> Result<models::GetSsfConfigurationResponse, Error<GetSsfConfigurationError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -138,9 +174,20 @@ pub async fn get_ssf_configuration(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetSsfConfigurationResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetSsfConfigurationResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetSsfConfigurationError> = serde_json::from_str(&content).ok();

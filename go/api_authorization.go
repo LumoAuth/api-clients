@@ -24,7 +24,7 @@ import (
 type AuthorizationAPI interface {
 
 	/*
-	CheckAbac Check ABAC authorization
+	CheckAbac Evaluate an ABAC policy decision for the caller
 
 	POST /api/v1/abac/check
 Body: {
@@ -43,10 +43,11 @@ Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 	CheckAbac(ctx context.Context, orgId string) ApiCheckAbacRequest
 
 	// CheckAbacExecute executes the request
-	CheckAbacExecute(r ApiCheckAbacRequest) (*http.Response, error)
+	//  @return CheckAbacResponse
+	CheckAbacExecute(r ApiCheckAbacRequest) (*CheckAbacResponse, *http.Response, error)
 
 	/*
-	CheckAbacBulk Bulk check multiple authorization requests
+	CheckAbacBulk Evaluate up to 100 ABAC checks for the caller in one call
 
 	POST /api/v1/abac/check-bulk
 Body: {
@@ -64,10 +65,11 @@ Body: {
 	CheckAbacBulk(ctx context.Context, orgId string) ApiCheckAbacBulkRequest
 
 	// CheckAbacBulkExecute executes the request
-	CheckAbacBulkExecute(r ApiCheckAbacBulkRequest) (*http.Response, error)
+	//  @return CheckAbacBulkResponse
+	CheckAbacBulkExecute(r ApiCheckAbacBulkRequest) (*CheckAbacBulkResponse, *http.Response, error)
 
 	/*
-	CheckAllPermissions Check if user has ALL of the specified permissions
+	CheckAllPermissions Check whether the subject holds all of the permissions
 
 	POST /api/v1/authz/check-all
 Body: {
@@ -82,10 +84,11 @@ Body: {
 	CheckAllPermissions(ctx context.Context) ApiCheckAllPermissionsRequest
 
 	// CheckAllPermissionsExecute executes the request
-	CheckAllPermissionsExecute(r ApiCheckAllPermissionsRequest) (*http.Response, error)
+	//  @return CheckAnyPermissionResponse
+	CheckAllPermissionsExecute(r ApiCheckAllPermissionsRequest) (*CheckAnyPermissionResponse, *http.Response, error)
 
 	/*
-	CheckAnyPermission Check if user has ANY of the specified permissions
+	CheckAnyPermission Check whether the subject holds any of the permissions
 
 	POST /api/v1/authz/check-any
 Body: {
@@ -100,10 +103,11 @@ Body: {
 	CheckAnyPermission(ctx context.Context) ApiCheckAnyPermissionRequest
 
 	// CheckAnyPermissionExecute executes the request
-	CheckAnyPermissionExecute(r ApiCheckAnyPermissionRequest) (*http.Response, error)
+	//  @return CheckAnyPermissionResponse
+	CheckAnyPermissionExecute(r ApiCheckAnyPermissionRequest) (*CheckAnyPermissionResponse, *http.Response, error)
 
 	/*
-	CheckPermission Check if the authenticated user has a specific permission
+	CheckPermission Check one permission
 
 	POST /api/v1/authz/check
 Body: {
@@ -123,10 +127,11 @@ ThirdPartySubjectGuard.
 	CheckPermission(ctx context.Context) ApiCheckPermissionRequest
 
 	// CheckPermissionExecute executes the request
-	CheckPermissionExecute(r ApiCheckPermissionRequest) (*http.Response, error)
+	//  @return CheckPermissionResponse
+	CheckPermissionExecute(r ApiCheckPermissionRequest) (*CheckPermissionResponse, *http.Response, error)
 
 	/*
-	CheckPermissionsBulk Check multiple permissions at once
+	CheckPermissionsBulk Check up to 100 permissions in one call
 
 	POST /api/v1/authz/check-bulk
 Body: {
@@ -141,10 +146,11 @@ Body: {
 	CheckPermissionsBulk(ctx context.Context) ApiCheckPermissionsBulkRequest
 
 	// CheckPermissionsBulkExecute executes the request
-	CheckPermissionsBulkExecute(r ApiCheckPermissionsBulkRequest) (*http.Response, error)
+	//  @return CheckPermissionsBulkResponse
+	CheckPermissionsBulkExecute(r ApiCheckPermissionsBulkRequest) (*CheckPermissionsBulkResponse, *http.Response, error)
 
 	/*
-	CheckRelation Zanzibar-style relationship check
+	CheckRelation Zanzibar relationship check
 
 	POST /api/v1/authz/zanzibar/check
 Body: {
@@ -159,10 +165,11 @@ Body: {
 	CheckRelation(ctx context.Context) ApiCheckRelationRequest
 
 	// CheckRelationExecute executes the request
-	CheckRelationExecute(r ApiCheckRelationRequest) (*http.Response, error)
+	//  @return CheckRelationResponse
+	CheckRelationExecute(r ApiCheckRelationRequest) (*CheckRelationResponse, *http.Response, error)
 
 	/*
-	CheckRelationScoped Method for CheckRelationScoped
+	CheckRelationScoped Zanzibar relationship check
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -171,10 +178,11 @@ Body: {
 	CheckRelationScoped(ctx context.Context, orgId string) ApiCheckRelationScopedRequest
 
 	// CheckRelationScopedExecute executes the request
-	CheckRelationScopedExecute(r ApiCheckRelationScopedRequest) (*http.Response, error)
+	//  @return CheckRelationScopedResponse
+	CheckRelationScopedExecute(r ApiCheckRelationScopedRequest) (*CheckRelationScopedResponse, *http.Response, error)
 
 	/*
-	Evaluate AuthZEN 1.0 single access evaluation.
+	Evaluate AuthZEN 1.0 access evaluation
 
 	POST /api/v1/authz/v1/evaluation
 Body: {
@@ -191,10 +199,11 @@ Response: {"decision": true|false, "context": {...}?}
 	Evaluate(ctx context.Context) ApiEvaluateRequest
 
 	// EvaluateExecute executes the request
-	EvaluateExecute(r ApiEvaluateRequest) (*http.Response, error)
+	//  @return AuthZenDecision
+	EvaluateExecute(r ApiEvaluateRequest) (*AuthZenDecision, *http.Response, error)
 
 	/*
-	EvaluateBatch AuthZEN 1.0 boxcarred access evaluations.
+	EvaluateBatch AuthZEN 1.0 boxcarred access evaluations
 
 	POST /api/v1/authz/v1/evaluations
 Body: {
@@ -212,7 +221,8 @@ Response: {"evaluations": [{"decision": ...}, ...]} preserving order.
 	EvaluateBatch(ctx context.Context) ApiEvaluateBatchRequest
 
 	// EvaluateBatchExecute executes the request
-	EvaluateBatchExecute(r ApiEvaluateBatchRequest) (*http.Response, error)
+	//  @return EvaluateBatchResponse
+	EvaluateBatchExecute(r ApiEvaluateBatchRequest) (*EvaluateBatchResponse, *http.Response, error)
 
 	/*
 	ExpandRelation Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
@@ -262,7 +272,7 @@ Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
 	ExpandRelationScopedExecute(r ApiExpandRelationScopedRequest) (*ExpandRelationResponse, *http.Response, error)
 
 	/*
-	GetMyAttributes Get user's current attributes (for debugging/UI)
+	GetMyAttributes The caller's ABAC subject attributes
 
 	GET /api/v1/abac/my-attributes
 
@@ -273,10 +283,11 @@ Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
 	GetMyAttributes(ctx context.Context, orgId string) ApiGetMyAttributesRequest
 
 	// GetMyAttributesExecute executes the request
-	GetMyAttributesExecute(r ApiGetMyAttributesRequest) (*http.Response, error)
+	//  @return GetMyAttributesResponse
+	GetMyAttributesExecute(r ApiGetMyAttributesRequest) (*GetMyAttributesResponse, *http.Response, error)
 
 	/*
-	GetResourceAttributes Get resource attributes
+	GetResourceAttributes Attributes stored for a resource
 
 	GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -289,10 +300,11 @@ Response: {"tree": {"type", "object", "relation", "children", "subjects"}}
 	GetResourceAttributes(ctx context.Context, orgId string, resourceType string, resourceId string) ApiGetResourceAttributesRequest
 
 	// GetResourceAttributesExecute executes the request
-	GetResourceAttributesExecute(r ApiGetResourceAttributesRequest) (*http.Response, error)
+	//  @return GetResourceAttributesResponse
+	GetResourceAttributesExecute(r ApiGetResourceAttributesRequest) (*GetResourceAttributesResponse, *http.Response, error)
 
 	/*
-	ListAttributeDefinitions Get available attribute definitions
+	ListAttributeDefinitions Attribute definitions available to the organization
 
 	GET /api/v1/abac/attribute-definitions
 Query params: type (user|resource|environment)
@@ -304,10 +316,11 @@ Query params: type (user|resource|environment)
 	ListAttributeDefinitions(ctx context.Context, orgId string) ApiListAttributeDefinitionsRequest
 
 	// ListAttributeDefinitionsExecute executes the request
-	ListAttributeDefinitionsExecute(r ApiListAttributeDefinitionsRequest) (*http.Response, error)
+	//  @return ListAttributeDefinitionsResponse
+	ListAttributeDefinitionsExecute(r ApiListAttributeDefinitionsRequest) (*ListAttributeDefinitionsResponse, *http.Response, error)
 
 	/*
-	ListPermissions List all permissions for the authenticated user
+	ListPermissions List the caller's effective permissions
 
 	GET /api/v1/authz/permissions
 
@@ -317,10 +330,11 @@ Query params: type (user|resource|environment)
 	ListPermissions(ctx context.Context) ApiListPermissionsRequest
 
 	// ListPermissionsExecute executes the request
-	ListPermissionsExecute(r ApiListPermissionsRequest) (*http.Response, error)
+	//  @return ListPermissionsResponse
+	ListPermissionsExecute(r ApiListPermissionsRequest) (*ListPermissionsResponse, *http.Response, error)
 
 	/*
-	SetResourceAttribute Set resource attribute
+	SetResourceAttribute Set a resource attribute
 
 	PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}
 Body: { value: any }
@@ -335,10 +349,11 @@ Body: { value: any }
 	SetResourceAttribute(ctx context.Context, orgId string, resourceType string, resourceId string, attributeSlug string) ApiSetResourceAttributeRequest
 
 	// SetResourceAttributeExecute executes the request
-	SetResourceAttributeExecute(r ApiSetResourceAttributeRequest) (*http.Response, error)
+	//  @return SetResourceAttributeResponse
+	SetResourceAttributeExecute(r ApiSetResourceAttributeRequest) (*SetResourceAttributeResponse, *http.Response, error)
 
 	/*
-	SetUserAttribute Set user attribute
+	SetUserAttribute Set a user attribute
 
 	PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug}
 Body: { value: any }
@@ -352,7 +367,8 @@ Body: { value: any }
 	SetUserAttribute(ctx context.Context, orgId string, userId string, attributeSlug string) ApiSetUserAttributeRequest
 
 	// SetUserAttributeExecute executes the request
-	SetUserAttributeExecute(r ApiSetUserAttributeRequest) (*http.Response, error)
+	//  @return SetUserAttributeResponse
+	SetUserAttributeExecute(r ApiSetUserAttributeRequest) (*SetUserAttributeResponse, *http.Response, error)
 }
 
 // AuthorizationAPIService AuthorizationAPI service
@@ -364,12 +380,12 @@ type ApiCheckAbacRequest struct {
 	orgId string
 }
 
-func (r ApiCheckAbacRequest) Execute() (*http.Response, error) {
+func (r ApiCheckAbacRequest) Execute() (*CheckAbacResponse, *http.Response, error) {
 	return r.ApiService.CheckAbacExecute(r)
 }
 
 /*
-CheckAbac Check ABAC authorization
+CheckAbac Evaluate an ABAC policy decision for the caller
 
 POST /api/v1/abac/check
 Body: {
@@ -394,16 +410,18 @@ func (a *AuthorizationAPIService) CheckAbac(ctx context.Context, orgId string) A
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*http.Response, error) {
+//  @return CheckAbacResponse
+func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*CheckAbacResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckAbacResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckAbac")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/check"
@@ -423,7 +441,7 @@ func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*http
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -446,19 +464,19 @@ func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*http
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -466,10 +484,19 @@ func (a *AuthorizationAPIService) CheckAbacExecute(r ApiCheckAbacRequest) (*http
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckAbacBulkRequest struct {
@@ -478,12 +505,12 @@ type ApiCheckAbacBulkRequest struct {
 	orgId string
 }
 
-func (r ApiCheckAbacBulkRequest) Execute() (*http.Response, error) {
+func (r ApiCheckAbacBulkRequest) Execute() (*CheckAbacBulkResponse, *http.Response, error) {
 	return r.ApiService.CheckAbacBulkExecute(r)
 }
 
 /*
-CheckAbacBulk Bulk check multiple authorization requests
+CheckAbacBulk Evaluate up to 100 ABAC checks for the caller in one call
 
 POST /api/v1/abac/check-bulk
 Body: {
@@ -507,16 +534,18 @@ func (a *AuthorizationAPIService) CheckAbacBulk(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest) (*http.Response, error) {
+//  @return CheckAbacBulkResponse
+func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest) (*CheckAbacBulkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckAbacBulkResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckAbacBulk")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/check-bulk"
@@ -536,7 +565,7 @@ func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -559,19 +588,19 @@ func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -579,10 +608,19 @@ func (a *AuthorizationAPIService) CheckAbacBulkExecute(r ApiCheckAbacBulkRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckAllPermissionsRequest struct {
@@ -590,12 +628,12 @@ type ApiCheckAllPermissionsRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiCheckAllPermissionsRequest) Execute() (*http.Response, error) {
+func (r ApiCheckAllPermissionsRequest) Execute() (*CheckAnyPermissionResponse, *http.Response, error) {
 	return r.ApiService.CheckAllPermissionsExecute(r)
 }
 
 /*
-CheckAllPermissions Check if user has ALL of the specified permissions
+CheckAllPermissions Check whether the subject holds all of the permissions
 
 POST /api/v1/authz/check-all
 Body: {
@@ -615,16 +653,18 @@ func (a *AuthorizationAPIService) CheckAllPermissions(ctx context.Context) ApiCh
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermissionsRequest) (*http.Response, error) {
+//  @return CheckAnyPermissionResponse
+func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermissionsRequest) (*CheckAnyPermissionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckAnyPermissionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckAllPermissions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/check-all"
@@ -643,7 +683,7 @@ func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermis
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -666,19 +706,19 @@ func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermis
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -686,10 +726,19 @@ func (a *AuthorizationAPIService) CheckAllPermissionsExecute(r ApiCheckAllPermis
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckAnyPermissionRequest struct {
@@ -697,12 +746,12 @@ type ApiCheckAnyPermissionRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiCheckAnyPermissionRequest) Execute() (*http.Response, error) {
+func (r ApiCheckAnyPermissionRequest) Execute() (*CheckAnyPermissionResponse, *http.Response, error) {
 	return r.ApiService.CheckAnyPermissionExecute(r)
 }
 
 /*
-CheckAnyPermission Check if user has ANY of the specified permissions
+CheckAnyPermission Check whether the subject holds any of the permissions
 
 POST /api/v1/authz/check-any
 Body: {
@@ -722,16 +771,18 @@ func (a *AuthorizationAPIService) CheckAnyPermission(ctx context.Context) ApiChe
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermissionRequest) (*http.Response, error) {
+//  @return CheckAnyPermissionResponse
+func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermissionRequest) (*CheckAnyPermissionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckAnyPermissionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckAnyPermission")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/check-any"
@@ -750,7 +801,7 @@ func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermiss
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -773,19 +824,19 @@ func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermiss
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -793,10 +844,19 @@ func (a *AuthorizationAPIService) CheckAnyPermissionExecute(r ApiCheckAnyPermiss
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckPermissionRequest struct {
@@ -804,12 +864,12 @@ type ApiCheckPermissionRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiCheckPermissionRequest) Execute() (*http.Response, error) {
+func (r ApiCheckPermissionRequest) Execute() (*CheckPermissionResponse, *http.Response, error) {
 	return r.ApiService.CheckPermissionExecute(r)
 }
 
 /*
-CheckPermission Check if the authenticated user has a specific permission
+CheckPermission Check one permission
 
 POST /api/v1/authz/check
 Body: {
@@ -834,16 +894,18 @@ func (a *AuthorizationAPIService) CheckPermission(ctx context.Context) ApiCheckP
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionRequest) (*http.Response, error) {
+//  @return CheckPermissionResponse
+func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionRequest) (*CheckPermissionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckPermissionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckPermission")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/check"
@@ -862,7 +924,7 @@ func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -885,19 +947,19 @@ func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -905,10 +967,19 @@ func (a *AuthorizationAPIService) CheckPermissionExecute(r ApiCheckPermissionReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckPermissionsBulkRequest struct {
@@ -916,12 +987,12 @@ type ApiCheckPermissionsBulkRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiCheckPermissionsBulkRequest) Execute() (*http.Response, error) {
+func (r ApiCheckPermissionsBulkRequest) Execute() (*CheckPermissionsBulkResponse, *http.Response, error) {
 	return r.ApiService.CheckPermissionsBulkExecute(r)
 }
 
 /*
-CheckPermissionsBulk Check multiple permissions at once
+CheckPermissionsBulk Check up to 100 permissions in one call
 
 POST /api/v1/authz/check-bulk
 Body: {
@@ -941,16 +1012,18 @@ func (a *AuthorizationAPIService) CheckPermissionsBulk(ctx context.Context) ApiC
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissionsBulkRequest) (*http.Response, error) {
+//  @return CheckPermissionsBulkResponse
+func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissionsBulkRequest) (*CheckPermissionsBulkResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckPermissionsBulkResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckPermissionsBulk")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/check-bulk"
@@ -969,7 +1042,7 @@ func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -992,19 +1065,19 @@ func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1012,10 +1085,19 @@ func (a *AuthorizationAPIService) CheckPermissionsBulkExecute(r ApiCheckPermissi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckRelationRequest struct {
@@ -1023,12 +1105,12 @@ type ApiCheckRelationRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiCheckRelationRequest) Execute() (*http.Response, error) {
+func (r ApiCheckRelationRequest) Execute() (*CheckRelationResponse, *http.Response, error) {
 	return r.ApiService.CheckRelationExecute(r)
 }
 
 /*
-CheckRelation Zanzibar-style relationship check
+CheckRelation Zanzibar relationship check
 
 POST /api/v1/authz/zanzibar/check
 Body: {
@@ -1048,16 +1130,18 @@ func (a *AuthorizationAPIService) CheckRelation(ctx context.Context) ApiCheckRel
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest) (*http.Response, error) {
+//  @return CheckRelationResponse
+func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest) (*CheckRelationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckRelationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckRelation")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/zanzibar/check"
@@ -1076,7 +1160,7 @@ func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1099,19 +1183,19 @@ func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1119,10 +1203,19 @@ func (a *AuthorizationAPIService) CheckRelationExecute(r ApiCheckRelationRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiCheckRelationScopedRequest struct {
@@ -1131,12 +1224,12 @@ type ApiCheckRelationScopedRequest struct {
 	orgId string
 }
 
-func (r ApiCheckRelationScopedRequest) Execute() (*http.Response, error) {
+func (r ApiCheckRelationScopedRequest) Execute() (*CheckRelationScopedResponse, *http.Response, error) {
 	return r.ApiService.CheckRelationScopedExecute(r)
 }
 
 /*
-CheckRelationScoped Method for CheckRelationScoped
+CheckRelationScoped Zanzibar relationship check
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1151,16 +1244,18 @@ func (a *AuthorizationAPIService) CheckRelationScoped(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationScopedRequest) (*http.Response, error) {
+//  @return CheckRelationScopedResponse
+func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationScopedRequest) (*CheckRelationScopedResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *CheckRelationScopedResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.CheckRelationScoped")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/zanzibar/check"
@@ -1180,7 +1275,7 @@ func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationS
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1203,19 +1298,19 @@ func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationS
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1223,10 +1318,19 @@ func (a *AuthorizationAPIService) CheckRelationScopedExecute(r ApiCheckRelationS
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiEvaluateRequest struct {
@@ -1234,12 +1338,12 @@ type ApiEvaluateRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiEvaluateRequest) Execute() (*http.Response, error) {
+func (r ApiEvaluateRequest) Execute() (*AuthZenDecision, *http.Response, error) {
 	return r.ApiService.EvaluateExecute(r)
 }
 
 /*
-Evaluate AuthZEN 1.0 single access evaluation.
+Evaluate AuthZEN 1.0 access evaluation
 
 POST /api/v1/authz/v1/evaluation
 Body: {
@@ -1261,16 +1365,18 @@ func (a *AuthorizationAPIService) Evaluate(ctx context.Context) ApiEvaluateReque
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*http.Response, error) {
+//  @return AuthZenDecision
+func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*AuthZenDecision, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AuthZenDecision
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.Evaluate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/v1/evaluation"
@@ -1289,7 +1395,7 @@ func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*http.R
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1312,19 +1418,19 @@ func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*http.R
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1332,10 +1438,19 @@ func (a *AuthorizationAPIService) EvaluateExecute(r ApiEvaluateRequest) (*http.R
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiEvaluateBatchRequest struct {
@@ -1343,12 +1458,12 @@ type ApiEvaluateBatchRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiEvaluateBatchRequest) Execute() (*http.Response, error) {
+func (r ApiEvaluateBatchRequest) Execute() (*EvaluateBatchResponse, *http.Response, error) {
 	return r.ApiService.EvaluateBatchExecute(r)
 }
 
 /*
-EvaluateBatch AuthZEN 1.0 boxcarred access evaluations.
+EvaluateBatch AuthZEN 1.0 boxcarred access evaluations
 
 POST /api/v1/authz/v1/evaluations
 Body: {
@@ -1371,16 +1486,18 @@ func (a *AuthorizationAPIService) EvaluateBatch(ctx context.Context) ApiEvaluate
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest) (*http.Response, error) {
+//  @return EvaluateBatchResponse
+func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest) (*EvaluateBatchResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *EvaluateBatchResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.EvaluateBatch")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/v1/evaluations"
@@ -1399,7 +1516,7 @@ func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1422,19 +1539,19 @@ func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1442,10 +1559,19 @@ func (a *AuthorizationAPIService) EvaluateBatchExecute(r ApiEvaluateBatchRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiExpandRelationRequest struct {
@@ -1724,12 +1850,12 @@ type ApiGetMyAttributesRequest struct {
 	orgId string
 }
 
-func (r ApiGetMyAttributesRequest) Execute() (*http.Response, error) {
+func (r ApiGetMyAttributesRequest) Execute() (*GetMyAttributesResponse, *http.Response, error) {
 	return r.ApiService.GetMyAttributesExecute(r)
 }
 
 /*
-GetMyAttributes Get user's current attributes (for debugging/UI)
+GetMyAttributes The caller's ABAC subject attributes
 
 GET /api/v1/abac/my-attributes
 
@@ -1746,16 +1872,18 @@ func (a *AuthorizationAPIService) GetMyAttributes(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) GetMyAttributesExecute(r ApiGetMyAttributesRequest) (*http.Response, error) {
+//  @return GetMyAttributesResponse
+func (a *AuthorizationAPIService) GetMyAttributesExecute(r ApiGetMyAttributesRequest) (*GetMyAttributesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetMyAttributesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetMyAttributes")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/my-attributes"
@@ -1775,7 +1903,7 @@ func (a *AuthorizationAPIService) GetMyAttributesExecute(r ApiGetMyAttributesReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1798,19 +1926,19 @@ func (a *AuthorizationAPIService) GetMyAttributesExecute(r ApiGetMyAttributesReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1818,10 +1946,19 @@ func (a *AuthorizationAPIService) GetMyAttributesExecute(r ApiGetMyAttributesReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetResourceAttributesRequest struct {
@@ -1832,12 +1969,12 @@ type ApiGetResourceAttributesRequest struct {
 	resourceId string
 }
 
-func (r ApiGetResourceAttributesRequest) Execute() (*http.Response, error) {
+func (r ApiGetResourceAttributesRequest) Execute() (*GetResourceAttributesResponse, *http.Response, error) {
 	return r.ApiService.GetResourceAttributesExecute(r)
 }
 
 /*
-GetResourceAttributes Get resource attributes
+GetResourceAttributes Attributes stored for a resource
 
 GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -1858,16 +1995,18 @@ func (a *AuthorizationAPIService) GetResourceAttributes(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) GetResourceAttributesExecute(r ApiGetResourceAttributesRequest) (*http.Response, error) {
+//  @return GetResourceAttributesResponse
+func (a *AuthorizationAPIService) GetResourceAttributesExecute(r ApiGetResourceAttributesRequest) (*GetResourceAttributesResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetResourceAttributesResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.GetResourceAttributes")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes"
@@ -1889,7 +2028,7 @@ func (a *AuthorizationAPIService) GetResourceAttributesExecute(r ApiGetResourceA
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1912,19 +2051,19 @@ func (a *AuthorizationAPIService) GetResourceAttributesExecute(r ApiGetResourceA
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1932,24 +2071,39 @@ func (a *AuthorizationAPIService) GetResourceAttributesExecute(r ApiGetResourceA
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiListAttributeDefinitionsRequest struct {
 	ctx context.Context
 	ApiService AuthorizationAPI
 	orgId string
+	type_ *string
 }
 
-func (r ApiListAttributeDefinitionsRequest) Execute() (*http.Response, error) {
+func (r ApiListAttributeDefinitionsRequest) Type_(type_ string) ApiListAttributeDefinitionsRequest {
+	r.type_ = &type_
+	return r
+}
+
+func (r ApiListAttributeDefinitionsRequest) Execute() (*ListAttributeDefinitionsResponse, *http.Response, error) {
 	return r.ApiService.ListAttributeDefinitionsExecute(r)
 }
 
 /*
-ListAttributeDefinitions Get available attribute definitions
+ListAttributeDefinitions Attribute definitions available to the organization
 
 GET /api/v1/abac/attribute-definitions
 Query params: type (user|resource|environment)
@@ -1967,16 +2121,18 @@ func (a *AuthorizationAPIService) ListAttributeDefinitions(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) ListAttributeDefinitionsExecute(r ApiListAttributeDefinitionsRequest) (*http.Response, error) {
+//  @return ListAttributeDefinitionsResponse
+func (a *AuthorizationAPIService) ListAttributeDefinitionsExecute(r ApiListAttributeDefinitionsRequest) (*ListAttributeDefinitionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ListAttributeDefinitionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.ListAttributeDefinitions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attribute-definitions"
@@ -1986,6 +2142,9 @@ func (a *AuthorizationAPIService) ListAttributeDefinitionsExecute(r ApiListAttri
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.type_ != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "type", r.type_, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1996,7 +2155,7 @@ func (a *AuthorizationAPIService) ListAttributeDefinitionsExecute(r ApiListAttri
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2019,19 +2178,19 @@ func (a *AuthorizationAPIService) ListAttributeDefinitionsExecute(r ApiListAttri
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2039,10 +2198,19 @@ func (a *AuthorizationAPIService) ListAttributeDefinitionsExecute(r ApiListAttri
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiListPermissionsRequest struct {
@@ -2050,12 +2218,12 @@ type ApiListPermissionsRequest struct {
 	ApiService AuthorizationAPI
 }
 
-func (r ApiListPermissionsRequest) Execute() (*http.Response, error) {
+func (r ApiListPermissionsRequest) Execute() (*ListPermissionsResponse, *http.Response, error) {
 	return r.ApiService.ListPermissionsExecute(r)
 }
 
 /*
-ListPermissions List all permissions for the authenticated user
+ListPermissions List the caller's effective permissions
 
 GET /api/v1/authz/permissions
 
@@ -2070,16 +2238,18 @@ func (a *AuthorizationAPIService) ListPermissions(ctx context.Context) ApiListPe
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) ListPermissionsExecute(r ApiListPermissionsRequest) (*http.Response, error) {
+//  @return ListPermissionsResponse
+func (a *AuthorizationAPIService) ListPermissionsExecute(r ApiListPermissionsRequest) (*ListPermissionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *ListPermissionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.ListPermissions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/api/v1/authz/permissions"
@@ -2098,7 +2268,7 @@ func (a *AuthorizationAPIService) ListPermissionsExecute(r ApiListPermissionsReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2121,19 +2291,19 @@ func (a *AuthorizationAPIService) ListPermissionsExecute(r ApiListPermissionsReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2141,10 +2311,19 @@ func (a *AuthorizationAPIService) ListPermissionsExecute(r ApiListPermissionsReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSetResourceAttributeRequest struct {
@@ -2156,12 +2335,12 @@ type ApiSetResourceAttributeRequest struct {
 	attributeSlug string
 }
 
-func (r ApiSetResourceAttributeRequest) Execute() (*http.Response, error) {
+func (r ApiSetResourceAttributeRequest) Execute() (*SetResourceAttributeResponse, *http.Response, error) {
 	return r.ApiService.SetResourceAttributeExecute(r)
 }
 
 /*
-SetResourceAttribute Set resource attribute
+SetResourceAttribute Set a resource attribute
 
 PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}
 Body: { value: any }
@@ -2185,16 +2364,18 @@ func (a *AuthorizationAPIService) SetResourceAttribute(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAttributeRequest) (*http.Response, error) {
+//  @return SetResourceAttributeResponse
+func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAttributeRequest) (*SetResourceAttributeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SetResourceAttributeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.SetResourceAttribute")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}"
@@ -2217,7 +2398,7 @@ func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2240,19 +2421,19 @@ func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAt
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2260,10 +2441,19 @@ func (a *AuthorizationAPIService) SetResourceAttributeExecute(r ApiSetResourceAt
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSetUserAttributeRequest struct {
@@ -2274,12 +2464,12 @@ type ApiSetUserAttributeRequest struct {
 	attributeSlug string
 }
 
-func (r ApiSetUserAttributeRequest) Execute() (*http.Response, error) {
+func (r ApiSetUserAttributeRequest) Execute() (*SetUserAttributeResponse, *http.Response, error) {
 	return r.ApiService.SetUserAttributeExecute(r)
 }
 
 /*
-SetUserAttribute Set user attribute
+SetUserAttribute Set a user attribute
 
 PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug}
 Body: { value: any }
@@ -2301,16 +2491,18 @@ func (a *AuthorizationAPIService) SetUserAttribute(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeRequest) (*http.Response, error) {
+//  @return SetUserAttributeResponse
+func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeRequest) (*SetUserAttributeResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SetUserAttributeResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AuthorizationAPIService.SetUserAttribute")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}"
@@ -2332,7 +2524,7 @@ func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2355,19 +2547,19 @@ func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2375,8 +2567,17 @@ func (a *AuthorizationAPIService) SetUserAttributeExecute(r ApiSetUserAttributeR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

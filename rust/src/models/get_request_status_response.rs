@@ -27,9 +27,15 @@ pub struct GetRequestStatusResponse {
     /// Present when approved.
     #[serde(rename = "granted_ttl", skip_serializing_if = "Option::is_none")]
     pub granted_ttl: Option<i32>,
-    /// Present when denied.
-    #[serde(rename = "review_notes", skip_serializing_if = "Option::is_none")]
-    pub review_notes: Option<String>,
+    /// Present when decided: whether the reviewer left notes (the notes themselves are never returned).
+    #[serde(rename = "has_notes", skip_serializing_if = "Option::is_none")]
+    pub has_notes: Option<bool>,
+    /// Present when decided: message the reviewer explicitly wrote for the agent.
+    #[serde(rename = "agent_message", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub agent_message: Option<Option<String>>,
+    /// Present when pending: the on_behalf_of user must consent.
+    #[serde(rename = "delegation_consent_required", skip_serializing_if = "Option::is_none")]
+    pub delegation_consent_required: Option<bool>,
     /// Present when pending.
     #[serde(rename = "expires_at", skip_serializing_if = "Option::is_none")]
     pub expires_at: Option<String>,
@@ -44,7 +50,9 @@ impl GetRequestStatusResponse {
             task_id: None,
             token_url: None,
             granted_ttl: None,
-            review_notes: None,
+            has_notes: None,
+            agent_message: None,
+            delegation_consent_required: None,
             expires_at: None,
         }
     }

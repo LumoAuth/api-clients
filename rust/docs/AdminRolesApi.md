@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## admin_roles_add_permissions
 
-> admin_roles_add_permissions(org_id, role_id)
+> models::MessageResponse admin_roles_add_permissions(org_id, role_id)
 Add permission(s) to a role
 
 ### Parameters
@@ -35,7 +35,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -44,14 +44,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_add_user
 
-> admin_roles_add_user(org_id, role_id)
+> models::MessageResponse admin_roles_add_user(org_id, role_id)
 Assign a user to a role
 
 ### Parameters
@@ -64,7 +64,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -73,14 +73,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_create
 
-> admin_roles_create(org_id)
+> models::AdminRolesCreateResponse admin_roles_create(org_id)
 Create a new role
 
 ### Parameters
@@ -92,7 +92,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -101,14 +101,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_delete
 
-> admin_roles_delete(org_id, role_id)
+> models::MessageResponse admin_roles_delete(org_id, role_id)
 Delete a role
 
 ### Parameters
@@ -121,7 +121,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -130,14 +130,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_get
 
-> admin_roles_get(org_id, role_id)
+> models::AdminRolesGetResponse admin_roles_get(org_id, role_id)
 Get a single role by ID or slug
 
 ### Parameters
@@ -150,7 +150,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesGetResponse**](AdminRolesGetResponse.md)
 
 ### Authorization
 
@@ -159,14 +159,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_get_permissions
 
-> admin_roles_get_permissions(org_id, role_id)
+> models::AdminRolesGetPermissionsResponse admin_roles_get_permissions(org_id, role_id)
 Get role permissions
 
 ### Parameters
@@ -179,7 +179,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -188,14 +188,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_get_users
 
-> admin_roles_get_users(org_id, role_id)
+> models::AdminRolesGetUsersResponse admin_roles_get_users(org_id, role_id)
 Get users assigned to a role
 
 ### Parameters
@@ -208,7 +208,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesGetUsersResponse**](AdminRolesGetUsersResponse.md)
 
 ### Authorization
 
@@ -217,14 +217,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_list
 
-> admin_roles_list(org_id)
+> models::AdminRolesListResponse admin_roles_list(org_id)
 List all roles in the tenant
 
 ### Parameters
@@ -236,7 +236,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesListResponse**](AdminRolesListResponse.md)
 
 ### Authorization
 
@@ -245,14 +245,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_remove_permission
 
-> admin_roles_remove_permission(org_id, role_id, permission_id)
+> models::MessageResponse admin_roles_remove_permission(org_id, role_id, permission_id)
 Remove a permission from a role
 
 ### Parameters
@@ -266,7 +266,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -275,14 +275,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_remove_user
 
-> admin_roles_remove_user(org_id, role_id, user_id)
+> models::MessageResponse admin_roles_remove_user(org_id, role_id, user_id)
 Remove a user from a role
 
 ### Parameters
@@ -296,7 +296,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -305,14 +305,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_roles_update_permissions
 
-> admin_roles_update_permissions(org_id, role_id)
+> models::AdminRolesCreateResponse admin_roles_update_permissions(org_id, role_id)
 Update role permissions (replaces all)
 
 ### Parameters
@@ -325,7 +325,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -334,14 +334,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_roles_update
 
-> patch_admin_roles_update(org_id, role_id)
+> models::AdminRolesCreateResponse patch_admin_roles_update(org_id, role_id)
 Update an existing role
 
 ### Parameters
@@ -354,7 +354,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -363,14 +363,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_roles_update
 
-> put_admin_roles_update(org_id, role_id)
+> models::AdminRolesCreateResponse put_admin_roles_update(org_id, role_id)
 Update an existing role
 
 ### Parameters
@@ -383,7 +383,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -392,7 +392,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

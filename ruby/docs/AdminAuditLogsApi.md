@@ -4,21 +4,21 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant |
-| [**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON |
-| [**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry |
-| [**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant |
+| [**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant |
+| [**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON |
+| [**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry |
+| [**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries |
 | [**admin_audit_logs_retention**](AdminAuditLogsApi.md#admin_audit_logs_retention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings |
-| [**admin_audit_logs_stats**](AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics |
+| [**admin_audit_logs_stats**](AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days) |
 | [**patch_admin_audit_logs_retention_update**](AdminAuditLogsApi.md#patch_admin_audit_logs_retention_update) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings |
 | [**put_admin_audit_logs_retention_update**](AdminAuditLogsApi.md#put_admin_audit_logs_retention_update) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings |
 
 
 ## admin_audit_logs_actions
 
-> admin_audit_logs_actions(org_id)
+> <AdminAuditLogsActionsResponse> admin_audit_logs_actions(org_id)
 
-List available audit action types for this tenant
+List the distinct audit action types recorded for the tenant
 
 ### Examples
 
@@ -40,8 +40,9 @@ api_instance = LumoAuthApiClient::AdminAuditLogsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List available audit action types for this tenant
-  api_instance.admin_audit_logs_actions(org_id)
+  # List the distinct audit action types recorded for the tenant
+  result = api_instance.admin_audit_logs_actions(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_actions: #{e}"
 end
@@ -49,17 +50,17 @@ end
 
 #### Using the admin_audit_logs_actions_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_audit_logs_actions_with_http_info(org_id)
+> <Array(<AdminAuditLogsActionsResponse>, Integer, Hash)> admin_audit_logs_actions_with_http_info(org_id)
 
 ```ruby
 begin
-  # List available audit action types for this tenant
+  # List the distinct audit action types recorded for the tenant
   data, status_code, headers = api_instance.admin_audit_logs_actions_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsActionsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_actions_with_http_info: #{e}"
 end
@@ -73,7 +74,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsActionsResponse**](AdminAuditLogsActionsResponse.md)
 
 ### Authorization
 
@@ -82,14 +83,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_audit_logs_export
 
-> admin_audit_logs_export(org_id)
+> String admin_audit_logs_export(org_id)
 
-Export audit logs as CSV or JSON
+Export audit logs as CSV (default) or JSON
 
 ### Examples
 
@@ -111,8 +112,9 @@ api_instance = LumoAuthApiClient::AdminAuditLogsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Export audit logs as CSV or JSON
-  api_instance.admin_audit_logs_export(org_id)
+  # Export audit logs as CSV (default) or JSON
+  result = api_instance.admin_audit_logs_export(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_export: #{e}"
 end
@@ -120,17 +122,17 @@ end
 
 #### Using the admin_audit_logs_export_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_audit_logs_export_with_http_info(org_id)
+> <Array(String, Integer, Hash)> admin_audit_logs_export_with_http_info(org_id)
 
 ```ruby
 begin
-  # Export audit logs as CSV or JSON
+  # Export audit logs as CSV (default) or JSON
   data, status_code, headers = api_instance.admin_audit_logs_export_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => String
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_export_with_http_info: #{e}"
 end
@@ -144,7 +146,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+**String**
 
 ### Authorization
 
@@ -153,14 +155,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/csv, application/json
 
 
 ## admin_audit_logs_get
 
-> admin_audit_logs_get(org_id, log_id)
+> <AdminAuditLogsGetResponse> admin_audit_logs_get(org_id, log_id)
 
-Get a single audit log entry
+Get an audit log entry
 
 ### Examples
 
@@ -183,8 +185,9 @@ org_id = 'org_id_example' # String |
 log_id = 'log_id_example' # String | 
 
 begin
-  # Get a single audit log entry
-  api_instance.admin_audit_logs_get(org_id, log_id)
+  # Get an audit log entry
+  result = api_instance.admin_audit_logs_get(org_id, log_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_get: #{e}"
 end
@@ -192,17 +195,17 @@ end
 
 #### Using the admin_audit_logs_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_audit_logs_get_with_http_info(org_id, log_id)
+> <Array(<AdminAuditLogsGetResponse>, Integer, Hash)> admin_audit_logs_get_with_http_info(org_id, log_id)
 
 ```ruby
 begin
-  # Get a single audit log entry
+  # Get an audit log entry
   data, status_code, headers = api_instance.admin_audit_logs_get_with_http_info(org_id, log_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_get_with_http_info: #{e}"
 end
@@ -217,7 +220,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsGetResponse**](AdminAuditLogsGetResponse.md)
 
 ### Authorization
 
@@ -226,14 +229,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_audit_logs_list
 
-> admin_audit_logs_list(org_id)
+> <AdminAuditLogsListResponse> admin_audit_logs_list(org_id)
 
-List audit logs for the tenant
+List audit log entries
 
 ### Examples
 
@@ -255,8 +258,9 @@ api_instance = LumoAuthApiClient::AdminAuditLogsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List audit logs for the tenant
-  api_instance.admin_audit_logs_list(org_id)
+  # List audit log entries
+  result = api_instance.admin_audit_logs_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_list: #{e}"
 end
@@ -264,17 +268,17 @@ end
 
 #### Using the admin_audit_logs_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_audit_logs_list_with_http_info(org_id)
+> <Array(<AdminAuditLogsListResponse>, Integer, Hash)> admin_audit_logs_list_with_http_info(org_id)
 
 ```ruby
 begin
-  # List audit logs for the tenant
+  # List audit log entries
   data, status_code, headers = api_instance.admin_audit_logs_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_list_with_http_info: #{e}"
 end
@@ -288,7 +292,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsListResponse**](AdminAuditLogsListResponse.md)
 
 ### Authorization
 
@@ -297,12 +301,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_audit_logs_retention
 
-> admin_audit_logs_retention(org_id)
+> <AdminAuditLogsRetentionResponse> admin_audit_logs_retention(org_id)
 
 Get audit log retention settings
 
@@ -327,7 +331,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Get audit log retention settings
-  api_instance.admin_audit_logs_retention(org_id)
+  result = api_instance.admin_audit_logs_retention(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_retention: #{e}"
 end
@@ -335,9 +340,9 @@ end
 
 #### Using the admin_audit_logs_retention_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_audit_logs_retention_with_http_info(org_id)
+> <Array(<AdminAuditLogsRetentionResponse>, Integer, Hash)> admin_audit_logs_retention_with_http_info(org_id)
 
 ```ruby
 begin
@@ -345,7 +350,7 @@ begin
   data, status_code, headers = api_instance.admin_audit_logs_retention_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsRetentionResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_retention_with_http_info: #{e}"
 end
@@ -359,7 +364,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -368,14 +373,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_audit_logs_stats
 
-> admin_audit_logs_stats(org_id)
+> <AdminAuditLogsStatsResponse> admin_audit_logs_stats(org_id)
 
-Get audit log statistics
+Audit log statistics for a period (default: last 30 days)
 
 ### Examples
 
@@ -397,8 +402,9 @@ api_instance = LumoAuthApiClient::AdminAuditLogsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Get audit log statistics
-  api_instance.admin_audit_logs_stats(org_id)
+  # Audit log statistics for a period (default: last 30 days)
+  result = api_instance.admin_audit_logs_stats(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_stats: #{e}"
 end
@@ -406,17 +412,17 @@ end
 
 #### Using the admin_audit_logs_stats_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_audit_logs_stats_with_http_info(org_id)
+> <Array(<AdminAuditLogsStatsResponse>, Integer, Hash)> admin_audit_logs_stats_with_http_info(org_id)
 
 ```ruby
 begin
-  # Get audit log statistics
+  # Audit log statistics for a period (default: last 30 days)
   data, status_code, headers = api_instance.admin_audit_logs_stats_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsStatsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->admin_audit_logs_stats_with_http_info: #{e}"
 end
@@ -430,7 +436,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsStatsResponse**](AdminAuditLogsStatsResponse.md)
 
 ### Authorization
 
@@ -439,12 +445,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_audit_logs_retention_update
 
-> patch_admin_audit_logs_retention_update(org_id)
+> <AdminAuditLogsRetentionResponse> patch_admin_audit_logs_retention_update(org_id)
 
 Update audit log retention settings
 
@@ -469,7 +475,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Update audit log retention settings
-  api_instance.patch_admin_audit_logs_retention_update(org_id)
+  result = api_instance.patch_admin_audit_logs_retention_update(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->patch_admin_audit_logs_retention_update: #{e}"
 end
@@ -477,9 +484,9 @@ end
 
 #### Using the patch_admin_audit_logs_retention_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_audit_logs_retention_update_with_http_info(org_id)
+> <Array(<AdminAuditLogsRetentionResponse>, Integer, Hash)> patch_admin_audit_logs_retention_update_with_http_info(org_id)
 
 ```ruby
 begin
@@ -487,7 +494,7 @@ begin
   data, status_code, headers = api_instance.patch_admin_audit_logs_retention_update_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsRetentionResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->patch_admin_audit_logs_retention_update_with_http_info: #{e}"
 end
@@ -501,7 +508,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -510,12 +517,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_audit_logs_retention_update
 
-> put_admin_audit_logs_retention_update(org_id)
+> <AdminAuditLogsRetentionResponse> put_admin_audit_logs_retention_update(org_id)
 
 Update audit log retention settings
 
@@ -540,7 +547,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Update audit log retention settings
-  api_instance.put_admin_audit_logs_retention_update(org_id)
+  result = api_instance.put_admin_audit_logs_retention_update(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->put_admin_audit_logs_retention_update: #{e}"
 end
@@ -548,9 +556,9 @@ end
 
 #### Using the put_admin_audit_logs_retention_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_audit_logs_retention_update_with_http_info(org_id)
+> <Array(<AdminAuditLogsRetentionResponse>, Integer, Hash)> put_admin_audit_logs_retention_update_with_http_info(org_id)
 
 ```ruby
 begin
@@ -558,7 +566,7 @@ begin
   data, status_code, headers = api_instance.put_admin_audit_logs_retention_update_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminAuditLogsRetentionResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAuditLogsApi->put_admin_audit_logs_retention_update_with_http_info: #{e}"
 end
@@ -572,7 +580,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -581,5 +589,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

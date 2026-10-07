@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminPermissionsCreateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum AdminPermissionsCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminPermissionsDeleteError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,6 @@ pub enum AdminPermissionsDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminPermissionsGetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +40,6 @@ pub enum AdminPermissionsGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminPermissionsListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +47,6 @@ pub enum AdminPermissionsListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminPermissionsUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +54,6 @@ pub enum AdminPermissionsUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminPermissionsUsageError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +61,6 @@ pub enum AdminPermissionsUsageError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminScopesCreateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +68,6 @@ pub enum AdminScopesCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminScopesDeleteError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,12 +75,11 @@ pub enum AdminScopesDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminScopesListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_permissions_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminPermissionsCreateError>> {
+pub async fn admin_permissions_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminPermissionsCreateResponse, Error<AdminPermissionsCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -114,9 +105,20 @@ pub async fn admin_permissions_create(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminPermissionsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminPermissionsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminPermissionsCreateError> = serde_json::from_str(&content).ok();
@@ -124,7 +126,7 @@ pub async fn admin_permissions_create(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_permissions_delete(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<(), Error<AdminPermissionsDeleteError>> {
+pub async fn admin_permissions_delete(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<models::MessageResponse, Error<AdminPermissionsDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_permission_id = permission_id;
@@ -151,9 +153,20 @@ pub async fn admin_permissions_delete(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminPermissionsDeleteError> = serde_json::from_str(&content).ok();
@@ -161,7 +174,7 @@ pub async fn admin_permissions_delete(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_permissions_get(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<(), Error<AdminPermissionsGetError>> {
+pub async fn admin_permissions_get(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<models::AdminPermissionsGetResponse, Error<AdminPermissionsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_permission_id = permission_id;
@@ -188,9 +201,20 @@ pub async fn admin_permissions_get(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminPermissionsGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminPermissionsGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminPermissionsGetError> = serde_json::from_str(&content).ok();
@@ -198,7 +222,7 @@ pub async fn admin_permissions_get(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_permissions_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminPermissionsListError>> {
+pub async fn admin_permissions_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminPermissionsListResponse, Error<AdminPermissionsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -224,9 +248,20 @@ pub async fn admin_permissions_list(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminPermissionsListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminPermissionsListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminPermissionsListError> = serde_json::from_str(&content).ok();
@@ -234,7 +269,7 @@ pub async fn admin_permissions_list(configuration: &configuration::Configuration
     }
 }
 
-pub async fn admin_permissions_update(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<(), Error<AdminPermissionsUpdateError>> {
+pub async fn admin_permissions_update(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<models::AdminPermissionsCreateResponse, Error<AdminPermissionsUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_permission_id = permission_id;
@@ -261,9 +296,20 @@ pub async fn admin_permissions_update(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminPermissionsCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminPermissionsCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminPermissionsUpdateError> = serde_json::from_str(&content).ok();
@@ -271,7 +317,7 @@ pub async fn admin_permissions_update(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_permissions_usage(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<(), Error<AdminPermissionsUsageError>> {
+pub async fn admin_permissions_usage(configuration: &configuration::Configuration, org_id: &str, permission_id: &str) -> Result<models::AdminPermissionsUsageResponse, Error<AdminPermissionsUsageError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_permission_id = permission_id;
@@ -298,9 +344,20 @@ pub async fn admin_permissions_usage(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminPermissionsUsageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminPermissionsUsageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminPermissionsUsageError> = serde_json::from_str(&content).ok();
@@ -308,7 +365,7 @@ pub async fn admin_permissions_usage(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_scopes_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminScopesCreateError>> {
+pub async fn admin_scopes_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminScopesCreateResponse, Error<AdminScopesCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -334,9 +391,20 @@ pub async fn admin_scopes_create(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminScopesCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminScopesCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminScopesCreateError> = serde_json::from_str(&content).ok();
@@ -344,7 +412,7 @@ pub async fn admin_scopes_create(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_scopes_delete(configuration: &configuration::Configuration, org_id: &str, scope_id: &str) -> Result<(), Error<AdminScopesDeleteError>> {
+pub async fn admin_scopes_delete(configuration: &configuration::Configuration, org_id: &str, scope_id: &str) -> Result<models::MessageResponse, Error<AdminScopesDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_scope_id = scope_id;
@@ -371,9 +439,20 @@ pub async fn admin_scopes_delete(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminScopesDeleteError> = serde_json::from_str(&content).ok();
@@ -381,7 +460,7 @@ pub async fn admin_scopes_delete(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn admin_scopes_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminScopesListError>> {
+pub async fn admin_scopes_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminScopesListResponse, Error<AdminScopesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -407,9 +486,20 @@ pub async fn admin_scopes_list(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminScopesListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminScopesListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminScopesListError> = serde_json::from_str(&content).ok();

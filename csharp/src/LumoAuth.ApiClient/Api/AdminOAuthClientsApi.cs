@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,31 +29,31 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Create a new OAuth client
+        /// Create an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void CreateClient(string orgId);
+        /// <returns>CreateClientResponse</returns>
+        CreateClientResponse CreateClient(string orgId);
 
         /// <summary>
-        /// Create a new OAuth client
+        /// Create an OAuth client
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> CreateClientWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of CreateClientResponse</returns>
+        ApiResponse<CreateClientResponse> CreateClientWithHttpInfo(string orgId);
         /// <summary>
         /// Delete an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void DeleteClient(string orgId, string clientId);
+        /// <returns>MessageResponse</returns>
+        MessageResponse DeleteClient(string orgId, string clientId);
 
         /// <summary>
         /// Delete an OAuth client
@@ -63,19 +64,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DeleteClientWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> DeleteClientWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Disable OAuth client
+        /// Disable an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void DisableClient(string orgId, string clientId);
+        /// <returns>UpdateClientResponse</returns>
+        UpdateClientResponse DisableClient(string orgId, string clientId);
 
         /// <summary>
-        /// Disable OAuth client
+        /// Disable an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -83,19 +84,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> DisableClientWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        ApiResponse<UpdateClientResponse> DisableClientWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Enable OAuth client
+        /// Enable an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void EnableClient(string orgId, string clientId);
+        /// <returns>UpdateClientResponse</returns>
+        UpdateClientResponse EnableClient(string orgId, string clientId);
 
         /// <summary>
-        /// Enable OAuth client
+        /// Enable an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -103,19 +104,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> EnableClientWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        ApiResponse<UpdateClientResponse> EnableClientWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Get a single OAuth client by ID or clientId
+        /// Get an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void GetClient(string orgId, string clientId);
+        /// <returns>GetClientResponse</returns>
+        GetClientResponse GetClient(string orgId, string clientId);
 
         /// <summary>
-        /// Get a single OAuth client by ID or clientId
+        /// Get an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -123,19 +124,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetClientWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of GetClientResponse</returns>
+        ApiResponse<GetClientResponse> GetClientWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Get client scopes
+        /// List the scopes granted to an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void ListClientScopes(string orgId, string clientId);
+        /// <returns>ListClientScopesResponse</returns>
+        ListClientScopesResponse ListClientScopes(string orgId, string clientId);
 
         /// <summary>
-        /// Get client scopes
+        /// List the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -143,57 +144,37 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ListClientScopesWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of ListClientScopesResponse</returns>
+        ApiResponse<ListClientScopesResponse> ListClientScopesWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// List all OAuth clients in the tenant
+        /// List OAuth clients
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void ListClients(string orgId);
+        /// <returns>ListClientsResponse</returns>
+        ListClientsResponse ListClients(string orgId);
 
         /// <summary>
-        /// List all OAuth clients in the tenant
+        /// List OAuth clients
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ListClientsWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of ListClientsResponse</returns>
+        ApiResponse<ListClientsResponse> ListClientsWithHttpInfo(string orgId);
         /// <summary>
-        /// Update an existing OAuth client
+        /// Update an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void PatchClient(string orgId, string clientId);
+        /// <returns>UpdateClientResponse</returns>
+        UpdateClientResponse PatchClient(string orgId, string clientId);
 
         /// <summary>
-        /// Update an existing OAuth client
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PatchClientWithHttpInfo(string orgId, string clientId);
-        /// <summary>
-        /// Rotate client secret
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="clientId"></param>
-        /// <returns></returns>
-        void RotateClientSecret(string orgId, string clientId);
-
-        /// <summary>
-        /// Rotate client secret
+        /// Update an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -201,19 +182,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> RotateClientSecretWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        ApiResponse<UpdateClientResponse> PatchClientWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Set client scopes
+        /// Rotate an OAuth client secret
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void SetClientScopes(string orgId, string clientId);
+        /// <returns>RotateClientSecretResponse</returns>
+        RotateClientSecretResponse RotateClientSecret(string orgId, string clientId);
 
         /// <summary>
-        /// Set client scopes
+        /// Rotate an OAuth client secret
         /// </summary>
         /// <remarks>
         /// 
@@ -221,19 +202,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> SetClientScopesWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of RotateClientSecretResponse</returns>
+        ApiResponse<RotateClientSecretResponse> RotateClientSecretWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Update an existing OAuth client
+        /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void UpdateClient(string orgId, string clientId);
+        /// <returns>SetClientScopesResponse</returns>
+        SetClientScopesResponse SetClientScopes(string orgId, string clientId);
 
         /// <summary>
-        /// Update an existing OAuth client
+        /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -241,8 +222,28 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UpdateClientWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of SetClientScopesResponse</returns>
+        ApiResponse<SetClientScopesResponse> SetClientScopesWithHttpInfo(string orgId, string clientId);
+        /// <summary>
+        /// Replace an OAuth client
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>UpdateClientResponse</returns>
+        UpdateClientResponse UpdateClient(string orgId, string clientId);
+
+        /// <summary>
+        /// Replace an OAuth client
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="clientId"></param>
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        ApiResponse<UpdateClientResponse> UpdateClientWithHttpInfo(string orgId, string clientId);
         #endregion Synchronous Operations
     }
 
@@ -253,7 +254,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Create a new OAuth client
+        /// Create an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -261,11 +262,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task CreateClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of CreateClientResponse</returns>
+        System.Threading.Tasks.Task<CreateClientResponse> CreateClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a new OAuth client
+        /// Create an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -273,8 +274,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (CreateClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<CreateClientResponse>> CreateClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an OAuth client
         /// </summary>
@@ -285,8 +286,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DeleteClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> DeleteClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete an OAuth client
@@ -298,10 +299,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> DeleteClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Disable OAuth client
+        /// Disable an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -310,11 +311,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task DisableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of UpdateClientResponse</returns>
+        System.Threading.Tasks.Task<UpdateClientResponse> DisableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Disable OAuth client
+        /// Disable an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -323,10 +324,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> DisableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UpdateClientResponse>> DisableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Enable OAuth client
+        /// Enable an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -335,11 +336,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task EnableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of UpdateClientResponse</returns>
+        System.Threading.Tasks.Task<UpdateClientResponse> EnableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Enable OAuth client
+        /// Enable an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -348,10 +349,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> EnableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UpdateClientResponse>> EnableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get a single OAuth client by ID or clientId
+        /// Get an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -360,11 +361,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of GetClientResponse</returns>
+        System.Threading.Tasks.Task<GetClientResponse> GetClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a single OAuth client by ID or clientId
+        /// Get an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -373,10 +374,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (GetClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetClientResponse>> GetClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get client scopes
+        /// List the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -385,11 +386,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ListClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ListClientScopesResponse</returns>
+        System.Threading.Tasks.Task<ListClientScopesResponse> ListClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get client scopes
+        /// List the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -398,10 +399,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ListClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (ListClientScopesResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListClientScopesResponse>> ListClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all OAuth clients in the tenant
+        /// List OAuth clients
         /// </summary>
         /// <remarks>
         /// 
@@ -409,11 +410,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ListClientsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ListClientsResponse</returns>
+        System.Threading.Tasks.Task<ListClientsResponse> ListClientsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all OAuth clients in the tenant
+        /// List OAuth clients
         /// </summary>
         /// <remarks>
         /// 
@@ -421,10 +422,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ListClientsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (ListClientsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListClientsResponse>> ListClientsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Update an existing OAuth client
+        /// Update an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -433,11 +434,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PatchClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of UpdateClientResponse</returns>
+        System.Threading.Tasks.Task<UpdateClientResponse> PatchClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update an existing OAuth client
+        /// Update an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -446,10 +447,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PatchClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UpdateClientResponse>> PatchClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Rotate client secret
+        /// Rotate an OAuth client secret
         /// </summary>
         /// <remarks>
         /// 
@@ -458,11 +459,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task RotateClientSecretAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of RotateClientSecretResponse</returns>
+        System.Threading.Tasks.Task<RotateClientSecretResponse> RotateClientSecretAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Rotate client secret
+        /// Rotate an OAuth client secret
         /// </summary>
         /// <remarks>
         /// 
@@ -471,10 +472,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> RotateClientSecretWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (RotateClientSecretResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RotateClientSecretResponse>> RotateClientSecretWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Set client scopes
+        /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -483,11 +484,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task SetClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of SetClientScopesResponse</returns>
+        System.Threading.Tasks.Task<SetClientScopesResponse> SetClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Set client scopes
+        /// Replace the scopes granted to an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -496,10 +497,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> SetClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (SetClientScopesResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<SetClientScopesResponse>> SetClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Update an existing OAuth client
+        /// Replace an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -508,11 +509,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UpdateClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of UpdateClientResponse</returns>
+        System.Threading.Tasks.Task<UpdateClientResponse> UpdateClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update an existing OAuth client
+        /// Replace an OAuth client
         /// </summary>
         /// <remarks>
         /// 
@@ -521,8 +522,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UpdateClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UpdateClientResponse>> UpdateClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -737,23 +738,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new OAuth client 
+        /// Create an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void CreateClient(string orgId)
+        /// <returns>CreateClientResponse</returns>
+        public CreateClientResponse CreateClient(string orgId)
         {
-            CreateClientWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<CreateClientResponse> localVarResponse = CreateClientWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new OAuth client 
+        /// Create an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> CreateClientWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of CreateClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<CreateClientResponse> CreateClientWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -766,6 +768,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -789,7 +792,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<CreateClientResponse>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -801,25 +804,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new OAuth client 
+        /// Create an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task CreateClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of CreateClientResponse</returns>
+        public async System.Threading.Tasks.Task<CreateClientResponse> CreateClientAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await CreateClientWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<CreateClientResponse> localVarResponse = await CreateClientWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new OAuth client 
+        /// Create an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> CreateClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (CreateClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<CreateClientResponse>> CreateClientWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -833,6 +837,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -858,7 +863,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<CreateClientResponse>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -875,10 +880,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void DeleteClient(string orgId, string clientId)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse DeleteClient(string orgId, string clientId)
         {
-            DeleteClientWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = DeleteClientWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -887,8 +893,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> DeleteClientWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> DeleteClientWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -905,6 +911,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -929,7 +936,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -947,10 +954,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DeleteClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> DeleteClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await DeleteClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await DeleteClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -960,8 +968,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> DeleteClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> DeleteClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -979,6 +987,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1005,7 +1014,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1017,25 +1026,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Disable OAuth client 
+        /// Disable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void DisableClient(string orgId, string clientId)
+        /// <returns>UpdateClientResponse</returns>
+        public UpdateClientResponse DisableClient(string orgId, string clientId)
         {
-            DisableClientWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = DisableClientWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Disable OAuth client 
+        /// Disable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> DisableClientWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> DisableClientWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1052,6 +1062,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1076,7 +1087,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1088,27 +1099,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Disable OAuth client 
+        /// Disable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task DisableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of UpdateClientResponse</returns>
+        public async System.Threading.Tasks.Task<UpdateClientResponse> DisableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await DisableClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = await DisableClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Disable OAuth client 
+        /// Disable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> DisableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse>> DisableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1126,6 +1138,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1152,7 +1165,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1164,25 +1177,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Enable OAuth client 
+        /// Enable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void EnableClient(string orgId, string clientId)
+        /// <returns>UpdateClientResponse</returns>
+        public UpdateClientResponse EnableClient(string orgId, string clientId)
         {
-            EnableClientWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = EnableClientWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Enable OAuth client 
+        /// Enable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> EnableClientWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> EnableClientWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1199,6 +1213,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1223,7 +1238,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1235,27 +1250,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Enable OAuth client 
+        /// Enable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task EnableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of UpdateClientResponse</returns>
+        public async System.Threading.Tasks.Task<UpdateClientResponse> EnableClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await EnableClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = await EnableClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Enable OAuth client 
+        /// Enable an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> EnableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse>> EnableClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1273,6 +1289,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1299,7 +1316,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1311,25 +1328,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single OAuth client by ID or clientId 
+        /// Get an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void GetClient(string orgId, string clientId)
+        /// <returns>GetClientResponse</returns>
+        public GetClientResponse GetClient(string orgId, string clientId)
         {
-            GetClientWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<GetClientResponse> localVarResponse = GetClientWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single OAuth client by ID or clientId 
+        /// Get an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetClientWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of GetClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<GetClientResponse> GetClientWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1346,6 +1364,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1370,7 +1389,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<GetClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1382,27 +1401,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single OAuth client by ID or clientId 
+        /// Get an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of GetClientResponse</returns>
+        public async System.Threading.Tasks.Task<GetClientResponse> GetClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<GetClientResponse> localVarResponse = await GetClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single OAuth client by ID or clientId 
+        /// Get an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (GetClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<GetClientResponse>> GetClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1420,6 +1440,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1446,7 +1467,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<GetClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1458,25 +1479,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get client scopes 
+        /// List the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void ListClientScopes(string orgId, string clientId)
+        /// <returns>ListClientScopesResponse</returns>
+        public ListClientScopesResponse ListClientScopes(string orgId, string clientId)
         {
-            ListClientScopesWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<ListClientScopesResponse> localVarResponse = ListClientScopesWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get client scopes 
+        /// List the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> ListClientScopesWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of ListClientScopesResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<ListClientScopesResponse> ListClientScopesWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1493,6 +1515,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1517,7 +1540,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ListClientScopesResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1529,27 +1552,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get client scopes 
+        /// List the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ListClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ListClientScopesResponse</returns>
+        public async System.Threading.Tasks.Task<ListClientScopesResponse> ListClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await ListClientScopesWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ListClientScopesResponse> localVarResponse = await ListClientScopesWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get client scopes 
+        /// List the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> ListClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (ListClientScopesResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ListClientScopesResponse>> ListClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1567,6 +1591,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1593,7 +1618,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ListClientScopesResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1605,23 +1630,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all OAuth clients in the tenant 
+        /// List OAuth clients 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void ListClients(string orgId)
+        /// <returns>ListClientsResponse</returns>
+        public ListClientsResponse ListClients(string orgId)
         {
-            ListClientsWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<ListClientsResponse> localVarResponse = ListClientsWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all OAuth clients in the tenant 
+        /// List OAuth clients 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> ListClientsWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of ListClientsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<ListClientsResponse> ListClientsWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1634,6 +1660,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1657,7 +1684,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ListClientsResponse>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1669,25 +1696,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all OAuth clients in the tenant 
+        /// List OAuth clients 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ListClientsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ListClientsResponse</returns>
+        public async System.Threading.Tasks.Task<ListClientsResponse> ListClientsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await ListClientsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ListClientsResponse> localVarResponse = await ListClientsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all OAuth clients in the tenant 
+        /// List OAuth clients 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> ListClientsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (ListClientsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ListClientsResponse>> ListClientsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1701,6 +1729,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1726,7 +1755,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ListClientsResponse>("/orgs/{orgId}/api/v1/admin/clients", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1738,25 +1767,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Update an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void PatchClient(string orgId, string clientId)
+        /// <returns>UpdateClientResponse</returns>
+        public UpdateClientResponse PatchClient(string orgId, string clientId)
         {
-            PatchClientWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = PatchClientWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Update an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PatchClientWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> PatchClientWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1773,6 +1803,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1797,7 +1828,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1809,27 +1840,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Update an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PatchClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of UpdateClientResponse</returns>
+        public async System.Threading.Tasks.Task<UpdateClientResponse> PatchClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PatchClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = await PatchClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Update an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PatchClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse>> PatchClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1847,6 +1879,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1873,7 +1906,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1885,25 +1918,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate client secret 
+        /// Rotate an OAuth client secret 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void RotateClientSecret(string orgId, string clientId)
+        /// <returns>RotateClientSecretResponse</returns>
+        public RotateClientSecretResponse RotateClientSecret(string orgId, string clientId)
         {
-            RotateClientSecretWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<RotateClientSecretResponse> localVarResponse = RotateClientSecretWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Rotate client secret 
+        /// Rotate an OAuth client secret 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> RotateClientSecretWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of RotateClientSecretResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<RotateClientSecretResponse> RotateClientSecretWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1920,6 +1954,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1944,7 +1979,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<RotateClientSecretResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1956,27 +1991,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Rotate client secret 
+        /// Rotate an OAuth client secret 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task RotateClientSecretAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of RotateClientSecretResponse</returns>
+        public async System.Threading.Tasks.Task<RotateClientSecretResponse> RotateClientSecretAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await RotateClientSecretWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<RotateClientSecretResponse> localVarResponse = await RotateClientSecretWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Rotate client secret 
+        /// Rotate an OAuth client secret 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> RotateClientSecretWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (RotateClientSecretResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<RotateClientSecretResponse>> RotateClientSecretWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1994,6 +2030,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2020,7 +2057,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<RotateClientSecretResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2032,25 +2069,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set client scopes 
+        /// Replace the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void SetClientScopes(string orgId, string clientId)
+        /// <returns>SetClientScopesResponse</returns>
+        public SetClientScopesResponse SetClientScopes(string orgId, string clientId)
         {
-            SetClientScopesWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<SetClientScopesResponse> localVarResponse = SetClientScopesWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Set client scopes 
+        /// Replace the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> SetClientScopesWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of SetClientScopesResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<SetClientScopesResponse> SetClientScopesWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2067,6 +2105,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2091,7 +2130,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<SetClientScopesResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2103,27 +2142,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Set client scopes 
+        /// Replace the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task SetClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of SetClientScopesResponse</returns>
+        public async System.Threading.Tasks.Task<SetClientScopesResponse> SetClientScopesAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await SetClientScopesWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<SetClientScopesResponse> localVarResponse = await SetClientScopesWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Set client scopes 
+        /// Replace the scopes granted to an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> SetClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (SetClientScopesResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<SetClientScopesResponse>> SetClientScopesWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2141,6 +2181,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2167,7 +2208,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<SetClientScopesResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2179,25 +2220,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Replace an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void UpdateClient(string orgId, string clientId)
+        /// <returns>UpdateClientResponse</returns>
+        public UpdateClientResponse UpdateClient(string orgId, string clientId)
         {
-            UpdateClientWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = UpdateClientWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Replace an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> UpdateClientWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of UpdateClientResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> UpdateClientWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2214,6 +2256,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2238,7 +2281,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2250,27 +2293,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Replace an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UpdateClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of UpdateClientResponse</returns>
+        public async System.Threading.Tasks.Task<UpdateClientResponse> UpdateClientAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await UpdateClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse> localVarResponse = await UpdateClientWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an existing OAuth client 
+        /// Replace an OAuth client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> UpdateClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (UpdateClientResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UpdateClientResponse>> UpdateClientWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2288,6 +2332,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2314,7 +2359,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<UpdateClientResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

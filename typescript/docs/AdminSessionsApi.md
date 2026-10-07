@@ -4,23 +4,23 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminClientTokensRevokeAll**](#adminclienttokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens for a client|
-|[**adminClientTokensRevokePost**](#adminclienttokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens for a client via POST|
-|[**adminSessionsCount**](#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Get active session count for the tenant|
-|[**adminSessionsList**](#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions for the tenant|
-|[**adminSessionsRevoke**](#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a specific session|
-|[**adminSessionsRevokeAll**](#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke all tenant sessions via POST|
-|[**adminSessionsStats**](#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Get session statistics for the tenant|
-|[**adminTokensList**](#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens for the tenant|
+|[**adminClientTokensRevokeAll**](#adminclienttokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client|
+|[**adminClientTokensRevokePost**](#adminclienttokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias)|
+|[**adminSessionsCount**](#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count|
+|[**adminSessionsList**](#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions|
+|[**adminSessionsRevoke**](#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session|
+|[**adminSessionsRevokeAll**](#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant|
+|[**adminSessionsStats**](#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics|
+|[**adminTokensList**](#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens|
 |[**adminTokensRevoke**](#admintokensrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token|
-|[**adminUserSessionsList**](#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Get sessions for a specific user|
-|[**adminUserSessionsRevokeAll**](#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions for a user|
-|[**adminUserSessionsRevokePost**](#adminusersessionsrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions for a user via POST|
-|[**adminUserTokensRevokeAll**](#adminusertokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens for a user|
-|[**adminUserTokensRevokePost**](#adminusertokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens for a user via POST|
+|[**adminUserSessionsList**](#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user\&#39;s active sessions|
+|[**adminUserSessionsRevokeAll**](#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user|
+|[**adminUserSessionsRevokePost**](#adminusersessionsrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions of a user (POST alias)|
+|[**adminUserTokensRevokeAll**](#adminusertokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens of a user|
+|[**adminUserTokensRevokePost**](#adminusertokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens of a user (POST alias)|
 
 # **adminClientTokensRevokeAll**
-> adminClientTokensRevokeAll()
+> AdminClientTokensRevokeAllResponse adminClientTokensRevokeAll()
 
 
 ### Example
@@ -53,7 +53,7 @@ const { status, data } = await apiInstance.adminClientTokensRevokeAll(
 
 ### Return type
 
-void (empty response body)
+**AdminClientTokensRevokeAllResponse**
 
 ### Authorization
 
@@ -62,18 +62,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tokens revoked; the message carries the count |  -  |
+|**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminClientTokensRevokePost**
-> adminClientTokensRevokePost()
+> AdminUserTokensRevokePostResponse adminClientTokensRevokePost()
 
 
 ### Example
@@ -106,7 +107,7 @@ const { status, data } = await apiInstance.adminClientTokensRevokePost(
 
 ### Return type
 
-void (empty response body)
+**AdminUserTokensRevokePostResponse**
 
 ### Authorization
 
@@ -115,18 +116,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tokens revoked; the message carries the count |  -  |
+|**404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsCount**
-> adminSessionsCount()
+> AdminSessionsCountResponse adminSessionsCount()
 
 
 ### Example
@@ -156,7 +158,7 @@ const { status, data } = await apiInstance.adminSessionsCount(
 
 ### Return type
 
-void (empty response body)
+**AdminSessionsCountResponse**
 
 ### Authorization
 
@@ -165,19 +167,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Active session count |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsList**
-> adminSessionsList()
+> AdminSessionsListResponse adminSessionsList()
 
+Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 
@@ -206,7 +209,7 @@ const { status, data } = await apiInstance.adminSessionsList(
 
 ### Return type
 
-void (empty response body)
+**AdminSessionsListResponse**
 
 ### Authorization
 
@@ -215,18 +218,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sessions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsRevoke**
-> adminSessionsRevoke()
+> AdminSessionsRevokeResponse adminSessionsRevoke()
 
 
 ### Example
@@ -259,7 +262,7 @@ const { status, data } = await apiInstance.adminSessionsRevoke(
 
 ### Return type
 
-void (empty response body)
+**AdminSessionsRevokeResponse**
 
 ### Authorization
 
@@ -268,35 +271,41 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Session revoked |  -  |
+|**403** | Target holds privileges the actor lacks |  -  |
+|**404** | Session not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsRevokeAll**
-> adminSessionsRevokeAll()
+> AdminSessionsRevokeAllResponse adminSessionsRevokeAll(adminSessionsRevokeAllRequest)
 
+Signs out all users. Requires `confirm: true` in the body.
 
 ### Example
 
 ```typescript
 import {
     AdminSessionsApi,
-    Configuration
+    Configuration,
+    AdminSessionsRevokeAllRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSessionsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest; //
 
 const { status, data } = await apiInstance.adminSessionsRevokeAll(
-    orgId
+    orgId,
+    adminSessionsRevokeAllRequest
 );
 ```
 
@@ -304,12 +313,13 @@ const { status, data } = await apiInstance.adminSessionsRevokeAll(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminSessionsRevokeAllRequest** | **AdminSessionsRevokeAllRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
 
-void (empty response body)
+**AdminSessionsRevokeAllResponse**
 
 ### Authorization
 
@@ -317,19 +327,20 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sessions revoked; the message carries the count |  -  |
+|**400** | confirm: true is required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSessionsStats**
-> adminSessionsStats()
+> AdminSessionsStatsResponse adminSessionsStats()
 
 
 ### Example
@@ -359,7 +370,7 @@ const { status, data } = await apiInstance.adminSessionsStats(
 
 ### Return type
 
-void (empty response body)
+**AdminSessionsStatsResponse**
 
 ### Authorization
 
@@ -368,19 +379,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Session counts |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminTokensList**
-> adminTokensList()
+> AdminTokensListResponse adminTokensList()
 
+Paginated OAuth access tokens issued by the tenant\'s clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 
@@ -409,7 +421,7 @@ const { status, data } = await apiInstance.adminTokensList(
 
 ### Return type
 
-void (empty response body)
+**AdminTokensListResponse**
 
 ### Authorization
 
@@ -418,18 +430,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tokens |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminTokensRevoke**
-> adminTokensRevoke()
+> AdminTokensRevokeResponse adminTokensRevoke()
 
 
 ### Example
@@ -462,7 +474,7 @@ const { status, data } = await apiInstance.adminTokensRevoke(
 
 ### Return type
 
-void (empty response body)
+**AdminTokensRevokeResponse**
 
 ### Authorization
 
@@ -471,19 +483,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Token revoked |  -  |
+|**403** | Target holds privileges the actor lacks |  -  |
+|**404** | Token not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserSessionsList**
-> adminUserSessionsList()
+> AdminUserSessionsListResponse adminUserSessionsList()
 
+All active sessions of one user (UUID or email), returned as a single page.
 
 ### Example
 
@@ -515,7 +530,7 @@ const { status, data } = await apiInstance.adminUserSessionsList(
 
 ### Return type
 
-void (empty response body)
+**AdminUserSessionsListResponse**
 
 ### Authorization
 
@@ -524,18 +539,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sessions |  -  |
+|**404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserSessionsRevokeAll**
-> adminUserSessionsRevokeAll()
+> AdminUserSessionsRevokeAllResponse adminUserSessionsRevokeAll()
 
 
 ### Example
@@ -568,7 +584,7 @@ const { status, data } = await apiInstance.adminUserSessionsRevokeAll(
 
 ### Return type
 
-void (empty response body)
+**AdminUserSessionsRevokeAllResponse**
 
 ### Authorization
 
@@ -577,18 +593,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sessions revoked; the message carries the count |  -  |
+|**403** | Target holds privileges the actor lacks |  -  |
+|**404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserSessionsRevokePost**
-> adminUserSessionsRevokePost()
+> AdminUserSessionsRevokePostResponse adminUserSessionsRevokePost()
 
 
 ### Example
@@ -621,7 +639,7 @@ const { status, data } = await apiInstance.adminUserSessionsRevokePost(
 
 ### Return type
 
-void (empty response body)
+**AdminUserSessionsRevokePostResponse**
 
 ### Authorization
 
@@ -630,18 +648,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sessions revoked; the message carries the count |  -  |
+|**403** | Target holds privileges the actor lacks |  -  |
+|**404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserTokensRevokeAll**
-> adminUserTokensRevokeAll()
+> AdminUserTokensRevokeAllResponse adminUserTokensRevokeAll()
 
 
 ### Example
@@ -674,7 +694,7 @@ const { status, data } = await apiInstance.adminUserTokensRevokeAll(
 
 ### Return type
 
-void (empty response body)
+**AdminUserTokensRevokeAllResponse**
 
 ### Authorization
 
@@ -683,18 +703,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tokens revoked |  -  |
+|**403** | Target holds privileges the actor lacks |  -  |
+|**404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminUserTokensRevokePost**
-> adminUserTokensRevokePost()
+> AdminUserTokensRevokePostResponse adminUserTokensRevokePost()
 
 
 ### Example
@@ -727,7 +749,7 @@ const { status, data } = await apiInstance.adminUserTokensRevokePost(
 
 ### Return type
 
-void (empty response body)
+**AdminUserTokensRevokePostResponse**
 
 ### Authorization
 
@@ -736,13 +758,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tokens revoked; the message carries the count |  -  |
+|**403** | Target holds privileges the actor lacks |  -  |
+|**404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

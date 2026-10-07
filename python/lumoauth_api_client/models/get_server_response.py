@@ -40,11 +40,12 @@ class GetServerResponse(BaseModel):
     status: Optional[StrictStr] = None
     scopes_supported: Optional[List[StrictStr]] = None
     require_pkce: Optional[StrictBool] = None
+    require_dpop: Optional[StrictBool] = None
     token_lifetime: Optional[StrictInt] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     discovery: Optional[GetServerResponseDiscovery] = None
-    __properties: ClassVar[List[str]] = ["id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "auth_mode", "status", "scopes_supported", "require_pkce", "token_lifetime", "created_at", "updated_at", "discovery"]
+    __properties: ClassVar[List[str]] = ["id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "auth_mode", "status", "scopes_supported", "require_pkce", "require_dpop", "token_lifetime", "created_at", "updated_at", "discovery"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -111,6 +112,7 @@ class GetServerResponse(BaseModel):
             "status": obj.get("status"),
             "scopes_supported": obj.get("scopes_supported"),
             "require_pkce": obj.get("require_pkce"),
+            "require_dpop": obj.get("require_dpop"),
             "token_lifetime": obj.get("token_lifetime"),
             "created_at": obj.get("created_at"),
             "updated_at": obj.get("updated_at"),

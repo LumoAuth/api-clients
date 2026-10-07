@@ -28,9 +28,10 @@ func Test_lumoauthclient_WellKnownAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.WellKnownAPI.GetAuthorizationServerMetadata(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.WellKnownAPI.GetAuthorizationServerMetadata(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -41,9 +42,10 @@ func Test_lumoauthclient_WellKnownAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.WellKnownAPI.GetJwks(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.WellKnownAPI.GetJwks(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -54,9 +56,10 @@ func Test_lumoauthclient_WellKnownAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.WellKnownAPI.GetOpenidConfiguration(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.WellKnownAPI.GetOpenidConfiguration(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -67,9 +70,10 @@ func Test_lumoauthclient_WellKnownAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.WellKnownAPI.GetSsfConfiguration(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.WellKnownAPI.GetSsfConfiguration(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

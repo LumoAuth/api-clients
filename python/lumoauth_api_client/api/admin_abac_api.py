@@ -18,6 +18,16 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.abac_attributes_create_response import AbacAttributesCreateResponse
+from lumoauth_api_client.models.abac_attributes_get_response import AbacAttributesGetResponse
+from lumoauth_api_client.models.abac_attributes_list_response import AbacAttributesListResponse
+from lumoauth_api_client.models.abac_policies_create_response import AbacPoliciesCreateResponse
+from lumoauth_api_client.models.abac_policies_get_response import AbacPoliciesGetResponse
+from lumoauth_api_client.models.abac_policies_list_response import AbacPoliciesListResponse
+from lumoauth_api_client.models.abac_policies_toggle_response import AbacPoliciesToggleResponse
+from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse
+from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,8 +63,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Create a new attribute definition
+    ) -> AbacAttributesCreateResponse:
+        """Create an attribute definition
 
 
         :param org_id: (required)
@@ -90,6 +100,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AbacAttributesCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,8 +130,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Create a new attribute definition
+    ) -> ApiResponse[AbacAttributesCreateResponse]:
+        """Create an attribute definition
 
 
         :param org_id: (required)
@@ -155,6 +167,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AbacAttributesCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,7 +198,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a new attribute definition
+        """Create an attribute definition
 
 
         :param org_id: (required)
@@ -220,6 +234,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AbacAttributesCreateResponse",
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +276,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -303,7 +326,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete an attribute definition
 
 
@@ -343,6 +366,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -372,7 +398,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete an attribute definition
 
 
@@ -412,6 +438,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -481,6 +510,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -524,6 +556,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -567,8 +606,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single attribute definition
+    ) -> AbacAttributesGetResponse:
+        """Get an attribute definition
 
 
         :param org_id: (required)
@@ -607,6 +646,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacAttributesGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -636,8 +677,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single attribute definition
+    ) -> ApiResponse[AbacAttributesGetResponse]:
+        """Get an attribute definition
 
 
         :param org_id: (required)
@@ -676,6 +717,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacAttributesGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -706,7 +749,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single attribute definition
+        """Get an attribute definition
 
 
         :param org_id: (required)
@@ -745,6 +788,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacAttributesGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +833,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -830,8 +882,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List all attribute definitions
+    ) -> AbacAttributesListResponse:
+        """List attribute definitions
 
 
         :param org_id: (required)
@@ -867,6 +919,7 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacAttributesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -895,8 +948,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List all attribute definitions
+    ) -> ApiResponse[AbacAttributesListResponse]:
+        """List attribute definitions
 
 
         :param org_id: (required)
@@ -932,6 +985,7 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacAttributesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -961,7 +1015,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all attribute definitions
+        """List attribute definitions
 
 
         :param org_id: (required)
@@ -997,6 +1051,7 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacAttributesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1037,6 +1092,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1079,8 +1141,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Create a new ABAC policy
+    ) -> AbacPoliciesCreateResponse:
+        """Create an ABAC policy
 
 
         :param org_id: (required)
@@ -1116,6 +1178,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AbacPoliciesCreateResponse",
+            '400': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1144,8 +1209,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Create a new ABAC policy
+    ) -> ApiResponse[AbacPoliciesCreateResponse]:
+        """Create an ABAC policy
 
 
         :param org_id: (required)
@@ -1181,6 +1246,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AbacPoliciesCreateResponse",
+            '400': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1210,7 +1278,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a new ABAC policy
+        """Create an ABAC policy
 
 
         :param org_id: (required)
@@ -1246,6 +1314,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AbacPoliciesCreateResponse",
+            '400': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1286,6 +1357,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1329,7 +1407,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete an ABAC policy
 
 
@@ -1369,6 +1447,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1398,7 +1479,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete an ABAC policy
 
 
@@ -1438,6 +1519,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1507,6 +1591,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1550,6 +1637,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1593,8 +1687,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single ABAC policy
+    ) -> AbacPoliciesGetResponse:
+        """Get an ABAC policy
 
 
         :param org_id: (required)
@@ -1633,6 +1727,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1662,8 +1758,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single ABAC policy
+    ) -> ApiResponse[AbacPoliciesGetResponse]:
+        """Get an ABAC policy
 
 
         :param org_id: (required)
@@ -1702,6 +1798,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1732,7 +1830,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single ABAC policy
+        """Get an ABAC policy
 
 
         :param org_id: (required)
@@ -1771,6 +1869,8 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1814,6 +1914,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1856,8 +1963,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List all ABAC policies
+    ) -> AbacPoliciesListResponse:
+        """List ABAC policies
 
 
         :param org_id: (required)
@@ -1893,6 +2000,7 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1921,8 +2029,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List all ABAC policies
+    ) -> ApiResponse[AbacPoliciesListResponse]:
+        """List ABAC policies
 
 
         :param org_id: (required)
@@ -1958,6 +2066,7 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1987,7 +2096,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all ABAC policies
+        """List ABAC policies
 
 
         :param org_id: (required)
@@ -2023,6 +2132,7 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2063,6 +2173,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2106,8 +2223,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Toggle policy active status
+    ) -> AbacPoliciesToggleResponse:
+        """Toggle a policy between active and inactive
 
 
         :param org_id: (required)
@@ -2146,6 +2263,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesToggleResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2175,8 +2295,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Toggle policy active status
+    ) -> ApiResponse[AbacPoliciesToggleResponse]:
+        """Toggle a policy between active and inactive
 
 
         :param org_id: (required)
@@ -2215,6 +2335,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesToggleResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2245,7 +2368,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Toggle policy active status
+        """Toggle a policy between active and inactive
 
 
         :param org_id: (required)
@@ -2284,6 +2407,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AbacPoliciesToggleResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2327,6 +2453,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2370,8 +2503,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update an attribute definition
+    ) -> PutAbacAttributesUpdateResponse:
+        """Partially update an attribute definition
 
 
         :param org_id: (required)
@@ -2410,6 +2543,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacAttributesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2439,8 +2575,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update an attribute definition
+    ) -> ApiResponse[PutAbacAttributesUpdateResponse]:
+        """Partially update an attribute definition
 
 
         :param org_id: (required)
@@ -2479,6 +2615,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacAttributesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2509,7 +2648,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update an attribute definition
+        """Partially update an attribute definition
 
 
         :param org_id: (required)
@@ -2548,6 +2687,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacAttributesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2591,6 +2733,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2634,8 +2783,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update an ABAC policy
+    ) -> PutAbacPoliciesUpdateResponse:
+        """Partially update an ABAC policy
 
 
         :param org_id: (required)
@@ -2674,6 +2823,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacPoliciesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2703,8 +2855,8 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update an ABAC policy
+    ) -> ApiResponse[PutAbacPoliciesUpdateResponse]:
+        """Partially update an ABAC policy
 
 
         :param org_id: (required)
@@ -2743,6 +2895,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacPoliciesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2773,7 +2928,7 @@ class AdminAbacApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update an ABAC policy
+        """Partially update an ABAC policy
 
 
         :param org_id: (required)
@@ -2812,6 +2967,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacPoliciesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2855,6 +3013,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2898,7 +3063,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAbacAttributesUpdateResponse:
         """Update an attribute definition
 
 
@@ -2938,6 +3103,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacAttributesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2967,7 +3135,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAbacAttributesUpdateResponse]:
         """Update an attribute definition
 
 
@@ -3007,6 +3175,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacAttributesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3076,6 +3247,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacAttributesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3119,6 +3293,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3162,7 +3343,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> PutAbacPoliciesUpdateResponse:
         """Update an ABAC policy
 
 
@@ -3202,6 +3383,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacPoliciesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3231,7 +3415,7 @@ class AdminAbacApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[PutAbacPoliciesUpdateResponse]:
         """Update an ABAC policy
 
 
@@ -3271,6 +3455,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacPoliciesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3340,6 +3527,9 @@ class AdminAbacApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAbacPoliciesUpdateResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3383,6 +3573,13 @@ class AdminAbacApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

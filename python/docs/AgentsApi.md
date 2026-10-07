@@ -5,14 +5,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ask**](AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
-[**attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | 
+[**attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 [**authorize_mcp**](AgentsApi.md#authorize_mcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
 [**create_approval**](AgentsApi.md#create_approval) | **POST** /orgs/{orgId}/api/v1/agents/me/approvals | 
-[**get_agent_card**](AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | 
+[**get_agent_card**](AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 [**get_approval_status**](AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**get_current_agent**](AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
-[**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | 
-[**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | 
+[**register_agent**](AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+[**verify_agent_card**](AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
 
 # **ask**
@@ -110,7 +110,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **attest**
-> attest(org_id, agent_id)
+> AttestResponse attest(org_id, agent_id, attest_request)
+
+Workload attestation: exchange a cloud OIDC token for an agent access token
+
+Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
 ### Example
 
@@ -119,6 +123,8 @@ Name | Type | Description  | Notes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.attest_request import AttestRequest
+from lumoauth_api_client.models.attest_response import AttestResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -150,9 +156,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AgentsApi(api_client)
     org_id = 'org_id_example' # str | 
     agent_id = 'agent_id_example' # str | 
+    attest_request = lumoauth_api_client.AttestRequest() # AttestRequest | 
 
     try:
-        api_instance.attest(org_id, agent_id)
+        # Workload attestation: exchange a cloud OIDC token for an agent access token
+        api_response = api_instance.attest(org_id, agent_id, attest_request)
+        print("The response of AgentsApi->attest:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AgentsApi->attest: %s\n" % e)
 ```
@@ -166,10 +176,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
  **agent_id** | **str**|  | 
+ **attest_request** | [**AttestRequest**](AttestRequest.md)|  | 
 
 ### Return type
 
-void (empty response body)
+[**AttestResponse**](AttestResponse.md)
 
 ### Authorization
 
@@ -177,14 +188,19 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. |  -  |
+**400** | invalid_json or missing_attestation_token. |  -  |
+**401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
+**403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |
+**404** | tenant_not_found. |  -  |
+**429** | rate_limit_exceeded (Retry-After: 60). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -375,13 +391,18 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_agent_card**
-> get_agent_card(org_id, agent_id)
+> SignedAgentCard get_agent_card(org_id, agent_id)
+
+Signed A2A agent card
+
+Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
 ### Example
 
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.signed_agent_card import SignedAgentCard
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -400,7 +421,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     agent_id = 'agent_id_example' # str | 
 
     try:
-        api_instance.get_agent_card(org_id, agent_id)
+        # Signed A2A agent card
+        api_response = api_instance.get_agent_card(org_id, agent_id)
+        print("The response of AgentsApi->get_agent_card:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AgentsApi->get_agent_card: %s\n" % e)
 ```
@@ -417,7 +441,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**SignedAgentCard**](SignedAgentCard.md)
 
 ### Authorization
 
@@ -426,13 +450,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). |  -  |
+**404** | not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -607,7 +632,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **register_agent**
-> register_agent(org_id)
+> RegisterAgentResponse register_agent(org_id)
+
+Register (or re-register) an agent
 
 ### Example
 
@@ -616,6 +643,7 @@ Name | Type | Description  | Notes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.register_agent_response import RegisterAgentResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -648,7 +676,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.register_agent(org_id)
+        # Register (or re-register) an agent
+        api_response = api_instance.register_agent(org_id)
+        print("The response of AgentsApi->register_agent:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AgentsApi->register_agent: %s\n" % e)
 ```
@@ -664,7 +695,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**RegisterAgentResponse**](RegisterAgentResponse.md)
 
 ### Authorization
 
@@ -673,18 +704,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Registered agent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **verify_agent_card**
-> verify_agent_card(org_id)
+> VerifyAgentCardResponse verify_agent_card(org_id, request_body)
+
+Verify a signed A2A agent card
+
+Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {"card": {...}, "jwks_uri": "https://..."} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
 ### Example
 
@@ -693,6 +728,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.verify_agent_card_response import VerifyAgentCardResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -723,9 +759,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AgentsApi(api_client)
     org_id = 'org_id_example' # str | 
+    request_body = None # Dict[str, object] | 
 
     try:
-        api_instance.verify_agent_card(org_id)
+        # Verify a signed A2A agent card
+        api_response = api_instance.verify_agent_card(org_id, request_body)
+        print("The response of AgentsApi->verify_agent_card:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AgentsApi->verify_agent_card: %s\n" % e)
 ```
@@ -738,10 +778,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
-void (empty response body)
+[**VerifyAgentCardResponse**](VerifyAgentCardResponse.md)
 
 ### Authorization
 
@@ -749,14 +790,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. |  -  |
+**400** | invalid_request — body is not a JSON agent card. |  -  |
+**403** | Caller does not belong to this organization. |  -  |
+**404** | Unknown organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

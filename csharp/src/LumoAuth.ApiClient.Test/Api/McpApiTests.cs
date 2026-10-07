@@ -63,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string serverId = null;
-            //instance.GetProtectedResourceMetadata(orgId, serverId);
+            //var response = instance.GetProtectedResourceMetadata(orgId, serverId);
+            //Assert.IsType<ProtectedResourceMetadata>(response);
         }
 
         /// <summary>
@@ -74,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetProtectedResourceMetadataRoot(orgId);
+            //var response = instance.GetProtectedResourceMetadataRoot(orgId);
+            //Assert.IsType<GetProtectedResourceMetadataRoot200Response>(response);
         }
 
         /// <summary>
@@ -99,7 +101,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string serverId = null;
-            //instance.GetServerChallenge(orgId, serverId);
+            //var response = instance.GetServerChallenge(orgId, serverId);
+            //Assert.IsType<GetServerChallengeResponse>(response);
         }
 
         /// <summary>
@@ -123,7 +126,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string serverId = null;
-            //instance.PostServerChallenge(orgId, serverId);
+            //var response = instance.PostServerChallenge(orgId, serverId);
+            //Assert.IsType<GetServerChallengeResponse>(response);
         }
     }
 }

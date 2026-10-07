@@ -4,23 +4,23 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_social_providers_available**](AdminIdentityProvidersApi.md#admin_social_providers_available) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types
-[**admin_social_providers_callback_urls**](AdminIdentityProvidersApi.md#admin_social_providers_callback_urls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers
-[**admin_social_providers_create**](AdminIdentityProvidersApi.md#admin_social_providers_create) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider
+[**admin_social_providers_available**](AdminIdentityProvidersApi.md#admin_social_providers_available) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types
+[**admin_social_providers_callback_urls**](AdminIdentityProvidersApi.md#admin_social_providers_callback_urls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider
+[**admin_social_providers_create**](AdminIdentityProvidersApi.md#admin_social_providers_create) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider
 [**admin_social_providers_delete**](AdminIdentityProvidersApi.md#admin_social_providers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider
 [**admin_social_providers_disable**](AdminIdentityProvidersApi.md#admin_social_providers_disable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider
 [**admin_social_providers_enable**](AdminIdentityProvidersApi.md#admin_social_providers_enable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider
-[**admin_social_providers_get**](AdminIdentityProvidersApi.md#admin_social_providers_get) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name)
-[**admin_social_providers_list**](AdminIdentityProvidersApi.md#admin_social_providers_list) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers
-[**admin_social_providers_types**](AdminIdentityProvidersApi.md#admin_social_providers_types) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types
-[**patch_admin_social_providers_update**](AdminIdentityProvidersApi.md#patch_admin_social_providers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
-[**put_admin_social_providers_update**](AdminIdentityProvidersApi.md#put_admin_social_providers_update) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
+[**admin_social_providers_get**](AdminIdentityProvidersApi.md#admin_social_providers_get) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider
+[**admin_social_providers_list**](AdminIdentityProvidersApi.md#admin_social_providers_list) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers
+[**admin_social_providers_types**](AdminIdentityProvidersApi.md#admin_social_providers_types) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types
+[**patch_admin_social_providers_update**](AdminIdentityProvidersApi.md#patch_admin_social_providers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider
+[**put_admin_social_providers_update**](AdminIdentityProvidersApi.md#put_admin_social_providers_update) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider
 
 
 # **admin_social_providers_available**
-> admin_social_providers_available(org_id)
+> AdminSocialProvidersAvailableResponse admin_social_providers_available(org_id)
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 
@@ -29,6 +29,7 @@ Get available social login provider types
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_available_response import AdminSocialProvidersAvailableResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -61,8 +62,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get available social login provider types
-        api_instance.admin_social_providers_available(org_id)
+        # List the available social login provider types
+        api_response = api_instance.admin_social_providers_available(org_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_available:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_available: %s\n" % e)
 ```
@@ -78,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -87,20 +90,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Provider types |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_callback_urls**
-> admin_social_providers_callback_urls(org_id)
+> AdminSocialProvidersCallbackUrlsResponse admin_social_providers_callback_urls(org_id)
 
-Get callback URLs for all configured providers
+Get the OAuth callback URL of every configured provider
 
 ### Example
 
@@ -109,6 +112,7 @@ Get callback URLs for all configured providers
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_callback_urls_response import AdminSocialProvidersCallbackUrlsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -141,8 +145,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get callback URLs for all configured providers
-        api_instance.admin_social_providers_callback_urls(org_id)
+        # Get the OAuth callback URL of every configured provider
+        api_response = api_instance.admin_social_providers_callback_urls(org_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_callback_urls:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_callback_urls: %s\n" % e)
 ```
@@ -158,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCallbackUrlsResponse**](AdminSocialProvidersCallbackUrlsResponse.md)
 
 ### Authorization
 
@@ -167,20 +173,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Map of provider name to callback URL |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_create**
-> admin_social_providers_create(org_id)
+> AdminSocialProvidersCreateResponse admin_social_providers_create(org_id)
 
-Create a new social login provider
+Create a social login provider
 
 ### Example
 
@@ -189,6 +195,7 @@ Create a new social login provider
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -221,8 +228,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Create a new social login provider
-        api_instance.admin_social_providers_create(org_id)
+        # Create a social login provider
+        api_response = api_instance.admin_social_providers_create(org_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_create: %s\n" % e)
 ```
@@ -238,7 +247,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -247,18 +256,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created provider (detailed; secrets redacted) |  -  |
+**409** | Provider already configured |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_delete**
-> admin_social_providers_delete(org_id, provider_id)
+> MessageResponse admin_social_providers_delete(org_id, provider_id)
 
 Delete a social login provider
 
@@ -269,6 +279,7 @@ Delete a social login provider
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -303,7 +314,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete a social login provider
-        api_instance.admin_social_providers_delete(org_id, provider_id)
+        api_response = api_instance.admin_social_providers_delete(org_id, provider_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_delete: %s\n" % e)
 ```
@@ -320,7 +333,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -329,18 +342,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
+**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_disable**
-> admin_social_providers_disable(org_id, provider_id)
+> AdminSocialProvidersCreateResponse admin_social_providers_disable(org_id, provider_id)
 
 Disable a social login provider
 
@@ -351,6 +365,7 @@ Disable a social login provider
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -385,7 +400,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Disable a social login provider
-        api_instance.admin_social_providers_disable(org_id, provider_id)
+        api_response = api_instance.admin_social_providers_disable(org_id, provider_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_disable:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_disable: %s\n" % e)
 ```
@@ -402,7 +419,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -411,18 +428,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Provider disabled (summary fields only) |  -  |
+**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_enable**
-> admin_social_providers_enable(org_id, provider_id)
+> AdminSocialProvidersCreateResponse admin_social_providers_enable(org_id, provider_id)
 
 Enable a social login provider
 
@@ -433,6 +451,7 @@ Enable a social login provider
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -467,7 +486,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Enable a social login provider
-        api_instance.admin_social_providers_enable(org_id, provider_id)
+        api_response = api_instance.admin_social_providers_enable(org_id, provider_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_enable:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_enable: %s\n" % e)
 ```
@@ -484,7 +505,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -493,20 +514,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Provider enabled (summary fields only) |  -  |
+**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_get**
-> admin_social_providers_get(org_id, provider_id)
+> AdminSocialProvidersGetResponse admin_social_providers_get(org_id, provider_id)
 
-Get a single social login provider (by ID or by provider name)
+Get a social login provider
 
 ### Example
 
@@ -515,6 +537,7 @@ Get a single social login provider (by ID or by provider name)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_get_response import AdminSocialProvidersGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -548,8 +571,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     provider_id = 'provider_id_example' # str | 
 
     try:
-        # Get a single social login provider (by ID or by provider name)
-        api_instance.admin_social_providers_get(org_id, provider_id)
+        # Get a social login provider
+        api_response = api_instance.admin_social_providers_get(org_id, provider_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_get: %s\n" % e)
 ```
@@ -566,7 +591,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersGetResponse**](AdminSocialProvidersGetResponse.md)
 
 ### Authorization
 
@@ -575,20 +600,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Provider (detailed; secrets redacted) |  -  |
+**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_list**
-> admin_social_providers_list(org_id)
+> AdminSocialProvidersListResponse admin_social_providers_list(org_id)
 
-List all configured social login providers
+List social login providers
 
 ### Example
 
@@ -597,6 +623,7 @@ List all configured social login providers
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_list_response import AdminSocialProvidersListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -629,8 +656,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all configured social login providers
-        api_instance.admin_social_providers_list(org_id)
+        # List social login providers
+        api_response = api_instance.admin_social_providers_list(org_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_list: %s\n" % e)
 ```
@@ -646,7 +675,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersListResponse**](AdminSocialProvidersListResponse.md)
 
 ### Authorization
 
@@ -655,20 +684,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Providers (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_social_providers_types**
-> admin_social_providers_types(org_id)
+> AdminSocialProvidersAvailableResponse admin_social_providers_types(org_id)
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 
@@ -677,6 +706,7 @@ Get available social login provider types
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_available_response import AdminSocialProvidersAvailableResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -709,8 +739,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get available social login provider types
-        api_instance.admin_social_providers_types(org_id)
+        # List the available social login provider types
+        api_response = api_instance.admin_social_providers_types(org_id)
+        print("The response of AdminIdentityProvidersApi->admin_social_providers_types:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->admin_social_providers_types: %s\n" % e)
 ```
@@ -726,7 +758,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -735,20 +767,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Provider types |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_social_providers_update**
-> patch_admin_social_providers_update(org_id, provider_id)
+> AdminSocialProvidersCreateResponse patch_admin_social_providers_update(org_id, provider_id)
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Update a social login provider
 
 ### Example
 
@@ -757,6 +789,7 @@ Upsert (create or update) a social login provider via PUT; update via PATCH
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -790,8 +823,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     provider_id = 'provider_id_example' # str | 
 
     try:
-        # Upsert (create or update) a social login provider via PUT; update via PATCH
-        api_instance.patch_admin_social_providers_update(org_id, provider_id)
+        # Update a social login provider
+        api_response = api_instance.patch_admin_social_providers_update(org_id, provider_id)
+        print("The response of AdminIdentityProvidersApi->patch_admin_social_providers_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->patch_admin_social_providers_update: %s\n" % e)
 ```
@@ -808,7 +843,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -817,20 +852,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated provider (detailed) |  -  |
+**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_social_providers_update**
-> put_admin_social_providers_update(org_id, provider_id)
+> AdminSocialProvidersCreateResponse put_admin_social_providers_update(org_id, provider_id)
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Create or replace a social login provider
 
 ### Example
 
@@ -839,6 +875,7 @@ Upsert (create or update) a social login provider via PUT; update via PATCH
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_social_providers_create_response import AdminSocialProvidersCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -872,8 +909,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     provider_id = 'provider_id_example' # str | 
 
     try:
-        # Upsert (create or update) a social login provider via PUT; update via PATCH
-        api_instance.put_admin_social_providers_update(org_id, provider_id)
+        # Create or replace a social login provider
+        api_response = api_instance.put_admin_social_providers_update(org_id, provider_id)
+        print("The response of AdminIdentityProvidersApi->put_admin_social_providers_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminIdentityProvidersApi->put_admin_social_providers_update: %s\n" % e)
 ```
@@ -890,7 +929,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -899,13 +938,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated provider (detailed) |  -  |
+**201** | Provider did not exist and was created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

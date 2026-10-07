@@ -18,6 +18,12 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
+from lumoauth_api_client.models.admin_groups_get_members_response import AdminGroupsGetMembersResponse
+from lumoauth_api_client.models.admin_groups_get_response import AdminGroupsGetResponse
+from lumoauth_api_client.models.admin_groups_groups_get_roles_response import AdminGroupsGroupsGetRolesResponse
+from lumoauth_api_client.models.admin_groups_list_response import AdminGroupsListResponse
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +60,8 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+    ) -> AdminGroupsCreateResponse:
+        """Add member(s) to group
 
 
         :param org_id: (required)
@@ -94,6 +100,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,8 +130,8 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+    ) -> ApiResponse[AdminGroupsCreateResponse]:
+        """Add member(s) to group
 
 
         :param org_id: (required)
@@ -163,6 +170,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -193,7 +201,7 @@ class AdminGroupsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+        """Add member(s) to group
 
 
         :param org_id: (required)
@@ -232,6 +240,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +284,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -318,7 +334,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Add a single role to a group
 
 
@@ -358,6 +374,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -387,7 +404,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Add a single role to a group
 
 
@@ -427,6 +444,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -496,6 +514,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -539,6 +558,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -581,7 +607,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsCreateResponse:
         """Create a new group
 
 
@@ -618,6 +644,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -646,7 +673,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Create a new group
 
 
@@ -683,6 +710,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -748,6 +776,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +817,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -831,7 +867,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete a group
 
 
@@ -871,6 +907,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -900,7 +937,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete a group
 
 
@@ -940,6 +977,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1009,6 +1047,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1052,6 +1091,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1095,7 +1141,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsGetResponse:
         """Get a single group by ID or slug
 
 
@@ -1135,6 +1181,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1164,7 +1211,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsGetResponse]:
         """Get a single group by ID or slug
 
 
@@ -1204,6 +1251,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1273,6 +1321,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1316,6 +1365,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1359,7 +1415,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsGetMembersResponse:
         """Get group members
 
 
@@ -1399,6 +1455,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGetMembersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1428,7 +1485,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsGetMembersResponse]:
         """Get group members
 
 
@@ -1468,6 +1525,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGetMembersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1537,6 +1595,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGetMembersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1580,6 +1639,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1623,7 +1689,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsGroupsGetRolesResponse:
         """Get group roles
 
 
@@ -1663,6 +1729,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1692,7 +1759,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsGroupsGetRolesResponse]:
         """Get group roles
 
 
@@ -1732,6 +1799,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1801,6 +1869,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsGroupsGetRolesResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1844,6 +1913,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1886,7 +1962,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsListResponse:
         """List all groups in the tenant
 
 
@@ -1923,6 +1999,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1951,7 +2028,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsListResponse]:
         """List all groups in the tenant
 
 
@@ -1988,6 +2065,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2053,6 +2131,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2093,6 +2172,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2137,8 +2223,8 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Remove member from group — userId is a UUID or email
+    ) -> MessageResponse:
+        """Remove member from group
 
 
         :param org_id: (required)
@@ -2180,6 +2266,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2210,8 +2297,8 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Remove member from group — userId is a UUID or email
+    ) -> ApiResponse[MessageResponse]:
+        """Remove member from group
 
 
         :param org_id: (required)
@@ -2253,6 +2340,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2284,7 +2372,7 @@ class AdminGroupsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Remove member from group — userId is a UUID or email
+        """Remove member from group
 
 
         :param org_id: (required)
@@ -2326,6 +2414,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2372,6 +2461,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2416,7 +2512,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Remove a role from a group
 
 
@@ -2459,6 +2555,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2489,7 +2586,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Remove a role from a group
 
 
@@ -2532,6 +2629,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2605,6 +2703,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2651,6 +2750,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2694,7 +2800,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsCreateResponse:
         """Update group roles (replaces all existing roles)
 
 
@@ -2734,6 +2840,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2763,7 +2870,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Update group roles (replaces all existing roles)
 
 
@@ -2803,6 +2910,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2872,6 +2980,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2915,6 +3024,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2958,7 +3074,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsCreateResponse:
         """Update an existing group
 
 
@@ -2998,6 +3114,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3027,7 +3144,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Update an existing group
 
 
@@ -3067,6 +3184,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3136,6 +3254,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3179,6 +3298,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3222,7 +3348,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminGroupsCreateResponse:
         """Update an existing group
 
 
@@ -3262,6 +3388,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3291,7 +3418,7 @@ class AdminGroupsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminGroupsCreateResponse]:
         """Update an existing group
 
 
@@ -3331,6 +3458,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3400,6 +3528,7 @@ class AdminGroupsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminGroupsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3443,6 +3572,13 @@ class AdminGroupsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

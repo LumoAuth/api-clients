@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminGroupsAddMembers**](AdminGroupsAPI.md#AdminGroupsAddMembers) | **Post** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+[**AdminGroupsAddMembers**](AdminGroupsAPI.md#AdminGroupsAddMembers) | **Post** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group
 [**AdminGroupsAddRole**](AdminGroupsAPI.md#AdminGroupsAddRole) | **Post** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group
 [**AdminGroupsCreate**](AdminGroupsAPI.md#AdminGroupsCreate) | **Post** /orgs/{orgId}/api/v1/admin/groups | Create a new group
 [**AdminGroupsDelete**](AdminGroupsAPI.md#AdminGroupsDelete) | **Delete** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**AdminGroupsGetMembers**](AdminGroupsAPI.md#AdminGroupsGetMembers) | **Get** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 [**AdminGroupsGroupsGetRoles**](AdminGroupsAPI.md#AdminGroupsGroupsGetRoles) | **Get** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
 [**AdminGroupsList**](AdminGroupsAPI.md#AdminGroupsList) | **Get** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
-[**AdminGroupsRemoveMember**](AdminGroupsAPI.md#AdminGroupsRemoveMember) | **Delete** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email
+[**AdminGroupsRemoveMember**](AdminGroupsAPI.md#AdminGroupsRemoveMember) | **Delete** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 [**AdminGroupsRemoveRole**](AdminGroupsAPI.md#AdminGroupsRemoveRole) | **Delete** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 [**AdminGroupsUpdateRoles**](AdminGroupsAPI.md#AdminGroupsUpdateRoles) | **Put** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
 [**PatchAdminGroupsUpdate**](AdminGroupsAPI.md#PatchAdminGroupsUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group
@@ -22,9 +22,9 @@ Method | HTTP request | Description
 
 ## AdminGroupsAddMembers
 
-> AdminGroupsAddMembers(ctx, orgId, groupId).Execute()
+> AdminGroupsCreateResponse AdminGroupsAddMembers(ctx, orgId, groupId).Execute()
 
-Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+Add member(s) to group
 
 ### Example
 
@@ -44,11 +44,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsAddMembers(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsAddMembers(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsAddMembers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsAddMembers`: AdminGroupsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsAddMembers`: %v\n", resp)
 }
 ```
 
@@ -73,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -82,7 +84,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -91,7 +93,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsAddRole
 
-> AdminGroupsAddRole(ctx, orgId, groupId).Execute()
+> MessageResponse AdminGroupsAddRole(ctx, orgId, groupId).Execute()
 
 Add a single role to a group
 
@@ -113,11 +115,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsAddRole(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsAddRole(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsAddRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsAddRole`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsAddRole`: %v\n", resp)
 }
 ```
 
@@ -142,7 +146,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -151,7 +155,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -160,7 +164,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsCreate
 
-> AdminGroupsCreate(ctx, orgId).Execute()
+> AdminGroupsCreateResponse AdminGroupsCreate(ctx, orgId).Execute()
 
 Create a new group
 
@@ -181,11 +185,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsCreate`: AdminGroupsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsCreate`: %v\n", resp)
 }
 ```
 
@@ -208,7 +214,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -217,7 +223,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -226,7 +232,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsDelete
 
-> AdminGroupsDelete(ctx, orgId, groupId).Execute()
+> MessageResponse AdminGroupsDelete(ctx, orgId, groupId).Execute()
 
 Delete a group
 
@@ -248,11 +254,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsDelete(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsDelete(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsDelete`: %v\n", resp)
 }
 ```
 
@@ -277,7 +285,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -286,7 +294,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -295,7 +303,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsGet
 
-> AdminGroupsGet(ctx, orgId, groupId).Execute()
+> AdminGroupsGetResponse AdminGroupsGet(ctx, orgId, groupId).Execute()
 
 Get a single group by ID or slug
 
@@ -317,11 +325,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsGet(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsGet(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsGet`: AdminGroupsGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsGet`: %v\n", resp)
 }
 ```
 
@@ -346,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsGetResponse**](AdminGroupsGetResponse.md)
 
 ### Authorization
 
@@ -355,7 +365,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -364,7 +374,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsGetMembers
 
-> AdminGroupsGetMembers(ctx, orgId, groupId).Execute()
+> AdminGroupsGetMembersResponse AdminGroupsGetMembers(ctx, orgId, groupId).Execute()
 
 Get group members
 
@@ -386,11 +396,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsGetMembers(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsGetMembers(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsGetMembers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsGetMembers`: AdminGroupsGetMembersResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsGetMembers`: %v\n", resp)
 }
 ```
 
@@ -415,7 +427,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsGetMembersResponse**](AdminGroupsGetMembersResponse.md)
 
 ### Authorization
 
@@ -424,7 +436,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -433,7 +445,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsGroupsGetRoles
 
-> AdminGroupsGroupsGetRoles(ctx, orgId, groupId).Execute()
+> AdminGroupsGroupsGetRolesResponse AdminGroupsGroupsGetRoles(ctx, orgId, groupId).Execute()
 
 Get group roles
 
@@ -455,11 +467,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsGroupsGetRoles(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsGroupsGetRoles(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsGroupsGetRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsGroupsGetRoles`: AdminGroupsGroupsGetRolesResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsGroupsGetRoles`: %v\n", resp)
 }
 ```
 
@@ -484,7 +498,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -493,7 +507,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -502,7 +516,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsList
 
-> AdminGroupsList(ctx, orgId).Execute()
+> AdminGroupsListResponse AdminGroupsList(ctx, orgId).Execute()
 
 List all groups in the tenant
 
@@ -523,11 +537,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsList`: AdminGroupsListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsList`: %v\n", resp)
 }
 ```
 
@@ -550,7 +566,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsListResponse**](AdminGroupsListResponse.md)
 
 ### Authorization
 
@@ -559,7 +575,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -568,9 +584,9 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsRemoveMember
 
-> AdminGroupsRemoveMember(ctx, orgId, groupId, userId).Execute()
+> MessageResponse AdminGroupsRemoveMember(ctx, orgId, groupId, userId).Execute()
 
-Remove member from group — userId is a UUID or email
+Remove member from group
 
 ### Example
 
@@ -591,11 +607,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveMember(context.Background(), orgId, groupId, userId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveMember(context.Background(), orgId, groupId, userId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsRemoveMember``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsRemoveMember`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsRemoveMember`: %v\n", resp)
 }
 ```
 
@@ -622,7 +640,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -631,7 +649,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -640,7 +658,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsRemoveRole
 
-> AdminGroupsRemoveRole(ctx, orgId, groupId, roleId).Execute()
+> MessageResponse AdminGroupsRemoveRole(ctx, orgId, groupId, roleId).Execute()
 
 Remove a role from a group
 
@@ -663,11 +681,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveRole(context.Background(), orgId, groupId, roleId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveRole(context.Background(), orgId, groupId, roleId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsRemoveRole``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsRemoveRole`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsRemoveRole`: %v\n", resp)
 }
 ```
 
@@ -694,7 +714,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -703,7 +723,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -712,7 +732,7 @@ Name | Type | Description  | Notes
 
 ## AdminGroupsUpdateRoles
 
-> AdminGroupsUpdateRoles(ctx, orgId, groupId).Execute()
+> AdminGroupsCreateResponse AdminGroupsUpdateRoles(ctx, orgId, groupId).Execute()
 
 Update group roles (replaces all existing roles)
 
@@ -734,11 +754,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.AdminGroupsUpdateRoles(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.AdminGroupsUpdateRoles(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.AdminGroupsUpdateRoles``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminGroupsUpdateRoles`: AdminGroupsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.AdminGroupsUpdateRoles`: %v\n", resp)
 }
 ```
 
@@ -763,7 +785,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -772,7 +794,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -781,7 +803,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminGroupsUpdate
 
-> PatchAdminGroupsUpdate(ctx, orgId, groupId).Execute()
+> AdminGroupsCreateResponse PatchAdminGroupsUpdate(ctx, orgId, groupId).Execute()
 
 Update an existing group
 
@@ -803,11 +825,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.PatchAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.PatchAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.PatchAdminGroupsUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminGroupsUpdate`: AdminGroupsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.PatchAdminGroupsUpdate`: %v\n", resp)
 }
 ```
 
@@ -832,7 +856,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -841,7 +865,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -850,7 +874,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminGroupsUpdate
 
-> PutAdminGroupsUpdate(ctx, orgId, groupId).Execute()
+> AdminGroupsCreateResponse PutAdminGroupsUpdate(ctx, orgId, groupId).Execute()
 
 Update an existing group
 
@@ -872,11 +896,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminGroupsAPI.PutAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
+	resp, r, err := apiClient.AdminGroupsAPI.PutAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminGroupsAPI.PutAdminGroupsUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminGroupsUpdate`: AdminGroupsCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminGroupsAPI.PutAdminGroupsUpdate`: %v\n", resp)
 }
 ```
 
@@ -901,7 +927,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -910,7 +936,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

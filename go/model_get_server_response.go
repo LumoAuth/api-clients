@@ -32,6 +32,7 @@ type GetServerResponse struct {
 	Status *string `json:"status,omitempty"`
 	ScopesSupported []string `json:"scopes_supported,omitempty"`
 	RequirePkce *bool `json:"require_pkce,omitempty"`
+	RequireDpop *bool `json:"require_dpop,omitempty"`
 	TokenLifetime *int32 `json:"token_lifetime,omitempty"`
 	CreatedAt *time.Time `json:"created_at,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
@@ -407,6 +408,38 @@ func (o *GetServerResponse) SetRequirePkce(v bool) {
 	o.RequirePkce = &v
 }
 
+// GetRequireDpop returns the RequireDpop field value if set, zero value otherwise.
+func (o *GetServerResponse) GetRequireDpop() bool {
+	if o == nil || IsNil(o.RequireDpop) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireDpop
+}
+
+// GetRequireDpopOk returns a tuple with the RequireDpop field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetServerResponse) GetRequireDpopOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireDpop) {
+		return nil, false
+	}
+	return o.RequireDpop, true
+}
+
+// HasRequireDpop returns a boolean if a field has been set.
+func (o *GetServerResponse) HasRequireDpop() bool {
+	if o != nil && !IsNil(o.RequireDpop) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireDpop gets a reference to the given bool and assigns it to the RequireDpop field.
+func (o *GetServerResponse) SetRequireDpop(v bool) {
+	o.RequireDpop = &v
+}
+
 // GetTokenLifetime returns the TokenLifetime field value if set, zero value otherwise.
 func (o *GetServerResponse) GetTokenLifetime() int32 {
 	if o == nil || IsNil(o.TokenLifetime) {
@@ -577,6 +610,9 @@ func (o GetServerResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RequirePkce) {
 		toSerialize["require_pkce"] = o.RequirePkce
+	}
+	if !IsNil(o.RequireDpop) {
+		toSerialize["require_dpop"] = o.RequireDpop
 	}
 	if !IsNil(o.TokenLifetime) {
 		toSerialize["token_lifetime"] = o.TokenLifetime

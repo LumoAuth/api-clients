@@ -13,18 +13,18 @@ import AnyCodable
 open class AdminAuditLogsAPI {
 
     /**
-     List available audit action types for this tenant
+     List the distinct audit action types recorded for the tenant
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsActionsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsActions(orgId: String) async throws {
+    open class func adminAuditLogsActions(orgId: String) async throws -> AdminAuditLogsActionsResponse {
         return try await adminAuditLogsActionsWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List available audit action types for this tenant
+     List the distinct audit action types recorded for the tenant
      - GET /orgs/{orgId}/api/v1/admin/audit-logs/actions
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -33,9 +33,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsActionsResponse> 
      */
-    open class func adminAuditLogsActionsWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminAuditLogsActionsWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsActionsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/actions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -51,24 +51,24 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsActionsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Export audit logs as CSV or JSON
+     Export audit logs as CSV (default) or JSON
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsExport(orgId: String) async throws {
+    open class func adminAuditLogsExport(orgId: String) async throws -> String {
         return try await adminAuditLogsExportWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Export audit logs as CSV or JSON
+     Export audit logs as CSV (default) or JSON
      - GET /orgs/{orgId}/api/v1/admin/audit-logs/export
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -77,9 +77,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func adminAuditLogsExportWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminAuditLogsExportWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/export"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -95,25 +95,25 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get a single audit log entry
+     Get an audit log entry
      
      - parameter orgId: (path)  
      - parameter logId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsGetResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsGet(orgId: String, logId: String) async throws {
+    open class func adminAuditLogsGet(orgId: String, logId: String) async throws -> AdminAuditLogsGetResponse {
         return try await adminAuditLogsGetWithRequestBuilder(orgId: orgId, logId: logId).execute().body
     }
 
     /**
-     Get a single audit log entry
+     Get an audit log entry
      - GET /orgs/{orgId}/api/v1/admin/audit-logs/{logId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -123,9 +123,9 @@ open class AdminAuditLogsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter logId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsGetResponse> 
      */
-    open class func adminAuditLogsGetWithRequestBuilder(orgId: String, logId: String) -> RequestBuilder<Void> {
+    open class func adminAuditLogsGetWithRequestBuilder(orgId: String, logId: String) -> RequestBuilder<AdminAuditLogsGetResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/{logId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -144,24 +144,24 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     List audit logs for the tenant
+     List audit log entries
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsList(orgId: String) async throws {
+    open class func adminAuditLogsList(orgId: String) async throws -> AdminAuditLogsListResponse {
         return try await adminAuditLogsListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List audit logs for the tenant
+     List audit log entries
      - GET /orgs/{orgId}/api/v1/admin/audit-logs
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -170,9 +170,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsListResponse> 
      */
-    open class func adminAuditLogsListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminAuditLogsListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -188,7 +188,7 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -197,10 +197,10 @@ open class AdminAuditLogsAPI {
      Get audit log retention settings
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsRetentionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsRetention(orgId: String) async throws {
+    open class func adminAuditLogsRetention(orgId: String) async throws -> AdminAuditLogsRetentionResponse {
         return try await adminAuditLogsRetentionWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -214,9 +214,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsRetentionResponse> 
      */
-    open class func adminAuditLogsRetentionWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminAuditLogsRetentionWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -232,24 +232,24 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsRetentionResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get audit log statistics
+     Audit log statistics for a period (default: last 30 days)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsStatsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAuditLogsStats(orgId: String) async throws {
+    open class func adminAuditLogsStats(orgId: String) async throws -> AdminAuditLogsStatsResponse {
         return try await adminAuditLogsStatsWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Get audit log statistics
+     Audit log statistics for a period (default: last 30 days)
      - GET /orgs/{orgId}/api/v1/admin/audit-logs/stats
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -258,9 +258,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsStatsResponse> 
      */
-    open class func adminAuditLogsStatsWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminAuditLogsStatsWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsStatsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/stats"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -276,7 +276,7 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsStatsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -285,10 +285,10 @@ open class AdminAuditLogsAPI {
      Update audit log retention settings
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsRetentionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func patchAdminAuditLogsRetentionUpdate(orgId: String) async throws {
+    open class func patchAdminAuditLogsRetentionUpdate(orgId: String) async throws -> AdminAuditLogsRetentionResponse {
         return try await patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -302,9 +302,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsRetentionResponse> 
      */
-    open class func patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func patchAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -320,7 +320,7 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsRetentionResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -329,10 +329,10 @@ open class AdminAuditLogsAPI {
      Update audit log retention settings
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminAuditLogsRetentionResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func putAdminAuditLogsRetentionUpdate(orgId: String) async throws {
+    open class func putAdminAuditLogsRetentionUpdate(orgId: String) async throws -> AdminAuditLogsRetentionResponse {
         return try await putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -346,9 +346,9 @@ open class AdminAuditLogsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminAuditLogsRetentionResponse> 
      */
-    open class func putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func putAdminAuditLogsRetentionUpdateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminAuditLogsRetentionResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -364,7 +364,7 @@ open class AdminAuditLogsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAuditLogsRetentionResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

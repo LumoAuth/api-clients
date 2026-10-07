@@ -4,12 +4,12 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant
-[**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON
-[**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry
-[**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant
+[**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+[**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
+[**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
+[**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
 [**admin_audit_logs_retention**](AdminAuditLogsApi.md#admin_audit_logs_retention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings
-[**admin_audit_logs_stats**](AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics
+[**admin_audit_logs_stats**](AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days)
 [**patch_admin_audit_logs_retention_update**](AdminAuditLogsApi.md#patch_admin_audit_logs_retention_update) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 [**put_admin_audit_logs_retention_update**](AdminAuditLogsApi.md#put_admin_audit_logs_retention_update) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 
@@ -17,8 +17,8 @@ Method | HTTP request | Description
 
 ## admin_audit_logs_actions
 
-> admin_audit_logs_actions(org_id)
-List available audit action types for this tenant
+> models::AdminAuditLogsActionsResponse admin_audit_logs_actions(org_id)
+List the distinct audit action types recorded for the tenant
 
 ### Parameters
 
@@ -29,7 +29,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsActionsResponse**](AdminAuditLogsActionsResponse.md)
 
 ### Authorization
 
@@ -38,15 +38,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_audit_logs_export
 
-> admin_audit_logs_export(org_id)
-Export audit logs as CSV or JSON
+> String admin_audit_logs_export(org_id)
+Export audit logs as CSV (default) or JSON
 
 ### Parameters
 
@@ -57,7 +57,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+**String**
 
 ### Authorization
 
@@ -66,15 +66,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/csv, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_audit_logs_get
 
-> admin_audit_logs_get(org_id, log_id)
-Get a single audit log entry
+> models::AdminAuditLogsGetResponse admin_audit_logs_get(org_id, log_id)
+Get an audit log entry
 
 ### Parameters
 
@@ -86,7 +86,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsGetResponse**](AdminAuditLogsGetResponse.md)
 
 ### Authorization
 
@@ -95,15 +95,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_audit_logs_list
 
-> admin_audit_logs_list(org_id)
-List audit logs for the tenant
+> models::AdminAuditLogsListResponse admin_audit_logs_list(org_id)
+List audit log entries
 
 ### Parameters
 
@@ -114,7 +114,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsListResponse**](AdminAuditLogsListResponse.md)
 
 ### Authorization
 
@@ -123,14 +123,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_audit_logs_retention
 
-> admin_audit_logs_retention(org_id)
+> models::AdminAuditLogsRetentionResponse admin_audit_logs_retention(org_id)
 Get audit log retention settings
 
 ### Parameters
@@ -142,7 +142,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -151,15 +151,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_audit_logs_stats
 
-> admin_audit_logs_stats(org_id)
-Get audit log statistics
+> models::AdminAuditLogsStatsResponse admin_audit_logs_stats(org_id)
+Audit log statistics for a period (default: last 30 days)
 
 ### Parameters
 
@@ -170,7 +170,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsStatsResponse**](AdminAuditLogsStatsResponse.md)
 
 ### Authorization
 
@@ -179,14 +179,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_audit_logs_retention_update
 
-> patch_admin_audit_logs_retention_update(org_id)
+> models::AdminAuditLogsRetentionResponse patch_admin_audit_logs_retention_update(org_id)
 Update audit log retention settings
 
 ### Parameters
@@ -198,7 +198,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -207,14 +207,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_audit_logs_retention_update
 
-> put_admin_audit_logs_retention_update(org_id)
+> models::AdminAuditLogsRetentionResponse put_admin_audit_logs_retention_update(org_id)
 Update audit log retention settings
 
 ### Parameters
@@ -226,7 +226,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -235,7 +235,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

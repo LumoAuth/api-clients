@@ -20,8 +20,7 @@ var _ MappedNullable = &AdminAgentsGenerateTokenResponse{}
 
 // AdminAgentsGenerateTokenResponse struct for AdminAgentsGenerateTokenResponse
 type AdminAgentsGenerateTokenResponse struct {
-	// The issued token and its metadata (access_token, expires_in, ...).
-	Data map[string]interface{} `json:"data,omitempty"`
+	Data *AdminAgentsGenerateTokenResponseData `json:"data,omitempty"`
 }
 
 // NewAdminAgentsGenerateTokenResponse instantiates a new AdminAgentsGenerateTokenResponse object
@@ -42,19 +41,19 @@ func NewAdminAgentsGenerateTokenResponseWithDefaults() *AdminAgentsGenerateToken
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *AdminAgentsGenerateTokenResponse) GetData() map[string]interface{} {
+func (o *AdminAgentsGenerateTokenResponse) GetData() AdminAgentsGenerateTokenResponseData {
 	if o == nil || IsNil(o.Data) {
-		var ret map[string]interface{}
+		var ret AdminAgentsGenerateTokenResponseData
 		return ret
 	}
-	return o.Data
+	return *o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AdminAgentsGenerateTokenResponse) GetDataOk() (map[string]interface{}, bool) {
+func (o *AdminAgentsGenerateTokenResponse) GetDataOk() (*AdminAgentsGenerateTokenResponseData, bool) {
 	if o == nil || IsNil(o.Data) {
-		return map[string]interface{}{}, false
+		return nil, false
 	}
 	return o.Data, true
 }
@@ -68,9 +67,9 @@ func (o *AdminAgentsGenerateTokenResponse) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
-func (o *AdminAgentsGenerateTokenResponse) SetData(v map[string]interface{}) {
-	o.Data = v
+// SetData gets a reference to the given AdminAgentsGenerateTokenResponseData and assigns it to the Data field.
+func (o *AdminAgentsGenerateTokenResponse) SetData(v AdminAgentsGenerateTokenResponseData) {
+	o.Data = &v
 }
 
 func (o AdminAgentsGenerateTokenResponse) MarshalJSON() ([]byte, error) {

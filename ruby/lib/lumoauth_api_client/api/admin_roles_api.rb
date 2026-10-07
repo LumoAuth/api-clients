@@ -23,17 +23,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_roles_add_permissions(org_id, role_id, opts = {})
-      admin_roles_add_permissions_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_add_permissions_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Add permission(s) to a role
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_roles_add_permissions_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_add_permissions ...'
@@ -54,6 +54,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -62,7 +64,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -88,17 +90,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_roles_add_user(org_id, role_id, opts = {})
-      admin_roles_add_user_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_add_user_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Assign a user to a role
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_roles_add_user_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_add_user ...'
@@ -119,6 +121,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -127,7 +131,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -152,16 +156,16 @@ module LumoAuthApiClient
     # Create a new role
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesCreateResponse]
     def admin_roles_create(org_id, opts = {})
-      admin_roles_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_create_with_http_info(org_id, opts)
+      data
     end
 
     # Create a new role
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
     def admin_roles_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_create ...'
@@ -178,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -186,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -212,17 +218,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_roles_delete(org_id, role_id, opts = {})
-      admin_roles_delete_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_delete_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Delete a role
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_roles_delete_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_delete ...'
@@ -243,6 +249,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -251,7 +259,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -277,17 +285,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesGetResponse]
     def admin_roles_get(org_id, role_id, opts = {})
-      admin_roles_get_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_get_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Get a single role by ID or slug
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesGetResponse, Integer, Hash)>] AdminRolesGetResponse data, response status code and response headers
     def admin_roles_get_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_get ...'
@@ -308,6 +316,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -316,7 +326,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -342,17 +352,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesGetPermissionsResponse]
     def admin_roles_get_permissions(org_id, role_id, opts = {})
-      admin_roles_get_permissions_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_get_permissions_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Get role permissions
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesGetPermissionsResponse, Integer, Hash)>] AdminRolesGetPermissionsResponse data, response status code and response headers
     def admin_roles_get_permissions_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_get_permissions ...'
@@ -373,6 +383,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -381,7 +393,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesGetPermissionsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -407,17 +419,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesGetUsersResponse]
     def admin_roles_get_users(org_id, role_id, opts = {})
-      admin_roles_get_users_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_get_users_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Get users assigned to a role
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesGetUsersResponse, Integer, Hash)>] AdminRolesGetUsersResponse data, response status code and response headers
     def admin_roles_get_users_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_get_users ...'
@@ -438,6 +450,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -446,7 +460,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesGetUsersResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -471,16 +485,16 @@ module LumoAuthApiClient
     # List all roles in the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesListResponse]
     def admin_roles_list(org_id, opts = {})
-      admin_roles_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_list_with_http_info(org_id, opts)
+      data
     end
 
     # List all roles in the tenant
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesListResponse, Integer, Hash)>] AdminRolesListResponse data, response status code and response headers
     def admin_roles_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_list ...'
@@ -497,6 +511,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -505,7 +521,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -532,10 +548,10 @@ module LumoAuthApiClient
     # @param role_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_roles_remove_permission(org_id, role_id, permission_id, opts = {})
-      admin_roles_remove_permission_with_http_info(org_id, role_id, permission_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_remove_permission_with_http_info(org_id, role_id, permission_id, opts)
+      data
     end
 
     # Remove a permission from a role
@@ -543,7 +559,7 @@ module LumoAuthApiClient
     # @param role_id [String] 
     # @param permission_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_roles_remove_permission_with_http_info(org_id, role_id, permission_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_remove_permission ...'
@@ -568,6 +584,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -576,7 +594,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -603,10 +621,10 @@ module LumoAuthApiClient
     # @param role_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def admin_roles_remove_user(org_id, role_id, user_id, opts = {})
-      admin_roles_remove_user_with_http_info(org_id, role_id, user_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_remove_user_with_http_info(org_id, role_id, user_id, opts)
+      data
     end
 
     # Remove a user from a role
@@ -614,7 +632,7 @@ module LumoAuthApiClient
     # @param role_id [String] 
     # @param user_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def admin_roles_remove_user_with_http_info(org_id, role_id, user_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_remove_user ...'
@@ -639,6 +657,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -647,7 +667,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -673,17 +693,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesCreateResponse]
     def admin_roles_update_permissions(org_id, role_id, opts = {})
-      admin_roles_update_permissions_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = admin_roles_update_permissions_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Update role permissions (replaces all)
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
     def admin_roles_update_permissions_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.admin_roles_update_permissions ...'
@@ -704,6 +724,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -712,7 +734,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -738,17 +760,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesCreateResponse]
     def patch_admin_roles_update(org_id, role_id, opts = {})
-      patch_admin_roles_update_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = patch_admin_roles_update_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Update an existing role
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
     def patch_admin_roles_update_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.patch_admin_roles_update ...'
@@ -769,6 +791,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -777,7 +801,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -803,17 +827,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AdminRolesCreateResponse]
     def put_admin_roles_update(org_id, role_id, opts = {})
-      put_admin_roles_update_with_http_info(org_id, role_id, opts)
-      nil
+      data, _status_code, _headers = put_admin_roles_update_with_http_info(org_id, role_id, opts)
+      data
     end
 
     # Update an existing role
     # @param org_id [String] 
     # @param role_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AdminRolesCreateResponse, Integer, Hash)>] AdminRolesCreateResponse data, response status code and response headers
     def put_admin_roles_update_with_http_info(org_id, role_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminRolesApi.put_admin_roles_update ...'
@@ -834,6 +858,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -842,7 +868,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AdminRolesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

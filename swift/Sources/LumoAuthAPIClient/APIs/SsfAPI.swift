@@ -13,18 +13,18 @@ import AnyCodable
 open class SsfAPI {
 
     /**
-     Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+     Create an SSF stream
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: SsfStream
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func createStreamConfig(orgId: String) async throws {
+    open class func createStreamConfig(orgId: String) async throws -> SsfStream {
         return try await createStreamConfigWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+     Create an SSF stream
      - POST /orgs/{orgId}/api/v1/ssf/stream
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -33,9 +33,9 @@ open class SsfAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<SsfStream> 
      */
-    open class func createStreamConfigWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func createStreamConfigWithRequestBuilder(orgId: String) -> RequestBuilder<SsfStream> {
         var localVariablePath = "/orgs/{orgId}/api/v1/ssf/stream"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -51,22 +51,25 @@ open class SsfAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SsfStream>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Delete an SSF stream
+     
+     - parameter streamId: (query)  
      - parameter orgId: (path)  
      - returns: Void
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func deleteStreamConfig(orgId: String) async throws {
-        return try await deleteStreamConfigWithRequestBuilder(orgId: orgId).execute().body
+    open class func deleteStreamConfig(streamId: String, orgId: String) async throws {
+        return try await deleteStreamConfigWithRequestBuilder(streamId: streamId, orgId: orgId).execute().body
     }
 
     /**
+     Delete an SSF stream
      - DELETE /orgs/{orgId}/api/v1/ssf/stream
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -74,10 +77,11 @@ open class SsfAPI {
      - Bearer Token:
        - type: http
        - name: BearerAuth
+     - parameter streamId: (query)  
      - parameter orgId: (path)  
      - returns: RequestBuilder<Void> 
      */
-    open class func deleteStreamConfigWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func deleteStreamConfigWithRequestBuilder(streamId: String, orgId: String) -> RequestBuilder<Void> {
         var localVariablePath = "/orgs/{orgId}/api/v1/ssf/stream"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -85,7 +89,10 @@ open class SsfAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "stream_id": (wrappedValue: streamId.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -99,18 +106,19 @@ open class SsfAPI {
     }
 
     /**
-     Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+     Read SSF stream configuration(s)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - parameter streamId: (query)  (optional)
+     - returns: GetStreamConfig200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getStreamConfig(orgId: String) async throws {
-        return try await getStreamConfigWithRequestBuilder(orgId: orgId).execute().body
+    open class func getStreamConfig(orgId: String, streamId: String? = nil) async throws -> GetStreamConfig200Response {
+        return try await getStreamConfigWithRequestBuilder(orgId: orgId, streamId: streamId).execute().body
     }
 
     /**
-     Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+     Read SSF stream configuration(s)
      - GET /orgs/{orgId}/api/v1/ssf/stream
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -119,9 +127,10 @@ open class SsfAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - parameter streamId: (query)  (optional)
+     - returns: RequestBuilder<GetStreamConfig200Response> 
      */
-    open class func getStreamConfigWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func getStreamConfigWithRequestBuilder(orgId: String, streamId: String? = nil) -> RequestBuilder<GetStreamConfig200Response> {
         var localVariablePath = "/orgs/{orgId}/api/v1/ssf/stream"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -129,7 +138,10 @@ open class SsfAPI {
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
         let localVariableParameters: [String: Any]? = nil
 
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        var localVariableUrlComponents = URLComponents(string: localVariableURLString)
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+            "stream_id": (wrappedValue: streamId?.encodeToJSON(), isExplode: true),
+        ])
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -137,13 +149,13 @@ open class SsfAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetStreamConfig200Response>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+     Request a stream verification event
      
      - parameter orgId: (path)  
      - returns: Void
@@ -154,7 +166,7 @@ open class SsfAPI {
     }
 
     /**
-     SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+     Request a stream verification event
      - POST /orgs/{orgId}/api/v1/ssf/verify
      - API Key:
        - type: apiKey X-API-Key (HEADER)

@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminWebhooksCreate(orgId);
+            //var response = instance.AdminWebhooksCreate(orgId);
+            //Assert.IsType<AdminWebhooksCreateResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksDelete(orgId, webhookId);
+            //var response = instance.AdminWebhooksDelete(orgId, webhookId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksDeliveriesList(orgId, webhookId);
+            //var response = instance.AdminWebhooksDeliveriesList(orgId, webhookId);
+            //Assert.IsType<AdminWebhooksDeliveriesListResponse>(response);
         }
 
         /// <summary>
@@ -97,7 +102,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string webhookId = null;
             //string deliveryId = null;
-            //instance.AdminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+            //var response = instance.AdminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+            //Assert.IsType<AdminWebhooksDeliveryReplayResponse>(response);
         }
 
         /// <summary>
@@ -110,7 +116,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string webhookId = null;
             //string deliveryId = null;
-            //instance.AdminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+            //var response = instance.AdminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+            //Assert.IsType<AdminWebhooksDeliveryShowResponse>(response);
         }
 
         /// <summary>
@@ -121,7 +128,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminWebhooksEvents(orgId);
+            //var response = instance.AdminWebhooksEvents(orgId);
+            //Assert.IsType<AdminWebhooksEventsResponse>(response);
         }
 
         /// <summary>
@@ -133,7 +141,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksGet(orgId, webhookId);
+            //var response = instance.AdminWebhooksGet(orgId, webhookId);
+            //Assert.IsType<AdminWebhooksGetResponse>(response);
         }
 
         /// <summary>
@@ -144,7 +153,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminWebhooksList(orgId);
+            //var response = instance.AdminWebhooksList(orgId);
+            //Assert.IsType<AdminWebhooksListResponse>(response);
         }
 
         /// <summary>
@@ -156,7 +166,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksRotateSecret(orgId, webhookId);
+            //var response = instance.AdminWebhooksRotateSecret(orgId, webhookId);
+            //Assert.IsType<AdminWebhooksRotateSecretResponse>(response);
         }
 
         /// <summary>
@@ -168,7 +179,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksTest(orgId, webhookId);
+            //var response = instance.AdminWebhooksTest(orgId, webhookId);
+            //Assert.IsType<AdminWebhooksTestResponse>(response);
         }
 
         /// <summary>
@@ -179,7 +191,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminWebhooksTunnelStart(orgId);
+            //var response = instance.AdminWebhooksTunnelStart(orgId);
+            //Assert.IsType<AdminWebhooksTunnelStartResponse>(response);
         }
 
         /// <summary>
@@ -191,7 +204,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksTunnelStop(orgId, webhookId);
+            //var response = instance.AdminWebhooksTunnelStop(orgId, webhookId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -203,7 +217,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksTunnelStream(orgId, webhookId);
+            //var response = instance.AdminWebhooksTunnelStream(orgId, webhookId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -215,7 +230,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksWebhooksDisable(orgId, webhookId);
+            //var response = instance.AdminWebhooksWebhooksDisable(orgId, webhookId);
+            //Assert.IsType<AdminWebhooksWebhooksDisableResponse>(response);
         }
 
         /// <summary>
@@ -227,7 +243,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.AdminWebhooksWebhooksEnable(orgId, webhookId);
+            //var response = instance.AdminWebhooksWebhooksEnable(orgId, webhookId);
+            //Assert.IsType<AdminWebhooksWebhooksEnableResponse>(response);
         }
 
         /// <summary>
@@ -239,7 +256,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.PatchAdminWebhooksUpdate(orgId, webhookId);
+            //var response = instance.PatchAdminWebhooksUpdate(orgId, webhookId);
+            //Assert.IsType<PutAdminWebhooksUpdateResponse>(response);
         }
 
         /// <summary>
@@ -251,7 +269,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string webhookId = null;
-            //instance.PutAdminWebhooksUpdate(orgId, webhookId);
+            //var response = instance.PutAdminWebhooksUpdate(orgId, webhookId);
+            //Assert.IsType<PutAdminWebhooksUpdateResponse>(response);
         }
     }
 }

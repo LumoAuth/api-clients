@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminEmailTemplatesDeleteError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +27,7 @@ pub enum AdminEmailTemplatesDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminEmailTemplatesGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +35,6 @@ pub enum AdminEmailTemplatesGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminEmailTemplatesListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +42,7 @@ pub enum AdminEmailTemplatesListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminEmailTemplatesPreviewError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +50,8 @@ pub enum AdminEmailTemplatesPreviewError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminEmailTemplatesUpsertError {
-    DefaultResponse(),
+    Status404(),
+    Status422(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,12 +59,12 @@ pub enum AdminEmailTemplatesUpsertError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminEmailTemplatesVariablesError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_email_templates_delete(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<(), Error<AdminEmailTemplatesDeleteError>> {
+pub async fn admin_email_templates_delete(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::MessageResponse, Error<AdminEmailTemplatesDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
@@ -91,9 +91,20 @@ pub async fn admin_email_templates_delete(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminEmailTemplatesDeleteError> = serde_json::from_str(&content).ok();
@@ -101,7 +112,7 @@ pub async fn admin_email_templates_delete(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_email_templates_get(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<(), Error<AdminEmailTemplatesGetError>> {
+pub async fn admin_email_templates_get(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
@@ -128,9 +139,20 @@ pub async fn admin_email_templates_get(configuration: &configuration::Configurat
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EmailTemplate`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EmailTemplate`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminEmailTemplatesGetError> = serde_json::from_str(&content).ok();
@@ -138,7 +160,7 @@ pub async fn admin_email_templates_get(configuration: &configuration::Configurat
     }
 }
 
-pub async fn admin_email_templates_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminEmailTemplatesListError>> {
+pub async fn admin_email_templates_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminEmailTemplatesListResponse, Error<AdminEmailTemplatesListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -164,9 +186,20 @@ pub async fn admin_email_templates_list(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminEmailTemplatesListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminEmailTemplatesListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminEmailTemplatesListError> = serde_json::from_str(&content).ok();
@@ -174,7 +207,7 @@ pub async fn admin_email_templates_list(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_email_templates_preview(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<(), Error<AdminEmailTemplatesPreviewError>> {
+pub async fn admin_email_templates_preview(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::AdminEmailTemplatesPreviewResponse, Error<AdminEmailTemplatesPreviewError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
@@ -201,9 +234,20 @@ pub async fn admin_email_templates_preview(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminEmailTemplatesPreviewResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminEmailTemplatesPreviewResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminEmailTemplatesPreviewError> = serde_json::from_str(&content).ok();
@@ -211,7 +255,7 @@ pub async fn admin_email_templates_preview(configuration: &configuration::Config
     }
 }
 
-pub async fn admin_email_templates_upsert(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<(), Error<AdminEmailTemplatesUpsertError>> {
+pub async fn admin_email_templates_upsert(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::EmailTemplate, Error<AdminEmailTemplatesUpsertError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
@@ -238,9 +282,20 @@ pub async fn admin_email_templates_upsert(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EmailTemplate`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EmailTemplate`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminEmailTemplatesUpsertError> = serde_json::from_str(&content).ok();
@@ -248,7 +303,7 @@ pub async fn admin_email_templates_upsert(configuration: &configuration::Configu
     }
 }
 
-pub async fn admin_email_templates_variables(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<(), Error<AdminEmailTemplatesVariablesError>> {
+pub async fn admin_email_templates_variables(configuration: &configuration::Configuration, org_id: &str, r#type: &str) -> Result<models::AdminEmailTemplatesVariablesResponse, Error<AdminEmailTemplatesVariablesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_type = r#type;
@@ -275,9 +330,20 @@ pub async fn admin_email_templates_variables(configuration: &configuration::Conf
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminEmailTemplatesVariablesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminEmailTemplatesVariablesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminEmailTemplatesVariablesError> = serde_json::from_str(&content).ok();

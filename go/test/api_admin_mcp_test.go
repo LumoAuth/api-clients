@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminMcpAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_AdminMcpAPIService(t *testing.T) {
 		var orgId string
 		var serverId string
 
-		httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersDelete(context.Background(), orgId, serverId).Execute()
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersDelete(context.Background(), orgId, serverId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminMcpAPIService(t *testing.T) {
 		var orgId string
 		var serverId string
 
-		httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersGet(context.Background(), orgId, serverId).Execute()
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersGet(context.Background(), orgId, serverId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -69,9 +72,10 @@ func Test_lumoauthclient_AdminMcpAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminMcpAPI.AdminMcpServersList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

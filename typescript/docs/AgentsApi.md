@@ -5,14 +5,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**ask**](#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)|
-|[**attest**](#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | |
+|[**attest**](#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token|
 |[**authorizeMcp**](#authorizemcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).|
 |[**createApproval**](#createapproval) | **POST** /orgs/{orgId}/api/v1/agents/me/approvals | |
-|[**getAgentCard**](#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | |
+|[**getAgentCard**](#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card|
 |[**getApprovalStatus**](#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | |
 |[**getCurrentAgent**](#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent|
-|[**registerAgent**](#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | |
-|[**verifyAgentCard**](#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | |
+|[**registerAgent**](#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent|
+|[**verifyAgentCard**](#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card|
 
 # **ask**
 > AskResponse ask(askRequest)
@@ -72,15 +72,17 @@ const { status, data } = await apiInstance.ask(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **attest**
-> attest()
+> AttestResponse attest(attestRequest)
 
+Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent\'s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
 ### Example
 
 ```typescript
 import {
     AgentsApi,
-    Configuration
+    Configuration,
+    AttestRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
@@ -88,10 +90,12 @@ const apiInstance = new AgentsApi(configuration);
 
 let orgId: string; // (default to undefined)
 let agentId: string; // (default to undefined)
+let attestRequest: AttestRequest; //
 
 const { status, data } = await apiInstance.attest(
     orgId,
-    agentId
+    agentId,
+    attestRequest
 );
 ```
 
@@ -99,13 +103,14 @@ const { status, data } = await apiInstance.attest(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **attestRequest** | **AttestRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 | **agentId** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
 
-void (empty response body)
+**AttestResponse**
 
 ### Authorization
 
@@ -113,14 +118,19 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent\&#39;s capabilities. |  -  |
+|**400** | invalid_json or missing_attestation_token. |  -  |
+|**401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
+|**403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |
+|**404** | tenant_not_found. |  -  |
+|**429** | rate_limit_exceeded (Retry-After: 60). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -242,8 +252,9 @@ const { status, data } = await apiInstance.createApproval(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAgentCard**
-> getAgentCard()
+> SignedAgentCard getAgentCard()
 
+Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
 ### Example
 
@@ -275,7 +286,7 @@ const { status, data } = await apiInstance.getAgentCard(
 
 ### Return type
 
-void (empty response body)
+**SignedAgentCard**
 
 ### Authorization
 
@@ -284,13 +295,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization\&#39;s JWKS). |  -  |
+|**404** | not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -402,7 +414,7 @@ const { status, data } = await apiInstance.getCurrentAgent(
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **registerAgent**
-> registerAgent()
+> RegisterAgentResponse registerAgent()
 
 
 ### Example
@@ -432,7 +444,7 @@ const { status, data } = await apiInstance.registerAgent(
 
 ### Return type
 
-void (empty response body)
+**RegisterAgentResponse**
 
 ### Authorization
 
@@ -441,19 +453,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Registered agent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **verifyAgentCard**
-> verifyAgentCard()
+> VerifyAgentCardResponse verifyAgentCard(requestBody)
 
+Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer\'s key set (SSRF-guarded); by default the organization\'s own JWKS is used.
 
 ### Example
 
@@ -467,9 +480,11 @@ const configuration = new Configuration();
 const apiInstance = new AgentsApi(configuration);
 
 let orgId: string; // (default to undefined)
+let requestBody: { [key: string]: any; }; //
 
 const { status, data } = await apiInstance.verifyAgentCard(
-    orgId
+    orgId,
+    requestBody
 );
 ```
 
@@ -477,12 +492,13 @@ const { status, data } = await apiInstance.verifyAgentCard(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **requestBody** | **{ [key: string]: any; }**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
 
-void (empty response body)
+**VerifyAgentCardResponse**
 
 ### Authorization
 
@@ -490,14 +506,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. |  -  |
+|**400** | invalid_request — body is not a JSON agent card. |  -  |
+|**403** | Caller does not belong to this organization. |  -  |
+|**404** | Unknown organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

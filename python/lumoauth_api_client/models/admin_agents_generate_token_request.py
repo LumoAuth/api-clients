@@ -27,9 +27,9 @@ class AdminAgentsGenerateTokenRequest(BaseModel):
     """
     AdminAgentsGenerateTokenRequest
     """ # noqa: E501
-    scopes: Optional[List[StrictStr]] = Field(default=None, description="Optional scopes to embed in the token.")
-    ttl: Optional[StrictInt] = Field(default=None, description="Optional token lifetime in seconds.")
-    __properties: ClassVar[List[str]] = ["scopes", "ttl"]
+    expires_in: Optional[StrictInt] = Field(default=None, description="Token lifetime in seconds. Default 3600, at most 2592000 (30 days).", alias="expiresIn")
+    scopes: Optional[List[StrictStr]] = Field(default=None, description="Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.")
+    __properties: ClassVar[List[str]] = ["expiresIn", "scopes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,8 +82,8 @@ class AdminAgentsGenerateTokenRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "scopes": obj.get("scopes"),
-            "ttl": obj.get("ttl")
+            "expiresIn": obj.get("expiresIn"),
+            "scopes": obj.get("scopes")
         })
         return _obj
 

@@ -4,24 +4,24 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_social_providers_available**](AdminIdentityProvidersApi.md#admin_social_providers_available) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types
-[**admin_social_providers_callback_urls**](AdminIdentityProvidersApi.md#admin_social_providers_callback_urls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers
-[**admin_social_providers_create**](AdminIdentityProvidersApi.md#admin_social_providers_create) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider
+[**admin_social_providers_available**](AdminIdentityProvidersApi.md#admin_social_providers_available) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types
+[**admin_social_providers_callback_urls**](AdminIdentityProvidersApi.md#admin_social_providers_callback_urls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider
+[**admin_social_providers_create**](AdminIdentityProvidersApi.md#admin_social_providers_create) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider
 [**admin_social_providers_delete**](AdminIdentityProvidersApi.md#admin_social_providers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider
 [**admin_social_providers_disable**](AdminIdentityProvidersApi.md#admin_social_providers_disable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider
 [**admin_social_providers_enable**](AdminIdentityProvidersApi.md#admin_social_providers_enable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider
-[**admin_social_providers_get**](AdminIdentityProvidersApi.md#admin_social_providers_get) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name)
-[**admin_social_providers_list**](AdminIdentityProvidersApi.md#admin_social_providers_list) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers
-[**admin_social_providers_types**](AdminIdentityProvidersApi.md#admin_social_providers_types) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types
-[**patch_admin_social_providers_update**](AdminIdentityProvidersApi.md#patch_admin_social_providers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
-[**put_admin_social_providers_update**](AdminIdentityProvidersApi.md#put_admin_social_providers_update) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
+[**admin_social_providers_get**](AdminIdentityProvidersApi.md#admin_social_providers_get) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider
+[**admin_social_providers_list**](AdminIdentityProvidersApi.md#admin_social_providers_list) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers
+[**admin_social_providers_types**](AdminIdentityProvidersApi.md#admin_social_providers_types) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types
+[**patch_admin_social_providers_update**](AdminIdentityProvidersApi.md#patch_admin_social_providers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider
+[**put_admin_social_providers_update**](AdminIdentityProvidersApi.md#put_admin_social_providers_update) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider
 
 
 
 ## admin_social_providers_available
 
-> admin_social_providers_available(org_id)
-Get available social login provider types
+> models::AdminSocialProvidersAvailableResponse admin_social_providers_available(org_id)
+List the available social login provider types
 
 ### Parameters
 
@@ -32,7 +32,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -41,15 +41,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_callback_urls
 
-> admin_social_providers_callback_urls(org_id)
-Get callback URLs for all configured providers
+> models::AdminSocialProvidersCallbackUrlsResponse admin_social_providers_callback_urls(org_id)
+Get the OAuth callback URL of every configured provider
 
 ### Parameters
 
@@ -60,7 +60,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersCallbackUrlsResponse**](AdminSocialProvidersCallbackUrlsResponse.md)
 
 ### Authorization
 
@@ -69,15 +69,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_create
 
-> admin_social_providers_create(org_id)
-Create a new social login provider
+> models::AdminSocialProvidersCreateResponse admin_social_providers_create(org_id)
+Create a social login provider
 
 ### Parameters
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -97,14 +97,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_delete
 
-> admin_social_providers_delete(org_id, provider_id)
+> models::MessageResponse admin_social_providers_delete(org_id, provider_id)
 Delete a social login provider
 
 ### Parameters
@@ -117,7 +117,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -126,14 +126,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_disable
 
-> admin_social_providers_disable(org_id, provider_id)
+> models::AdminSocialProvidersCreateResponse admin_social_providers_disable(org_id, provider_id)
 Disable a social login provider
 
 ### Parameters
@@ -146,7 +146,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -155,14 +155,14 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_enable
 
-> admin_social_providers_enable(org_id, provider_id)
+> models::AdminSocialProvidersCreateResponse admin_social_providers_enable(org_id, provider_id)
 Enable a social login provider
 
 ### Parameters
@@ -175,7 +175,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -184,15 +184,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_get
 
-> admin_social_providers_get(org_id, provider_id)
-Get a single social login provider (by ID or by provider name)
+> models::AdminSocialProvidersGetResponse admin_social_providers_get(org_id, provider_id)
+Get a social login provider
 
 ### Parameters
 
@@ -204,7 +204,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersGetResponse**](AdminSocialProvidersGetResponse.md)
 
 ### Authorization
 
@@ -213,15 +213,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_list
 
-> admin_social_providers_list(org_id)
-List all configured social login providers
+> models::AdminSocialProvidersListResponse admin_social_providers_list(org_id)
+List social login providers
 
 ### Parameters
 
@@ -232,7 +232,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersListResponse**](AdminSocialProvidersListResponse.md)
 
 ### Authorization
 
@@ -241,15 +241,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## admin_social_providers_types
 
-> admin_social_providers_types(org_id)
-Get available social login provider types
+> models::AdminSocialProvidersAvailableResponse admin_social_providers_types(org_id)
+List the available social login provider types
 
 ### Parameters
 
@@ -260,7 +260,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -269,15 +269,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## patch_admin_social_providers_update
 
-> patch_admin_social_providers_update(org_id, provider_id)
-Upsert (create or update) a social login provider via PUT; update via PATCH
+> models::AdminSocialProvidersCreateResponse patch_admin_social_providers_update(org_id, provider_id)
+Update a social login provider
 
 ### Parameters
 
@@ -289,7 +289,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -298,15 +298,15 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
 ## put_admin_social_providers_update
 
-> put_admin_social_providers_update(org_id, provider_id)
-Upsert (create or update) a social login provider via PUT; update via PATCH
+> models::AdminSocialProvidersCreateResponse put_admin_social_providers_update(org_id, provider_id)
+Create or replace a social login provider
 
 ### Parameters
 
@@ -318,7 +318,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
- (empty response body)
+[**models::AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -327,7 +327,7 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

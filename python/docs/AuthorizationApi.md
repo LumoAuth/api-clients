@@ -4,30 +4,30 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**check_abac**](AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Check ABAC authorization
-[**check_abac_bulk**](AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Bulk check multiple authorization requests
-[**check_all_permissions**](AuthorizationApi.md#check_all_permissions) | **POST** /api/v1/authz/check-all | Check if user has ALL of the specified permissions
-[**check_any_permission**](AuthorizationApi.md#check_any_permission) | **POST** /api/v1/authz/check-any | Check if user has ANY of the specified permissions
-[**check_permission**](AuthorizationApi.md#check_permission) | **POST** /api/v1/authz/check | Check if the authenticated user has a specific permission
-[**check_permissions_bulk**](AuthorizationApi.md#check_permissions_bulk) | **POST** /api/v1/authz/check-bulk | Check multiple permissions at once
-[**check_relation**](AuthorizationApi.md#check_relation) | **POST** /api/v1/authz/zanzibar/check | Zanzibar-style relationship check
-[**check_relation_scoped**](AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | 
-[**evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
-[**evaluate_batch**](AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+[**check_abac**](AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
+[**check_abac_bulk**](AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
+[**check_all_permissions**](AuthorizationApi.md#check_all_permissions) | **POST** /api/v1/authz/check-all | Check whether the subject holds all of the permissions
+[**check_any_permission**](AuthorizationApi.md#check_any_permission) | **POST** /api/v1/authz/check-any | Check whether the subject holds any of the permissions
+[**check_permission**](AuthorizationApi.md#check_permission) | **POST** /api/v1/authz/check | Check one permission
+[**check_permissions_bulk**](AuthorizationApi.md#check_permissions_bulk) | **POST** /api/v1/authz/check-bulk | Check up to 100 permissions in one call
+[**check_relation**](AuthorizationApi.md#check_relation) | **POST** /api/v1/authz/zanzibar/check | Zanzibar relationship check
+[**check_relation_scoped**](AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | Zanzibar relationship check
+[**evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 access evaluation
+[**evaluate_batch**](AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations
 [**expand_relation**](AuthorizationApi.md#expand_relation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites.
 [**expand_relation_scoped**](AuthorizationApi.md#expand_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope).
-[**get_my_attributes**](AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI)
-[**get_resource_attributes**](AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
-[**list_attribute_definitions**](AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
-[**list_permissions**](AuthorizationApi.md#list_permissions) | **GET** /api/v1/authz/permissions | List all permissions for the authenticated user
-[**set_resource_attribute**](AuthorizationApi.md#set_resource_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set resource attribute
-[**set_user_attribute**](AuthorizationApi.md#set_user_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set user attribute
+[**get_my_attributes**](AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | The caller&#39;s ABAC subject attributes
+[**get_resource_attributes**](AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Attributes stored for a resource
+[**list_attribute_definitions**](AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Attribute definitions available to the organization
+[**list_permissions**](AuthorizationApi.md#list_permissions) | **GET** /api/v1/authz/permissions | List the caller&#39;s effective permissions
+[**set_resource_attribute**](AuthorizationApi.md#set_resource_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set a resource attribute
+[**set_user_attribute**](AuthorizationApi.md#set_user_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set a user attribute
 
 
 # **check_abac**
-> check_abac(org_id)
+> CheckAbacResponse check_abac(org_id)
 
-Check ABAC authorization
+Evaluate an ABAC policy decision for the caller
 
 POST /api/v1/abac/check
 Body: {
@@ -46,6 +46,7 @@ Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_abac_response import CheckAbacResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -78,8 +79,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Check ABAC authorization
-        api_instance.check_abac(org_id)
+        # Evaluate an ABAC policy decision for the caller
+        api_response = api_instance.check_abac(org_id)
+        print("The response of AuthorizationApi->check_abac:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_abac: %s\n" % e)
 ```
@@ -95,7 +98,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**CheckAbacResponse**](CheckAbacResponse.md)
 
 ### Authorization
 
@@ -104,20 +107,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_abac_bulk**
-> check_abac_bulk(org_id)
+> CheckAbacBulkResponse check_abac_bulk(org_id)
 
-Bulk check multiple authorization requests
+Evaluate up to 100 ABAC checks for the caller in one call
 
 POST /api/v1/abac/check-bulk
 Body: {
@@ -135,6 +138,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_abac_bulk_response import CheckAbacBulkResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -167,8 +171,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Bulk check multiple authorization requests
-        api_instance.check_abac_bulk(org_id)
+        # Evaluate up to 100 ABAC checks for the caller in one call
+        api_response = api_instance.check_abac_bulk(org_id)
+        print("The response of AuthorizationApi->check_abac_bulk:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_abac_bulk: %s\n" % e)
 ```
@@ -184,7 +190,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**CheckAbacBulkResponse**](CheckAbacBulkResponse.md)
 
 ### Authorization
 
@@ -193,20 +199,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Per-check decisions in request order |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_all_permissions**
-> check_all_permissions()
+> CheckAnyPermissionResponse check_all_permissions()
 
-Check if user has ALL of the specified permissions
+Check whether the subject holds all of the permissions
 
 POST /api/v1/authz/check-all
 Body: {
@@ -222,6 +228,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -253,8 +260,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # Check if user has ALL of the specified permissions
-        api_instance.check_all_permissions()
+        # Check whether the subject holds all of the permissions
+        api_response = api_instance.check_all_permissions()
+        print("The response of AuthorizationApi->check_all_permissions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_all_permissions: %s\n" % e)
 ```
@@ -267,7 +276,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
 
 ### Authorization
 
@@ -276,20 +285,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_any_permission**
-> check_any_permission()
+> CheckAnyPermissionResponse check_any_permission()
 
-Check if user has ANY of the specified permissions
+Check whether the subject holds any of the permissions
 
 POST /api/v1/authz/check-any
 Body: {
@@ -305,6 +314,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_any_permission_response import CheckAnyPermissionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -336,8 +346,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # Check if user has ANY of the specified permissions
-        api_instance.check_any_permission()
+        # Check whether the subject holds any of the permissions
+        api_response = api_instance.check_any_permission()
+        print("The response of AuthorizationApi->check_any_permission:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_any_permission: %s\n" % e)
 ```
@@ -350,7 +362,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
 
 ### Authorization
 
@@ -359,20 +371,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_permission**
-> check_permission()
+> CheckPermissionResponse check_permission()
 
-Check if the authenticated user has a specific permission
+Check one permission
 
 POST /api/v1/authz/check
 Body: {
@@ -393,6 +405,7 @@ ThirdPartySubjectGuard.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_permission_response import CheckPermissionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -424,8 +437,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # Check if the authenticated user has a specific permission
-        api_instance.check_permission()
+        # Check one permission
+        api_response = api_instance.check_permission()
+        print("The response of AuthorizationApi->check_permission:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_permission: %s\n" % e)
 ```
@@ -438,7 +453,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**CheckPermissionResponse**](CheckPermissionResponse.md)
 
 ### Authorization
 
@@ -447,20 +462,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_permissions_bulk**
-> check_permissions_bulk()
+> CheckPermissionsBulkResponse check_permissions_bulk()
 
-Check multiple permissions at once
+Check up to 100 permissions in one call
 
 POST /api/v1/authz/check-bulk
 Body: {
@@ -476,6 +491,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_permissions_bulk_response import CheckPermissionsBulkResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -507,8 +523,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # Check multiple permissions at once
-        api_instance.check_permissions_bulk()
+        # Check up to 100 permissions in one call
+        api_response = api_instance.check_permissions_bulk()
+        print("The response of AuthorizationApi->check_permissions_bulk:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_permissions_bulk: %s\n" % e)
 ```
@@ -521,7 +539,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**CheckPermissionsBulkResponse**](CheckPermissionsBulkResponse.md)
 
 ### Authorization
 
@@ -530,20 +548,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Per-permission decisions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_relation**
-> check_relation()
+> CheckRelationResponse check_relation()
 
-Zanzibar-style relationship check
+Zanzibar relationship check
 
 POST /api/v1/authz/zanzibar/check
 Body: {
@@ -559,6 +577,7 @@ Body: {
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_relation_response import CheckRelationResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -590,8 +609,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # Zanzibar-style relationship check
-        api_instance.check_relation()
+        # Zanzibar relationship check
+        api_response = api_instance.check_relation()
+        print("The response of AuthorizationApi->check_relation:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_relation: %s\n" % e)
 ```
@@ -604,7 +625,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**CheckRelationResponse**](CheckRelationResponse.md)
 
 ### Authorization
 
@@ -613,18 +634,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **check_relation_scoped**
-> check_relation_scoped(org_id)
+> CheckRelationScopedResponse check_relation_scoped(org_id)
+
+Zanzibar relationship check
 
 ### Example
 
@@ -633,6 +656,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.check_relation_scoped_response import CheckRelationScopedResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -665,7 +689,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.check_relation_scoped(org_id)
+        # Zanzibar relationship check
+        api_response = api_instance.check_relation_scoped(org_id)
+        print("The response of AuthorizationApi->check_relation_scoped:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->check_relation_scoped: %s\n" % e)
 ```
@@ -681,7 +708,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**CheckRelationScopedResponse**](CheckRelationScopedResponse.md)
 
 ### Authorization
 
@@ -690,20 +717,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluate**
-> evaluate()
+> AuthZenDecision evaluate()
 
-AuthZEN 1.0 single access evaluation.
+AuthZEN 1.0 access evaluation
 
 POST /api/v1/authz/v1/evaluation
 Body: {
@@ -721,6 +748,7 @@ Response: {"decision": true|false, "context": {...}?}
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.auth_zen_decision import AuthZenDecision
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -752,8 +780,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # AuthZEN 1.0 single access evaluation.
-        api_instance.evaluate()
+        # AuthZEN 1.0 access evaluation
+        api_response = api_instance.evaluate()
+        print("The response of AuthorizationApi->evaluate:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->evaluate: %s\n" % e)
 ```
@@ -766,7 +796,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**AuthZenDecision**](AuthZenDecision.md)
 
 ### Authorization
 
@@ -775,20 +805,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | AuthZEN decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **evaluate_batch**
-> evaluate_batch()
+> EvaluateBatchResponse evaluate_batch()
 
-AuthZEN 1.0 boxcarred access evaluations.
+AuthZEN 1.0 boxcarred access evaluations
 
 POST /api/v1/authz/v1/evaluations
 Body: {
@@ -807,6 +837,7 @@ Response: {"evaluations": [{"decision": ...}, ...]} preserving order.
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.evaluate_batch_response import EvaluateBatchResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -838,8 +869,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # AuthZEN 1.0 boxcarred access evaluations.
-        api_instance.evaluate_batch()
+        # AuthZEN 1.0 boxcarred access evaluations
+        api_response = api_instance.evaluate_batch()
+        print("The response of AuthorizationApi->evaluate_batch:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->evaluate_batch: %s\n" % e)
 ```
@@ -852,7 +885,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**EvaluateBatchResponse**](EvaluateBatchResponse.md)
 
 ### Authorization
 
@@ -861,13 +894,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | One decision per evaluation, in request order |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1068,9 +1101,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_my_attributes**
-> get_my_attributes(org_id)
+> GetMyAttributesResponse get_my_attributes(org_id)
 
-Get user's current attributes (for debugging/UI)
+The caller's ABAC subject attributes
 
 GET /api/v1/abac/my-attributes
 
@@ -1081,6 +1114,7 @@ GET /api/v1/abac/my-attributes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_my_attributes_response import GetMyAttributesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1113,8 +1147,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get user's current attributes (for debugging/UI)
-        api_instance.get_my_attributes(org_id)
+        # The caller's ABAC subject attributes
+        api_response = api_instance.get_my_attributes(org_id)
+        print("The response of AuthorizationApi->get_my_attributes:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->get_my_attributes: %s\n" % e)
 ```
@@ -1130,7 +1166,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**GetMyAttributesResponse**](GetMyAttributesResponse.md)
 
 ### Authorization
 
@@ -1139,20 +1175,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_resource_attributes**
-> get_resource_attributes(org_id, resource_type, resource_id)
+> GetResourceAttributesResponse get_resource_attributes(org_id, resource_type, resource_id)
 
-Get resource attributes
+Attributes stored for a resource
 
 GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -1163,6 +1199,7 @@ GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.get_resource_attributes_response import GetResourceAttributesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1197,8 +1234,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     resource_id = 'resource_id_example' # str | 
 
     try:
-        # Get resource attributes
-        api_instance.get_resource_attributes(org_id, resource_type, resource_id)
+        # Attributes stored for a resource
+        api_response = api_instance.get_resource_attributes(org_id, resource_type, resource_id)
+        print("The response of AuthorizationApi->get_resource_attributes:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->get_resource_attributes: %s\n" % e)
 ```
@@ -1216,7 +1255,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**GetResourceAttributesResponse**](GetResourceAttributesResponse.md)
 
 ### Authorization
 
@@ -1225,20 +1264,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Resource attributes keyed by attribute slug |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_attribute_definitions**
-> list_attribute_definitions(org_id)
+> ListAttributeDefinitionsResponse list_attribute_definitions(org_id, type=type)
 
-Get available attribute definitions
+Attribute definitions available to the organization
 
 GET /api/v1/abac/attribute-definitions
 Query params: type (user|resource|environment)
@@ -1250,6 +1289,7 @@ Query params: type (user|resource|environment)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.list_attribute_definitions_response import ListAttributeDefinitionsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1280,10 +1320,13 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
     org_id = 'org_id_example' # str | 
+    type = 'type_example' # str |  (optional)
 
     try:
-        # Get available attribute definitions
-        api_instance.list_attribute_definitions(org_id)
+        # Attribute definitions available to the organization
+        api_response = api_instance.list_attribute_definitions(org_id, type=type)
+        print("The response of AuthorizationApi->list_attribute_definitions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->list_attribute_definitions: %s\n" % e)
 ```
@@ -1296,10 +1339,11 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **org_id** | **str**|  | 
+ **type** | **str**|  | [optional] 
 
 ### Return type
 
-void (empty response body)
+[**ListAttributeDefinitionsResponse**](ListAttributeDefinitionsResponse.md)
 
 ### Authorization
 
@@ -1308,20 +1352,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Definitions (tenant-defined and global) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **list_permissions**
-> list_permissions()
+> ListPermissionsResponse list_permissions()
 
-List all permissions for the authenticated user
+List the caller's effective permissions
 
 GET /api/v1/authz/permissions
 
@@ -1332,6 +1376,7 @@ GET /api/v1/authz/permissions
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.list_permissions_response import ListPermissionsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1363,8 +1408,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     api_instance = lumoauth_api_client.AuthorizationApi(api_client)
 
     try:
-        # List all permissions for the authenticated user
-        api_instance.list_permissions()
+        # List the caller's effective permissions
+        api_response = api_instance.list_permissions()
+        print("The response of AuthorizationApi->list_permissions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->list_permissions: %s\n" % e)
 ```
@@ -1377,7 +1424,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**ListPermissionsResponse**](ListPermissionsResponse.md)
 
 ### Authorization
 
@@ -1386,20 +1433,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_resource_attribute**
-> set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+> SetResourceAttributeResponse set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
 
-Set resource attribute
+Set a resource attribute
 
 PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}
 Body: { value: any }
@@ -1411,6 +1458,7 @@ Body: { value: any }
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_resource_attribute_response import SetResourceAttributeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1446,8 +1494,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     attribute_slug = 'attribute_slug_example' # str | 
 
     try:
-        # Set resource attribute
-        api_instance.set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+        # Set a resource attribute
+        api_response = api_instance.set_resource_attribute(org_id, resource_type, resource_id, attribute_slug)
+        print("The response of AuthorizationApi->set_resource_attribute:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->set_resource_attribute: %s\n" % e)
 ```
@@ -1466,7 +1516,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**SetResourceAttributeResponse**](SetResourceAttributeResponse.md)
 
 ### Authorization
 
@@ -1475,20 +1525,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Stored attribute |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **set_user_attribute**
-> set_user_attribute(org_id, user_id, attribute_slug)
+> SetUserAttributeResponse set_user_attribute(org_id, user_id, attribute_slug)
 
-Set user attribute
+Set a user attribute
 
 PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug}
 Body: { value: any }
@@ -1500,6 +1550,7 @@ Body: { value: any }
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.set_user_attribute_response import SetUserAttributeResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1534,8 +1585,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     attribute_slug = 'attribute_slug_example' # str | 
 
     try:
-        # Set user attribute
-        api_instance.set_user_attribute(org_id, user_id, attribute_slug)
+        # Set a user attribute
+        api_response = api_instance.set_user_attribute(org_id, user_id, attribute_slug)
+        print("The response of AuthorizationApi->set_user_attribute:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AuthorizationApi->set_user_attribute: %s\n" % e)
 ```
@@ -1553,7 +1606,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**SetUserAttributeResponse**](SetUserAttributeResponse.md)
 
 ### Authorization
 
@@ -1562,13 +1615,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Stored attribute |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

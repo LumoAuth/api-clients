@@ -18,6 +18,11 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from typing import Optional
+from lumoauth_api_client.models.admin_sandbox_list_response import AdminSandboxListResponse
+from lumoauth_api_client.models.admin_sandbox_spawn_request import AdminSandboxSpawnRequest
+from lumoauth_api_client.models.admin_sandbox_spawn_response import AdminSandboxSpawnResponse
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +59,8 @@ class AdminSandboxApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+    ) -> MessageResponse:
+        """Destroy a sandbox tenant
 
 
         :param org_id: (required)
@@ -94,6 +99,8 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,8 +130,8 @@ class AdminSandboxApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+    ) -> ApiResponse[MessageResponse]:
+        """Destroy a sandbox tenant
 
 
         :param org_id: (required)
@@ -163,6 +170,8 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -193,7 +202,7 @@ class AdminSandboxApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+        """Destroy a sandbox tenant
 
 
         :param org_id: (required)
@@ -232,6 +241,8 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +286,13 @@ class AdminSandboxApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -317,8 +335,8 @@ class AdminSandboxApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """GET / Lists the caller's active sandbox tenants (their own only).
+    ) -> AdminSandboxListResponse:
+        """List the caller's sandbox tenants
 
 
         :param org_id: (required)
@@ -354,6 +372,7 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSandboxListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -382,8 +401,8 @@ class AdminSandboxApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """GET / Lists the caller's active sandbox tenants (their own only).
+    ) -> ApiResponse[AdminSandboxListResponse]:
+        """List the caller's sandbox tenants
 
 
         :param org_id: (required)
@@ -419,6 +438,7 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSandboxListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -448,7 +468,7 @@ class AdminSandboxApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """GET / Lists the caller's active sandbox tenants (their own only).
+        """List the caller's sandbox tenants
 
 
         :param org_id: (required)
@@ -484,6 +504,7 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSandboxListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -524,6 +545,13 @@ class AdminSandboxApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -554,6 +582,7 @@ class AdminSandboxApi:
     def admin_sandbox_spawn(
         self,
         org_id: StrictStr,
+        admin_sandbox_spawn_request: Optional[AdminSandboxSpawnRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -566,12 +595,14 @@ class AdminSandboxApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+    ) -> AdminSandboxSpawnResponse:
+        """Spawn a sandbox tenant
 
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_sandbox_spawn_request:
+        :type admin_sandbox_spawn_request: AdminSandboxSpawnRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -596,6 +627,7 @@ class AdminSandboxApi:
 
         _param = self._admin_sandbox_spawn_serialize(
             org_id=org_id,
+            admin_sandbox_spawn_request=admin_sandbox_spawn_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -603,6 +635,8 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminSandboxSpawnResponse",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -619,6 +653,7 @@ class AdminSandboxApi:
     def admin_sandbox_spawn_with_http_info(
         self,
         org_id: StrictStr,
+        admin_sandbox_spawn_request: Optional[AdminSandboxSpawnRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -631,12 +666,14 @@ class AdminSandboxApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+    ) -> ApiResponse[AdminSandboxSpawnResponse]:
+        """Spawn a sandbox tenant
 
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_sandbox_spawn_request:
+        :type admin_sandbox_spawn_request: AdminSandboxSpawnRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -661,6 +698,7 @@ class AdminSandboxApi:
 
         _param = self._admin_sandbox_spawn_serialize(
             org_id=org_id,
+            admin_sandbox_spawn_request=admin_sandbox_spawn_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -668,6 +706,8 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminSandboxSpawnResponse",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -684,6 +724,7 @@ class AdminSandboxApi:
     def admin_sandbox_spawn_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_sandbox_spawn_request: Optional[AdminSandboxSpawnRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -697,11 +738,13 @@ class AdminSandboxApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+        """Spawn a sandbox tenant
 
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_sandbox_spawn_request:
+        :type admin_sandbox_spawn_request: AdminSandboxSpawnRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -726,6 +769,7 @@ class AdminSandboxApi:
 
         _param = self._admin_sandbox_spawn_serialize(
             org_id=org_id,
+            admin_sandbox_spawn_request=admin_sandbox_spawn_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -733,6 +777,8 @@ class AdminSandboxApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminSandboxSpawnResponse",
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -744,6 +790,7 @@ class AdminSandboxApi:
     def _admin_sandbox_spawn_serialize(
         self,
         org_id,
+        admin_sandbox_spawn_request,
         _request_auth,
         _content_type,
         _headers,
@@ -771,9 +818,31 @@ class AdminSandboxApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_sandbox_spawn_request is not None:
+            _body_params = admin_sandbox_spawn_request
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [

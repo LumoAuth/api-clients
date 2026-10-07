@@ -56,21 +56,21 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'ExpiresIn'
+        /// </summary>
+        [Fact]
+        public void ExpiresInTest()
+        {
+            // TODO unit test for the property 'ExpiresIn'
+        }
+
+        /// <summary>
         /// Test the property 'Scopes'
         /// </summary>
         [Fact]
         public void ScopesTest()
         {
             // TODO unit test for the property 'Scopes'
-        }
-
-        /// <summary>
-        /// Test the property 'Ttl'
-        /// </summary>
-        [Fact]
-        public void TtlTest()
-        {
-            // TODO unit test for the property 'Ttl'
         }
     }
 }

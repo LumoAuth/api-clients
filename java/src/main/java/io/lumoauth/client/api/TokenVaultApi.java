@@ -27,6 +27,9 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.GetConnectionTokenRequest;
+import io.lumoauth.client.model.GetConnectionTokenResponse;
+import io.lumoauth.client.model.ListConnectionsResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -75,6 +78,7 @@ public class TokenVaultApi {
      * Build call for getConnectionToken
      * @param orgId  (required)
      * @param connectionId  (required)
+     * @param getConnectionTokenRequest  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -82,10 +86,16 @@ public class TokenVaultApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConnectionTokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getConnectionTokenCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, @javax.annotation.Nullable GetConnectionTokenRequest getConnectionTokenRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -99,7 +109,7 @@ public class TokenVaultApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = getConnectionTokenRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token"
@@ -113,6 +123,7 @@ public class TokenVaultApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -120,6 +131,7 @@ public class TokenVaultApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -131,7 +143,7 @@ public class TokenVaultApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getConnectionTokenValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getConnectionTokenValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, @javax.annotation.Nullable GetConnectionTokenRequest getConnectionTokenRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling getConnectionToken(Async)");
@@ -142,51 +154,69 @@ public class TokenVaultApi {
             throw new ApiException("Missing the required parameter 'connectionId' when calling getConnectionToken(Async)");
         }
 
-        return getConnectionTokenCall(orgId, connectionId, _callback);
+        return getConnectionTokenCall(orgId, connectionId, getConnectionTokenRequest, _callback);
 
     }
 
     /**
-     * Fetch a live third-party access token for a connection.
-     * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+     * Fetch a live third-party access token for a connection
+     * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
      * @param orgId  (required)
      * @param connectionId  (required)
+     * @param getConnectionTokenRequest  (optional)
+     * @return GetConnectionTokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
-    public void getConnectionToken(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId) throws ApiException {
-        getConnectionTokenWithHttpInfo(orgId, connectionId);
+    public GetConnectionTokenResponse getConnectionToken(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, @javax.annotation.Nullable GetConnectionTokenRequest getConnectionTokenRequest) throws ApiException {
+        ApiResponse<GetConnectionTokenResponse> localVarResp = getConnectionTokenWithHttpInfo(orgId, connectionId, getConnectionTokenRequest);
+        return localVarResp.getData();
     }
 
     /**
-     * Fetch a live third-party access token for a connection.
-     * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+     * Fetch a live third-party access token for a connection
+     * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
      * @param orgId  (required)
      * @param connectionId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param getConnectionTokenRequest  (optional)
+     * @return ApiResponse&lt;GetConnectionTokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getConnectionTokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId) throws ApiException {
-        okhttp3.Call localVarCall = getConnectionTokenValidateBeforeCall(orgId, connectionId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<GetConnectionTokenResponse> getConnectionTokenWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, @javax.annotation.Nullable GetConnectionTokenRequest getConnectionTokenRequest) throws ApiException {
+        okhttp3.Call localVarCall = getConnectionTokenValidateBeforeCall(orgId, connectionId, getConnectionTokenRequest, null);
+        Type localVarReturnType = new TypeToken<GetConnectionTokenResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Fetch a live third-party access token for a connection. (asynchronously)
-     * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+     * Fetch a live third-party access token for a connection (asynchronously)
+     * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
      * @param orgId  (required)
      * @param connectionId  (required)
+     * @param getConnectionTokenRequest  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -194,13 +224,20 @@ public class TokenVaultApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The provider access token. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_user_id. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required, cross_tenant, delegation_not_permitted, agent_not_allowed, delegation_not_allowed or connection_disabled. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found, connection_not_found or grant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> grant_revoked, grant_expired or refresh_failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limited. </td><td>  -  </td></tr>
+        <tr><td> 503 </td><td> refresh_in_progress (Retry-After: 2) or provider_unavailable. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConnectionTokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getConnectionTokenAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String connectionId, @javax.annotation.Nullable GetConnectionTokenRequest getConnectionTokenRequest, final ApiCallback<GetConnectionTokenResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getConnectionTokenValidateBeforeCall(orgId, connectionId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = getConnectionTokenValidateBeforeCall(orgId, connectionId, getConnectionTokenRequest, _callback);
+        Type localVarReturnType = new TypeToken<GetConnectionTokenResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -213,7 +250,9 @@ public class TokenVaultApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Connections available to the agent. connections and data hold the same list (data + pagination is the standard list envelope). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required (caller is not an agent) or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listConnectionsCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -243,6 +282,7 @@ public class TokenVaultApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -272,42 +312,49 @@ public class TokenVaultApi {
     }
 
     /**
-     * List the connections this agent may use, with grant status. No secrets.
-     * GET /orgs/{orgId}/api/v1/agents/me/connections
+     * List the outbound connections this agent may use
+     * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
      * @param orgId  (required)
+     * @return ListConnectionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Connections available to the agent. connections and data hold the same list (data + pagination is the standard list envelope). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required (caller is not an agent) or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
      </table>
      */
-    public void listConnections(@javax.annotation.Nonnull String orgId) throws ApiException {
-        listConnectionsWithHttpInfo(orgId);
+    public ListConnectionsResponse listConnections(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<ListConnectionsResponse> localVarResp = listConnectionsWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * List the connections this agent may use, with grant status. No secrets.
-     * GET /orgs/{orgId}/api/v1/agents/me/connections
+     * List the outbound connections this agent may use
+     * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;ListConnectionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Connections available to the agent. connections and data hold the same list (data + pagination is the standard list envelope). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required (caller is not an agent) or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listConnectionsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<ListConnectionsResponse> listConnectionsWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = listConnectionsValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<ListConnectionsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * List the connections this agent may use, with grant status. No secrets. (asynchronously)
-     * GET /orgs/{orgId}/api/v1/agents/me/connections
+     * List the outbound connections this agent may use (asynchronously)
+     * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -316,13 +363,16 @@ public class TokenVaultApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Connections available to the agent. connections and data hold the same list (data + pagination is the standard list envelope). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> agent_token_required (caller is not an agent) or cross_tenant. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listConnectionsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listConnectionsAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ListConnectionsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listConnectionsValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<ListConnectionsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

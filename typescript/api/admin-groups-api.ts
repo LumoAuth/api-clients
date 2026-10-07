@@ -21,6 +21,18 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminGroupsCreateResponse } from '../models';
+// @ts-ignore
+import type { AdminGroupsGetMembersResponse } from '../models';
+// @ts-ignore
+import type { AdminGroupsGetResponse } from '../models';
+// @ts-ignore
+import type { AdminGroupsGroupsGetRolesResponse } from '../models';
+// @ts-ignore
+import type { AdminGroupsListResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
 /**
  * AdminGroupsApi - axios parameter creator
  * @export
@@ -29,7 +41,7 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
     return {
         /**
          * 
-         * @summary Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+         * @summary Add member(s) to group
          * @param {string} orgId 
          * @param {string} groupId 
          * @param {*} [options] Override http request option.
@@ -381,7 +393,7 @@ export const AdminGroupsApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Remove member from group — userId is a UUID or email
+         * @summary Remove member from group
          * @param {string} orgId 
          * @param {string} groupId 
          * @param {string} userId 
@@ -624,13 +636,13 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+         * @summary Add member(s) to group
          * @param {string} orgId 
          * @param {string} groupId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsAddMembers(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsAddMembers(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsAddMembers(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsAddMembers']?.[localVarOperationServerIndex]?.url;
@@ -644,7 +656,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsAddRole(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsAddRole(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsAddRole(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsAddRole']?.[localVarOperationServerIndex]?.url;
@@ -657,7 +669,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsCreate']?.[localVarOperationServerIndex]?.url;
@@ -671,7 +683,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsDelete(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsDelete(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsDelete(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsDelete']?.[localVarOperationServerIndex]?.url;
@@ -685,7 +697,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsGet(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsGet(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsGet(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsGet']?.[localVarOperationServerIndex]?.url;
@@ -699,7 +711,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsGetMembers(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsGetMembers(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsGetMembersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsGetMembers(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsGetMembers']?.[localVarOperationServerIndex]?.url;
@@ -713,7 +725,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsGroupsGetRoles(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsGroupsGetRoles(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsGroupsGetRolesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsGroupsGetRoles(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsGroupsGetRoles']?.[localVarOperationServerIndex]?.url;
@@ -726,7 +738,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsList']?.[localVarOperationServerIndex]?.url;
@@ -734,14 +746,14 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Remove member from group — userId is a UUID or email
+         * @summary Remove member from group
          * @param {string} orgId 
          * @param {string} groupId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsRemoveMember(orgId: string, groupId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsRemoveMember(orgId: string, groupId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsRemoveMember(orgId, groupId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsRemoveMember']?.[localVarOperationServerIndex]?.url;
@@ -756,7 +768,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsRemoveRole(orgId: string, groupId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsRemoveRole(orgId: string, groupId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsRemoveRole(orgId, groupId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsRemoveRole']?.[localVarOperationServerIndex]?.url;
@@ -770,7 +782,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminGroupsUpdateRoles(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminGroupsUpdateRoles(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminGroupsUpdateRoles(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.adminGroupsUpdateRoles']?.[localVarOperationServerIndex]?.url;
@@ -784,7 +796,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminGroupsUpdate(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminGroupsUpdate(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminGroupsUpdate(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.patchAdminGroupsUpdate']?.[localVarOperationServerIndex]?.url;
@@ -798,7 +810,7 @@ export const AdminGroupsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminGroupsUpdate(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminGroupsUpdate(orgId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminGroupsUpdate(orgId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminGroupsApi.putAdminGroupsUpdate']?.[localVarOperationServerIndex]?.url;
@@ -816,12 +828,12 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
     return {
         /**
          * 
-         * @summary Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+         * @summary Add member(s) to group
          * @param {AdminGroupsApiAdminGroupsAddMembersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
             return localVarFp.adminGroupsAddMembers(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -831,7 +843,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminGroupsAddRole(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -841,7 +853,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsCreate(requestParameters: AdminGroupsApiAdminGroupsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsCreate(requestParameters: AdminGroupsApiAdminGroupsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
             return localVarFp.adminGroupsCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -851,7 +863,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsDelete(requestParameters: AdminGroupsApiAdminGroupsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsDelete(requestParameters: AdminGroupsApiAdminGroupsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminGroupsDelete(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -861,7 +873,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsGet(requestParameters: AdminGroupsApiAdminGroupsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsGet(requestParameters: AdminGroupsApiAdminGroupsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGetResponse> {
             return localVarFp.adminGroupsGet(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -871,7 +883,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsGetMembers(requestParameters: AdminGroupsApiAdminGroupsGetMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsGetMembers(requestParameters: AdminGroupsApiAdminGroupsGetMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGetMembersResponse> {
             return localVarFp.adminGroupsGetMembers(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -881,7 +893,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsGroupsGetRoles(requestParameters: AdminGroupsApiAdminGroupsGroupsGetRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsGroupsGetRoles(requestParameters: AdminGroupsApiAdminGroupsGroupsGetRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGroupsGetRolesResponse> {
             return localVarFp.adminGroupsGroupsGetRoles(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -891,17 +903,17 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsList(requestParameters: AdminGroupsApiAdminGroupsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsList(requestParameters: AdminGroupsApiAdminGroupsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsListResponse> {
             return localVarFp.adminGroupsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Remove member from group — userId is a UUID or email
+         * @summary Remove member from group
          * @param {AdminGroupsApiAdminGroupsRemoveMemberRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsRemoveMember(requestParameters: AdminGroupsApiAdminGroupsRemoveMemberRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsRemoveMember(requestParameters: AdminGroupsApiAdminGroupsRemoveMemberRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminGroupsRemoveMember(requestParameters.orgId, requestParameters.groupId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -911,7 +923,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsRemoveRole(requestParameters: AdminGroupsApiAdminGroupsRemoveRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsRemoveRole(requestParameters: AdminGroupsApiAdminGroupsRemoveRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminGroupsRemoveRole(requestParameters.orgId, requestParameters.groupId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -921,7 +933,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminGroupsUpdateRoles(requestParameters: AdminGroupsApiAdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminGroupsUpdateRoles(requestParameters: AdminGroupsApiAdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
             return localVarFp.adminGroupsUpdateRoles(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -931,7 +943,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminGroupsUpdate(requestParameters: AdminGroupsApiPatchAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminGroupsUpdate(requestParameters: AdminGroupsApiPatchAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
             return localVarFp.patchAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -941,7 +953,7 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminGroupsUpdate(requestParameters: AdminGroupsApiPutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminGroupsUpdate(requestParameters: AdminGroupsApiPutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse> {
             return localVarFp.putAdminGroupsUpdate(requestParameters.orgId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
     };
@@ -955,13 +967,13 @@ export const AdminGroupsApiFactory = function (configuration?: Configuration, ba
 export interface AdminGroupsApiInterface {
     /**
      * 
-     * @summary Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     * @summary Add member(s) to group
      * @param {AdminGroupsApiAdminGroupsAddMembersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsAddMembers(requestParameters: AdminGroupsApiAdminGroupsAddMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
     /**
      * 
@@ -971,7 +983,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsAddRole(requestParameters: AdminGroupsApiAdminGroupsAddRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -981,7 +993,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsCreate(requestParameters: AdminGroupsApiAdminGroupsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsCreate(requestParameters: AdminGroupsApiAdminGroupsCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
     /**
      * 
@@ -991,7 +1003,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsDelete(requestParameters: AdminGroupsApiAdminGroupsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsDelete(requestParameters: AdminGroupsApiAdminGroupsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -1001,7 +1013,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsGet(requestParameters: AdminGroupsApiAdminGroupsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsGet(requestParameters: AdminGroupsApiAdminGroupsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGetResponse>;
 
     /**
      * 
@@ -1011,7 +1023,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsGetMembers(requestParameters: AdminGroupsApiAdminGroupsGetMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsGetMembers(requestParameters: AdminGroupsApiAdminGroupsGetMembersRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGetMembersResponse>;
 
     /**
      * 
@@ -1021,7 +1033,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsGroupsGetRoles(requestParameters: AdminGroupsApiAdminGroupsGroupsGetRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsGroupsGetRoles(requestParameters: AdminGroupsApiAdminGroupsGroupsGetRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGroupsGetRolesResponse>;
 
     /**
      * 
@@ -1031,17 +1043,17 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsList(requestParameters: AdminGroupsApiAdminGroupsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsList(requestParameters: AdminGroupsApiAdminGroupsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsListResponse>;
 
     /**
      * 
-     * @summary Remove member from group — userId is a UUID or email
+     * @summary Remove member from group
      * @param {AdminGroupsApiAdminGroupsRemoveMemberRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsRemoveMember(requestParameters: AdminGroupsApiAdminGroupsRemoveMemberRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsRemoveMember(requestParameters: AdminGroupsApiAdminGroupsRemoveMemberRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -1051,7 +1063,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsRemoveRole(requestParameters: AdminGroupsApiAdminGroupsRemoveRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsRemoveRole(requestParameters: AdminGroupsApiAdminGroupsRemoveRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
@@ -1061,7 +1073,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    adminGroupsUpdateRoles(requestParameters: AdminGroupsApiAdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminGroupsUpdateRoles(requestParameters: AdminGroupsApiAdminGroupsUpdateRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
     /**
      * 
@@ -1071,7 +1083,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    patchAdminGroupsUpdate(requestParameters: AdminGroupsApiPatchAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminGroupsUpdate(requestParameters: AdminGroupsApiPatchAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
     /**
      * 
@@ -1081,7 +1093,7 @@ export interface AdminGroupsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminGroupsApiInterface
      */
-    putAdminGroupsUpdate(requestParameters: AdminGroupsApiPutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminGroupsUpdate(requestParameters: AdminGroupsApiPutAdminGroupsUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsCreateResponse>;
 
 }
 
@@ -1367,7 +1379,7 @@ export interface AdminGroupsApiPutAdminGroupsUpdateRequest {
 export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
     /**
      * 
-     * @summary Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+     * @summary Add member(s) to group
      * @param {AdminGroupsApiAdminGroupsAddMembersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1463,7 +1475,7 @@ export class AdminGroupsApi extends BaseAPI implements AdminGroupsApiInterface {
 
     /**
      * 
-     * @summary Remove member from group — userId is a UUID or email
+     * @summary Remove member from group
      * @param {AdminGroupsApiAdminGroupsRemoveMemberRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

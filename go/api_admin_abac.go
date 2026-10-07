@@ -24,7 +24,7 @@ import (
 type AdminAbacAPI interface {
 
 	/*
-	AbacAttributesCreate Create a new attribute definition
+	AbacAttributesCreate Create an attribute definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,7 +33,8 @@ type AdminAbacAPI interface {
 	AbacAttributesCreate(ctx context.Context, orgId string) ApiAbacAttributesCreateRequest
 
 	// AbacAttributesCreateExecute executes the request
-	AbacAttributesCreateExecute(r ApiAbacAttributesCreateRequest) (*http.Response, error)
+	//  @return AbacAttributesCreateResponse
+	AbacAttributesCreateExecute(r ApiAbacAttributesCreateRequest) (*AbacAttributesCreateResponse, *http.Response, error)
 
 	/*
 	AbacAttributesDelete Delete an attribute definition
@@ -46,10 +47,11 @@ type AdminAbacAPI interface {
 	AbacAttributesDelete(ctx context.Context, orgId string, id string) ApiAbacAttributesDeleteRequest
 
 	// AbacAttributesDeleteExecute executes the request
-	AbacAttributesDeleteExecute(r ApiAbacAttributesDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AbacAttributesDeleteExecute(r ApiAbacAttributesDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AbacAttributesGet Get a single attribute definition
+	AbacAttributesGet Get an attribute definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -59,10 +61,11 @@ type AdminAbacAPI interface {
 	AbacAttributesGet(ctx context.Context, orgId string, id string) ApiAbacAttributesGetRequest
 
 	// AbacAttributesGetExecute executes the request
-	AbacAttributesGetExecute(r ApiAbacAttributesGetRequest) (*http.Response, error)
+	//  @return AbacAttributesGetResponse
+	AbacAttributesGetExecute(r ApiAbacAttributesGetRequest) (*AbacAttributesGetResponse, *http.Response, error)
 
 	/*
-	AbacAttributesList List all attribute definitions
+	AbacAttributesList List attribute definitions
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -71,10 +74,11 @@ type AdminAbacAPI interface {
 	AbacAttributesList(ctx context.Context, orgId string) ApiAbacAttributesListRequest
 
 	// AbacAttributesListExecute executes the request
-	AbacAttributesListExecute(r ApiAbacAttributesListRequest) (*http.Response, error)
+	//  @return AbacAttributesListResponse
+	AbacAttributesListExecute(r ApiAbacAttributesListRequest) (*AbacAttributesListResponse, *http.Response, error)
 
 	/*
-	AbacPoliciesCreate Create a new ABAC policy
+	AbacPoliciesCreate Create an ABAC policy
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -83,7 +87,8 @@ type AdminAbacAPI interface {
 	AbacPoliciesCreate(ctx context.Context, orgId string) ApiAbacPoliciesCreateRequest
 
 	// AbacPoliciesCreateExecute executes the request
-	AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateRequest) (*http.Response, error)
+	//  @return AbacPoliciesCreateResponse
+	AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateRequest) (*AbacPoliciesCreateResponse, *http.Response, error)
 
 	/*
 	AbacPoliciesDelete Delete an ABAC policy
@@ -96,10 +101,11 @@ type AdminAbacAPI interface {
 	AbacPoliciesDelete(ctx context.Context, orgId string, id string) ApiAbacPoliciesDeleteRequest
 
 	// AbacPoliciesDeleteExecute executes the request
-	AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AbacPoliciesGet Get a single ABAC policy
+	AbacPoliciesGet Get an ABAC policy
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -109,10 +115,11 @@ type AdminAbacAPI interface {
 	AbacPoliciesGet(ctx context.Context, orgId string, id string) ApiAbacPoliciesGetRequest
 
 	// AbacPoliciesGetExecute executes the request
-	AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest) (*http.Response, error)
+	//  @return AbacPoliciesGetResponse
+	AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest) (*AbacPoliciesGetResponse, *http.Response, error)
 
 	/*
-	AbacPoliciesList List all ABAC policies
+	AbacPoliciesList List ABAC policies
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -121,10 +128,11 @@ type AdminAbacAPI interface {
 	AbacPoliciesList(ctx context.Context, orgId string) ApiAbacPoliciesListRequest
 
 	// AbacPoliciesListExecute executes the request
-	AbacPoliciesListExecute(r ApiAbacPoliciesListRequest) (*http.Response, error)
+	//  @return AbacPoliciesListResponse
+	AbacPoliciesListExecute(r ApiAbacPoliciesListRequest) (*AbacPoliciesListResponse, *http.Response, error)
 
 	/*
-	AbacPoliciesToggle Toggle policy active status
+	AbacPoliciesToggle Toggle a policy between active and inactive
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -134,10 +142,11 @@ type AdminAbacAPI interface {
 	AbacPoliciesToggle(ctx context.Context, orgId string, id string) ApiAbacPoliciesToggleRequest
 
 	// AbacPoliciesToggleExecute executes the request
-	AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleRequest) (*http.Response, error)
+	//  @return AbacPoliciesToggleResponse
+	AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleRequest) (*AbacPoliciesToggleResponse, *http.Response, error)
 
 	/*
-	PatchAbacAttributesUpdate Update an attribute definition
+	PatchAbacAttributesUpdate Partially update an attribute definition
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -147,10 +156,11 @@ type AdminAbacAPI interface {
 	PatchAbacAttributesUpdate(ctx context.Context, orgId string, id string) ApiPatchAbacAttributesUpdateRequest
 
 	// PatchAbacAttributesUpdateExecute executes the request
-	PatchAbacAttributesUpdateExecute(r ApiPatchAbacAttributesUpdateRequest) (*http.Response, error)
+	//  @return PutAbacAttributesUpdateResponse
+	PatchAbacAttributesUpdateExecute(r ApiPatchAbacAttributesUpdateRequest) (*PutAbacAttributesUpdateResponse, *http.Response, error)
 
 	/*
-	PatchAbacPoliciesUpdate Update an ABAC policy
+	PatchAbacPoliciesUpdate Partially update an ABAC policy
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -160,7 +170,8 @@ type AdminAbacAPI interface {
 	PatchAbacPoliciesUpdate(ctx context.Context, orgId string, id string) ApiPatchAbacPoliciesUpdateRequest
 
 	// PatchAbacPoliciesUpdateExecute executes the request
-	PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPoliciesUpdateRequest) (*http.Response, error)
+	//  @return PutAbacPoliciesUpdateResponse
+	PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPoliciesUpdateRequest) (*PutAbacPoliciesUpdateResponse, *http.Response, error)
 
 	/*
 	PutAbacAttributesUpdate Update an attribute definition
@@ -173,7 +184,8 @@ type AdminAbacAPI interface {
 	PutAbacAttributesUpdate(ctx context.Context, orgId string, id string) ApiPutAbacAttributesUpdateRequest
 
 	// PutAbacAttributesUpdateExecute executes the request
-	PutAbacAttributesUpdateExecute(r ApiPutAbacAttributesUpdateRequest) (*http.Response, error)
+	//  @return PutAbacAttributesUpdateResponse
+	PutAbacAttributesUpdateExecute(r ApiPutAbacAttributesUpdateRequest) (*PutAbacAttributesUpdateResponse, *http.Response, error)
 
 	/*
 	PutAbacPoliciesUpdate Update an ABAC policy
@@ -186,7 +198,8 @@ type AdminAbacAPI interface {
 	PutAbacPoliciesUpdate(ctx context.Context, orgId string, id string) ApiPutAbacPoliciesUpdateRequest
 
 	// PutAbacPoliciesUpdateExecute executes the request
-	PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesUpdateRequest) (*http.Response, error)
+	//  @return PutAbacPoliciesUpdateResponse
+	PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesUpdateRequest) (*PutAbacPoliciesUpdateResponse, *http.Response, error)
 }
 
 // AdminAbacAPIService AdminAbacAPI service
@@ -198,12 +211,12 @@ type ApiAbacAttributesCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAbacAttributesCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAbacAttributesCreateRequest) Execute() (*AbacAttributesCreateResponse, *http.Response, error) {
 	return r.ApiService.AbacAttributesCreateExecute(r)
 }
 
 /*
-AbacAttributesCreate Create a new attribute definition
+AbacAttributesCreate Create an attribute definition
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -218,16 +231,18 @@ func (a *AdminAbacAPIService) AbacAttributesCreate(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCreateRequest) (*http.Response, error) {
+//  @return AbacAttributesCreateResponse
+func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCreateRequest) (*AbacAttributesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacAttributesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacAttributesCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attributes"
@@ -247,7 +262,7 @@ func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCre
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -270,19 +285,19 @@ func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCre
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -290,10 +305,19 @@ func (a *AdminAbacAPIService) AbacAttributesCreateExecute(r ApiAbacAttributesCre
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacAttributesDeleteRequest struct {
@@ -303,7 +327,7 @@ type ApiAbacAttributesDeleteRequest struct {
 	id string
 }
 
-func (r ApiAbacAttributesDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAbacAttributesDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AbacAttributesDeleteExecute(r)
 }
 
@@ -325,16 +349,18 @@ func (a *AdminAbacAPIService) AbacAttributesDelete(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacAttributesDeleteExecute(r ApiAbacAttributesDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminAbacAPIService) AbacAttributesDeleteExecute(r ApiAbacAttributesDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacAttributesDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attributes/{id}"
@@ -355,7 +381,7 @@ func (a *AdminAbacAPIService) AbacAttributesDeleteExecute(r ApiAbacAttributesDel
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -378,19 +404,19 @@ func (a *AdminAbacAPIService) AbacAttributesDeleteExecute(r ApiAbacAttributesDel
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -398,10 +424,19 @@ func (a *AdminAbacAPIService) AbacAttributesDeleteExecute(r ApiAbacAttributesDel
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacAttributesGetRequest struct {
@@ -411,12 +446,12 @@ type ApiAbacAttributesGetRequest struct {
 	id string
 }
 
-func (r ApiAbacAttributesGetRequest) Execute() (*http.Response, error) {
+func (r ApiAbacAttributesGetRequest) Execute() (*AbacAttributesGetResponse, *http.Response, error) {
 	return r.ApiService.AbacAttributesGetExecute(r)
 }
 
 /*
-AbacAttributesGet Get a single attribute definition
+AbacAttributesGet Get an attribute definition
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -433,16 +468,18 @@ func (a *AdminAbacAPIService) AbacAttributesGet(ctx context.Context, orgId strin
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacAttributesGetExecute(r ApiAbacAttributesGetRequest) (*http.Response, error) {
+//  @return AbacAttributesGetResponse
+func (a *AdminAbacAPIService) AbacAttributesGetExecute(r ApiAbacAttributesGetRequest) (*AbacAttributesGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacAttributesGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacAttributesGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attributes/{id}"
@@ -463,7 +500,7 @@ func (a *AdminAbacAPIService) AbacAttributesGetExecute(r ApiAbacAttributesGetReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -486,19 +523,19 @@ func (a *AdminAbacAPIService) AbacAttributesGetExecute(r ApiAbacAttributesGetReq
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -506,10 +543,19 @@ func (a *AdminAbacAPIService) AbacAttributesGetExecute(r ApiAbacAttributesGetReq
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacAttributesListRequest struct {
@@ -518,12 +564,12 @@ type ApiAbacAttributesListRequest struct {
 	orgId string
 }
 
-func (r ApiAbacAttributesListRequest) Execute() (*http.Response, error) {
+func (r ApiAbacAttributesListRequest) Execute() (*AbacAttributesListResponse, *http.Response, error) {
 	return r.ApiService.AbacAttributesListExecute(r)
 }
 
 /*
-AbacAttributesList List all attribute definitions
+AbacAttributesList List attribute definitions
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -538,16 +584,18 @@ func (a *AdminAbacAPIService) AbacAttributesList(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacAttributesListExecute(r ApiAbacAttributesListRequest) (*http.Response, error) {
+//  @return AbacAttributesListResponse
+func (a *AdminAbacAPIService) AbacAttributesListExecute(r ApiAbacAttributesListRequest) (*AbacAttributesListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacAttributesListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacAttributesList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attributes"
@@ -567,7 +615,7 @@ func (a *AdminAbacAPIService) AbacAttributesListExecute(r ApiAbacAttributesListR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -590,19 +638,19 @@ func (a *AdminAbacAPIService) AbacAttributesListExecute(r ApiAbacAttributesListR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -610,10 +658,19 @@ func (a *AdminAbacAPIService) AbacAttributesListExecute(r ApiAbacAttributesListR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacPoliciesCreateRequest struct {
@@ -622,12 +679,12 @@ type ApiAbacPoliciesCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAbacPoliciesCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAbacPoliciesCreateRequest) Execute() (*AbacPoliciesCreateResponse, *http.Response, error) {
 	return r.ApiService.AbacPoliciesCreateExecute(r)
 }
 
 /*
-AbacPoliciesCreate Create a new ABAC policy
+AbacPoliciesCreate Create an ABAC policy
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -642,16 +699,18 @@ func (a *AdminAbacAPIService) AbacPoliciesCreate(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateRequest) (*http.Response, error) {
+//  @return AbacPoliciesCreateResponse
+func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateRequest) (*AbacPoliciesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacPoliciesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacPoliciesCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies"
@@ -671,7 +730,7 @@ func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -694,19 +753,19 @@ func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -714,10 +773,19 @@ func (a *AdminAbacAPIService) AbacPoliciesCreateExecute(r ApiAbacPoliciesCreateR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacPoliciesDeleteRequest struct {
@@ -727,7 +795,7 @@ type ApiAbacPoliciesDeleteRequest struct {
 	id string
 }
 
-func (r ApiAbacPoliciesDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAbacPoliciesDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AbacPoliciesDeleteExecute(r)
 }
 
@@ -749,16 +817,18 @@ func (a *AdminAbacAPIService) AbacPoliciesDelete(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminAbacAPIService) AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacPoliciesDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies/{id}"
@@ -779,7 +849,7 @@ func (a *AdminAbacAPIService) AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -802,19 +872,19 @@ func (a *AdminAbacAPIService) AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -822,10 +892,19 @@ func (a *AdminAbacAPIService) AbacPoliciesDeleteExecute(r ApiAbacPoliciesDeleteR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacPoliciesGetRequest struct {
@@ -835,12 +914,12 @@ type ApiAbacPoliciesGetRequest struct {
 	id string
 }
 
-func (r ApiAbacPoliciesGetRequest) Execute() (*http.Response, error) {
+func (r ApiAbacPoliciesGetRequest) Execute() (*AbacPoliciesGetResponse, *http.Response, error) {
 	return r.ApiService.AbacPoliciesGetExecute(r)
 }
 
 /*
-AbacPoliciesGet Get a single ABAC policy
+AbacPoliciesGet Get an ABAC policy
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -857,16 +936,18 @@ func (a *AdminAbacAPIService) AbacPoliciesGet(ctx context.Context, orgId string,
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest) (*http.Response, error) {
+//  @return AbacPoliciesGetResponse
+func (a *AdminAbacAPIService) AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest) (*AbacPoliciesGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacPoliciesGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacPoliciesGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies/{id}"
@@ -887,7 +968,7 @@ func (a *AdminAbacAPIService) AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -910,19 +991,19 @@ func (a *AdminAbacAPIService) AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -930,10 +1011,19 @@ func (a *AdminAbacAPIService) AbacPoliciesGetExecute(r ApiAbacPoliciesGetRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacPoliciesListRequest struct {
@@ -942,12 +1032,12 @@ type ApiAbacPoliciesListRequest struct {
 	orgId string
 }
 
-func (r ApiAbacPoliciesListRequest) Execute() (*http.Response, error) {
+func (r ApiAbacPoliciesListRequest) Execute() (*AbacPoliciesListResponse, *http.Response, error) {
 	return r.ApiService.AbacPoliciesListExecute(r)
 }
 
 /*
-AbacPoliciesList List all ABAC policies
+AbacPoliciesList List ABAC policies
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -962,16 +1052,18 @@ func (a *AdminAbacAPIService) AbacPoliciesList(ctx context.Context, orgId string
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacPoliciesListExecute(r ApiAbacPoliciesListRequest) (*http.Response, error) {
+//  @return AbacPoliciesListResponse
+func (a *AdminAbacAPIService) AbacPoliciesListExecute(r ApiAbacPoliciesListRequest) (*AbacPoliciesListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacPoliciesListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacPoliciesList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies"
@@ -991,7 +1083,7 @@ func (a *AdminAbacAPIService) AbacPoliciesListExecute(r ApiAbacPoliciesListReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1014,19 +1106,19 @@ func (a *AdminAbacAPIService) AbacPoliciesListExecute(r ApiAbacPoliciesListReque
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1034,10 +1126,19 @@ func (a *AdminAbacAPIService) AbacPoliciesListExecute(r ApiAbacPoliciesListReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAbacPoliciesToggleRequest struct {
@@ -1047,12 +1148,12 @@ type ApiAbacPoliciesToggleRequest struct {
 	id string
 }
 
-func (r ApiAbacPoliciesToggleRequest) Execute() (*http.Response, error) {
+func (r ApiAbacPoliciesToggleRequest) Execute() (*AbacPoliciesToggleResponse, *http.Response, error) {
 	return r.ApiService.AbacPoliciesToggleExecute(r)
 }
 
 /*
-AbacPoliciesToggle Toggle policy active status
+AbacPoliciesToggle Toggle a policy between active and inactive
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1069,16 +1170,18 @@ func (a *AdminAbacAPIService) AbacPoliciesToggle(ctx context.Context, orgId stri
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleRequest) (*http.Response, error) {
+//  @return AbacPoliciesToggleResponse
+func (a *AdminAbacAPIService) AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleRequest) (*AbacPoliciesToggleResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AbacPoliciesToggleResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.AbacPoliciesToggle")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies/{id}/toggle"
@@ -1099,7 +1202,7 @@ func (a *AdminAbacAPIService) AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1122,19 +1225,19 @@ func (a *AdminAbacAPIService) AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1142,10 +1245,19 @@ func (a *AdminAbacAPIService) AbacPoliciesToggleExecute(r ApiAbacPoliciesToggleR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAbacAttributesUpdateRequest struct {
@@ -1155,12 +1267,12 @@ type ApiPatchAbacAttributesUpdateRequest struct {
 	id string
 }
 
-func (r ApiPatchAbacAttributesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAbacAttributesUpdateRequest) Execute() (*PutAbacAttributesUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAbacAttributesUpdateExecute(r)
 }
 
 /*
-PatchAbacAttributesUpdate Update an attribute definition
+PatchAbacAttributesUpdate Partially update an attribute definition
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1177,16 +1289,18 @@ func (a *AdminAbacAPIService) PatchAbacAttributesUpdate(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAttributesUpdateRequest) (*http.Response, error) {
+//  @return PutAbacAttributesUpdateResponse
+func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAttributesUpdateRequest) (*PutAbacAttributesUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAbacAttributesUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.PatchAbacAttributesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attributes/{id}"
@@ -1207,7 +1321,7 @@ func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAtt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1230,19 +1344,19 @@ func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAtt
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1250,10 +1364,19 @@ func (a *AdminAbacAPIService) PatchAbacAttributesUpdateExecute(r ApiPatchAbacAtt
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAbacPoliciesUpdateRequest struct {
@@ -1263,12 +1386,12 @@ type ApiPatchAbacPoliciesUpdateRequest struct {
 	id string
 }
 
-func (r ApiPatchAbacPoliciesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAbacPoliciesUpdateRequest) Execute() (*PutAbacPoliciesUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAbacPoliciesUpdateExecute(r)
 }
 
 /*
-PatchAbacPoliciesUpdate Update an ABAC policy
+PatchAbacPoliciesUpdate Partially update an ABAC policy
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1285,16 +1408,18 @@ func (a *AdminAbacAPIService) PatchAbacPoliciesUpdate(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPoliciesUpdateRequest) (*http.Response, error) {
+//  @return PutAbacPoliciesUpdateResponse
+func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPoliciesUpdateRequest) (*PutAbacPoliciesUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAbacPoliciesUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.PatchAbacPoliciesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies/{id}"
@@ -1315,7 +1440,7 @@ func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPolic
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1338,19 +1463,19 @@ func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPolic
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1358,10 +1483,19 @@ func (a *AdminAbacAPIService) PatchAbacPoliciesUpdateExecute(r ApiPatchAbacPolic
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAbacAttributesUpdateRequest struct {
@@ -1371,7 +1505,7 @@ type ApiPutAbacAttributesUpdateRequest struct {
 	id string
 }
 
-func (r ApiPutAbacAttributesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAbacAttributesUpdateRequest) Execute() (*PutAbacAttributesUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAbacAttributesUpdateExecute(r)
 }
 
@@ -1393,16 +1527,18 @@ func (a *AdminAbacAPIService) PutAbacAttributesUpdate(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttributesUpdateRequest) (*http.Response, error) {
+//  @return PutAbacAttributesUpdateResponse
+func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttributesUpdateRequest) (*PutAbacAttributesUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAbacAttributesUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.PutAbacAttributesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/attributes/{id}"
@@ -1423,7 +1559,7 @@ func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttribu
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1446,19 +1582,19 @@ func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttribu
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1466,10 +1602,19 @@ func (a *AdminAbacAPIService) PutAbacAttributesUpdateExecute(r ApiPutAbacAttribu
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAbacPoliciesUpdateRequest struct {
@@ -1479,7 +1624,7 @@ type ApiPutAbacPoliciesUpdateRequest struct {
 	id string
 }
 
-func (r ApiPutAbacPoliciesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAbacPoliciesUpdateRequest) Execute() (*PutAbacPoliciesUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAbacPoliciesUpdateExecute(r)
 }
 
@@ -1501,16 +1646,18 @@ func (a *AdminAbacAPIService) PutAbacPoliciesUpdate(ctx context.Context, orgId s
 }
 
 // Execute executes the request
-func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesUpdateRequest) (*http.Response, error) {
+//  @return PutAbacPoliciesUpdateResponse
+func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesUpdateRequest) (*PutAbacPoliciesUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAbacPoliciesUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAbacAPIService.PutAbacPoliciesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/abac/policies/{id}"
@@ -1531,7 +1678,7 @@ func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesU
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1554,19 +1701,19 @@ func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesU
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1574,8 +1721,17 @@ func (a *AdminAbacAPIService) PutAbacPoliciesUpdateExecute(r ApiPutAbacPoliciesU
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

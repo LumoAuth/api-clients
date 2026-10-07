@@ -18,6 +18,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_mcp_servers_create_response import AdminMcpServersCreateResponse
+from lumoauth_api_client.models.admin_mcp_servers_get_response import AdminMcpServersGetResponse
+from lumoauth_api_client.models.admin_mcp_servers_list_response import AdminMcpServersListResponse
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,10 +57,10 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """POST /api/v1/admin/mcp/servers
+    ) -> AdminMcpServersCreateResponse:
+        """Register an MCP server
 
-        Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization's OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
         :param org_id: (required)
         :type org_id: str
@@ -91,6 +95,9 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminMcpServersCreateResponse",
+            '409': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -119,10 +126,10 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """POST /api/v1/admin/mcp/servers
+    ) -> ApiResponse[AdminMcpServersCreateResponse]:
+        """Register an MCP server
 
-        Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization's OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
         :param org_id: (required)
         :type org_id: str
@@ -157,6 +164,9 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminMcpServersCreateResponse",
+            '409': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -186,9 +196,9 @@ class AdminMcpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """POST /api/v1/admin/mcp/servers
+        """Register an MCP server
 
-        Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization's OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
         :param org_id: (required)
         :type org_id: str
@@ -223,6 +233,9 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminMcpServersCreateResponse",
+            '409': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -263,6 +276,13 @@ class AdminMcpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -306,8 +326,8 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_mcp_servers_delete
+    ) -> MessageResponse:
+        """Delete an MCP server
 
 
         :param org_id: (required)
@@ -346,6 +366,8 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -375,8 +397,8 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_mcp_servers_delete
+    ) -> ApiResponse[MessageResponse]:
+        """Delete an MCP server
 
 
         :param org_id: (required)
@@ -415,6 +437,8 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -445,7 +469,7 @@ class AdminMcpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_mcp_servers_delete
+        """Delete an MCP server
 
 
         :param org_id: (required)
@@ -484,6 +508,8 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -527,6 +553,13 @@ class AdminMcpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -570,8 +603,8 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_mcp_servers_get
+    ) -> AdminMcpServersGetResponse:
+        """Get an MCP server
 
 
         :param org_id: (required)
@@ -610,6 +643,8 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -639,8 +674,8 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_mcp_servers_get
+    ) -> ApiResponse[AdminMcpServersGetResponse]:
+        """Get an MCP server
 
 
         :param org_id: (required)
@@ -679,6 +714,8 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -709,7 +746,7 @@ class AdminMcpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_mcp_servers_get
+        """Get an MCP server
 
 
         :param org_id: (required)
@@ -748,6 +785,8 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -791,6 +830,13 @@ class AdminMcpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -833,8 +879,8 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_mcp_servers_list
+    ) -> AdminMcpServersListResponse:
+        """List MCP servers
 
 
         :param org_id: (required)
@@ -870,6 +916,7 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -898,8 +945,8 @@ class AdminMcpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_mcp_servers_list
+    ) -> ApiResponse[AdminMcpServersListResponse]:
+        """List MCP servers
 
 
         :param org_id: (required)
@@ -935,6 +982,7 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -964,7 +1012,7 @@ class AdminMcpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_mcp_servers_list
+        """List MCP servers
 
 
         :param org_id: (required)
@@ -1000,6 +1048,7 @@ class AdminMcpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminMcpServersListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1040,6 +1089,13 @@ class AdminMcpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

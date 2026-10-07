@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsActions(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsActions(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -41,9 +42,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsExport(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsExport(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -55,9 +57,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 		var orgId string
 		var logId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsGet(context.Background(), orgId, logId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsGet(context.Background(), orgId, logId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -68,9 +71,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -81,9 +85,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsRetention(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsRetention(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -94,9 +99,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsStats(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsStats(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -107,9 +113,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.PatchAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.PatchAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -120,9 +127,10 @@ func Test_lumoauthclient_AdminAuditLogsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminAuditLogsAPI.PutAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminAuditLogsAPI.PutAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

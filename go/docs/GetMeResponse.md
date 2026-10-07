@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **MfaEnabled** | Pointer to **NullableBool** |  | [optional] 
 **Roles** | Pointer to **[]string** |  | [optional] 
 **Capabilities** | Pointer to **[]string** |  | [optional] 
-**Tenant** | Pointer to [**GetMeResponseTenant**](GetMeResponseTenant.md) |  | [optional] 
+**Tenant** | Pointer to [**GroupRef**](GroupRef.md) |  | [optional] 
 
 ## Methods
 
@@ -259,20 +259,20 @@ HasCapabilities returns a boolean if a field has been set.
 UnsetCapabilities ensures that no value is present for Capabilities, not even an explicit nil
 ### GetTenant
 
-`func (o *GetMeResponse) GetTenant() GetMeResponseTenant`
+`func (o *GetMeResponse) GetTenant() GroupRef`
 
 GetTenant returns the Tenant field if non-nil, zero value otherwise.
 
 ### GetTenantOk
 
-`func (o *GetMeResponse) GetTenantOk() (*GetMeResponseTenant, bool)`
+`func (o *GetMeResponse) GetTenantOk() (*GroupRef, bool)`
 
 GetTenantOk returns a tuple with the Tenant field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetTenant
 
-`func (o *GetMeResponse) SetTenant(v GetMeResponseTenant)`
+`func (o *GetMeResponse) SetTenant(v GroupRef)`
 
 SetTenant sets Tenant field to given value.
 

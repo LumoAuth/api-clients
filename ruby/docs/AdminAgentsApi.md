@@ -468,7 +468,7 @@ end
 
 ## admin_agents_delete
 
-> <MessageResponse> admin_agents_delete(org_id, agent_id)
+> <AdminAgentsDeleteResponse> admin_agents_delete(org_id, agent_id)
 
 Delete an agent
 
@@ -505,7 +505,7 @@ end
 
 This returns an Array which contains the response data, status code and headers.
 
-> <Array(<MessageResponse>, Integer, Hash)> admin_agents_delete_with_http_info(org_id, agent_id)
+> <Array(<AdminAgentsDeleteResponse>, Integer, Hash)> admin_agents_delete_with_http_info(org_id, agent_id)
 
 ```ruby
 begin
@@ -513,7 +513,7 @@ begin
   data, status_code, headers = api_instance.admin_agents_delete_with_http_info(org_id, agent_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => <MessageResponse>
+  p data # => <AdminAgentsDeleteResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminAgentsApi->admin_agents_delete_with_http_info: #{e}"
 end
@@ -528,7 +528,7 @@ end
 
 ### Return type
 
-[**MessageResponse**](MessageResponse.md)
+[**AdminAgentsDeleteResponse**](AdminAgentsDeleteResponse.md)
 
 ### Authorization
 

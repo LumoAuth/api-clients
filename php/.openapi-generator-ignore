@@ -1,0 +1,15 @@
+# Managed by server/scripts/sdk-codegen (pre-seeded as .openapi-generator-ignore).
+# Suppresses generator-emitted repo junk that does not belong in api-clients.
+.travis.yml
+.gitlab-ci.yml
+appveyor.yml
+git_push.sh
+.github/
+.github/**
+
+# Auto-generated assertion-free test stubs (one markTestIncomplete() per
+# API/model) and the tooling that only exists to run them.
+test/
+test/**
+phpunit.xml.dist
+.php-cs-fixer.dist.php

@@ -13,19 +13,19 @@ import AnyCodable
 open class AdminSessionsAPI {
 
     /**
-     Revoke all tokens for a client
+     Revoke all tokens of a client
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: AdminClientTokensRevokeAllResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminClientTokensRevokeAll(orgId: String, clientId: String) async throws {
+    open class func adminClientTokensRevokeAll(orgId: String, clientId: String) async throws -> AdminClientTokensRevokeAllResponse {
         return try await adminClientTokensRevokeAllWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Revoke all tokens for a client
+     Revoke all tokens of a client
      - DELETE /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -35,9 +35,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminClientTokensRevokeAllResponse> 
      */
-    open class func adminClientTokensRevokeAllWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func adminClientTokensRevokeAllWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<AdminClientTokensRevokeAllResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -56,25 +56,25 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminClientTokensRevokeAllResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke all tokens for a client via POST
+     Revoke all tokens of a client (POST alias)
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: AdminUserTokensRevokePostResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminClientTokensRevokePost(orgId: String, clientId: String) async throws {
+    open class func adminClientTokensRevokePost(orgId: String, clientId: String) async throws -> AdminUserTokensRevokePostResponse {
         return try await adminClientTokensRevokePostWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Revoke all tokens for a client via POST
+     Revoke all tokens of a client (POST alias)
      - POST /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -84,9 +84,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminUserTokensRevokePostResponse> 
      */
-    open class func adminClientTokensRevokePostWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func adminClientTokensRevokePostWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<AdminUserTokensRevokePostResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -105,24 +105,24 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminUserTokensRevokePostResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get active session count for the tenant
+     Active session count
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSessionsCountResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSessionsCount(orgId: String) async throws {
+    open class func adminSessionsCount(orgId: String) async throws -> AdminSessionsCountResponse {
         return try await adminSessionsCountWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Get active session count for the tenant
+     Active session count
      - GET /orgs/{orgId}/api/v1/admin/sessions/count
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -131,9 +131,9 @@ open class AdminSessionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSessionsCountResponse> 
      */
-    open class func adminSessionsCountWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSessionsCountWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSessionsCountResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sessions/count"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -149,25 +149,26 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSessionsCountResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     List active sessions for the tenant
+     List active sessions
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSessionsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSessionsList(orgId: String) async throws {
+    open class func adminSessionsList(orgId: String) async throws -> AdminSessionsListResponse {
         return try await adminSessionsListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List active sessions for the tenant
+     List active sessions
      - GET /orgs/{orgId}/api/v1/admin/sessions
+     - Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -175,9 +176,9 @@ open class AdminSessionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSessionsListResponse> 
      */
-    open class func adminSessionsListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSessionsListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSessionsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sessions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -193,25 +194,25 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSessionsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke a specific session
+     Revoke a session
      
      - parameter orgId: (path)  
      - parameter sessionId: (path)  
-     - returns: Void
+     - returns: AdminSessionsRevokeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSessionsRevoke(orgId: String, sessionId: String) async throws {
+    open class func adminSessionsRevoke(orgId: String, sessionId: String) async throws -> AdminSessionsRevokeResponse {
         return try await adminSessionsRevokeWithRequestBuilder(orgId: orgId, sessionId: sessionId).execute().body
     }
 
     /**
-     Revoke a specific session
+     Revoke a session
      - DELETE /orgs/{orgId}/api/v1/admin/sessions/{sessionId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -221,9 +222,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter sessionId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSessionsRevokeResponse> 
      */
-    open class func adminSessionsRevokeWithRequestBuilder(orgId: String, sessionId: String) -> RequestBuilder<Void> {
+    open class func adminSessionsRevokeWithRequestBuilder(orgId: String, sessionId: String) -> RequestBuilder<AdminSessionsRevokeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sessions/{sessionId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -242,25 +243,27 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSessionsRevokeResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke all tenant sessions via POST
+     Revoke every session in the tenant
      
      - parameter orgId: (path)  
-     - returns: Void
+     - parameter adminSessionsRevokeAllRequest: (body)  
+     - returns: AdminSessionsRevokeAllResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSessionsRevokeAll(orgId: String) async throws {
-        return try await adminSessionsRevokeAllWithRequestBuilder(orgId: orgId).execute().body
+    open class func adminSessionsRevokeAll(orgId: String, adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest) async throws -> AdminSessionsRevokeAllResponse {
+        return try await adminSessionsRevokeAllWithRequestBuilder(orgId: orgId, adminSessionsRevokeAllRequest: adminSessionsRevokeAllRequest).execute().body
     }
 
     /**
-     Revoke all tenant sessions via POST
+     Revoke every session in the tenant
      - POST /orgs/{orgId}/api/v1/admin/sessions/revoke-all
+     - Signs out all users. Requires `confirm: true` in the body.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -268,42 +271,43 @@ open class AdminSessionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - parameter adminSessionsRevokeAllRequest: (body)  
+     - returns: RequestBuilder<AdminSessionsRevokeAllResponse> 
      */
-    open class func adminSessionsRevokeAllWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSessionsRevokeAllWithRequestBuilder(orgId: String, adminSessionsRevokeAllRequest: AdminSessionsRevokeAllRequest) -> RequestBuilder<AdminSessionsRevokeAllResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sessions/revoke-all"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
         let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminSessionsRevokeAllRequest)
 
         let localVariableUrlComponents = URLComponents(string: localVariableURLString)
 
         let localVariableNillableHeaders: [String: Any?] = [
-            :
+            "Content-Type": "application/json",
         ]
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSessionsRevokeAllResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get session statistics for the tenant
+     Session statistics
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminSessionsStatsResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminSessionsStats(orgId: String) async throws {
+    open class func adminSessionsStats(orgId: String) async throws -> AdminSessionsStatsResponse {
         return try await adminSessionsStatsWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Get session statistics for the tenant
+     Session statistics
      - GET /orgs/{orgId}/api/v1/admin/sessions/stats
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -312,9 +316,9 @@ open class AdminSessionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminSessionsStatsResponse> 
      */
-    open class func adminSessionsStatsWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminSessionsStatsWithRequestBuilder(orgId: String) -> RequestBuilder<AdminSessionsStatsResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/sessions/stats"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -330,25 +334,26 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminSessionsStatsResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     List access tokens for the tenant
+     List access tokens
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminTokensListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminTokensList(orgId: String) async throws {
+    open class func adminTokensList(orgId: String) async throws -> AdminTokensListResponse {
         return try await adminTokensListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     List access tokens for the tenant
+     List access tokens
      - GET /orgs/{orgId}/api/v1/admin/tokens
+     - Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -356,9 +361,9 @@ open class AdminSessionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminTokensListResponse> 
      */
-    open class func adminTokensListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminTokensListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminTokensListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/tokens"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -374,7 +379,7 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminTokensListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -384,10 +389,10 @@ open class AdminSessionsAPI {
      
      - parameter orgId: (path)  
      - parameter tokenId: (path)  
-     - returns: Void
+     - returns: AdminTokensRevokeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminTokensRevoke(orgId: String, tokenId: String) async throws {
+    open class func adminTokensRevoke(orgId: String, tokenId: String) async throws -> AdminTokensRevokeResponse {
         return try await adminTokensRevokeWithRequestBuilder(orgId: orgId, tokenId: tokenId).execute().body
     }
 
@@ -402,9 +407,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter tokenId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminTokensRevokeResponse> 
      */
-    open class func adminTokensRevokeWithRequestBuilder(orgId: String, tokenId: String) -> RequestBuilder<Void> {
+    open class func adminTokensRevokeWithRequestBuilder(orgId: String, tokenId: String) -> RequestBuilder<AdminTokensRevokeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/tokens/{tokenId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -423,26 +428,27 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminTokensRevokeResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Get sessions for a specific user
+     List a user's active sessions
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: Void
+     - returns: AdminUserSessionsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminUserSessionsList(orgId: String, userId: String) async throws {
+    open class func adminUserSessionsList(orgId: String, userId: String) async throws -> AdminUserSessionsListResponse {
         return try await adminUserSessionsListWithRequestBuilder(orgId: orgId, userId: userId).execute().body
     }
 
     /**
-     Get sessions for a specific user
+     List a user's active sessions
      - GET /orgs/{orgId}/api/v1/admin/users/{userId}/sessions
+     - All active sessions of one user (UUID or email), returned as a single page.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -451,9 +457,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminUserSessionsListResponse> 
      */
-    open class func adminUserSessionsListWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<Void> {
+    open class func adminUserSessionsListWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AdminUserSessionsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -472,25 +478,25 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminUserSessionsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke all sessions for a user
+     Revoke all sessions of a user
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: Void
+     - returns: AdminUserSessionsRevokeAllResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminUserSessionsRevokeAll(orgId: String, userId: String) async throws {
+    open class func adminUserSessionsRevokeAll(orgId: String, userId: String) async throws -> AdminUserSessionsRevokeAllResponse {
         return try await adminUserSessionsRevokeAllWithRequestBuilder(orgId: orgId, userId: userId).execute().body
     }
 
     /**
-     Revoke all sessions for a user
+     Revoke all sessions of a user
      - DELETE /orgs/{orgId}/api/v1/admin/users/{userId}/sessions
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -500,9 +506,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminUserSessionsRevokeAllResponse> 
      */
-    open class func adminUserSessionsRevokeAllWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<Void> {
+    open class func adminUserSessionsRevokeAllWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AdminUserSessionsRevokeAllResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -521,25 +527,25 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminUserSessionsRevokeAllResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke all sessions for a user via POST
+     Revoke all sessions of a user (POST alias)
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: Void
+     - returns: AdminUserSessionsRevokePostResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminUserSessionsRevokePost(orgId: String, userId: String) async throws {
+    open class func adminUserSessionsRevokePost(orgId: String, userId: String) async throws -> AdminUserSessionsRevokePostResponse {
         return try await adminUserSessionsRevokePostWithRequestBuilder(orgId: orgId, userId: userId).execute().body
     }
 
     /**
-     Revoke all sessions for a user via POST
+     Revoke all sessions of a user (POST alias)
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -549,9 +555,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminUserSessionsRevokePostResponse> 
      */
-    open class func adminUserSessionsRevokePostWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<Void> {
+    open class func adminUserSessionsRevokePostWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AdminUserSessionsRevokePostResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -570,25 +576,25 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminUserSessionsRevokePostResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke all tokens for a user
+     Revoke all tokens of a user
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: Void
+     - returns: AdminUserTokensRevokeAllResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminUserTokensRevokeAll(orgId: String, userId: String) async throws {
+    open class func adminUserTokensRevokeAll(orgId: String, userId: String) async throws -> AdminUserTokensRevokeAllResponse {
         return try await adminUserTokensRevokeAllWithRequestBuilder(orgId: orgId, userId: userId).execute().body
     }
 
     /**
-     Revoke all tokens for a user
+     Revoke all tokens of a user
      - DELETE /orgs/{orgId}/api/v1/admin/users/{userId}/tokens
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -598,9 +604,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminUserTokensRevokeAllResponse> 
      */
-    open class func adminUserTokensRevokeAllWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<Void> {
+    open class func adminUserTokensRevokeAllWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AdminUserTokensRevokeAllResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/tokens"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -619,25 +625,25 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminUserTokensRevokeAllResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Revoke all tokens for a user via POST
+     Revoke all tokens of a user (POST alias)
      
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: Void
+     - returns: AdminUserTokensRevokePostResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminUserTokensRevokePost(orgId: String, userId: String) async throws {
+    open class func adminUserTokensRevokePost(orgId: String, userId: String) async throws -> AdminUserTokensRevokePostResponse {
         return try await adminUserTokensRevokePostWithRequestBuilder(orgId: orgId, userId: userId).execute().body
     }
 
     /**
-     Revoke all tokens for a user via POST
+     Revoke all tokens of a user (POST alias)
      - POST /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -647,9 +653,9 @@ open class AdminSessionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter userId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminUserTokensRevokePostResponse> 
      */
-    open class func adminUserTokensRevokePostWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<Void> {
+    open class func adminUserTokensRevokePostWithRequestBuilder(orgId: String, userId: String) -> RequestBuilder<AdminUserTokensRevokePostResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -668,7 +674,7 @@ open class AdminSessionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminUserTokensRevokePostResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

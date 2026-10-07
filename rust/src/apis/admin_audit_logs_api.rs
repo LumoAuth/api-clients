@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAuditLogsActionsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum AdminAuditLogsActionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAuditLogsExportError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,7 @@ pub enum AdminAuditLogsExportError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAuditLogsGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +41,6 @@ pub enum AdminAuditLogsGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAuditLogsListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +48,6 @@ pub enum AdminAuditLogsListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAuditLogsRetentionError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +55,6 @@ pub enum AdminAuditLogsRetentionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminAuditLogsStatsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +62,6 @@ pub enum AdminAuditLogsStatsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminAuditLogsRetentionUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,12 +69,11 @@ pub enum PatchAdminAuditLogsRetentionUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminAuditLogsRetentionUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_audit_logs_actions(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAuditLogsActionsError>> {
+pub async fn admin_audit_logs_actions(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsActionsResponse, Error<AdminAuditLogsActionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -106,9 +99,20 @@ pub async fn admin_audit_logs_actions(configuration: &configuration::Configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsActionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsActionsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAuditLogsActionsError> = serde_json::from_str(&content).ok();
@@ -116,7 +120,7 @@ pub async fn admin_audit_logs_actions(configuration: &configuration::Configurati
     }
 }
 
-pub async fn admin_audit_logs_export(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAuditLogsExportError>> {
+pub async fn admin_audit_logs_export(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<AdminAuditLogsExportError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -142,9 +146,20 @@ pub async fn admin_audit_logs_export(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAuditLogsExportError> = serde_json::from_str(&content).ok();
@@ -152,7 +167,7 @@ pub async fn admin_audit_logs_export(configuration: &configuration::Configuratio
     }
 }
 
-pub async fn admin_audit_logs_get(configuration: &configuration::Configuration, org_id: &str, log_id: &str) -> Result<(), Error<AdminAuditLogsGetError>> {
+pub async fn admin_audit_logs_get(configuration: &configuration::Configuration, org_id: &str, log_id: &str) -> Result<models::AdminAuditLogsGetResponse, Error<AdminAuditLogsGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_log_id = log_id;
@@ -179,9 +194,20 @@ pub async fn admin_audit_logs_get(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAuditLogsGetError> = serde_json::from_str(&content).ok();
@@ -189,7 +215,7 @@ pub async fn admin_audit_logs_get(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn admin_audit_logs_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAuditLogsListError>> {
+pub async fn admin_audit_logs_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsListResponse, Error<AdminAuditLogsListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -215,9 +241,20 @@ pub async fn admin_audit_logs_list(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAuditLogsListError> = serde_json::from_str(&content).ok();
@@ -225,7 +262,7 @@ pub async fn admin_audit_logs_list(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn admin_audit_logs_retention(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAuditLogsRetentionError>> {
+pub async fn admin_audit_logs_retention(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<AdminAuditLogsRetentionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -251,9 +288,20 @@ pub async fn admin_audit_logs_retention(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsRetentionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsRetentionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAuditLogsRetentionError> = serde_json::from_str(&content).ok();
@@ -261,7 +309,7 @@ pub async fn admin_audit_logs_retention(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_audit_logs_stats(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminAuditLogsStatsError>> {
+pub async fn admin_audit_logs_stats(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsStatsResponse, Error<AdminAuditLogsStatsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -287,9 +335,20 @@ pub async fn admin_audit_logs_stats(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsStatsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsStatsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminAuditLogsStatsError> = serde_json::from_str(&content).ok();
@@ -297,7 +356,7 @@ pub async fn admin_audit_logs_stats(configuration: &configuration::Configuration
     }
 }
 
-pub async fn patch_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PatchAdminAuditLogsRetentionUpdateError>> {
+pub async fn patch_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<PatchAdminAuditLogsRetentionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -323,9 +382,20 @@ pub async fn patch_admin_audit_logs_retention_update(configuration: &configurati
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsRetentionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsRetentionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminAuditLogsRetentionUpdateError> = serde_json::from_str(&content).ok();
@@ -333,7 +403,7 @@ pub async fn patch_admin_audit_logs_retention_update(configuration: &configurati
     }
 }
 
-pub async fn put_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<PutAdminAuditLogsRetentionUpdateError>> {
+pub async fn put_admin_audit_logs_retention_update(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminAuditLogsRetentionResponse, Error<PutAdminAuditLogsRetentionUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -359,9 +429,20 @@ pub async fn put_admin_audit_logs_retention_update(configuration: &configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAuditLogsRetentionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAuditLogsRetentionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminAuditLogsRetentionUpdateError> = serde_json::from_str(&content).ok();

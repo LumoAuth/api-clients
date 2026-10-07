@@ -4,18 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminMcpServersCreate**](AdminMcpApi.md#adminmcpserverscreate) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | POST /api/v1/admin/mcp/servers |
-| [**AdminMcpServersDelete**](AdminMcpApi.md#adminmcpserversdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} |  |
-| [**AdminMcpServersGet**](AdminMcpApi.md#adminmcpserversget) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} |  |
-| [**AdminMcpServersList**](AdminMcpApi.md#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers |  |
+| [**AdminMcpServersCreate**](AdminMcpApi.md#adminmcpserverscreate) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server |
+| [**AdminMcpServersDelete**](AdminMcpApi.md#adminmcpserversdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server |
+| [**AdminMcpServersGet**](AdminMcpApi.md#adminmcpserversget) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server |
+| [**AdminMcpServersList**](AdminMcpApi.md#adminmcpserverslist) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers |
 
 <a id="adminmcpserverscreate"></a>
 # **AdminMcpServersCreate**
-> void AdminMcpServersCreate (string orgId)
+> AdminMcpServersCreateResponse AdminMcpServersCreate (string orgId)
 
-POST /api/v1/admin/mcp/servers
+Register an MCP server
 
-Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
+Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization's OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
 
 ### Example
 ```csharp
@@ -49,8 +49,9 @@ namespace Example
 
             try
             {
-                // POST /api/v1/admin/mcp/servers
-                apiInstance.AdminMcpServersCreate(orgId);
+                // Register an MCP server
+                AdminMcpServersCreateResponse result = apiInstance.AdminMcpServersCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -69,8 +70,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // POST /api/v1/admin/mcp/servers
-    apiInstance.AdminMcpServersCreateWithHttpInfo(orgId);
+    // Register an MCP server
+    ApiResponse<AdminMcpServersCreateResponse> response = apiInstance.AdminMcpServersCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -88,7 +92,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
 
 ### Authorization
 
@@ -97,21 +101,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | MCP server created |  -  |
+| **409** | An MCP server with this resource_uri already exists |  -  |
+| **422** | validation_error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminmcpserversdelete"></a>
 # **AdminMcpServersDelete**
-> void AdminMcpServersDelete (string orgId, string serverId)
+> MessageResponse AdminMcpServersDelete (string orgId, string serverId)
 
-
+Delete an MCP server
 
 ### Example
 ```csharp
@@ -146,7 +152,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminMcpServersDelete(orgId, serverId);
+                // Delete an MCP server
+                MessageResponse result = apiInstance.AdminMcpServersDelete(orgId, serverId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -165,7 +173,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminMcpServersDeleteWithHttpInfo(orgId, serverId);
+    // Delete an MCP server
+    ApiResponse<MessageResponse> response = apiInstance.AdminMcpServersDeleteWithHttpInfo(orgId, serverId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -184,7 +196,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -193,21 +205,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | MCP server deleted |  -  |
+| **404** | MCP server not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminmcpserversget"></a>
 # **AdminMcpServersGet**
-> void AdminMcpServersGet (string orgId, string serverId)
+> AdminMcpServersGetResponse AdminMcpServersGet (string orgId, string serverId)
 
-
+Get an MCP server
 
 ### Example
 ```csharp
@@ -242,7 +255,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminMcpServersGet(orgId, serverId);
+                // Get an MCP server
+                AdminMcpServersGetResponse result = apiInstance.AdminMcpServersGet(orgId, serverId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -261,7 +276,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminMcpServersGetWithHttpInfo(orgId, serverId);
+    // Get an MCP server
+    ApiResponse<AdminMcpServersGetResponse> response = apiInstance.AdminMcpServersGetWithHttpInfo(orgId, serverId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -280,7 +299,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminMcpServersGetResponse**](AdminMcpServersGetResponse.md)
 
 ### Authorization
 
@@ -289,21 +308,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | MCP server |  -  |
+| **404** | MCP server not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminmcpserverslist"></a>
 # **AdminMcpServersList**
-> void AdminMcpServersList (string orgId)
+> AdminMcpServersListResponse AdminMcpServersList (string orgId)
 
-
+List MCP servers
 
 ### Example
 ```csharp
@@ -337,7 +357,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminMcpServersList(orgId);
+                // List MCP servers
+                AdminMcpServersListResponse result = apiInstance.AdminMcpServersList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -356,7 +378,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminMcpServersListWithHttpInfo(orgId);
+    // List MCP servers
+    ApiResponse<AdminMcpServersListResponse> response = apiInstance.AdminMcpServersListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -374,7 +400,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminMcpServersListResponse**](AdminMcpServersListResponse.md)
 
 ### Authorization
 
@@ -383,13 +409,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | MCP servers |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -13,26 +13,26 @@ import AnyCodable
 open class McpAPI {
 
     /**
-     OAuth 2.0 Protected Resource Metadata (RFC 9728)
+     MCP server protected resource metadata (RFC 9728)
      
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: Void
+     - returns: ProtectedResourceMetadata
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getProtectedResourceMetadata(orgId: String, serverId: String) async throws {
+    open class func getProtectedResourceMetadata(orgId: String, serverId: String) async throws -> ProtectedResourceMetadata {
         return try await getProtectedResourceMetadataWithRequestBuilder(orgId: orgId, serverId: serverId).execute().body
     }
 
     /**
-     OAuth 2.0 Protected Resource Metadata (RFC 9728)
+     MCP server protected resource metadata (RFC 9728)
      - GET /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}
-     - Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+     - Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<ProtectedResourceMetadata> 
      */
-    open class func getProtectedResourceMetadataWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<Void> {
+    open class func getProtectedResourceMetadataWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<ProtectedResourceMetadata> {
         var localVariablePath = "/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -51,30 +51,30 @@ open class McpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ProtectedResourceMetadata>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-     Root-level Protected Resource Metadata
+     Organization-level protected resource metadata (RFC 9728)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: GetProtectedResourceMetadataRoot200Response
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getProtectedResourceMetadataRoot(orgId: String) async throws {
+    open class func getProtectedResourceMetadataRoot(orgId: String) async throws -> GetProtectedResourceMetadataRoot200Response {
         return try await getProtectedResourceMetadataRootWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Root-level Protected Resource Metadata
+     Organization-level protected resource metadata (RFC 9728)
      - GET /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource
-     - Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+     - Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<GetProtectedResourceMetadataRoot200Response> 
      */
-    open class func getProtectedResourceMetadataRootWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func getProtectedResourceMetadataRootWithRequestBuilder(orgId: String) -> RequestBuilder<GetProtectedResourceMetadataRoot200Response> {
         var localVariablePath = "/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -90,7 +90,7 @@ open class McpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetProtectedResourceMetadataRoot200Response>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
@@ -146,29 +146,29 @@ open class McpAPI {
     }
 
     /**
-     Simulated MCP Server 401 challenge endpoint.
+     Simulated MCP server authorization challenge
      
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: Void
+     - returns: GetServerChallengeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getServerChallenge(orgId: String, serverId: String) async throws {
+    open class func getServerChallenge(orgId: String, serverId: String) async throws -> GetServerChallengeResponse {
         return try await getServerChallengeWithRequestBuilder(orgId: orgId, serverId: serverId).execute().body
     }
 
     /**
-     Simulated MCP Server 401 challenge endpoint.
+     Simulated MCP server authorization challenge
      - GET /orgs/{orgId}/api/v1/mcp/{serverId}/challenge
-     - When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     - Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
      - Bearer Token:
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<GetServerChallengeResponse> 
      */
-    open class func getServerChallengeWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<Void> {
+    open class func getServerChallengeWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<GetServerChallengeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/mcp/{serverId}/challenge"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -187,7 +187,7 @@ open class McpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetServerChallengeResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -238,29 +238,29 @@ open class McpAPI {
     }
 
     /**
-     Simulated MCP Server 401 challenge endpoint.
+     Simulated MCP server authorization challenge (POST)
      
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: Void
+     - returns: GetServerChallengeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func postServerChallenge(orgId: String, serverId: String) async throws {
+    open class func postServerChallenge(orgId: String, serverId: String) async throws -> GetServerChallengeResponse {
         return try await postServerChallengeWithRequestBuilder(orgId: orgId, serverId: serverId).execute().body
     }
 
     /**
-     Simulated MCP Server 401 challenge endpoint.
+     Simulated MCP server authorization challenge (POST)
      - POST /orgs/{orgId}/api/v1/mcp/{serverId}/challenge
-     - When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+     - Identical to GET; the HTTP method is only recorded in the audit trail.
      - Bearer Token:
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<GetServerChallengeResponse> 
      */
-    open class func postServerChallengeWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<Void> {
+    open class func postServerChallengeWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<GetServerChallengeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/mcp/{serverId}/challenge"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -279,7 +279,7 @@ open class McpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<GetServerChallengeResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

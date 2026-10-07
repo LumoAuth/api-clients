@@ -18,6 +18,20 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_client_tokens_revoke_all_response import AdminClientTokensRevokeAllResponse
+from lumoauth_api_client.models.admin_sessions_count_response import AdminSessionsCountResponse
+from lumoauth_api_client.models.admin_sessions_list_response import AdminSessionsListResponse
+from lumoauth_api_client.models.admin_sessions_revoke_all_request import AdminSessionsRevokeAllRequest
+from lumoauth_api_client.models.admin_sessions_revoke_all_response import AdminSessionsRevokeAllResponse
+from lumoauth_api_client.models.admin_sessions_revoke_response import AdminSessionsRevokeResponse
+from lumoauth_api_client.models.admin_sessions_stats_response import AdminSessionsStatsResponse
+from lumoauth_api_client.models.admin_tokens_list_response import AdminTokensListResponse
+from lumoauth_api_client.models.admin_tokens_revoke_response import AdminTokensRevokeResponse
+from lumoauth_api_client.models.admin_user_sessions_list_response import AdminUserSessionsListResponse
+from lumoauth_api_client.models.admin_user_sessions_revoke_all_response import AdminUserSessionsRevokeAllResponse
+from lumoauth_api_client.models.admin_user_sessions_revoke_post_response import AdminUserSessionsRevokePostResponse
+from lumoauth_api_client.models.admin_user_tokens_revoke_all_response import AdminUserTokensRevokeAllResponse
+from lumoauth_api_client.models.admin_user_tokens_revoke_post_response import AdminUserTokensRevokePostResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +68,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all tokens for a client
+    ) -> AdminClientTokensRevokeAllResponse:
+        """Revoke all tokens of a client
 
 
         :param org_id: (required)
@@ -94,6 +108,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminClientTokensRevokeAllResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,8 +139,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all tokens for a client
+    ) -> ApiResponse[AdminClientTokensRevokeAllResponse]:
+        """Revoke all tokens of a client
 
 
         :param org_id: (required)
@@ -163,6 +179,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminClientTokensRevokeAllResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -193,7 +211,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all tokens for a client
+        """Revoke all tokens of a client
 
 
         :param org_id: (required)
@@ -232,6 +250,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminClientTokensRevokeAllResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +295,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -318,8 +345,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all tokens for a client via POST
+    ) -> AdminUserTokensRevokePostResponse:
+        """Revoke all tokens of a client (POST alias)
 
 
         :param org_id: (required)
@@ -358,6 +385,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokePostResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -387,8 +416,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all tokens for a client via POST
+    ) -> ApiResponse[AdminUserTokensRevokePostResponse]:
+        """Revoke all tokens of a client (POST alias)
 
 
         :param org_id: (required)
@@ -427,6 +456,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokePostResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -457,7 +488,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all tokens for a client via POST
+        """Revoke all tokens of a client (POST alias)
 
 
         :param org_id: (required)
@@ -496,6 +527,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokePostResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -539,6 +572,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -581,8 +621,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get active session count for the tenant
+    ) -> AdminSessionsCountResponse:
+        """Active session count
 
 
         :param org_id: (required)
@@ -618,6 +658,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsCountResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -646,8 +687,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get active session count for the tenant
+    ) -> ApiResponse[AdminSessionsCountResponse]:
+        """Active session count
 
 
         :param org_id: (required)
@@ -683,6 +724,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsCountResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -712,7 +754,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get active session count for the tenant
+        """Active session count
 
 
         :param org_id: (required)
@@ -748,6 +790,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsCountResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +831,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -830,9 +880,10 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List active sessions for the tenant
+    ) -> AdminSessionsListResponse:
+        """List active sessions
 
+        Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
         :param org_id: (required)
         :type org_id: str
@@ -867,6 +918,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -895,9 +947,10 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List active sessions for the tenant
+    ) -> ApiResponse[AdminSessionsListResponse]:
+        """List active sessions
 
+        Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
         :param org_id: (required)
         :type org_id: str
@@ -932,6 +985,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -961,8 +1015,9 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List active sessions for the tenant
+        """List active sessions
 
+        Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
         :param org_id: (required)
         :type org_id: str
@@ -997,6 +1052,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1037,6 +1093,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1080,8 +1143,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke a specific session
+    ) -> AdminSessionsRevokeResponse:
+        """Revoke a session
 
 
         :param org_id: (required)
@@ -1120,6 +1183,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsRevokeResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1149,8 +1215,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke a specific session
+    ) -> ApiResponse[AdminSessionsRevokeResponse]:
+        """Revoke a session
 
 
         :param org_id: (required)
@@ -1189,6 +1255,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsRevokeResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1219,7 +1288,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke a specific session
+        """Revoke a session
 
 
         :param org_id: (required)
@@ -1258,6 +1327,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsRevokeResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1301,6 +1373,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1331,6 +1410,7 @@ class AdminSessionsApi:
     def admin_sessions_revoke_all(
         self,
         org_id: StrictStr,
+        admin_sessions_revoke_all_request: AdminSessionsRevokeAllRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1343,12 +1423,15 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all tenant sessions via POST
+    ) -> AdminSessionsRevokeAllResponse:
+        """Revoke every session in the tenant
 
+        Signs out all users. Requires `confirm: true` in the body.
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_sessions_revoke_all_request: (required)
+        :type admin_sessions_revoke_all_request: AdminSessionsRevokeAllRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1373,6 +1456,7 @@ class AdminSessionsApi:
 
         _param = self._admin_sessions_revoke_all_serialize(
             org_id=org_id,
+            admin_sessions_revoke_all_request=admin_sessions_revoke_all_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1380,6 +1464,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsRevokeAllResponse",
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1396,6 +1482,7 @@ class AdminSessionsApi:
     def admin_sessions_revoke_all_with_http_info(
         self,
         org_id: StrictStr,
+        admin_sessions_revoke_all_request: AdminSessionsRevokeAllRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1408,12 +1495,15 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all tenant sessions via POST
+    ) -> ApiResponse[AdminSessionsRevokeAllResponse]:
+        """Revoke every session in the tenant
 
+        Signs out all users. Requires `confirm: true` in the body.
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_sessions_revoke_all_request: (required)
+        :type admin_sessions_revoke_all_request: AdminSessionsRevokeAllRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1438,6 +1528,7 @@ class AdminSessionsApi:
 
         _param = self._admin_sessions_revoke_all_serialize(
             org_id=org_id,
+            admin_sessions_revoke_all_request=admin_sessions_revoke_all_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1445,6 +1536,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsRevokeAllResponse",
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1461,6 +1554,7 @@ class AdminSessionsApi:
     def admin_sessions_revoke_all_without_preload_content(
         self,
         org_id: StrictStr,
+        admin_sessions_revoke_all_request: AdminSessionsRevokeAllRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1474,11 +1568,14 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all tenant sessions via POST
+        """Revoke every session in the tenant
 
+        Signs out all users. Requires `confirm: true` in the body.
 
         :param org_id: (required)
         :type org_id: str
+        :param admin_sessions_revoke_all_request: (required)
+        :type admin_sessions_revoke_all_request: AdminSessionsRevokeAllRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1503,6 +1600,7 @@ class AdminSessionsApi:
 
         _param = self._admin_sessions_revoke_all_serialize(
             org_id=org_id,
+            admin_sessions_revoke_all_request=admin_sessions_revoke_all_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1510,6 +1608,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsRevokeAllResponse",
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1521,6 +1621,7 @@ class AdminSessionsApi:
     def _admin_sessions_revoke_all_serialize(
         self,
         org_id,
+        admin_sessions_revoke_all_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1548,9 +1649,31 @@ class AdminSessionsApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if admin_sessions_revoke_all_request is not None:
+            _body_params = admin_sessions_revoke_all_request
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1592,8 +1715,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get session statistics for the tenant
+    ) -> AdminSessionsStatsResponse:
+        """Session statistics
 
 
         :param org_id: (required)
@@ -1629,6 +1752,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsStatsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1657,8 +1781,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get session statistics for the tenant
+    ) -> ApiResponse[AdminSessionsStatsResponse]:
+        """Session statistics
 
 
         :param org_id: (required)
@@ -1694,6 +1818,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsStatsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1723,7 +1848,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get session statistics for the tenant
+        """Session statistics
 
 
         :param org_id: (required)
@@ -1759,6 +1884,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminSessionsStatsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1799,6 +1925,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1841,9 +1974,10 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List access tokens for the tenant
+    ) -> AdminTokensListResponse:
+        """List access tokens
 
+        Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
         :param org_id: (required)
         :type org_id: str
@@ -1878,6 +2012,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTokensListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1906,9 +2041,10 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List access tokens for the tenant
+    ) -> ApiResponse[AdminTokensListResponse]:
+        """List access tokens
 
+        Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
         :param org_id: (required)
         :type org_id: str
@@ -1943,6 +2079,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTokensListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1972,8 +2109,9 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List access tokens for the tenant
+        """List access tokens
 
+        Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2008,6 +2146,7 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTokensListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2048,6 +2187,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2091,7 +2237,7 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminTokensRevokeResponse:
         """Revoke a token
 
 
@@ -2131,6 +2277,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTokensRevokeResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2160,7 +2309,7 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminTokensRevokeResponse]:
         """Revoke a token
 
 
@@ -2200,6 +2349,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTokensRevokeResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2269,6 +2421,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminTokensRevokeResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2312,6 +2467,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2355,9 +2517,10 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get sessions for a specific user
+    ) -> AdminUserSessionsListResponse:
+        """List a user's active sessions
 
+        All active sessions of one user (UUID or email), returned as a single page.
 
         :param org_id: (required)
         :type org_id: str
@@ -2395,6 +2558,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2424,9 +2589,10 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get sessions for a specific user
+    ) -> ApiResponse[AdminUserSessionsListResponse]:
+        """List a user's active sessions
 
+        All active sessions of one user (UUID or email), returned as a single page.
 
         :param org_id: (required)
         :type org_id: str
@@ -2464,6 +2630,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2494,8 +2662,9 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get sessions for a specific user
+        """List a user's active sessions
 
+        All active sessions of one user (UUID or email), returned as a single page.
 
         :param org_id: (required)
         :type org_id: str
@@ -2533,6 +2702,8 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2576,6 +2747,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2619,8 +2797,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all sessions for a user
+    ) -> AdminUserSessionsRevokeAllResponse:
+        """Revoke all sessions of a user
 
 
         :param org_id: (required)
@@ -2659,6 +2837,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsRevokeAllResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2688,8 +2869,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all sessions for a user
+    ) -> ApiResponse[AdminUserSessionsRevokeAllResponse]:
+        """Revoke all sessions of a user
 
 
         :param org_id: (required)
@@ -2728,6 +2909,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsRevokeAllResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2758,7 +2942,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all sessions for a user
+        """Revoke all sessions of a user
 
 
         :param org_id: (required)
@@ -2797,6 +2981,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsRevokeAllResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2840,6 +3027,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2883,8 +3077,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all sessions for a user via POST
+    ) -> AdminUserSessionsRevokePostResponse:
+        """Revoke all sessions of a user (POST alias)
 
 
         :param org_id: (required)
@@ -2923,6 +3117,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsRevokePostResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2952,8 +3149,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all sessions for a user via POST
+    ) -> ApiResponse[AdminUserSessionsRevokePostResponse]:
+        """Revoke all sessions of a user (POST alias)
 
 
         :param org_id: (required)
@@ -2992,6 +3189,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsRevokePostResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3022,7 +3222,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all sessions for a user via POST
+        """Revoke all sessions of a user (POST alias)
 
 
         :param org_id: (required)
@@ -3061,6 +3261,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserSessionsRevokePostResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3104,6 +3307,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3147,8 +3357,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all tokens for a user
+    ) -> AdminUserTokensRevokeAllResponse:
+        """Revoke all tokens of a user
 
 
         :param org_id: (required)
@@ -3187,6 +3397,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokeAllResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3216,8 +3429,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all tokens for a user
+    ) -> ApiResponse[AdminUserTokensRevokeAllResponse]:
+        """Revoke all tokens of a user
 
 
         :param org_id: (required)
@@ -3256,6 +3469,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokeAllResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3286,7 +3502,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all tokens for a user
+        """Revoke all tokens of a user
 
 
         :param org_id: (required)
@@ -3325,6 +3541,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokeAllResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3368,6 +3587,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3411,8 +3637,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Revoke all tokens for a user via POST
+    ) -> AdminUserTokensRevokePostResponse:
+        """Revoke all tokens of a user (POST alias)
 
 
         :param org_id: (required)
@@ -3451,6 +3677,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokePostResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3480,8 +3709,8 @@ class AdminSessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Revoke all tokens for a user via POST
+    ) -> ApiResponse[AdminUserTokensRevokePostResponse]:
+        """Revoke all tokens of a user (POST alias)
 
 
         :param org_id: (required)
@@ -3520,6 +3749,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokePostResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3550,7 +3782,7 @@ class AdminSessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Revoke all tokens for a user via POST
+        """Revoke all tokens of a user (POST alias)
 
 
         :param org_id: (required)
@@ -3589,6 +3821,9 @@ class AdminSessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminUserTokensRevokePostResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3632,6 +3867,13 @@ class AdminSessionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

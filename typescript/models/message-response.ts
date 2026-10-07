@@ -25,6 +25,6 @@ export interface MessageResponse {
      * @type {string}
      * @memberof MessageResponse
      */
-    'message'?: string;
+    'message': string;
 }
 

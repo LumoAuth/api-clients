@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,49 +29,51 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Fetch a live third-party access token for a connection.
+        /// Fetch a live third-party access token for a connection
         /// </summary>
         /// <remarks>
-        /// POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
-        /// <returns></returns>
-        void GetConnectionToken(string orgId, string connectionId);
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
+        /// <returns>GetConnectionTokenResponse</returns>
+        GetConnectionTokenResponse GetConnectionToken(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default);
 
         /// <summary>
-        /// Fetch a live third-party access token for a connection.
+        /// Fetch a live third-party access token for a connection
         /// </summary>
         /// <remarks>
-        /// POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetConnectionTokenWithHttpInfo(string orgId, string connectionId);
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
+        /// <returns>ApiResponse of GetConnectionTokenResponse</returns>
+        ApiResponse<GetConnectionTokenResponse> GetConnectionTokenWithHttpInfo(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default);
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets.
+        /// List the outbound connections this agent may use
         /// </summary>
         /// <remarks>
-        /// GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void ListConnections(string orgId);
+        /// <returns>ListConnectionsResponse</returns>
+        ListConnectionsResponse ListConnections(string orgId);
 
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets.
+        /// List the outbound connections this agent may use
         /// </summary>
         /// <remarks>
-        /// GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> ListConnectionsWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of ListConnectionsResponse</returns>
+        ApiResponse<ListConnectionsResponse> ListConnectionsWithHttpInfo(string orgId);
         #endregion Synchronous Operations
     }
 
@@ -81,53 +84,55 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Fetch a live third-party access token for a connection.
+        /// Fetch a live third-party access token for a connection
         /// </summary>
         /// <remarks>
-        /// POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetConnectionTokenAsync(string orgId, string connectionId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of GetConnectionTokenResponse</returns>
+        System.Threading.Tasks.Task<GetConnectionTokenResponse> GetConnectionTokenAsync(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Fetch a live third-party access token for a connection.
+        /// Fetch a live third-party access token for a connection
         /// </summary>
         /// <remarks>
-        /// POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetConnectionTokenWithHttpInfoAsync(string orgId, string connectionId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (GetConnectionTokenResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetConnectionTokenResponse>> GetConnectionTokenWithHttpInfoAsync(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets.
+        /// List the outbound connections this agent may use
         /// </summary>
         /// <remarks>
-        /// GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task ListConnectionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ListConnectionsResponse</returns>
+        System.Threading.Tasks.Task<ListConnectionsResponse> ListConnectionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets.
+        /// List the outbound connections this agent may use
         /// </summary>
         /// <remarks>
-        /// GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> ListConnectionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (ListConnectionsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ListConnectionsResponse>> ListConnectionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -342,25 +347,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Fetch a live third-party access token for a connection. POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Fetch a live third-party access token for a connection Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
-        /// <returns></returns>
-        public void GetConnectionToken(string orgId, string connectionId)
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
+        /// <returns>GetConnectionTokenResponse</returns>
+        public GetConnectionTokenResponse GetConnectionToken(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default)
         {
-            GetConnectionTokenWithHttpInfo(orgId, connectionId);
+            LumoAuth.ApiClient.Client.ApiResponse<GetConnectionTokenResponse> localVarResponse = GetConnectionTokenWithHttpInfo(orgId, connectionId, getConnectionTokenRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Fetch a live third-party access token for a connection. POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Fetch a live third-party access token for a connection Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetConnectionTokenWithHttpInfo(string orgId, string connectionId)
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
+        /// <returns>ApiResponse of GetConnectionTokenResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<GetConnectionTokenResponse> GetConnectionTokenWithHttpInfo(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -373,10 +381,12 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -387,6 +397,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("connectionId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(connectionId)); // path parameter
+            localVarRequestOptions.Data = getConnectionTokenRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -401,7 +412,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<GetConnectionTokenResponse>("/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -413,27 +424,30 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Fetch a live third-party access token for a connection. POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Fetch a live third-party access token for a connection Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetConnectionTokenAsync(string orgId, string connectionId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of GetConnectionTokenResponse</returns>
+        public async System.Threading.Tasks.Task<GetConnectionTokenResponse> GetConnectionTokenAsync(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetConnectionTokenWithHttpInfoAsync(orgId, connectionId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<GetConnectionTokenResponse> localVarResponse = await GetConnectionTokenWithHttpInfoAsync(orgId, connectionId, getConnectionTokenRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Fetch a live third-party access token for a connection. POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+        /// Fetch a live third-party access token for a connection Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="connectionId"></param>
+        /// <param name="getConnectionTokenRequest"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetConnectionTokenWithHttpInfoAsync(string orgId, string connectionId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (GetConnectionTokenResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<GetConnectionTokenResponse>> GetConnectionTokenWithHttpInfoAsync(string orgId, string connectionId, GetConnectionTokenRequest? getConnectionTokenRequest = default, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -447,10 +461,12 @@ namespace LumoAuth.ApiClient.Api
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -462,6 +478,7 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
             localVarRequestOptions.PathParameters.Add("connectionId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(connectionId)); // path parameter
+            localVarRequestOptions.Data = getConnectionTokenRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -477,7 +494,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<GetConnectionTokenResponse>("/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -489,23 +506,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets. GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// List the outbound connections this agent may use Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void ListConnections(string orgId)
+        /// <returns>ListConnectionsResponse</returns>
+        public ListConnectionsResponse ListConnections(string orgId)
         {
-            ListConnectionsWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<ListConnectionsResponse> localVarResponse = ListConnectionsWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets. GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// List the outbound connections this agent may use Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> ListConnectionsWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of ListConnectionsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<ListConnectionsResponse> ListConnectionsWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -518,6 +536,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -541,7 +560,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/agents/me/connections", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ListConnectionsResponse>("/orgs/{orgId}/api/v1/agents/me/connections", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -553,25 +572,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets. GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// List the outbound connections this agent may use Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task ListConnectionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ListConnectionsResponse</returns>
+        public async System.Threading.Tasks.Task<ListConnectionsResponse> ListConnectionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await ListConnectionsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ListConnectionsResponse> localVarResponse = await ListConnectionsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List the connections this agent may use, with grant status. No secrets. GET /orgs/{orgId}/api/v1/agents/me/connections
+        /// List the outbound connections this agent may use Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> ListConnectionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (ListConnectionsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ListConnectionsResponse>> ListConnectionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -585,6 +605,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -610,7 +631,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/agents/me/connections", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ListConnectionsResponse>("/orgs/{orgId}/api/v1/agents/me/connections", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

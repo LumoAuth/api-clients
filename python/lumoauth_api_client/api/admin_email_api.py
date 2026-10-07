@@ -18,6 +18,11 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse
+from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse
+from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse
+from lumoauth_api_client.models.email_template import EmailTemplate
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,8 +59,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_email_templates_delete
+    ) -> MessageResponse:
+        """Remove the custom email template so the built-in default is used
 
 
         :param org_id: (required)
@@ -94,6 +99,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,8 +130,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_email_templates_delete
+    ) -> ApiResponse[MessageResponse]:
+        """Remove the custom email template so the built-in default is used
 
 
         :param org_id: (required)
@@ -163,6 +170,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -193,7 +202,7 @@ class AdminEmailApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_email_templates_delete
+        """Remove the custom email template so the built-in default is used
 
 
         :param org_id: (required)
@@ -232,6 +241,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +286,13 @@ class AdminEmailApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -318,8 +336,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_email_templates_get
+    ) -> EmailTemplate:
+        """Get an email template (custom or built-in default)
 
 
         :param org_id: (required)
@@ -358,6 +376,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EmailTemplate",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -387,8 +407,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_email_templates_get
+    ) -> ApiResponse[EmailTemplate]:
+        """Get an email template (custom or built-in default)
 
 
         :param org_id: (required)
@@ -427,6 +447,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EmailTemplate",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -457,7 +479,7 @@ class AdminEmailApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_email_templates_get
+        """Get an email template (custom or built-in default)
 
 
         :param org_id: (required)
@@ -496,6 +518,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EmailTemplate",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -539,6 +563,13 @@ class AdminEmailApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -581,8 +612,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_email_templates_list
+    ) -> AdminEmailTemplatesListResponse:
+        """List every email template type with its current (custom or built-in) template
 
 
         :param org_id: (required)
@@ -618,6 +649,7 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -646,8 +678,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_email_templates_list
+    ) -> ApiResponse[AdminEmailTemplatesListResponse]:
+        """List every email template type with its current (custom or built-in) template
 
 
         :param org_id: (required)
@@ -683,6 +715,7 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -712,7 +745,7 @@ class AdminEmailApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_email_templates_list
+        """List every email template type with its current (custom or built-in) template
 
 
         :param org_id: (required)
@@ -748,6 +781,7 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +822,13 @@ class AdminEmailApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -831,8 +872,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_email_templates_preview
+    ) -> AdminEmailTemplatesPreviewResponse:
+        """Render an email template with sample data
 
 
         :param org_id: (required)
@@ -871,6 +912,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesPreviewResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -900,8 +943,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_email_templates_preview
+    ) -> ApiResponse[AdminEmailTemplatesPreviewResponse]:
+        """Render an email template with sample data
 
 
         :param org_id: (required)
@@ -940,6 +983,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesPreviewResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -970,7 +1015,7 @@ class AdminEmailApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_email_templates_preview
+        """Render an email template with sample data
 
 
         :param org_id: (required)
@@ -1009,6 +1054,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesPreviewResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1052,6 +1099,13 @@ class AdminEmailApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1095,8 +1149,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_email_templates_upsert
+    ) -> EmailTemplate:
+        """Create or replace the custom email template for a type
 
 
         :param org_id: (required)
@@ -1135,6 +1189,9 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EmailTemplate",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1164,8 +1221,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_email_templates_upsert
+    ) -> ApiResponse[EmailTemplate]:
+        """Create or replace the custom email template for a type
 
 
         :param org_id: (required)
@@ -1204,6 +1261,9 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EmailTemplate",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1234,7 +1294,7 @@ class AdminEmailApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_email_templates_upsert
+        """Create or replace the custom email template for a type
 
 
         :param org_id: (required)
@@ -1273,6 +1333,9 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "EmailTemplate",
+            '404': None,
+            '422': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1316,6 +1379,13 @@ class AdminEmailApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1359,8 +1429,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_email_templates_variables
+    ) -> AdminEmailTemplatesVariablesResponse:
+        """List the placeholders available to an email template type
 
 
         :param org_id: (required)
@@ -1399,6 +1469,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesVariablesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1428,8 +1500,8 @@ class AdminEmailApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_email_templates_variables
+    ) -> ApiResponse[AdminEmailTemplatesVariablesResponse]:
+        """List the placeholders available to an email template type
 
 
         :param org_id: (required)
@@ -1468,6 +1540,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesVariablesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1498,7 +1572,7 @@ class AdminEmailApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_email_templates_variables
+        """List the placeholders available to an email template type
 
 
         :param org_id: (required)
@@ -1537,6 +1611,8 @@ class AdminEmailApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminEmailTemplatesVariablesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1580,6 +1656,13 @@ class AdminEmailApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -87,11 +88,27 @@ public class GetRequestStatusResponseTest {
     }
 
     /**
-     * Test the property 'reviewNotes'
+     * Test the property 'hasNotes'
      */
     @Test
-    public void reviewNotesTest() {
-        // TODO: test reviewNotes
+    public void hasNotesTest() {
+        // TODO: test hasNotes
+    }
+
+    /**
+     * Test the property 'agentMessage'
+     */
+    @Test
+    public void agentMessageTest() {
+        // TODO: test agentMessage
+    }
+
+    /**
+     * Test the property 'delegationConsentRequired'
+     */
+    @Test
+    public void delegationConsentRequiredTest() {
+        // TODO: test delegationConsentRequired
     }
 
     /**

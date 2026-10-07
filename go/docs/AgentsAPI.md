@@ -5,14 +5,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**Ask**](AgentsAPI.md#Ask) | **Post** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
-[**Attest**](AgentsAPI.md#Attest) | **Post** /orgs/{orgId}/api/v1/agents/{agentId}/attest | 
+[**Attest**](AgentsAPI.md#Attest) | **Post** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 [**AuthorizeMcp**](AgentsAPI.md#AuthorizeMcp) | **Post** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
 [**CreateApproval**](AgentsAPI.md#CreateApproval) | **Post** /orgs/{orgId}/api/v1/agents/me/approvals | 
-[**GetAgentCard**](AgentsAPI.md#GetAgentCard) | **Get** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | 
+[**GetAgentCard**](AgentsAPI.md#GetAgentCard) | **Get** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 [**GetApprovalStatus**](AgentsAPI.md#GetApprovalStatus) | **Get** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 [**GetCurrentAgent**](AgentsAPI.md#GetCurrentAgent) | **Get** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
-[**RegisterAgent**](AgentsAPI.md#RegisterAgent) | **Post** /orgs/{orgId}/api/v1/agents/register | 
-[**VerifyAgentCard**](AgentsAPI.md#VerifyAgentCard) | **Post** /orgs/{orgId}/api/v1/agents/agent-card/verify | 
+[**RegisterAgent**](AgentsAPI.md#RegisterAgent) | **Post** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+[**VerifyAgentCard**](AgentsAPI.md#VerifyAgentCard) | **Post** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
 
 
 
@@ -90,7 +90,9 @@ Name | Type | Description  | Notes
 
 ## Attest
 
-> Attest(ctx, orgId, agentId).Execute()
+> AttestResponse Attest(ctx, orgId, agentId).AttestRequest(attestRequest).Execute()
+
+Workload attestation: exchange a cloud OIDC token for an agent access token
 
 
 
@@ -109,14 +111,17 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	agentId := "agentId_example" // string | 
+	attestRequest := *openapiclient.NewAttestRequest("AttestationToken_example") // AttestRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AgentsAPI.Attest(context.Background(), orgId, agentId).Execute()
+	resp, r, err := apiClient.AgentsAPI.Attest(context.Background(), orgId, agentId).AttestRequest(attestRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.Attest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `Attest`: AttestResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.Attest`: %v\n", resp)
 }
 ```
 
@@ -138,10 +143,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **attestRequest** | [**AttestRequest**](AttestRequest.md) |  | 
 
 ### Return type
 
- (empty response body)
+[**AttestResponse**](AttestResponse.md)
 
 ### Authorization
 
@@ -149,8 +155,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -301,7 +307,9 @@ Name | Type | Description  | Notes
 
 ## GetAgentCard
 
-> GetAgentCard(ctx, orgId, agentId).Execute()
+> SignedAgentCard GetAgentCard(ctx, orgId, agentId).Execute()
+
+Signed A2A agent card
 
 
 
@@ -323,11 +331,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AgentsAPI.GetAgentCard(context.Background(), orgId, agentId).Execute()
+	resp, r, err := apiClient.AgentsAPI.GetAgentCard(context.Background(), orgId, agentId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.GetAgentCard``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetAgentCard`: SignedAgentCard
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.GetAgentCard`: %v\n", resp)
 }
 ```
 
@@ -352,7 +362,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**SignedAgentCard**](SignedAgentCard.md)
 
 ### Authorization
 
@@ -361,7 +371,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -511,9 +521,9 @@ Name | Type | Description  | Notes
 
 ## RegisterAgent
 
-> RegisterAgent(ctx, orgId).Execute()
+> RegisterAgentResponse RegisterAgent(ctx, orgId).Execute()
 
-
+Register (or re-register) an agent
 
 ### Example
 
@@ -532,11 +542,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AgentsAPI.RegisterAgent(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AgentsAPI.RegisterAgent(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.RegisterAgent``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `RegisterAgent`: RegisterAgentResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.RegisterAgent`: %v\n", resp)
 }
 ```
 
@@ -559,7 +571,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**RegisterAgentResponse**](RegisterAgentResponse.md)
 
 ### Authorization
 
@@ -568,7 +580,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -577,7 +589,9 @@ Name | Type | Description  | Notes
 
 ## VerifyAgentCard
 
-> VerifyAgentCard(ctx, orgId).Execute()
+> VerifyAgentCardResponse VerifyAgentCard(ctx, orgId).RequestBody(requestBody).Execute()
+
+Verify a signed A2A agent card
 
 
 
@@ -595,14 +609,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	requestBody := map[string]interface{}{"key": interface{}(123)} // map[string]interface{} | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AgentsAPI.VerifyAgentCard(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AgentsAPI.VerifyAgentCard(context.Background(), orgId).RequestBody(requestBody).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AgentsAPI.VerifyAgentCard``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `VerifyAgentCard`: VerifyAgentCardResponse
+	fmt.Fprintf(os.Stdout, "Response from `AgentsAPI.VerifyAgentCard`: %v\n", resp)
 }
 ```
 
@@ -622,10 +639,11 @@ Other parameters are passed through a pointer to a apiVerifyAgentCardRequest str
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **requestBody** | **map[string]interface{}** |  | 
 
 ### Return type
 
- (empty response body)
+[**VerifyAgentCardResponse**](VerifyAgentCardResponse.md)
 
 ### Authorization
 
@@ -633,8 +651,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

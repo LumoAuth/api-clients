@@ -16,9 +16,12 @@ pub struct ApproveRequestRequest {
     /// Optional TTL override in seconds.
     #[serde(rename = "ttl", skip_serializing_if = "Option::is_none")]
     pub ttl: Option<i32>,
-    /// Optional reviewer notes.
+    /// Optional reviewer notes (internal; never shown to the agent).
     #[serde(rename = "notes", skip_serializing_if = "Option::is_none")]
     pub notes: Option<String>,
+    /// Optional message the agent MAY read on the status endpoint / callback.
+    #[serde(rename = "agent_message", skip_serializing_if = "Option::is_none")]
+    pub agent_message: Option<String>,
 }
 
 impl ApproveRequestRequest {
@@ -26,6 +29,7 @@ impl ApproveRequestRequest {
         ApproveRequestRequest {
             ttl: None,
             notes: None,
+            agent_message: None,
         }
     }
 }

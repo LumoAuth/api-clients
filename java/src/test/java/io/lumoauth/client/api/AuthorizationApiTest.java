@@ -14,8 +14,23 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AuthZenDecision;
+import io.lumoauth.client.model.CheckAbacBulkResponse;
+import io.lumoauth.client.model.CheckAbacResponse;
+import io.lumoauth.client.model.CheckAnyPermissionResponse;
+import io.lumoauth.client.model.CheckPermissionResponse;
+import io.lumoauth.client.model.CheckPermissionsBulkResponse;
+import io.lumoauth.client.model.CheckRelationResponse;
+import io.lumoauth.client.model.CheckRelationScopedResponse;
+import io.lumoauth.client.model.EvaluateBatchResponse;
 import io.lumoauth.client.model.ExpandRelationRequest;
 import io.lumoauth.client.model.ExpandRelationResponse;
+import io.lumoauth.client.model.GetMyAttributesResponse;
+import io.lumoauth.client.model.GetResourceAttributesResponse;
+import io.lumoauth.client.model.ListAttributeDefinitionsResponse;
+import io.lumoauth.client.model.ListPermissionsResponse;
+import io.lumoauth.client.model.SetResourceAttributeResponse;
+import io.lumoauth.client.model.SetUserAttributeResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +48,7 @@ public class AuthorizationApiTest {
     private final AuthorizationApi api = new AuthorizationApi();
 
     /**
-     * Check ABAC authorization
+     * Evaluate an ABAC policy decision for the caller
      *
      * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
      *
@@ -42,12 +57,12 @@ public class AuthorizationApiTest {
     @Test
     public void checkAbacTest() throws ApiException {
         String orgId = null;
-        api.checkAbac(orgId);
+        CheckAbacResponse response = api.checkAbac(orgId);
         // TODO: test validations
     }
 
     /**
-     * Bulk check multiple authorization requests
+     * Evaluate up to 100 ABAC checks for the caller in one call
      *
      * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
      *
@@ -56,12 +71,12 @@ public class AuthorizationApiTest {
     @Test
     public void checkAbacBulkTest() throws ApiException {
         String orgId = null;
-        api.checkAbacBulk(orgId);
+        CheckAbacBulkResponse response = api.checkAbacBulk(orgId);
         // TODO: test validations
     }
 
     /**
-     * Check if user has ALL of the specified permissions
+     * Check whether the subject holds all of the permissions
      *
      * POST /api/v1/authz/check-all Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.publish\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      *
@@ -69,12 +84,12 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkAllPermissionsTest() throws ApiException {
-        api.checkAllPermissions();
+        CheckAnyPermissionResponse response = api.checkAllPermissions();
         // TODO: test validations
     }
 
     /**
-     * Check if user has ANY of the specified permissions
+     * Check whether the subject holds any of the permissions
      *
      * POST /api/v1/authz/check-any Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.view\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      *
@@ -82,12 +97,12 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkAnyPermissionTest() throws ApiException {
-        api.checkAnyPermission();
+        CheckAnyPermissionResponse response = api.checkAnyPermission();
         // TODO: test validations
     }
 
     /**
-     * Check if the authenticated user has a specific permission
+     * Check one permission
      *
      * POST /api/v1/authz/check Body: {   \&quot;permission\&quot;: \&quot;document.edit\&quot;,   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123, \&quot;owner_id\&quot;: 456},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — defaults to the caller }  All four check endpoints accept the optional &#x60;subject&#x60;. Naming a subject other than the caller requires the &#x60;authz.check&#x60; permission or the &#x60;authz:check&#x60; scope (403 &#x60;insufficient_permissions&#x60; otherwise) — see ThirdPartySubjectGuard.
      *
@@ -95,12 +110,12 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkPermissionTest() throws ApiException {
-        api.checkPermission();
+        CheckPermissionResponse response = api.checkPermission();
         // TODO: test validations
     }
 
     /**
-     * Check multiple permissions at once
+     * Check up to 100 permissions in one call
      *
      * POST /api/v1/authz/check-bulk Body: {   \&quot;permissions\&quot;: [\&quot;document.edit\&quot;, \&quot;document.delete\&quot;],   \&quot;context\&quot;: {\&quot;document_id\&quot;: 123},   \&quot;subject\&quot;: {\&quot;type\&quot;: \&quot;user\&quot;, \&quot;id\&quot;: \&quot;&lt;uuid&gt;\&quot;}   // optional — see /check }
      *
@@ -108,12 +123,12 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkPermissionsBulkTest() throws ApiException {
-        api.checkPermissionsBulk();
+        CheckPermissionsBulkResponse response = api.checkPermissionsBulk();
         // TODO: test validations
     }
 
     /**
-     * Zanzibar-style relationship check
+     * Zanzibar relationship check
      *
      * POST /api/v1/authz/zanzibar/check Body: {   \&quot;object\&quot;: \&quot;document:123\&quot;,   \&quot;relation\&quot;: \&quot;viewer\&quot;,   \&quot;subject\&quot;: \&quot;user:456\&quot; }
      *
@@ -121,22 +136,24 @@ public class AuthorizationApiTest {
      */
     @Test
     public void checkRelationTest() throws ApiException {
-        api.checkRelation();
+        CheckRelationResponse response = api.checkRelation();
         // TODO: test validations
     }
 
     /**
+     * Zanzibar relationship check
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void checkRelationScopedTest() throws ApiException {
         String orgId = null;
-        api.checkRelationScoped(orgId);
+        CheckRelationScopedResponse response = api.checkRelationScoped(orgId);
         // TODO: test validations
     }
 
     /**
-     * AuthZEN 1.0 single access evaluation.
+     * AuthZEN 1.0 access evaluation
      *
      * POST /api/v1/authz/v1/evaluation Body: {   \&quot;subject\&quot;:  {\&quot;type\&quot;: \&quot;user\&quot;|\&quot;agent\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;action\&quot;:   {\&quot;name\&quot;: \&quot;...\&quot;},   \&quot;resource\&quot;: {\&quot;type\&quot;: \&quot;...\&quot;, \&quot;id\&quot;: \&quot;...\&quot;},   \&quot;context\&quot;:  {...} } Response: {\&quot;decision\&quot;: true|false, \&quot;context\&quot;: {...}?}
      *
@@ -144,12 +161,12 @@ public class AuthorizationApiTest {
      */
     @Test
     public void evaluateTest() throws ApiException {
-        api.evaluate();
+        AuthZenDecision response = api.evaluate();
         // TODO: test validations
     }
 
     /**
-     * AuthZEN 1.0 boxcarred access evaluations.
+     * AuthZEN 1.0 boxcarred access evaluations
      *
      * POST /api/v1/authz/v1/evaluations Body: {   \&quot;subject\&quot;:  {...}?,   // optional defaults, overridden per item   \&quot;action\&quot;:   {...}?,   \&quot;resource\&quot;: {...}?,   \&quot;context\&quot;:  {...}?,   \&quot;evaluations\&quot;: [{...}, ...] } Response: {\&quot;evaluations\&quot;: [{\&quot;decision\&quot;: ...}, ...]} preserving order.
      *
@@ -157,7 +174,7 @@ public class AuthorizationApiTest {
      */
     @Test
     public void evaluateBatchTest() throws ApiException {
-        api.evaluateBatch();
+        EvaluateBatchResponse response = api.evaluateBatch();
         // TODO: test validations
     }
 
@@ -191,7 +208,7 @@ public class AuthorizationApiTest {
     }
 
     /**
-     * Get user&#39;s current attributes (for debugging/UI)
+     * The caller&#39;s ABAC subject attributes
      *
      * GET /api/v1/abac/my-attributes
      *
@@ -200,12 +217,12 @@ public class AuthorizationApiTest {
     @Test
     public void getMyAttributesTest() throws ApiException {
         String orgId = null;
-        api.getMyAttributes(orgId);
+        GetMyAttributesResponse response = api.getMyAttributes(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get resource attributes
+     * Attributes stored for a resource
      *
      * GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
      *
@@ -216,12 +233,12 @@ public class AuthorizationApiTest {
         String orgId = null;
         String resourceType = null;
         String resourceId = null;
-        api.getResourceAttributes(orgId, resourceType, resourceId);
+        GetResourceAttributesResponse response = api.getResourceAttributes(orgId, resourceType, resourceId);
         // TODO: test validations
     }
 
     /**
-     * Get available attribute definitions
+     * Attribute definitions available to the organization
      *
      * GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
      *
@@ -230,12 +247,13 @@ public class AuthorizationApiTest {
     @Test
     public void listAttributeDefinitionsTest() throws ApiException {
         String orgId = null;
-        api.listAttributeDefinitions(orgId);
+        String type = null;
+        ListAttributeDefinitionsResponse response = api.listAttributeDefinitions(orgId, type);
         // TODO: test validations
     }
 
     /**
-     * List all permissions for the authenticated user
+     * List the caller&#39;s effective permissions
      *
      * GET /api/v1/authz/permissions
      *
@@ -243,12 +261,12 @@ public class AuthorizationApiTest {
      */
     @Test
     public void listPermissionsTest() throws ApiException {
-        api.listPermissions();
+        ListPermissionsResponse response = api.listPermissions();
         // TODO: test validations
     }
 
     /**
-     * Set resource attribute
+     * Set a resource attribute
      *
      * PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
      *
@@ -260,12 +278,12 @@ public class AuthorizationApiTest {
         String resourceType = null;
         String resourceId = null;
         String attributeSlug = null;
-        api.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+        SetResourceAttributeResponse response = api.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
         // TODO: test validations
     }
 
     /**
-     * Set user attribute
+     * Set a user attribute
      *
      * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
      *
@@ -276,7 +294,7 @@ public class AuthorizationApiTest {
         String orgId = null;
         String userId = null;
         String attributeSlug = null;
-        api.setUserAttribute(orgId, userId, attributeSlug);
+        SetUserAttributeResponse response = api.setUserAttribute(orgId, userId, attributeSlug);
         // TODO: test validations
     }
 

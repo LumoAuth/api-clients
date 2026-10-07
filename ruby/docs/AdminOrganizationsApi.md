@@ -4,33 +4,33 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_org_invitations_create**](AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations |  |
-| [**admin_org_invitations_list**](AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations |  |
-| [**admin_org_invitations_resend**](AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend |  |
-| [**admin_org_invitations_revoke**](AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} |  |
-| [**admin_org_members_add**](AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members |  |
-| [**admin_org_members_list**](AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members |  |
-| [**admin_org_members_remove**](AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**admin_org_roles_create**](AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles |  |
-| [**admin_org_roles_delete**](AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**admin_org_roles_list**](AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles |  |
-| [**admin_organizations_create**](AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations |  |
-| [**admin_organizations_delete**](AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**admin_organizations_get**](AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**admin_organizations_list**](AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations |  |
-| [**patch_admin_org_members_update**](AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**patch_admin_org_roles_update**](AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**patch_admin_organizations_update**](AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**put_admin_org_members_update**](AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**put_admin_org_roles_update**](AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**put_admin_organizations_update**](AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
+| [**admin_org_invitations_create**](AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization |
+| [**admin_org_invitations_list**](AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations |
+| [**admin_org_invitations_resend**](AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation |
+| [**admin_org_invitations_revoke**](AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation |
+| [**admin_org_members_add**](AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization |
+| [**admin_org_members_list**](AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members |
+| [**admin_org_members_remove**](AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization |
+| [**admin_org_roles_create**](AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role |
+| [**admin_org_roles_delete**](AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role |
+| [**admin_org_roles_list**](AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles |
+| [**admin_organizations_create**](AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization |
+| [**admin_organizations_delete**](AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization |
+| [**admin_organizations_get**](AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization |
+| [**admin_organizations_list**](AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations |
+| [**patch_admin_org_members_update**](AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status |
+| [**patch_admin_org_roles_update**](AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role |
+| [**patch_admin_organizations_update**](AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization |
+| [**put_admin_org_members_update**](AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status |
+| [**put_admin_org_roles_update**](AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role |
+| [**put_admin_organizations_update**](AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization |
 
 
 ## admin_org_invitations_create
 
-> admin_org_invitations_create(org_id, organization_id)
+> <AdminOrgInvitationsCreateResponse> admin_org_invitations_create(org_id, organization_id)
 
-
+Invite a user to an organization
 
 ### Examples
 
@@ -53,8 +53,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_invitations_create(org_id, organization_id)
+  # Invite a user to an organization
+  result = api_instance.admin_org_invitations_create(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_create: #{e}"
 end
@@ -62,17 +63,17 @@ end
 
 #### Using the admin_org_invitations_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_invitations_create_with_http_info(org_id, organization_id)
+> <Array(<AdminOrgInvitationsCreateResponse>, Integer, Hash)> admin_org_invitations_create_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Invite a user to an organization
   data, status_code, headers = api_instance.admin_org_invitations_create_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgInvitationsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_create_with_http_info: #{e}"
 end
@@ -87,7 +88,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgInvitationsCreateResponse**](AdminOrgInvitationsCreateResponse.md)
 
 ### Authorization
 
@@ -96,14 +97,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_invitations_list
 
-> admin_org_invitations_list(org_id, organization_id)
+> <AdminOrgInvitationsListResponse> admin_org_invitations_list(org_id, organization_id)
 
-
+List organization invitations
 
 ### Examples
 
@@ -126,8 +127,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_invitations_list(org_id, organization_id)
+  # List organization invitations
+  result = api_instance.admin_org_invitations_list(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_list: #{e}"
 end
@@ -135,17 +137,17 @@ end
 
 #### Using the admin_org_invitations_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_invitations_list_with_http_info(org_id, organization_id)
+> <Array(<AdminOrgInvitationsListResponse>, Integer, Hash)> admin_org_invitations_list_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # List organization invitations
   data, status_code, headers = api_instance.admin_org_invitations_list_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgInvitationsListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_list_with_http_info: #{e}"
 end
@@ -160,7 +162,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgInvitationsListResponse**](AdminOrgInvitationsListResponse.md)
 
 ### Authorization
 
@@ -169,14 +171,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_invitations_resend
 
-> admin_org_invitations_resend(org_id, organization_id, inv_id)
+> <MessageResponse> admin_org_invitations_resend(org_id, organization_id, inv_id)
 
-
+Resend an invitation
 
 ### Examples
 
@@ -200,8 +202,9 @@ organization_id = 'organization_id_example' # String |
 inv_id = 'inv_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_invitations_resend(org_id, organization_id, inv_id)
+  # Resend an invitation
+  result = api_instance.admin_org_invitations_resend(org_id, organization_id, inv_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_resend: #{e}"
 end
@@ -209,17 +212,17 @@ end
 
 #### Using the admin_org_invitations_resend_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_invitations_resend_with_http_info(org_id, organization_id, inv_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_org_invitations_resend_with_http_info(org_id, organization_id, inv_id)
 
 ```ruby
 begin
-  
+  # Resend an invitation
   data, status_code, headers = api_instance.admin_org_invitations_resend_with_http_info(org_id, organization_id, inv_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_resend_with_http_info: #{e}"
 end
@@ -235,7 +238,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -244,14 +247,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_invitations_revoke
 
-> admin_org_invitations_revoke(org_id, organization_id, inv_id)
+> <MessageResponse> admin_org_invitations_revoke(org_id, organization_id, inv_id)
 
-
+Revoke an invitation
 
 ### Examples
 
@@ -275,8 +278,9 @@ organization_id = 'organization_id_example' # String |
 inv_id = 'inv_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_invitations_revoke(org_id, organization_id, inv_id)
+  # Revoke an invitation
+  result = api_instance.admin_org_invitations_revoke(org_id, organization_id, inv_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_revoke: #{e}"
 end
@@ -284,17 +288,17 @@ end
 
 #### Using the admin_org_invitations_revoke_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_invitations_revoke_with_http_info(org_id, organization_id, inv_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_org_invitations_revoke_with_http_info(org_id, organization_id, inv_id)
 
 ```ruby
 begin
-  
+  # Revoke an invitation
   data, status_code, headers = api_instance.admin_org_invitations_revoke_with_http_info(org_id, organization_id, inv_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_invitations_revoke_with_http_info: #{e}"
 end
@@ -310,7 +314,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -319,14 +323,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_members_add
 
-> admin_org_members_add(org_id, organization_id)
+> <AdminOrgMembersAddResponse> admin_org_members_add(org_id, organization_id)
 
-
+Add a member to an organization
 
 ### Examples
 
@@ -349,8 +353,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_members_add(org_id, organization_id)
+  # Add a member to an organization
+  result = api_instance.admin_org_members_add(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_members_add: #{e}"
 end
@@ -358,17 +363,17 @@ end
 
 #### Using the admin_org_members_add_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_members_add_with_http_info(org_id, organization_id)
+> <Array(<AdminOrgMembersAddResponse>, Integer, Hash)> admin_org_members_add_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Add a member to an organization
   data, status_code, headers = api_instance.admin_org_members_add_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgMembersAddResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_members_add_with_http_info: #{e}"
 end
@@ -383,7 +388,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgMembersAddResponse**](AdminOrgMembersAddResponse.md)
 
 ### Authorization
 
@@ -392,14 +397,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_members_list
 
-> admin_org_members_list(org_id, organization_id)
+> <AdminOrgMembersListResponse> admin_org_members_list(org_id, organization_id)
 
-
+List organization members
 
 ### Examples
 
@@ -422,8 +427,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_members_list(org_id, organization_id)
+  # List organization members
+  result = api_instance.admin_org_members_list(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_members_list: #{e}"
 end
@@ -431,17 +437,17 @@ end
 
 #### Using the admin_org_members_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_members_list_with_http_info(org_id, organization_id)
+> <Array(<AdminOrgMembersListResponse>, Integer, Hash)> admin_org_members_list_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # List organization members
   data, status_code, headers = api_instance.admin_org_members_list_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgMembersListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_members_list_with_http_info: #{e}"
 end
@@ -456,7 +462,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgMembersListResponse**](AdminOrgMembersListResponse.md)
 
 ### Authorization
 
@@ -465,14 +471,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_members_remove
 
-> admin_org_members_remove(org_id, organization_id, user_id)
+> <MessageResponse> admin_org_members_remove(org_id, organization_id, user_id)
 
-
+Remove a member from an organization
 
 ### Examples
 
@@ -496,8 +502,9 @@ organization_id = 'organization_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_members_remove(org_id, organization_id, user_id)
+  # Remove a member from an organization
+  result = api_instance.admin_org_members_remove(org_id, organization_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_members_remove: #{e}"
 end
@@ -505,17 +512,17 @@ end
 
 #### Using the admin_org_members_remove_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_members_remove_with_http_info(org_id, organization_id, user_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_org_members_remove_with_http_info(org_id, organization_id, user_id)
 
 ```ruby
 begin
-  
+  # Remove a member from an organization
   data, status_code, headers = api_instance.admin_org_members_remove_with_http_info(org_id, organization_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_members_remove_with_http_info: #{e}"
 end
@@ -531,7 +538,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -540,14 +547,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_roles_create
 
-> admin_org_roles_create(org_id, organization_id)
+> <AdminOrgRolesCreateResponse> admin_org_roles_create(org_id, organization_id)
 
-
+Create an organization role
 
 ### Examples
 
@@ -570,8 +577,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_roles_create(org_id, organization_id)
+  # Create an organization role
+  result = api_instance.admin_org_roles_create(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_roles_create: #{e}"
 end
@@ -579,17 +587,17 @@ end
 
 #### Using the admin_org_roles_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_roles_create_with_http_info(org_id, organization_id)
+> <Array(<AdminOrgRolesCreateResponse>, Integer, Hash)> admin_org_roles_create_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Create an organization role
   data, status_code, headers = api_instance.admin_org_roles_create_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_roles_create_with_http_info: #{e}"
 end
@@ -604,7 +612,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -613,14 +621,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_roles_delete
 
-> admin_org_roles_delete(org_id, organization_id, role_id)
+> <MessageResponse> admin_org_roles_delete(org_id, organization_id, role_id)
 
-
+Delete an organization role
 
 ### Examples
 
@@ -644,8 +652,9 @@ organization_id = 'organization_id_example' # String |
 role_id = 'role_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_roles_delete(org_id, organization_id, role_id)
+  # Delete an organization role
+  result = api_instance.admin_org_roles_delete(org_id, organization_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_roles_delete: #{e}"
 end
@@ -653,17 +662,17 @@ end
 
 #### Using the admin_org_roles_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_roles_delete_with_http_info(org_id, organization_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_org_roles_delete_with_http_info(org_id, organization_id, role_id)
 
 ```ruby
 begin
-  
+  # Delete an organization role
   data, status_code, headers = api_instance.admin_org_roles_delete_with_http_info(org_id, organization_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_roles_delete_with_http_info: #{e}"
 end
@@ -679,7 +688,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -688,14 +697,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_org_roles_list
 
-> admin_org_roles_list(org_id, organization_id)
+> <AdminOrgRolesListResponse> admin_org_roles_list(org_id, organization_id)
 
-
+List organization roles
 
 ### Examples
 
@@ -718,8 +727,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_org_roles_list(org_id, organization_id)
+  # List organization roles
+  result = api_instance.admin_org_roles_list(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_roles_list: #{e}"
 end
@@ -727,17 +737,17 @@ end
 
 #### Using the admin_org_roles_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_org_roles_list_with_http_info(org_id, organization_id)
+> <Array(<AdminOrgRolesListResponse>, Integer, Hash)> admin_org_roles_list_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # List organization roles
   data, status_code, headers = api_instance.admin_org_roles_list_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgRolesListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_org_roles_list_with_http_info: #{e}"
 end
@@ -752,7 +762,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgRolesListResponse**](AdminOrgRolesListResponse.md)
 
 ### Authorization
 
@@ -761,14 +771,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_organizations_create
 
-> admin_organizations_create(org_id)
+> <AdminOrganizationsCreateResponse> admin_organizations_create(org_id)
 
-
+Create an organization
 
 ### Examples
 
@@ -790,8 +800,9 @@ api_instance = LumoAuthApiClient::AdminOrganizationsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.admin_organizations_create(org_id)
+  # Create an organization
+  result = api_instance.admin_organizations_create(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_create: #{e}"
 end
@@ -799,17 +810,17 @@ end
 
 #### Using the admin_organizations_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_organizations_create_with_http_info(org_id)
+> <Array(<AdminOrganizationsCreateResponse>, Integer, Hash)> admin_organizations_create_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # Create an organization
   data, status_code, headers = api_instance.admin_organizations_create_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrganizationsCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_create_with_http_info: #{e}"
 end
@@ -823,7 +834,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrganizationsCreateResponse**](AdminOrganizationsCreateResponse.md)
 
 ### Authorization
 
@@ -832,14 +843,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_organizations_delete
 
-> admin_organizations_delete(org_id, organization_id)
+> <MessageResponse> admin_organizations_delete(org_id, organization_id)
 
-
+Delete an organization
 
 ### Examples
 
@@ -862,8 +873,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_organizations_delete(org_id, organization_id)
+  # Delete an organization
+  result = api_instance.admin_organizations_delete(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_delete: #{e}"
 end
@@ -871,17 +883,17 @@ end
 
 #### Using the admin_organizations_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_organizations_delete_with_http_info(org_id, organization_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_organizations_delete_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Delete an organization
   data, status_code, headers = api_instance.admin_organizations_delete_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_delete_with_http_info: #{e}"
 end
@@ -896,7 +908,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -905,14 +917,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_organizations_get
 
-> admin_organizations_get(org_id, organization_id)
+> <AdminOrganizationsGetResponse> admin_organizations_get(org_id, organization_id)
 
-
+Get an organization
 
 ### Examples
 
@@ -935,8 +947,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.admin_organizations_get(org_id, organization_id)
+  # Get an organization
+  result = api_instance.admin_organizations_get(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_get: #{e}"
 end
@@ -944,17 +957,17 @@ end
 
 #### Using the admin_organizations_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_organizations_get_with_http_info(org_id, organization_id)
+> <Array(<AdminOrganizationsGetResponse>, Integer, Hash)> admin_organizations_get_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Get an organization
   data, status_code, headers = api_instance.admin_organizations_get_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrganizationsGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_get_with_http_info: #{e}"
 end
@@ -969,7 +982,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -978,14 +991,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_organizations_list
 
-> admin_organizations_list(org_id)
+> <AdminOrganizationsListResponse> admin_organizations_list(org_id)
 
-
+List organizations
 
 ### Examples
 
@@ -1007,8 +1020,9 @@ api_instance = LumoAuthApiClient::AdminOrganizationsApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.admin_organizations_list(org_id)
+  # List organizations
+  result = api_instance.admin_organizations_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_list: #{e}"
 end
@@ -1016,17 +1030,17 @@ end
 
 #### Using the admin_organizations_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_organizations_list_with_http_info(org_id)
+> <Array(<AdminOrganizationsListResponse>, Integer, Hash)> admin_organizations_list_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # List organizations
   data, status_code, headers = api_instance.admin_organizations_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrganizationsListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->admin_organizations_list_with_http_info: #{e}"
 end
@@ -1040,7 +1054,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrganizationsListResponse**](AdminOrganizationsListResponse.md)
 
 ### Authorization
 
@@ -1049,14 +1063,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_org_members_update
 
-> patch_admin_org_members_update(org_id, organization_id, user_id)
+> <PutAdminOrgMembersUpdateResponse> patch_admin_org_members_update(org_id, organization_id, user_id)
 
-
+Update a member's role or status
 
 ### Examples
 
@@ -1080,8 +1094,9 @@ organization_id = 'organization_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.patch_admin_org_members_update(org_id, organization_id, user_id)
+  # Update a member's role or status
+  result = api_instance.patch_admin_org_members_update(org_id, organization_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->patch_admin_org_members_update: #{e}"
 end
@@ -1089,17 +1104,17 @@ end
 
 #### Using the patch_admin_org_members_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id)
+> <Array(<PutAdminOrgMembersUpdateResponse>, Integer, Hash)> patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id)
 
 ```ruby
 begin
-  
+  # Update a member's role or status
   data, status_code, headers = api_instance.patch_admin_org_members_update_with_http_info(org_id, organization_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <PutAdminOrgMembersUpdateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->patch_admin_org_members_update_with_http_info: #{e}"
 end
@@ -1115,7 +1130,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1124,14 +1139,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_org_roles_update
 
-> patch_admin_org_roles_update(org_id, organization_id, role_id)
+> <AdminOrgRolesCreateResponse> patch_admin_org_roles_update(org_id, organization_id, role_id)
 
-
+Update an organization role
 
 ### Examples
 
@@ -1155,8 +1170,9 @@ organization_id = 'organization_id_example' # String |
 role_id = 'role_id_example' # String | 
 
 begin
-  
-  api_instance.patch_admin_org_roles_update(org_id, organization_id, role_id)
+  # Update an organization role
+  result = api_instance.patch_admin_org_roles_update(org_id, organization_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->patch_admin_org_roles_update: #{e}"
 end
@@ -1164,17 +1180,17 @@ end
 
 #### Using the patch_admin_org_roles_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id)
+> <Array(<AdminOrgRolesCreateResponse>, Integer, Hash)> patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id)
 
 ```ruby
 begin
-  
+  # Update an organization role
   data, status_code, headers = api_instance.patch_admin_org_roles_update_with_http_info(org_id, organization_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->patch_admin_org_roles_update_with_http_info: #{e}"
 end
@@ -1190,7 +1206,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1199,14 +1215,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_organizations_update
 
-> patch_admin_organizations_update(org_id, organization_id)
+> <AdminOrganizationsGetResponse> patch_admin_organizations_update(org_id, organization_id)
 
-
+Update an organization
 
 ### Examples
 
@@ -1229,8 +1245,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.patch_admin_organizations_update(org_id, organization_id)
+  # Update an organization
+  result = api_instance.patch_admin_organizations_update(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->patch_admin_organizations_update: #{e}"
 end
@@ -1238,17 +1255,17 @@ end
 
 #### Using the patch_admin_organizations_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_organizations_update_with_http_info(org_id, organization_id)
+> <Array(<AdminOrganizationsGetResponse>, Integer, Hash)> patch_admin_organizations_update_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Update an organization
   data, status_code, headers = api_instance.patch_admin_organizations_update_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrganizationsGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->patch_admin_organizations_update_with_http_info: #{e}"
 end
@@ -1263,7 +1280,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1272,14 +1289,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_org_members_update
 
-> put_admin_org_members_update(org_id, organization_id, user_id)
+> <PutAdminOrgMembersUpdateResponse> put_admin_org_members_update(org_id, organization_id, user_id)
 
-
+Update a member's role or status
 
 ### Examples
 
@@ -1303,8 +1320,9 @@ organization_id = 'organization_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.put_admin_org_members_update(org_id, organization_id, user_id)
+  # Update a member's role or status
+  result = api_instance.put_admin_org_members_update(org_id, organization_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->put_admin_org_members_update: #{e}"
 end
@@ -1312,17 +1330,17 @@ end
 
 #### Using the put_admin_org_members_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_org_members_update_with_http_info(org_id, organization_id, user_id)
+> <Array(<PutAdminOrgMembersUpdateResponse>, Integer, Hash)> put_admin_org_members_update_with_http_info(org_id, organization_id, user_id)
 
 ```ruby
 begin
-  
+  # Update a member's role or status
   data, status_code, headers = api_instance.put_admin_org_members_update_with_http_info(org_id, organization_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <PutAdminOrgMembersUpdateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->put_admin_org_members_update_with_http_info: #{e}"
 end
@@ -1338,7 +1356,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1347,14 +1365,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_org_roles_update
 
-> put_admin_org_roles_update(org_id, organization_id, role_id)
+> <AdminOrgRolesCreateResponse> put_admin_org_roles_update(org_id, organization_id, role_id)
 
-
+Update an organization role
 
 ### Examples
 
@@ -1378,8 +1396,9 @@ organization_id = 'organization_id_example' # String |
 role_id = 'role_id_example' # String | 
 
 begin
-  
-  api_instance.put_admin_org_roles_update(org_id, organization_id, role_id)
+  # Update an organization role
+  result = api_instance.put_admin_org_roles_update(org_id, organization_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->put_admin_org_roles_update: #{e}"
 end
@@ -1387,17 +1406,17 @@ end
 
 #### Using the put_admin_org_roles_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id)
+> <Array(<AdminOrgRolesCreateResponse>, Integer, Hash)> put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id)
 
 ```ruby
 begin
-  
+  # Update an organization role
   data, status_code, headers = api_instance.put_admin_org_roles_update_with_http_info(org_id, organization_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrgRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->put_admin_org_roles_update_with_http_info: #{e}"
 end
@@ -1413,7 +1432,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1422,14 +1441,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_organizations_update
 
-> put_admin_organizations_update(org_id, organization_id)
+> <AdminOrganizationsGetResponse> put_admin_organizations_update(org_id, organization_id)
 
-
+Update an organization
 
 ### Examples
 
@@ -1452,8 +1471,9 @@ org_id = 'org_id_example' # String |
 organization_id = 'organization_id_example' # String | 
 
 begin
-  
-  api_instance.put_admin_organizations_update(org_id, organization_id)
+  # Update an organization
+  result = api_instance.put_admin_organizations_update(org_id, organization_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->put_admin_organizations_update: #{e}"
 end
@@ -1461,17 +1481,17 @@ end
 
 #### Using the put_admin_organizations_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_organizations_update_with_http_info(org_id, organization_id)
+> <Array(<AdminOrganizationsGetResponse>, Integer, Hash)> put_admin_organizations_update_with_http_info(org_id, organization_id)
 
 ```ruby
 begin
-  
+  # Update an organization
   data, status_code, headers = api_instance.put_admin_organizations_update_with_http_info(org_id, organization_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminOrganizationsGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminOrganizationsApi->put_admin_organizations_update_with_http_info: #{e}"
 end
@@ -1486,7 +1506,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1495,5 +1515,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

@@ -29,49 +29,49 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728)
+        /// MCP server protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        void GetProtectedResourceMetadata(string orgId, string serverId);
+        /// <returns>ProtectedResourceMetadata</returns>
+        ProtectedResourceMetadata GetProtectedResourceMetadata(string orgId, string serverId);
 
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728)
+        /// MCP server protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetProtectedResourceMetadataWithHttpInfo(string orgId, string serverId);
+        /// <returns>ApiResponse of ProtectedResourceMetadata</returns>
+        ApiResponse<ProtectedResourceMetadata> GetProtectedResourceMetadataWithHttpInfo(string orgId, string serverId);
         /// <summary>
-        /// Root-level Protected Resource Metadata
+        /// Organization-level protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void GetProtectedResourceMetadataRoot(string orgId);
+        /// <returns>GetProtectedResourceMetadataRoot200Response</returns>
+        GetProtectedResourceMetadataRoot200Response GetProtectedResourceMetadataRoot(string orgId);
 
         /// <summary>
-        /// Root-level Protected Resource Metadata
+        /// Organization-level protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetProtectedResourceMetadataRootWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of GetProtectedResourceMetadataRoot200Response</returns>
+        ApiResponse<GetProtectedResourceMetadataRoot200Response> GetProtectedResourceMetadataRootWithHttpInfo(string orgId);
         /// <summary>
         /// REST API: Get a specific MCP server.
         /// </summary>
@@ -96,28 +96,28 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of GetServerResponse</returns>
         ApiResponse<GetServerResponse> GetServerWithHttpInfo(string orgId, string serverId);
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        void GetServerChallenge(string orgId, string serverId);
+        /// <returns>GetServerChallengeResponse</returns>
+        GetServerChallengeResponse GetServerChallenge(string orgId, string serverId);
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> GetServerChallengeWithHttpInfo(string orgId, string serverId);
+        /// <returns>ApiResponse of GetServerChallengeResponse</returns>
+        ApiResponse<GetServerChallengeResponse> GetServerChallengeWithHttpInfo(string orgId, string serverId);
         /// <summary>
         /// REST API: List MCP servers for a tenant.
         /// </summary>
@@ -140,28 +140,28 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of ListServersResponse</returns>
         ApiResponse<ListServersResponse> ListServersWithHttpInfo(string orgId);
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge (POST)
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        void PostServerChallenge(string orgId, string serverId);
+        /// <returns>GetServerChallengeResponse</returns>
+        GetServerChallengeResponse PostServerChallenge(string orgId, string serverId);
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge (POST)
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PostServerChallengeWithHttpInfo(string orgId, string serverId);
+        /// <returns>ApiResponse of GetServerChallengeResponse</returns>
+        ApiResponse<GetServerChallengeResponse> PostServerChallengeWithHttpInfo(string orgId, string serverId);
         #endregion Synchronous Operations
     }
 
@@ -172,53 +172,53 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728)
+        /// MCP server protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetProtectedResourceMetadataAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ProtectedResourceMetadata</returns>
+        System.Threading.Tasks.Task<ProtectedResourceMetadata> GetProtectedResourceMetadataAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728)
+        /// MCP server protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetProtectedResourceMetadataWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (ProtectedResourceMetadata)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ProtectedResourceMetadata>> GetProtectedResourceMetadataWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Root-level Protected Resource Metadata
+        /// Organization-level protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetProtectedResourceMetadataRootAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of GetProtectedResourceMetadataRoot200Response</returns>
+        System.Threading.Tasks.Task<GetProtectedResourceMetadataRoot200Response> GetProtectedResourceMetadataRootAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Root-level Protected Resource Metadata
+        /// Organization-level protected resource metadata (RFC 9728)
         /// </summary>
         /// <remarks>
-        /// Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetProtectedResourceMetadataRootWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (GetProtectedResourceMetadataRoot200Response)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetProtectedResourceMetadataRoot200Response>> GetProtectedResourceMetadataRootWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// REST API: Get a specific MCP server.
         /// </summary>
@@ -245,30 +245,30 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (GetServerResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<GetServerResponse>> GetServerWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task GetServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of GetServerChallengeResponse</returns>
+        System.Threading.Tasks.Task<GetServerChallengeResponse> GetServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> GetServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (GetServerChallengeResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetServerChallengeResponse>> GetServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// REST API: List MCP servers for a tenant.
         /// </summary>
@@ -293,30 +293,30 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>Task of ApiResponse (ListServersResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ListServersResponse>> ListServersWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge (POST)
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PostServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of GetServerChallengeResponse</returns>
+        System.Threading.Tasks.Task<GetServerChallengeResponse> PostServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint.
+        /// Simulated MCP server authorization challenge (POST)
         /// </summary>
         /// <remarks>
-        /// When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PostServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (GetServerChallengeResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<GetServerChallengeResponse>> PostServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -531,25 +531,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728) Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// MCP server protected resource metadata (RFC 9728) Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        public void GetProtectedResourceMetadata(string orgId, string serverId)
+        /// <returns>ProtectedResourceMetadata</returns>
+        public ProtectedResourceMetadata GetProtectedResourceMetadata(string orgId, string serverId)
         {
-            GetProtectedResourceMetadataWithHttpInfo(orgId, serverId);
+            LumoAuth.ApiClient.Client.ApiResponse<ProtectedResourceMetadata> localVarResponse = GetProtectedResourceMetadataWithHttpInfo(orgId, serverId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728) Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// MCP server protected resource metadata (RFC 9728) Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetProtectedResourceMetadataWithHttpInfo(string orgId, string serverId)
+        /// <returns>ApiResponse of ProtectedResourceMetadata</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<ProtectedResourceMetadata> GetProtectedResourceMetadataWithHttpInfo(string orgId, string serverId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -566,6 +567,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -579,7 +581,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<ProtectedResourceMetadata>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -591,27 +593,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728) Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// MCP server protected resource metadata (RFC 9728) Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetProtectedResourceMetadataAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ProtectedResourceMetadata</returns>
+        public async System.Threading.Tasks.Task<ProtectedResourceMetadata> GetProtectedResourceMetadataAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetProtectedResourceMetadataWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<ProtectedResourceMetadata> localVarResponse = await GetProtectedResourceMetadataWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OAuth 2.0 Protected Resource Metadata (RFC 9728) Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        /// MCP server protected resource metadata (RFC 9728) Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetProtectedResourceMetadataWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (ProtectedResourceMetadata)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<ProtectedResourceMetadata>> GetProtectedResourceMetadataWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -629,6 +632,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -644,7 +648,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<ProtectedResourceMetadata>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -656,23 +660,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Root-level Protected Resource Metadata Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Organization-level protected resource metadata (RFC 9728) Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void GetProtectedResourceMetadataRoot(string orgId)
+        /// <returns>GetProtectedResourceMetadataRoot200Response</returns>
+        public GetProtectedResourceMetadataRoot200Response GetProtectedResourceMetadataRoot(string orgId)
         {
-            GetProtectedResourceMetadataRootWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<GetProtectedResourceMetadataRoot200Response> localVarResponse = GetProtectedResourceMetadataRootWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Root-level Protected Resource Metadata Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Organization-level protected resource metadata (RFC 9728) Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetProtectedResourceMetadataRootWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of GetProtectedResourceMetadataRoot200Response</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<GetProtectedResourceMetadataRoot200Response> GetProtectedResourceMetadataRootWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -685,6 +690,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -697,7 +703,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<GetProtectedResourceMetadataRoot200Response>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -709,25 +715,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Root-level Protected Resource Metadata Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Organization-level protected resource metadata (RFC 9728) Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetProtectedResourceMetadataRootAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of GetProtectedResourceMetadataRoot200Response</returns>
+        public async System.Threading.Tasks.Task<GetProtectedResourceMetadataRoot200Response> GetProtectedResourceMetadataRootAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetProtectedResourceMetadataRootWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<GetProtectedResourceMetadataRoot200Response> localVarResponse = await GetProtectedResourceMetadataRootWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Root-level Protected Resource Metadata Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        /// Organization-level protected resource metadata (RFC 9728) Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetProtectedResourceMetadataRootWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (GetProtectedResourceMetadataRoot200Response)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<GetProtectedResourceMetadataRoot200Response>> GetProtectedResourceMetadataRootWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -741,6 +748,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -755,7 +763,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<GetProtectedResourceMetadataRoot200Response>("/orgs/{orgId}/api/v1/.well-known/oauth-protected-resource", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -918,25 +926,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        public void GetServerChallenge(string orgId, string serverId)
+        /// <returns>GetServerChallengeResponse</returns>
+        public GetServerChallengeResponse GetServerChallenge(string orgId, string serverId)
         {
-            GetServerChallengeWithHttpInfo(orgId, serverId);
+            LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse> localVarResponse = GetServerChallengeWithHttpInfo(orgId, serverId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> GetServerChallengeWithHttpInfo(string orgId, string serverId)
+        /// <returns>ApiResponse of GetServerChallengeResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse> GetServerChallengeWithHttpInfo(string orgId, string serverId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -953,6 +962,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -972,7 +982,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<GetServerChallengeResponse>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -984,27 +994,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task GetServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of GetServerChallengeResponse</returns>
+        public async System.Threading.Tasks.Task<GetServerChallengeResponse> GetServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await GetServerChallengeWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse> localVarResponse = await GetServerChallengeWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> GetServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (GetServerChallengeResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse>> GetServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1022,6 +1033,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1043,7 +1055,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<GetServerChallengeResponse>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1192,25 +1204,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge (POST) Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns></returns>
-        public void PostServerChallenge(string orgId, string serverId)
+        /// <returns>GetServerChallengeResponse</returns>
+        public GetServerChallengeResponse PostServerChallenge(string orgId, string serverId)
         {
-            PostServerChallengeWithHttpInfo(orgId, serverId);
+            LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse> localVarResponse = PostServerChallengeWithHttpInfo(orgId, serverId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge (POST) Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PostServerChallengeWithHttpInfo(string orgId, string serverId)
+        /// <returns>ApiResponse of GetServerChallengeResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse> PostServerChallengeWithHttpInfo(string orgId, string serverId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1227,6 +1240,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1246,7 +1260,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<GetServerChallengeResponse>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1258,27 +1272,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge (POST) Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PostServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of GetServerChallengeResponse</returns>
+        public async System.Threading.Tasks.Task<GetServerChallengeResponse> PostServerChallengeAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PostServerChallengeWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse> localVarResponse = await PostServerChallengeWithHttpInfoAsync(orgId, serverId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Simulated MCP Server 401 challenge endpoint. When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        /// Simulated MCP server authorization challenge (POST) Identical to GET; the HTTP method is only recorded in the audit trail.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="serverId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PostServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (GetServerChallengeResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<GetServerChallengeResponse>> PostServerChallengeWithHttpInfoAsync(string orgId, string serverId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1296,6 +1311,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1317,7 +1333,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<GetServerChallengeResponse>("/orgs/{orgId}/api/v1/mcp/{serverId}/challenge", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

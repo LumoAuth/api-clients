@@ -18,8 +18,11 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.get_protected_resource_metadata_root200_response import GetProtectedResourceMetadataRoot200Response
+from lumoauth_api_client.models.get_server_challenge_response import GetServerChallengeResponse
 from lumoauth_api_client.models.get_server_response import GetServerResponse
 from lumoauth_api_client.models.list_servers_response import ListServersResponse
+from lumoauth_api_client.models.protected_resource_metadata import ProtectedResourceMetadata
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -56,10 +59,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    ) -> ProtectedResourceMetadata:
+        """MCP server protected resource metadata (RFC 9728)
 
-        Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -97,6 +100,9 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ProtectedResourceMetadata",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -126,10 +132,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """OAuth 2.0 Protected Resource Metadata (RFC 9728)
+    ) -> ApiResponse[ProtectedResourceMetadata]:
+        """MCP server protected resource metadata (RFC 9728)
 
-        Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -167,6 +173,9 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ProtectedResourceMetadata",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -197,9 +206,9 @@ class McpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """OAuth 2.0 Protected Resource Metadata (RFC 9728)
+        """MCP server protected resource metadata (RFC 9728)
 
-        Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+        Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -237,6 +246,9 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ProtectedResourceMetadata",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -280,6 +292,13 @@ class McpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -320,10 +339,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Root-level Protected Resource Metadata
+    ) -> GetProtectedResourceMetadataRoot200Response:
+        """Organization-level protected resource metadata (RFC 9728)
 
-        Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -358,6 +377,8 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetProtectedResourceMetadataRoot200Response",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -386,10 +407,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Root-level Protected Resource Metadata
+    ) -> ApiResponse[GetProtectedResourceMetadataRoot200Response]:
+        """Organization-level protected resource metadata (RFC 9728)
 
-        Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -424,6 +445,8 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetProtectedResourceMetadataRoot200Response",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -453,9 +476,9 @@ class McpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Root-level Protected Resource Metadata
+        """Organization-level protected resource metadata (RFC 9728)
 
-        Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+        Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
         :param org_id: (required)
         :type org_id: str
@@ -490,6 +513,8 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetProtectedResourceMetadataRoot200Response",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -530,6 +555,13 @@ class McpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -854,10 +886,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Simulated MCP Server 401 challenge endpoint.
+    ) -> GetServerChallengeResponse:
+        """Simulated MCP server authorization challenge
 
-        When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
         :param org_id: (required)
         :type org_id: str
@@ -895,6 +927,11 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetServerChallengeResponse",
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -924,10 +961,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Simulated MCP Server 401 challenge endpoint.
+    ) -> ApiResponse[GetServerChallengeResponse]:
+        """Simulated MCP server authorization challenge
 
-        When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
         :param org_id: (required)
         :type org_id: str
@@ -965,6 +1002,11 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetServerChallengeResponse",
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -995,9 +1037,9 @@ class McpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Simulated MCP Server 401 challenge endpoint.
+        """Simulated MCP server authorization challenge
 
-        When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
         :param org_id: (required)
         :type org_id: str
@@ -1035,6 +1077,11 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetServerChallengeResponse",
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1078,6 +1125,13 @@ class McpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1388,10 +1442,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Simulated MCP Server 401 challenge endpoint.
+    ) -> GetServerChallengeResponse:
+        """Simulated MCP server authorization challenge (POST)
 
-        When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        Identical to GET; the HTTP method is only recorded in the audit trail.
 
         :param org_id: (required)
         :type org_id: str
@@ -1429,6 +1483,11 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetServerChallengeResponse",
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1458,10 +1517,10 @@ class McpApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Simulated MCP Server 401 challenge endpoint.
+    ) -> ApiResponse[GetServerChallengeResponse]:
+        """Simulated MCP server authorization challenge (POST)
 
-        When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        Identical to GET; the HTTP method is only recorded in the audit trail.
 
         :param org_id: (required)
         :type org_id: str
@@ -1499,6 +1558,11 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetServerChallengeResponse",
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1529,9 +1593,9 @@ class McpApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Simulated MCP Server 401 challenge endpoint.
+        """Simulated MCP server authorization challenge (POST)
 
-        When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+        Identical to GET; the HTTP method is only recorded in the audit trail.
 
         :param org_id: (required)
         :type org_id: str
@@ -1569,6 +1633,11 @@ class McpApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetServerChallengeResponse",
+            '401': None,
+            '403': None,
+            '404': None,
+            '429': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1612,6 +1681,13 @@ class McpApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

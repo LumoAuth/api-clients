@@ -4,25 +4,25 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateClient**](AdminOAuthClientsAPI.md#CreateClient) | **Post** /orgs/{orgId}/api/v1/admin/clients | Create a new OAuth client
+[**CreateClient**](AdminOAuthClientsAPI.md#CreateClient) | **Post** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**DeleteClient**](AdminOAuthClientsAPI.md#DeleteClient) | **Delete** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
-[**DisableClient**](AdminOAuthClientsAPI.md#DisableClient) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable OAuth client
-[**EnableClient**](AdminOAuthClientsAPI.md#EnableClient) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable OAuth client
-[**GetClient**](AdminOAuthClientsAPI.md#GetClient) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get a single OAuth client by ID or clientId
-[**ListClientScopes**](AdminOAuthClientsAPI.md#ListClientScopes) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Get client scopes
-[**ListClients**](AdminOAuthClientsAPI.md#ListClients) | **Get** /orgs/{orgId}/api/v1/admin/clients | List all OAuth clients in the tenant
-[**PatchClient**](AdminOAuthClientsAPI.md#PatchClient) | **Patch** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client
-[**RotateClientSecret**](AdminOAuthClientsAPI.md#RotateClientSecret) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate client secret
-[**SetClientScopes**](AdminOAuthClientsAPI.md#SetClientScopes) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Set client scopes
-[**UpdateClient**](AdminOAuthClientsAPI.md#UpdateClient) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client
+[**DisableClient**](AdminOAuthClientsAPI.md#DisableClient) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
+[**EnableClient**](AdminOAuthClientsAPI.md#EnableClient) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable an OAuth client
+[**GetClient**](AdminOAuthClientsAPI.md#GetClient) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
+[**ListClientScopes**](AdminOAuthClientsAPI.md#ListClientScopes) | **Get** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
+[**ListClients**](AdminOAuthClientsAPI.md#ListClients) | **Get** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+[**PatchClient**](AdminOAuthClientsAPI.md#PatchClient) | **Patch** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+[**RotateClientSecret**](AdminOAuthClientsAPI.md#RotateClientSecret) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
+[**SetClientScopes**](AdminOAuthClientsAPI.md#SetClientScopes) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
+[**UpdateClient**](AdminOAuthClientsAPI.md#UpdateClient) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
 
 
 
 ## CreateClient
 
-> CreateClient(ctx, orgId).Execute()
+> CreateClientResponse CreateClient(ctx, orgId).Execute()
 
-Create a new OAuth client
+Create an OAuth client
 
 ### Example
 
@@ -41,11 +41,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.CreateClient(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.CreateClient(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.CreateClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `CreateClient`: CreateClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.CreateClient`: %v\n", resp)
 }
 ```
 
@@ -68,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**CreateClientResponse**](CreateClientResponse.md)
 
 ### Authorization
 
@@ -77,7 +79,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 
 ## DeleteClient
 
-> DeleteClient(ctx, orgId, clientId).Execute()
+> MessageResponse DeleteClient(ctx, orgId, clientId).Execute()
 
 Delete an OAuth client
 
@@ -108,11 +110,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.DeleteClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.DeleteClient(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.DeleteClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `DeleteClient`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.DeleteClient`: %v\n", resp)
 }
 ```
 
@@ -137,7 +141,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -146,7 +150,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -155,9 +159,9 @@ Name | Type | Description  | Notes
 
 ## DisableClient
 
-> DisableClient(ctx, orgId, clientId).Execute()
+> UpdateClientResponse DisableClient(ctx, orgId, clientId).Execute()
 
-Disable OAuth client
+Disable an OAuth client
 
 ### Example
 
@@ -177,11 +181,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.DisableClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.DisableClient(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.DisableClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `DisableClient`: UpdateClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.DisableClient`: %v\n", resp)
 }
 ```
 
@@ -206,7 +212,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -215,7 +221,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -224,9 +230,9 @@ Name | Type | Description  | Notes
 
 ## EnableClient
 
-> EnableClient(ctx, orgId, clientId).Execute()
+> UpdateClientResponse EnableClient(ctx, orgId, clientId).Execute()
 
-Enable OAuth client
+Enable an OAuth client
 
 ### Example
 
@@ -246,11 +252,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.EnableClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.EnableClient(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.EnableClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `EnableClient`: UpdateClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.EnableClient`: %v\n", resp)
 }
 ```
 
@@ -275,7 +283,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -284,7 +292,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -293,9 +301,9 @@ Name | Type | Description  | Notes
 
 ## GetClient
 
-> GetClient(ctx, orgId, clientId).Execute()
+> GetClientResponse GetClient(ctx, orgId, clientId).Execute()
 
-Get a single OAuth client by ID or clientId
+Get an OAuth client
 
 ### Example
 
@@ -315,11 +323,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.GetClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.GetClient(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.GetClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetClient`: GetClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.GetClient`: %v\n", resp)
 }
 ```
 
@@ -344,7 +354,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**GetClientResponse**](GetClientResponse.md)
 
 ### Authorization
 
@@ -353,7 +363,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -362,9 +372,9 @@ Name | Type | Description  | Notes
 
 ## ListClientScopes
 
-> ListClientScopes(ctx, orgId, clientId).Execute()
+> ListClientScopesResponse ListClientScopes(ctx, orgId, clientId).Execute()
 
-Get client scopes
+List the scopes granted to an OAuth client
 
 ### Example
 
@@ -384,11 +394,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.ListClientScopes(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.ListClientScopes(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.ListClientScopes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `ListClientScopes`: ListClientScopesResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.ListClientScopes`: %v\n", resp)
 }
 ```
 
@@ -413,7 +425,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**ListClientScopesResponse**](ListClientScopesResponse.md)
 
 ### Authorization
 
@@ -422,7 +434,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -431,9 +443,9 @@ Name | Type | Description  | Notes
 
 ## ListClients
 
-> ListClients(ctx, orgId).Execute()
+> ListClientsResponse ListClients(ctx, orgId).Execute()
 
-List all OAuth clients in the tenant
+List OAuth clients
 
 ### Example
 
@@ -452,11 +464,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.ListClients(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.ListClients(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.ListClients``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `ListClients`: ListClientsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.ListClients`: %v\n", resp)
 }
 ```
 
@@ -479,7 +493,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**ListClientsResponse**](ListClientsResponse.md)
 
 ### Authorization
 
@@ -488,7 +502,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -497,9 +511,9 @@ Name | Type | Description  | Notes
 
 ## PatchClient
 
-> PatchClient(ctx, orgId, clientId).Execute()
+> UpdateClientResponse PatchClient(ctx, orgId, clientId).Execute()
 
-Update an existing OAuth client
+Update an OAuth client
 
 ### Example
 
@@ -519,11 +533,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.PatchClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.PatchClient(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.PatchClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchClient`: UpdateClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.PatchClient`: %v\n", resp)
 }
 ```
 
@@ -548,7 +564,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -557,7 +573,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -566,9 +582,9 @@ Name | Type | Description  | Notes
 
 ## RotateClientSecret
 
-> RotateClientSecret(ctx, orgId, clientId).Execute()
+> RotateClientSecretResponse RotateClientSecret(ctx, orgId, clientId).Execute()
 
-Rotate client secret
+Rotate an OAuth client secret
 
 ### Example
 
@@ -588,11 +604,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.RotateClientSecret(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.RotateClientSecret(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.RotateClientSecret``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `RotateClientSecret`: RotateClientSecretResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.RotateClientSecret`: %v\n", resp)
 }
 ```
 
@@ -617,7 +635,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**RotateClientSecretResponse**](RotateClientSecretResponse.md)
 
 ### Authorization
 
@@ -626,7 +644,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -635,9 +653,9 @@ Name | Type | Description  | Notes
 
 ## SetClientScopes
 
-> SetClientScopes(ctx, orgId, clientId).Execute()
+> SetClientScopesResponse SetClientScopes(ctx, orgId, clientId).Execute()
 
-Set client scopes
+Replace the scopes granted to an OAuth client
 
 ### Example
 
@@ -657,11 +675,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.SetClientScopes(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.SetClientScopes(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.SetClientScopes``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `SetClientScopes`: SetClientScopesResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.SetClientScopes`: %v\n", resp)
 }
 ```
 
@@ -686,7 +706,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**SetClientScopesResponse**](SetClientScopesResponse.md)
 
 ### Authorization
 
@@ -695,7 +715,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -704,9 +724,9 @@ Name | Type | Description  | Notes
 
 ## UpdateClient
 
-> UpdateClient(ctx, orgId, clientId).Execute()
+> UpdateClientResponse UpdateClient(ctx, orgId, clientId).Execute()
 
-Update an existing OAuth client
+Replace an OAuth client
 
 ### Example
 
@@ -726,11 +746,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminOAuthClientsAPI.UpdateClient(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminOAuthClientsAPI.UpdateClient(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.UpdateClient``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `UpdateClient`: UpdateClientResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.UpdateClient`: %v\n", resp)
 }
 ```
 
@@ -755,7 +777,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -764,7 +786,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

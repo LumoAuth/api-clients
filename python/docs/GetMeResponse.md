@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **mfa_enabled** | **bool** |  | [optional] 
 **roles** | **List[str]** |  | [optional] 
 **capabilities** | **List[str]** |  | [optional] 
-**tenant** | [**GetMeResponseTenant**](GetMeResponseTenant.md) |  | [optional] 
+**tenant** | [**GroupRef**](GroupRef.md) |  | [optional] 
 
 ## Example
 

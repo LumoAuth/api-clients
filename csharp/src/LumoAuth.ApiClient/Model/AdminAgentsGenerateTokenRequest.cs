@@ -36,27 +36,33 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AdminAgentsGenerateTokenRequest" /> class.
         /// </summary>
-        /// <param name="scopes">Optional scopes to embed in the token..</param>
-        /// <param name="ttl">Optional token lifetime in seconds..</param>
-        public AdminAgentsGenerateTokenRequest(List<string> scopes = default, int ttl = default)
+        /// <param name="expiresIn">Token lifetime in seconds. Default 3600, at most 2592000 (30 days)..</param>
+        /// <param name="scopes">Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400..</param>
+        public AdminAgentsGenerateTokenRequest(int expiresIn = default, List<string> scopes = default)
         {
+            this.ExpiresIn = expiresIn;
             this.Scopes = scopes;
-            this.Ttl = ttl;
         }
 
         /// <summary>
-        /// Optional scopes to embed in the token.
+        /// Token lifetime in seconds. Default 3600, at most 2592000 (30 days).
         /// </summary>
-        /// <value>Optional scopes to embed in the token.</value>
-        [DataMember(Name = "scopes", EmitDefaultValue = false)]
-        public List<string> Scopes { get; set; }
+        /// <value>Token lifetime in seconds. Default 3600, at most 2592000 (30 days).</value>
+        /*
+        <example>600</example>
+        */
+        [DataMember(Name = "expiresIn", EmitDefaultValue = false)]
+        public int ExpiresIn { get; set; }
 
         /// <summary>
-        /// Optional token lifetime in seconds.
+        /// Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
         /// </summary>
-        /// <value>Optional token lifetime in seconds.</value>
-        [DataMember(Name = "ttl", EmitDefaultValue = false)]
-        public int Ttl { get; set; }
+        /// <value>Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.</value>
+        /*
+        <example>[&quot;invoices.read&quot;]</example>
+        */
+        [DataMember(Name = "scopes", EmitDefaultValue = false)]
+        public List<string> Scopes { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -66,8 +72,8 @@ namespace LumoAuth.ApiClient.Model
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("class AdminAgentsGenerateTokenRequest {\n");
+            sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
-            sb.Append("  Ttl: ").Append(Ttl).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

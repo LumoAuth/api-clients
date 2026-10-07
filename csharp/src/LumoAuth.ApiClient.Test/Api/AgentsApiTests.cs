@@ -76,7 +76,9 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string agentId = null;
-            //instance.Attest(orgId, agentId);
+            //AttestRequest attestRequest = null;
+            //var response = instance.Attest(orgId, agentId, attestRequest);
+            //Assert.IsType<AttestResponse>(response);
         }
 
         /// <summary>
@@ -114,7 +116,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string agentId = null;
-            //instance.GetAgentCard(orgId, agentId);
+            //var response = instance.GetAgentCard(orgId, agentId);
+            //Assert.IsType<SignedAgentCard>(response);
         }
 
         /// <summary>
@@ -150,7 +153,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.RegisterAgent(orgId);
+            //var response = instance.RegisterAgent(orgId);
+            //Assert.IsType<RegisterAgentResponse>(response);
         }
 
         /// <summary>
@@ -161,7 +165,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.VerifyAgentCard(orgId);
+            //Dictionary<string, Object> requestBody = null;
+            //var response = instance.VerifyAgentCard(orgId, requestBody);
+            //Assert.IsType<VerifyAgentCardResponse>(response);
         }
     }
 }

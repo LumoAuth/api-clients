@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller. |
-| [**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller&#39;s active sandbox tenants (their own only). |
-| [**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24} |
+| [**admin_sandbox_destroy**](AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant |
+| [**admin_sandbox_list**](AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants |
+| [**admin_sandbox_spawn**](AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant |
 
 
 ## admin_sandbox_destroy
 
-> admin_sandbox_destroy(org_id, sandbox_slug)
+> <MessageResponse> admin_sandbox_destroy(org_id, sandbox_slug)
 
-POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+Destroy a sandbox tenant
 
 ### Examples
 
@@ -36,8 +36,9 @@ org_id = 'org_id_example' # String |
 sandbox_slug = 'sandbox_slug_example' # String | 
 
 begin
-  # POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
-  api_instance.admin_sandbox_destroy(org_id, sandbox_slug)
+  # Destroy a sandbox tenant
+  result = api_instance.admin_sandbox_destroy(org_id, sandbox_slug)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSandboxApi->admin_sandbox_destroy: #{e}"
 end
@@ -45,17 +46,17 @@ end
 
 #### Using the admin_sandbox_destroy_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_sandbox_destroy_with_http_info(org_id, sandbox_slug)
+> <Array(<MessageResponse>, Integer, Hash)> admin_sandbox_destroy_with_http_info(org_id, sandbox_slug)
 
 ```ruby
 begin
-  # POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+  # Destroy a sandbox tenant
   data, status_code, headers = api_instance.admin_sandbox_destroy_with_http_info(org_id, sandbox_slug)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSandboxApi->admin_sandbox_destroy_with_http_info: #{e}"
 end
@@ -70,7 +71,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -79,14 +80,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_sandbox_list
 
-> admin_sandbox_list(org_id)
+> <AdminSandboxListResponse> admin_sandbox_list(org_id)
 
-GET / Lists the caller's active sandbox tenants (their own only).
+List the caller's sandbox tenants
 
 ### Examples
 
@@ -108,8 +109,9 @@ api_instance = LumoAuthApiClient::AdminSandboxApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # GET / Lists the caller's active sandbox tenants (their own only).
-  api_instance.admin_sandbox_list(org_id)
+  # List the caller's sandbox tenants
+  result = api_instance.admin_sandbox_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSandboxApi->admin_sandbox_list: #{e}"
 end
@@ -117,17 +119,17 @@ end
 
 #### Using the admin_sandbox_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_sandbox_list_with_http_info(org_id)
+> <Array(<AdminSandboxListResponse>, Integer, Hash)> admin_sandbox_list_with_http_info(org_id)
 
 ```ruby
 begin
-  # GET / Lists the caller's active sandbox tenants (their own only).
+  # List the caller's sandbox tenants
   data, status_code, headers = api_instance.admin_sandbox_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminSandboxListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSandboxApi->admin_sandbox_list_with_http_info: #{e}"
 end
@@ -141,7 +143,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminSandboxListResponse**](AdminSandboxListResponse.md)
 
 ### Authorization
 
@@ -150,14 +152,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_sandbox_spawn
 
-> admin_sandbox_spawn(org_id)
+> <AdminSandboxSpawnResponse> admin_sandbox_spawn(org_id, opts)
 
-POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+Spawn a sandbox tenant
 
 ### Examples
 
@@ -177,10 +179,14 @@ end
 
 api_instance = LumoAuthApiClient::AdminSandboxApi.new
 org_id = 'org_id_example' # String | 
+opts = {
+  admin_sandbox_spawn_request: LumoAuthApiClient::AdminSandboxSpawnRequest.new # AdminSandboxSpawnRequest | 
+}
 
 begin
-  # POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
-  api_instance.admin_sandbox_spawn(org_id)
+  # Spawn a sandbox tenant
+  result = api_instance.admin_sandbox_spawn(org_id, opts)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSandboxApi->admin_sandbox_spawn: #{e}"
 end
@@ -188,17 +194,17 @@ end
 
 #### Using the admin_sandbox_spawn_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_sandbox_spawn_with_http_info(org_id)
+> <Array(<AdminSandboxSpawnResponse>, Integer, Hash)> admin_sandbox_spawn_with_http_info(org_id, opts)
 
 ```ruby
 begin
-  # POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
-  data, status_code, headers = api_instance.admin_sandbox_spawn_with_http_info(org_id)
+  # Spawn a sandbox tenant
+  data, status_code, headers = api_instance.admin_sandbox_spawn_with_http_info(org_id, opts)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminSandboxSpawnResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminSandboxApi->admin_sandbox_spawn_with_http_info: #{e}"
 end
@@ -209,10 +215,11 @@ end
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
 | **org_id** | **String** |  |  |
+| **admin_sandbox_spawn_request** | [**AdminSandboxSpawnRequest**](AdminSandboxSpawnRequest.md) |  | [optional] |
 
 ### Return type
 
-nil (empty response body)
+[**AdminSandboxSpawnResponse**](AdminSandboxSpawnResponse.md)
 
 ### Authorization
 
@@ -220,6 +227,6 @@ nil (empty response body)
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 

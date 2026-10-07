@@ -21,7 +21,7 @@ Method | HTTP request | Description
 
 # **adminRolesAddPermissions**
 ```swift
-    open class func adminRolesAddPermissions(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesAddPermissions(orgId: String, roleId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Add permission(s) to a role
@@ -56,7 +56,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -65,13 +65,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesAddUser**
 ```swift
-    open class func adminRolesAddUser(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesAddUser(orgId: String, roleId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Assign a user to a role
@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -115,13 +115,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesCreate**
 ```swift
-    open class func adminRolesCreate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesCreate(orgId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a new role
@@ -154,7 +154,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -163,13 +163,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesDelete**
 ```swift
-    open class func adminRolesDelete(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesDelete(orgId: String, roleId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Delete a role
@@ -204,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -213,13 +213,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesGet**
 ```swift
-    open class func adminRolesGet(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesGet(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get a single role by ID or slug
@@ -254,7 +254,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesGetResponse**](AdminRolesGetResponse.md)
 
 ### Authorization
 
@@ -263,13 +263,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesGetPermissions**
 ```swift
-    open class func adminRolesGetPermissions(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesGetPermissions(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesGetPermissionsResponse?, _ error: Error?) -> Void)
 ```
 
 Get role permissions
@@ -304,7 +304,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -313,13 +313,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesGetUsers**
 ```swift
-    open class func adminRolesGetUsers(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesGetUsers(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesGetUsersResponse?, _ error: Error?) -> Void)
 ```
 
 Get users assigned to a role
@@ -354,7 +354,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesGetUsersResponse**](AdminRolesGetUsersResponse.md)
 
 ### Authorization
 
@@ -363,13 +363,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesList**
 ```swift
-    open class func adminRolesList(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesList(orgId: String, completion: @escaping (_ data: AdminRolesListResponse?, _ error: Error?) -> Void)
 ```
 
 List all roles in the tenant
@@ -402,7 +402,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesListResponse**](AdminRolesListResponse.md)
 
 ### Authorization
 
@@ -411,13 +411,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesRemovePermission**
 ```swift
-    open class func adminRolesRemovePermission(orgId: String, roleId: String, permissionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesRemovePermission(orgId: String, roleId: String, permissionId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Remove a permission from a role
@@ -454,7 +454,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -463,13 +463,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesRemoveUser**
 ```swift
-    open class func adminRolesRemoveUser(orgId: String, roleId: String, userId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesRemoveUser(orgId: String, roleId: String, userId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Remove a user from a role
@@ -506,7 +506,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -515,13 +515,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminRolesUpdatePermissions**
 ```swift
-    open class func adminRolesUpdatePermissions(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminRolesUpdatePermissions(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update role permissions (replaces all)
@@ -556,7 +556,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -565,13 +565,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminRolesUpdate**
 ```swift
-    open class func patchAdminRolesUpdate(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func patchAdminRolesUpdate(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an existing role
@@ -606,7 +606,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -615,13 +615,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminRolesUpdate**
 ```swift
-    open class func putAdminRolesUpdate(orgId: String, roleId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func putAdminRolesUpdate(orgId: String, roleId: String, completion: @escaping (_ data: AdminRolesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update an existing role
@@ -656,7 +656,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -665,7 +665,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

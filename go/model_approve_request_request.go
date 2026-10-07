@@ -22,8 +22,10 @@ var _ MappedNullable = &ApproveRequestRequest{}
 type ApproveRequestRequest struct {
 	// Optional TTL override in seconds.
 	Ttl *int32 `json:"ttl,omitempty"`
-	// Optional reviewer notes.
+	// Optional reviewer notes (internal; never shown to the agent).
 	Notes *string `json:"notes,omitempty"`
+	// Optional message the agent MAY read on the status endpoint / callback.
+	AgentMessage *string `json:"agent_message,omitempty"`
 }
 
 // NewApproveRequestRequest instantiates a new ApproveRequestRequest object
@@ -107,6 +109,38 @@ func (o *ApproveRequestRequest) SetNotes(v string) {
 	o.Notes = &v
 }
 
+// GetAgentMessage returns the AgentMessage field value if set, zero value otherwise.
+func (o *ApproveRequestRequest) GetAgentMessage() string {
+	if o == nil || IsNil(o.AgentMessage) {
+		var ret string
+		return ret
+	}
+	return *o.AgentMessage
+}
+
+// GetAgentMessageOk returns a tuple with the AgentMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApproveRequestRequest) GetAgentMessageOk() (*string, bool) {
+	if o == nil || IsNil(o.AgentMessage) {
+		return nil, false
+	}
+	return o.AgentMessage, true
+}
+
+// HasAgentMessage returns a boolean if a field has been set.
+func (o *ApproveRequestRequest) HasAgentMessage() bool {
+	if o != nil && !IsNil(o.AgentMessage) {
+		return true
+	}
+
+	return false
+}
+
+// SetAgentMessage gets a reference to the given string and assigns it to the AgentMessage field.
+func (o *ApproveRequestRequest) SetAgentMessage(v string) {
+	o.AgentMessage = &v
+}
+
 func (o ApproveRequestRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +156,9 @@ func (o ApproveRequestRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Notes) {
 		toSerialize["notes"] = o.Notes
+	}
+	if !IsNil(o.AgentMessage) {
+		toSerialize["agent_message"] = o.AgentMessage
 	}
 	return toSerialize, nil
 }

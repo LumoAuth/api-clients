@@ -11,7 +11,9 @@ Name | Type | Description | Notes
 **task_id** | **str** |  | [optional] 
 **token_url** | **str** | Present when approved. | [optional] 
 **granted_ttl** | **int** | Present when approved. | [optional] 
-**review_notes** | **str** | Present when denied. | [optional] 
+**has_notes** | **bool** | Present when decided: whether the reviewer left notes (the notes themselves are never returned). | [optional] 
+**agent_message** | **str** | Present when decided: message the reviewer explicitly wrote for the agent. | [optional] 
+**delegation_consent_required** | **bool** | Present when pending: the on_behalf_of user must consent. | [optional] 
 **expires_at** | **datetime** | Present when pending. | [optional] 
 
 ## Example

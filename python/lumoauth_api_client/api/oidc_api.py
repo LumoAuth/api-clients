@@ -18,6 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.userinfo_response import UserinfoResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,9 +54,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """check_session
+    ) -> str:
+        """OP session-check iframe (OIDC Session Management 1.0)
 
+        The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -90,6 +92,7 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,9 +121,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """check_session
+    ) -> ApiResponse[str]:
+        """OP session-check iframe (OIDC Session Management 1.0)
 
+        The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -155,6 +159,7 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,8 +189,9 @@ class OIDCApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """check_session
+        """OP session-check iframe (OIDC Session Management 1.0)
 
+        The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -220,6 +226,7 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +267,13 @@ class OIDCApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -300,9 +314,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """logout
+    ) -> str:
+        """RP-initiated logout (OIDC RP-Initiated Logout 1.0)
 
+        end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -337,6 +352,9 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -365,9 +383,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """logout
+    ) -> ApiResponse[str]:
+        """RP-initiated logout (OIDC RP-Initiated Logout 1.0)
 
+        end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -402,6 +421,9 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -431,8 +453,9 @@ class OIDCApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """logout
+        """RP-initiated logout (OIDC RP-Initiated Logout 1.0)
 
+        end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -467,6 +490,9 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -507,6 +533,13 @@ class OIDCApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -547,9 +580,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """logout_post
+    ) -> str:
+        """RP-initiated logout (confirmation submission)
 
+        Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -584,6 +618,9 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -612,9 +649,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """logout_post
+    ) -> ApiResponse[str]:
+        """RP-initiated logout (confirmation submission)
 
+        Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -649,6 +687,9 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -678,8 +719,9 @@ class OIDCApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """logout_post
+        """RP-initiated logout (confirmation submission)
 
+        Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
 
         :param org_id: (required)
         :type org_id: str
@@ -714,6 +756,9 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '302': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -754,6 +799,13 @@ class OIDCApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/html'
+                ]
+            )
 
 
         # authentication setting
@@ -794,10 +846,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """OIDC UserInfo Endpoint
+    ) -> UserinfoResponse:
+        """OpenID Connect UserInfo endpoint
 
-        Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
 
         :param org_id: (required)
         :type org_id: str
@@ -832,6 +884,10 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserinfoResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -860,10 +916,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """OIDC UserInfo Endpoint
+    ) -> ApiResponse[UserinfoResponse]:
+        """OpenID Connect UserInfo endpoint
 
-        Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
 
         :param org_id: (required)
         :type org_id: str
@@ -898,6 +954,10 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserinfoResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -927,9 +987,9 @@ class OIDCApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """OIDC UserInfo Endpoint
+        """OpenID Connect UserInfo endpoint
 
-        Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
 
         :param org_id: (required)
         :type org_id: str
@@ -964,6 +1024,10 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserinfoResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1004,6 +1068,13 @@ class OIDCApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1045,10 +1116,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """OIDC UserInfo Endpoint
+    ) -> UserinfoResponse:
+        """OpenID Connect UserInfo endpoint (POST)
 
-        Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        Identical to GET.
 
         :param org_id: (required)
         :type org_id: str
@@ -1083,6 +1154,10 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserinfoResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1111,10 +1186,10 @@ class OIDCApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """OIDC UserInfo Endpoint
+    ) -> ApiResponse[UserinfoResponse]:
+        """OpenID Connect UserInfo endpoint (POST)
 
-        Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        Identical to GET.
 
         :param org_id: (required)
         :type org_id: str
@@ -1149,6 +1224,10 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserinfoResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1178,9 +1257,9 @@ class OIDCApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """OIDC UserInfo Endpoint
+        """OpenID Connect UserInfo endpoint (POST)
 
-        Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        Identical to GET.
 
         :param org_id: (required)
         :type org_id: str
@@ -1215,6 +1294,10 @@ class OIDCApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserinfoResponse",
+            '400': None,
+            '401': None,
+            '403': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1255,6 +1338,13 @@ class OIDCApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

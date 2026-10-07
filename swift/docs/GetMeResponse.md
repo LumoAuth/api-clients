@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **mfaEnabled** | **Bool** |  | [optional] 
 **roles** | **[String]** |  | [optional] 
 **capabilities** | **[String]** |  | [optional] 
-**tenant** | [**GetMeResponseTenant**](GetMeResponseTenant.md) |  | [optional] 
+**tenant** | [**GroupRef**](GroupRef.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

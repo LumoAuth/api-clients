@@ -130,6 +130,14 @@ public class GetServerResponseTest {
     }
 
     /**
+     * Test the property 'requireDpop'
+     */
+    @Test
+    public void requireDpopTest() {
+        // TODO: test requireDpop
+    }
+
+    /**
      * Test the property 'tokenLifetime'
      */
     @Test

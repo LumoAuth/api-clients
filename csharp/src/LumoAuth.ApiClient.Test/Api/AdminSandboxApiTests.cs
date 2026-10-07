@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string sandboxSlug = null;
-            //instance.AdminSandboxDestroy(orgId, sandboxSlug);
+            //var response = instance.AdminSandboxDestroy(orgId, sandboxSlug);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSandboxList(orgId);
+            //var response = instance.AdminSandboxList(orgId);
+            //Assert.IsType<AdminSandboxListResponse>(response);
         }
 
         /// <summary>
@@ -83,7 +87,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSandboxSpawn(orgId);
+            //AdminSandboxSpawnRequest? adminSandboxSpawnRequest = null;
+            //var response = instance.AdminSandboxSpawn(orgId, adminSandboxSpawnRequest);
+            //Assert.IsType<AdminSandboxSpawnResponse>(response);
         }
     }
 }

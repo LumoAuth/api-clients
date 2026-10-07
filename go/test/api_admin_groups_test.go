@@ -29,9 +29,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsAddMembers(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsAddMembers(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -43,9 +44,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsAddRole(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsAddRole(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -70,9 +73,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsDelete(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsDelete(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -84,9 +88,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsGet(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsGet(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -98,9 +103,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsGetMembers(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsGetMembers(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -112,9 +118,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsGroupsGetRoles(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsGroupsGetRoles(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -125,9 +132,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -140,9 +148,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var groupId string
 		var userId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveMember(context.Background(), orgId, groupId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveMember(context.Background(), orgId, groupId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -155,9 +164,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var groupId string
 		var roleId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveRole(context.Background(), orgId, groupId, roleId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsRemoveRole(context.Background(), orgId, groupId, roleId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -169,9 +179,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsUpdateRoles(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.AdminGroupsUpdateRoles(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -183,9 +194,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.PatchAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.PatchAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -197,9 +209,10 @@ func Test_lumoauthclient_AdminGroupsAPIService(t *testing.T) {
 		var orgId string
 		var groupId string
 
-		httpRes, err := apiClient.AdminGroupsAPI.PutAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
+		resp, httpRes, err := apiClient.AdminGroupsAPI.PutAdminGroupsUpdate(context.Background(), orgId, groupId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

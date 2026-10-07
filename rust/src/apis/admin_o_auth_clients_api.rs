@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateClientError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,7 @@ pub enum CreateClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteClientError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +34,7 @@ pub enum DeleteClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DisableClientError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +42,7 @@ pub enum DisableClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EnableClientError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +50,7 @@ pub enum EnableClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetClientError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +58,7 @@ pub enum GetClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListClientScopesError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +66,6 @@ pub enum ListClientScopesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListClientsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +73,7 @@ pub enum ListClientsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchClientError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +81,7 @@ pub enum PatchClientError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RotateClientSecretError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +89,7 @@ pub enum RotateClientSecretError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetClientScopesError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,12 +97,12 @@ pub enum SetClientScopesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateClientError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn create_client(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CreateClientError>> {
+pub async fn create_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CreateClientResponse, Error<CreateClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -130,9 +128,20 @@ pub async fn create_client(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CreateClientError> = serde_json::from_str(&content).ok();
@@ -140,7 +149,7 @@ pub async fn create_client(configuration: &configuration::Configuration, org_id:
     }
 }
 
-pub async fn delete_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<DeleteClientError>> {
+pub async fn delete_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::MessageResponse, Error<DeleteClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -167,9 +176,20 @@ pub async fn delete_client(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<DeleteClientError> = serde_json::from_str(&content).ok();
@@ -177,7 +197,7 @@ pub async fn delete_client(configuration: &configuration::Configuration, org_id:
     }
 }
 
-pub async fn disable_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<DisableClientError>> {
+pub async fn disable_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<DisableClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -204,9 +224,20 @@ pub async fn disable_client(configuration: &configuration::Configuration, org_id
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<DisableClientError> = serde_json::from_str(&content).ok();
@@ -214,7 +245,7 @@ pub async fn disable_client(configuration: &configuration::Configuration, org_id
     }
 }
 
-pub async fn enable_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<EnableClientError>> {
+pub async fn enable_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<EnableClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -241,9 +272,20 @@ pub async fn enable_client(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<EnableClientError> = serde_json::from_str(&content).ok();
@@ -251,7 +293,7 @@ pub async fn enable_client(configuration: &configuration::Configuration, org_id:
     }
 }
 
-pub async fn get_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<GetClientError>> {
+pub async fn get_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::GetClientResponse, Error<GetClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -278,9 +320,20 @@ pub async fn get_client(configuration: &configuration::Configuration, org_id: &s
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetClientError> = serde_json::from_str(&content).ok();
@@ -288,7 +341,7 @@ pub async fn get_client(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-pub async fn list_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<ListClientScopesError>> {
+pub async fn list_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::ListClientScopesResponse, Error<ListClientScopesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -315,9 +368,20 @@ pub async fn list_client_scopes(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListClientScopesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListClientScopesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListClientScopesError> = serde_json::from_str(&content).ok();
@@ -325,7 +389,7 @@ pub async fn list_client_scopes(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn list_clients(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<ListClientsError>> {
+pub async fn list_clients(configuration: &configuration::Configuration, org_id: &str) -> Result<models::ListClientsResponse, Error<ListClientsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -351,9 +415,20 @@ pub async fn list_clients(configuration: &configuration::Configuration, org_id: 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListClientsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListClientsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListClientsError> = serde_json::from_str(&content).ok();
@@ -361,7 +436,7 @@ pub async fn list_clients(configuration: &configuration::Configuration, org_id: 
     }
 }
 
-pub async fn patch_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<PatchClientError>> {
+pub async fn patch_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<PatchClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -388,9 +463,20 @@ pub async fn patch_client(configuration: &configuration::Configuration, org_id: 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchClientError> = serde_json::from_str(&content).ok();
@@ -398,7 +484,7 @@ pub async fn patch_client(configuration: &configuration::Configuration, org_id: 
     }
 }
 
-pub async fn rotate_client_secret(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<RotateClientSecretError>> {
+pub async fn rotate_client_secret(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::RotateClientSecretResponse, Error<RotateClientSecretError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -425,9 +511,20 @@ pub async fn rotate_client_secret(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RotateClientSecretResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RotateClientSecretResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RotateClientSecretError> = serde_json::from_str(&content).ok();
@@ -435,7 +532,7 @@ pub async fn rotate_client_secret(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn set_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<SetClientScopesError>> {
+pub async fn set_client_scopes(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::SetClientScopesResponse, Error<SetClientScopesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -462,9 +559,20 @@ pub async fn set_client_scopes(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SetClientScopesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SetClientScopesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SetClientScopesError> = serde_json::from_str(&content).ok();
@@ -472,7 +580,7 @@ pub async fn set_client_scopes(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn update_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<(), Error<UpdateClientError>> {
+pub async fn update_client(configuration: &configuration::Configuration, org_id: &str, client_id: &str) -> Result<models::UpdateClientResponse, Error<UpdateClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_client_id = client_id;
@@ -499,9 +607,20 @@ pub async fn update_client(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateClientResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateClientResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UpdateClientError> = serde_json::from_str(&content).ok();

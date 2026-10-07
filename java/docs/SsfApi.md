@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**createStreamConfig**](SsfApi.md#createStreamConfig) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; } |
-| [**deleteStreamConfig**](SsfApi.md#deleteStreamConfig) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream |  |
-| [**getStreamConfig**](SsfApi.md#getStreamConfig) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned. |
-| [**verifyStream**](SsfApi.md#verifyStream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; } |
+| [**createStreamConfig**](SsfApi.md#createStreamConfig) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream |
+| [**deleteStreamConfig**](SsfApi.md#deleteStreamConfig) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream |
+| [**getStreamConfig**](SsfApi.md#getStreamConfig) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s) |
+| [**verifyStream**](SsfApi.md#verifyStream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event |
 
 
 <a id="createStreamConfig"></a>
 # **createStreamConfig**
-> createStreamConfig(orgId)
+> SsfStream createStreamConfig(orgId)
 
-Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
+Create an SSF stream
 
 ### Example
 ```java
@@ -44,7 +44,8 @@ public class Example {
     SsfApi apiInstance = new SsfApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.createStreamConfig(orgId);
+      SsfStream result = apiInstance.createStreamConfig(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SsfApi#createStreamConfig");
       System.err.println("Status code: " + e.getCode());
@@ -64,7 +65,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**SsfStream**](SsfStream.md)
 
 ### Authorization
 
@@ -73,18 +74,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Stream configuration |  -  |
+| **400** | Unsupported delivery method or missing field |  -  |
 
 <a id="deleteStreamConfig"></a>
 # **deleteStreamConfig**
-> deleteStreamConfig(orgId)
+> deleteStreamConfig(streamId, orgId)
 
-
+Delete an SSF stream
 
 ### Example
 ```java
@@ -112,9 +114,10 @@ public class Example {
     BearerAuth.setBearerToken("BEARER TOKEN");
 
     SsfApi apiInstance = new SsfApi(defaultClient);
+    String streamId = "streamId_example"; // String | 
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.deleteStreamConfig(orgId);
+      apiInstance.deleteStreamConfig(streamId, orgId);
     } catch (ApiException e) {
       System.err.println("Exception when calling SsfApi#deleteStreamConfig");
       System.err.println("Status code: " + e.getCode());
@@ -130,6 +133,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
+| **streamId** | **String**|  | |
 | **orgId** | **String**|  | |
 
 ### Return type
@@ -148,13 +152,15 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **204** | Stream deleted |  -  |
+| **400** | Missing stream_id |  -  |
+| **404** | Stream not found |  -  |
 
 <a id="getStreamConfig"></a>
 # **getStreamConfig**
-> getStreamConfig(orgId)
+> GetStreamConfig200Response getStreamConfig(orgId, streamId)
 
-Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
+Read SSF stream configuration(s)
 
 ### Example
 ```java
@@ -183,8 +189,10 @@ public class Example {
 
     SsfApi apiInstance = new SsfApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    String streamId = "streamId_example"; // String | 
     try {
-      apiInstance.getStreamConfig(orgId);
+      GetStreamConfig200Response result = apiInstance.getStreamConfig(orgId, streamId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SsfApi#getStreamConfig");
       System.err.println("Status code: " + e.getCode());
@@ -201,10 +209,11 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **streamId** | **String**|  | [optional] |
 
 ### Return type
 
-null (empty response body)
+[**GetStreamConfig200Response**](GetStreamConfig200Response.md)
 
 ### Authorization
 
@@ -213,18 +222,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | A single stream (with stream_id) or all of the tenant&#39;s streams |  -  |
+| **404** | Stream not found |  -  |
 
 <a id="verifyStream"></a>
 # **verifyStream**
 > verifyStream(orgId)
 
-SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+Request a stream verification event
 
 ### Example
 ```java
@@ -288,5 +298,8 @@ null (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **204** | Verification event queued |  -  |
+| **400** | Missing stream_id |  -  |
+| **404** | Stream not found |  -  |
+| **409** | Stream is not enabled |  -  |
 

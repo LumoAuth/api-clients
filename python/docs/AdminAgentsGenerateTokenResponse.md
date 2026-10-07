@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**data** | **object** | The issued token and its metadata (access_token, expires_in, ...). | [optional] 
+**data** | [**AdminAgentsGenerateTokenResponseData**](AdminAgentsGenerateTokenResponseData.md) |  | [optional] 
 
 ## Example
 

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **MfaEnabled** | **bool?** |  | [optional] 
 **Roles** | **List&lt;string&gt;** |  | [optional] 
 **Capabilities** | **List&lt;string&gt;** |  | [optional] 
-**Tenant** | [**GetMeResponseTenant**](GetMeResponseTenant.md) |  | [optional] 
+**Tenant** | [**GroupRef**](GroupRef.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

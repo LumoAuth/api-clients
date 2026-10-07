@@ -13,17 +13,19 @@ import AnyCodable
 open class AdminEmailAPI {
 
     /**
-
+     Remove the custom email template so the built-in default is used
+     
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesDelete(orgId: String, type: String) async throws {
+    open class func adminEmailTemplatesDelete(orgId: String, type: String) async throws -> MessageResponse {
         return try await adminEmailTemplatesDeleteWithRequestBuilder(orgId: orgId, type: type).execute().body
     }
 
     /**
+     Remove the custom email template so the built-in default is used
      - DELETE /orgs/{orgId}/api/v1/admin/email-templates/{type}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -33,9 +35,9 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminEmailTemplatesDeleteWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<Void> {
+    open class func adminEmailTemplatesDeleteWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -54,23 +56,25 @@ open class AdminEmailAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Get an email template (custom or built-in default)
+     
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: Void
+     - returns: EmailTemplate
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesGet(orgId: String, type: String) async throws {
+    open class func adminEmailTemplatesGet(orgId: String, type: String) async throws -> EmailTemplate {
         return try await adminEmailTemplatesGetWithRequestBuilder(orgId: orgId, type: type).execute().body
     }
 
     /**
+     Get an email template (custom or built-in default)
      - GET /orgs/{orgId}/api/v1/admin/email-templates/{type}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -80,9 +84,9 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<EmailTemplate> 
      */
-    open class func adminEmailTemplatesGetWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<Void> {
+    open class func adminEmailTemplatesGetWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<EmailTemplate> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -101,22 +105,24 @@ open class AdminEmailAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<EmailTemplate>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     List every email template type with its current (custom or built-in) template
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminEmailTemplatesListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesList(orgId: String) async throws {
+    open class func adminEmailTemplatesList(orgId: String) async throws -> AdminEmailTemplatesListResponse {
         return try await adminEmailTemplatesListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     List every email template type with its current (custom or built-in) template
      - GET /orgs/{orgId}/api/v1/admin/email-templates
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -125,9 +131,9 @@ open class AdminEmailAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminEmailTemplatesListResponse> 
      */
-    open class func adminEmailTemplatesListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminEmailTemplatesListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminEmailTemplatesListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -143,23 +149,25 @@ open class AdminEmailAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminEmailTemplatesListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Render an email template with sample data
+     
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: Void
+     - returns: AdminEmailTemplatesPreviewResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesPreview(orgId: String, type: String) async throws {
+    open class func adminEmailTemplatesPreview(orgId: String, type: String) async throws -> AdminEmailTemplatesPreviewResponse {
         return try await adminEmailTemplatesPreviewWithRequestBuilder(orgId: orgId, type: type).execute().body
     }
 
     /**
+     Render an email template with sample data
      - POST /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -169,9 +177,9 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminEmailTemplatesPreviewResponse> 
      */
-    open class func adminEmailTemplatesPreviewWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<Void> {
+    open class func adminEmailTemplatesPreviewWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<AdminEmailTemplatesPreviewResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -190,23 +198,25 @@ open class AdminEmailAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminEmailTemplatesPreviewResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Create or replace the custom email template for a type
+     
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: Void
+     - returns: EmailTemplate
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesUpsert(orgId: String, type: String) async throws {
+    open class func adminEmailTemplatesUpsert(orgId: String, type: String) async throws -> EmailTemplate {
         return try await adminEmailTemplatesUpsertWithRequestBuilder(orgId: orgId, type: type).execute().body
     }
 
     /**
+     Create or replace the custom email template for a type
      - PUT /orgs/{orgId}/api/v1/admin/email-templates/{type}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -216,9 +226,9 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<EmailTemplate> 
      */
-    open class func adminEmailTemplatesUpsertWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<Void> {
+    open class func adminEmailTemplatesUpsertWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<EmailTemplate> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -237,23 +247,25 @@ open class AdminEmailAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<EmailTemplate>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PUT", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     List the placeholders available to an email template type
+     
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: Void
+     - returns: AdminEmailTemplatesVariablesResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminEmailTemplatesVariables(orgId: String, type: String) async throws {
+    open class func adminEmailTemplatesVariables(orgId: String, type: String) async throws -> AdminEmailTemplatesVariablesResponse {
         return try await adminEmailTemplatesVariablesWithRequestBuilder(orgId: orgId, type: type).execute().body
     }
 
     /**
+     List the placeholders available to an email template type
      - GET /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -263,9 +275,9 @@ open class AdminEmailAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter type: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminEmailTemplatesVariablesResponse> 
      */
-    open class func adminEmailTemplatesVariablesWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<Void> {
+    open class func adminEmailTemplatesVariablesWithRequestBuilder(orgId: String, type: String) -> RequestBuilder<AdminEmailTemplatesVariablesResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -284,7 +296,7 @@ open class AdminEmailAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminEmailTemplatesVariablesResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

@@ -4,16 +4,16 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**GetConnectionToken**](TokenVaultAPI.md#GetConnectionToken) | **Post** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection.
-[**ListConnections**](TokenVaultAPI.md#ListConnections) | **Get** /orgs/{orgId}/api/v1/agents/me/connections | List the connections this agent may use, with grant status. No secrets.
+[**GetConnectionToken**](TokenVaultAPI.md#GetConnectionToken) | **Post** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection
+[**ListConnections**](TokenVaultAPI.md#ListConnections) | **Get** /orgs/{orgId}/api/v1/agents/me/connections | List the outbound connections this agent may use
 
 
 
 ## GetConnectionToken
 
-> GetConnectionToken(ctx, orgId, connectionId).Execute()
+> GetConnectionTokenResponse GetConnectionToken(ctx, orgId, connectionId).GetConnectionTokenRequest(getConnectionTokenRequest).Execute()
 
-Fetch a live third-party access token for a connection.
+Fetch a live third-party access token for a connection
 
 
 
@@ -32,14 +32,17 @@ import (
 func main() {
 	orgId := "orgId_example" // string | 
 	connectionId := "connectionId_example" // string | 
+	getConnectionTokenRequest := *openapiclient.NewGetConnectionTokenRequest() // GetConnectionTokenRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.TokenVaultAPI.GetConnectionToken(context.Background(), orgId, connectionId).Execute()
+	resp, r, err := apiClient.TokenVaultAPI.GetConnectionToken(context.Background(), orgId, connectionId).GetConnectionTokenRequest(getConnectionTokenRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TokenVaultAPI.GetConnectionToken``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `GetConnectionToken`: GetConnectionTokenResponse
+	fmt.Fprintf(os.Stdout, "Response from `TokenVaultAPI.GetConnectionToken`: %v\n", resp)
 }
 ```
 
@@ -61,10 +64,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **getConnectionTokenRequest** | [**GetConnectionTokenRequest**](GetConnectionTokenRequest.md) |  | 
 
 ### Return type
 
- (empty response body)
+[**GetConnectionTokenResponse**](GetConnectionTokenResponse.md)
 
 ### Authorization
 
@@ -72,8 +76,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -82,9 +86,9 @@ Name | Type | Description  | Notes
 
 ## ListConnections
 
-> ListConnections(ctx, orgId).Execute()
+> ListConnectionsResponse ListConnections(ctx, orgId).Execute()
 
-List the connections this agent may use, with grant status. No secrets.
+List the outbound connections this agent may use
 
 
 
@@ -105,11 +109,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.TokenVaultAPI.ListConnections(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.TokenVaultAPI.ListConnections(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `TokenVaultAPI.ListConnections``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `ListConnections`: ListConnectionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `TokenVaultAPI.ListConnections`: %v\n", resp)
 }
 ```
 
@@ -132,7 +138,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**ListConnectionsResponse**](ListConnectionsResponse.md)
 
 ### Authorization
 
@@ -141,7 +147,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

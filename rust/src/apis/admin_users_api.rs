@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddUserGroupError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum AddUserGroupError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddUserPermissionError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,53 @@ pub enum AddUserPermissionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AddUserRoleError {
-    DefaultResponse(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_identities_legacy_saml_relink`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminIdentitiesLegacySamlRelinkError {
+    Status403(),
+    Status404(),
+    Status422(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_identities_legacy_saml_report`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminIdentitiesLegacySamlReportError {
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_identities_link`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminIdentitiesLinkError {
+    Status403(),
+    Status404(),
+    Status409(),
+    Status422(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_identities_list`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminIdentitiesListError {
+    Status404(),
+    UnknownValue(serde_json::Value),
+}
+
+/// struct for typed errors of method [`admin_identities_unlink`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminIdentitiesUnlinkError {
+    Status403(),
+    Status404(),
+    Status422(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +87,6 @@ pub enum AddUserRoleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum BlockUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +94,6 @@ pub enum BlockUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +101,6 @@ pub enum CreateUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +108,6 @@ pub enum DeleteUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +115,6 @@ pub enum GetUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUserGroupsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +122,6 @@ pub enum ListUserGroupsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUserPermissionsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +129,6 @@ pub enum ListUserPermissionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUserRolesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,7 +136,6 @@ pub enum ListUserRolesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListUsersError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -107,7 +143,6 @@ pub enum ListUsersError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum MarkUserVerifiedError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -115,7 +150,6 @@ pub enum MarkUserVerifiedError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -123,7 +157,6 @@ pub enum PatchUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveUserGroupError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -131,7 +164,6 @@ pub enum RemoveUserGroupError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveUserPermissionError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -139,7 +171,6 @@ pub enum RemoveUserPermissionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum RemoveUserRoleError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -147,7 +178,7 @@ pub enum RemoveUserRoleError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ResetUserMfaError {
-    DefaultResponse(),
+    Status410(),
     UnknownValue(serde_json::Value),
 }
 
@@ -155,7 +186,6 @@ pub enum ResetUserMfaError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SendUserVerificationEmailError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -163,7 +193,6 @@ pub enum SendUserVerificationEmailError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetUserPasswordError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -171,7 +200,6 @@ pub enum SetUserPasswordError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetUserPasswordPostError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -179,7 +207,6 @@ pub enum SetUserPasswordPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TriggerUserPasswordResetError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -187,7 +214,6 @@ pub enum TriggerUserPasswordResetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UnblockUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -195,7 +221,6 @@ pub enum UnblockUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateUserError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -203,7 +228,6 @@ pub enum UpdateUserError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateUserGroupsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -211,12 +235,11 @@ pub enum UpdateUserGroupsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UpdateUserRolesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn add_user_group(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AddUserGroupError>> {
+pub async fn add_user_group(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserGroupResponse, Error<AddUserGroupError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -243,9 +266,20 @@ pub async fn add_user_group(configuration: &configuration::Configuration, org_id
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AddUserGroupResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AddUserGroupResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AddUserGroupError> = serde_json::from_str(&content).ok();
@@ -253,7 +287,7 @@ pub async fn add_user_group(configuration: &configuration::Configuration, org_id
     }
 }
 
-pub async fn add_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AddUserPermissionError>> {
+pub async fn add_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserPermissionResponse, Error<AddUserPermissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -280,9 +314,20 @@ pub async fn add_user_permission(configuration: &configuration::Configuration, o
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AddUserPermissionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AddUserPermissionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AddUserPermissionError> = serde_json::from_str(&content).ok();
@@ -290,7 +335,7 @@ pub async fn add_user_permission(configuration: &configuration::Configuration, o
     }
 }
 
-pub async fn add_user_role(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<AddUserRoleError>> {
+pub async fn add_user_role(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AddUserRoleResponse, Error<AddUserRoleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -317,9 +362,20 @@ pub async fn add_user_role(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AddUserRoleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AddUserRoleResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AddUserRoleError> = serde_json::from_str(&content).ok();
@@ -327,7 +383,259 @@ pub async fn add_user_role(configuration: &configuration::Configuration, org_id:
     }
 }
 
-pub async fn block_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<BlockUserError>> {
+/// Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+pub async fn admin_identities_legacy_saml_relink(configuration: &configuration::Configuration, org_id: &str, admin_identities_legacy_saml_relink_request: models::AdminIdentitiesLegacySamlRelinkRequest) -> Result<models::AdminIdentitiesLegacySamlRelinkResponse, Error<AdminIdentitiesLegacySamlRelinkError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_admin_identities_legacy_saml_relink_request = admin_identities_legacy_saml_relink_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/identities/legacy-saml", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_admin_identities_legacy_saml_relink_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminIdentitiesLegacySamlRelinkResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminIdentitiesLegacySamlRelinkResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminIdentitiesLegacySamlRelinkError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+pub async fn admin_identities_legacy_saml_report(configuration: &configuration::Configuration, org_id: &str, idp_id: Option<i32>) -> Result<models::AdminIdentitiesLegacySamlReportResponse, Error<AdminIdentitiesLegacySamlReportError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_idp_id = idp_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/identities/legacy-saml", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref param_value) = p_idp_id {
+        req_builder = req_builder.query(&[("idp_id", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminIdentitiesLegacySamlReportResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminIdentitiesLegacySamlReportResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminIdentitiesLegacySamlReportError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+pub async fn admin_identities_link(configuration: &configuration::Configuration, org_id: &str, user_id: &str, admin_identities_link_request: models::AdminIdentitiesLinkRequest) -> Result<models::AdminAgentsGetResponse, Error<AdminIdentitiesLinkError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_user_id = user_id;
+    let p_admin_identities_link_request = admin_identities_link_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/identities", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_admin_identities_link_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAgentsGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAgentsGetResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminIdentitiesLinkError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+pub async fn admin_identities_list(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminIdentitiesListResponse, Error<AdminIdentitiesListError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_user_id = user_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/identities", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminIdentitiesListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminIdentitiesListResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminIdentitiesListError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+/// Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+pub async fn admin_identities_unlink(configuration: &configuration::Configuration, r#type: &str, org_id: &str, user_id: &str) -> Result<models::AdminAgentsGetResponse, Error<AdminIdentitiesUnlinkError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_type = r#type;
+    let p_org_id = org_id;
+    let p_user_id = user_id;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}", configuration.base_path, type=crate::apis::urlencode(p_type), orgId=crate::apis::urlencode(p_org_id), userId=crate::apis::urlencode(p_user_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminAgentsGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminAgentsGetResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminIdentitiesUnlinkError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
+
+pub async fn block_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::BlockUserResponse, Error<BlockUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -354,9 +662,20 @@ pub async fn block_user(configuration: &configuration::Configuration, org_id: &s
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::BlockUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::BlockUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<BlockUserError> = serde_json::from_str(&content).ok();
@@ -364,7 +683,7 @@ pub async fn block_user(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-pub async fn create_user(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CreateUserError>> {
+pub async fn create_user(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CreateUserResponse, Error<CreateUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -390,9 +709,20 @@ pub async fn create_user(configuration: &configuration::Configuration, org_id: &
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CreateUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CreateUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CreateUserError> = serde_json::from_str(&content).ok();
@@ -400,7 +730,7 @@ pub async fn create_user(configuration: &configuration::Configuration, org_id: &
     }
 }
 
-pub async fn delete_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<DeleteUserError>> {
+pub async fn delete_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::DeleteUserResponse, Error<DeleteUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -427,9 +757,20 @@ pub async fn delete_user(configuration: &configuration::Configuration, org_id: &
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::DeleteUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::DeleteUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<DeleteUserError> = serde_json::from_str(&content).ok();
@@ -437,7 +778,7 @@ pub async fn delete_user(configuration: &configuration::Configuration, org_id: &
     }
 }
 
-pub async fn get_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<GetUserError>> {
+pub async fn get_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::GetUserResponse, Error<GetUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -464,9 +805,20 @@ pub async fn get_user(configuration: &configuration::Configuration, org_id: &str
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetUserError> = serde_json::from_str(&content).ok();
@@ -474,7 +826,7 @@ pub async fn get_user(configuration: &configuration::Configuration, org_id: &str
     }
 }
 
-pub async fn list_user_groups(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<ListUserGroupsError>> {
+pub async fn list_user_groups(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminGroupsGroupsGetRolesResponse, Error<ListUserGroupsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -501,9 +853,20 @@ pub async fn list_user_groups(configuration: &configuration::Configuration, org_
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsGroupsGetRolesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsGroupsGetRolesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListUserGroupsError> = serde_json::from_str(&content).ok();
@@ -511,7 +874,7 @@ pub async fn list_user_groups(configuration: &configuration::Configuration, org_
     }
 }
 
-pub async fn list_user_permissions(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<ListUserPermissionsError>> {
+pub async fn list_user_permissions(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminRolesGetPermissionsResponse, Error<ListUserPermissionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -538,9 +901,20 @@ pub async fn list_user_permissions(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminRolesGetPermissionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminRolesGetPermissionsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListUserPermissionsError> = serde_json::from_str(&content).ok();
@@ -548,7 +922,7 @@ pub async fn list_user_permissions(configuration: &configuration::Configuration,
     }
 }
 
-pub async fn list_user_roles(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<ListUserRolesError>> {
+pub async fn list_user_roles(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::AdminGroupsGroupsGetRolesResponse, Error<ListUserRolesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -575,9 +949,20 @@ pub async fn list_user_roles(configuration: &configuration::Configuration, org_i
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminGroupsGroupsGetRolesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminGroupsGroupsGetRolesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListUserRolesError> = serde_json::from_str(&content).ok();
@@ -585,7 +970,7 @@ pub async fn list_user_roles(configuration: &configuration::Configuration, org_i
     }
 }
 
-pub async fn list_users(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<ListUsersError>> {
+pub async fn list_users(configuration: &configuration::Configuration, org_id: &str) -> Result<models::ListUsersResponse, Error<ListUsersError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -611,9 +996,20 @@ pub async fn list_users(configuration: &configuration::Configuration, org_id: &s
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListUsersResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListUsersResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListUsersError> = serde_json::from_str(&content).ok();
@@ -621,7 +1017,7 @@ pub async fn list_users(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-pub async fn mark_user_verified(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<MarkUserVerifiedError>> {
+pub async fn mark_user_verified(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::MarkUserVerifiedResponse, Error<MarkUserVerifiedError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -648,9 +1044,20 @@ pub async fn mark_user_verified(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MarkUserVerifiedResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MarkUserVerifiedResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<MarkUserVerifiedError> = serde_json::from_str(&content).ok();
@@ -658,7 +1065,7 @@ pub async fn mark_user_verified(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn patch_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<PatchUserError>> {
+pub async fn patch_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserResponse, Error<PatchUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -685,9 +1092,20 @@ pub async fn patch_user(configuration: &configuration::Configuration, org_id: &s
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchUserError> = serde_json::from_str(&content).ok();
@@ -695,7 +1113,7 @@ pub async fn patch_user(configuration: &configuration::Configuration, org_id: &s
     }
 }
 
-pub async fn remove_user_group(configuration: &configuration::Configuration, org_id: &str, user_id: &str, group_id: &str) -> Result<(), Error<RemoveUserGroupError>> {
+pub async fn remove_user_group(configuration: &configuration::Configuration, org_id: &str, user_id: &str, group_id: &str) -> Result<models::RemoveUserGroupResponse, Error<RemoveUserGroupError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -723,9 +1141,20 @@ pub async fn remove_user_group(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RemoveUserGroupResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RemoveUserGroupResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RemoveUserGroupError> = serde_json::from_str(&content).ok();
@@ -733,7 +1162,7 @@ pub async fn remove_user_group(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn remove_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str, permission_id: &str) -> Result<(), Error<RemoveUserPermissionError>> {
+pub async fn remove_user_permission(configuration: &configuration::Configuration, org_id: &str, user_id: &str, permission_id: &str) -> Result<models::RemoveUserPermissionResponse, Error<RemoveUserPermissionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -761,9 +1190,20 @@ pub async fn remove_user_permission(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RemoveUserPermissionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RemoveUserPermissionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RemoveUserPermissionError> = serde_json::from_str(&content).ok();
@@ -771,7 +1211,7 @@ pub async fn remove_user_permission(configuration: &configuration::Configuration
     }
 }
 
-pub async fn remove_user_role(configuration: &configuration::Configuration, org_id: &str, user_id: &str, role_id: &str) -> Result<(), Error<RemoveUserRoleError>> {
+pub async fn remove_user_role(configuration: &configuration::Configuration, org_id: &str, user_id: &str, role_id: &str) -> Result<models::RemoveUserRoleResponse, Error<RemoveUserRoleError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -799,9 +1239,20 @@ pub async fn remove_user_role(configuration: &configuration::Configuration, org_
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::RemoveUserRoleResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::RemoveUserRoleResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<RemoveUserRoleError> = serde_json::from_str(&content).ok();
@@ -809,6 +1260,7 @@ pub async fn remove_user_role(configuration: &configuration::Configuration, org_
     }
 }
 
+/// Removed: admins cannot disable a user's MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
 pub async fn reset_user_mfa(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<ResetUserMfaError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
@@ -846,7 +1298,7 @@ pub async fn reset_user_mfa(configuration: &configuration::Configuration, org_id
     }
 }
 
-pub async fn send_user_verification_email(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<SendUserVerificationEmailError>> {
+pub async fn send_user_verification_email(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SendUserVerificationEmailResponse, Error<SendUserVerificationEmailError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -873,9 +1325,20 @@ pub async fn send_user_verification_email(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SendUserVerificationEmailResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SendUserVerificationEmailResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SendUserVerificationEmailError> = serde_json::from_str(&content).ok();
@@ -883,7 +1346,7 @@ pub async fn send_user_verification_email(configuration: &configuration::Configu
     }
 }
 
-pub async fn set_user_password(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<SetUserPasswordError>> {
+pub async fn set_user_password(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -910,9 +1373,20 @@ pub async fn set_user_password(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SetUserPasswordPostResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SetUserPasswordPostResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SetUserPasswordError> = serde_json::from_str(&content).ok();
@@ -920,7 +1394,7 @@ pub async fn set_user_password(configuration: &configuration::Configuration, org
     }
 }
 
-pub async fn set_user_password_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<SetUserPasswordPostError>> {
+pub async fn set_user_password_post(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::SetUserPasswordPostResponse, Error<SetUserPasswordPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -947,9 +1421,20 @@ pub async fn set_user_password_post(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SetUserPasswordPostResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SetUserPasswordPostResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SetUserPasswordPostError> = serde_json::from_str(&content).ok();
@@ -957,7 +1442,7 @@ pub async fn set_user_password_post(configuration: &configuration::Configuration
     }
 }
 
-pub async fn trigger_user_password_reset(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<TriggerUserPasswordResetError>> {
+pub async fn trigger_user_password_reset(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::TriggerUserPasswordResetResponse, Error<TriggerUserPasswordResetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -984,9 +1469,20 @@ pub async fn trigger_user_password_reset(configuration: &configuration::Configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TriggerUserPasswordResetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TriggerUserPasswordResetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<TriggerUserPasswordResetError> = serde_json::from_str(&content).ok();
@@ -994,7 +1490,7 @@ pub async fn trigger_user_password_reset(configuration: &configuration::Configur
     }
 }
 
-pub async fn unblock_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<UnblockUserError>> {
+pub async fn unblock_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UnblockUserResponse, Error<UnblockUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -1021,9 +1517,20 @@ pub async fn unblock_user(configuration: &configuration::Configuration, org_id: 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UnblockUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UnblockUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UnblockUserError> = serde_json::from_str(&content).ok();
@@ -1031,7 +1538,7 @@ pub async fn unblock_user(configuration: &configuration::Configuration, org_id: 
     }
 }
 
-pub async fn update_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<UpdateUserError>> {
+pub async fn update_user(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserResponse, Error<UpdateUserError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -1058,9 +1565,20 @@ pub async fn update_user(configuration: &configuration::Configuration, org_id: &
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateUserResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateUserResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UpdateUserError> = serde_json::from_str(&content).ok();
@@ -1068,7 +1586,7 @@ pub async fn update_user(configuration: &configuration::Configuration, org_id: &
     }
 }
 
-pub async fn update_user_groups(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<UpdateUserGroupsError>> {
+pub async fn update_user_groups(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserGroupsResponse, Error<UpdateUserGroupsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -1095,9 +1613,20 @@ pub async fn update_user_groups(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateUserGroupsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateUserGroupsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UpdateUserGroupsError> = serde_json::from_str(&content).ok();
@@ -1105,7 +1634,7 @@ pub async fn update_user_groups(configuration: &configuration::Configuration, or
     }
 }
 
-pub async fn update_user_roles(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<(), Error<UpdateUserRolesError>> {
+pub async fn update_user_roles(configuration: &configuration::Configuration, org_id: &str, user_id: &str) -> Result<models::UpdateUserRolesResponse, Error<UpdateUserRolesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -1132,9 +1661,20 @@ pub async fn update_user_roles(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UpdateUserRolesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UpdateUserRolesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UpdateUserRolesError> = serde_json::from_str(&content).ok();

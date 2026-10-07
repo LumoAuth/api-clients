@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminPermissionsCreate(orgId);
+            //var response = instance.AdminPermissionsCreate(orgId);
+            //Assert.IsType<AdminPermissionsCreateResponse>(response);
         }
 
         /// <summary>
@@ -72,7 +75,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string permissionId = null;
-            //instance.AdminPermissionsDelete(orgId, permissionId);
+            //var response = instance.AdminPermissionsDelete(orgId, permissionId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string permissionId = null;
-            //instance.AdminPermissionsGet(orgId, permissionId);
+            //var response = instance.AdminPermissionsGet(orgId, permissionId);
+            //Assert.IsType<AdminPermissionsGetResponse>(response);
         }
 
         /// <summary>
@@ -95,7 +100,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminPermissionsList(orgId);
+            //var response = instance.AdminPermissionsList(orgId);
+            //Assert.IsType<AdminPermissionsListResponse>(response);
         }
 
         /// <summary>
@@ -107,7 +113,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string permissionId = null;
-            //instance.AdminPermissionsUpdate(orgId, permissionId);
+            //var response = instance.AdminPermissionsUpdate(orgId, permissionId);
+            //Assert.IsType<AdminPermissionsCreateResponse>(response);
         }
 
         /// <summary>
@@ -119,7 +126,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string permissionId = null;
-            //instance.AdminPermissionsUsage(orgId, permissionId);
+            //var response = instance.AdminPermissionsUsage(orgId, permissionId);
+            //Assert.IsType<AdminPermissionsUsageResponse>(response);
         }
 
         /// <summary>
@@ -130,7 +138,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminScopesCreate(orgId);
+            //var response = instance.AdminScopesCreate(orgId);
+            //Assert.IsType<AdminScopesCreateResponse>(response);
         }
 
         /// <summary>
@@ -142,7 +151,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string scopeId = null;
-            //instance.AdminScopesDelete(orgId, scopeId);
+            //var response = instance.AdminScopesDelete(orgId, scopeId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -153,7 +163,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminScopesList(orgId);
+            //var response = instance.AdminScopesList(orgId);
+            //Assert.IsType<AdminScopesListResponse>(response);
         }
     }
 }

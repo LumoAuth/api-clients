@@ -29,9 +29,10 @@ func Test_lumoauthclient_TokenVaultAPIService(t *testing.T) {
 		var orgId string
 		var connectionId string
 
-		httpRes, err := apiClient.TokenVaultAPI.GetConnectionToken(context.Background(), orgId, connectionId).Execute()
+		resp, httpRes, err := apiClient.TokenVaultAPI.GetConnectionToken(context.Background(), orgId, connectionId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_TokenVaultAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.TokenVaultAPI.ListConnections(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.TokenVaultAPI.ListConnections(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

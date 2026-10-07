@@ -18,6 +18,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from typing import Optional
+from lumoauth_api_client.models.get_stream_config200_response import GetStreamConfig200Response
+from lumoauth_api_client.models.ssf_stream import SsfStream
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,8 +56,8 @@ class SsfApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+    ) -> SsfStream:
+        """Create an SSF stream
 
 
         :param org_id: (required)
@@ -90,6 +93,8 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "SsfStream",
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,8 +123,8 @@ class SsfApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+    ) -> ApiResponse[SsfStream]:
+        """Create an SSF stream
 
 
         :param org_id: (required)
@@ -155,6 +160,8 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "SsfStream",
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,7 +191,7 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+        """Create an SSF stream
 
 
         :param org_id: (required)
@@ -220,6 +227,8 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "SsfStream",
+            '400': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +269,13 @@ class SsfApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -289,6 +305,7 @@ class SsfApi:
     @validate_call
     def delete_stream_config(
         self,
+        stream_id: StrictStr,
         org_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -303,9 +320,11 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """delete_stream_config
+        """Delete an SSF stream
 
 
+        :param stream_id: (required)
+        :type stream_id: str
         :param org_id: (required)
         :type org_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -331,6 +350,7 @@ class SsfApi:
         """ # noqa: E501
 
         _param = self._delete_stream_config_serialize(
+            stream_id=stream_id,
             org_id=org_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -339,6 +359,9 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -354,6 +377,7 @@ class SsfApi:
     @validate_call
     def delete_stream_config_with_http_info(
         self,
+        stream_id: StrictStr,
         org_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -368,9 +392,11 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """delete_stream_config
+        """Delete an SSF stream
 
 
+        :param stream_id: (required)
+        :type stream_id: str
         :param org_id: (required)
         :type org_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -396,6 +422,7 @@ class SsfApi:
         """ # noqa: E501
 
         _param = self._delete_stream_config_serialize(
+            stream_id=stream_id,
             org_id=org_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -404,6 +431,9 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -419,6 +449,7 @@ class SsfApi:
     @validate_call
     def delete_stream_config_without_preload_content(
         self,
+        stream_id: StrictStr,
         org_id: StrictStr,
         _request_timeout: Union[
             None,
@@ -433,9 +464,11 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """delete_stream_config
+        """Delete an SSF stream
 
 
+        :param stream_id: (required)
+        :type stream_id: str
         :param org_id: (required)
         :type org_id: str
         :param _request_timeout: timeout setting for this request. If one
@@ -461,6 +494,7 @@ class SsfApi:
         """ # noqa: E501
 
         _param = self._delete_stream_config_serialize(
+            stream_id=stream_id,
             org_id=org_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -469,6 +503,9 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -479,6 +516,7 @@ class SsfApi:
 
     def _delete_stream_config_serialize(
         self,
+        stream_id,
         org_id,
         _request_auth,
         _content_type,
@@ -504,6 +542,10 @@ class SsfApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if stream_id is not None:
+            
+            _query_params.append(('stream_id', stream_id))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -539,6 +581,7 @@ class SsfApi:
     def get_stream_config(
         self,
         org_id: StrictStr,
+        stream_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -551,12 +594,14 @@ class SsfApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+    ) -> GetStreamConfig200Response:
+        """Read SSF stream configuration(s)
 
 
         :param org_id: (required)
         :type org_id: str
+        :param stream_id:
+        :type stream_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -581,6 +626,7 @@ class SsfApi:
 
         _param = self._get_stream_config_serialize(
             org_id=org_id,
+            stream_id=stream_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -588,6 +634,8 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetStreamConfig200Response",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -604,6 +652,7 @@ class SsfApi:
     def get_stream_config_with_http_info(
         self,
         org_id: StrictStr,
+        stream_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -616,12 +665,14 @@ class SsfApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+    ) -> ApiResponse[GetStreamConfig200Response]:
+        """Read SSF stream configuration(s)
 
 
         :param org_id: (required)
         :type org_id: str
+        :param stream_id:
+        :type stream_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -646,6 +697,7 @@ class SsfApi:
 
         _param = self._get_stream_config_serialize(
             org_id=org_id,
+            stream_id=stream_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -653,6 +705,8 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetStreamConfig200Response",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -669,6 +723,7 @@ class SsfApi:
     def get_stream_config_without_preload_content(
         self,
         org_id: StrictStr,
+        stream_id: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -682,11 +737,13 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+        """Read SSF stream configuration(s)
 
 
         :param org_id: (required)
         :type org_id: str
+        :param stream_id:
+        :type stream_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -711,6 +768,7 @@ class SsfApi:
 
         _param = self._get_stream_config_serialize(
             org_id=org_id,
+            stream_id=stream_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -718,6 +776,8 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetStreamConfig200Response",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -729,6 +789,7 @@ class SsfApi:
     def _get_stream_config_serialize(
         self,
         org_id,
+        stream_id,
         _request_auth,
         _content_type,
         _headers,
@@ -753,11 +814,22 @@ class SsfApi:
         if org_id is not None:
             _path_params['orgId'] = org_id
         # process the query parameters
+        if stream_id is not None:
+            
+            _query_params.append(('stream_id', stream_id))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -801,7 +873,7 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> None:
-        """SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+        """Request a stream verification event
 
 
         :param org_id: (required)
@@ -837,6 +909,10 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': None,
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -866,7 +942,7 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[None]:
-        """SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+        """Request a stream verification event
 
 
         :param org_id: (required)
@@ -902,6 +978,10 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': None,
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -931,7 +1011,7 @@ class SsfApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+        """Request a stream verification event
 
 
         :param org_id: (required)
@@ -967,6 +1047,10 @@ class SsfApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '204': None,
+            '400': None,
+            '404': None,
+            '409': None,
         }
         response_data = self.api_client.call_api(
             *_param,

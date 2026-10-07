@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 # **adminPermissionsCreate**
 ```swift
-    open class func adminPermissionsCreate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminPermissionsCreate(orgId: String, completion: @escaping (_ data: AdminPermissionsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a custom permission for the tenant
@@ -50,7 +50,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -59,13 +59,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsDelete**
 ```swift
-    open class func adminPermissionsDelete(orgId: String, permissionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminPermissionsDelete(orgId: String, permissionId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Delete a custom permission
@@ -100,7 +100,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -109,13 +109,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsGet**
 ```swift
-    open class func adminPermissionsGet(orgId: String, permissionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminPermissionsGet(orgId: String, permissionId: String, completion: @escaping (_ data: AdminPermissionsGetResponse?, _ error: Error?) -> Void)
 ```
 
 Get a single permission
@@ -150,7 +150,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminPermissionsGetResponse**](AdminPermissionsGetResponse.md)
 
 ### Authorization
 
@@ -159,13 +159,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsList**
 ```swift
-    open class func adminPermissionsList(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminPermissionsList(orgId: String, completion: @escaping (_ data: AdminPermissionsListResponse?, _ error: Error?) -> Void)
 ```
 
 List all available permissions for the tenant
@@ -198,7 +198,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminPermissionsListResponse**](AdminPermissionsListResponse.md)
 
 ### Authorization
 
@@ -207,13 +207,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsUpdate**
 ```swift
-    open class func adminPermissionsUpdate(orgId: String, permissionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminPermissionsUpdate(orgId: String, permissionId: String, completion: @escaping (_ data: AdminPermissionsCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Update a permission
@@ -248,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -257,13 +257,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsUsage**
 ```swift
-    open class func adminPermissionsUsage(orgId: String, permissionId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminPermissionsUsage(orgId: String, permissionId: String, completion: @escaping (_ data: AdminPermissionsUsageResponse?, _ error: Error?) -> Void)
 ```
 
 Get permission usage (roles assigned to this permission)
@@ -298,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminPermissionsUsageResponse**](AdminPermissionsUsageResponse.md)
 
 ### Authorization
 
@@ -307,13 +307,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesCreate**
 ```swift
-    open class func adminScopesCreate(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminScopesCreate(orgId: String, completion: @escaping (_ data: AdminScopesCreateResponse?, _ error: Error?) -> Void)
 ```
 
 Create a custom OAuth scope
@@ -346,7 +346,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminScopesCreateResponse**](AdminScopesCreateResponse.md)
 
 ### Authorization
 
@@ -355,13 +355,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesDelete**
 ```swift
-    open class func adminScopesDelete(orgId: String, scopeId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminScopesDelete(orgId: String, scopeId: String, completion: @escaping (_ data: MessageResponse?, _ error: Error?) -> Void)
 ```
 
 Delete a custom OAuth scope
@@ -396,7 +396,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -405,13 +405,13 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesList**
 ```swift
-    open class func adminScopesList(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func adminScopesList(orgId: String, completion: @escaping (_ data: AdminScopesListResponse?, _ error: Error?) -> Void)
 ```
 
 List OAuth scopes
@@ -444,7 +444,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**AdminScopesListResponse**](AdminScopesListResponse.md)
 
 ### Authorization
 
@@ -453,7 +453,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

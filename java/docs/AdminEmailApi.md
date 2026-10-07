@@ -4,19 +4,19 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminEmailTemplatesDelete**](AdminEmailApi.md#adminEmailTemplatesDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**adminEmailTemplatesGet**](AdminEmailApi.md#adminEmailTemplatesGet) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**adminEmailTemplatesList**](AdminEmailApi.md#adminEmailTemplatesList) | **GET** /orgs/{orgId}/api/v1/admin/email-templates |  |
-| [**adminEmailTemplatesPreview**](AdminEmailApi.md#adminEmailTemplatesPreview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview |  |
-| [**adminEmailTemplatesUpsert**](AdminEmailApi.md#adminEmailTemplatesUpsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} |  |
-| [**adminEmailTemplatesVariables**](AdminEmailApi.md#adminEmailTemplatesVariables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables |  |
+| [**adminEmailTemplatesDelete**](AdminEmailApi.md#adminEmailTemplatesDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Remove the custom email template so the built-in default is used |
+| [**adminEmailTemplatesGet**](AdminEmailApi.md#adminEmailTemplatesGet) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Get an email template (custom or built-in default) |
+| [**adminEmailTemplatesList**](AdminEmailApi.md#adminEmailTemplatesList) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | List every email template type with its current (custom or built-in) template |
+| [**adminEmailTemplatesPreview**](AdminEmailApi.md#adminEmailTemplatesPreview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | Render an email template with sample data |
+| [**adminEmailTemplatesUpsert**](AdminEmailApi.md#adminEmailTemplatesUpsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Create or replace the custom email template for a type |
+| [**adminEmailTemplatesVariables**](AdminEmailApi.md#adminEmailTemplatesVariables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | List the placeholders available to an email template type |
 
 
 <a id="adminEmailTemplatesDelete"></a>
 # **adminEmailTemplatesDelete**
-> adminEmailTemplatesDelete(orgId, type)
+> MessageResponse adminEmailTemplatesDelete(orgId, type)
 
-
+Remove the custom email template so the built-in default is used
 
 ### Example
 ```java
@@ -47,7 +47,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
     try {
-      apiInstance.adminEmailTemplatesDelete(orgId, type);
+      MessageResponse result = apiInstance.adminEmailTemplatesDelete(orgId, type);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesDelete");
       System.err.println("Status code: " + e.getCode());
@@ -68,7 +69,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -77,18 +78,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Reverted to default |  -  |
+| **404** | Unknown template type, or no custom template exists |  -  |
 
 <a id="adminEmailTemplatesGet"></a>
 # **adminEmailTemplatesGet**
-> adminEmailTemplatesGet(orgId, type)
+> EmailTemplate adminEmailTemplatesGet(orgId, type)
 
-
+Get an email template (custom or built-in default)
 
 ### Example
 ```java
@@ -119,7 +121,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
     try {
-      apiInstance.adminEmailTemplatesGet(orgId, type);
+      EmailTemplate result = apiInstance.adminEmailTemplatesGet(orgId, type);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesGet");
       System.err.println("Status code: " + e.getCode());
@@ -140,7 +143,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -149,18 +152,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Template including body_html |  -  |
+| **404** | Unknown template type |  -  |
 
 <a id="adminEmailTemplatesList"></a>
 # **adminEmailTemplatesList**
-> adminEmailTemplatesList(orgId)
+> AdminEmailTemplatesListResponse adminEmailTemplatesList(orgId)
 
-
+List every email template type with its current (custom or built-in) template
 
 ### Example
 ```java
@@ -190,7 +194,8 @@ public class Example {
     AdminEmailApi apiInstance = new AdminEmailApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminEmailTemplatesList(orgId);
+      AdminEmailTemplatesListResponse result = apiInstance.adminEmailTemplatesList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesList");
       System.err.println("Status code: " + e.getCode());
@@ -210,7 +215,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminEmailTemplatesListResponse**](AdminEmailTemplatesListResponse.md)
 
 ### Authorization
 
@@ -219,18 +224,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Templates without body_html; &#x60;email_templates&#x60; duplicates &#x60;data&#x60; |  -  |
 
 <a id="adminEmailTemplatesPreview"></a>
 # **adminEmailTemplatesPreview**
-> adminEmailTemplatesPreview(orgId, type)
+> AdminEmailTemplatesPreviewResponse adminEmailTemplatesPreview(orgId, type)
 
-
+Render an email template with sample data
 
 ### Example
 ```java
@@ -261,7 +266,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
     try {
-      apiInstance.adminEmailTemplatesPreview(orgId, type);
+      AdminEmailTemplatesPreviewResponse result = apiInstance.adminEmailTemplatesPreview(orgId, type);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesPreview");
       System.err.println("Status code: " + e.getCode());
@@ -282,7 +288,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminEmailTemplatesPreviewResponse**](AdminEmailTemplatesPreviewResponse.md)
 
 ### Authorization
 
@@ -291,18 +297,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Rendered preview |  -  |
+| **404** | Unknown template type |  -  |
 
 <a id="adminEmailTemplatesUpsert"></a>
 # **adminEmailTemplatesUpsert**
-> adminEmailTemplatesUpsert(orgId, type)
+> EmailTemplate adminEmailTemplatesUpsert(orgId, type)
 
-
+Create or replace the custom email template for a type
 
 ### Example
 ```java
@@ -333,7 +340,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
     try {
-      apiInstance.adminEmailTemplatesUpsert(orgId, type);
+      EmailTemplate result = apiInstance.adminEmailTemplatesUpsert(orgId, type);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesUpsert");
       System.err.println("Status code: " + e.getCode());
@@ -354,7 +362,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**EmailTemplate**](EmailTemplate.md)
 
 ### Authorization
 
@@ -363,18 +371,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Saved template including body_html |  -  |
+| **404** | Unknown template type |  -  |
+| **422** | Validation failed |  -  |
 
 <a id="adminEmailTemplatesVariables"></a>
 # **adminEmailTemplatesVariables**
-> adminEmailTemplatesVariables(orgId, type)
+> AdminEmailTemplatesVariablesResponse adminEmailTemplatesVariables(orgId, type)
 
-
+List the placeholders available to an email template type
 
 ### Example
 ```java
@@ -405,7 +415,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String type = "type_example"; // String | 
     try {
-      apiInstance.adminEmailTemplatesVariables(orgId, type);
+      AdminEmailTemplatesVariablesResponse result = apiInstance.adminEmailTemplatesVariables(orgId, type);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminEmailApi#adminEmailTemplatesVariables");
       System.err.println("Status code: " + e.getCode());
@@ -426,7 +437,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminEmailTemplatesVariablesResponse**](AdminEmailTemplatesVariablesResponse.md)
 
 ### Authorization
 
@@ -435,10 +446,11 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Placeholder to description map |  -  |
+| **404** | Unknown template type |  -  |
 

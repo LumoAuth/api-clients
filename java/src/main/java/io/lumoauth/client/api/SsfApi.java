@@ -27,6 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.GetStreamConfig200Response;
+import io.lumoauth.client.model.SsfStream;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +83,8 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Stream configuration </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createStreamConfigCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +114,7 @@ public class SsfApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,41 +144,46 @@ public class SsfApi {
     }
 
     /**
-     * Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
+     * Create an SSF stream
      * 
      * @param orgId  (required)
+     * @return SsfStream
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Stream configuration </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public void createStreamConfig(@javax.annotation.Nonnull String orgId) throws ApiException {
-        createStreamConfigWithHttpInfo(orgId);
+    public SsfStream createStreamConfig(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<SsfStream> localVarResp = createStreamConfigWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
+     * Create an SSF stream
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SsfStream&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Stream configuration </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> createStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<SsfStream> createStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = createStreamConfigValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SsfStream>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; } (asynchronously)
+     * Create an SSF stream (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -184,17 +193,20 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Stream configuration </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Unsupported delivery method or missing field </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createStreamConfigAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call createStreamConfigAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<SsfStream> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createStreamConfigValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SsfStream>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for deleteStreamConfig
+     * @param streamId  (required)
      * @param orgId  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -203,10 +215,12 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Stream deleted </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteStreamConfigCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call deleteStreamConfigCall(@javax.annotation.Nonnull String streamId, @javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -231,6 +245,10 @@ public class SsfApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (streamId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("stream_id", streamId));
+        }
 
         final String[] localVarAccepts = {
         };
@@ -251,35 +269,44 @@ public class SsfApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteStreamConfigValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call deleteStreamConfigValidateBeforeCall(@javax.annotation.Nonnull String streamId, @javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'streamId' is set
+        if (streamId == null) {
+            throw new ApiException("Missing the required parameter 'streamId' when calling deleteStreamConfig(Async)");
+        }
+
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling deleteStreamConfig(Async)");
         }
 
-        return deleteStreamConfigCall(orgId, _callback);
+        return deleteStreamConfigCall(streamId, orgId, _callback);
 
     }
 
     /**
+     * Delete an SSF stream
      * 
-     * 
+     * @param streamId  (required)
      * @param orgId  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Stream deleted </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public void deleteStreamConfig(@javax.annotation.Nonnull String orgId) throws ApiException {
-        deleteStreamConfigWithHttpInfo(orgId);
+    public void deleteStreamConfig(@javax.annotation.Nonnull String streamId, @javax.annotation.Nonnull String orgId) throws ApiException {
+        deleteStreamConfigWithHttpInfo(streamId, orgId);
     }
 
     /**
+     * Delete an SSF stream
      * 
-     * 
+     * @param streamId  (required)
      * @param orgId  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -287,17 +314,20 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Stream deleted </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> deleteStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = deleteStreamConfigValidateBeforeCall(orgId, null);
+    public ApiResponse<Void> deleteStreamConfigWithHttpInfo(@javax.annotation.Nonnull String streamId, @javax.annotation.Nonnull String orgId) throws ApiException {
+        okhttp3.Call localVarCall = deleteStreamConfigValidateBeforeCall(streamId, orgId, null);
         return localVarApiClient.execute(localVarCall);
     }
 
     /**
-     *  (asynchronously)
+     * Delete an SSF stream (asynchronously)
      * 
+     * @param streamId  (required)
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -306,18 +336,21 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Stream deleted </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteStreamConfigAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call deleteStreamConfigAsync(@javax.annotation.Nonnull String streamId, @javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteStreamConfigValidateBeforeCall(orgId, _callback);
+        okhttp3.Call localVarCall = deleteStreamConfigValidateBeforeCall(streamId, orgId, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
      * Build call for getStreamConfig
      * @param orgId  (required)
+     * @param streamId  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -325,10 +358,11 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getStreamConfigCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getStreamConfigCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String streamId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -354,7 +388,12 @@ public class SsfApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (streamId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("stream_id", streamId));
+        }
+
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -373,54 +412,62 @@ public class SsfApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getStreamConfigValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getStreamConfigValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String streamId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling getStreamConfig(Async)");
         }
 
-        return getStreamConfigCall(orgId, _callback);
+        return getStreamConfigCall(orgId, streamId, _callback);
 
     }
 
     /**
-     * Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
+     * Read SSF stream configuration(s)
      * 
      * @param orgId  (required)
+     * @param streamId  (optional)
+     * @return GetStreamConfig200Response
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public void getStreamConfig(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getStreamConfigWithHttpInfo(orgId);
+    public GetStreamConfig200Response getStreamConfig(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String streamId) throws ApiException {
+        ApiResponse<GetStreamConfig200Response> localVarResp = getStreamConfigWithHttpInfo(orgId, streamId);
+        return localVarResp.getData();
     }
 
     /**
-     * Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
+     * Read SSF stream configuration(s)
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param streamId  (optional)
+     * @return ApiResponse&lt;GetStreamConfig200Response&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = getStreamConfigValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<GetStreamConfig200Response> getStreamConfigWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String streamId) throws ApiException {
+        okhttp3.Call localVarCall = getStreamConfigValidateBeforeCall(orgId, streamId, null);
+        Type localVarReturnType = new TypeToken<GetStreamConfig200Response>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned. (asynchronously)
+     * Read SSF stream configuration(s) (asynchronously)
      * 
      * @param orgId  (required)
+     * @param streamId  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -428,13 +475,15 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> A single stream (with stream_id) or all of the tenant&#39;s streams </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getStreamConfigAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getStreamConfigAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable String streamId, final ApiCallback<GetStreamConfig200Response> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getStreamConfigValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = getStreamConfigValidateBeforeCall(orgId, streamId, _callback);
+        Type localVarReturnType = new TypeToken<GetStreamConfig200Response>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -447,7 +496,10 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Verification event queued </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call verifyStreamCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -506,7 +558,7 @@ public class SsfApi {
     }
 
     /**
-     * SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+     * Request a stream verification event
      * 
      * @param orgId  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -514,7 +566,10 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Verification event queued </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
     public void verifyStream(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -522,7 +577,7 @@ public class SsfApi {
     }
 
     /**
-     * SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+     * Request a stream verification event
      * 
      * @param orgId  (required)
      * @return ApiResponse&lt;Void&gt;
@@ -531,7 +586,10 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Verification event queued </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<Void> verifyStreamWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -540,7 +598,7 @@ public class SsfApi {
     }
 
     /**
-     * SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; } (asynchronously)
+     * Request a stream verification event (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -550,7 +608,10 @@ public class SsfApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 204 </td><td> Verification event queued </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Missing stream_id </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Stream not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> Stream is not enabled </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call verifyStreamAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {

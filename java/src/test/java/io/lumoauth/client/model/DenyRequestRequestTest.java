@@ -45,4 +45,12 @@ public class DenyRequestRequestTest {
         // TODO: test reason
     }
 
+    /**
+     * Test the property 'agentMessage'
+     */
+    @Test
+    public void agentMessageTest() {
+        // TODO: test agentMessage
+    }
+
 }

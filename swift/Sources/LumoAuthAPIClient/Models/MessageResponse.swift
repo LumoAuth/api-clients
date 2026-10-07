@@ -12,9 +12,9 @@ import AnyCodable
 
 public struct MessageResponse: Codable, JSONEncodable, Hashable {
 
-    public var message: String?
+    public var message: String
 
-    public init(message: String? = nil) {
+    public init(message: String) {
         self.message = message
     }
 
@@ -26,7 +26,7 @@ public struct MessageResponse: Codable, JSONEncodable, Hashable {
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encodeIfPresent(message, forKey: .message)
+        try container.encode(message, forKey: .message)
     }
 }
 

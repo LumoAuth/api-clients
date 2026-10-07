@@ -4,25 +4,25 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AbacAttributesCreate**](AdminAbacApi.md#abacattributescreate) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create a new attribute definition |
+| [**AbacAttributesCreate**](AdminAbacApi.md#abacattributescreate) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create an attribute definition |
 | [**AbacAttributesDelete**](AdminAbacApi.md#abacattributesdelete) | **DELETE** /orgs/{orgId}/api/v1/abac/attributes/{id} | Delete an attribute definition |
-| [**AbacAttributesGet**](AdminAbacApi.md#abacattributesget) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get a single attribute definition |
-| [**AbacAttributesList**](AdminAbacApi.md#abacattributeslist) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List all attribute definitions |
-| [**AbacPoliciesCreate**](AdminAbacApi.md#abacpoliciescreate) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create a new ABAC policy |
+| [**AbacAttributesGet**](AdminAbacApi.md#abacattributesget) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get an attribute definition |
+| [**AbacAttributesList**](AdminAbacApi.md#abacattributeslist) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List attribute definitions |
+| [**AbacPoliciesCreate**](AdminAbacApi.md#abacpoliciescreate) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create an ABAC policy |
 | [**AbacPoliciesDelete**](AdminAbacApi.md#abacpoliciesdelete) | **DELETE** /orgs/{orgId}/api/v1/abac/policies/{id} | Delete an ABAC policy |
-| [**AbacPoliciesGet**](AdminAbacApi.md#abacpoliciesget) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get a single ABAC policy |
-| [**AbacPoliciesList**](AdminAbacApi.md#abacpolicieslist) | **GET** /orgs/{orgId}/api/v1/abac/policies | List all ABAC policies |
-| [**AbacPoliciesToggle**](AdminAbacApi.md#abacpoliciestoggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle policy active status |
-| [**PatchAbacAttributesUpdate**](AdminAbacApi.md#patchabacattributesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition |
-| [**PatchAbacPoliciesUpdate**](AdminAbacApi.md#patchabacpoliciesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy |
+| [**AbacPoliciesGet**](AdminAbacApi.md#abacpoliciesget) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get an ABAC policy |
+| [**AbacPoliciesList**](AdminAbacApi.md#abacpolicieslist) | **GET** /orgs/{orgId}/api/v1/abac/policies | List ABAC policies |
+| [**AbacPoliciesToggle**](AdminAbacApi.md#abacpoliciestoggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle a policy between active and inactive |
+| [**PatchAbacAttributesUpdate**](AdminAbacApi.md#patchabacattributesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Partially update an attribute definition |
+| [**PatchAbacPoliciesUpdate**](AdminAbacApi.md#patchabacpoliciesupdate) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Partially update an ABAC policy |
 | [**PutAbacAttributesUpdate**](AdminAbacApi.md#putabacattributesupdate) | **PUT** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition |
 | [**PutAbacPoliciesUpdate**](AdminAbacApi.md#putabacpoliciesupdate) | **PUT** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy |
 
 <a id="abacattributescreate"></a>
 # **AbacAttributesCreate**
-> void AbacAttributesCreate (string orgId)
+> AbacAttributesCreateResponse AbacAttributesCreate (string orgId)
 
-Create a new attribute definition
+Create an attribute definition
 
 ### Example
 ```csharp
@@ -56,8 +56,9 @@ namespace Example
 
             try
             {
-                // Create a new attribute definition
-                apiInstance.AbacAttributesCreate(orgId);
+                // Create an attribute definition
+                AbacAttributesCreateResponse result = apiInstance.AbacAttributesCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -76,8 +77,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a new attribute definition
-    apiInstance.AbacAttributesCreateWithHttpInfo(orgId);
+    // Create an attribute definition
+    ApiResponse<AbacAttributesCreateResponse> response = apiInstance.AbacAttributesCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -95,7 +99,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacAttributesCreateResponse**](AbacAttributesCreateResponse.md)
 
 ### Authorization
 
@@ -104,19 +108,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created |  -  |
+| **409** | An attribute with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacattributesdelete"></a>
 # **AbacAttributesDelete**
-> void AbacAttributesDelete (string orgId, string id)
+> MessageResponse AbacAttributesDelete (string orgId, string id)
 
 Delete an attribute definition
 
@@ -154,7 +159,8 @@ namespace Example
             try
             {
                 // Delete an attribute definition
-                apiInstance.AbacAttributesDelete(orgId, id);
+                MessageResponse result = apiInstance.AbacAttributesDelete(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -174,7 +180,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete an attribute definition
-    apiInstance.AbacAttributesDeleteWithHttpInfo(orgId, id);
+    ApiResponse<MessageResponse> response = apiInstance.AbacAttributesDeleteWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -193,7 +202,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -202,21 +211,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **403** | System attribute definitions cannot be deleted |  -  |
+| **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacattributesget"></a>
 # **AbacAttributesGet**
-> void AbacAttributesGet (string orgId, string id)
+> AbacAttributesGetResponse AbacAttributesGet (string orgId, string id)
 
-Get a single attribute definition
+Get an attribute definition
 
 ### Example
 ```csharp
@@ -251,8 +262,9 @@ namespace Example
 
             try
             {
-                // Get a single attribute definition
-                apiInstance.AbacAttributesGet(orgId, id);
+                // Get an attribute definition
+                AbacAttributesGetResponse result = apiInstance.AbacAttributesGet(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -271,8 +283,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single attribute definition
-    apiInstance.AbacAttributesGetWithHttpInfo(orgId, id);
+    // Get an attribute definition
+    ApiResponse<AbacAttributesGetResponse> response = apiInstance.AbacAttributesGetWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -291,7 +306,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacAttributesGetResponse**](AbacAttributesGetResponse.md)
 
 ### Authorization
 
@@ -300,21 +315,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Attribute definition |  -  |
+| **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacattributeslist"></a>
 # **AbacAttributesList**
-> void AbacAttributesList (string orgId)
+> AbacAttributesListResponse AbacAttributesList (string orgId)
 
-List all attribute definitions
+List attribute definitions
 
 ### Example
 ```csharp
@@ -348,8 +364,9 @@ namespace Example
 
             try
             {
-                // List all attribute definitions
-                apiInstance.AbacAttributesList(orgId);
+                // List attribute definitions
+                AbacAttributesListResponse result = apiInstance.AbacAttributesList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -368,8 +385,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all attribute definitions
-    apiInstance.AbacAttributesListWithHttpInfo(orgId);
+    // List attribute definitions
+    ApiResponse<AbacAttributesListResponse> response = apiInstance.AbacAttributesListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -387,7 +407,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacAttributesListResponse**](AbacAttributesListResponse.md)
 
 ### Authorization
 
@@ -396,21 +416,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Paginated attribute definitions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacpoliciescreate"></a>
 # **AbacPoliciesCreate**
-> void AbacPoliciesCreate (string orgId)
+> AbacPoliciesCreateResponse AbacPoliciesCreate (string orgId)
 
-Create a new ABAC policy
+Create an ABAC policy
 
 ### Example
 ```csharp
@@ -444,8 +464,9 @@ namespace Example
 
             try
             {
-                // Create a new ABAC policy
-                apiInstance.AbacPoliciesCreate(orgId);
+                // Create an ABAC policy
+                AbacPoliciesCreateResponse result = apiInstance.AbacPoliciesCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -464,8 +485,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a new ABAC policy
-    apiInstance.AbacPoliciesCreateWithHttpInfo(orgId);
+    // Create an ABAC policy
+    ApiResponse<AbacPoliciesCreateResponse> response = apiInstance.AbacPoliciesCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -483,7 +507,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesCreateResponse**](AbacPoliciesCreateResponse.md)
 
 ### Authorization
 
@@ -492,19 +516,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created |  -  |
+| **400** | Invalid effect or policy conditions |  -  |
+| **409** | A policy with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacpoliciesdelete"></a>
 # **AbacPoliciesDelete**
-> void AbacPoliciesDelete (string orgId, string id)
+> MessageResponse AbacPoliciesDelete (string orgId, string id)
 
 Delete an ABAC policy
 
@@ -542,7 +568,8 @@ namespace Example
             try
             {
                 // Delete an ABAC policy
-                apiInstance.AbacPoliciesDelete(orgId, id);
+                MessageResponse result = apiInstance.AbacPoliciesDelete(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -562,7 +589,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete an ABAC policy
-    apiInstance.AbacPoliciesDeleteWithHttpInfo(orgId, id);
+    ApiResponse<MessageResponse> response = apiInstance.AbacPoliciesDeleteWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -581,7 +611,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -590,21 +620,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **403** | System policies cannot be deleted |  -  |
+| **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacpoliciesget"></a>
 # **AbacPoliciesGet**
-> void AbacPoliciesGet (string orgId, string id)
+> AbacPoliciesGetResponse AbacPoliciesGet (string orgId, string id)
 
-Get a single ABAC policy
+Get an ABAC policy
 
 ### Example
 ```csharp
@@ -639,8 +671,9 @@ namespace Example
 
             try
             {
-                // Get a single ABAC policy
-                apiInstance.AbacPoliciesGet(orgId, id);
+                // Get an ABAC policy
+                AbacPoliciesGetResponse result = apiInstance.AbacPoliciesGet(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -659,8 +692,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single ABAC policy
-    apiInstance.AbacPoliciesGetWithHttpInfo(orgId, id);
+    // Get an ABAC policy
+    ApiResponse<AbacPoliciesGetResponse> response = apiInstance.AbacPoliciesGetWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -679,7 +715,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesGetResponse**](AbacPoliciesGetResponse.md)
 
 ### Authorization
 
@@ -688,21 +724,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Policy |  -  |
+| **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacpolicieslist"></a>
 # **AbacPoliciesList**
-> void AbacPoliciesList (string orgId)
+> AbacPoliciesListResponse AbacPoliciesList (string orgId)
 
-List all ABAC policies
+List ABAC policies
 
 ### Example
 ```csharp
@@ -736,8 +773,9 @@ namespace Example
 
             try
             {
-                // List all ABAC policies
-                apiInstance.AbacPoliciesList(orgId);
+                // List ABAC policies
+                AbacPoliciesListResponse result = apiInstance.AbacPoliciesList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -756,8 +794,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all ABAC policies
-    apiInstance.AbacPoliciesListWithHttpInfo(orgId);
+    // List ABAC policies
+    ApiResponse<AbacPoliciesListResponse> response = apiInstance.AbacPoliciesListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -775,7 +816,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesListResponse**](AbacPoliciesListResponse.md)
 
 ### Authorization
 
@@ -784,21 +825,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Paginated policies |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="abacpoliciestoggle"></a>
 # **AbacPoliciesToggle**
-> void AbacPoliciesToggle (string orgId, string id)
+> AbacPoliciesToggleResponse AbacPoliciesToggle (string orgId, string id)
 
-Toggle policy active status
+Toggle a policy between active and inactive
 
 ### Example
 ```csharp
@@ -833,8 +874,9 @@ namespace Example
 
             try
             {
-                // Toggle policy active status
-                apiInstance.AbacPoliciesToggle(orgId, id);
+                // Toggle a policy between active and inactive
+                AbacPoliciesToggleResponse result = apiInstance.AbacPoliciesToggle(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -853,8 +895,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Toggle policy active status
-    apiInstance.AbacPoliciesToggleWithHttpInfo(orgId, id);
+    // Toggle a policy between active and inactive
+    ApiResponse<AbacPoliciesToggleResponse> response = apiInstance.AbacPoliciesToggleWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -873,7 +918,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesToggleResponse**](AbacPoliciesToggleResponse.md)
 
 ### Authorization
 
@@ -882,21 +927,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Toggled policy |  -  |
+| **403** | System policies cannot be modified |  -  |
+| **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchabacattributesupdate"></a>
 # **PatchAbacAttributesUpdate**
-> void PatchAbacAttributesUpdate (string orgId, string id)
+> PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate (string orgId, string id)
 
-Update an attribute definition
+Partially update an attribute definition
 
 ### Example
 ```csharp
@@ -931,8 +978,9 @@ namespace Example
 
             try
             {
-                // Update an attribute definition
-                apiInstance.PatchAbacAttributesUpdate(orgId, id);
+                // Partially update an attribute definition
+                PutAbacAttributesUpdateResponse result = apiInstance.PatchAbacAttributesUpdate(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -951,8 +999,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update an attribute definition
-    apiInstance.PatchAbacAttributesUpdateWithHttpInfo(orgId, id);
+    // Partially update an attribute definition
+    ApiResponse<PutAbacAttributesUpdateResponse> response = apiInstance.PatchAbacAttributesUpdateWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -971,7 +1022,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -980,21 +1031,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System attribute definitions cannot be modified |  -  |
+| **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchabacpoliciesupdate"></a>
 # **PatchAbacPoliciesUpdate**
-> void PatchAbacPoliciesUpdate (string orgId, string id)
+> PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate (string orgId, string id)
 
-Update an ABAC policy
+Partially update an ABAC policy
 
 ### Example
 ```csharp
@@ -1029,8 +1082,9 @@ namespace Example
 
             try
             {
-                // Update an ABAC policy
-                apiInstance.PatchAbacPoliciesUpdate(orgId, id);
+                // Partially update an ABAC policy
+                PutAbacPoliciesUpdateResponse result = apiInstance.PatchAbacPoliciesUpdate(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1049,8 +1103,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update an ABAC policy
-    apiInstance.PatchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    // Partially update an ABAC policy
+    ApiResponse<PutAbacPoliciesUpdateResponse> response = apiInstance.PatchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1069,7 +1126,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -1078,19 +1135,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System policies cannot be modified |  -  |
+| **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putabacattributesupdate"></a>
 # **PutAbacAttributesUpdate**
-> void PutAbacAttributesUpdate (string orgId, string id)
+> PutAbacAttributesUpdateResponse PutAbacAttributesUpdate (string orgId, string id)
 
 Update an attribute definition
 
@@ -1128,7 +1187,8 @@ namespace Example
             try
             {
                 // Update an attribute definition
-                apiInstance.PutAbacAttributesUpdate(orgId, id);
+                PutAbacAttributesUpdateResponse result = apiInstance.PutAbacAttributesUpdate(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1148,7 +1208,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an attribute definition
-    apiInstance.PutAbacAttributesUpdateWithHttpInfo(orgId, id);
+    ApiResponse<PutAbacAttributesUpdateResponse> response = apiInstance.PutAbacAttributesUpdateWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1167,7 +1230,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -1176,19 +1239,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System attribute definitions cannot be modified |  -  |
+| **404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putabacpoliciesupdate"></a>
 # **PutAbacPoliciesUpdate**
-> void PutAbacPoliciesUpdate (string orgId, string id)
+> PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate (string orgId, string id)
 
 Update an ABAC policy
 
@@ -1226,7 +1291,8 @@ namespace Example
             try
             {
                 // Update an ABAC policy
-                apiInstance.PutAbacPoliciesUpdate(orgId, id);
+                PutAbacPoliciesUpdateResponse result = apiInstance.PutAbacPoliciesUpdate(orgId, id);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1246,7 +1312,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Update an ABAC policy
-    apiInstance.PutAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    ApiResponse<PutAbacPoliciesUpdateResponse> response = apiInstance.PutAbacPoliciesUpdateWithHttpInfo(orgId, id);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1265,7 +1334,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -1274,13 +1343,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated |  -  |
+| **403** | System policies cannot be modified |  -  |
+| **404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

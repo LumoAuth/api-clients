@@ -27,6 +27,33 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AddUserGroupResponse;
+import io.lumoauth.client.model.AddUserPermissionResponse;
+import io.lumoauth.client.model.AddUserRoleResponse;
+import io.lumoauth.client.model.AdminAgentsGetResponse;
+import io.lumoauth.client.model.AdminGroupsGroupsGetRolesResponse;
+import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkRequest;
+import io.lumoauth.client.model.AdminIdentitiesLegacySamlRelinkResponse;
+import io.lumoauth.client.model.AdminIdentitiesLegacySamlReportResponse;
+import io.lumoauth.client.model.AdminIdentitiesLinkRequest;
+import io.lumoauth.client.model.AdminIdentitiesListResponse;
+import io.lumoauth.client.model.AdminRolesGetPermissionsResponse;
+import io.lumoauth.client.model.BlockUserResponse;
+import io.lumoauth.client.model.CreateUserResponse;
+import io.lumoauth.client.model.DeleteUserResponse;
+import io.lumoauth.client.model.GetUserResponse;
+import io.lumoauth.client.model.ListUsersResponse;
+import io.lumoauth.client.model.MarkUserVerifiedResponse;
+import io.lumoauth.client.model.RemoveUserGroupResponse;
+import io.lumoauth.client.model.RemoveUserPermissionResponse;
+import io.lumoauth.client.model.RemoveUserRoleResponse;
+import io.lumoauth.client.model.SendUserVerificationEmailResponse;
+import io.lumoauth.client.model.SetUserPasswordPostResponse;
+import io.lumoauth.client.model.TriggerUserPasswordResetResponse;
+import io.lumoauth.client.model.UnblockUserResponse;
+import io.lumoauth.client.model.UpdateUserGroupsResponse;
+import io.lumoauth.client.model.UpdateUserResponse;
+import io.lumoauth.client.model.UpdateUserRolesResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -82,7 +109,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call addUserGroupCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -113,6 +140,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -147,43 +175,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Add a user to a group
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AddUserGroupResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public void addUserGroup(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        addUserGroupWithHttpInfo(orgId, userId);
+    public AddUserGroupResponse addUserGroup(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AddUserGroupResponse> localVarResp = addUserGroupWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Add a user to a group
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AddUserGroupResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> addUserGroupWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AddUserGroupResponse> addUserGroupWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = addUserGroupValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AddUserGroupResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Add a user to a group (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -194,13 +225,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserGroupAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call addUserGroupAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AddUserGroupResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = addUserGroupValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AddUserGroupResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -214,7 +246,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call addUserPermissionCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -245,6 +277,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -279,43 +312,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Assign a permission to a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AddUserPermissionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public void addUserPermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        addUserPermissionWithHttpInfo(orgId, userId);
+    public AddUserPermissionResponse addUserPermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AddUserPermissionResponse> localVarResp = addUserPermissionWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Assign a permission to a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AddUserPermissionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> addUserPermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AddUserPermissionResponse> addUserPermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = addUserPermissionValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AddUserPermissionResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Assign a permission to a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -326,13 +362,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserPermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call addUserPermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AddUserPermissionResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = addUserPermissionValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AddUserPermissionResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -346,7 +383,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call addUserRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -377,6 +414,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -411,43 +449,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Assign a role to a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AddUserRoleResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public void addUserRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        addUserRoleWithHttpInfo(orgId, userId);
+    public AddUserRoleResponse addUserRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AddUserRoleResponse> localVarResp = addUserRoleWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Assign a role to a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AddUserRoleResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> addUserRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AddUserRoleResponse> addUserRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = addUserRoleValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AddUserRoleResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Assign a role to a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -458,13 +499,765 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role assigned </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call addUserRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call addUserRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AddUserRoleResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = addUserRoleValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AddUserRoleResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminIdentitiesLegacySamlRelink
+     * @param orgId  (required)
+     * @param adminIdentitiesLegacySamlRelinkRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Plan (dry run) or result </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Neither user_ids nor all_matching_domains given, or the IdP has no allowed email domains </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesLegacySamlRelinkCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminIdentitiesLegacySamlRelinkRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/identities/legacy-saml"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminIdentitiesLegacySamlRelinkValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminIdentitiesLegacySamlRelink(Async)");
+        }
+
+        // verify the required parameter 'adminIdentitiesLegacySamlRelinkRequest' is set
+        if (adminIdentitiesLegacySamlRelinkRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminIdentitiesLegacySamlRelinkRequest' when calling adminIdentitiesLegacySamlRelink(Async)");
+        }
+
+        return adminIdentitiesLegacySamlRelinkCall(orgId, adminIdentitiesLegacySamlRelinkRequest, _callback);
+
+    }
+
+    /**
+     * Relink legacy SAML users to an IdP
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * @param orgId  (required)
+     * @param adminIdentitiesLegacySamlRelinkRequest  (required)
+     * @return AdminIdentitiesLegacySamlRelinkResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Plan (dry run) or result </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Neither user_ids nor all_matching_domains given, or the IdP has no allowed email domains </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminIdentitiesLegacySamlRelinkResponse adminIdentitiesLegacySamlRelink(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest) throws ApiException {
+        ApiResponse<AdminIdentitiesLegacySamlRelinkResponse> localVarResp = adminIdentitiesLegacySamlRelinkWithHttpInfo(orgId, adminIdentitiesLegacySamlRelinkRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Relink legacy SAML users to an IdP
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * @param orgId  (required)
+     * @param adminIdentitiesLegacySamlRelinkRequest  (required)
+     * @return ApiResponse&lt;AdminIdentitiesLegacySamlRelinkResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Plan (dry run) or result </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Neither user_ids nor all_matching_domains given, or the IdP has no allowed email domains </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminIdentitiesLegacySamlRelinkResponse> adminIdentitiesLegacySamlRelinkWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminIdentitiesLegacySamlRelinkValidateBeforeCall(orgId, adminIdentitiesLegacySamlRelinkRequest, null);
+        Type localVarReturnType = new TypeToken<AdminIdentitiesLegacySamlRelinkResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Relink legacy SAML users to an IdP (asynchronously)
+     * Rebinds legacy bare-NameID users to &#x60;idp_id&#x60;, keeping their NameID: either &#x60;user_ids&#x60;, or every legacy user whose email domain the IdP&#39;s allowed email domains claim (&#x60;all_matching_domains: true&#x60;). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. &#x60;dry_run&#x60; (default true) only reports what would change. A real run revokes each relinked user&#39;s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * @param orgId  (required)
+     * @param adminIdentitiesLegacySamlRelinkRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Plan (dry run) or result </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Neither user_ids nor all_matching_domains given, or the IdP has no allowed email domains </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesLegacySamlRelinkAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest, final ApiCallback<AdminIdentitiesLegacySamlRelinkResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminIdentitiesLegacySamlRelinkValidateBeforeCall(orgId, adminIdentitiesLegacySamlRelinkRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminIdentitiesLegacySamlRelinkResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminIdentitiesLegacySamlReport
+     * @param orgId  (required)
+     * @param idpId  (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Report </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesLegacySamlReportCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer idpId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/identities/legacy-saml"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (idpId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("idp_id", idpId));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminIdentitiesLegacySamlReportValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer idpId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminIdentitiesLegacySamlReport(Async)");
+        }
+
+        return adminIdentitiesLegacySamlReportCall(orgId, idpId, _callback);
+
+    }
+
+    /**
+     * Legacy SAML bindings report
+     * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (&#x60;ambiguous: true&#x60;) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; &#x60;suggested_idp_id&#x60; is set when exactly one does. Filter with &#x60;idp_id&#x60;.
+     * @param orgId  (required)
+     * @param idpId  (optional)
+     * @return AdminIdentitiesLegacySamlReportResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Report </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminIdentitiesLegacySamlReportResponse adminIdentitiesLegacySamlReport(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer idpId) throws ApiException {
+        ApiResponse<AdminIdentitiesLegacySamlReportResponse> localVarResp = adminIdentitiesLegacySamlReportWithHttpInfo(orgId, idpId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Legacy SAML bindings report
+     * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (&#x60;ambiguous: true&#x60;) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; &#x60;suggested_idp_id&#x60; is set when exactly one does. Filter with &#x60;idp_id&#x60;.
+     * @param orgId  (required)
+     * @param idpId  (optional)
+     * @return ApiResponse&lt;AdminIdentitiesLegacySamlReportResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Report </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminIdentitiesLegacySamlReportResponse> adminIdentitiesLegacySamlReportWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer idpId) throws ApiException {
+        okhttp3.Call localVarCall = adminIdentitiesLegacySamlReportValidateBeforeCall(orgId, idpId, null);
+        Type localVarReturnType = new TypeToken<AdminIdentitiesLegacySamlReportResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Legacy SAML bindings report (asynchronously)
+     * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (&#x60;ambiguous: true&#x60;) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; &#x60;suggested_idp_id&#x60; is set when exactly one does. Filter with &#x60;idp_id&#x60;.
+     * @param orgId  (required)
+     * @param idpId  (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Report </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> IdP not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesLegacySamlReportAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nullable Integer idpId, final ApiCallback<AdminIdentitiesLegacySamlReportResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminIdentitiesLegacySamlReportValidateBeforeCall(orgId, idpId, _callback);
+        Type localVarReturnType = new TypeToken<AdminIdentitiesLegacySamlReportResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminIdentitiesLink
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param adminIdentitiesLinkRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Linked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User, IdP or directory not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> identity_conflict </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> invalid_identity / directory_lookup_failed </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesLinkCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminIdentitiesLinkRequest adminIdentitiesLinkRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminIdentitiesLinkRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/identities"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "userId" + "}", localVarApiClient.escapeString(userId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminIdentitiesLinkValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminIdentitiesLinkRequest adminIdentitiesLinkRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminIdentitiesLink(Async)");
+        }
+
+        // verify the required parameter 'userId' is set
+        if (userId == null) {
+            throw new ApiException("Missing the required parameter 'userId' when calling adminIdentitiesLink(Async)");
+        }
+
+        // verify the required parameter 'adminIdentitiesLinkRequest' is set
+        if (adminIdentitiesLinkRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminIdentitiesLinkRequest' when calling adminIdentitiesLink(Async)");
+        }
+
+        return adminIdentitiesLinkCall(orgId, userId, adminIdentitiesLinkRequest, _callback);
+
+    }
+
+    /**
+     * Link a SAML or LDAP identity to a user
+     * Sets (or replaces) the user&#39;s SAML binding (&#x60;idp_id&#x60; + &#x60;name_id&#x60;) or LDAP binding (&#x60;ldap_config_id&#x60; + &#x60;dn&#x60;; omit &#x60;dn&#x60; to look the entry up in the directory by the user&#39;s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param adminIdentitiesLinkRequest  (required)
+     * @return AdminAgentsGetResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Linked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User, IdP or directory not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> identity_conflict </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> invalid_identity / directory_lookup_failed </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminAgentsGetResponse adminIdentitiesLink(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminIdentitiesLinkRequest adminIdentitiesLinkRequest) throws ApiException {
+        ApiResponse<AdminAgentsGetResponse> localVarResp = adminIdentitiesLinkWithHttpInfo(orgId, userId, adminIdentitiesLinkRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Link a SAML or LDAP identity to a user
+     * Sets (or replaces) the user&#39;s SAML binding (&#x60;idp_id&#x60; + &#x60;name_id&#x60;) or LDAP binding (&#x60;ldap_config_id&#x60; + &#x60;dn&#x60;; omit &#x60;dn&#x60; to look the entry up in the directory by the user&#39;s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param adminIdentitiesLinkRequest  (required)
+     * @return ApiResponse&lt;AdminAgentsGetResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Linked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User, IdP or directory not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> identity_conflict </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> invalid_identity / directory_lookup_failed </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminAgentsGetResponse> adminIdentitiesLinkWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminIdentitiesLinkRequest adminIdentitiesLinkRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminIdentitiesLinkValidateBeforeCall(orgId, userId, adminIdentitiesLinkRequest, null);
+        Type localVarReturnType = new TypeToken<AdminAgentsGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Link a SAML or LDAP identity to a user (asynchronously)
+     * Sets (or replaces) the user&#39;s SAML binding (&#x60;idp_id&#x60; + &#x60;name_id&#x60;) or LDAP binding (&#x60;ldap_config_id&#x60; + &#x60;dn&#x60;; omit &#x60;dn&#x60; to look the entry up in the directory by the user&#39;s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param adminIdentitiesLinkRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 201 </td><td> Linked </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User, IdP or directory not found </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> identity_conflict </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> invalid_identity / directory_lookup_failed </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesLinkAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull AdminIdentitiesLinkRequest adminIdentitiesLinkRequest, final ApiCallback<AdminAgentsGetResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminIdentitiesLinkValidateBeforeCall(orgId, userId, adminIdentitiesLinkRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminAgentsGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminIdentitiesList
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Links </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesListCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/identities"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "userId" + "}", localVarApiClient.escapeString(userId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminIdentitiesListValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminIdentitiesList(Async)");
+        }
+
+        // verify the required parameter 'userId' is set
+        if (userId == null) {
+            throw new ApiException("Missing the required parameter 'userId' when calling adminIdentitiesList(Async)");
+        }
+
+        return adminIdentitiesListCall(orgId, userId, _callback);
+
+    }
+
+    /**
+     * List a user&#39;s federated identity links
+     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with &#x60;legacy: true&#x60; stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @return AdminIdentitiesListResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Links </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminIdentitiesListResponse adminIdentitiesList(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminIdentitiesListResponse> localVarResp = adminIdentitiesListWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * List a user&#39;s federated identity links
+     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with &#x60;legacy: true&#x60; stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @return ApiResponse&lt;AdminIdentitiesListResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Links </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminIdentitiesListResponse> adminIdentitiesListWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        okhttp3.Call localVarCall = adminIdentitiesListValidateBeforeCall(orgId, userId, null);
+        Type localVarReturnType = new TypeToken<AdminIdentitiesListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * List a user&#39;s federated identity links (asynchronously)
+     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with &#x60;legacy: true&#x60; stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Links </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesListAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminIdentitiesListResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminIdentitiesListValidateBeforeCall(orgId, userId, _callback);
+        Type localVarReturnType = new TypeToken<AdminIdentitiesListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for adminIdentitiesUnlink
+     * @param type  (required)
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Unlinked; returns the removed binding </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found, or no link of that type </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Unknown type </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesUnlinkCall(@javax.annotation.Nonnull String type, @javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}"
+            .replace("{" + "type" + "}", localVarApiClient.escapeString(type.toString()))
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "userId" + "}", localVarApiClient.escapeString(userId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminIdentitiesUnlinkValidateBeforeCall(@javax.annotation.Nonnull String type, @javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'type' is set
+        if (type == null) {
+            throw new ApiException("Missing the required parameter 'type' when calling adminIdentitiesUnlink(Async)");
+        }
+
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminIdentitiesUnlink(Async)");
+        }
+
+        // verify the required parameter 'userId' is set
+        if (userId == null) {
+            throw new ApiException("Missing the required parameter 'userId' when calling adminIdentitiesUnlink(Async)");
+        }
+
+        return adminIdentitiesUnlinkCall(type, orgId, userId, _callback);
+
+    }
+
+    /**
+     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Removes the binding of the given type (&#x60;saml&#x60;, &#x60;ldap&#x60; or &#x60;social&#x60;). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @param type  (required)
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @return AdminAgentsGetResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Unlinked; returns the removed binding </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found, or no link of that type </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Unknown type </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminAgentsGetResponse adminIdentitiesUnlink(@javax.annotation.Nonnull String type, @javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminAgentsGetResponse> localVarResp = adminIdentitiesUnlinkWithHttpInfo(type, orgId, userId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Unlink a user&#39;s SAML, LDAP or social identity
+     * Removes the binding of the given type (&#x60;saml&#x60;, &#x60;ldap&#x60; or &#x60;social&#x60;). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @param type  (required)
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @return ApiResponse&lt;AdminAgentsGetResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Unlinked; returns the removed binding </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found, or no link of that type </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Unknown type </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminAgentsGetResponse> adminIdentitiesUnlinkWithHttpInfo(@javax.annotation.Nonnull String type, @javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        okhttp3.Call localVarCall = adminIdentitiesUnlinkValidateBeforeCall(type, orgId, userId, null);
+        Type localVarReturnType = new TypeToken<AdminAgentsGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Unlink a user&#39;s SAML, LDAP or social identity (asynchronously)
+     * Removes the binding of the given type (&#x60;saml&#x60;, &#x60;ldap&#x60; or &#x60;social&#x60;). Revokes the user&#39;s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @param type  (required)
+     * @param orgId  (required)
+     * @param userId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Unlinked; returns the removed binding </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Actor does not outrank the user, or step_up_required </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> User not found, or no link of that type </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> Unknown type </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminIdentitiesUnlinkAsync(@javax.annotation.Nonnull String type, @javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminAgentsGetResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminIdentitiesUnlinkValidateBeforeCall(type, orgId, userId, _callback);
+        Type localVarReturnType = new TypeToken<AdminAgentsGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -478,7 +1271,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User blocked </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call blockUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -509,6 +1302,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -543,43 +1337,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Block a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return BlockUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User blocked </td><td>  -  </td></tr>
      </table>
      */
-    public void blockUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        blockUserWithHttpInfo(orgId, userId);
+    public BlockUserResponse blockUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<BlockUserResponse> localVarResp = blockUserWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Block a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;BlockUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User blocked </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> blockUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<BlockUserResponse> blockUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = blockUserValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<BlockUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Block a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -590,13 +1387,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User blocked </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call blockUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call blockUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<BlockUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = blockUserValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<BlockUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -609,7 +1407,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call createUserCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -639,6 +1437,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -668,41 +1467,44 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Create a user
      * 
      * @param orgId  (required)
+     * @return CreateUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
      </table>
      */
-    public void createUser(@javax.annotation.Nonnull String orgId) throws ApiException {
-        createUserWithHttpInfo(orgId);
+    public CreateUserResponse createUser(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<CreateUserResponse> localVarResp = createUserWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Create a user
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;CreateUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> createUserWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<CreateUserResponse> createUserWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = createUserValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<CreateUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Create a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -712,13 +1514,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> User created </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createUserAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call createUserAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<CreateUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createUserValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<CreateUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -732,7 +1535,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User deleted </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deleteUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -763,6 +1566,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -797,43 +1601,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Delete a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return DeleteUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User deleted </td><td>  -  </td></tr>
      </table>
      */
-    public void deleteUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        deleteUserWithHttpInfo(orgId, userId);
+    public DeleteUserResponse deleteUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<DeleteUserResponse> localVarResp = deleteUserWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Delete a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;DeleteUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User deleted </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> deleteUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<DeleteUserResponse> deleteUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = deleteUserValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<DeleteUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Delete a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -844,13 +1651,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User deleted </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call deleteUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<DeleteUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteUserValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<DeleteUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -864,7 +1672,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -895,6 +1703,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -929,43 +1738,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Get a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return GetUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User </td><td>  -  </td></tr>
      </table>
      */
-    public void getUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        getUserWithHttpInfo(orgId, userId);
+    public GetUserResponse getUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<GetUserResponse> localVarResp = getUserWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Get a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;GetUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<GetUserResponse> getUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = getUserValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<GetUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Get a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -976,13 +1788,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<GetUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getUserValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<GetUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -996,7 +1809,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups the user belongs to </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listUserGroupsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1027,6 +1840,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1061,43 +1875,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * List a user&#39;s groups
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminGroupsGroupsGetRolesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups the user belongs to </td><td>  -  </td></tr>
      </table>
      */
-    public void listUserGroups(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        listUserGroupsWithHttpInfo(orgId, userId);
+    public AdminGroupsGroupsGetRolesResponse listUserGroups(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminGroupsGroupsGetRolesResponse> localVarResp = listUserGroupsWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * List a user&#39;s groups
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsGroupsGetRolesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups the user belongs to </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listUserGroupsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminGroupsGroupsGetRolesResponse> listUserGroupsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = listUserGroupsValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsGroupsGetRolesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * List a user&#39;s groups (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1108,13 +1925,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Groups the user belongs to </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listUserGroupsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listUserGroupsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminGroupsGroupsGetRolesResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listUserGroupsValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsGroupsGetRolesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1128,7 +1946,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions assigned directly to the user </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listUserPermissionsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1159,6 +1977,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1193,43 +2012,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * List a user&#39;s direct permissions
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminRolesGetPermissionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions assigned directly to the user </td><td>  -  </td></tr>
      </table>
      */
-    public void listUserPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        listUserPermissionsWithHttpInfo(orgId, userId);
+    public AdminRolesGetPermissionsResponse listUserPermissions(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminRolesGetPermissionsResponse> localVarResp = listUserPermissionsWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * List a user&#39;s direct permissions
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminRolesGetPermissionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions assigned directly to the user </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listUserPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminRolesGetPermissionsResponse> listUserPermissionsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = listUserPermissionsValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminRolesGetPermissionsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * List a user&#39;s direct permissions (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1240,13 +2062,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permissions assigned directly to the user </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listUserPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listUserPermissionsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminRolesGetPermissionsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listUserPermissionsValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminRolesGetPermissionsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1260,7 +2083,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles assigned to the user </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listUserRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1291,6 +2114,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1325,43 +2149,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * List a user&#39;s roles
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return AdminGroupsGroupsGetRolesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles assigned to the user </td><td>  -  </td></tr>
      </table>
      */
-    public void listUserRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        listUserRolesWithHttpInfo(orgId, userId);
+    public AdminGroupsGroupsGetRolesResponse listUserRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<AdminGroupsGroupsGetRolesResponse> localVarResp = listUserRolesWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * List a user&#39;s roles
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminGroupsGroupsGetRolesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles assigned to the user </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listUserRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<AdminGroupsGroupsGetRolesResponse> listUserRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = listUserRolesValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminGroupsGroupsGetRolesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * List a user&#39;s roles (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1372,13 +2199,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Roles assigned to the user </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listUserRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listUserRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<AdminGroupsGroupsGetRolesResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listUserRolesValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminGroupsGroupsGetRolesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1391,7 +2219,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call listUsersCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1421,6 +2249,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1450,41 +2279,44 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * List users
      * 
      * @param orgId  (required)
+     * @return ListUsersResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public void listUsers(@javax.annotation.Nonnull String orgId) throws ApiException {
-        listUsersWithHttpInfo(orgId);
+    public ListUsersResponse listUsers(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<ListUsersResponse> localVarResp = listUsersWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * List users
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;ListUsersResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> listUsersWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<ListUsersResponse> listUsersWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = listUsersValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<ListUsersResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * List users (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1494,13 +2326,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Users </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call listUsersAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call listUsersAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ListUsersResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = listUsersValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<ListUsersResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1514,7 +2347,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User marked verified </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call markUserVerifiedCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1545,6 +2378,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1579,43 +2413,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Mark a user&#39;s email as verified
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return MarkUserVerifiedResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User marked verified </td><td>  -  </td></tr>
      </table>
      */
-    public void markUserVerified(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        markUserVerifiedWithHttpInfo(orgId, userId);
+    public MarkUserVerifiedResponse markUserVerified(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<MarkUserVerifiedResponse> localVarResp = markUserVerifiedWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Mark a user&#39;s email as verified
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MarkUserVerifiedResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User marked verified </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> markUserVerifiedWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<MarkUserVerifiedResponse> markUserVerifiedWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = markUserVerifiedValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MarkUserVerifiedResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Mark a user&#39;s email as verified (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1626,13 +2463,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User marked verified </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call markUserVerifiedAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call markUserVerifiedAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<MarkUserVerifiedResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = markUserVerifiedValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MarkUserVerifiedResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1646,7 +2484,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call patchUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -1677,6 +2515,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1711,43 +2550,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Update a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return UpdateUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
-    public void patchUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        patchUserWithHttpInfo(orgId, userId);
+    public UpdateUserResponse patchUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<UpdateUserResponse> localVarResp = patchUserWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Update a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> patchUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<UpdateUserResponse> patchUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = patchUserValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Update a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1758,13 +2600,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call patchUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call patchUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = patchUserValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1779,7 +2622,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call removeUserGroupCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId, final ApiCallback _callback) throws ApiException {
@@ -1811,6 +2654,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1850,45 +2694,48 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Remove a user from a group
      * 
      * @param orgId  (required)
      * @param userId  (required)
      * @param groupId  (required)
+     * @return RemoveUserGroupResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group removed </td><td>  -  </td></tr>
      </table>
      */
-    public void removeUserGroup(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId) throws ApiException {
-        removeUserGroupWithHttpInfo(orgId, userId, groupId);
+    public RemoveUserGroupResponse removeUserGroup(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId) throws ApiException {
+        ApiResponse<RemoveUserGroupResponse> localVarResp = removeUserGroupWithHttpInfo(orgId, userId, groupId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Remove a user from a group
      * 
      * @param orgId  (required)
      * @param userId  (required)
      * @param groupId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RemoveUserGroupResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> removeUserGroupWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId) throws ApiException {
+    public ApiResponse<RemoveUserGroupResponse> removeUserGroupWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId) throws ApiException {
         okhttp3.Call localVarCall = removeUserGroupValidateBeforeCall(orgId, userId, groupId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RemoveUserGroupResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Remove a user from a group (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -1900,13 +2747,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the group removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call removeUserGroupAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call removeUserGroupAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String groupId, final ApiCallback<RemoveUserGroupResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = removeUserGroupValidateBeforeCall(orgId, userId, groupId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RemoveUserGroupResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1921,7 +2769,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call removeUserPermissionCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId, final ApiCallback _callback) throws ApiException {
@@ -1953,6 +2801,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1992,45 +2841,48 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Remove a permission from a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
      * @param permissionId  (required)
+     * @return RemoveUserPermissionResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission removed </td><td>  -  </td></tr>
      </table>
      */
-    public void removeUserPermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId) throws ApiException {
-        removeUserPermissionWithHttpInfo(orgId, userId, permissionId);
+    public RemoveUserPermissionResponse removeUserPermission(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId) throws ApiException {
+        ApiResponse<RemoveUserPermissionResponse> localVarResp = removeUserPermissionWithHttpInfo(orgId, userId, permissionId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Remove a permission from a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
      * @param permissionId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RemoveUserPermissionResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> removeUserPermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId) throws ApiException {
+    public ApiResponse<RemoveUserPermissionResponse> removeUserPermissionWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId) throws ApiException {
         okhttp3.Call localVarCall = removeUserPermissionValidateBeforeCall(orgId, userId, permissionId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RemoveUserPermissionResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Remove a permission from a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2042,13 +2894,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Permission removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call removeUserPermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call removeUserPermissionAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String permissionId, final ApiCallback<RemoveUserPermissionResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = removeUserPermissionValidateBeforeCall(orgId, userId, permissionId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RemoveUserPermissionResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2063,7 +2916,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role removed </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call removeUserRoleCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId, final ApiCallback _callback) throws ApiException {
@@ -2095,6 +2948,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2134,45 +2988,48 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Remove a role from a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
      * @param roleId  (required)
+     * @return RemoveUserRoleResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role removed </td><td>  -  </td></tr>
      </table>
      */
-    public void removeUserRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId) throws ApiException {
-        removeUserRoleWithHttpInfo(orgId, userId, roleId);
+    public RemoveUserRoleResponse removeUserRole(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId) throws ApiException {
+        ApiResponse<RemoveUserRoleResponse> localVarResp = removeUserRoleWithHttpInfo(orgId, userId, roleId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Remove a role from a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
      * @param roleId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RemoveUserRoleResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role removed </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> removeUserRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId) throws ApiException {
+    public ApiResponse<RemoveUserRoleResponse> removeUserRoleWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId) throws ApiException {
         okhttp3.Call localVarCall = removeUserRoleValidateBeforeCall(orgId, userId, roleId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RemoveUserRoleResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Remove a role from a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2184,13 +3041,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with the role removed </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call removeUserRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call removeUserRoleAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, @javax.annotation.Nonnull String roleId, final ApiCallback<RemoveUserRoleResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = removeUserRoleValidateBeforeCall(orgId, userId, roleId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RemoveUserRoleResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2204,9 +3062,11 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 410 </td><td> Gone — use temporary-access-code </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
+    @Deprecated
     public okhttp3.Call resetUserMfaCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
@@ -2252,6 +3112,7 @@ public class AdminUsersApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    @Deprecated
     @SuppressWarnings("rawtypes")
     private okhttp3.Call resetUserMfaValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
@@ -2269,8 +3130,8 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
-     * 
+     * Reset MFA (removed)
+     * Removed: admins cannot disable a user&#39;s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
      * @param orgId  (required)
      * @param userId  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -2278,16 +3139,18 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 410 </td><td> Gone — use temporary-access-code </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
+    @Deprecated
     public void resetUserMfa(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         resetUserMfaWithHttpInfo(orgId, userId);
     }
 
     /**
-     * 
-     * 
+     * Reset MFA (removed)
+     * Removed: admins cannot disable a user&#39;s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
      * @param orgId  (required)
      * @param userId  (required)
      * @return ApiResponse&lt;Void&gt;
@@ -2296,17 +3159,19 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 410 </td><td> Gone — use temporary-access-code </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
+    @Deprecated
     public ApiResponse<Void> resetUserMfaWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = resetUserMfaValidateBeforeCall(orgId, userId, null);
         return localVarApiClient.execute(localVarCall);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Reset MFA (removed) (asynchronously)
+     * Removed: admins cannot disable a user&#39;s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
      * @param orgId  (required)
      * @param userId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -2316,9 +3181,11 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 410 </td><td> Gone — use temporary-access-code </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
+    @Deprecated
     public okhttp3.Call resetUserMfaAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = resetUserMfaValidateBeforeCall(orgId, userId, _callback);
@@ -2336,7 +3203,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification email sent </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call sendUserVerificationEmailCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -2367,6 +3234,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2401,43 +3269,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Send a verification email
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return SendUserVerificationEmailResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification email sent </td><td>  -  </td></tr>
      </table>
      */
-    public void sendUserVerificationEmail(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        sendUserVerificationEmailWithHttpInfo(orgId, userId);
+    public SendUserVerificationEmailResponse sendUserVerificationEmail(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<SendUserVerificationEmailResponse> localVarResp = sendUserVerificationEmailWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Send a verification email
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SendUserVerificationEmailResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification email sent </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> sendUserVerificationEmailWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<SendUserVerificationEmailResponse> sendUserVerificationEmailWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = sendUserVerificationEmailValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SendUserVerificationEmailResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Send a verification email (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2448,13 +3319,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification email sent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call sendUserVerificationEmailAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call sendUserVerificationEmailAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SendUserVerificationEmailResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = sendUserVerificationEmailValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SendUserVerificationEmailResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2468,7 +3340,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserPasswordCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -2499,6 +3371,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2533,43 +3406,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Set a user&#39;s password
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return SetUserPasswordPostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
-    public void setUserPassword(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        setUserPasswordWithHttpInfo(orgId, userId);
+    public SetUserPasswordPostResponse setUserPassword(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<SetUserPasswordPostResponse> localVarResp = setUserPasswordWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Set a user&#39;s password
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SetUserPasswordPostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> setUserPasswordWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<SetUserPasswordPostResponse> setUserPasswordWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = setUserPasswordValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Set a user&#39;s password (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2580,13 +3456,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserPasswordAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call setUserPasswordAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = setUserPasswordValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2600,7 +3477,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call setUserPasswordPostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -2631,6 +3508,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2665,43 +3543,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Set a user&#39;s password
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return SetUserPasswordPostResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
-    public void setUserPasswordPost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        setUserPasswordPostWithHttpInfo(orgId, userId);
+    public SetUserPasswordPostResponse setUserPasswordPost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<SetUserPasswordPostResponse> localVarResp = setUserPasswordPostWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Set a user&#39;s password
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SetUserPasswordPostResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> setUserPasswordPostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<SetUserPasswordPostResponse> setUserPasswordPostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = setUserPasswordPostValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Set a user&#39;s password (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2712,13 +3593,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password updated </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call setUserPasswordPostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call setUserPasswordPostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<SetUserPasswordPostResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = setUserPasswordPostValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SetUserPasswordPostResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2732,7 +3614,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password reset email sent </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call triggerUserPasswordResetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -2763,6 +3645,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2797,43 +3680,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Send a password reset email
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return TriggerUserPasswordResetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password reset email sent </td><td>  -  </td></tr>
      </table>
      */
-    public void triggerUserPasswordReset(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        triggerUserPasswordResetWithHttpInfo(orgId, userId);
+    public TriggerUserPasswordResetResponse triggerUserPasswordReset(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<TriggerUserPasswordResetResponse> localVarResp = triggerUserPasswordResetWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Send a password reset email
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;TriggerUserPasswordResetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password reset email sent </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> triggerUserPasswordResetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<TriggerUserPasswordResetResponse> triggerUserPasswordResetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = triggerUserPasswordResetValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<TriggerUserPasswordResetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Send a password reset email (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2844,13 +3730,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Password reset email sent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call triggerUserPasswordResetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call triggerUserPasswordResetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<TriggerUserPasswordResetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = triggerUserPasswordResetValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<TriggerUserPasswordResetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2864,7 +3751,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User unblocked </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call unblockUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -2895,6 +3782,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2929,43 +3817,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Unblock a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return UnblockUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User unblocked </td><td>  -  </td></tr>
      </table>
      */
-    public void unblockUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        unblockUserWithHttpInfo(orgId, userId);
+    public UnblockUserResponse unblockUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<UnblockUserResponse> localVarResp = unblockUserWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Unblock a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UnblockUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User unblocked </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> unblockUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<UnblockUserResponse> unblockUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = unblockUserValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UnblockUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Unblock a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -2976,13 +3867,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User unblocked </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call unblockUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call unblockUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UnblockUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = unblockUserValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UnblockUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2996,7 +3888,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call updateUserCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -3027,6 +3919,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3061,43 +3954,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Update a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return UpdateUserResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
-    public void updateUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        updateUserWithHttpInfo(orgId, userId);
+    public UpdateUserResponse updateUser(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<UpdateUserResponse> localVarResp = updateUserWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Update a user
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateUserResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> updateUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<UpdateUserResponse> updateUserWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = updateUserValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Update a user (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -3108,13 +4004,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User updated </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call updateUserAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateUserValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateUserResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3128,7 +4025,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call updateUserGroupsCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -3159,6 +4056,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3193,43 +4091,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Replace a user&#39;s groups
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return UpdateUserGroupsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public void updateUserGroups(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        updateUserGroupsWithHttpInfo(orgId, userId);
+    public UpdateUserGroupsResponse updateUserGroups(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<UpdateUserGroupsResponse> localVarResp = updateUserGroupsWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Replace a user&#39;s groups
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateUserGroupsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> updateUserGroupsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<UpdateUserGroupsResponse> updateUserGroupsWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = updateUserGroupsValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateUserGroupsResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Replace a user&#39;s groups (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -3240,13 +4141,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated groups </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserGroupsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call updateUserGroupsAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserGroupsResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateUserGroupsValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateUserGroupsResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -3260,7 +4162,7 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call updateUserRolesCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback _callback) throws ApiException {
@@ -3291,6 +4193,7 @@ public class AdminUsersApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -3325,43 +4228,46 @@ public class AdminUsersApi {
     }
 
     /**
-     * 
+     * Replace a user&#39;s roles
      * 
      * @param orgId  (required)
      * @param userId  (required)
+     * @return UpdateUserRolesResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public void updateUserRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
-        updateUserRolesWithHttpInfo(orgId, userId);
+    public UpdateUserRolesResponse updateUserRoles(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+        ApiResponse<UpdateUserRolesResponse> localVarResp = updateUserRolesWithHttpInfo(orgId, userId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Replace a user&#39;s roles
      * 
      * @param orgId  (required)
      * @param userId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;UpdateUserRolesResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> updateUserRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
+    public ApiResponse<UpdateUserRolesResponse> updateUserRolesWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId) throws ApiException {
         okhttp3.Call localVarCall = updateUserRolesValidateBeforeCall(orgId, userId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<UpdateUserRolesResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Replace a user&#39;s roles (asynchronously)
      * 
      * @param orgId  (required)
      * @param userId  (required)
@@ -3372,13 +4278,14 @@ public class AdminUsersApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> User with updated roles </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateUserRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call updateUserRolesAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String userId, final ApiCallback<UpdateUserRolesResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateUserRolesValidateBeforeCall(orgId, userId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<UpdateUserRolesResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

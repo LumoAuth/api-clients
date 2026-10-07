@@ -19,6 +19,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import io.lumoauth.client.model.AdminAgentsGenerateTokenResponseData;
 import java.io.IOException;
 import java.util.Arrays;
 
@@ -48,31 +49,31 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsGenerateTokenResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-09-17T16:31:25.084377-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T05:47:44.997141468Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAgentsGenerateTokenResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
   @javax.annotation.Nullable
-  private Object data;
+  private AdminAgentsGenerateTokenResponseData data;
 
   public AdminAgentsGenerateTokenResponse() {
   }
 
-  public AdminAgentsGenerateTokenResponse data(@javax.annotation.Nullable Object data) {
+  public AdminAgentsGenerateTokenResponse data(@javax.annotation.Nullable AdminAgentsGenerateTokenResponseData data) {
     this.data = data;
     return this;
   }
 
   /**
-   * The issued token and its metadata (access_token, expires_in, ...).
+   * Get data
    * @return data
    */
   @javax.annotation.Nullable
-  public Object getData() {
+  public AdminAgentsGenerateTokenResponseData getData() {
     return data;
   }
 
-  public void setData(@javax.annotation.Nullable Object data) {
+  public void setData(@javax.annotation.Nullable AdminAgentsGenerateTokenResponseData data) {
     this.data = data;
   }
 
@@ -148,6 +149,10 @@ public class AdminAgentsGenerateTokenResponse {
         }
       }
         JsonObject jsonObj = jsonElement.getAsJsonObject();
+      // validate the optional field `data`
+      if (jsonObj.get("data") != null && !jsonObj.get("data").isJsonNull()) {
+        AdminAgentsGenerateTokenResponseData.validateJsonElement(jsonObj.get("data"));
+      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {

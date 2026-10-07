@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 		var orgId string
 		var permissionId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsDelete(context.Background(), orgId, permissionId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsDelete(context.Background(), orgId, permissionId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 		var orgId string
 		var permissionId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsGet(context.Background(), orgId, permissionId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsGet(context.Background(), orgId, permissionId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -69,9 +72,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -83,9 +87,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 		var orgId string
 		var permissionId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsUpdate(context.Background(), orgId, permissionId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsUpdate(context.Background(), orgId, permissionId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -97,9 +102,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 		var orgId string
 		var permissionId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsUsage(context.Background(), orgId, permissionId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminPermissionsUsage(context.Background(), orgId, permissionId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -110,9 +116,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminScopesCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminScopesCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -124,9 +131,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 		var orgId string
 		var scopeId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminScopesDelete(context.Background(), orgId, scopeId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminScopesDelete(context.Background(), orgId, scopeId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -137,9 +145,10 @@ func Test_lumoauthclient_AdminPermissionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminPermissionsAPI.AdminScopesList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminPermissionsAPI.AdminScopesList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

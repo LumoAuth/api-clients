@@ -12,15 +12,19 @@ import AnyCodable
 
 public struct DenyRequestRequest: Codable, JSONEncodable, Hashable {
 
-    /** Optional denial reason. */
+    /** Optional denial reason (internal; never shown to the agent). */
     public var reason: String?
+    /** Optional message the agent MAY read on the status endpoint / callback. */
+    public var agentMessage: String?
 
-    public init(reason: String? = nil) {
+    public init(reason: String? = nil, agentMessage: String? = nil) {
         self.reason = reason
+        self.agentMessage = agentMessage
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case reason
+        case agentMessage = "agent_message"
     }
 
     // Encodable protocol methods
@@ -28,6 +32,7 @@ public struct DenyRequestRequest: Codable, JSONEncodable, Hashable {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(reason, forKey: .reason)
+        try container.encodeIfPresent(agentMessage, forKey: .agentMessage)
     }
 }
 

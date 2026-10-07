@@ -4,30 +4,32 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**admin_webhooks_create**](AdminWebhooksApi.md#admin_webhooks_create) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a new webhook |
+| [**admin_webhooks_create**](AdminWebhooksApi.md#admin_webhooks_create) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a webhook |
 | [**admin_webhooks_delete**](AdminWebhooksApi.md#admin_webhooks_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Delete a webhook |
-| [**admin_webhooks_deliveries_list**](AdminWebhooksApi.md#admin_webhooks_deliveries_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent delivery attempts for a webhook. |
-| [**admin_webhooks_delivery_replay**](AdminWebhooksApi.md#admin_webhooks_delivery_replay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage |
-| [**admin_webhooks_delivery_show**](AdminWebhooksApi.md#admin_webhooks_delivery_show) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis. |
-| [**admin_webhooks_events**](AdminWebhooksApi.md#admin_webhooks_events) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | Get available webhook event types |
-| [**admin_webhooks_get**](AdminWebhooksApi.md#admin_webhooks_get) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a single webhook by ID |
-| [**admin_webhooks_list**](AdminWebhooksApi.md#admin_webhooks_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List all webhooks in the tenant |
-| [**admin_webhooks_rotate_secret**](AdminWebhooksApi.md#admin_webhooks_rotate_secret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate webhook secret |
-| [**admin_webhooks_test**](AdminWebhooksApi.md#admin_webhooks_test) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Test a webhook by sending a test payload |
-| [**admin_webhooks_tunnel_start**](AdminWebhooksApi.md#admin_webhooks_tunnel_start) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start |  |
-| [**admin_webhooks_tunnel_stop**](AdminWebhooksApi.md#admin_webhooks_tunnel_stop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop |  |
-| [**admin_webhooks_tunnel_stream**](AdminWebhooksApi.md#admin_webhooks_tunnel_stream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream |  |
-| [**admin_webhooks_webhooks_disable**](AdminWebhooksApi.md#admin_webhooks_webhooks_disable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable webhook |
-| [**admin_webhooks_webhooks_enable**](AdminWebhooksApi.md#admin_webhooks_webhooks_enable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable webhook |
-| [**patch_admin_webhooks_update**](AdminWebhooksApi.md#patch_admin_webhooks_update) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook |
-| [**put_admin_webhooks_update**](AdminWebhooksApi.md#put_admin_webhooks_update) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook |
+| [**admin_webhooks_deliveries_list**](AdminWebhooksApi.md#admin_webhooks_deliveries_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent deliveries |
+| [**admin_webhooks_delivery_replay**](AdminWebhooksApi.md#admin_webhooks_delivery_replay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Replay a delivery |
+| [**admin_webhooks_delivery_show**](AdminWebhooksApi.md#admin_webhooks_delivery_show) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a delivery |
+| [**admin_webhooks_events**](AdminWebhooksApi.md#admin_webhooks_events) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | List available webhook event types |
+| [**admin_webhooks_get**](AdminWebhooksApi.md#admin_webhooks_get) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a webhook |
+| [**admin_webhooks_list**](AdminWebhooksApi.md#admin_webhooks_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List webhooks |
+| [**admin_webhooks_rotate_secret**](AdminWebhooksApi.md#admin_webhooks_rotate_secret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate the signing secret |
+| [**admin_webhooks_test**](AdminWebhooksApi.md#admin_webhooks_test) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Send a test delivery |
+| [**admin_webhooks_tunnel_start**](AdminWebhooksApi.md#admin_webhooks_tunnel_start) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | Start a webhook tunnel |
+| [**admin_webhooks_tunnel_stop**](AdminWebhooksApi.md#admin_webhooks_tunnel_stop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | Stop a webhook tunnel |
+| [**admin_webhooks_tunnel_stream**](AdminWebhooksApi.md#admin_webhooks_tunnel_stream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | Stream tunnel deliveries (SSE) |
+| [**admin_webhooks_webhooks_disable**](AdminWebhooksApi.md#admin_webhooks_webhooks_disable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable a webhook |
+| [**admin_webhooks_webhooks_enable**](AdminWebhooksApi.md#admin_webhooks_webhooks_enable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook |
+| [**patch_admin_webhooks_update**](AdminWebhooksApi.md#patch_admin_webhooks_update) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook |
+| [**put_admin_webhooks_update**](AdminWebhooksApi.md#put_admin_webhooks_update) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook |
 
 
 ## admin_webhooks_create
 
-> admin_webhooks_create(org_id)
+> <AdminWebhooksCreateResponse> admin_webhooks_create(org_id)
 
-Create a new webhook
+Create a webhook
+
+The signing secret is generated server-side and returned once in this response only.
 
 ### Examples
 
@@ -49,8 +51,9 @@ api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Create a new webhook
-  api_instance.admin_webhooks_create(org_id)
+  # Create a webhook
+  result = api_instance.admin_webhooks_create(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_create: #{e}"
 end
@@ -58,17 +61,17 @@ end
 
 #### Using the admin_webhooks_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_create_with_http_info(org_id)
+> <Array(<AdminWebhooksCreateResponse>, Integer, Hash)> admin_webhooks_create_with_http_info(org_id)
 
 ```ruby
 begin
-  # Create a new webhook
+  # Create a webhook
   data, status_code, headers = api_instance.admin_webhooks_create_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_create_with_http_info: #{e}"
 end
@@ -82,7 +85,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksCreateResponse**](AdminWebhooksCreateResponse.md)
 
 ### Authorization
 
@@ -91,12 +94,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_delete
 
-> admin_webhooks_delete(org_id, webhook_id)
+> <MessageResponse> admin_webhooks_delete(org_id, webhook_id)
 
 Delete a webhook
 
@@ -122,7 +125,8 @@ webhook_id = 'webhook_id_example' # String |
 
 begin
   # Delete a webhook
-  api_instance.admin_webhooks_delete(org_id, webhook_id)
+  result = api_instance.admin_webhooks_delete(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_delete: #{e}"
 end
@@ -130,9 +134,9 @@ end
 
 #### Using the admin_webhooks_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_delete_with_http_info(org_id, webhook_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_webhooks_delete_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
@@ -140,7 +144,7 @@ begin
   data, status_code, headers = api_instance.admin_webhooks_delete_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_delete_with_http_info: #{e}"
 end
@@ -155,7 +159,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -164,16 +168,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_deliveries_list
 
-> admin_webhooks_deliveries_list(org_id, webhook_id)
+> <AdminWebhooksDeliveriesListResponse> admin_webhooks_deliveries_list(org_id, webhook_id)
 
-List recent delivery attempts for a webhook.
+List recent deliveries
 
-Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
 ### Examples
 
@@ -196,8 +200,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # List recent delivery attempts for a webhook.
-  api_instance.admin_webhooks_deliveries_list(org_id, webhook_id)
+  # List recent deliveries
+  result = api_instance.admin_webhooks_deliveries_list(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_deliveries_list: #{e}"
 end
@@ -205,17 +210,17 @@ end
 
 #### Using the admin_webhooks_deliveries_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_deliveries_list_with_http_info(org_id, webhook_id)
+> <Array(<AdminWebhooksDeliveriesListResponse>, Integer, Hash)> admin_webhooks_deliveries_list_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # List recent delivery attempts for a webhook.
+  # List recent deliveries
   data, status_code, headers = api_instance.admin_webhooks_deliveries_list_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksDeliveriesListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_deliveries_list_with_http_info: #{e}"
 end
@@ -230,7 +235,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksDeliveriesListResponse**](AdminWebhooksDeliveriesListResponse.md)
 
 ### Authorization
 
@@ -239,16 +244,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_delivery_replay
 
-> admin_webhooks_delivery_replay(org_id, webhook_id, delivery_id)
+> <AdminWebhooksDeliveryReplayResponse> admin_webhooks_delivery_replay(org_id, webhook_id, delivery_id)
 
-Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+Replay a delivery
 
-Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
 ### Examples
 
@@ -272,8 +277,9 @@ webhook_id = 'webhook_id_example' # String |
 delivery_id = 'delivery_id_example' # String | 
 
 begin
-  # Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-  api_instance.admin_webhooks_delivery_replay(org_id, webhook_id, delivery_id)
+  # Replay a delivery
+  result = api_instance.admin_webhooks_delivery_replay(org_id, webhook_id, delivery_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_delivery_replay: #{e}"
 end
@@ -281,17 +287,17 @@ end
 
 #### Using the admin_webhooks_delivery_replay_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_delivery_replay_with_http_info(org_id, webhook_id, delivery_id)
+> <Array(<AdminWebhooksDeliveryReplayResponse>, Integer, Hash)> admin_webhooks_delivery_replay_with_http_info(org_id, webhook_id, delivery_id)
 
 ```ruby
 begin
-  # Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+  # Replay a delivery
   data, status_code, headers = api_instance.admin_webhooks_delivery_replay_with_http_info(org_id, webhook_id, delivery_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksDeliveryReplayResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_delivery_replay_with_http_info: #{e}"
 end
@@ -307,7 +313,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksDeliveryReplayResponse**](AdminWebhooksDeliveryReplayResponse.md)
 
 ### Authorization
 
@@ -316,14 +322,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_delivery_show
 
-> admin_webhooks_delivery_show(org_id, webhook_id, delivery_id)
+> <AdminWebhooksDeliveryShowResponse> admin_webhooks_delivery_show(org_id, webhook_id, delivery_id)
 
-Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+Get a delivery
+
+A single delivery including the event payload and the per-attempt history.
 
 ### Examples
 
@@ -347,8 +355,9 @@ webhook_id = 'webhook_id_example' # String |
 delivery_id = 'delivery_id_example' # String | 
 
 begin
-  # Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
-  api_instance.admin_webhooks_delivery_show(org_id, webhook_id, delivery_id)
+  # Get a delivery
+  result = api_instance.admin_webhooks_delivery_show(org_id, webhook_id, delivery_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_delivery_show: #{e}"
 end
@@ -356,17 +365,17 @@ end
 
 #### Using the admin_webhooks_delivery_show_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_delivery_show_with_http_info(org_id, webhook_id, delivery_id)
+> <Array(<AdminWebhooksDeliveryShowResponse>, Integer, Hash)> admin_webhooks_delivery_show_with_http_info(org_id, webhook_id, delivery_id)
 
 ```ruby
 begin
-  # Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+  # Get a delivery
   data, status_code, headers = api_instance.admin_webhooks_delivery_show_with_http_info(org_id, webhook_id, delivery_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksDeliveryShowResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_delivery_show_with_http_info: #{e}"
 end
@@ -382,7 +391,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksDeliveryShowResponse**](AdminWebhooksDeliveryShowResponse.md)
 
 ### Authorization
 
@@ -391,14 +400,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_events
 
-> admin_webhooks_events(org_id)
+> <AdminWebhooksEventsResponse> admin_webhooks_events(org_id)
 
-Get available webhook event types
+List available webhook event types
 
 ### Examples
 
@@ -420,8 +429,9 @@ api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # Get available webhook event types
-  api_instance.admin_webhooks_events(org_id)
+  # List available webhook event types
+  result = api_instance.admin_webhooks_events(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_events: #{e}"
 end
@@ -429,17 +439,17 @@ end
 
 #### Using the admin_webhooks_events_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_events_with_http_info(org_id)
+> <Array(<AdminWebhooksEventsResponse>, Integer, Hash)> admin_webhooks_events_with_http_info(org_id)
 
 ```ruby
 begin
-  # Get available webhook event types
+  # List available webhook event types
   data, status_code, headers = api_instance.admin_webhooks_events_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksEventsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_events_with_http_info: #{e}"
 end
@@ -453,7 +463,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksEventsResponse**](AdminWebhooksEventsResponse.md)
 
 ### Authorization
 
@@ -462,14 +472,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_get
 
-> admin_webhooks_get(org_id, webhook_id)
+> <AdminWebhooksGetResponse> admin_webhooks_get(org_id, webhook_id)
 
-Get a single webhook by ID
+Get a webhook
 
 ### Examples
 
@@ -492,8 +502,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Get a single webhook by ID
-  api_instance.admin_webhooks_get(org_id, webhook_id)
+  # Get a webhook
+  result = api_instance.admin_webhooks_get(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_get: #{e}"
 end
@@ -501,17 +512,17 @@ end
 
 #### Using the admin_webhooks_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_get_with_http_info(org_id, webhook_id)
+> <Array(<AdminWebhooksGetResponse>, Integer, Hash)> admin_webhooks_get_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Get a single webhook by ID
+  # Get a webhook
   data, status_code, headers = api_instance.admin_webhooks_get_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_get_with_http_info: #{e}"
 end
@@ -526,7 +537,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksGetResponse**](AdminWebhooksGetResponse.md)
 
 ### Authorization
 
@@ -535,14 +546,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_list
 
-> admin_webhooks_list(org_id)
+> <AdminWebhooksListResponse> admin_webhooks_list(org_id)
 
-List all webhooks in the tenant
+List webhooks
+
+Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Examples
 
@@ -564,8 +577,9 @@ api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  # List all webhooks in the tenant
-  api_instance.admin_webhooks_list(org_id)
+  # List webhooks
+  result = api_instance.admin_webhooks_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_list: #{e}"
 end
@@ -573,17 +587,17 @@ end
 
 #### Using the admin_webhooks_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_list_with_http_info(org_id)
+> <Array(<AdminWebhooksListResponse>, Integer, Hash)> admin_webhooks_list_with_http_info(org_id)
 
 ```ruby
 begin
-  # List all webhooks in the tenant
+  # List webhooks
   data, status_code, headers = api_instance.admin_webhooks_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_list_with_http_info: #{e}"
 end
@@ -597,7 +611,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksListResponse**](AdminWebhooksListResponse.md)
 
 ### Authorization
 
@@ -606,14 +620,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_rotate_secret
 
-> admin_webhooks_rotate_secret(org_id, webhook_id)
+> <AdminWebhooksRotateSecretResponse> admin_webhooks_rotate_secret(org_id, webhook_id)
 
-Rotate webhook secret
+Rotate the signing secret
+
+Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
 ### Examples
 
@@ -636,8 +652,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Rotate webhook secret
-  api_instance.admin_webhooks_rotate_secret(org_id, webhook_id)
+  # Rotate the signing secret
+  result = api_instance.admin_webhooks_rotate_secret(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_rotate_secret: #{e}"
 end
@@ -645,17 +662,17 @@ end
 
 #### Using the admin_webhooks_rotate_secret_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_rotate_secret_with_http_info(org_id, webhook_id)
+> <Array(<AdminWebhooksRotateSecretResponse>, Integer, Hash)> admin_webhooks_rotate_secret_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Rotate webhook secret
+  # Rotate the signing secret
   data, status_code, headers = api_instance.admin_webhooks_rotate_secret_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksRotateSecretResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_rotate_secret_with_http_info: #{e}"
 end
@@ -670,7 +687,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksRotateSecretResponse**](AdminWebhooksRotateSecretResponse.md)
 
 ### Authorization
 
@@ -679,14 +696,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_test
 
-> admin_webhooks_test(org_id, webhook_id)
+> <AdminWebhooksTestResponse> admin_webhooks_test(org_id, webhook_id)
 
-Test a webhook by sending a test payload
+Send a test delivery
+
+POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
 ### Examples
 
@@ -709,8 +728,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Test a webhook by sending a test payload
-  api_instance.admin_webhooks_test(org_id, webhook_id)
+  # Send a test delivery
+  result = api_instance.admin_webhooks_test(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_test: #{e}"
 end
@@ -718,17 +738,17 @@ end
 
 #### Using the admin_webhooks_test_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_test_with_http_info(org_id, webhook_id)
+> <Array(<AdminWebhooksTestResponse>, Integer, Hash)> admin_webhooks_test_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Test a webhook by sending a test payload
+  # Send a test delivery
   data, status_code, headers = api_instance.admin_webhooks_test_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksTestResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_test_with_http_info: #{e}"
 end
@@ -743,7 +763,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksTestResponse**](AdminWebhooksTestResponse.md)
 
 ### Authorization
 
@@ -752,14 +772,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_tunnel_start
 
-> admin_webhooks_tunnel_start(org_id)
+> <AdminWebhooksTunnelStartResponse> admin_webhooks_tunnel_start(org_id)
 
+Start a webhook tunnel
 
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
 ### Examples
 
@@ -781,8 +803,9 @@ api_instance = LumoAuthApiClient::AdminWebhooksApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.admin_webhooks_tunnel_start(org_id)
+  # Start a webhook tunnel
+  result = api_instance.admin_webhooks_tunnel_start(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_tunnel_start: #{e}"
 end
@@ -790,17 +813,17 @@ end
 
 #### Using the admin_webhooks_tunnel_start_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_tunnel_start_with_http_info(org_id)
+> <Array(<AdminWebhooksTunnelStartResponse>, Integer, Hash)> admin_webhooks_tunnel_start_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # Start a webhook tunnel
   data, status_code, headers = api_instance.admin_webhooks_tunnel_start_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksTunnelStartResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_tunnel_start_with_http_info: #{e}"
 end
@@ -814,7 +837,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksTunnelStartResponse**](AdminWebhooksTunnelStartResponse.md)
 
 ### Authorization
 
@@ -823,14 +846,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_tunnel_stop
 
-> admin_webhooks_tunnel_stop(org_id, webhook_id)
+> <MessageResponse> admin_webhooks_tunnel_stop(org_id, webhook_id)
 
+Stop a webhook tunnel
 
+Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
 ### Examples
 
@@ -853,8 +878,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  
-  api_instance.admin_webhooks_tunnel_stop(org_id, webhook_id)
+  # Stop a webhook tunnel
+  result = api_instance.admin_webhooks_tunnel_stop(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_tunnel_stop: #{e}"
 end
@@ -862,17 +888,17 @@ end
 
 #### Using the admin_webhooks_tunnel_stop_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_tunnel_stop_with_http_info(org_id, webhook_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_webhooks_tunnel_stop_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  
+  # Stop a webhook tunnel
   data, status_code, headers = api_instance.admin_webhooks_tunnel_stop_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_tunnel_stop_with_http_info: #{e}"
 end
@@ -887,7 +913,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -896,14 +922,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_tunnel_stream
 
-> admin_webhooks_tunnel_stream(org_id, webhook_id)
+> String admin_webhooks_tunnel_stream(org_id, webhook_id)
 
+Stream tunnel deliveries (SSE)
 
+Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
 ### Examples
 
@@ -926,8 +954,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  
-  api_instance.admin_webhooks_tunnel_stream(org_id, webhook_id)
+  # Stream tunnel deliveries (SSE)
+  result = api_instance.admin_webhooks_tunnel_stream(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_tunnel_stream: #{e}"
 end
@@ -935,17 +964,17 @@ end
 
 #### Using the admin_webhooks_tunnel_stream_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_tunnel_stream_with_http_info(org_id, webhook_id)
+> <Array(String, Integer, Hash)> admin_webhooks_tunnel_stream_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  
+  # Stream tunnel deliveries (SSE)
   data, status_code, headers = api_instance.admin_webhooks_tunnel_stream_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => String
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_tunnel_stream_with_http_info: #{e}"
 end
@@ -960,7 +989,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+**String**
 
 ### Authorization
 
@@ -969,14 +998,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/event-stream
 
 
 ## admin_webhooks_webhooks_disable
 
-> admin_webhooks_webhooks_disable(org_id, webhook_id)
+> <AdminWebhooksWebhooksDisableResponse> admin_webhooks_webhooks_disable(org_id, webhook_id)
 
-Disable webhook
+Disable a webhook
 
 ### Examples
 
@@ -999,8 +1028,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Disable webhook
-  api_instance.admin_webhooks_webhooks_disable(org_id, webhook_id)
+  # Disable a webhook
+  result = api_instance.admin_webhooks_webhooks_disable(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_webhooks_disable: #{e}"
 end
@@ -1008,17 +1038,17 @@ end
 
 #### Using the admin_webhooks_webhooks_disable_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_webhooks_disable_with_http_info(org_id, webhook_id)
+> <Array(<AdminWebhooksWebhooksDisableResponse>, Integer, Hash)> admin_webhooks_webhooks_disable_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Disable webhook
+  # Disable a webhook
   data, status_code, headers = api_instance.admin_webhooks_webhooks_disable_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksWebhooksDisableResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_webhooks_disable_with_http_info: #{e}"
 end
@@ -1033,7 +1063,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksWebhooksDisableResponse**](AdminWebhooksWebhooksDisableResponse.md)
 
 ### Authorization
 
@@ -1042,14 +1072,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_webhooks_webhooks_enable
 
-> admin_webhooks_webhooks_enable(org_id, webhook_id)
+> <AdminWebhooksWebhooksEnableResponse> admin_webhooks_webhooks_enable(org_id, webhook_id)
 
-Enable webhook
+Enable a webhook
 
 ### Examples
 
@@ -1072,8 +1102,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Enable webhook
-  api_instance.admin_webhooks_webhooks_enable(org_id, webhook_id)
+  # Enable a webhook
+  result = api_instance.admin_webhooks_webhooks_enable(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_webhooks_enable: #{e}"
 end
@@ -1081,17 +1112,17 @@ end
 
 #### Using the admin_webhooks_webhooks_enable_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_webhooks_webhooks_enable_with_http_info(org_id, webhook_id)
+> <Array(<AdminWebhooksWebhooksEnableResponse>, Integer, Hash)> admin_webhooks_webhooks_enable_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Enable webhook
+  # Enable a webhook
   data, status_code, headers = api_instance.admin_webhooks_webhooks_enable_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminWebhooksWebhooksEnableResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->admin_webhooks_webhooks_enable_with_http_info: #{e}"
 end
@@ -1106,7 +1137,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminWebhooksWebhooksEnableResponse**](AdminWebhooksWebhooksEnableResponse.md)
 
 ### Authorization
 
@@ -1115,14 +1146,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_webhooks_update
 
-> patch_admin_webhooks_update(org_id, webhook_id)
+> <PutAdminWebhooksUpdateResponse> patch_admin_webhooks_update(org_id, webhook_id)
 
-Update an existing webhook
+Partially update a webhook
 
 ### Examples
 
@@ -1145,8 +1176,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Update an existing webhook
-  api_instance.patch_admin_webhooks_update(org_id, webhook_id)
+  # Partially update a webhook
+  result = api_instance.patch_admin_webhooks_update(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->patch_admin_webhooks_update: #{e}"
 end
@@ -1154,17 +1186,17 @@ end
 
 #### Using the patch_admin_webhooks_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_webhooks_update_with_http_info(org_id, webhook_id)
+> <Array(<PutAdminWebhooksUpdateResponse>, Integer, Hash)> patch_admin_webhooks_update_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Update an existing webhook
+  # Partially update a webhook
   data, status_code, headers = api_instance.patch_admin_webhooks_update_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <PutAdminWebhooksUpdateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->patch_admin_webhooks_update_with_http_info: #{e}"
 end
@@ -1179,7 +1211,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1188,14 +1220,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_webhooks_update
 
-> put_admin_webhooks_update(org_id, webhook_id)
+> <PutAdminWebhooksUpdateResponse> put_admin_webhooks_update(org_id, webhook_id)
 
-Update an existing webhook
+Update a webhook
 
 ### Examples
 
@@ -1218,8 +1250,9 @@ org_id = 'org_id_example' # String |
 webhook_id = 'webhook_id_example' # String | 
 
 begin
-  # Update an existing webhook
-  api_instance.put_admin_webhooks_update(org_id, webhook_id)
+  # Update a webhook
+  result = api_instance.put_admin_webhooks_update(org_id, webhook_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->put_admin_webhooks_update: #{e}"
 end
@@ -1227,17 +1260,17 @@ end
 
 #### Using the put_admin_webhooks_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_webhooks_update_with_http_info(org_id, webhook_id)
+> <Array(<PutAdminWebhooksUpdateResponse>, Integer, Hash)> put_admin_webhooks_update_with_http_info(org_id, webhook_id)
 
 ```ruby
 begin
-  # Update an existing webhook
+  # Update a webhook
   data, status_code, headers = api_instance.put_admin_webhooks_update_with_http_info(org_id, webhook_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <PutAdminWebhooksUpdateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminWebhooksApi->put_admin_webhooks_update_with_http_info: #{e}"
 end
@@ -1252,7 +1285,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1261,5 +1294,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

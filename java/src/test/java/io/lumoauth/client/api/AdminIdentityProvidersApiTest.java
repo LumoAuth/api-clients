@@ -14,6 +14,12 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminSocialProvidersAvailableResponse;
+import io.lumoauth.client.model.AdminSocialProvidersCallbackUrlsResponse;
+import io.lumoauth.client.model.AdminSocialProvidersCreateResponse;
+import io.lumoauth.client.model.AdminSocialProvidersGetResponse;
+import io.lumoauth.client.model.AdminSocialProvidersListResponse;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,38 +37,38 @@ public class AdminIdentityProvidersApiTest {
     private final AdminIdentityProvidersApi api = new AdminIdentityProvidersApi();
 
     /**
-     * Get available social login provider types
+     * List the available social login provider types
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSocialProvidersAvailableTest() throws ApiException {
         String orgId = null;
-        api.adminSocialProvidersAvailable(orgId);
+        AdminSocialProvidersAvailableResponse response = api.adminSocialProvidersAvailable(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get callback URLs for all configured providers
+     * Get the OAuth callback URL of every configured provider
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSocialProvidersCallbackUrlsTest() throws ApiException {
         String orgId = null;
-        api.adminSocialProvidersCallbackUrls(orgId);
+        AdminSocialProvidersCallbackUrlsResponse response = api.adminSocialProvidersCallbackUrls(orgId);
         // TODO: test validations
     }
 
     /**
-     * Create a new social login provider
+     * Create a social login provider
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSocialProvidersCreateTest() throws ApiException {
         String orgId = null;
-        api.adminSocialProvidersCreate(orgId);
+        AdminSocialProvidersCreateResponse response = api.adminSocialProvidersCreate(orgId);
         // TODO: test validations
     }
 
@@ -75,7 +81,7 @@ public class AdminIdentityProvidersApiTest {
     public void adminSocialProvidersDeleteTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        api.adminSocialProvidersDelete(orgId, providerId);
+        MessageResponse response = api.adminSocialProvidersDelete(orgId, providerId);
         // TODO: test validations
     }
 
@@ -88,7 +94,7 @@ public class AdminIdentityProvidersApiTest {
     public void adminSocialProvidersDisableTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        api.adminSocialProvidersDisable(orgId, providerId);
+        AdminSocialProvidersCreateResponse response = api.adminSocialProvidersDisable(orgId, providerId);
         // TODO: test validations
     }
 
@@ -101,12 +107,12 @@ public class AdminIdentityProvidersApiTest {
     public void adminSocialProvidersEnableTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        api.adminSocialProvidersEnable(orgId, providerId);
+        AdminSocialProvidersCreateResponse response = api.adminSocialProvidersEnable(orgId, providerId);
         // TODO: test validations
     }
 
     /**
-     * Get a single social login provider (by ID or by provider name)
+     * Get a social login provider
      *
      * @throws ApiException if the Api call fails
      */
@@ -114,36 +120,36 @@ public class AdminIdentityProvidersApiTest {
     public void adminSocialProvidersGetTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        api.adminSocialProvidersGet(orgId, providerId);
+        AdminSocialProvidersGetResponse response = api.adminSocialProvidersGet(orgId, providerId);
         // TODO: test validations
     }
 
     /**
-     * List all configured social login providers
+     * List social login providers
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSocialProvidersListTest() throws ApiException {
         String orgId = null;
-        api.adminSocialProvidersList(orgId);
+        AdminSocialProvidersListResponse response = api.adminSocialProvidersList(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get available social login provider types
+     * List the available social login provider types
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminSocialProvidersTypesTest() throws ApiException {
         String orgId = null;
-        api.adminSocialProvidersTypes(orgId);
+        AdminSocialProvidersAvailableResponse response = api.adminSocialProvidersTypes(orgId);
         // TODO: test validations
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH
+     * Update a social login provider
      *
      * @throws ApiException if the Api call fails
      */
@@ -151,12 +157,12 @@ public class AdminIdentityProvidersApiTest {
     public void patchAdminSocialProvidersUpdateTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        api.patchAdminSocialProvidersUpdate(orgId, providerId);
+        AdminSocialProvidersCreateResponse response = api.patchAdminSocialProvidersUpdate(orgId, providerId);
         // TODO: test validations
     }
 
     /**
-     * Upsert (create or update) a social login provider via PUT; update via PATCH
+     * Create or replace a social login provider
      *
      * @throws ApiException if the Api call fails
      */
@@ -164,7 +170,7 @@ public class AdminIdentityProvidersApiTest {
     public void putAdminSocialProvidersUpdateTest() throws ApiException {
         String orgId = null;
         String providerId = null;
-        api.putAdminSocialProvidersUpdate(orgId, providerId);
+        AdminSocialProvidersCreateResponse response = api.putAdminSocialProvidersUpdate(orgId, providerId);
         // TODO: test validations
     }
 

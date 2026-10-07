@@ -19,19 +19,19 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create a new OAuth client
+    # Create an OAuth client
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [CreateClientResponse]
     def create_client(org_id, opts = {})
-      create_client_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = create_client_with_http_info(org_id, opts)
+      data
     end
 
-    # Create a new OAuth client
+    # Create an OAuth client
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(CreateClientResponse, Integer, Hash)>] CreateClientResponse data, response status code and response headers
     def create_client_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.create_client ...'
@@ -48,6 +48,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +58,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'CreateClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -82,17 +84,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def delete_client(org_id, client_id, opts = {})
-      delete_client_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = delete_client_with_http_info(org_id, client_id, opts)
+      data
     end
 
     # Delete an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def delete_client_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.delete_client ...'
@@ -113,6 +115,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -121,7 +125,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -143,21 +147,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Disable OAuth client
+    # Disable an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [UpdateClientResponse]
     def disable_client(org_id, client_id, opts = {})
-      disable_client_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = disable_client_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Disable OAuth client
+    # Disable an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(UpdateClientResponse, Integer, Hash)>] UpdateClientResponse data, response status code and response headers
     def disable_client_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.disable_client ...'
@@ -178,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -186,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'UpdateClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -208,21 +214,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Enable OAuth client
+    # Enable an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [UpdateClientResponse]
     def enable_client(org_id, client_id, opts = {})
-      enable_client_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = enable_client_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Enable OAuth client
+    # Enable an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(UpdateClientResponse, Integer, Hash)>] UpdateClientResponse data, response status code and response headers
     def enable_client_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.enable_client ...'
@@ -243,6 +249,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -251,7 +259,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'UpdateClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -273,21 +281,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single OAuth client by ID or clientId
+    # Get an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [GetClientResponse]
     def get_client(org_id, client_id, opts = {})
-      get_client_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = get_client_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Get a single OAuth client by ID or clientId
+    # Get an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(GetClientResponse, Integer, Hash)>] GetClientResponse data, response status code and response headers
     def get_client_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.get_client ...'
@@ -308,6 +316,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -316,7 +326,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'GetClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -338,21 +348,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get client scopes
+    # List the scopes granted to an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [ListClientScopesResponse]
     def list_client_scopes(org_id, client_id, opts = {})
-      list_client_scopes_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = list_client_scopes_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Get client scopes
+    # List the scopes granted to an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(ListClientScopesResponse, Integer, Hash)>] ListClientScopesResponse data, response status code and response headers
     def list_client_scopes_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.list_client_scopes ...'
@@ -373,6 +383,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -381,7 +393,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'ListClientScopesResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -403,19 +415,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all OAuth clients in the tenant
+    # List OAuth clients
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [ListClientsResponse]
     def list_clients(org_id, opts = {})
-      list_clients_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = list_clients_with_http_info(org_id, opts)
+      data
     end
 
-    # List all OAuth clients in the tenant
+    # List OAuth clients
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(ListClientsResponse, Integer, Hash)>] ListClientsResponse data, response status code and response headers
     def list_clients_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.list_clients ...'
@@ -432,6 +444,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -440,7 +454,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'ListClientsResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -462,21 +476,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update an existing OAuth client
+    # Update an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [UpdateClientResponse]
     def patch_client(org_id, client_id, opts = {})
-      patch_client_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = patch_client_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Update an existing OAuth client
+    # Update an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(UpdateClientResponse, Integer, Hash)>] UpdateClientResponse data, response status code and response headers
     def patch_client_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.patch_client ...'
@@ -497,6 +511,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -505,7 +521,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'UpdateClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -527,21 +543,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Rotate client secret
+    # Rotate an OAuth client secret
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [RotateClientSecretResponse]
     def rotate_client_secret(org_id, client_id, opts = {})
-      rotate_client_secret_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = rotate_client_secret_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Rotate client secret
+    # Rotate an OAuth client secret
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(RotateClientSecretResponse, Integer, Hash)>] RotateClientSecretResponse data, response status code and response headers
     def rotate_client_secret_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.rotate_client_secret ...'
@@ -562,6 +578,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -570,7 +588,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'RotateClientSecretResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -592,21 +610,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Set client scopes
+    # Replace the scopes granted to an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [SetClientScopesResponse]
     def set_client_scopes(org_id, client_id, opts = {})
-      set_client_scopes_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = set_client_scopes_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Set client scopes
+    # Replace the scopes granted to an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(SetClientScopesResponse, Integer, Hash)>] SetClientScopesResponse data, response status code and response headers
     def set_client_scopes_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.set_client_scopes ...'
@@ -627,6 +645,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -635,7 +655,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'SetClientScopesResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -657,21 +677,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update an existing OAuth client
+    # Replace an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [UpdateClientResponse]
     def update_client(org_id, client_id, opts = {})
-      update_client_with_http_info(org_id, client_id, opts)
-      nil
+      data, _status_code, _headers = update_client_with_http_info(org_id, client_id, opts)
+      data
     end
 
-    # Update an existing OAuth client
+    # Replace an OAuth client
     # @param org_id [String] 
     # @param client_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(UpdateClientResponse, Integer, Hash)>] UpdateClientResponse data, response status code and response headers
     def update_client_with_http_info(org_id, client_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.update_client ...'
@@ -692,6 +712,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -700,7 +722,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'UpdateClientResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

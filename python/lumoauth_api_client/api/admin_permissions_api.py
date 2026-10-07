@@ -18,6 +18,13 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
+from lumoauth_api_client.models.admin_permissions_get_response import AdminPermissionsGetResponse
+from lumoauth_api_client.models.admin_permissions_list_response import AdminPermissionsListResponse
+from lumoauth_api_client.models.admin_permissions_usage_response import AdminPermissionsUsageResponse
+from lumoauth_api_client.models.admin_scopes_create_response import AdminScopesCreateResponse
+from lumoauth_api_client.models.admin_scopes_list_response import AdminScopesListResponse
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,7 +60,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminPermissionsCreateResponse:
         """Create a custom permission for the tenant
 
 
@@ -90,6 +97,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminPermissionsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,7 +126,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminPermissionsCreateResponse]:
         """Create a custom permission for the tenant
 
 
@@ -155,6 +163,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminPermissionsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -220,6 +229,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminPermissionsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +270,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -303,7 +320,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete a custom permission
 
 
@@ -343,6 +360,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -372,7 +390,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete a custom permission
 
 
@@ -412,6 +430,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -481,6 +500,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -524,6 +544,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -567,7 +594,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminPermissionsGetResponse:
         """Get a single permission
 
 
@@ -607,6 +634,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -636,7 +664,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminPermissionsGetResponse]:
         """Get a single permission
 
 
@@ -676,6 +704,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -745,6 +774,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +818,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -830,7 +867,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminPermissionsListResponse:
         """List all available permissions for the tenant
 
 
@@ -867,6 +904,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -895,7 +933,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminPermissionsListResponse]:
         """List all available permissions for the tenant
 
 
@@ -932,6 +970,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -997,6 +1036,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1037,6 +1077,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1080,7 +1127,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminPermissionsCreateResponse:
         """Update a permission
 
 
@@ -1120,6 +1167,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1149,7 +1197,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminPermissionsCreateResponse]:
         """Update a permission
 
 
@@ -1189,6 +1237,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1258,6 +1307,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1301,6 +1351,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1344,7 +1401,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminPermissionsUsageResponse:
         """Get permission usage (roles assigned to this permission)
 
 
@@ -1384,6 +1441,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsUsageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1413,7 +1471,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminPermissionsUsageResponse]:
         """Get permission usage (roles assigned to this permission)
 
 
@@ -1453,6 +1511,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsUsageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1522,6 +1581,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminPermissionsUsageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1565,6 +1625,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1607,7 +1674,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminScopesCreateResponse:
         """Create a custom OAuth scope
 
 
@@ -1644,6 +1711,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminScopesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1672,7 +1740,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminScopesCreateResponse]:
         """Create a custom OAuth scope
 
 
@@ -1709,6 +1777,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminScopesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1774,6 +1843,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminScopesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1814,6 +1884,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1857,7 +1934,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete a custom OAuth scope
 
 
@@ -1897,6 +1974,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1926,7 +2004,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete a custom OAuth scope
 
 
@@ -1966,6 +2044,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2035,6 +2114,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2078,6 +2158,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2120,7 +2207,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminScopesListResponse:
         """List OAuth scopes
 
 
@@ -2157,6 +2244,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminScopesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2185,7 +2273,7 @@ class AdminPermissionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminScopesListResponse]:
         """List OAuth scopes
 
 
@@ -2222,6 +2310,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminScopesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2287,6 +2376,7 @@ class AdminPermissionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminScopesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2327,6 +2417,13 @@ class AdminPermissionsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

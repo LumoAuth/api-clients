@@ -19,7 +19,7 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CreateStreamConfigError {
-    DefaultResponse(),
+    Status400(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +27,8 @@ pub enum CreateStreamConfigError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum DeleteStreamConfigError {
-    DefaultResponse(),
+    Status400(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +36,7 @@ pub enum DeleteStreamConfigError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetStreamConfigError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,12 +44,14 @@ pub enum GetStreamConfigError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum VerifyStreamError {
-    DefaultResponse(),
+    Status400(),
+    Status404(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn create_stream_config(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CreateStreamConfigError>> {
+pub async fn create_stream_config(configuration: &configuration::Configuration, org_id: &str) -> Result<models::SsfStream, Error<CreateStreamConfigError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -74,9 +77,20 @@ pub async fn create_stream_config(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SsfStream`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SsfStream`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CreateStreamConfigError> = serde_json::from_str(&content).ok();
@@ -84,13 +98,15 @@ pub async fn create_stream_config(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn delete_stream_config(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<DeleteStreamConfigError>> {
+pub async fn delete_stream_config(configuration: &configuration::Configuration, stream_id: &str, org_id: &str) -> Result<(), Error<DeleteStreamConfigError>> {
     // add a prefix to parameters to efficiently prevent name collisions
+    let p_stream_id = stream_id;
     let p_org_id = org_id;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/ssf/stream", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::DELETE, &uri_str);
 
+    req_builder = req_builder.query(&[("stream_id", &p_stream_id.to_string())]);
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -120,13 +136,17 @@ pub async fn delete_stream_config(configuration: &configuration::Configuration, 
     }
 }
 
-pub async fn get_stream_config(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetStreamConfigError>> {
+pub async fn get_stream_config(configuration: &configuration::Configuration, org_id: &str, stream_id: Option<&str>) -> Result<models::GetStreamConfig200Response, Error<GetStreamConfigError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_stream_id = stream_id;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/ssf/stream", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_stream_id {
+        req_builder = req_builder.query(&[("stream_id", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -146,9 +166,20 @@ pub async fn get_stream_config(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetStreamConfig200Response`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetStreamConfig200Response`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetStreamConfigError> = serde_json::from_str(&content).ok();

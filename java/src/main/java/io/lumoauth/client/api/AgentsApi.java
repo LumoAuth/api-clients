@@ -29,6 +29,8 @@ import java.io.IOException;
 
 import io.lumoauth.client.model.AskRequest;
 import io.lumoauth.client.model.AskResponse;
+import io.lumoauth.client.model.AttestRequest;
+import io.lumoauth.client.model.AttestResponse;
 import io.lumoauth.client.model.AuthorizeMcpRequest;
 import io.lumoauth.client.model.AuthorizeMcpResponse;
 import io.lumoauth.client.model.CreateApprovalRequest;
@@ -36,6 +38,9 @@ import io.lumoauth.client.model.CreateApprovalResponse;
 import io.lumoauth.client.model.CreateApprovalResponse202;
 import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
+import io.lumoauth.client.model.RegisterAgentResponse;
+import io.lumoauth.client.model.SignedAgentCard;
+import io.lumoauth.client.model.VerifyAgentCardResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -229,6 +234,7 @@ public class AgentsApi {
      * Build call for attest
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param attestRequest  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -236,10 +242,15 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call attestCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call attestCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -253,7 +264,7 @@ public class AgentsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = attestRequest;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/agents/{agentId}/attest"
@@ -267,6 +278,7 @@ public class AgentsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -274,6 +286,7 @@ public class AgentsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -285,7 +298,7 @@ public class AgentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call attestValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call attestValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling attest(Async)");
@@ -296,51 +309,72 @@ public class AgentsApi {
             throw new ApiException("Missing the required parameter 'agentId' when calling attest(Async)");
         }
 
-        return attestCall(orgId, agentId, _callback);
+        // verify the required parameter 'attestRequest' is set
+        if (attestRequest == null) {
+            throw new ApiException("Missing the required parameter 'attestRequest' when calling attest(Async)");
+        }
+
+        return attestCall(orgId, agentId, attestRequest, _callback);
 
     }
 
     /**
-     * 
-     * 
+     * Workload attestation: exchange a cloud OIDC token for an agent access token
+     * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param attestRequest  (required)
+     * @return AttestResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
      </table>
      */
-    public void attest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        attestWithHttpInfo(orgId, agentId);
+    public AttestResponse attest(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest) throws ApiException {
+        ApiResponse<AttestResponse> localVarResp = attestWithHttpInfo(orgId, agentId, attestRequest);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Workload attestation: exchange a cloud OIDC token for an agent access token
+     * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
      * @param orgId  (required)
      * @param agentId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param attestRequest  (required)
+     * @return ApiResponse&lt;AttestResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> attestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        okhttp3.Call localVarCall = attestValidateBeforeCall(orgId, agentId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<AttestResponse> attestWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest) throws ApiException {
+        okhttp3.Call localVarCall = attestValidateBeforeCall(orgId, agentId, attestRequest, null);
+        Type localVarReturnType = new TypeToken<AttestResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Workload attestation: exchange a cloud OIDC token for an agent access token (asynchronously)
+     * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
      * @param orgId  (required)
      * @param agentId  (required)
+     * @param attestRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -348,13 +382,19 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_json or missing_attestation_token. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_policy_denied — a conditional access policy refused the agent (reason code included). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> tenant_not_found. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> rate_limit_exceeded (Retry-After: 60). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call attestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call attestAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, @javax.annotation.Nonnull AttestRequest attestRequest, final ApiCallback<AttestResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = attestValidateBeforeCall(orgId, agentId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = attestValidateBeforeCall(orgId, agentId, attestRequest, _callback);
+        Type localVarReturnType = new TypeToken<AttestResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -674,7 +714,8 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getAgentCardCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback _callback) throws ApiException {
@@ -705,6 +746,7 @@ public class AgentsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -739,44 +781,49 @@ public class AgentsApi {
     }
 
     /**
-     * 
-     * 
+     * Signed A2A agent card
+     * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
      * @param orgId  (required)
      * @param agentId  (required)
+     * @return SignedAgentCard
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
      </table>
      */
-    public void getAgentCard(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        getAgentCardWithHttpInfo(orgId, agentId);
+    public SignedAgentCard getAgentCard(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
+        ApiResponse<SignedAgentCard> localVarResp = getAgentCardWithHttpInfo(orgId, agentId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Signed A2A agent card
+     * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
      * @param orgId  (required)
      * @param agentId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SignedAgentCard&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getAgentCardWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
+    public ApiResponse<SignedAgentCard> getAgentCardWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
         okhttp3.Call localVarCall = getAgentCardValidateBeforeCall(orgId, agentId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SignedAgentCard>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Signed A2A agent card (asynchronously)
+     * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
      * @param orgId  (required)
      * @param agentId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -786,13 +833,15 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getAgentCardAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getAgentCardAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<SignedAgentCard> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getAgentCardValidateBeforeCall(orgId, agentId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SignedAgentCard>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1081,7 +1130,7 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call registerAgentCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1111,6 +1160,7 @@ public class AgentsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1140,41 +1190,44 @@ public class AgentsApi {
     }
 
     /**
-     * 
+     * Register (or re-register) an agent
      * 
      * @param orgId  (required)
+     * @return RegisterAgentResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public void registerAgent(@javax.annotation.Nonnull String orgId) throws ApiException {
-        registerAgentWithHttpInfo(orgId);
+    public RegisterAgentResponse registerAgent(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<RegisterAgentResponse> localVarResp = registerAgentWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Register (or re-register) an agent
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RegisterAgentResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> registerAgentWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<RegisterAgentResponse> registerAgentWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RegisterAgentResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Register (or re-register) an agent (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1184,18 +1237,20 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered agent </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerAgentAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call registerAgentAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<RegisterAgentResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = registerAgentValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RegisterAgentResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for verifyAgentCard
      * @param orgId  (required)
+     * @param requestBody  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1203,10 +1258,13 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — body is not a JSON agent card. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller does not belong to this organization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call verifyAgentCardCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call verifyAgentCardCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull Map<String, Object> requestBody, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1220,7 +1278,7 @@ public class AgentsApi {
             basePath = null;
         }
 
-        Object localVarPostBody = null;
+        Object localVarPostBody = requestBody;
 
         // create path and map variables
         String localVarPath = "/orgs/{orgId}/api/v1/agents/agent-card/verify"
@@ -1233,6 +1291,7 @@ public class AgentsApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1240,6 +1299,7 @@ public class AgentsApi {
         }
 
         final String[] localVarContentTypes = {
+            "application/json"
         };
         final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
         if (localVarContentType != null) {
@@ -1251,54 +1311,71 @@ public class AgentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call verifyAgentCardValidateBeforeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call verifyAgentCardValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull Map<String, Object> requestBody, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'orgId' is set
         if (orgId == null) {
             throw new ApiException("Missing the required parameter 'orgId' when calling verifyAgentCard(Async)");
         }
 
-        return verifyAgentCardCall(orgId, _callback);
+        // verify the required parameter 'requestBody' is set
+        if (requestBody == null) {
+            throw new ApiException("Missing the required parameter 'requestBody' when calling verifyAgentCard(Async)");
+        }
+
+        return verifyAgentCardCall(orgId, requestBody, _callback);
 
     }
 
     /**
-     * 
-     * 
+     * Verify a signed A2A agent card
+     * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
      * @param orgId  (required)
+     * @param requestBody  (required)
+     * @return VerifyAgentCardResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — body is not a JSON agent card. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller does not belong to this organization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public void verifyAgentCard(@javax.annotation.Nonnull String orgId) throws ApiException {
-        verifyAgentCardWithHttpInfo(orgId);
+    public VerifyAgentCardResponse verifyAgentCard(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull Map<String, Object> requestBody) throws ApiException {
+        ApiResponse<VerifyAgentCardResponse> localVarResp = verifyAgentCardWithHttpInfo(orgId, requestBody);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Verify a signed A2A agent card
+     * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @param requestBody  (required)
+     * @return ApiResponse&lt;VerifyAgentCardResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — body is not a JSON agent card. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller does not belong to this organization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> verifyAgentCardWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
-        okhttp3.Call localVarCall = verifyAgentCardValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+    public ApiResponse<VerifyAgentCardResponse> verifyAgentCardWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull Map<String, Object> requestBody) throws ApiException {
+        okhttp3.Call localVarCall = verifyAgentCardValidateBeforeCall(orgId, requestBody, null);
+        Type localVarReturnType = new TypeToken<VerifyAgentCardResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Verify a signed A2A agent card (asynchronously)
+     * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
      * @param orgId  (required)
+     * @param requestBody  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1306,13 +1383,17 @@ public class AgentsApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — body is not a JSON agent card. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Caller does not belong to this organization. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call verifyAgentCardAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call verifyAgentCardAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull Map<String, Object> requestBody, final ApiCallback<VerifyAgentCardResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = verifyAgentCardValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        okhttp3.Call localVarCall = verifyAgentCardValidateBeforeCall(orgId, requestBody, _callback);
+        Type localVarReturnType = new TypeToken<VerifyAgentCardResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

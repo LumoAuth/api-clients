@@ -13,20 +13,20 @@ import AnyCodable
 open class AdminMcpAPI {
 
     /**
-     POST /api/v1/admin/mcp/servers
+     Register an MCP server
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminMcpServersCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminMcpServersCreate(orgId: String) async throws {
+    open class func adminMcpServersCreate(orgId: String) async throws -> AdminMcpServersCreateResponse {
         return try await adminMcpServersCreateWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     POST /api/v1/admin/mcp/servers
+     Register an MCP server
      - POST /orgs/{orgId}/api/v1/admin/mcp/servers
-     - Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400]
+     - Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \"http_streamable\" auth_mode (optional) — defaults to \"oauth\" token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization's OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -34,9 +34,9 @@ open class AdminMcpAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminMcpServersCreateResponse> 
      */
-    open class func adminMcpServersCreateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminMcpServersCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminMcpServersCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -52,23 +52,25 @@ open class AdminMcpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Delete an MCP server
+     
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminMcpServersDelete(orgId: String, serverId: String) async throws {
+    open class func adminMcpServersDelete(orgId: String, serverId: String) async throws -> MessageResponse {
         return try await adminMcpServersDeleteWithRequestBuilder(orgId: orgId, serverId: serverId).execute().body
     }
 
     /**
+     Delete an MCP server
      - DELETE /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -78,9 +80,9 @@ open class AdminMcpAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminMcpServersDeleteWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<Void> {
+    open class func adminMcpServersDeleteWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -99,23 +101,25 @@ open class AdminMcpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Get an MCP server
+     
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: Void
+     - returns: AdminMcpServersGetResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminMcpServersGet(orgId: String, serverId: String) async throws {
+    open class func adminMcpServersGet(orgId: String, serverId: String) async throws -> AdminMcpServersGetResponse {
         return try await adminMcpServersGetWithRequestBuilder(orgId: orgId, serverId: serverId).execute().body
     }
 
     /**
+     Get an MCP server
      - GET /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -125,9 +129,9 @@ open class AdminMcpAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter serverId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminMcpServersGetResponse> 
      */
-    open class func adminMcpServersGetWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<Void> {
+    open class func adminMcpServersGetWithRequestBuilder(orgId: String, serverId: String) -> RequestBuilder<AdminMcpServersGetResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -146,22 +150,24 @@ open class AdminMcpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     List MCP servers
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminMcpServersListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminMcpServersList(orgId: String) async throws {
+    open class func adminMcpServersList(orgId: String) async throws -> AdminMcpServersListResponse {
         return try await adminMcpServersListWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     List MCP servers
      - GET /orgs/{orgId}/api/v1/admin/mcp/servers
      - API Key:
        - type: apiKey X-API-Key (HEADER)
@@ -170,9 +176,9 @@ open class AdminMcpAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminMcpServersListResponse> 
      */
-    open class func adminMcpServersListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminMcpServersListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminMcpServersListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/mcp/servers"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -188,7 +194,7 @@ open class AdminMcpAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminMcpServersListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

@@ -4,18 +4,18 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminMcpServersCreate**](AdminMcpAPI.md#AdminMcpServersCreate) | **Post** /orgs/{orgId}/api/v1/admin/mcp/servers | POST /api/v1/admin/mcp/servers
-[**AdminMcpServersDelete**](AdminMcpAPI.md#AdminMcpServersDelete) | **Delete** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | 
-[**AdminMcpServersGet**](AdminMcpAPI.md#AdminMcpServersGet) | **Get** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | 
-[**AdminMcpServersList**](AdminMcpAPI.md#AdminMcpServersList) | **Get** /orgs/{orgId}/api/v1/admin/mcp/servers | 
+[**AdminMcpServersCreate**](AdminMcpAPI.md#AdminMcpServersCreate) | **Post** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server
+[**AdminMcpServersDelete**](AdminMcpAPI.md#AdminMcpServersDelete) | **Delete** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server
+[**AdminMcpServersGet**](AdminMcpAPI.md#AdminMcpServersGet) | **Get** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server
+[**AdminMcpServersList**](AdminMcpAPI.md#AdminMcpServersList) | **Get** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
 
 
 
 ## AdminMcpServersCreate
 
-> AdminMcpServersCreate(ctx, orgId).Execute()
+> AdminMcpServersCreateResponse AdminMcpServersCreate(ctx, orgId).Execute()
 
-POST /api/v1/admin/mcp/servers
+Register an MCP server
 
 
 
@@ -36,11 +36,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminMcpAPI.AdminMcpServersCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminMcpAPI.AdminMcpServersCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.AdminMcpServersCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminMcpServersCreate`: AdminMcpServersCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminMcpAPI.AdminMcpServersCreate`: %v\n", resp)
 }
 ```
 
@@ -63,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminMcpServersCreateResponse**](AdminMcpServersCreateResponse.md)
 
 ### Authorization
 
@@ -72,7 +74,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -81,9 +83,9 @@ Name | Type | Description  | Notes
 
 ## AdminMcpServersDelete
 
-> AdminMcpServersDelete(ctx, orgId, serverId).Execute()
+> MessageResponse AdminMcpServersDelete(ctx, orgId, serverId).Execute()
 
-
+Delete an MCP server
 
 ### Example
 
@@ -103,11 +105,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminMcpAPI.AdminMcpServersDelete(context.Background(), orgId, serverId).Execute()
+	resp, r, err := apiClient.AdminMcpAPI.AdminMcpServersDelete(context.Background(), orgId, serverId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.AdminMcpServersDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminMcpServersDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminMcpAPI.AdminMcpServersDelete`: %v\n", resp)
 }
 ```
 
@@ -132,7 +136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -141,7 +145,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -150,9 +154,9 @@ Name | Type | Description  | Notes
 
 ## AdminMcpServersGet
 
-> AdminMcpServersGet(ctx, orgId, serverId).Execute()
+> AdminMcpServersGetResponse AdminMcpServersGet(ctx, orgId, serverId).Execute()
 
-
+Get an MCP server
 
 ### Example
 
@@ -172,11 +176,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminMcpAPI.AdminMcpServersGet(context.Background(), orgId, serverId).Execute()
+	resp, r, err := apiClient.AdminMcpAPI.AdminMcpServersGet(context.Background(), orgId, serverId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.AdminMcpServersGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminMcpServersGet`: AdminMcpServersGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminMcpAPI.AdminMcpServersGet`: %v\n", resp)
 }
 ```
 
@@ -201,7 +207,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminMcpServersGetResponse**](AdminMcpServersGetResponse.md)
 
 ### Authorization
 
@@ -210,7 +216,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -219,9 +225,9 @@ Name | Type | Description  | Notes
 
 ## AdminMcpServersList
 
-> AdminMcpServersList(ctx, orgId).Execute()
+> AdminMcpServersListResponse AdminMcpServersList(ctx, orgId).Execute()
 
-
+List MCP servers
 
 ### Example
 
@@ -240,11 +246,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminMcpAPI.AdminMcpServersList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminMcpAPI.AdminMcpServersList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminMcpAPI.AdminMcpServersList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminMcpServersList`: AdminMcpServersListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminMcpAPI.AdminMcpServersList`: %v\n", resp)
 }
 ```
 
@@ -267,7 +275,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminMcpServersListResponse**](AdminMcpServersListResponse.md)
 
 ### Authorization
 
@@ -276,7 +284,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

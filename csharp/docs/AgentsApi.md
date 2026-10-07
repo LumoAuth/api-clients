@@ -5,14 +5,14 @@ All URIs are relative to *https://app.lumoauth.dev*
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
 | [**Ask**](AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style) |
-| [**Attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest |  |
+| [**Attest**](AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token |
 | [**AuthorizeMcp**](AgentsApi.md#authorizemcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3). |
 | [**CreateApproval**](AgentsApi.md#createapproval) | **POST** /orgs/{orgId}/api/v1/agents/me/approvals |  |
-| [**GetAgentCard**](AgentsApi.md#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card |  |
+| [**GetAgentCard**](AgentsApi.md#getagentcard) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card |
 | [**GetApprovalStatus**](AgentsApi.md#getapprovalstatus) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status |  |
 | [**GetCurrentAgent**](AgentsApi.md#getcurrentagent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent |
-| [**RegisterAgent**](AgentsApi.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register |  |
-| [**VerifyAgentCard**](AgentsApi.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify |  |
+| [**RegisterAgent**](AgentsApi.md#registeragent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent |
+| [**VerifyAgentCard**](AgentsApi.md#verifyagentcard) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card |
 
 <a id="ask"></a>
 # **Ask**
@@ -122,9 +122,11 @@ catch (ApiException e)
 
 <a id="attest"></a>
 # **Attest**
-> void Attest (string orgId, string agentId)
+> AttestResponse Attest (string orgId, string agentId, AttestRequest attestRequest)
 
+Workload attestation: exchange a cloud OIDC token for an agent access token
 
+Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
 ### Example
 ```csharp
@@ -156,10 +158,13 @@ namespace Example
             var apiInstance = new AgentsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
             var agentId = "agentId_example";  // string | 
+            var attestRequest = new AttestRequest(); // AttestRequest | 
 
             try
             {
-                apiInstance.Attest(orgId, agentId);
+                // Workload attestation: exchange a cloud OIDC token for an agent access token
+                AttestResponse result = apiInstance.Attest(orgId, agentId, attestRequest);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -178,7 +183,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AttestWithHttpInfo(orgId, agentId);
+    // Workload attestation: exchange a cloud OIDC token for an agent access token
+    ApiResponse<AttestResponse> response = apiInstance.AttestWithHttpInfo(orgId, agentId, attestRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -194,10 +203,11 @@ catch (ApiException e)
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
 | **agentId** | **string** |  |  |
+| **attestRequest** | [**AttestRequest**](AttestRequest.md) |  |  |
 
 ### Return type
 
-void (empty response body)
+[**AttestResponse**](AttestResponse.md)
 
 ### Authorization
 
@@ -205,14 +215,19 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Attestation accepted: a short-lived (15 minute) LumoAuth access token scoped to the agent&#39;s capabilities. |  -  |
+| **400** | invalid_json or missing_attestation_token. |  -  |
+| **401** | attestation_rejected — generic for unknown agent, inactive agent / organization, or a token that failed verification. |  -  |
+| **403** | access_policy_denied — a conditional access policy refused the agent (reason code included). |  -  |
+| **404** | tenant_not_found. |  -  |
+| **429** | rate_limit_exceeded (Retry-After: 60). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -430,9 +445,11 @@ catch (ApiException e)
 
 <a id="getagentcard"></a>
 # **GetAgentCard**
-> void GetAgentCard (string orgId, string agentId)
+> SignedAgentCard GetAgentCard (string orgId, string agentId)
 
+Signed A2A agent card
 
+Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
 ### Example
 ```csharp
@@ -460,7 +477,9 @@ namespace Example
 
             try
             {
-                apiInstance.GetAgentCard(orgId, agentId);
+                // Signed A2A agent card
+                SignedAgentCard result = apiInstance.GetAgentCard(orgId, agentId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -479,7 +498,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.GetAgentCardWithHttpInfo(orgId, agentId);
+    // Signed A2A agent card
+    ApiResponse<SignedAgentCard> response = apiInstance.GetAgentCardWithHttpInfo(orgId, agentId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -498,7 +521,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SignedAgentCard**](SignedAgentCard.md)
 
 ### Authorization
 
@@ -507,13 +530,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | The A2A AgentCard with a detached JWS signature over its JCS-canonical content (signatures[].protected + signature, verifiable against this organization&#39;s JWKS). |  -  |
+| **404** | not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -724,9 +748,9 @@ catch (ApiException e)
 
 <a id="registeragent"></a>
 # **RegisterAgent**
-> void RegisterAgent (string orgId)
+> RegisterAgentResponse RegisterAgent (string orgId)
 
-
+Register (or re-register) an agent
 
 ### Example
 ```csharp
@@ -760,7 +784,9 @@ namespace Example
 
             try
             {
-                apiInstance.RegisterAgent(orgId);
+                // Register (or re-register) an agent
+                RegisterAgentResponse result = apiInstance.RegisterAgent(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -779,7 +805,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.RegisterAgentWithHttpInfo(orgId);
+    // Register (or re-register) an agent
+    ApiResponse<RegisterAgentResponse> response = apiInstance.RegisterAgentWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -797,7 +827,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**RegisterAgentResponse**](RegisterAgentResponse.md)
 
 ### Authorization
 
@@ -806,21 +836,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Registered agent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="verifyagentcard"></a>
 # **VerifyAgentCard**
-> void VerifyAgentCard (string orgId)
+> VerifyAgentCardResponse VerifyAgentCard (string orgId, Dictionary<string, Object> requestBody)
 
+Verify a signed A2A agent card
 
+Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
 ### Example
 ```csharp
@@ -851,10 +883,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AgentsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var requestBody = new Dictionary<string, Object>(); // Dictionary<string, Object> | 
 
             try
             {
-                apiInstance.VerifyAgentCard(orgId);
+                // Verify a signed A2A agent card
+                VerifyAgentCardResponse result = apiInstance.VerifyAgentCard(orgId, requestBody);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -873,7 +908,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.VerifyAgentCardWithHttpInfo(orgId);
+    // Verify a signed A2A agent card
+    ApiResponse<VerifyAgentCardResponse> response = apiInstance.VerifyAgentCardWithHttpInfo(orgId, requestBody);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -888,10 +927,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **requestBody** | [**Dictionary&lt;string, Object&gt;**](Object.md) |  |  |
 
 ### Return type
 
-void (empty response body)
+[**VerifyAgentCardResponse**](VerifyAgentCardResponse.md)
 
 ### Authorization
 
@@ -899,14 +939,17 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Verification result — 200 for both outcomes. valid&#x3D;true carries signer and card_summary; valid&#x3D;false carries error. |  -  |
+| **400** | invalid_request — body is not a JSON agent card. |  -  |
+| **403** | Caller does not belong to this organization. |  -  |
+| **404** | Unknown organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

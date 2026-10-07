@@ -1,0 +1,14 @@
+# AdminOrganizationsListResponse
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**data** | Option<[**Vec<models::Organization>**](Organization.md)> |  | [optional]
+**meta** | Option<[**models::PaginationMeta**](PaginationMeta.md)> |  | [optional]
+**pagination** | Option<[**models::PaginationMeta**](PaginationMeta.md)> |  | [optional]
+**resource_type** | Option<**String**> |  | [optional]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

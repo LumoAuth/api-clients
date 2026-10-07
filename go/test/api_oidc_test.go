@@ -28,9 +28,10 @@ func Test_lumoauthclient_OIDCAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OIDCAPI.CheckSession(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OIDCAPI.CheckSession(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -41,9 +42,10 @@ func Test_lumoauthclient_OIDCAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OIDCAPI.Logout(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OIDCAPI.Logout(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -54,9 +56,10 @@ func Test_lumoauthclient_OIDCAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OIDCAPI.LogoutPost(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OIDCAPI.LogoutPost(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -67,9 +70,10 @@ func Test_lumoauthclient_OIDCAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OIDCAPI.Userinfo(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OIDCAPI.Userinfo(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -80,9 +84,10 @@ func Test_lumoauthclient_OIDCAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OIDCAPI.UserinfoPost(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OIDCAPI.UserinfoPost(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

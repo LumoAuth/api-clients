@@ -24,7 +24,7 @@ import (
 type AdminAuditLogsAPI interface {
 
 	/*
-	AdminAuditLogsActions List available audit action types for this tenant
+	AdminAuditLogsActions List the distinct audit action types recorded for the tenant
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,10 +33,11 @@ type AdminAuditLogsAPI interface {
 	AdminAuditLogsActions(ctx context.Context, orgId string) ApiAdminAuditLogsActionsRequest
 
 	// AdminAuditLogsActionsExecute executes the request
-	AdminAuditLogsActionsExecute(r ApiAdminAuditLogsActionsRequest) (*http.Response, error)
+	//  @return AdminAuditLogsActionsResponse
+	AdminAuditLogsActionsExecute(r ApiAdminAuditLogsActionsRequest) (*AdminAuditLogsActionsResponse, *http.Response, error)
 
 	/*
-	AdminAuditLogsExport Export audit logs as CSV or JSON
+	AdminAuditLogsExport Export audit logs as CSV (default) or JSON
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -45,10 +46,11 @@ type AdminAuditLogsAPI interface {
 	AdminAuditLogsExport(ctx context.Context, orgId string) ApiAdminAuditLogsExportRequest
 
 	// AdminAuditLogsExportExecute executes the request
-	AdminAuditLogsExportExecute(r ApiAdminAuditLogsExportRequest) (*http.Response, error)
+	//  @return string
+	AdminAuditLogsExportExecute(r ApiAdminAuditLogsExportRequest) (string, *http.Response, error)
 
 	/*
-	AdminAuditLogsGet Get a single audit log entry
+	AdminAuditLogsGet Get an audit log entry
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -58,10 +60,11 @@ type AdminAuditLogsAPI interface {
 	AdminAuditLogsGet(ctx context.Context, orgId string, logId string) ApiAdminAuditLogsGetRequest
 
 	// AdminAuditLogsGetExecute executes the request
-	AdminAuditLogsGetExecute(r ApiAdminAuditLogsGetRequest) (*http.Response, error)
+	//  @return AdminAuditLogsGetResponse
+	AdminAuditLogsGetExecute(r ApiAdminAuditLogsGetRequest) (*AdminAuditLogsGetResponse, *http.Response, error)
 
 	/*
-	AdminAuditLogsList List audit logs for the tenant
+	AdminAuditLogsList List audit log entries
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -70,7 +73,8 @@ type AdminAuditLogsAPI interface {
 	AdminAuditLogsList(ctx context.Context, orgId string) ApiAdminAuditLogsListRequest
 
 	// AdminAuditLogsListExecute executes the request
-	AdminAuditLogsListExecute(r ApiAdminAuditLogsListRequest) (*http.Response, error)
+	//  @return AdminAuditLogsListResponse
+	AdminAuditLogsListExecute(r ApiAdminAuditLogsListRequest) (*AdminAuditLogsListResponse, *http.Response, error)
 
 	/*
 	AdminAuditLogsRetention Get audit log retention settings
@@ -82,10 +86,11 @@ type AdminAuditLogsAPI interface {
 	AdminAuditLogsRetention(ctx context.Context, orgId string) ApiAdminAuditLogsRetentionRequest
 
 	// AdminAuditLogsRetentionExecute executes the request
-	AdminAuditLogsRetentionExecute(r ApiAdminAuditLogsRetentionRequest) (*http.Response, error)
+	//  @return AdminAuditLogsRetentionResponse
+	AdminAuditLogsRetentionExecute(r ApiAdminAuditLogsRetentionRequest) (*AdminAuditLogsRetentionResponse, *http.Response, error)
 
 	/*
-	AdminAuditLogsStats Get audit log statistics
+	AdminAuditLogsStats Audit log statistics for a period (default: last 30 days)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -94,7 +99,8 @@ type AdminAuditLogsAPI interface {
 	AdminAuditLogsStats(ctx context.Context, orgId string) ApiAdminAuditLogsStatsRequest
 
 	// AdminAuditLogsStatsExecute executes the request
-	AdminAuditLogsStatsExecute(r ApiAdminAuditLogsStatsRequest) (*http.Response, error)
+	//  @return AdminAuditLogsStatsResponse
+	AdminAuditLogsStatsExecute(r ApiAdminAuditLogsStatsRequest) (*AdminAuditLogsStatsResponse, *http.Response, error)
 
 	/*
 	PatchAdminAuditLogsRetentionUpdate Update audit log retention settings
@@ -106,7 +112,8 @@ type AdminAuditLogsAPI interface {
 	PatchAdminAuditLogsRetentionUpdate(ctx context.Context, orgId string) ApiPatchAdminAuditLogsRetentionUpdateRequest
 
 	// PatchAdminAuditLogsRetentionUpdateExecute executes the request
-	PatchAdminAuditLogsRetentionUpdateExecute(r ApiPatchAdminAuditLogsRetentionUpdateRequest) (*http.Response, error)
+	//  @return AdminAuditLogsRetentionResponse
+	PatchAdminAuditLogsRetentionUpdateExecute(r ApiPatchAdminAuditLogsRetentionUpdateRequest) (*AdminAuditLogsRetentionResponse, *http.Response, error)
 
 	/*
 	PutAdminAuditLogsRetentionUpdate Update audit log retention settings
@@ -118,7 +125,8 @@ type AdminAuditLogsAPI interface {
 	PutAdminAuditLogsRetentionUpdate(ctx context.Context, orgId string) ApiPutAdminAuditLogsRetentionUpdateRequest
 
 	// PutAdminAuditLogsRetentionUpdateExecute executes the request
-	PutAdminAuditLogsRetentionUpdateExecute(r ApiPutAdminAuditLogsRetentionUpdateRequest) (*http.Response, error)
+	//  @return AdminAuditLogsRetentionResponse
+	PutAdminAuditLogsRetentionUpdateExecute(r ApiPutAdminAuditLogsRetentionUpdateRequest) (*AdminAuditLogsRetentionResponse, *http.Response, error)
 }
 
 // AdminAuditLogsAPIService AdminAuditLogsAPI service
@@ -130,12 +138,12 @@ type ApiAdminAuditLogsActionsRequest struct {
 	orgId string
 }
 
-func (r ApiAdminAuditLogsActionsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAuditLogsActionsRequest) Execute() (*AdminAuditLogsActionsResponse, *http.Response, error) {
 	return r.ApiService.AdminAuditLogsActionsExecute(r)
 }
 
 /*
-AdminAuditLogsActions List available audit action types for this tenant
+AdminAuditLogsActions List the distinct audit action types recorded for the tenant
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -150,16 +158,18 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsActions(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) AdminAuditLogsActionsExecute(r ApiAdminAuditLogsActionsRequest) (*http.Response, error) {
+//  @return AdminAuditLogsActionsResponse
+func (a *AdminAuditLogsAPIService) AdminAuditLogsActionsExecute(r ApiAdminAuditLogsActionsRequest) (*AdminAuditLogsActionsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsActionsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.AdminAuditLogsActions")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/actions"
@@ -179,7 +189,7 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsActionsExecute(r ApiAdminAuditL
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -202,19 +212,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsActionsExecute(r ApiAdminAuditL
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -222,10 +232,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsActionsExecute(r ApiAdminAuditL
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAuditLogsExportRequest struct {
@@ -234,12 +253,12 @@ type ApiAdminAuditLogsExportRequest struct {
 	orgId string
 }
 
-func (r ApiAdminAuditLogsExportRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAuditLogsExportRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.AdminAuditLogsExportExecute(r)
 }
 
 /*
-AdminAuditLogsExport Export audit logs as CSV or JSON
+AdminAuditLogsExport Export audit logs as CSV (default) or JSON
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -254,16 +273,18 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsExport(ctx context.Context, org
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) AdminAuditLogsExportExecute(r ApiAdminAuditLogsExportRequest) (*http.Response, error) {
+//  @return string
+func (a *AdminAuditLogsAPIService) AdminAuditLogsExportExecute(r ApiAdminAuditLogsExportRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.AdminAuditLogsExport")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/export"
@@ -283,7 +304,7 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsExportExecute(r ApiAdminAuditLo
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/csv", "application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -306,19 +327,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsExportExecute(r ApiAdminAuditLo
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -326,10 +347,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsExportExecute(r ApiAdminAuditLo
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAuditLogsGetRequest struct {
@@ -339,12 +369,12 @@ type ApiAdminAuditLogsGetRequest struct {
 	logId string
 }
 
-func (r ApiAdminAuditLogsGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAuditLogsGetRequest) Execute() (*AdminAuditLogsGetResponse, *http.Response, error) {
 	return r.ApiService.AdminAuditLogsGetExecute(r)
 }
 
 /*
-AdminAuditLogsGet Get a single audit log entry
+AdminAuditLogsGet Get an audit log entry
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -361,16 +391,18 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsGet(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) AdminAuditLogsGetExecute(r ApiAdminAuditLogsGetRequest) (*http.Response, error) {
+//  @return AdminAuditLogsGetResponse
+func (a *AdminAuditLogsAPIService) AdminAuditLogsGetExecute(r ApiAdminAuditLogsGetRequest) (*AdminAuditLogsGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.AdminAuditLogsGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/{logId}"
@@ -391,7 +423,7 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsGetExecute(r ApiAdminAuditLogsG
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -414,19 +446,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsGetExecute(r ApiAdminAuditLogsG
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -434,10 +466,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsGetExecute(r ApiAdminAuditLogsG
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAuditLogsListRequest struct {
@@ -446,12 +487,12 @@ type ApiAdminAuditLogsListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminAuditLogsListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAuditLogsListRequest) Execute() (*AdminAuditLogsListResponse, *http.Response, error) {
 	return r.ApiService.AdminAuditLogsListExecute(r)
 }
 
 /*
-AdminAuditLogsList List audit logs for the tenant
+AdminAuditLogsList List audit log entries
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -466,16 +507,18 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsList(ctx context.Context, orgId
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) AdminAuditLogsListExecute(r ApiAdminAuditLogsListRequest) (*http.Response, error) {
+//  @return AdminAuditLogsListResponse
+func (a *AdminAuditLogsAPIService) AdminAuditLogsListExecute(r ApiAdminAuditLogsListRequest) (*AdminAuditLogsListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.AdminAuditLogsList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs"
@@ -495,7 +538,7 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsListExecute(r ApiAdminAuditLogs
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -518,19 +561,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsListExecute(r ApiAdminAuditLogs
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -538,10 +581,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsListExecute(r ApiAdminAuditLogs
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAuditLogsRetentionRequest struct {
@@ -550,7 +602,7 @@ type ApiAdminAuditLogsRetentionRequest struct {
 	orgId string
 }
 
-func (r ApiAdminAuditLogsRetentionRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAuditLogsRetentionRequest) Execute() (*AdminAuditLogsRetentionResponse, *http.Response, error) {
 	return r.ApiService.AdminAuditLogsRetentionExecute(r)
 }
 
@@ -570,16 +622,18 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsRetention(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) AdminAuditLogsRetentionExecute(r ApiAdminAuditLogsRetentionRequest) (*http.Response, error) {
+//  @return AdminAuditLogsRetentionResponse
+func (a *AdminAuditLogsAPIService) AdminAuditLogsRetentionExecute(r ApiAdminAuditLogsRetentionRequest) (*AdminAuditLogsRetentionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsRetentionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.AdminAuditLogsRetention")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
@@ -599,7 +653,7 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsRetentionExecute(r ApiAdminAudi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -622,19 +676,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsRetentionExecute(r ApiAdminAudi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -642,10 +696,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsRetentionExecute(r ApiAdminAudi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminAuditLogsStatsRequest struct {
@@ -654,12 +717,12 @@ type ApiAdminAuditLogsStatsRequest struct {
 	orgId string
 }
 
-func (r ApiAdminAuditLogsStatsRequest) Execute() (*http.Response, error) {
+func (r ApiAdminAuditLogsStatsRequest) Execute() (*AdminAuditLogsStatsResponse, *http.Response, error) {
 	return r.ApiService.AdminAuditLogsStatsExecute(r)
 }
 
 /*
-AdminAuditLogsStats Get audit log statistics
+AdminAuditLogsStats Audit log statistics for a period (default: last 30 days)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -674,16 +737,18 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsStats(ctx context.Context, orgI
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) AdminAuditLogsStatsExecute(r ApiAdminAuditLogsStatsRequest) (*http.Response, error) {
+//  @return AdminAuditLogsStatsResponse
+func (a *AdminAuditLogsAPIService) AdminAuditLogsStatsExecute(r ApiAdminAuditLogsStatsRequest) (*AdminAuditLogsStatsResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsStatsResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.AdminAuditLogsStats")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/stats"
@@ -703,7 +768,7 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsStatsExecute(r ApiAdminAuditLog
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -726,19 +791,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsStatsExecute(r ApiAdminAuditLog
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -746,10 +811,19 @@ func (a *AdminAuditLogsAPIService) AdminAuditLogsStatsExecute(r ApiAdminAuditLog
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminAuditLogsRetentionUpdateRequest struct {
@@ -758,7 +832,7 @@ type ApiPatchAdminAuditLogsRetentionUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPatchAdminAuditLogsRetentionUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminAuditLogsRetentionUpdateRequest) Execute() (*AdminAuditLogsRetentionResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminAuditLogsRetentionUpdateExecute(r)
 }
 
@@ -778,16 +852,18 @@ func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdate(ctx contex
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r ApiPatchAdminAuditLogsRetentionUpdateRequest) (*http.Response, error) {
+//  @return AdminAuditLogsRetentionResponse
+func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r ApiPatchAdminAuditLogsRetentionUpdateRequest) (*AdminAuditLogsRetentionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsRetentionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.PatchAdminAuditLogsRetentionUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
@@ -807,7 +883,7 @@ func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r A
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -830,19 +906,19 @@ func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r A
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -850,10 +926,19 @@ func (a *AdminAuditLogsAPIService) PatchAdminAuditLogsRetentionUpdateExecute(r A
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminAuditLogsRetentionUpdateRequest struct {
@@ -862,7 +947,7 @@ type ApiPutAdminAuditLogsRetentionUpdateRequest struct {
 	orgId string
 }
 
-func (r ApiPutAdminAuditLogsRetentionUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminAuditLogsRetentionUpdateRequest) Execute() (*AdminAuditLogsRetentionResponse, *http.Response, error) {
 	return r.ApiService.PutAdminAuditLogsRetentionUpdateExecute(r)
 }
 
@@ -882,16 +967,18 @@ func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdate(ctx context.
 }
 
 // Execute executes the request
-func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r ApiPutAdminAuditLogsRetentionUpdateRequest) (*http.Response, error) {
+//  @return AdminAuditLogsRetentionResponse
+func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r ApiPutAdminAuditLogsRetentionUpdateRequest) (*AdminAuditLogsRetentionResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminAuditLogsRetentionResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminAuditLogsAPIService.PutAdminAuditLogsRetentionUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/audit-logs/retention"
@@ -911,7 +998,7 @@ func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r Api
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -934,19 +1021,19 @@ func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r Api
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -954,8 +1041,17 @@ func (a *AdminAuditLogsAPIService) PutAdminAuditLogsRetentionUpdateExecute(r Api
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -4,23 +4,23 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**CreateClient**](AdminOAuthClientsApi.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create a new OAuth client |
+| [**CreateClient**](AdminOAuthClientsApi.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**DeleteClient**](AdminOAuthClientsApi.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
-| [**DisableClient**](AdminOAuthClientsApi.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable OAuth client |
-| [**EnableClient**](AdminOAuthClientsApi.md#enableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable OAuth client |
-| [**GetClient**](AdminOAuthClientsApi.md#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get a single OAuth client by ID or clientId |
-| [**ListClientScopes**](AdminOAuthClientsApi.md#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Get client scopes |
-| [**ListClients**](AdminOAuthClientsApi.md#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List all OAuth clients in the tenant |
-| [**PatchClient**](AdminOAuthClientsApi.md#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client |
-| [**RotateClientSecret**](AdminOAuthClientsApi.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate client secret |
-| [**SetClientScopes**](AdminOAuthClientsApi.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Set client scopes |
-| [**UpdateClient**](AdminOAuthClientsApi.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client |
+| [**DisableClient**](AdminOAuthClientsApi.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
+| [**EnableClient**](AdminOAuthClientsApi.md#enableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable an OAuth client |
+| [**GetClient**](AdminOAuthClientsApi.md#getclient) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client |
+| [**ListClientScopes**](AdminOAuthClientsApi.md#listclientscopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client |
+| [**ListClients**](AdminOAuthClientsApi.md#listclients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients |
+| [**PatchClient**](AdminOAuthClientsApi.md#patchclient) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client |
+| [**RotateClientSecret**](AdminOAuthClientsApi.md#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
+| [**SetClientScopes**](AdminOAuthClientsApi.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
+| [**UpdateClient**](AdminOAuthClientsApi.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
 
 <a id="createclient"></a>
 # **CreateClient**
-> void CreateClient (string orgId)
+> CreateClientResponse CreateClient (string orgId)
 
-Create a new OAuth client
+Create an OAuth client
 
 ### Example
 ```csharp
@@ -54,8 +54,9 @@ namespace Example
 
             try
             {
-                // Create a new OAuth client
-                apiInstance.CreateClient(orgId);
+                // Create an OAuth client
+                CreateClientResponse result = apiInstance.CreateClient(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -74,8 +75,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a new OAuth client
-    apiInstance.CreateClientWithHttpInfo(orgId);
+    // Create an OAuth client
+    ApiResponse<CreateClientResponse> response = apiInstance.CreateClientWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -93,7 +97,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**CreateClientResponse**](CreateClientResponse.md)
 
 ### Authorization
 
@@ -102,19 +106,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created — the plaintext secret is included once and never shown again |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="deleteclient"></a>
 # **DeleteClient**
-> void DeleteClient (string orgId, string clientId)
+> MessageResponse DeleteClient (string orgId, string clientId)
 
 Delete an OAuth client
 
@@ -152,7 +156,8 @@ namespace Example
             try
             {
                 // Delete an OAuth client
-                apiInstance.DeleteClient(orgId, clientId);
+                MessageResponse result = apiInstance.DeleteClient(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -172,7 +177,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete an OAuth client
-    apiInstance.DeleteClientWithHttpInfo(orgId, clientId);
+    ApiResponse<MessageResponse> response = apiInstance.DeleteClientWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -191,7 +199,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -200,21 +208,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="disableclient"></a>
 # **DisableClient**
-> void DisableClient (string orgId, string clientId)
+> UpdateClientResponse DisableClient (string orgId, string clientId)
 
-Disable OAuth client
+Disable an OAuth client
 
 ### Example
 ```csharp
@@ -249,8 +258,9 @@ namespace Example
 
             try
             {
-                // Disable OAuth client
-                apiInstance.DisableClient(orgId, clientId);
+                // Disable an OAuth client
+                UpdateClientResponse result = apiInstance.DisableClient(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -269,8 +279,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Disable OAuth client
-    apiInstance.DisableClientWithHttpInfo(orgId, clientId);
+    // Disable an OAuth client
+    ApiResponse<UpdateClientResponse> response = apiInstance.DisableClientWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -289,7 +302,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -298,21 +311,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Client disabled (summary fields only) |  -  |
+| **404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="enableclient"></a>
 # **EnableClient**
-> void EnableClient (string orgId, string clientId)
+> UpdateClientResponse EnableClient (string orgId, string clientId)
 
-Enable OAuth client
+Enable an OAuth client
 
 ### Example
 ```csharp
@@ -347,8 +361,9 @@ namespace Example
 
             try
             {
-                // Enable OAuth client
-                apiInstance.EnableClient(orgId, clientId);
+                // Enable an OAuth client
+                UpdateClientResponse result = apiInstance.EnableClient(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -367,8 +382,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Enable OAuth client
-    apiInstance.EnableClientWithHttpInfo(orgId, clientId);
+    // Enable an OAuth client
+    ApiResponse<UpdateClientResponse> response = apiInstance.EnableClientWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -387,7 +405,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -396,21 +414,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Client enabled (summary fields only) |  -  |
+| **404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getclient"></a>
 # **GetClient**
-> void GetClient (string orgId, string clientId)
+> GetClientResponse GetClient (string orgId, string clientId)
 
-Get a single OAuth client by ID or clientId
+Get an OAuth client
 
 ### Example
 ```csharp
@@ -445,8 +464,9 @@ namespace Example
 
             try
             {
-                // Get a single OAuth client by ID or clientId
-                apiInstance.GetClient(orgId, clientId);
+                // Get an OAuth client
+                GetClientResponse result = apiInstance.GetClient(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -465,8 +485,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single OAuth client by ID or clientId
-    apiInstance.GetClientWithHttpInfo(orgId, clientId);
+    // Get an OAuth client
+    ApiResponse<GetClientResponse> response = apiInstance.GetClientWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -485,7 +508,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetClientResponse**](GetClientResponse.md)
 
 ### Authorization
 
@@ -494,21 +517,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | OAuth client (detailed) |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listclientscopes"></a>
 # **ListClientScopes**
-> void ListClientScopes (string orgId, string clientId)
+> ListClientScopesResponse ListClientScopes (string orgId, string clientId)
 
-Get client scopes
+List the scopes granted to an OAuth client
 
 ### Example
 ```csharp
@@ -543,8 +567,9 @@ namespace Example
 
             try
             {
-                // Get client scopes
-                apiInstance.ListClientScopes(orgId, clientId);
+                // List the scopes granted to an OAuth client
+                ListClientScopesResponse result = apiInstance.ListClientScopes(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -563,8 +588,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get client scopes
-    apiInstance.ListClientScopesWithHttpInfo(orgId, clientId);
+    // List the scopes granted to an OAuth client
+    ApiResponse<ListClientScopesResponse> response = apiInstance.ListClientScopesWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -583,7 +611,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**ListClientScopesResponse**](ListClientScopesResponse.md)
 
 ### Authorization
 
@@ -592,21 +620,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Scope names |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listclients"></a>
 # **ListClients**
-> void ListClients (string orgId)
+> ListClientsResponse ListClients (string orgId)
 
-List all OAuth clients in the tenant
+List OAuth clients
 
 ### Example
 ```csharp
@@ -640,8 +669,9 @@ namespace Example
 
             try
             {
-                // List all OAuth clients in the tenant
-                apiInstance.ListClients(orgId);
+                // List OAuth clients
+                ListClientsResponse result = apiInstance.ListClients(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -660,8 +690,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all OAuth clients in the tenant
-    apiInstance.ListClientsWithHttpInfo(orgId);
+    // List OAuth clients
+    ApiResponse<ListClientsResponse> response = apiInstance.ListClientsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -679,7 +712,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**ListClientsResponse**](ListClientsResponse.md)
 
 ### Authorization
 
@@ -688,21 +721,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | OAuth clients (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchclient"></a>
 # **PatchClient**
-> void PatchClient (string orgId, string clientId)
+> UpdateClientResponse PatchClient (string orgId, string clientId)
 
-Update an existing OAuth client
+Update an OAuth client
 
 ### Example
 ```csharp
@@ -737,8 +770,9 @@ namespace Example
 
             try
             {
-                // Update an existing OAuth client
-                apiInstance.PatchClient(orgId, clientId);
+                // Update an OAuth client
+                UpdateClientResponse result = apiInstance.PatchClient(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -757,8 +791,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update an existing OAuth client
-    apiInstance.PatchClientWithHttpInfo(orgId, clientId);
+    // Update an OAuth client
+    ApiResponse<UpdateClientResponse> response = apiInstance.PatchClientWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -777,7 +814,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -786,21 +823,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated OAuth client (detailed) |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="rotateclientsecret"></a>
 # **RotateClientSecret**
-> void RotateClientSecret (string orgId, string clientId)
+> RotateClientSecretResponse RotateClientSecret (string orgId, string clientId)
 
-Rotate client secret
+Rotate an OAuth client secret
 
 ### Example
 ```csharp
@@ -835,8 +873,9 @@ namespace Example
 
             try
             {
-                // Rotate client secret
-                apiInstance.RotateClientSecret(orgId, clientId);
+                // Rotate an OAuth client secret
+                RotateClientSecretResponse result = apiInstance.RotateClientSecret(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -855,8 +894,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Rotate client secret
-    apiInstance.RotateClientSecretWithHttpInfo(orgId, clientId);
+    // Rotate an OAuth client secret
+    ApiResponse<RotateClientSecretResponse> response = apiInstance.RotateClientSecretWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -875,7 +917,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**RotateClientSecretResponse**](RotateClientSecretResponse.md)
 
 ### Authorization
 
@@ -884,21 +926,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Rotated — the new plaintext secret is included once and never shown again |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="setclientscopes"></a>
 # **SetClientScopes**
-> void SetClientScopes (string orgId, string clientId)
+> SetClientScopesResponse SetClientScopes (string orgId, string clientId)
 
-Set client scopes
+Replace the scopes granted to an OAuth client
 
 ### Example
 ```csharp
@@ -933,8 +976,9 @@ namespace Example
 
             try
             {
-                // Set client scopes
-                apiInstance.SetClientScopes(orgId, clientId);
+                // Replace the scopes granted to an OAuth client
+                SetClientScopesResponse result = apiInstance.SetClientScopes(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -953,8 +997,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Set client scopes
-    apiInstance.SetClientScopesWithHttpInfo(orgId, clientId);
+    // Replace the scopes granted to an OAuth client
+    ApiResponse<SetClientScopesResponse> response = apiInstance.SetClientScopesWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -973,7 +1020,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SetClientScopesResponse**](SetClientScopesResponse.md)
 
 ### Authorization
 
@@ -982,21 +1029,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated scope names |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="updateclient"></a>
 # **UpdateClient**
-> void UpdateClient (string orgId, string clientId)
+> UpdateClientResponse UpdateClient (string orgId, string clientId)
 
-Update an existing OAuth client
+Replace an OAuth client
 
 ### Example
 ```csharp
@@ -1031,8 +1079,9 @@ namespace Example
 
             try
             {
-                // Update an existing OAuth client
-                apiInstance.UpdateClient(orgId, clientId);
+                // Replace an OAuth client
+                UpdateClientResponse result = apiInstance.UpdateClient(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1051,8 +1100,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Update an existing OAuth client
-    apiInstance.UpdateClientWithHttpInfo(orgId, clientId);
+    // Replace an OAuth client
+    ApiResponse<UpdateClientResponse> response = apiInstance.UpdateClientWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1071,7 +1123,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateClientResponse**](UpdateClientResponse.md)
 
 ### Authorization
 
@@ -1080,13 +1132,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated OAuth client (detailed) |  -  |
+| **404** | OAuth client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -16,10 +16,10 @@ open class AdminPermissionsAPI {
      Create a custom permission for the tenant
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminPermissionsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsCreate(orgId: String) async throws {
+    open class func adminPermissionsCreate(orgId: String) async throws -> AdminPermissionsCreateResponse {
         return try await adminPermissionsCreateWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -33,9 +33,9 @@ open class AdminPermissionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminPermissionsCreateResponse> 
      */
-    open class func adminPermissionsCreateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminPermissionsCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminPermissionsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -51,7 +51,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminPermissionsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -61,10 +61,10 @@ open class AdminPermissionsAPI {
      
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsDelete(orgId: String, permissionId: String) async throws {
+    open class func adminPermissionsDelete(orgId: String, permissionId: String) async throws -> MessageResponse {
         return try await adminPermissionsDeleteWithRequestBuilder(orgId: orgId, permissionId: permissionId).execute().body
     }
 
@@ -79,9 +79,9 @@ open class AdminPermissionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminPermissionsDeleteWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<Void> {
+    open class func adminPermissionsDeleteWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -100,7 +100,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -110,10 +110,10 @@ open class AdminPermissionsAPI {
      
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: Void
+     - returns: AdminPermissionsGetResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsGet(orgId: String, permissionId: String) async throws {
+    open class func adminPermissionsGet(orgId: String, permissionId: String) async throws -> AdminPermissionsGetResponse {
         return try await adminPermissionsGetWithRequestBuilder(orgId: orgId, permissionId: permissionId).execute().body
     }
 
@@ -128,9 +128,9 @@ open class AdminPermissionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminPermissionsGetResponse> 
      */
-    open class func adminPermissionsGetWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<Void> {
+    open class func adminPermissionsGetWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<AdminPermissionsGetResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -149,7 +149,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminPermissionsGetResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -158,10 +158,10 @@ open class AdminPermissionsAPI {
      List all available permissions for the tenant
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminPermissionsListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsList(orgId: String) async throws {
+    open class func adminPermissionsList(orgId: String) async throws -> AdminPermissionsListResponse {
         return try await adminPermissionsListWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -175,9 +175,9 @@ open class AdminPermissionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminPermissionsListResponse> 
      */
-    open class func adminPermissionsListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminPermissionsListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminPermissionsListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -193,7 +193,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminPermissionsListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -203,10 +203,10 @@ open class AdminPermissionsAPI {
      
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: Void
+     - returns: AdminPermissionsCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsUpdate(orgId: String, permissionId: String) async throws {
+    open class func adminPermissionsUpdate(orgId: String, permissionId: String) async throws -> AdminPermissionsCreateResponse {
         return try await adminPermissionsUpdateWithRequestBuilder(orgId: orgId, permissionId: permissionId).execute().body
     }
 
@@ -221,9 +221,9 @@ open class AdminPermissionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminPermissionsCreateResponse> 
      */
-    open class func adminPermissionsUpdateWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<Void> {
+    open class func adminPermissionsUpdateWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<AdminPermissionsCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -242,7 +242,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminPermissionsCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "PATCH", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -252,10 +252,10 @@ open class AdminPermissionsAPI {
      
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: Void
+     - returns: AdminPermissionsUsageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminPermissionsUsage(orgId: String, permissionId: String) async throws {
+    open class func adminPermissionsUsage(orgId: String, permissionId: String) async throws -> AdminPermissionsUsageResponse {
         return try await adminPermissionsUsageWithRequestBuilder(orgId: orgId, permissionId: permissionId).execute().body
     }
 
@@ -270,9 +270,9 @@ open class AdminPermissionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter permissionId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminPermissionsUsageResponse> 
      */
-    open class func adminPermissionsUsageWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<Void> {
+    open class func adminPermissionsUsageWithRequestBuilder(orgId: String, permissionId: String) -> RequestBuilder<AdminPermissionsUsageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -291,7 +291,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminPermissionsUsageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -300,10 +300,10 @@ open class AdminPermissionsAPI {
      Create a custom OAuth scope
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminScopesCreateResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminScopesCreate(orgId: String) async throws {
+    open class func adminScopesCreate(orgId: String) async throws -> AdminScopesCreateResponse {
         return try await adminScopesCreateWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -317,9 +317,9 @@ open class AdminPermissionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminScopesCreateResponse> 
      */
-    open class func adminScopesCreateWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminScopesCreateWithRequestBuilder(orgId: String) -> RequestBuilder<AdminScopesCreateResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/scopes"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -335,7 +335,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminScopesCreateResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -345,10 +345,10 @@ open class AdminPermissionsAPI {
      
      - parameter orgId: (path)  
      - parameter scopeId: (path)  
-     - returns: Void
+     - returns: MessageResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminScopesDelete(orgId: String, scopeId: String) async throws {
+    open class func adminScopesDelete(orgId: String, scopeId: String) async throws -> MessageResponse {
         return try await adminScopesDeleteWithRequestBuilder(orgId: orgId, scopeId: scopeId).execute().body
     }
 
@@ -363,9 +363,9 @@ open class AdminPermissionsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter scopeId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<MessageResponse> 
      */
-    open class func adminScopesDeleteWithRequestBuilder(orgId: String, scopeId: String) -> RequestBuilder<Void> {
+    open class func adminScopesDeleteWithRequestBuilder(orgId: String, scopeId: String) -> RequestBuilder<MessageResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/scopes/{scopeId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -384,7 +384,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
@@ -393,10 +393,10 @@ open class AdminPermissionsAPI {
      List OAuth scopes
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AdminScopesListResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminScopesList(orgId: String) async throws {
+    open class func adminScopesList(orgId: String) async throws -> AdminScopesListResponse {
         return try await adminScopesListWithRequestBuilder(orgId: orgId).execute().body
     }
 
@@ -410,9 +410,9 @@ open class AdminPermissionsAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AdminScopesListResponse> 
      */
-    open class func adminScopesListWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func adminScopesListWithRequestBuilder(orgId: String) -> RequestBuilder<AdminScopesListResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/scopes"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -428,7 +428,7 @@ open class AdminPermissionsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminScopesListResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

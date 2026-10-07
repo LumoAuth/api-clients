@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **Status** | Pointer to **string** |  | [optional] 
 **ScopesSupported** | Pointer to **[]string** |  | [optional] 
 **RequirePkce** | Pointer to **bool** |  | [optional] 
+**RequireDpop** | Pointer to **bool** |  | [optional] 
 **TokenLifetime** | Pointer to **int32** |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
 **UpdatedAt** | Pointer to **time.Time** |  | [optional] 
@@ -313,6 +314,31 @@ SetRequirePkce sets RequirePkce field to given value.
 `func (o *GetServerResponse) HasRequirePkce() bool`
 
 HasRequirePkce returns a boolean if a field has been set.
+
+### GetRequireDpop
+
+`func (o *GetServerResponse) GetRequireDpop() bool`
+
+GetRequireDpop returns the RequireDpop field if non-nil, zero value otherwise.
+
+### GetRequireDpopOk
+
+`func (o *GetServerResponse) GetRequireDpopOk() (*bool, bool)`
+
+GetRequireDpopOk returns a tuple with the RequireDpop field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRequireDpop
+
+`func (o *GetServerResponse) SetRequireDpop(v bool)`
+
+SetRequireDpop sets RequireDpop field to given value.
+
+### HasRequireDpop
+
+`func (o *GetServerResponse) HasRequireDpop() bool`
+
+HasRequireDpop returns a boolean if a field has been set.
 
 ### GetTokenLifetime
 

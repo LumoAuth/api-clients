@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Reason** | Pointer to **string** | Optional denial reason. | [optional] 
+**Reason** | Pointer to **string** | Optional denial reason (internal; never shown to the agent). | [optional] 
+**AgentMessage** | Pointer to **string** | Optional message the agent MAY read on the status endpoint / callback. | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetReason sets Reason field to given value.
 `func (o *DenyRequestRequest) HasReason() bool`
 
 HasReason returns a boolean if a field has been set.
+
+### GetAgentMessage
+
+`func (o *DenyRequestRequest) GetAgentMessage() string`
+
+GetAgentMessage returns the AgentMessage field if non-nil, zero value otherwise.
+
+### GetAgentMessageOk
+
+`func (o *DenyRequestRequest) GetAgentMessageOk() (*string, bool)`
+
+GetAgentMessageOk returns a tuple with the AgentMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAgentMessage
+
+`func (o *DenyRequestRequest) SetAgentMessage(v string)`
+
+SetAgentMessage sets AgentMessage field to given value.
+
+### HasAgentMessage
+
+`func (o *DenyRequestRequest) HasAgentMessage() bool`
+
+HasAgentMessage returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

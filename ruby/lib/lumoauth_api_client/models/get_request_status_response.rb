@@ -29,8 +29,14 @@ module LumoAuthApiClient
     # Present when approved.
     attr_accessor :granted_ttl
 
-    # Present when denied.
-    attr_accessor :review_notes
+    # Present when decided: whether the reviewer left notes (the notes themselves are never returned).
+    attr_accessor :has_notes
+
+    # Present when decided: message the reviewer explicitly wrote for the agent.
+    attr_accessor :agent_message
+
+    # Present when pending: the on_behalf_of user must consent.
+    attr_accessor :delegation_consent_required
 
     # Present when pending.
     attr_accessor :expires_at
@@ -44,7 +50,9 @@ module LumoAuthApiClient
         :'task_id' => :'task_id',
         :'token_url' => :'token_url',
         :'granted_ttl' => :'granted_ttl',
-        :'review_notes' => :'review_notes',
+        :'has_notes' => :'has_notes',
+        :'agent_message' => :'agent_message',
+        :'delegation_consent_required' => :'delegation_consent_required',
         :'expires_at' => :'expires_at'
       }
     end
@@ -68,7 +76,9 @@ module LumoAuthApiClient
         :'task_id' => :'String',
         :'token_url' => :'String',
         :'granted_ttl' => :'Integer',
-        :'review_notes' => :'String',
+        :'has_notes' => :'Boolean',
+        :'agent_message' => :'String',
+        :'delegation_consent_required' => :'Boolean',
         :'expires_at' => :'Time'
       }
     end
@@ -76,6 +86,7 @@ module LumoAuthApiClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'agent_message',
       ])
     end
 
@@ -119,8 +130,16 @@ module LumoAuthApiClient
         self.granted_ttl = attributes[:'granted_ttl']
       end
 
-      if attributes.key?(:'review_notes')
-        self.review_notes = attributes[:'review_notes']
+      if attributes.key?(:'has_notes')
+        self.has_notes = attributes[:'has_notes']
+      end
+
+      if attributes.key?(:'agent_message')
+        self.agent_message = attributes[:'agent_message']
+      end
+
+      if attributes.key?(:'delegation_consent_required')
+        self.delegation_consent_required = attributes[:'delegation_consent_required']
       end
 
       if attributes.key?(:'expires_at')
@@ -154,7 +173,9 @@ module LumoAuthApiClient
           task_id == o.task_id &&
           token_url == o.token_url &&
           granted_ttl == o.granted_ttl &&
-          review_notes == o.review_notes &&
+          has_notes == o.has_notes &&
+          agent_message == o.agent_message &&
+          delegation_consent_required == o.delegation_consent_required &&
           expires_at == o.expires_at
     end
 
@@ -167,7 +188,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [request_id, status, risk_level, task_id, token_url, granted_ttl, review_notes, expires_at].hash
+      [request_id, status, risk_level, task_id, token_url, granted_ttl, has_notes, agent_message, delegation_consent_required, expires_at].hash
     end
 
     # Builds the object from hash

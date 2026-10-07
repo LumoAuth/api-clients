@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,31 +29,31 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Create a new attribute definition
+        /// Create an attribute definition
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AbacAttributesCreate(string orgId);
+        /// <returns>AbacAttributesCreateResponse</returns>
+        AbacAttributesCreateResponse AbacAttributesCreate(string orgId);
 
         /// <summary>
-        /// Create a new attribute definition
+        /// Create an attribute definition
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacAttributesCreateWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AbacAttributesCreateResponse</returns>
+        ApiResponse<AbacAttributesCreateResponse> AbacAttributesCreateWithHttpInfo(string orgId);
         /// <summary>
         /// Delete an attribute definition
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void AbacAttributesDelete(string orgId, string id);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AbacAttributesDelete(string orgId, string id);
 
         /// <summary>
         /// Delete an attribute definition
@@ -63,19 +64,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacAttributesDeleteWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AbacAttributesDeleteWithHttpInfo(string orgId, string id);
         /// <summary>
-        /// Get a single attribute definition
+        /// Get an attribute definition
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void AbacAttributesGet(string orgId, string id);
+        /// <returns>AbacAttributesGetResponse</returns>
+        AbacAttributesGetResponse AbacAttributesGet(string orgId, string id);
 
         /// <summary>
-        /// Get a single attribute definition
+        /// Get an attribute definition
         /// </summary>
         /// <remarks>
         /// 
@@ -83,52 +84,52 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacAttributesGetWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of AbacAttributesGetResponse</returns>
+        ApiResponse<AbacAttributesGetResponse> AbacAttributesGetWithHttpInfo(string orgId, string id);
         /// <summary>
-        /// List all attribute definitions
+        /// List attribute definitions
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AbacAttributesList(string orgId);
+        /// <returns>AbacAttributesListResponse</returns>
+        AbacAttributesListResponse AbacAttributesList(string orgId);
 
         /// <summary>
-        /// List all attribute definitions
+        /// List attribute definitions
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacAttributesListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AbacAttributesListResponse</returns>
+        ApiResponse<AbacAttributesListResponse> AbacAttributesListWithHttpInfo(string orgId);
         /// <summary>
-        /// Create a new ABAC policy
+        /// Create an ABAC policy
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AbacPoliciesCreate(string orgId);
+        /// <returns>AbacPoliciesCreateResponse</returns>
+        AbacPoliciesCreateResponse AbacPoliciesCreate(string orgId);
 
         /// <summary>
-        /// Create a new ABAC policy
+        /// Create an ABAC policy
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacPoliciesCreateWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AbacPoliciesCreateResponse</returns>
+        ApiResponse<AbacPoliciesCreateResponse> AbacPoliciesCreateWithHttpInfo(string orgId);
         /// <summary>
         /// Delete an ABAC policy
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void AbacPoliciesDelete(string orgId, string id);
+        /// <returns>MessageResponse</returns>
+        MessageResponse AbacPoliciesDelete(string orgId, string id);
 
         /// <summary>
         /// Delete an ABAC policy
@@ -139,19 +140,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacPoliciesDeleteWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of MessageResponse</returns>
+        ApiResponse<MessageResponse> AbacPoliciesDeleteWithHttpInfo(string orgId, string id);
         /// <summary>
-        /// Get a single ABAC policy
+        /// Get an ABAC policy
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void AbacPoliciesGet(string orgId, string id);
+        /// <returns>AbacPoliciesGetResponse</returns>
+        AbacPoliciesGetResponse AbacPoliciesGet(string orgId, string id);
 
         /// <summary>
-        /// Get a single ABAC policy
+        /// Get an ABAC policy
         /// </summary>
         /// <remarks>
         /// 
@@ -159,37 +160,37 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacPoliciesGetWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of AbacPoliciesGetResponse</returns>
+        ApiResponse<AbacPoliciesGetResponse> AbacPoliciesGetWithHttpInfo(string orgId, string id);
         /// <summary>
-        /// List all ABAC policies
+        /// List ABAC policies
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AbacPoliciesList(string orgId);
+        /// <returns>AbacPoliciesListResponse</returns>
+        AbacPoliciesListResponse AbacPoliciesList(string orgId);
 
         /// <summary>
-        /// List all ABAC policies
+        /// List ABAC policies
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacPoliciesListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AbacPoliciesListResponse</returns>
+        ApiResponse<AbacPoliciesListResponse> AbacPoliciesListWithHttpInfo(string orgId);
         /// <summary>
-        /// Toggle policy active status
+        /// Toggle a policy between active and inactive
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void AbacPoliciesToggle(string orgId, string id);
+        /// <returns>AbacPoliciesToggleResponse</returns>
+        AbacPoliciesToggleResponse AbacPoliciesToggle(string orgId, string id);
 
         /// <summary>
-        /// Toggle policy active status
+        /// Toggle a policy between active and inactive
         /// </summary>
         /// <remarks>
         /// 
@@ -197,16 +198,56 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AbacPoliciesToggleWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of AbacPoliciesToggleResponse</returns>
+        ApiResponse<AbacPoliciesToggleResponse> AbacPoliciesToggleWithHttpInfo(string orgId, string id);
+        /// <summary>
+        /// Partially update an attribute definition
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <returns>PutAbacAttributesUpdateResponse</returns>
+        PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(string orgId, string id);
+
+        /// <summary>
+        /// Partially update an attribute definition
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
+        ApiResponse<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id);
+        /// <summary>
+        /// Partially update an ABAC policy
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <returns>PutAbacPoliciesUpdateResponse</returns>
+        PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(string orgId, string id);
+
+        /// <summary>
+        /// Partially update an ABAC policy
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
+        ApiResponse<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id);
         /// <summary>
         /// Update an attribute definition
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void PatchAbacAttributesUpdate(string orgId, string id);
+        /// <returns>PutAbacAttributesUpdateResponse</returns>
+        PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(string orgId, string id);
 
         /// <summary>
         /// Update an attribute definition
@@ -217,16 +258,16 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
+        ApiResponse<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id);
         /// <summary>
         /// Update an ABAC policy
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        void PatchAbacPoliciesUpdate(string orgId, string id);
+        /// <returns>PutAbacPoliciesUpdateResponse</returns>
+        PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(string orgId, string id);
 
         /// <summary>
         /// Update an ABAC policy
@@ -237,48 +278,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id);
-        /// <summary>
-        /// Update an attribute definition
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        void PutAbacAttributesUpdate(string orgId, string id);
-
-        /// <summary>
-        /// Update an attribute definition
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id);
-        /// <summary>
-        /// Update an ABAC policy
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        void PutAbacPoliciesUpdate(string orgId, string id);
-
-        /// <summary>
-        /// Update an ABAC policy
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id);
+        /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
+        ApiResponse<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id);
         #endregion Synchronous Operations
     }
 
@@ -289,7 +290,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Create a new attribute definition
+        /// Create an attribute definition
         /// </summary>
         /// <remarks>
         /// 
@@ -297,11 +298,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacAttributesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacAttributesCreateResponse</returns>
+        System.Threading.Tasks.Task<AbacAttributesCreateResponse> AbacAttributesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a new attribute definition
+        /// Create an attribute definition
         /// </summary>
         /// <remarks>
         /// 
@@ -309,8 +310,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacAttributesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacAttributesCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacAttributesCreateResponse>> AbacAttributesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an attribute definition
         /// </summary>
@@ -321,8 +322,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacAttributesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AbacAttributesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete an attribute definition
@@ -334,10 +335,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacAttributesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AbacAttributesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get a single attribute definition
+        /// Get an attribute definition
         /// </summary>
         /// <remarks>
         /// 
@@ -346,11 +347,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacAttributesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacAttributesGetResponse</returns>
+        System.Threading.Tasks.Task<AbacAttributesGetResponse> AbacAttributesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a single attribute definition
+        /// Get an attribute definition
         /// </summary>
         /// <remarks>
         /// 
@@ -359,10 +360,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacAttributesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacAttributesGetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacAttributesGetResponse>> AbacAttributesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all attribute definitions
+        /// List attribute definitions
         /// </summary>
         /// <remarks>
         /// 
@@ -370,11 +371,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacAttributesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacAttributesListResponse</returns>
+        System.Threading.Tasks.Task<AbacAttributesListResponse> AbacAttributesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all attribute definitions
+        /// List attribute definitions
         /// </summary>
         /// <remarks>
         /// 
@@ -382,10 +383,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacAttributesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacAttributesListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacAttributesListResponse>> AbacAttributesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Create a new ABAC policy
+        /// Create an ABAC policy
         /// </summary>
         /// <remarks>
         /// 
@@ -393,11 +394,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacPoliciesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacPoliciesCreateResponse</returns>
+        System.Threading.Tasks.Task<AbacPoliciesCreateResponse> AbacPoliciesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a new ABAC policy
+        /// Create an ABAC policy
         /// </summary>
         /// <remarks>
         /// 
@@ -405,8 +406,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacPoliciesCreateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesCreateResponse>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Delete an ABAC policy
         /// </summary>
@@ -417,8 +418,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacPoliciesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of MessageResponse</returns>
+        System.Threading.Tasks.Task<MessageResponse> AbacPoliciesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Delete an ABAC policy
@@ -430,10 +431,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacPoliciesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<MessageResponse>> AbacPoliciesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get a single ABAC policy
+        /// Get an ABAC policy
         /// </summary>
         /// <remarks>
         /// 
@@ -442,11 +443,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacPoliciesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacPoliciesGetResponse</returns>
+        System.Threading.Tasks.Task<AbacPoliciesGetResponse> AbacPoliciesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a single ABAC policy
+        /// Get an ABAC policy
         /// </summary>
         /// <remarks>
         /// 
@@ -455,10 +456,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacPoliciesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacPoliciesGetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesGetResponse>> AbacPoliciesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List all ABAC policies
+        /// List ABAC policies
         /// </summary>
         /// <remarks>
         /// 
@@ -466,11 +467,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacPoliciesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacPoliciesListResponse</returns>
+        System.Threading.Tasks.Task<AbacPoliciesListResponse> AbacPoliciesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List all ABAC policies
+        /// List ABAC policies
         /// </summary>
         /// <remarks>
         /// 
@@ -478,10 +479,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacPoliciesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacPoliciesListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesListResponse>> AbacPoliciesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Toggle policy active status
+        /// Toggle a policy between active and inactive
         /// </summary>
         /// <remarks>
         /// 
@@ -490,11 +491,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AbacPoliciesToggleAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AbacPoliciesToggleResponse</returns>
+        System.Threading.Tasks.Task<AbacPoliciesToggleResponse> AbacPoliciesToggleAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Toggle policy active status
+        /// Toggle a policy between active and inactive
         /// </summary>
         /// <remarks>
         /// 
@@ -503,8 +504,58 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AbacPoliciesToggleWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AbacPoliciesToggleResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AbacPoliciesToggleResponse>> AbacPoliciesToggleWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Partially update an attribute definition
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
+        System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Partially update an attribute definition
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PutAbacAttributesUpdateResponse>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Partially update an ABAC policy
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
+        System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Partially update an ABAC policy
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PutAbacPoliciesUpdateResponse>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an attribute definition
         /// </summary>
@@ -515,8 +566,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PatchAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
+        System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an attribute definition
@@ -528,8 +579,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PutAbacAttributesUpdateResponse>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update an ABAC policy
         /// </summary>
@@ -540,8 +591,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PatchAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
+        System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update an ABAC policy
@@ -553,58 +604,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
-        /// <summary>
-        /// Update an attribute definition
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PutAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Update an attribute definition
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
-        /// <summary>
-        /// Update an ABAC policy
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PutAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Update an ABAC policy
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="id"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PutAbacPoliciesUpdateResponse>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -819,23 +820,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new attribute definition 
+        /// Create an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AbacAttributesCreate(string orgId)
+        /// <returns>AbacAttributesCreateResponse</returns>
+        public AbacAttributesCreateResponse AbacAttributesCreate(string orgId)
         {
-            AbacAttributesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> localVarResponse = AbacAttributesCreateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new attribute definition 
+        /// Create an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacAttributesCreateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AbacAttributesCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> AbacAttributesCreateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -848,6 +850,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -871,7 +874,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AbacAttributesCreateResponse>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -883,25 +886,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new attribute definition 
+        /// Create an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacAttributesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacAttributesCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AbacAttributesCreateResponse> AbacAttributesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacAttributesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse> localVarResponse = await AbacAttributesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new attribute definition 
+        /// Create an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacAttributesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacAttributesCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesCreateResponse>> AbacAttributesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -915,6 +919,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -940,7 +945,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AbacAttributesCreateResponse>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -957,10 +962,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void AbacAttributesDelete(string orgId, string id)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AbacAttributesDelete(string orgId, string id)
         {
-            AbacAttributesDeleteWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AbacAttributesDeleteWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -969,8 +975,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacAttributesDeleteWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AbacAttributesDeleteWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -987,6 +993,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1011,7 +1018,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1029,10 +1036,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacAttributesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AbacAttributesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacAttributesDeleteWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AbacAttributesDeleteWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1042,8 +1050,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacAttributesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AbacAttributesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1061,6 +1069,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1087,7 +1096,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1099,25 +1108,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single attribute definition 
+        /// Get an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void AbacAttributesGet(string orgId, string id)
+        /// <returns>AbacAttributesGetResponse</returns>
+        public AbacAttributesGetResponse AbacAttributesGet(string orgId, string id)
         {
-            AbacAttributesGetWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesGetResponse> localVarResponse = AbacAttributesGetWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single attribute definition 
+        /// Get an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacAttributesGetWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of AbacAttributesGetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesGetResponse> AbacAttributesGetWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1134,6 +1144,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1158,7 +1169,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AbacAttributesGetResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1170,27 +1181,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single attribute definition 
+        /// Get an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacAttributesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacAttributesGetResponse</returns>
+        public async System.Threading.Tasks.Task<AbacAttributesGetResponse> AbacAttributesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacAttributesGetWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesGetResponse> localVarResponse = await AbacAttributesGetWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single attribute definition 
+        /// Get an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacAttributesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacAttributesGetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesGetResponse>> AbacAttributesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1208,6 +1220,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1234,7 +1247,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AbacAttributesGetResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1246,23 +1259,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all attribute definitions 
+        /// List attribute definitions 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AbacAttributesList(string orgId)
+        /// <returns>AbacAttributesListResponse</returns>
+        public AbacAttributesListResponse AbacAttributesList(string orgId)
         {
-            AbacAttributesListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesListResponse> localVarResponse = AbacAttributesListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all attribute definitions 
+        /// List attribute definitions 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacAttributesListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AbacAttributesListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesListResponse> AbacAttributesListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1275,6 +1289,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1298,7 +1313,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AbacAttributesListResponse>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1310,25 +1325,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all attribute definitions 
+        /// List attribute definitions 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacAttributesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacAttributesListResponse</returns>
+        public async System.Threading.Tasks.Task<AbacAttributesListResponse> AbacAttributesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacAttributesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesListResponse> localVarResponse = await AbacAttributesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all attribute definitions 
+        /// List attribute definitions 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacAttributesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacAttributesListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacAttributesListResponse>> AbacAttributesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1342,6 +1358,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1367,7 +1384,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AbacAttributesListResponse>("/orgs/{orgId}/api/v1/abac/attributes", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1379,23 +1396,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new ABAC policy 
+        /// Create an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AbacPoliciesCreate(string orgId)
+        /// <returns>AbacPoliciesCreateResponse</returns>
+        public AbacPoliciesCreateResponse AbacPoliciesCreate(string orgId)
         {
-            AbacPoliciesCreateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> localVarResponse = AbacPoliciesCreateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new ABAC policy 
+        /// Create an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacPoliciesCreateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AbacPoliciesCreateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> AbacPoliciesCreateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1408,6 +1426,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1431,7 +1450,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AbacPoliciesCreateResponse>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1443,25 +1462,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Create a new ABAC policy 
+        /// Create an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacPoliciesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacPoliciesCreateResponse</returns>
+        public async System.Threading.Tasks.Task<AbacPoliciesCreateResponse> AbacPoliciesCreateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacPoliciesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse> localVarResponse = await AbacPoliciesCreateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Create a new ABAC policy 
+        /// Create an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacPoliciesCreateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesCreateResponse>> AbacPoliciesCreateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1475,6 +1495,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1500,7 +1521,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AbacPoliciesCreateResponse>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1517,10 +1538,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void AbacPoliciesDelete(string orgId, string id)
+        /// <returns>MessageResponse</returns>
+        public MessageResponse AbacPoliciesDelete(string orgId, string id)
         {
-            AbacPoliciesDeleteWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = AbacPoliciesDeleteWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1529,8 +1551,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacPoliciesDeleteWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of MessageResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> AbacPoliciesDeleteWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1547,6 +1569,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1571,7 +1594,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<MessageResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1589,10 +1612,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacPoliciesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of MessageResponse</returns>
+        public async System.Threading.Tasks.Task<MessageResponse> AbacPoliciesDeleteAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacPoliciesDeleteWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<MessageResponse> localVarResponse = await AbacPoliciesDeleteWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1602,8 +1626,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacPoliciesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (MessageResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<MessageResponse>> AbacPoliciesDeleteWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1621,6 +1645,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1647,7 +1672,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<MessageResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1659,25 +1684,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single ABAC policy 
+        /// Get an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void AbacPoliciesGet(string orgId, string id)
+        /// <returns>AbacPoliciesGetResponse</returns>
+        public AbacPoliciesGetResponse AbacPoliciesGet(string orgId, string id)
         {
-            AbacPoliciesGetWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesGetResponse> localVarResponse = AbacPoliciesGetWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single ABAC policy 
+        /// Get an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacPoliciesGetWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of AbacPoliciesGetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesGetResponse> AbacPoliciesGetWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1694,6 +1720,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1718,7 +1745,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AbacPoliciesGetResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1730,27 +1757,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single ABAC policy 
+        /// Get an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacPoliciesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacPoliciesGetResponse</returns>
+        public async System.Threading.Tasks.Task<AbacPoliciesGetResponse> AbacPoliciesGetAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacPoliciesGetWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesGetResponse> localVarResponse = await AbacPoliciesGetWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single ABAC policy 
+        /// Get an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacPoliciesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacPoliciesGetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesGetResponse>> AbacPoliciesGetWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1768,6 +1796,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1794,7 +1823,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AbacPoliciesGetResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1806,23 +1835,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all ABAC policies 
+        /// List ABAC policies 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AbacPoliciesList(string orgId)
+        /// <returns>AbacPoliciesListResponse</returns>
+        public AbacPoliciesListResponse AbacPoliciesList(string orgId)
         {
-            AbacPoliciesListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> localVarResponse = AbacPoliciesListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all ABAC policies 
+        /// List ABAC policies 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacPoliciesListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AbacPoliciesListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> AbacPoliciesListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1835,6 +1865,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1858,7 +1889,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AbacPoliciesListResponse>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1870,25 +1901,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List all ABAC policies 
+        /// List ABAC policies 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacPoliciesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacPoliciesListResponse</returns>
+        public async System.Threading.Tasks.Task<AbacPoliciesListResponse> AbacPoliciesListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacPoliciesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse> localVarResponse = await AbacPoliciesListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List all ABAC policies 
+        /// List ABAC policies 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacPoliciesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacPoliciesListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesListResponse>> AbacPoliciesListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1902,6 +1934,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1927,7 +1960,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AbacPoliciesListResponse>("/orgs/{orgId}/api/v1/abac/policies", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1939,25 +1972,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Toggle policy active status 
+        /// Toggle a policy between active and inactive 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void AbacPoliciesToggle(string orgId, string id)
+        /// <returns>AbacPoliciesToggleResponse</returns>
+        public AbacPoliciesToggleResponse AbacPoliciesToggle(string orgId, string id)
         {
-            AbacPoliciesToggleWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesToggleResponse> localVarResponse = AbacPoliciesToggleWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Toggle policy active status 
+        /// Toggle a policy between active and inactive 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AbacPoliciesToggleWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of AbacPoliciesToggleResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesToggleResponse> AbacPoliciesToggleWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1974,6 +2008,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1998,7 +2033,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}/toggle", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AbacPoliciesToggleResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}/toggle", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2010,27 +2045,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Toggle policy active status 
+        /// Toggle a policy between active and inactive 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AbacPoliciesToggleAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AbacPoliciesToggleResponse</returns>
+        public async System.Threading.Tasks.Task<AbacPoliciesToggleResponse> AbacPoliciesToggleAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AbacPoliciesToggleWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesToggleResponse> localVarResponse = await AbacPoliciesToggleWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Toggle policy active status 
+        /// Toggle a policy between active and inactive 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AbacPoliciesToggleWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AbacPoliciesToggleResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AbacPoliciesToggleResponse>> AbacPoliciesToggleWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2048,6 +2084,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2074,7 +2111,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}/toggle", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AbacPoliciesToggleResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}/toggle", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2086,25 +2123,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an attribute definition 
+        /// Partially update an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void PatchAbacAttributesUpdate(string orgId, string id)
+        /// <returns>PutAbacAttributesUpdateResponse</returns>
+        public PutAbacAttributesUpdateResponse PatchAbacAttributesUpdate(string orgId, string id)
         {
-            PatchAbacAttributesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = PatchAbacAttributesUpdateWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an attribute definition 
+        /// Partially update an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2121,6 +2159,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2145,7 +2184,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<PutAbacAttributesUpdateResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2157,27 +2196,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an attribute definition 
+        /// Partially update an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PatchAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
+        public async System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PatchAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PatchAbacAttributesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = await PatchAbacAttributesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an attribute definition 
+        /// Partially update an attribute definition 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse>> PatchAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2195,6 +2235,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2221,7 +2262,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<PutAbacAttributesUpdateResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2233,25 +2274,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an ABAC policy 
+        /// Partially update an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void PatchAbacPoliciesUpdate(string orgId, string id)
+        /// <returns>PutAbacPoliciesUpdateResponse</returns>
+        public PutAbacPoliciesUpdateResponse PatchAbacPoliciesUpdate(string orgId, string id)
         {
-            PatchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = PatchAbacPoliciesUpdateWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an ABAC policy 
+        /// Partially update an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2268,6 +2310,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2292,7 +2335,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<PutAbacPoliciesUpdateResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2304,27 +2347,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Update an ABAC policy 
+        /// Partially update an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PatchAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
+        public async System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PatchAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PatchAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = await PatchAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Update an ABAC policy 
+        /// Partially update an ABAC policy 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse>> PatchAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2342,6 +2386,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2368,7 +2413,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<PutAbacPoliciesUpdateResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2385,10 +2430,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void PutAbacAttributesUpdate(string orgId, string id)
+        /// <returns>PutAbacAttributesUpdateResponse</returns>
+        public PutAbacAttributesUpdateResponse PutAbacAttributesUpdate(string orgId, string id)
         {
-            PutAbacAttributesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = PutAbacAttributesUpdateWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2397,8 +2443,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of PutAbacAttributesUpdateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2415,6 +2461,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2439,7 +2486,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<PutAbacAttributesUpdateResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2457,10 +2504,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PutAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of PutAbacAttributesUpdateResponse</returns>
+        public async System.Threading.Tasks.Task<PutAbacAttributesUpdateResponse> PutAbacAttributesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PutAbacAttributesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse> localVarResponse = await PutAbacAttributesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2470,8 +2518,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (PutAbacAttributesUpdateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacAttributesUpdateResponse>> PutAbacAttributesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2489,6 +2537,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2515,7 +2564,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<PutAbacAttributesUpdateResponse>("/orgs/{orgId}/api/v1/abac/attributes/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2532,10 +2581,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns></returns>
-        public void PutAbacPoliciesUpdate(string orgId, string id)
+        /// <returns>PutAbacPoliciesUpdateResponse</returns>
+        public PutAbacPoliciesUpdateResponse PutAbacPoliciesUpdate(string orgId, string id)
         {
-            PutAbacPoliciesUpdateWithHttpInfo(orgId, id);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = PutAbacPoliciesUpdateWithHttpInfo(orgId, id);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2544,8 +2594,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="id"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id)
+        /// <returns>ApiResponse of PutAbacPoliciesUpdateResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateWithHttpInfo(string orgId, string id)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2562,6 +2612,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2586,7 +2637,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<PutAbacPoliciesUpdateResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2604,10 +2655,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PutAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of PutAbacPoliciesUpdateResponse</returns>
+        public async System.Threading.Tasks.Task<PutAbacPoliciesUpdateResponse> PutAbacPoliciesUpdateAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PutAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse> localVarResponse = await PutAbacPoliciesUpdateWithHttpInfoAsync(orgId, id, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2617,8 +2669,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="id"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (PutAbacPoliciesUpdateResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<PutAbacPoliciesUpdateResponse>> PutAbacPoliciesUpdateWithHttpInfoAsync(string orgId, string id, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2636,6 +2688,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2662,7 +2715,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<PutAbacPoliciesUpdateResponse>("/orgs/{orgId}/api/v1/abac/policies/{id}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

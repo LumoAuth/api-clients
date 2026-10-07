@@ -4,38 +4,43 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
-| [**add_user_group**](AdminUsersApi.md#add_user_group) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups |  |
-| [**add_user_permission**](AdminUsersApi.md#add_user_permission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions |  |
-| [**add_user_role**](AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles |  |
-| [**block_user**](AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block |  |
-| [**create_user**](AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users |  |
-| [**delete_user**](AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**get_user**](AdminUsersApi.md#get_user) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**list_user_groups**](AdminUsersApi.md#list_user_groups) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/groups |  |
-| [**list_user_permissions**](AdminUsersApi.md#list_user_permissions) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions |  |
-| [**list_user_roles**](AdminUsersApi.md#list_user_roles) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/roles |  |
-| [**list_users**](AdminUsersApi.md#list_users) | **GET** /orgs/{orgId}/api/v1/admin/users |  |
-| [**mark_user_verified**](AdminUsersApi.md#mark_user_verified) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified |  |
-| [**patch_user**](AdminUsersApi.md#patch_user) | **PATCH** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**remove_user_group**](AdminUsersApi.md#remove_user_group) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId} |  |
-| [**remove_user_permission**](AdminUsersApi.md#remove_user_permission) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId} |  |
-| [**remove_user_role**](AdminUsersApi.md#remove_user_role) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId} |  |
-| [**reset_user_mfa**](AdminUsersApi.md#reset_user_mfa) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset |  |
-| [**send_user_verification_email**](AdminUsersApi.md#send_user_verification_email) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/verify-email |  |
-| [**set_user_password**](AdminUsersApi.md#set_user_password) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/password |  |
-| [**set_user_password_post**](AdminUsersApi.md#set_user_password_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password |  |
-| [**trigger_user_password_reset**](AdminUsersApi.md#trigger_user_password_reset) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password-reset |  |
-| [**unblock_user**](AdminUsersApi.md#unblock_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/unblock |  |
-| [**update_user**](AdminUsersApi.md#update_user) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**update_user_groups**](AdminUsersApi.md#update_user_groups) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/groups |  |
-| [**update_user_roles**](AdminUsersApi.md#update_user_roles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles |  |
+| [**add_user_group**](AdminUsersApi.md#add_user_group) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Add a user to a group |
+| [**add_user_permission**](AdminUsersApi.md#add_user_permission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | Assign a permission to a user |
+| [**add_user_role**](AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user |
+| [**admin_identities_legacy_saml_relink**](AdminUsersApi.md#admin_identities_legacy_saml_relink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP |
+| [**admin_identities_legacy_saml_report**](AdminUsersApi.md#admin_identities_legacy_saml_report) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report |
+| [**admin_identities_link**](AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user |
+| [**admin_identities_list**](AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
+| [**admin_identities_unlink**](AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity |
+| [**block_user**](AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
+| [**create_user**](AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
+| [**delete_user**](AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
+| [**get_user**](AdminUsersApi.md#get_user) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId} | Get a user |
+| [**list_user_groups**](AdminUsersApi.md#list_user_groups) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | List a user&#39;s groups |
+| [**list_user_permissions**](AdminUsersApi.md#list_user_permissions) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | List a user&#39;s direct permissions |
+| [**list_user_roles**](AdminUsersApi.md#list_user_roles) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | List a user&#39;s roles |
+| [**list_users**](AdminUsersApi.md#list_users) | **GET** /orgs/{orgId}/api/v1/admin/users | List users |
+| [**mark_user_verified**](AdminUsersApi.md#mark_user_verified) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified | Mark a user&#39;s email as verified |
+| [**patch_user**](AdminUsersApi.md#patch_user) | **PATCH** /orgs/{orgId}/api/v1/admin/users/{userId} | Update a user |
+| [**remove_user_group**](AdminUsersApi.md#remove_user_group) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId} | Remove a user from a group |
+| [**remove_user_permission**](AdminUsersApi.md#remove_user_permission) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId} | Remove a permission from a user |
+| [**remove_user_role**](AdminUsersApi.md#remove_user_role) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId} | Remove a role from a user |
+| [**reset_user_mfa**](AdminUsersApi.md#reset_user_mfa) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset | Reset MFA (removed) |
+| [**send_user_verification_email**](AdminUsersApi.md#send_user_verification_email) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/verify-email | Send a verification email |
+| [**set_user_password**](AdminUsersApi.md#set_user_password) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/password | Set a user&#39;s password |
+| [**set_user_password_post**](AdminUsersApi.md#set_user_password_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password | Set a user&#39;s password |
+| [**trigger_user_password_reset**](AdminUsersApi.md#trigger_user_password_reset) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password-reset | Send a password reset email |
+| [**unblock_user**](AdminUsersApi.md#unblock_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/unblock | Unblock a user |
+| [**update_user**](AdminUsersApi.md#update_user) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId} | Update a user |
+| [**update_user_groups**](AdminUsersApi.md#update_user_groups) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Replace a user&#39;s groups |
+| [**update_user_roles**](AdminUsersApi.md#update_user_roles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Replace a user&#39;s roles |
 
 
 ## add_user_group
 
-> add_user_group(org_id, user_id)
+> <AddUserGroupResponse> add_user_group(org_id, user_id)
 
-
+Add a user to a group
 
 ### Examples
 
@@ -58,8 +63,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.add_user_group(org_id, user_id)
+  # Add a user to a group
+  result = api_instance.add_user_group(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_group: #{e}"
 end
@@ -67,17 +73,17 @@ end
 
 #### Using the add_user_group_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> add_user_group_with_http_info(org_id, user_id)
+> <Array(<AddUserGroupResponse>, Integer, Hash)> add_user_group_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Add a user to a group
   data, status_code, headers = api_instance.add_user_group_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AddUserGroupResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_group_with_http_info: #{e}"
 end
@@ -92,7 +98,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AddUserGroupResponse**](AddUserGroupResponse.md)
 
 ### Authorization
 
@@ -101,14 +107,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## add_user_permission
 
-> add_user_permission(org_id, user_id)
+> <AddUserPermissionResponse> add_user_permission(org_id, user_id)
 
-
+Assign a permission to a user
 
 ### Examples
 
@@ -131,8 +137,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.add_user_permission(org_id, user_id)
+  # Assign a permission to a user
+  result = api_instance.add_user_permission(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_permission: #{e}"
 end
@@ -140,17 +147,17 @@ end
 
 #### Using the add_user_permission_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> add_user_permission_with_http_info(org_id, user_id)
+> <Array(<AddUserPermissionResponse>, Integer, Hash)> add_user_permission_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Assign a permission to a user
   data, status_code, headers = api_instance.add_user_permission_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AddUserPermissionResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_permission_with_http_info: #{e}"
 end
@@ -165,7 +172,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AddUserPermissionResponse**](AddUserPermissionResponse.md)
 
 ### Authorization
 
@@ -174,14 +181,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## add_user_role
 
-> add_user_role(org_id, user_id)
+> <AddUserRoleResponse> add_user_role(org_id, user_id)
 
-
+Assign a role to a user
 
 ### Examples
 
@@ -204,8 +211,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.add_user_role(org_id, user_id)
+  # Assign a role to a user
+  result = api_instance.add_user_role(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_role: #{e}"
 end
@@ -213,17 +221,17 @@ end
 
 #### Using the add_user_role_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> add_user_role_with_http_info(org_id, user_id)
+> <Array(<AddUserRoleResponse>, Integer, Hash)> add_user_role_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Assign a role to a user
   data, status_code, headers = api_instance.add_user_role_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AddUserRoleResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->add_user_role_with_http_info: #{e}"
 end
@@ -238,7 +246,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AddUserRoleResponse**](AddUserRoleResponse.md)
 
 ### Authorization
 
@@ -247,14 +255,248 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
-## block_user
+## admin_identities_legacy_saml_relink
 
-> block_user(org_id, user_id)
+> <AdminIdentitiesLegacySamlRelinkResponse> admin_identities_legacy_saml_relink(org_id, admin_identities_legacy_saml_relink_request)
+
+Relink legacy SAML users to an IdP
+
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminUsersApi.new
+org_id = 'org_id_example' # String | 
+admin_identities_legacy_saml_relink_request = LumoAuthApiClient::AdminIdentitiesLegacySamlRelinkRequest.new({idp_id: 37}) # AdminIdentitiesLegacySamlRelinkRequest | 
+
+begin
+  # Relink legacy SAML users to an IdP
+  result = api_instance.admin_identities_legacy_saml_relink(org_id, admin_identities_legacy_saml_relink_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_legacy_saml_relink: #{e}"
+end
+```
+
+#### Using the admin_identities_legacy_saml_relink_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminIdentitiesLegacySamlRelinkResponse>, Integer, Hash)> admin_identities_legacy_saml_relink_with_http_info(org_id, admin_identities_legacy_saml_relink_request)
+
+```ruby
+begin
+  # Relink legacy SAML users to an IdP
+  data, status_code, headers = api_instance.admin_identities_legacy_saml_relink_with_http_info(org_id, admin_identities_legacy_saml_relink_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminIdentitiesLegacySamlRelinkResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_legacy_saml_relink_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **admin_identities_legacy_saml_relink_request** | [**AdminIdentitiesLegacySamlRelinkRequest**](AdminIdentitiesLegacySamlRelinkRequest.md) |  |  |
+
+### Return type
+
+[**AdminIdentitiesLegacySamlRelinkResponse**](AdminIdentitiesLegacySamlRelinkResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
+## admin_identities_legacy_saml_report
+
+> <AdminIdentitiesLegacySamlReportResponse> admin_identities_legacy_saml_report(org_id, opts)
+
+Legacy SAML bindings report
+
+Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminUsersApi.new
+org_id = 'org_id_example' # String | 
+opts = {
+  idp_id: 56 # Integer | 
+}
+
+begin
+  # Legacy SAML bindings report
+  result = api_instance.admin_identities_legacy_saml_report(org_id, opts)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_legacy_saml_report: #{e}"
+end
+```
+
+#### Using the admin_identities_legacy_saml_report_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminIdentitiesLegacySamlReportResponse>, Integer, Hash)> admin_identities_legacy_saml_report_with_http_info(org_id, opts)
+
+```ruby
+begin
+  # Legacy SAML bindings report
+  data, status_code, headers = api_instance.admin_identities_legacy_saml_report_with_http_info(org_id, opts)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminIdentitiesLegacySamlReportResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_legacy_saml_report_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **idp_id** | **Integer** |  | [optional] |
+
+### Return type
+
+[**AdminIdentitiesLegacySamlReportResponse**](AdminIdentitiesLegacySamlReportResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_identities_link
+
+> <AdminAgentsGetResponse> admin_identities_link(org_id, user_id, admin_identities_link_request)
+
+Link a SAML or LDAP identity to a user
+
+Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminUsersApi.new
+org_id = 'org_id_example' # String | 
+user_id = 'user_id_example' # String | 
+admin_identities_link_request = LumoAuthApiClient::AdminIdentitiesLinkRequest.new({type: 'saml'}) # AdminIdentitiesLinkRequest | 
+
+begin
+  # Link a SAML or LDAP identity to a user
+  result = api_instance.admin_identities_link(org_id, user_id, admin_identities_link_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_link: #{e}"
+end
+```
+
+#### Using the admin_identities_link_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminAgentsGetResponse>, Integer, Hash)> admin_identities_link_with_http_info(org_id, user_id, admin_identities_link_request)
+
+```ruby
+begin
+  # Link a SAML or LDAP identity to a user
+  data, status_code, headers = api_instance.admin_identities_link_with_http_info(org_id, user_id, admin_identities_link_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminAgentsGetResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_link_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **user_id** | **String** |  |  |
+| **admin_identities_link_request** | [**AdminIdentitiesLinkRequest**](AdminIdentitiesLinkRequest.md) |  |  |
+
+### Return type
+
+[**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+
+## admin_identities_list
+
+> <AdminIdentitiesListResponse> admin_identities_list(org_id, user_id)
+
+List a user's federated identity links
+
+SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
 
 ### Examples
 
@@ -277,8 +519,161 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.block_user(org_id, user_id)
+  # List a user's federated identity links
+  result = api_instance.admin_identities_list(org_id, user_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_list: #{e}"
+end
+```
+
+#### Using the admin_identities_list_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminIdentitiesListResponse>, Integer, Hash)> admin_identities_list_with_http_info(org_id, user_id)
+
+```ruby
+begin
+  # List a user's federated identity links
+  data, status_code, headers = api_instance.admin_identities_list_with_http_info(org_id, user_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminIdentitiesListResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_list_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **user_id** | **String** |  |  |
+
+### Return type
+
+[**AdminIdentitiesListResponse**](AdminIdentitiesListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## admin_identities_unlink
+
+> <AdminAgentsGetResponse> admin_identities_unlink(type, org_id, user_id)
+
+Unlink a user's SAML, LDAP or social identity
+
+Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminUsersApi.new
+type = 'saml' # String | 
+org_id = 'org_id_example' # String | 
+user_id = 'user_id_example' # String | 
+
+begin
+  # Unlink a user's SAML, LDAP or social identity
+  result = api_instance.admin_identities_unlink(type, org_id, user_id)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_unlink: #{e}"
+end
+```
+
+#### Using the admin_identities_unlink_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminAgentsGetResponse>, Integer, Hash)> admin_identities_unlink_with_http_info(type, org_id, user_id)
+
+```ruby
+begin
+  # Unlink a user's SAML, LDAP or social identity
+  data, status_code, headers = api_instance.admin_identities_unlink_with_http_info(type, org_id, user_id)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminAgentsGetResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminUsersApi->admin_identities_unlink_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **type** | **String** |  |  |
+| **org_id** | **String** |  |  |
+| **user_id** | **String** |  |  |
+
+### Return type
+
+[**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## block_user
+
+> <BlockUserResponse> block_user(org_id, user_id)
+
+Block a user
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminUsersApi.new
+org_id = 'org_id_example' # String | 
+user_id = 'user_id_example' # String | 
+
+begin
+  # Block a user
+  result = api_instance.block_user(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->block_user: #{e}"
 end
@@ -286,17 +681,17 @@ end
 
 #### Using the block_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> block_user_with_http_info(org_id, user_id)
+> <Array(<BlockUserResponse>, Integer, Hash)> block_user_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Block a user
   data, status_code, headers = api_instance.block_user_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <BlockUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->block_user_with_http_info: #{e}"
 end
@@ -311,7 +706,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**BlockUserResponse**](BlockUserResponse.md)
 
 ### Authorization
 
@@ -320,14 +715,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## create_user
 
-> create_user(org_id)
+> <CreateUserResponse> create_user(org_id)
 
-
+Create a user
 
 ### Examples
 
@@ -349,8 +744,9 @@ api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.create_user(org_id)
+  # Create a user
+  result = api_instance.create_user(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->create_user: #{e}"
 end
@@ -358,17 +754,17 @@ end
 
 #### Using the create_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> create_user_with_http_info(org_id)
+> <Array(<CreateUserResponse>, Integer, Hash)> create_user_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # Create a user
   data, status_code, headers = api_instance.create_user_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <CreateUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->create_user_with_http_info: #{e}"
 end
@@ -382,7 +778,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**CreateUserResponse**](CreateUserResponse.md)
 
 ### Authorization
 
@@ -391,14 +787,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## delete_user
 
-> delete_user(org_id, user_id)
+> <DeleteUserResponse> delete_user(org_id, user_id)
 
-
+Delete a user
 
 ### Examples
 
@@ -421,8 +817,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.delete_user(org_id, user_id)
+  # Delete a user
+  result = api_instance.delete_user(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->delete_user: #{e}"
 end
@@ -430,17 +827,17 @@ end
 
 #### Using the delete_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> delete_user_with_http_info(org_id, user_id)
+> <Array(<DeleteUserResponse>, Integer, Hash)> delete_user_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Delete a user
   data, status_code, headers = api_instance.delete_user_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <DeleteUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->delete_user_with_http_info: #{e}"
 end
@@ -455,7 +852,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**DeleteUserResponse**](DeleteUserResponse.md)
 
 ### Authorization
 
@@ -464,14 +861,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## get_user
 
-> get_user(org_id, user_id)
+> <GetUserResponse> get_user(org_id, user_id)
 
-
+Get a user
 
 ### Examples
 
@@ -494,8 +891,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.get_user(org_id, user_id)
+  # Get a user
+  result = api_instance.get_user(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->get_user: #{e}"
 end
@@ -503,17 +901,17 @@ end
 
 #### Using the get_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> get_user_with_http_info(org_id, user_id)
+> <Array(<GetUserResponse>, Integer, Hash)> get_user_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Get a user
   data, status_code, headers = api_instance.get_user_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <GetUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->get_user_with_http_info: #{e}"
 end
@@ -528,7 +926,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**GetUserResponse**](GetUserResponse.md)
 
 ### Authorization
 
@@ -537,14 +935,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## list_user_groups
 
-> list_user_groups(org_id, user_id)
+> <AdminGroupsGroupsGetRolesResponse> list_user_groups(org_id, user_id)
 
-
+List a user's groups
 
 ### Examples
 
@@ -567,8 +965,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.list_user_groups(org_id, user_id)
+  # List a user's groups
+  result = api_instance.list_user_groups(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_user_groups: #{e}"
 end
@@ -576,17 +975,17 @@ end
 
 #### Using the list_user_groups_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> list_user_groups_with_http_info(org_id, user_id)
+> <Array(<AdminGroupsGroupsGetRolesResponse>, Integer, Hash)> list_user_groups_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # List a user's groups
   data, status_code, headers = api_instance.list_user_groups_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsGroupsGetRolesResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_user_groups_with_http_info: #{e}"
 end
@@ -601,7 +1000,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -610,14 +1009,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## list_user_permissions
 
-> list_user_permissions(org_id, user_id)
+> <AdminRolesGetPermissionsResponse> list_user_permissions(org_id, user_id)
 
-
+List a user's direct permissions
 
 ### Examples
 
@@ -640,8 +1039,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.list_user_permissions(org_id, user_id)
+  # List a user's direct permissions
+  result = api_instance.list_user_permissions(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_user_permissions: #{e}"
 end
@@ -649,17 +1049,17 @@ end
 
 #### Using the list_user_permissions_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> list_user_permissions_with_http_info(org_id, user_id)
+> <Array(<AdminRolesGetPermissionsResponse>, Integer, Hash)> list_user_permissions_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # List a user's direct permissions
   data, status_code, headers = api_instance.list_user_permissions_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesGetPermissionsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_user_permissions_with_http_info: #{e}"
 end
@@ -674,7 +1074,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -683,14 +1083,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## list_user_roles
 
-> list_user_roles(org_id, user_id)
+> <AdminGroupsGroupsGetRolesResponse> list_user_roles(org_id, user_id)
 
-
+List a user's roles
 
 ### Examples
 
@@ -713,8 +1113,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.list_user_roles(org_id, user_id)
+  # List a user's roles
+  result = api_instance.list_user_roles(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_user_roles: #{e}"
 end
@@ -722,17 +1123,17 @@ end
 
 #### Using the list_user_roles_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> list_user_roles_with_http_info(org_id, user_id)
+> <Array(<AdminGroupsGroupsGetRolesResponse>, Integer, Hash)> list_user_roles_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # List a user's roles
   data, status_code, headers = api_instance.list_user_roles_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminGroupsGroupsGetRolesResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_user_roles_with_http_info: #{e}"
 end
@@ -747,7 +1148,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -756,14 +1157,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## list_users
 
-> list_users(org_id)
+> <ListUsersResponse> list_users(org_id)
 
-
+List users
 
 ### Examples
 
@@ -785,8 +1186,9 @@ api_instance = LumoAuthApiClient::AdminUsersApi.new
 org_id = 'org_id_example' # String | 
 
 begin
-  
-  api_instance.list_users(org_id)
+  # List users
+  result = api_instance.list_users(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_users: #{e}"
 end
@@ -794,17 +1196,17 @@ end
 
 #### Using the list_users_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> list_users_with_http_info(org_id)
+> <Array(<ListUsersResponse>, Integer, Hash)> list_users_with_http_info(org_id)
 
 ```ruby
 begin
-  
+  # List users
   data, status_code, headers = api_instance.list_users_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <ListUsersResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->list_users_with_http_info: #{e}"
 end
@@ -818,7 +1220,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**ListUsersResponse**](ListUsersResponse.md)
 
 ### Authorization
 
@@ -827,14 +1229,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## mark_user_verified
 
-> mark_user_verified(org_id, user_id)
+> <MarkUserVerifiedResponse> mark_user_verified(org_id, user_id)
 
-
+Mark a user's email as verified
 
 ### Examples
 
@@ -857,8 +1259,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.mark_user_verified(org_id, user_id)
+  # Mark a user's email as verified
+  result = api_instance.mark_user_verified(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->mark_user_verified: #{e}"
 end
@@ -866,17 +1269,17 @@ end
 
 #### Using the mark_user_verified_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> mark_user_verified_with_http_info(org_id, user_id)
+> <Array(<MarkUserVerifiedResponse>, Integer, Hash)> mark_user_verified_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Mark a user's email as verified
   data, status_code, headers = api_instance.mark_user_verified_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MarkUserVerifiedResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->mark_user_verified_with_http_info: #{e}"
 end
@@ -891,7 +1294,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MarkUserVerifiedResponse**](MarkUserVerifiedResponse.md)
 
 ### Authorization
 
@@ -900,14 +1303,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_user
 
-> patch_user(org_id, user_id)
+> <UpdateUserResponse> patch_user(org_id, user_id)
 
-
+Update a user
 
 ### Examples
 
@@ -930,8 +1333,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.patch_user(org_id, user_id)
+  # Update a user
+  result = api_instance.patch_user(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->patch_user: #{e}"
 end
@@ -939,17 +1343,17 @@ end
 
 #### Using the patch_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_user_with_http_info(org_id, user_id)
+> <Array(<UpdateUserResponse>, Integer, Hash)> patch_user_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Update a user
   data, status_code, headers = api_instance.patch_user_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <UpdateUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->patch_user_with_http_info: #{e}"
 end
@@ -964,7 +1368,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**UpdateUserResponse**](UpdateUserResponse.md)
 
 ### Authorization
 
@@ -973,14 +1377,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## remove_user_group
 
-> remove_user_group(org_id, user_id, group_id)
+> <RemoveUserGroupResponse> remove_user_group(org_id, user_id, group_id)
 
-
+Remove a user from a group
 
 ### Examples
 
@@ -1004,8 +1408,9 @@ user_id = 'user_id_example' # String |
 group_id = 'group_id_example' # String | 
 
 begin
-  
-  api_instance.remove_user_group(org_id, user_id, group_id)
+  # Remove a user from a group
+  result = api_instance.remove_user_group(org_id, user_id, group_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->remove_user_group: #{e}"
 end
@@ -1013,17 +1418,17 @@ end
 
 #### Using the remove_user_group_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> remove_user_group_with_http_info(org_id, user_id, group_id)
+> <Array(<RemoveUserGroupResponse>, Integer, Hash)> remove_user_group_with_http_info(org_id, user_id, group_id)
 
 ```ruby
 begin
-  
+  # Remove a user from a group
   data, status_code, headers = api_instance.remove_user_group_with_http_info(org_id, user_id, group_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <RemoveUserGroupResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->remove_user_group_with_http_info: #{e}"
 end
@@ -1039,7 +1444,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**RemoveUserGroupResponse**](RemoveUserGroupResponse.md)
 
 ### Authorization
 
@@ -1048,14 +1453,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## remove_user_permission
 
-> remove_user_permission(org_id, user_id, permission_id)
+> <RemoveUserPermissionResponse> remove_user_permission(org_id, user_id, permission_id)
 
-
+Remove a permission from a user
 
 ### Examples
 
@@ -1079,8 +1484,9 @@ user_id = 'user_id_example' # String |
 permission_id = 'permission_id_example' # String | 
 
 begin
-  
-  api_instance.remove_user_permission(org_id, user_id, permission_id)
+  # Remove a permission from a user
+  result = api_instance.remove_user_permission(org_id, user_id, permission_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->remove_user_permission: #{e}"
 end
@@ -1088,17 +1494,17 @@ end
 
 #### Using the remove_user_permission_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> remove_user_permission_with_http_info(org_id, user_id, permission_id)
+> <Array(<RemoveUserPermissionResponse>, Integer, Hash)> remove_user_permission_with_http_info(org_id, user_id, permission_id)
 
 ```ruby
 begin
-  
+  # Remove a permission from a user
   data, status_code, headers = api_instance.remove_user_permission_with_http_info(org_id, user_id, permission_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <RemoveUserPermissionResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->remove_user_permission_with_http_info: #{e}"
 end
@@ -1114,7 +1520,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**RemoveUserPermissionResponse**](RemoveUserPermissionResponse.md)
 
 ### Authorization
 
@@ -1123,14 +1529,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## remove_user_role
 
-> remove_user_role(org_id, user_id, role_id)
+> <RemoveUserRoleResponse> remove_user_role(org_id, user_id, role_id)
 
-
+Remove a role from a user
 
 ### Examples
 
@@ -1154,8 +1560,9 @@ user_id = 'user_id_example' # String |
 role_id = 'role_id_example' # String | 
 
 begin
-  
-  api_instance.remove_user_role(org_id, user_id, role_id)
+  # Remove a role from a user
+  result = api_instance.remove_user_role(org_id, user_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->remove_user_role: #{e}"
 end
@@ -1163,17 +1570,17 @@ end
 
 #### Using the remove_user_role_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> remove_user_role_with_http_info(org_id, user_id, role_id)
+> <Array(<RemoveUserRoleResponse>, Integer, Hash)> remove_user_role_with_http_info(org_id, user_id, role_id)
 
 ```ruby
 begin
-  
+  # Remove a role from a user
   data, status_code, headers = api_instance.remove_user_role_with_http_info(org_id, user_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <RemoveUserRoleResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->remove_user_role_with_http_info: #{e}"
 end
@@ -1189,7 +1596,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**RemoveUserRoleResponse**](RemoveUserRoleResponse.md)
 
 ### Authorization
 
@@ -1198,14 +1605,16 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## reset_user_mfa
 
 > reset_user_mfa(org_id, user_id)
 
+Reset MFA (removed)
 
+Removed: admins cannot disable a user's MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
 
 ### Examples
 
@@ -1228,7 +1637,7 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
+  # Reset MFA (removed)
   api_instance.reset_user_mfa(org_id, user_id)
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->reset_user_mfa: #{e}"
@@ -1243,7 +1652,7 @@ This returns an Array which contains the response data (`nil` in this case), sta
 
 ```ruby
 begin
-  
+  # Reset MFA (removed)
   data, status_code, headers = api_instance.reset_user_mfa_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
@@ -1276,9 +1685,9 @@ nil (empty response body)
 
 ## send_user_verification_email
 
-> send_user_verification_email(org_id, user_id)
+> <SendUserVerificationEmailResponse> send_user_verification_email(org_id, user_id)
 
-
+Send a verification email
 
 ### Examples
 
@@ -1301,8 +1710,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.send_user_verification_email(org_id, user_id)
+  # Send a verification email
+  result = api_instance.send_user_verification_email(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->send_user_verification_email: #{e}"
 end
@@ -1310,17 +1720,17 @@ end
 
 #### Using the send_user_verification_email_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> send_user_verification_email_with_http_info(org_id, user_id)
+> <Array(<SendUserVerificationEmailResponse>, Integer, Hash)> send_user_verification_email_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Send a verification email
   data, status_code, headers = api_instance.send_user_verification_email_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <SendUserVerificationEmailResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->send_user_verification_email_with_http_info: #{e}"
 end
@@ -1335,7 +1745,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**SendUserVerificationEmailResponse**](SendUserVerificationEmailResponse.md)
 
 ### Authorization
 
@@ -1344,14 +1754,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## set_user_password
 
-> set_user_password(org_id, user_id)
+> <SetUserPasswordPostResponse> set_user_password(org_id, user_id)
 
-
+Set a user's password
 
 ### Examples
 
@@ -1374,8 +1784,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.set_user_password(org_id, user_id)
+  # Set a user's password
+  result = api_instance.set_user_password(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->set_user_password: #{e}"
 end
@@ -1383,17 +1794,17 @@ end
 
 #### Using the set_user_password_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> set_user_password_with_http_info(org_id, user_id)
+> <Array(<SetUserPasswordPostResponse>, Integer, Hash)> set_user_password_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Set a user's password
   data, status_code, headers = api_instance.set_user_password_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <SetUserPasswordPostResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->set_user_password_with_http_info: #{e}"
 end
@@ -1408,7 +1819,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**SetUserPasswordPostResponse**](SetUserPasswordPostResponse.md)
 
 ### Authorization
 
@@ -1417,14 +1828,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## set_user_password_post
 
-> set_user_password_post(org_id, user_id)
+> <SetUserPasswordPostResponse> set_user_password_post(org_id, user_id)
 
-
+Set a user's password
 
 ### Examples
 
@@ -1447,8 +1858,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.set_user_password_post(org_id, user_id)
+  # Set a user's password
+  result = api_instance.set_user_password_post(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->set_user_password_post: #{e}"
 end
@@ -1456,17 +1868,17 @@ end
 
 #### Using the set_user_password_post_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> set_user_password_post_with_http_info(org_id, user_id)
+> <Array(<SetUserPasswordPostResponse>, Integer, Hash)> set_user_password_post_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Set a user's password
   data, status_code, headers = api_instance.set_user_password_post_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <SetUserPasswordPostResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->set_user_password_post_with_http_info: #{e}"
 end
@@ -1481,7 +1893,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**SetUserPasswordPostResponse**](SetUserPasswordPostResponse.md)
 
 ### Authorization
 
@@ -1490,14 +1902,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## trigger_user_password_reset
 
-> trigger_user_password_reset(org_id, user_id)
+> <TriggerUserPasswordResetResponse> trigger_user_password_reset(org_id, user_id)
 
-
+Send a password reset email
 
 ### Examples
 
@@ -1520,8 +1932,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.trigger_user_password_reset(org_id, user_id)
+  # Send a password reset email
+  result = api_instance.trigger_user_password_reset(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->trigger_user_password_reset: #{e}"
 end
@@ -1529,17 +1942,17 @@ end
 
 #### Using the trigger_user_password_reset_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> trigger_user_password_reset_with_http_info(org_id, user_id)
+> <Array(<TriggerUserPasswordResetResponse>, Integer, Hash)> trigger_user_password_reset_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Send a password reset email
   data, status_code, headers = api_instance.trigger_user_password_reset_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <TriggerUserPasswordResetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->trigger_user_password_reset_with_http_info: #{e}"
 end
@@ -1554,7 +1967,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**TriggerUserPasswordResetResponse**](TriggerUserPasswordResetResponse.md)
 
 ### Authorization
 
@@ -1563,14 +1976,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## unblock_user
 
-> unblock_user(org_id, user_id)
+> <UnblockUserResponse> unblock_user(org_id, user_id)
 
-
+Unblock a user
 
 ### Examples
 
@@ -1593,8 +2006,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.unblock_user(org_id, user_id)
+  # Unblock a user
+  result = api_instance.unblock_user(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->unblock_user: #{e}"
 end
@@ -1602,17 +2016,17 @@ end
 
 #### Using the unblock_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> unblock_user_with_http_info(org_id, user_id)
+> <Array(<UnblockUserResponse>, Integer, Hash)> unblock_user_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Unblock a user
   data, status_code, headers = api_instance.unblock_user_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <UnblockUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->unblock_user_with_http_info: #{e}"
 end
@@ -1627,7 +2041,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**UnblockUserResponse**](UnblockUserResponse.md)
 
 ### Authorization
 
@@ -1636,14 +2050,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## update_user
 
-> update_user(org_id, user_id)
+> <UpdateUserResponse> update_user(org_id, user_id)
 
-
+Update a user
 
 ### Examples
 
@@ -1666,8 +2080,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.update_user(org_id, user_id)
+  # Update a user
+  result = api_instance.update_user(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user: #{e}"
 end
@@ -1675,17 +2090,17 @@ end
 
 #### Using the update_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> update_user_with_http_info(org_id, user_id)
+> <Array(<UpdateUserResponse>, Integer, Hash)> update_user_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Update a user
   data, status_code, headers = api_instance.update_user_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <UpdateUserResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_with_http_info: #{e}"
 end
@@ -1700,7 +2115,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**UpdateUserResponse**](UpdateUserResponse.md)
 
 ### Authorization
 
@@ -1709,14 +2124,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## update_user_groups
 
-> update_user_groups(org_id, user_id)
+> <UpdateUserGroupsResponse> update_user_groups(org_id, user_id)
 
-
+Replace a user's groups
 
 ### Examples
 
@@ -1739,8 +2154,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.update_user_groups(org_id, user_id)
+  # Replace a user's groups
+  result = api_instance.update_user_groups(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_groups: #{e}"
 end
@@ -1748,17 +2164,17 @@ end
 
 #### Using the update_user_groups_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> update_user_groups_with_http_info(org_id, user_id)
+> <Array(<UpdateUserGroupsResponse>, Integer, Hash)> update_user_groups_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Replace a user's groups
   data, status_code, headers = api_instance.update_user_groups_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <UpdateUserGroupsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_groups_with_http_info: #{e}"
 end
@@ -1773,7 +2189,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**UpdateUserGroupsResponse**](UpdateUserGroupsResponse.md)
 
 ### Authorization
 
@@ -1782,14 +2198,14 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## update_user_roles
 
-> update_user_roles(org_id, user_id)
+> <UpdateUserRolesResponse> update_user_roles(org_id, user_id)
 
-
+Replace a user's roles
 
 ### Examples
 
@@ -1812,8 +2228,9 @@ org_id = 'org_id_example' # String |
 user_id = 'user_id_example' # String | 
 
 begin
-  
-  api_instance.update_user_roles(org_id, user_id)
+  # Replace a user's roles
+  result = api_instance.update_user_roles(org_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_roles: #{e}"
 end
@@ -1821,17 +2238,17 @@ end
 
 #### Using the update_user_roles_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> update_user_roles_with_http_info(org_id, user_id)
+> <Array(<UpdateUserRolesResponse>, Integer, Hash)> update_user_roles_with_http_info(org_id, user_id)
 
 ```ruby
 begin
-  
+  # Replace a user's roles
   data, status_code, headers = api_instance.update_user_roles_with_http_info(org_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <UpdateUserRolesResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminUsersApi->update_user_roles_with_http_info: #{e}"
 end
@@ -1846,7 +2263,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**UpdateUserRolesResponse**](UpdateUserRolesResponse.md)
 
 ### Authorization
 
@@ -1855,5 +2272,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

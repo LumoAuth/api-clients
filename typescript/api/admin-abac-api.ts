@@ -21,6 +21,26 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AbacAttributesCreateResponse } from '../models';
+// @ts-ignore
+import type { AbacAttributesGetResponse } from '../models';
+// @ts-ignore
+import type { AbacAttributesListResponse } from '../models';
+// @ts-ignore
+import type { AbacPoliciesCreateResponse } from '../models';
+// @ts-ignore
+import type { AbacPoliciesGetResponse } from '../models';
+// @ts-ignore
+import type { AbacPoliciesListResponse } from '../models';
+// @ts-ignore
+import type { AbacPoliciesToggleResponse } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
+// @ts-ignore
+import type { PutAbacAttributesUpdateResponse } from '../models';
+// @ts-ignore
+import type { PutAbacPoliciesUpdateResponse } from '../models';
 /**
  * AdminAbacApi - axios parameter creator
  * @export
@@ -29,7 +49,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * 
-         * @summary Create a new attribute definition
+         * @summary Create an attribute definition
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -115,7 +135,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Get a single attribute definition
+         * @summary Get an attribute definition
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -160,7 +180,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary List all attribute definitions
+         * @summary List attribute definitions
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -201,7 +221,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Create a new ABAC policy
+         * @summary Create an ABAC policy
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -287,7 +307,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Get a single ABAC policy
+         * @summary Get an ABAC policy
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -332,7 +352,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary List all ABAC policies
+         * @summary List ABAC policies
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -373,7 +393,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Toggle policy active status
+         * @summary Toggle a policy between active and inactive
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -418,7 +438,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Update an attribute definition
+         * @summary Partially update an attribute definition
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -463,7 +483,7 @@ export const AdminAbacApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Update an ABAC policy
+         * @summary Partially update an ABAC policy
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
@@ -608,12 +628,12 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Create a new attribute definition
+         * @summary Create an attribute definition
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacAttributesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacAttributesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacAttributesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacAttributesCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacAttributesCreate']?.[localVarOperationServerIndex]?.url;
@@ -627,7 +647,7 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacAttributesDelete(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacAttributesDelete(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacAttributesDelete(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacAttributesDelete']?.[localVarOperationServerIndex]?.url;
@@ -635,13 +655,13 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get a single attribute definition
+         * @summary Get an attribute definition
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacAttributesGet(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacAttributesGet(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacAttributesGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacAttributesGet(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacAttributesGet']?.[localVarOperationServerIndex]?.url;
@@ -649,12 +669,12 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all attribute definitions
+         * @summary List attribute definitions
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacAttributesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacAttributesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacAttributesListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacAttributesList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacAttributesList']?.[localVarOperationServerIndex]?.url;
@@ -662,12 +682,12 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Create a new ABAC policy
+         * @summary Create an ABAC policy
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacPoliciesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacPoliciesCreate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacPoliciesCreateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesCreate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacPoliciesCreate']?.[localVarOperationServerIndex]?.url;
@@ -681,7 +701,7 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacPoliciesDelete(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacPoliciesDelete(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesDelete(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacPoliciesDelete']?.[localVarOperationServerIndex]?.url;
@@ -689,13 +709,13 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get a single ABAC policy
+         * @summary Get an ABAC policy
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacPoliciesGet(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacPoliciesGet(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacPoliciesGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesGet(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacPoliciesGet']?.[localVarOperationServerIndex]?.url;
@@ -703,12 +723,12 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List all ABAC policies
+         * @summary List ABAC policies
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacPoliciesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacPoliciesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacPoliciesListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacPoliciesList']?.[localVarOperationServerIndex]?.url;
@@ -716,13 +736,13 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Toggle policy active status
+         * @summary Toggle a policy between active and inactive
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async abacPoliciesToggle(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async abacPoliciesToggle(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AbacPoliciesToggleResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.abacPoliciesToggle(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.abacPoliciesToggle']?.[localVarOperationServerIndex]?.url;
@@ -730,13 +750,13 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update an attribute definition
+         * @summary Partially update an attribute definition
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAbacAttributesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAbacAttributesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAbacAttributesUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAbacAttributesUpdate(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.patchAbacAttributesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -744,13 +764,13 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Update an ABAC policy
+         * @summary Partially update an ABAC policy
          * @param {string} orgId 
          * @param {string} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAbacPoliciesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAbacPoliciesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAbacPoliciesUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAbacPoliciesUpdate(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.patchAbacPoliciesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -764,7 +784,7 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAbacAttributesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAbacAttributesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAbacAttributesUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAbacAttributesUpdate(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.putAbacAttributesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -778,7 +798,7 @@ export const AdminAbacApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAbacPoliciesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAbacPoliciesUpdate(orgId: string, id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PutAbacPoliciesUpdateResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAbacPoliciesUpdate(orgId, id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAbacApi.putAbacPoliciesUpdate']?.[localVarOperationServerIndex]?.url;
@@ -796,12 +816,12 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * 
-         * @summary Create a new attribute definition
+         * @summary Create an attribute definition
          * @param {AdminAbacApiAbacAttributesCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacAttributesCreate(requestParameters: AdminAbacApiAbacAttributesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacAttributesCreate(requestParameters: AdminAbacApiAbacAttributesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacAttributesCreateResponse> {
             return localVarFp.abacAttributesCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -811,37 +831,37 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacAttributesDelete(requestParameters: AdminAbacApiAbacAttributesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacAttributesDelete(requestParameters: AdminAbacApiAbacAttributesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.abacAttributesDelete(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single attribute definition
+         * @summary Get an attribute definition
          * @param {AdminAbacApiAbacAttributesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacAttributesGet(requestParameters: AdminAbacApiAbacAttributesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacAttributesGet(requestParameters: AdminAbacApiAbacAttributesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacAttributesGetResponse> {
             return localVarFp.abacAttributesGet(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary List all attribute definitions
+         * @summary List attribute definitions
          * @param {AdminAbacApiAbacAttributesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacAttributesList(requestParameters: AdminAbacApiAbacAttributesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacAttributesList(requestParameters: AdminAbacApiAbacAttributesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacAttributesListResponse> {
             return localVarFp.abacAttributesList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Create a new ABAC policy
+         * @summary Create an ABAC policy
          * @param {AdminAbacApiAbacPoliciesCreateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacPoliciesCreate(requestParameters: AdminAbacApiAbacPoliciesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacPoliciesCreate(requestParameters: AdminAbacApiAbacPoliciesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesCreateResponse> {
             return localVarFp.abacPoliciesCreate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -851,57 +871,57 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacPoliciesDelete(requestParameters: AdminAbacApiAbacPoliciesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacPoliciesDelete(requestParameters: AdminAbacApiAbacPoliciesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.abacPoliciesDelete(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single ABAC policy
+         * @summary Get an ABAC policy
          * @param {AdminAbacApiAbacPoliciesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacPoliciesGet(requestParameters: AdminAbacApiAbacPoliciesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacPoliciesGet(requestParameters: AdminAbacApiAbacPoliciesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesGetResponse> {
             return localVarFp.abacPoliciesGet(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary List all ABAC policies
+         * @summary List ABAC policies
          * @param {AdminAbacApiAbacPoliciesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacPoliciesList(requestParameters: AdminAbacApiAbacPoliciesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacPoliciesList(requestParameters: AdminAbacApiAbacPoliciesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesListResponse> {
             return localVarFp.abacPoliciesList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Toggle policy active status
+         * @summary Toggle a policy between active and inactive
          * @param {AdminAbacApiAbacPoliciesToggleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        abacPoliciesToggle(requestParameters: AdminAbacApiAbacPoliciesToggleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        abacPoliciesToggle(requestParameters: AdminAbacApiAbacPoliciesToggleRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesToggleResponse> {
             return localVarFp.abacPoliciesToggle(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update an attribute definition
+         * @summary Partially update an attribute definition
          * @param {AdminAbacApiPatchAbacAttributesUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAbacAttributesUpdate(requestParameters: AdminAbacApiPatchAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAbacAttributesUpdate(requestParameters: AdminAbacApiPatchAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacAttributesUpdateResponse> {
             return localVarFp.patchAbacAttributesUpdate(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Update an ABAC policy
+         * @summary Partially update an ABAC policy
          * @param {AdminAbacApiPatchAbacPoliciesUpdateRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAbacPoliciesUpdate(requestParameters: AdminAbacApiPatchAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAbacPoliciesUpdate(requestParameters: AdminAbacApiPatchAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacPoliciesUpdateResponse> {
             return localVarFp.patchAbacPoliciesUpdate(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -911,7 +931,7 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAbacAttributesUpdate(requestParameters: AdminAbacApiPutAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAbacAttributesUpdate(requestParameters: AdminAbacApiPutAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacAttributesUpdateResponse> {
             return localVarFp.putAbacAttributesUpdate(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -921,7 +941,7 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAbacPoliciesUpdate(requestParameters: AdminAbacApiPutAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAbacPoliciesUpdate(requestParameters: AdminAbacApiPutAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacPoliciesUpdateResponse> {
             return localVarFp.putAbacPoliciesUpdate(requestParameters.orgId, requestParameters.id, options).then((request) => request(axios, basePath));
         },
     };
@@ -935,13 +955,13 @@ export const AdminAbacApiFactory = function (configuration?: Configuration, base
 export interface AdminAbacApiInterface {
     /**
      * 
-     * @summary Create a new attribute definition
+     * @summary Create an attribute definition
      * @param {AdminAbacApiAbacAttributesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacAttributesCreate(requestParameters: AdminAbacApiAbacAttributesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacAttributesCreate(requestParameters: AdminAbacApiAbacAttributesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacAttributesCreateResponse>;
 
     /**
      * 
@@ -951,37 +971,37 @@ export interface AdminAbacApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacAttributesDelete(requestParameters: AdminAbacApiAbacAttributesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacAttributesDelete(requestParameters: AdminAbacApiAbacAttributesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
-     * @summary Get a single attribute definition
+     * @summary Get an attribute definition
      * @param {AdminAbacApiAbacAttributesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacAttributesGet(requestParameters: AdminAbacApiAbacAttributesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacAttributesGet(requestParameters: AdminAbacApiAbacAttributesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacAttributesGetResponse>;
 
     /**
      * 
-     * @summary List all attribute definitions
+     * @summary List attribute definitions
      * @param {AdminAbacApiAbacAttributesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacAttributesList(requestParameters: AdminAbacApiAbacAttributesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacAttributesList(requestParameters: AdminAbacApiAbacAttributesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacAttributesListResponse>;
 
     /**
      * 
-     * @summary Create a new ABAC policy
+     * @summary Create an ABAC policy
      * @param {AdminAbacApiAbacPoliciesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacPoliciesCreate(requestParameters: AdminAbacApiAbacPoliciesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacPoliciesCreate(requestParameters: AdminAbacApiAbacPoliciesCreateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesCreateResponse>;
 
     /**
      * 
@@ -991,57 +1011,57 @@ export interface AdminAbacApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacPoliciesDelete(requestParameters: AdminAbacApiAbacPoliciesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacPoliciesDelete(requestParameters: AdminAbacApiAbacPoliciesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
-     * @summary Get a single ABAC policy
+     * @summary Get an ABAC policy
      * @param {AdminAbacApiAbacPoliciesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacPoliciesGet(requestParameters: AdminAbacApiAbacPoliciesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacPoliciesGet(requestParameters: AdminAbacApiAbacPoliciesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesGetResponse>;
 
     /**
      * 
-     * @summary List all ABAC policies
+     * @summary List ABAC policies
      * @param {AdminAbacApiAbacPoliciesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacPoliciesList(requestParameters: AdminAbacApiAbacPoliciesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacPoliciesList(requestParameters: AdminAbacApiAbacPoliciesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesListResponse>;
 
     /**
      * 
-     * @summary Toggle policy active status
+     * @summary Toggle a policy between active and inactive
      * @param {AdminAbacApiAbacPoliciesToggleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    abacPoliciesToggle(requestParameters: AdminAbacApiAbacPoliciesToggleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    abacPoliciesToggle(requestParameters: AdminAbacApiAbacPoliciesToggleRequest, options?: RawAxiosRequestConfig): AxiosPromise<AbacPoliciesToggleResponse>;
 
     /**
      * 
-     * @summary Update an attribute definition
+     * @summary Partially update an attribute definition
      * @param {AdminAbacApiPatchAbacAttributesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    patchAbacAttributesUpdate(requestParameters: AdminAbacApiPatchAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAbacAttributesUpdate(requestParameters: AdminAbacApiPatchAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacAttributesUpdateResponse>;
 
     /**
      * 
-     * @summary Update an ABAC policy
+     * @summary Partially update an ABAC policy
      * @param {AdminAbacApiPatchAbacPoliciesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    patchAbacPoliciesUpdate(requestParameters: AdminAbacApiPatchAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAbacPoliciesUpdate(requestParameters: AdminAbacApiPatchAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacPoliciesUpdateResponse>;
 
     /**
      * 
@@ -1051,7 +1071,7 @@ export interface AdminAbacApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    putAbacAttributesUpdate(requestParameters: AdminAbacApiPutAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAbacAttributesUpdate(requestParameters: AdminAbacApiPutAbacAttributesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacAttributesUpdateResponse>;
 
     /**
      * 
@@ -1061,7 +1081,7 @@ export interface AdminAbacApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAbacApiInterface
      */
-    putAbacPoliciesUpdate(requestParameters: AdminAbacApiPutAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAbacPoliciesUpdate(requestParameters: AdminAbacApiPutAbacPoliciesUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<PutAbacPoliciesUpdateResponse>;
 
 }
 
@@ -1319,7 +1339,7 @@ export interface AdminAbacApiPutAbacPoliciesUpdateRequest {
 export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
     /**
      * 
-     * @summary Create a new attribute definition
+     * @summary Create an attribute definition
      * @param {AdminAbacApiAbacAttributesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1343,7 +1363,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary Get a single attribute definition
+     * @summary Get an attribute definition
      * @param {AdminAbacApiAbacAttributesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1355,7 +1375,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary List all attribute definitions
+     * @summary List attribute definitions
      * @param {AdminAbacApiAbacAttributesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1367,7 +1387,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary Create a new ABAC policy
+     * @summary Create an ABAC policy
      * @param {AdminAbacApiAbacPoliciesCreateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1391,7 +1411,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary Get a single ABAC policy
+     * @summary Get an ABAC policy
      * @param {AdminAbacApiAbacPoliciesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1403,7 +1423,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary List all ABAC policies
+     * @summary List ABAC policies
      * @param {AdminAbacApiAbacPoliciesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1415,7 +1435,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary Toggle policy active status
+     * @summary Toggle a policy between active and inactive
      * @param {AdminAbacApiAbacPoliciesToggleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1427,7 +1447,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary Update an attribute definition
+     * @summary Partially update an attribute definition
      * @param {AdminAbacApiPatchAbacAttributesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1439,7 +1459,7 @@ export class AdminAbacApi extends BaseAPI implements AdminAbacApiInterface {
 
     /**
      * 
-     * @summary Update an ABAC policy
+     * @summary Partially update an ABAC policy
      * @param {AdminAbacApiPatchAbacPoliciesUpdateRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

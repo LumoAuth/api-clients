@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckSessionError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,7 @@ pub enum CheckSessionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogoutError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +34,7 @@ pub enum LogoutError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum LogoutPostError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +42,9 @@ pub enum LogoutPostError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UserinfoError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,12 +52,15 @@ pub enum UserinfoError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum UserinfoPostError {
-    DefaultResponse(),
+    Status400(),
+    Status401(),
+    Status403(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn check_session(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CheckSessionError>> {
+/// The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
+pub async fn check_session(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<CheckSessionError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -71,9 +75,20 @@ pub async fn check_session(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckSessionError> = serde_json::from_str(&content).ok();
@@ -81,7 +96,8 @@ pub async fn check_session(configuration: &configuration::Configuration, org_id:
     }
 }
 
-pub async fn logout(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<LogoutError>> {
+/// end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
+pub async fn logout(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<LogoutError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -96,9 +112,20 @@ pub async fn logout(configuration: &configuration::Configuration, org_id: &str) 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<LogoutError> = serde_json::from_str(&content).ok();
@@ -106,7 +133,8 @@ pub async fn logout(configuration: &configuration::Configuration, org_id: &str) 
     }
 }
 
-pub async fn logout_post(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<LogoutPostError>> {
+/// Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+pub async fn logout_post(configuration: &configuration::Configuration, org_id: &str) -> Result<String, Error<LogoutPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -121,9 +149,20 @@ pub async fn logout_post(configuration: &configuration::Configuration, org_id: &
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `String`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `String`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<LogoutPostError> = serde_json::from_str(&content).ok();
@@ -131,8 +170,8 @@ pub async fn logout_post(configuration: &configuration::Configuration, org_id: &
     }
 }
 
-/// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-pub async fn userinfo(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<UserinfoError>> {
+/// Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
+pub async fn userinfo(configuration: &configuration::Configuration, org_id: &str) -> Result<models::UserinfoResponse, Error<UserinfoError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -150,9 +189,20 @@ pub async fn userinfo(configuration: &configuration::Configuration, org_id: &str
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UserinfoResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UserinfoResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UserinfoError> = serde_json::from_str(&content).ok();
@@ -160,8 +210,8 @@ pub async fn userinfo(configuration: &configuration::Configuration, org_id: &str
     }
 }
 
-/// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
-pub async fn userinfo_post(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<UserinfoPostError>> {
+/// Identical to GET.
+pub async fn userinfo_post(configuration: &configuration::Configuration, org_id: &str) -> Result<models::UserinfoResponse, Error<UserinfoPostError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -179,9 +229,20 @@ pub async fn userinfo_post(configuration: &configuration::Configuration, org_id:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UserinfoResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UserinfoResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<UserinfoPostError> = serde_json::from_str(&content).ok();

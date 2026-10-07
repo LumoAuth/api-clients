@@ -29,9 +29,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokeAll(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokeAll(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -43,9 +44,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokePost(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokePost(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsCount(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsCount(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -69,9 +72,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -83,9 +87,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var sessionId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsRevoke(context.Background(), orgId, sessionId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsRevoke(context.Background(), orgId, sessionId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -96,9 +101,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsRevokeAll(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsRevokeAll(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -109,9 +115,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsStats(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminSessionsStats(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -122,9 +129,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminTokensList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminTokensList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -136,9 +144,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var tokenId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminTokensRevoke(context.Background(), orgId, tokenId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminTokensRevoke(context.Background(), orgId, tokenId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -150,9 +159,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var userId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminUserSessionsList(context.Background(), orgId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminUserSessionsList(context.Background(), orgId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -164,9 +174,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var userId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokeAll(context.Background(), orgId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokeAll(context.Background(), orgId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -178,9 +189,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var userId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokePost(context.Background(), orgId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokePost(context.Background(), orgId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -192,9 +204,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var userId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokeAll(context.Background(), orgId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokeAll(context.Background(), orgId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -206,9 +219,10 @@ func Test_lumoauthclient_AdminSessionsAPIService(t *testing.T) {
 		var orgId string
 		var userId string
 
-		httpRes, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokePost(context.Background(), orgId, userId).Execute()
+		resp, httpRes, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokePost(context.Background(), orgId, userId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

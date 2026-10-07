@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrgInvitationsCreate(orgId, organizationId);
+            //var response = instance.AdminOrgInvitationsCreate(orgId, organizationId);
+            //Assert.IsType<AdminOrgInvitationsCreateResponse>(response);
         }
 
         /// <summary>
@@ -73,7 +76,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrgInvitationsList(orgId, organizationId);
+            //var response = instance.AdminOrgInvitationsList(orgId, organizationId);
+            //Assert.IsType<AdminOrgInvitationsListResponse>(response);
         }
 
         /// <summary>
@@ -86,7 +90,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string invId = null;
-            //instance.AdminOrgInvitationsResend(orgId, organizationId, invId);
+            //var response = instance.AdminOrgInvitationsResend(orgId, organizationId, invId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -99,7 +104,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string invId = null;
-            //instance.AdminOrgInvitationsRevoke(orgId, organizationId, invId);
+            //var response = instance.AdminOrgInvitationsRevoke(orgId, organizationId, invId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -111,7 +117,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrgMembersAdd(orgId, organizationId);
+            //var response = instance.AdminOrgMembersAdd(orgId, organizationId);
+            //Assert.IsType<AdminOrgMembersAddResponse>(response);
         }
 
         /// <summary>
@@ -123,7 +130,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrgMembersList(orgId, organizationId);
+            //var response = instance.AdminOrgMembersList(orgId, organizationId);
+            //Assert.IsType<AdminOrgMembersListResponse>(response);
         }
 
         /// <summary>
@@ -136,7 +144,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string userId = null;
-            //instance.AdminOrgMembersRemove(orgId, organizationId, userId);
+            //var response = instance.AdminOrgMembersRemove(orgId, organizationId, userId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -148,7 +157,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrgRolesCreate(orgId, organizationId);
+            //var response = instance.AdminOrgRolesCreate(orgId, organizationId);
+            //Assert.IsType<AdminOrgRolesCreateResponse>(response);
         }
 
         /// <summary>
@@ -161,7 +171,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string roleId = null;
-            //instance.AdminOrgRolesDelete(orgId, organizationId, roleId);
+            //var response = instance.AdminOrgRolesDelete(orgId, organizationId, roleId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -173,7 +184,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrgRolesList(orgId, organizationId);
+            //var response = instance.AdminOrgRolesList(orgId, organizationId);
+            //Assert.IsType<AdminOrgRolesListResponse>(response);
         }
 
         /// <summary>
@@ -184,7 +196,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminOrganizationsCreate(orgId);
+            //var response = instance.AdminOrganizationsCreate(orgId);
+            //Assert.IsType<AdminOrganizationsCreateResponse>(response);
         }
 
         /// <summary>
@@ -196,7 +209,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrganizationsDelete(orgId, organizationId);
+            //var response = instance.AdminOrganizationsDelete(orgId, organizationId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -208,7 +222,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.AdminOrganizationsGet(orgId, organizationId);
+            //var response = instance.AdminOrganizationsGet(orgId, organizationId);
+            //Assert.IsType<AdminOrganizationsGetResponse>(response);
         }
 
         /// <summary>
@@ -219,7 +234,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminOrganizationsList(orgId);
+            //var response = instance.AdminOrganizationsList(orgId);
+            //Assert.IsType<AdminOrganizationsListResponse>(response);
         }
 
         /// <summary>
@@ -232,7 +248,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string userId = null;
-            //instance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId);
+            //var response = instance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId);
+            //Assert.IsType<PutAdminOrgMembersUpdateResponse>(response);
         }
 
         /// <summary>
@@ -245,7 +262,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string roleId = null;
-            //instance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+            //var response = instance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+            //Assert.IsType<AdminOrgRolesCreateResponse>(response);
         }
 
         /// <summary>
@@ -257,7 +275,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.PatchAdminOrganizationsUpdate(orgId, organizationId);
+            //var response = instance.PatchAdminOrganizationsUpdate(orgId, organizationId);
+            //Assert.IsType<AdminOrganizationsGetResponse>(response);
         }
 
         /// <summary>
@@ -270,7 +289,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string userId = null;
-            //instance.PutAdminOrgMembersUpdate(orgId, organizationId, userId);
+            //var response = instance.PutAdminOrgMembersUpdate(orgId, organizationId, userId);
+            //Assert.IsType<PutAdminOrgMembersUpdateResponse>(response);
         }
 
         /// <summary>
@@ -283,7 +303,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string organizationId = null;
             //string roleId = null;
-            //instance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId);
+            //var response = instance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId);
+            //Assert.IsType<AdminOrgRolesCreateResponse>(response);
         }
 
         /// <summary>
@@ -295,7 +316,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string organizationId = null;
-            //instance.PutAdminOrganizationsUpdate(orgId, organizationId);
+            //var response = instance.PutAdminOrganizationsUpdate(orgId, organizationId);
+            //Assert.IsType<AdminOrganizationsGetResponse>(response);
         }
     }
 }

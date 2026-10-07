@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAuditLogsActions(orgId);
+            //var response = instance.AdminAuditLogsActions(orgId);
+            //Assert.IsType<AdminAuditLogsActionsResponse>(response);
         }
 
         /// <summary>
@@ -71,7 +74,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAuditLogsExport(orgId);
+            //var response = instance.AdminAuditLogsExport(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -83,7 +87,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string logId = null;
-            //instance.AdminAuditLogsGet(orgId, logId);
+            //var response = instance.AdminAuditLogsGet(orgId, logId);
+            //Assert.IsType<AdminAuditLogsGetResponse>(response);
         }
 
         /// <summary>
@@ -94,7 +99,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAuditLogsList(orgId);
+            //var response = instance.AdminAuditLogsList(orgId);
+            //Assert.IsType<AdminAuditLogsListResponse>(response);
         }
 
         /// <summary>
@@ -105,7 +111,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAuditLogsRetention(orgId);
+            //var response = instance.AdminAuditLogsRetention(orgId);
+            //Assert.IsType<AdminAuditLogsRetentionResponse>(response);
         }
 
         /// <summary>
@@ -116,7 +123,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAuditLogsStats(orgId);
+            //var response = instance.AdminAuditLogsStats(orgId);
+            //Assert.IsType<AdminAuditLogsStatsResponse>(response);
         }
 
         /// <summary>
@@ -127,7 +135,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminAuditLogsRetentionUpdate(orgId);
+            //var response = instance.PatchAdminAuditLogsRetentionUpdate(orgId);
+            //Assert.IsType<AdminAuditLogsRetentionResponse>(response);
         }
 
         /// <summary>
@@ -138,7 +147,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminAuditLogsRetentionUpdate(orgId);
+            //var response = instance.PutAdminAuditLogsRetentionUpdate(orgId);
+            //Assert.IsType<AdminAuditLogsRetentionResponse>(response);
         }
     }
 }

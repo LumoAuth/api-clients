@@ -4,21 +4,21 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getProtectedResourceMetadata**](McpApi.md#getProtectedResourceMetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728) |
-| [**getProtectedResourceMetadataRoot**](McpApi.md#getProtectedResourceMetadataRoot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata |
+| [**getProtectedResourceMetadata**](McpApi.md#getProtectedResourceMetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728) |
+| [**getProtectedResourceMetadataRoot**](McpApi.md#getProtectedResourceMetadataRoot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728) |
 | [**getServer**](McpApi.md#getServer) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server. |
-| [**getServerChallenge**](McpApi.md#getServerChallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint. |
+| [**getServerChallenge**](McpApi.md#getServerChallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge |
 | [**listServers**](McpApi.md#listServers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant. |
-| [**postServerChallenge**](McpApi.md#postServerChallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint. |
+| [**postServerChallenge**](McpApi.md#postServerChallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST) |
 
 
 <a id="getProtectedResourceMetadata"></a>
 # **getProtectedResourceMetadata**
-> getProtectedResourceMetadata(orgId, serverId)
+> ProtectedResourceMetadata getProtectedResourceMetadata(orgId, serverId)
 
-OAuth 2.0 Protected Resource Metadata (RFC 9728)
+MCP server protected resource metadata (RFC 9728)
 
-Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age&#x3D;3600).
 
 ### Example
 ```java
@@ -38,7 +38,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String serverId = "serverId_example"; // String | 
     try {
-      apiInstance.getProtectedResourceMetadata(orgId, serverId);
+      ProtectedResourceMetadata result = apiInstance.getProtectedResourceMetadata(orgId, serverId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling McpApi#getProtectedResourceMetadata");
       System.err.println("Status code: " + e.getCode());
@@ -59,7 +60,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**ProtectedResourceMetadata**](ProtectedResourceMetadata.md)
 
 ### Authorization
 
@@ -68,20 +69,22 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Protected resource metadata. scopes_supported only when the server declares scopes; the dpop_* members only when the server requires DPoP-bound tokens. Any additional admin-supplied metadata fields are merged in (they can never override resource, authorization_servers, bearer_methods_supported or scopes_supported). |  -  |
+| **400** | not_applicable — the MCP server does not require authorization. |  -  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
 
 <a id="getProtectedResourceMetadataRoot"></a>
 # **getProtectedResourceMetadataRoot**
-> getProtectedResourceMetadataRoot(orgId)
+> GetProtectedResourceMetadataRoot200Response getProtectedResourceMetadataRoot(orgId)
 
-Root-level Protected Resource Metadata
+Organization-level protected resource metadata (RFC 9728)
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age&#x3D;3600).
 
 ### Example
 ```java
@@ -100,7 +103,8 @@ public class Example {
     McpApi apiInstance = new McpApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.getProtectedResourceMetadataRoot(orgId);
+      GetProtectedResourceMetadataRoot200Response result = apiInstance.getProtectedResourceMetadataRoot(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling McpApi#getProtectedResourceMetadataRoot");
       System.err.println("Status code: " + e.getCode());
@@ -120,7 +124,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**GetProtectedResourceMetadataRoot200Response**](GetProtectedResourceMetadataRoot200Response.md)
 
 ### Authorization
 
@@ -129,12 +133,13 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Either a single server&#39;s protected resource metadata (same shape as the per-server endpoint) or a resource list. |  -  |
+| **404** | not_found — unknown organization, or no protected MCP servers configured. |  -  |
 
 <a id="getServer"></a>
 # **getServer**
@@ -215,11 +220,11 @@ public class Example {
 
 <a id="getServerChallenge"></a>
 # **getServerChallenge**
-> getServerChallenge(orgId, serverId)
+> GetServerChallengeResponse getServerChallenge(orgId, serverId)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server&#39;s protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 ### Example
 ```java
@@ -244,7 +249,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String serverId = "serverId_example"; // String | 
     try {
-      apiInstance.getServerChallenge(orgId, serverId);
+      GetServerChallengeResponse result = apiInstance.getServerChallenge(orgId, serverId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling McpApi#getServerChallenge");
       System.err.println("Status code: " + e.getCode());
@@ -265,7 +271,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -274,12 +280,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | The access token is valid for this MCP server. |  -  |
+| **401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+| **403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **429** | too_many_requests (Retry-After header). |  -  |
 
 <a id="listServers"></a>
 # **listServers**
@@ -358,11 +368,11 @@ public class Example {
 
 <a id="postServerChallenge"></a>
 # **postServerChallenge**
-> postServerChallenge(orgId, serverId)
+> GetServerChallengeResponse postServerChallenge(orgId, serverId)
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge (POST)
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
 ### Example
 ```java
@@ -387,7 +397,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String serverId = "serverId_example"; // String | 
     try {
-      apiInstance.postServerChallenge(orgId, serverId);
+      GetServerChallengeResponse result = apiInstance.postServerChallenge(orgId, serverId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling McpApi#postServerChallenge");
       System.err.println("Status code: " + e.getCode());
@@ -408,7 +419,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -417,10 +428,14 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | The access token is valid for this MCP server. |  -  |
+| **401** | unauthorized / invalid_token with the MCP WWW-Authenticate challenge (resource_metadata, and scope when the server includes it). |  * WWW-Authenticate -  <br>  |
+| **403** | insufficient_scope — the token lacks required scopes (listed in scope and in WWW-Authenticate). |  * WWW-Authenticate -  <br>  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **429** | too_many_requests (Retry-After header). |  -  |
 

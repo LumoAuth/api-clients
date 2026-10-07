@@ -4,12 +4,12 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminSandboxDestroy**](#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.|
-|[**adminSandboxList**](#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller\&#39;s active sandbox tenants (their own only).|
-|[**adminSandboxSpawn**](#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}|
+|[**adminSandboxDestroy**](#adminsandboxdestroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant|
+|[**adminSandboxList**](#adminsandboxlist) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller\&#39;s sandbox tenants|
+|[**adminSandboxSpawn**](#adminsandboxspawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant|
 
 # **adminSandboxDestroy**
-> adminSandboxDestroy()
+> MessageResponse adminSandboxDestroy()
 
 
 ### Example
@@ -42,7 +42,7 @@ const { status, data } = await apiInstance.adminSandboxDestroy(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -51,18 +51,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sandbox destroyed |  -  |
+|**404** | Sandbox not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSandboxList**
-> adminSandboxList()
+> AdminSandboxListResponse adminSandboxList()
 
 
 ### Example
@@ -92,7 +93,7 @@ const { status, data } = await apiInstance.adminSandboxList(
 
 ### Return type
 
-void (empty response body)
+**AdminSandboxListResponse**
 
 ### Authorization
 
@@ -101,18 +102,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Sandboxes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSandboxSpawn**
-> adminSandboxSpawn()
+> AdminSandboxSpawnResponse adminSandboxSpawn()
 
 
 ### Example
@@ -120,16 +121,19 @@ void (empty response body)
 ```typescript
 import {
     AdminSandboxApi,
-    Configuration
+    Configuration,
+    AdminSandboxSpawnRequest
 } from '@lumoauth/api-client';
 
 const configuration = new Configuration();
 const apiInstance = new AdminSandboxApi(configuration);
 
 let orgId: string; // (default to undefined)
+let adminSandboxSpawnRequest: AdminSandboxSpawnRequest; // (optional)
 
 const { status, data } = await apiInstance.adminSandboxSpawn(
-    orgId
+    orgId,
+    adminSandboxSpawnRequest
 );
 ```
 
@@ -137,12 +141,13 @@ const { status, data } = await apiInstance.adminSandboxSpawn(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
+| **adminSandboxSpawnRequest** | **AdminSandboxSpawnRequest**|  | |
 | **orgId** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
 
-void (empty response body)
+**AdminSandboxSpawnResponse**
 
 ### Authorization
 
@@ -150,14 +155,15 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Sandbox created |  -  |
+|**429** | Per-owner active-sandbox cap reached |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

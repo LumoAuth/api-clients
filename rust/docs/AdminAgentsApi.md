@@ -199,7 +199,7 @@ Name | Type | Description  | Required | Notes
 
 ## admin_agents_delete
 
-> models::MessageResponse admin_agents_delete(org_id, agent_id)
+> models::AdminAgentsDeleteResponse admin_agents_delete(org_id, agent_id)
 Delete an agent
 
 ### Parameters
@@ -212,7 +212,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**models::MessageResponse**](MessageResponse.md)
+[**models::AdminAgentsDeleteResponse**](AdminAgentsDeleteResponse.md)
 
 ### Authorization
 

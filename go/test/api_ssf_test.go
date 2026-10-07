@@ -28,9 +28,10 @@ func Test_lumoauthclient_SsfAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.SsfAPI.CreateStreamConfig(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.SsfAPI.CreateStreamConfig(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -54,9 +55,10 @@ func Test_lumoauthclient_SsfAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.SsfAPI.GetStreamConfig(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.SsfAPI.GetStreamConfig(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

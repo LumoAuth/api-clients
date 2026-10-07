@@ -27,6 +27,14 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.BackchannelAuthorizeResponse;
+import io.lumoauth.client.model.DeviceAuthorizationResponse;
+import io.lumoauth.client.model.IntrospectResponse;
+import io.lumoauth.client.model.ParResponse;
+import io.lumoauth.client.model.RegisterClientResponse;
+import io.lumoauth.client.model.RegisteredClientMetadata;
+import io.lumoauth.client.model.SubmitLoginJsonResponse;
+import io.lumoauth.client.model.TokenResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +89,11 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +123,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,42 +153,53 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * OAuth 2.1 / OIDC authorization endpoint
+     * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public void authorize(@javax.annotation.Nonnull String orgId) throws ApiException {
-        authorizeWithHttpInfo(orgId);
+    public String authorize(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = authorizeWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * OAuth 2.1 / OIDC authorization endpoint
+     * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> authorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> authorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = authorizeValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * OAuth 2.1 / OIDC authorization endpoint (asynchronously)
+     * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -184,13 +208,18 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call authorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call authorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = authorizeValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -203,7 +232,11 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call backchannelAuthorizeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -233,6 +266,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -262,42 +296,53 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * CIBA backchannel authentication request
+     * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
+     * @return BackchannelAuthorizeResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public void backchannelAuthorize(@javax.annotation.Nonnull String orgId) throws ApiException {
-        backchannelAuthorizeWithHttpInfo(orgId);
+    public BackchannelAuthorizeResponse backchannelAuthorize(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<BackchannelAuthorizeResponse> localVarResp = backchannelAuthorizeWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * CIBA backchannel authentication request
+     * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;BackchannelAuthorizeResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<BackchannelAuthorizeResponse> backchannelAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * CIBA backchannel authentication request (asynchronously)
+     * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -306,13 +351,18 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authentication request accepted (CIBA Core §7.3). The hint is never confirmed: an unknown user yields an unstored auth_req_id of the same shape. interval is present for poll and ping delivery modes (always for agent-initiated requests). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request, unauthorized_client (CIBA not enabled for the client or plan), invalid_scope, missing_user_code / invalid_user_code or invalid_authorization_details. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> unauthorized_client (agent_id named but not authenticated by that agent) or access_denied. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests, or slow_down when the target user already has too many pending requests. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call backchannelAuthorizeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<BackchannelAuthorizeResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = backchannelAuthorizeValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<BackchannelAuthorizeResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -325,7 +375,10 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call deviceAuthorizationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -355,6 +408,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -384,42 +438,51 @@ public class OAuthApi {
     }
 
     /**
-     * Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
-     * The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+     * Device authorization request (RFC 8628)
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @param orgId  (required)
+     * @return DeviceAuthorizationResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public void deviceAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
-        deviceAuthorizationWithHttpInfo(orgId);
+    public DeviceAuthorizationResponse deviceAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<DeviceAuthorizationResponse> localVarResp = deviceAuthorizationWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
-     * The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+     * Device authorization request (RFC 8628)
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;DeviceAuthorizationResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<DeviceAuthorizationResponse> deviceAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<DeviceAuthorizationResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2) (asynchronously)
-     * The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+     * Device authorization request (RFC 8628) (asynchronously)
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -428,13 +491,17 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Device authorization response (RFC 8628 §3.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (client_id missing), invalid_client (unknown / inactive client), unauthorized_client (grant not allowed) or invalid_scope. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — a confidential client failed to authenticate. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call deviceAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<DeviceAuthorizationResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deviceAuthorizationValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<DeviceAuthorizationResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -448,7 +515,8 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered client metadata (OIDC Dynamic Client Registration §4.3). Never includes client_secret or registration_access_token; optional members are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — registration access token missing, invalid, for another client, or presented at a different issuer than the registration (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getClientConfigurationCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback _callback) throws ApiException {
@@ -479,6 +547,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -513,44 +582,49 @@ public class OAuthApi {
     }
 
     /**
-     * Client Configuration Endpoint per OIDC spec Section 4
-     * 
+     * Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+     * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
      * @param orgId  (required)
      * @param clientId  (required)
+     * @return RegisteredClientMetadata
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered client metadata (OIDC Dynamic Client Registration §4.3). Never includes client_secret or registration_access_token; optional members are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — registration access token missing, invalid, for another client, or presented at a different issuer than the registration (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
      </table>
      */
-    public void getClientConfiguration(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
-        getClientConfigurationWithHttpInfo(orgId, clientId);
+    public RegisteredClientMetadata getClientConfiguration(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+        ApiResponse<RegisteredClientMetadata> localVarResp = getClientConfigurationWithHttpInfo(orgId, clientId);
+        return localVarResp.getData();
     }
 
     /**
-     * Client Configuration Endpoint per OIDC spec Section 4
-     * 
+     * Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+     * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
      * @param orgId  (required)
      * @param clientId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RegisteredClientMetadata&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered client metadata (OIDC Dynamic Client Registration §4.3). Never includes client_secret or registration_access_token; optional members are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — registration access token missing, invalid, for another client, or presented at a different issuer than the registration (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getClientConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
+    public ApiResponse<RegisteredClientMetadata> getClientConfigurationWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId) throws ApiException {
         okhttp3.Call localVarCall = getClientConfigurationValidateBeforeCall(orgId, clientId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RegisteredClientMetadata>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Client Configuration Endpoint per OIDC spec Section 4 (asynchronously)
-     * 
+     * Read a dynamically registered client (RFC 7592 / OIDC DCR §4) (asynchronously)
+     * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
      * @param orgId  (required)
      * @param clientId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -560,13 +634,15 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Registered client metadata (OIDC Dynamic Client Registration §4.3). Never includes client_secret or registration_access_token; optional members are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — registration access token missing, invalid, for another client, or presented at a different issuer than the registration (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getClientConfigurationAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getClientConfigurationAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String clientId, final ApiCallback<RegisteredClientMetadata> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getClientConfigurationValidateBeforeCall(orgId, clientId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RegisteredClientMetadata>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -579,7 +655,9 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getDeviceVerificationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -609,6 +687,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -638,42 +717,49 @@ public class OAuthApi {
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3)
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Device verification page (RFC 8628 §3.3)
+     * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
-    public void getDeviceVerification(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getDeviceVerificationWithHttpInfo(orgId);
+    public String getDeviceVerification(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = getDeviceVerificationWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3)
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Device verification page (RFC 8628 §3.3)
+     * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getDeviceVerificationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> getDeviceVerificationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getDeviceVerificationValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3) (asynchronously)
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Device verification page (RFC 8628 §3.3) (asynchronously)
+     * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -682,13 +768,16 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getDeviceVerificationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getDeviceVerificationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getDeviceVerificationValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -701,7 +790,9 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call getOrgSelectionCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -731,6 +822,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -760,42 +852,49 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Organization selector page
+     * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public void getOrgSelection(@javax.annotation.Nonnull String orgId) throws ApiException {
-        getOrgSelectionWithHttpInfo(orgId);
+    public String getOrgSelection(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = getOrgSelectionWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Organization selector page
+     * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> getOrgSelectionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> getOrgSelectionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = getOrgSelectionValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Organization selector page (asynchronously)
+     * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -804,13 +903,16 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getOrgSelectionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call getOrgSelectionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getOrgSelectionValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -823,7 +925,10 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call introspectCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -853,6 +958,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -882,42 +988,51 @@ public class OAuthApi {
     }
 
     /**
-     * RFC 7662 - Token Introspection Endpoint
-     * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+     * Token introspection (RFC 7662)
+     * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @return IntrospectResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public void introspect(@javax.annotation.Nonnull String orgId) throws ApiException {
-        introspectWithHttpInfo(orgId);
+    public IntrospectResponse introspect(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<IntrospectResponse> localVarResp = introspectWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * RFC 7662 - Token Introspection Endpoint
-     * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+     * Token introspection (RFC 7662)
+     * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;IntrospectResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<IntrospectResponse> introspectWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<IntrospectResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * RFC 7662 - Token Introspection Endpoint (asynchronously)
-     * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+     * Token introspection (RFC 7662) (asynchronously)
+     * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -926,13 +1041,17 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Introspection response (RFC 7662 §2.2). An inactive, expired, revoked or unknown token yields only {\&quot;active\&quot;: false}. For an active token the optional members are present when known: username only for user-bound tokens; iss/aud only for tokens bound to a client; nbf/jti only for JWT access tokens; empty-string values are omitted. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — token parameter missing. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> Rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call introspectAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<IntrospectResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = introspectValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<IntrospectResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -945,7 +1064,10 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call parCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -975,6 +1097,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1004,42 +1127,51 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Pushed authorization request (RFC 9126)
+     * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
+     * @return ParResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public void par(@javax.annotation.Nonnull String orgId) throws ApiException {
-        parWithHttpInfo(orgId);
+    public ParResponse par(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<ParResponse> localVarResp = parWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Pushed authorization request (RFC 9126)
+     * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;ParResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> parWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<ParResponse> parWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = parValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<ParResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Pushed authorization request (RFC 9126) (asynchronously)
+     * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1048,13 +1180,17 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Pushed authorization request created (RFC 9126 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_target / invalid_request_object, or the tenant is unknown. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call parAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<ParResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = parValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<ParResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1067,7 +1203,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call passkeyLoginCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1126,15 +1262,15 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Passkey login entry point
+     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
      * @param orgId  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public void passkeyLogin(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1142,8 +1278,8 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Passkey login entry point
+     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
      * @param orgId  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1151,7 +1287,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public ApiResponse<Void> passkeyLoginWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -1160,8 +1296,8 @@ public class OAuthApi {
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Passkey login entry point (asynchronously)
+     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1170,7 +1306,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call passkeyLoginAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
@@ -1189,7 +1325,11 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call registerClientCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1219,6 +1359,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1248,42 +1389,53 @@ public class OAuthApi {
     }
 
     /**
-     * Client Registration Endpoint per OIDC spec Section 3
-     * 
+     * Dynamic client registration (RFC 7591 / OIDC DCR)
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      * @param orgId  (required)
+     * @return RegisterClientResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public void registerClient(@javax.annotation.Nonnull String orgId) throws ApiException {
-        registerClientWithHttpInfo(orgId);
+    public RegisterClientResponse registerClient(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<RegisterClientResponse> localVarResp = registerClientWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Client Registration Endpoint per OIDC spec Section 3
-     * 
+     * Dynamic client registration (RFC 7591 / OIDC DCR)
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;RegisterClientResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<RegisterClientResponse> registerClientWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Client Registration Endpoint per OIDC spec Section 3 (asynchronously)
-     * 
+     * Dynamic client registration (RFC 7591 / OIDC DCR) (asynchronously)
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1292,13 +1444,18 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> Client registered (OIDC Dynamic Client Registration §3.2). client_secret / client_secret_expires_at only for confidential clients; registration_access_token and registration_client_uri when a registration access token was issued; the remaining optional members echo registered metadata and are omitted when empty or at their default. Sent with Cache-Control: no-store. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (invalid JSON / unknown organization), invalid_client_metadata or invalid_redirect_uri. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> access_denied — initial access token required or invalid (WWW-Authenticate: Bearer). </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> access_denied — dynamic registration disabled for this organization, or the API key is not authorized for it. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call registerClientAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<RegisterClientResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = registerClientValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<RegisterClientResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1311,7 +1468,10 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call revokeCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1341,6 +1501,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1370,42 +1531,51 @@ public class OAuthApi {
     }
 
     /**
-     * RFC 7009 - Token Revocation Endpoint
-     * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+     * Token revocation (RFC 7009)
+     * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public void revoke(@javax.annotation.Nonnull String orgId) throws ApiException {
-        revokeWithHttpInfo(orgId);
+    public Object revoke(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<Object> localVarResp = revokeWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * RFC 7009 - Token Revocation Endpoint
-     * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+     * Token revocation (RFC 7009)
+     * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<Object> revokeWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * RFC 7009 - Token Revocation Endpoint (asynchronously)
-     * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+     * Token revocation (RFC 7009) (asynchronously)
+     * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1414,13 +1584,17 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Revocation acknowledged — always 200 with an empty JSON object, whether or not the token existed (RFC 7009 §2.2). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request (token parameter missing) or unsupported_token_type. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call revokeAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = revokeValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1434,7 +1608,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call socialCallbackCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider, final ApiCallback _callback) throws ApiException {
@@ -1499,8 +1673,8 @@ public class OAuthApi {
     }
 
     /**
-     * Handle social login callback from provider.
-     * 
+     * Social / enterprise identity-provider callback
+     * Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1508,7 +1682,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public void socialCallback(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider) throws ApiException {
@@ -1516,8 +1690,8 @@ public class OAuthApi {
     }
 
     /**
-     * Handle social login callback from provider.
-     * 
+     * Social / enterprise identity-provider callback
+     * Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @return ApiResponse&lt;Void&gt;
@@ -1526,7 +1700,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public ApiResponse<Void> socialCallbackWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider) throws ApiException {
@@ -1535,8 +1709,8 @@ public class OAuthApi {
     }
 
     /**
-     * Handle social login callback from provider. (asynchronously)
-     * 
+     * Social / enterprise identity-provider callback (asynchronously)
+     * Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1546,7 +1720,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call socialCallbackAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider, final ApiCallback<Void> _callback) throws ApiException {
@@ -1566,7 +1740,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call socialCallbackPostCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider, final ApiCallback _callback) throws ApiException {
@@ -1631,8 +1805,8 @@ public class OAuthApi {
     }
 
     /**
-     * Handle social login callback from provider.
-     * 
+     * Social / enterprise identity-provider callback (form_post)
+     * Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1640,7 +1814,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public void socialCallbackPost(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider) throws ApiException {
@@ -1648,8 +1822,8 @@ public class OAuthApi {
     }
 
     /**
-     * Handle social login callback from provider.
-     * 
+     * Social / enterprise identity-provider callback (form_post)
+     * Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @return ApiResponse&lt;Void&gt;
@@ -1658,7 +1832,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public ApiResponse<Void> socialCallbackPostWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider) throws ApiException {
@@ -1667,8 +1841,8 @@ public class OAuthApi {
     }
 
     /**
-     * Handle social login callback from provider. (asynchronously)
-     * 
+     * Social / enterprise identity-provider callback (form_post) (asynchronously)
+     * Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1678,7 +1852,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect: on success to the safe redirect target carried in the state (or the portal), to the MFA challenge when a second factor is required, to the login page with a verification notice when the signup must first be confirmed by email, or back to the hosted login page with a flash message on any failure. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call socialCallbackPostAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider, final ApiCallback<Void> _callback) throws ApiException {
@@ -1698,7 +1872,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the external provider&#39;s authorization endpoint — or back to the hosted login page when the organization, provider or redirect target is invalid. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call socialLoginCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider, final ApiCallback _callback) throws ApiException {
@@ -1763,8 +1937,8 @@ public class OAuthApi {
     }
 
     /**
-     * Initiate social login flow.
-     * Redirects to the external provider&#39;s authorization endpoint.
+     * Start social / enterprise identity-provider login
+     * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1772,7 +1946,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the external provider&#39;s authorization endpoint — or back to the hosted login page when the organization, provider or redirect target is invalid. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public void socialLogin(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider) throws ApiException {
@@ -1780,8 +1954,8 @@ public class OAuthApi {
     }
 
     /**
-     * Initiate social login flow.
-     * Redirects to the external provider&#39;s authorization endpoint.
+     * Start social / enterprise identity-provider login
+     * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @return ApiResponse&lt;Void&gt;
@@ -1790,7 +1964,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the external provider&#39;s authorization endpoint — or back to the hosted login page when the organization, provider or redirect target is invalid. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public ApiResponse<Void> socialLoginWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider) throws ApiException {
@@ -1799,8 +1973,8 @@ public class OAuthApi {
     }
 
     /**
-     * Initiate social login flow. (asynchronously)
-     * Redirects to the external provider&#39;s authorization endpoint.
+     * Start social / enterprise identity-provider login (asynchronously)
+     * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
      * @param orgId  (required)
      * @param provider  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -1810,7 +1984,7 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the external provider&#39;s authorization endpoint — or back to the hosted login page when the organization, provider or redirect target is invalid. </td><td>  * Location -  <br>  </td></tr>
      </table>
      */
     public okhttp3.Call socialLoginAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String provider, final ApiCallback<Void> _callback) throws ApiException {
@@ -1829,7 +2003,11 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitAuthorizationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1859,6 +2037,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1888,42 +2067,53 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * OAuth 2.1 / OIDC authorization endpoint (form submission)
+     * Same as GET; also receives the consent form submission. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public void submitAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
-        submitAuthorizationWithHttpInfo(orgId);
+    public String submitAuthorization(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = submitAuthorizationWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * OAuth 2.1 / OIDC authorization endpoint (form submission)
+     * Same as GET; also receives the consent form submission. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> submitAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> submitAuthorizationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = submitAuthorizationValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * OAuth 2.1 / OIDC authorization endpoint (form submission) (asynchronously)
+     * Same as GET; also receives the consent form submission. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1932,13 +2122,18 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: the hosted login page, the consent page, the auto-submitting form for response_mode&#x3D;form_post, or an error page (unrecoverable requests are rendered as HTML errors instead of redirecting). </td><td>  -  </td></tr>
+        <tr><td> 303 </td><td> Authorization response delivered to the client&#39;s redirect_uri in the query (default) or fragment, carrying code, state and iss (or error / error_description) — JARM modes carry a single response JWT. A session_state cookie accompanies successful responses. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 302 </td><td> Interstitial redirect: to the hosted login page, a social identity provider, the MFA / step-up challenge, the organization selector, or to logout for prompt&#x3D;login. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 400 </td><td> HTML error page for malformed requests (unknown client, unregistered redirect_uri, invalid request object, …). </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (JSON). </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call submitAuthorizationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = submitAuthorizationValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -1951,7 +2146,9 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitDeviceVerificationCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -1981,6 +2178,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2010,42 +2208,49 @@ public class OAuthApi {
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3)
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Submit device verification
+     * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
-    public void submitDeviceVerification(@javax.annotation.Nonnull String orgId) throws ApiException {
-        submitDeviceVerificationWithHttpInfo(orgId);
+    public String submitDeviceVerification(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = submitDeviceVerificationWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3)
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Submit device verification
+     * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> submitDeviceVerificationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> submitDeviceVerificationWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = submitDeviceVerificationValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3) (asynchronously)
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Submit device verification (asynchronously)
+     * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -2054,13 +2259,16 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML page: code entry form (with inline validation errors), the device consent page, or the success / denied / error result page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page when no user session exists; the browser returns here after sign-in. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 429 </td><td> HTML error page — too many attempts. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitDeviceVerificationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call submitDeviceVerificationAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = submitDeviceVerificationValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2073,7 +2281,8 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitLoginCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2132,15 +2341,16 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Hosted login form submission
+     * Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
      * @param orgId  (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public void submitLogin(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2148,8 +2358,8 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Hosted login form submission
+     * Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
      * @param orgId  (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -2157,7 +2367,8 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<Void> submitLoginWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
@@ -2166,8 +2377,8 @@ public class OAuthApi {
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Hosted login form submission (asynchronously)
+     * Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -2176,7 +2387,8 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to /oauth/authorize with the original client_id, redirect_uri, state, scope, PKCE and nonce parameters. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitLoginAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
@@ -2195,7 +2407,12 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitLoginJsonCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2225,6 +2442,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2254,42 +2472,55 @@ public class OAuthApi {
     }
 
     /**
-     * JSON credential login, for applications that render their own sign-in form.
-     * The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+     * Programmatic (JSON) login for the authorization flow
+     * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
+     * @return SubmitLoginJsonResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public void submitLoginJson(@javax.annotation.Nonnull String orgId) throws ApiException {
-        submitLoginJsonWithHttpInfo(orgId);
+    public SubmitLoginJsonResponse submitLoginJson(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<SubmitLoginJsonResponse> localVarResp = submitLoginJsonWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * JSON credential login, for applications that render their own sign-in form.
-     * The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+     * Programmatic (JSON) login for the authorization flow
+     * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;SubmitLoginJsonResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> submitLoginJsonWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<SubmitLoginJsonResponse> submitLoginJsonWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<SubmitLoginJsonResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * JSON credential login, for applications that render their own sign-in form. (asynchronously)
-     * The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+     * Programmatic (JSON) login for the authorization flow (asynchronously)
+     * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -2298,13 +2529,19 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Signed in (status&#x3D;complete — continue to /oauth/authorize) or a second factor is required (status&#x3D;mfa_required with the challenge page URL). </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> {\&quot;status\&quot;:\&quot;invalid_request\&quot;} or {\&quot;status\&quot;:\&quot;captcha_required\&quot;,\&quot;message\&quot;:…}. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> {\&quot;status\&quot;:\&quot;blocked\&quot;} or {\&quot;status\&quot;:\&quot;inactive\&quot;}. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> {\&quot;status\&quot;:\&quot;not_found\&quot;} — unknown or inactive organization. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> {\&quot;status\&quot;:\&quot;rate_limited\&quot;}. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitLoginJsonAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call submitLoginJsonAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<SubmitLoginJsonResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = submitLoginJsonValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<SubmitLoginJsonResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2317,7 +2554,9 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call submitOrgSelectionCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2347,6 +2586,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "text/html"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2376,42 +2616,49 @@ public class OAuthApi {
     }
 
     /**
-     * 
-     * 
+     * Submit organization selection
+     * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
      * @param orgId  (required)
+     * @return String
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public void submitOrgSelection(@javax.annotation.Nonnull String orgId) throws ApiException {
-        submitOrgSelectionWithHttpInfo(orgId);
+    public String submitOrgSelection(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<String> localVarResp = submitOrgSelectionWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
-     * 
+     * Submit organization selection
+     * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> submitOrgSelectionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<String> submitOrgSelectionWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = submitOrgSelectionValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
-     * 
+     * Submit organization selection (asynchronously)
+     * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -2420,13 +2667,16 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> HTML organization selector page. </td><td>  -  </td></tr>
+        <tr><td> 302 </td><td> Redirect to the hosted login page (no session) or back to /oauth/authorize once an organization is selected or none needs selecting. </td><td>  * Location -  <br>  </td></tr>
+        <tr><td> 404 </td><td> Unknown organization. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call submitOrgSelectionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call submitOrgSelectionAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<String> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = submitOrgSelectionValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -2439,7 +2689,10 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call tokenCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -2469,6 +2722,7 @@ public class OAuthApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -2498,42 +2752,51 @@ public class OAuthApi {
     }
 
     /**
-     * OAuth 2.1 Token Endpoint
-     * 
+     * OAuth 2.1 token endpoint
+     * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
+     * @return TokenResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public void token(@javax.annotation.Nonnull String orgId) throws ApiException {
-        tokenWithHttpInfo(orgId);
+    public TokenResponse token(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<TokenResponse> localVarResp = tokenWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * OAuth 2.1 Token Endpoint
-     * 
+     * OAuth 2.1 token endpoint
+     * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;TokenResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<TokenResponse> tokenWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<TokenResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * OAuth 2.1 Token Endpoint (asynchronously)
-     * 
+     * OAuth 2.1 token endpoint (asynchronously)
+     * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -2542,13 +2805,17 @@ public class OAuthApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Token response (RFC 6749 §5.1). Which optional members are present depends on the grant: refresh_token only when the client may use the refresh_token grant; id_token for authorization_code / CIBA / device grants with the openid scope; issued_token_type for token exchange (including ID-JAG and Txn-Token, whose token_type is N_A and which carry no scope unless scopes were granted); authorization_details, jit_request_id and task_id only for agent-initiated CIBA. Always sent with Cache-Control: no-store. </td><td>  * DPoP-Nonce - Fresh server nonce when the request carried a DPoP proof (RFC 9449 §8). <br>  </td></tr>
+        <tr><td> 400 </td><td> invalid_request / invalid_grant / unsupported_grant_type / invalid_scope (RFC 6749 §5.2). </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_client — client authentication failed. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests — rate limit exceeded. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call tokenAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<TokenResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = tokenValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<TokenResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

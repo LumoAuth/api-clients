@@ -24,7 +24,9 @@ import (
 type WellKnownAPI interface {
 
 	/*
-	GetAuthorizationServerMetadata Method for GetAuthorizationServerMetadata
+	GetAuthorizationServerMetadata OAuth 2.0 authorization server metadata (RFC 8414)
+
+	Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,10 +35,13 @@ type WellKnownAPI interface {
 	GetAuthorizationServerMetadata(ctx context.Context, orgId string) ApiGetAuthorizationServerMetadataRequest
 
 	// GetAuthorizationServerMetadataExecute executes the request
-	GetAuthorizationServerMetadataExecute(r ApiGetAuthorizationServerMetadataRequest) (*http.Response, error)
+	//  @return AuthorizationServerMetadata
+	GetAuthorizationServerMetadataExecute(r ApiGetAuthorizationServerMetadataRequest) (*AuthorizationServerMetadata, *http.Response, error)
 
 	/*
-	GetJwks Method for GetJwks
+	GetJwks JSON Web Key Set (RFC 7517)
+
+	Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -45,10 +50,13 @@ type WellKnownAPI interface {
 	GetJwks(ctx context.Context, orgId string) ApiGetJwksRequest
 
 	// GetJwksExecute executes the request
-	GetJwksExecute(r ApiGetJwksRequest) (*http.Response, error)
+	//  @return JsonWebKeySet
+	GetJwksExecute(r ApiGetJwksRequest) (*JsonWebKeySet, *http.Response, error)
 
 	/*
-	GetOpenidConfiguration Method for GetOpenidConfiguration
+	GetOpenidConfiguration OpenID Provider configuration (OIDC Discovery 1.0)
+
+	Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -57,10 +65,11 @@ type WellKnownAPI interface {
 	GetOpenidConfiguration(ctx context.Context, orgId string) ApiGetOpenidConfigurationRequest
 
 	// GetOpenidConfigurationExecute executes the request
-	GetOpenidConfigurationExecute(r ApiGetOpenidConfigurationRequest) (*http.Response, error)
+	//  @return OpenIdConfiguration
+	GetOpenidConfigurationExecute(r ApiGetOpenidConfigurationRequest) (*OpenIdConfiguration, *http.Response, error)
 
 	/*
-	GetSsfConfiguration Method for GetSsfConfiguration
+	GetSsfConfiguration SSF transmitter configuration metadata
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -69,7 +78,8 @@ type WellKnownAPI interface {
 	GetSsfConfiguration(ctx context.Context, orgId string) ApiGetSsfConfigurationRequest
 
 	// GetSsfConfigurationExecute executes the request
-	GetSsfConfigurationExecute(r ApiGetSsfConfigurationRequest) (*http.Response, error)
+	//  @return GetSsfConfigurationResponse
+	GetSsfConfigurationExecute(r ApiGetSsfConfigurationRequest) (*GetSsfConfigurationResponse, *http.Response, error)
 }
 
 // WellKnownAPIService WellKnownAPI service
@@ -81,12 +91,14 @@ type ApiGetAuthorizationServerMetadataRequest struct {
 	orgId string
 }
 
-func (r ApiGetAuthorizationServerMetadataRequest) Execute() (*http.Response, error) {
+func (r ApiGetAuthorizationServerMetadataRequest) Execute() (*AuthorizationServerMetadata, *http.Response, error) {
 	return r.ApiService.GetAuthorizationServerMetadataExecute(r)
 }
 
 /*
-GetAuthorizationServerMetadata Method for GetAuthorizationServerMetadata
+GetAuthorizationServerMetadata OAuth 2.0 authorization server metadata (RFC 8414)
+
+Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -101,16 +113,18 @@ func (a *WellKnownAPIService) GetAuthorizationServerMetadata(ctx context.Context
 }
 
 // Execute executes the request
-func (a *WellKnownAPIService) GetAuthorizationServerMetadataExecute(r ApiGetAuthorizationServerMetadataRequest) (*http.Response, error) {
+//  @return AuthorizationServerMetadata
+func (a *WellKnownAPIService) GetAuthorizationServerMetadataExecute(r ApiGetAuthorizationServerMetadataRequest) (*AuthorizationServerMetadata, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AuthorizationServerMetadata
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WellKnownAPIService.GetAuthorizationServerMetadata")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/.well-known/oauth-authorization-server"
@@ -130,7 +144,7 @@ func (a *WellKnownAPIService) GetAuthorizationServerMetadataExecute(r ApiGetAuth
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -139,19 +153,19 @@ func (a *WellKnownAPIService) GetAuthorizationServerMetadataExecute(r ApiGetAuth
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -159,10 +173,19 @@ func (a *WellKnownAPIService) GetAuthorizationServerMetadataExecute(r ApiGetAuth
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetJwksRequest struct {
@@ -171,12 +194,14 @@ type ApiGetJwksRequest struct {
 	orgId string
 }
 
-func (r ApiGetJwksRequest) Execute() (*http.Response, error) {
+func (r ApiGetJwksRequest) Execute() (*JsonWebKeySet, *http.Response, error) {
 	return r.ApiService.GetJwksExecute(r)
 }
 
 /*
-GetJwks Method for GetJwks
+GetJwks JSON Web Key Set (RFC 7517)
+
+Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -191,16 +216,18 @@ func (a *WellKnownAPIService) GetJwks(ctx context.Context, orgId string) ApiGetJ
 }
 
 // Execute executes the request
-func (a *WellKnownAPIService) GetJwksExecute(r ApiGetJwksRequest) (*http.Response, error) {
+//  @return JsonWebKeySet
+func (a *WellKnownAPIService) GetJwksExecute(r ApiGetJwksRequest) (*JsonWebKeySet, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *JsonWebKeySet
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WellKnownAPIService.GetJwks")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/.well-known/jwks.json"
@@ -220,7 +247,7 @@ func (a *WellKnownAPIService) GetJwksExecute(r ApiGetJwksRequest) (*http.Respons
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -229,19 +256,19 @@ func (a *WellKnownAPIService) GetJwksExecute(r ApiGetJwksRequest) (*http.Respons
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -249,10 +276,19 @@ func (a *WellKnownAPIService) GetJwksExecute(r ApiGetJwksRequest) (*http.Respons
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetOpenidConfigurationRequest struct {
@@ -261,12 +297,14 @@ type ApiGetOpenidConfigurationRequest struct {
 	orgId string
 }
 
-func (r ApiGetOpenidConfigurationRequest) Execute() (*http.Response, error) {
+func (r ApiGetOpenidConfigurationRequest) Execute() (*OpenIdConfiguration, *http.Response, error) {
 	return r.ApiService.GetOpenidConfigurationExecute(r)
 }
 
 /*
-GetOpenidConfiguration Method for GetOpenidConfiguration
+GetOpenidConfiguration OpenID Provider configuration (OIDC Discovery 1.0)
+
+Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization's custom domain when one is active.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -281,16 +319,18 @@ func (a *WellKnownAPIService) GetOpenidConfiguration(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *WellKnownAPIService) GetOpenidConfigurationExecute(r ApiGetOpenidConfigurationRequest) (*http.Response, error) {
+//  @return OpenIdConfiguration
+func (a *WellKnownAPIService) GetOpenidConfigurationExecute(r ApiGetOpenidConfigurationRequest) (*OpenIdConfiguration, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *OpenIdConfiguration
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WellKnownAPIService.GetOpenidConfiguration")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/.well-known/openid-configuration"
@@ -310,7 +350,7 @@ func (a *WellKnownAPIService) GetOpenidConfigurationExecute(r ApiGetOpenidConfig
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -319,19 +359,19 @@ func (a *WellKnownAPIService) GetOpenidConfigurationExecute(r ApiGetOpenidConfig
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -339,10 +379,19 @@ func (a *WellKnownAPIService) GetOpenidConfigurationExecute(r ApiGetOpenidConfig
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetSsfConfigurationRequest struct {
@@ -351,12 +400,12 @@ type ApiGetSsfConfigurationRequest struct {
 	orgId string
 }
 
-func (r ApiGetSsfConfigurationRequest) Execute() (*http.Response, error) {
+func (r ApiGetSsfConfigurationRequest) Execute() (*GetSsfConfigurationResponse, *http.Response, error) {
 	return r.ApiService.GetSsfConfigurationExecute(r)
 }
 
 /*
-GetSsfConfiguration Method for GetSsfConfiguration
+GetSsfConfiguration SSF transmitter configuration metadata
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -371,16 +420,18 @@ func (a *WellKnownAPIService) GetSsfConfiguration(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *WellKnownAPIService) GetSsfConfigurationExecute(r ApiGetSsfConfigurationRequest) (*http.Response, error) {
+//  @return GetSsfConfigurationResponse
+func (a *WellKnownAPIService) GetSsfConfigurationExecute(r ApiGetSsfConfigurationRequest) (*GetSsfConfigurationResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetSsfConfigurationResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "WellKnownAPIService.GetSsfConfiguration")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/.well-known/ssf-configuration"
@@ -400,7 +451,7 @@ func (a *WellKnownAPIService) GetSsfConfigurationExecute(r ApiGetSsfConfiguratio
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -409,19 +460,19 @@ func (a *WellKnownAPIService) GetSsfConfigurationExecute(r ApiGetSsfConfiguratio
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -429,8 +480,17 @@ func (a *WellKnownAPIService) GetSsfConfigurationExecute(r ApiGetSsfConfiguratio
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

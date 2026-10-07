@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAnalyticsDashboard(orgId);
+            //var response = instance.AdminAnalyticsDashboard(orgId);
+            //Assert.IsType<AdminAnalyticsDashboardResponse>(response);
         }
 
         /// <summary>
@@ -71,7 +74,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAnalyticsLogins(orgId);
+            //int? days = null;
+            //var response = instance.AdminAnalyticsLogins(orgId, days);
+            //Assert.IsType<AdminAnalyticsLoginsResponse>(response);
         }
 
         /// <summary>
@@ -82,7 +87,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminAnalyticsUsers(orgId);
+            //int? days = null;
+            //var response = instance.AdminAnalyticsUsers(orgId, days);
+            //Assert.IsType<AdminAnalyticsUsersResponse>(response);
         }
 
         /// <summary>
@@ -93,7 +100,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminOrganizationGet(orgId);
+            //var response = instance.AdminOrganizationGet(orgId);
+            //Assert.IsType<AdminTenantGetResponse>(response);
         }
 
         /// <summary>
@@ -104,7 +112,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsAll(orgId);
+            //var response = instance.AdminSettingsAll(orgId);
+            //Assert.IsType<AdminSettingsAllResponse>(response);
         }
 
         /// <summary>
@@ -115,7 +124,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsAuthGet(orgId);
+            //var response = instance.AdminSettingsAuthGet(orgId);
+            //Assert.IsType<AdminSettingsAuthenticationGetResponse>(response);
         }
 
         /// <summary>
@@ -126,7 +136,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsAuthenticationGet(orgId);
+            //var response = instance.AdminSettingsAuthenticationGet(orgId);
+            //Assert.IsType<AdminSettingsAuthenticationGetResponse>(response);
         }
 
         /// <summary>
@@ -137,7 +148,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsBrandingGet(orgId);
+            //var response = instance.AdminSettingsBrandingGet(orgId);
+            //Assert.IsType<AdminSettingsBrandingGetResponse>(response);
         }
 
         /// <summary>
@@ -148,7 +160,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsEmailGet(orgId);
+            //var response = instance.AdminSettingsEmailGet(orgId);
+            //Assert.IsType<AdminSettingsEmailGetResponse>(response);
         }
 
         /// <summary>
@@ -159,7 +172,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsGeneralGet(orgId);
+            //var response = instance.AdminSettingsGeneralGet(orgId);
+            //Assert.IsType<AdminSettingsGeneralGetResponse>(response);
         }
 
         /// <summary>
@@ -170,7 +184,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsScimGet(orgId);
+            //var response = instance.AdminSettingsScimGet(orgId);
+            //Assert.IsType<AdminSettingsScimGetResponse>(response);
         }
 
         /// <summary>
@@ -181,7 +196,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminSettingsSecurityGet(orgId);
+            //var response = instance.AdminSettingsSecurityGet(orgId);
+            //Assert.IsType<AdminSettingsSecurityGetResponse>(response);
         }
 
         /// <summary>
@@ -192,7 +208,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminTenantGet(orgId);
+            //var response = instance.AdminTenantGet(orgId);
+            //Assert.IsType<AdminTenantGetResponse>(response);
         }
 
         /// <summary>
@@ -203,7 +220,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminOrganizationUpdate(orgId);
+            //var response = instance.PatchAdminOrganizationUpdate(orgId);
+            //Assert.IsType<PutAdminTenantUpdateResponse>(response);
         }
 
         /// <summary>
@@ -214,7 +232,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsAuthUpdate(orgId);
+            //var response = instance.PatchAdminSettingsAuthUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsAuthenticationUpdateResponse>(response);
         }
 
         /// <summary>
@@ -225,7 +244,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsAuthenticationUpdate(orgId);
+            //var response = instance.PatchAdminSettingsAuthenticationUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsAuthenticationUpdateResponse>(response);
         }
 
         /// <summary>
@@ -236,7 +256,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsBrandingUpdate(orgId);
+            //var response = instance.PatchAdminSettingsBrandingUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsBrandingUpdateResponse>(response);
         }
 
         /// <summary>
@@ -247,7 +268,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsEmailUpdate(orgId);
+            //var response = instance.PatchAdminSettingsEmailUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsEmailUpdateResponse>(response);
         }
 
         /// <summary>
@@ -258,7 +280,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsGeneralUpdate(orgId);
+            //var response = instance.PatchAdminSettingsGeneralUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsGeneralUpdateResponse>(response);
         }
 
         /// <summary>
@@ -269,7 +292,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsScimUpdate(orgId);
+            //var response = instance.PatchAdminSettingsScimUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsScimUpdateResponse>(response);
         }
 
         /// <summary>
@@ -280,7 +304,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminSettingsSecurityUpdate(orgId);
+            //var response = instance.PatchAdminSettingsSecurityUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsSecurityUpdateResponse>(response);
         }
 
         /// <summary>
@@ -291,7 +316,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PatchAdminTenantUpdate(orgId);
+            //var response = instance.PatchAdminTenantUpdate(orgId);
+            //Assert.IsType<PutAdminTenantUpdateResponse>(response);
         }
 
         /// <summary>
@@ -302,7 +328,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminOrganizationUpdate(orgId);
+            //var response = instance.PutAdminOrganizationUpdate(orgId);
+            //Assert.IsType<PutAdminTenantUpdateResponse>(response);
         }
 
         /// <summary>
@@ -313,7 +340,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsAuthUpdate(orgId);
+            //var response = instance.PutAdminSettingsAuthUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsAuthenticationUpdateResponse>(response);
         }
 
         /// <summary>
@@ -324,7 +352,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsAuthenticationUpdate(orgId);
+            //var response = instance.PutAdminSettingsAuthenticationUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsAuthenticationUpdateResponse>(response);
         }
 
         /// <summary>
@@ -335,7 +364,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsBrandingUpdate(orgId);
+            //var response = instance.PutAdminSettingsBrandingUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsBrandingUpdateResponse>(response);
         }
 
         /// <summary>
@@ -346,7 +376,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsEmailUpdate(orgId);
+            //var response = instance.PutAdminSettingsEmailUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsEmailUpdateResponse>(response);
         }
 
         /// <summary>
@@ -357,7 +388,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsGeneralUpdate(orgId);
+            //var response = instance.PutAdminSettingsGeneralUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsGeneralUpdateResponse>(response);
         }
 
         /// <summary>
@@ -368,7 +400,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsScimUpdate(orgId);
+            //var response = instance.PutAdminSettingsScimUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsScimUpdateResponse>(response);
         }
 
         /// <summary>
@@ -379,7 +412,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminSettingsSecurityUpdate(orgId);
+            //var response = instance.PutAdminSettingsSecurityUpdate(orgId);
+            //Assert.IsType<PutAdminSettingsSecurityUpdateResponse>(response);
         }
 
         /// <summary>
@@ -390,7 +424,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.PutAdminTenantUpdate(orgId);
+            //var response = instance.PutAdminTenantUpdate(orgId);
+            //Assert.IsType<PutAdminTenantUpdateResponse>(response);
         }
     }
 }

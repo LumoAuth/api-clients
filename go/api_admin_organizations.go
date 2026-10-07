@@ -24,7 +24,7 @@ import (
 type AdminOrganizationsAPI interface {
 
 	/*
-	AdminOrgInvitationsCreate Method for AdminOrgInvitationsCreate
+	AdminOrgInvitationsCreate Invite a user to an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -34,10 +34,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgInvitationsCreate(ctx context.Context, orgId string, organizationId string) ApiAdminOrgInvitationsCreateRequest
 
 	// AdminOrgInvitationsCreateExecute executes the request
-	AdminOrgInvitationsCreateExecute(r ApiAdminOrgInvitationsCreateRequest) (*http.Response, error)
+	//  @return AdminOrgInvitationsCreateResponse
+	AdminOrgInvitationsCreateExecute(r ApiAdminOrgInvitationsCreateRequest) (*AdminOrgInvitationsCreateResponse, *http.Response, error)
 
 	/*
-	AdminOrgInvitationsList Method for AdminOrgInvitationsList
+	AdminOrgInvitationsList List organization invitations
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -47,10 +48,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgInvitationsList(ctx context.Context, orgId string, organizationId string) ApiAdminOrgInvitationsListRequest
 
 	// AdminOrgInvitationsListExecute executes the request
-	AdminOrgInvitationsListExecute(r ApiAdminOrgInvitationsListRequest) (*http.Response, error)
+	//  @return AdminOrgInvitationsListResponse
+	AdminOrgInvitationsListExecute(r ApiAdminOrgInvitationsListRequest) (*AdminOrgInvitationsListResponse, *http.Response, error)
 
 	/*
-	AdminOrgInvitationsResend Method for AdminOrgInvitationsResend
+	AdminOrgInvitationsResend Resend an invitation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -61,10 +63,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgInvitationsResend(ctx context.Context, orgId string, organizationId string, invId string) ApiAdminOrgInvitationsResendRequest
 
 	// AdminOrgInvitationsResendExecute executes the request
-	AdminOrgInvitationsResendExecute(r ApiAdminOrgInvitationsResendRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminOrgInvitationsResendExecute(r ApiAdminOrgInvitationsResendRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminOrgInvitationsRevoke Method for AdminOrgInvitationsRevoke
+	AdminOrgInvitationsRevoke Revoke an invitation
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -75,10 +78,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgInvitationsRevoke(ctx context.Context, orgId string, organizationId string, invId string) ApiAdminOrgInvitationsRevokeRequest
 
 	// AdminOrgInvitationsRevokeExecute executes the request
-	AdminOrgInvitationsRevokeExecute(r ApiAdminOrgInvitationsRevokeRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminOrgInvitationsRevokeExecute(r ApiAdminOrgInvitationsRevokeRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminOrgMembersAdd Method for AdminOrgMembersAdd
+	AdminOrgMembersAdd Add a member to an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -88,10 +92,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgMembersAdd(ctx context.Context, orgId string, organizationId string) ApiAdminOrgMembersAddRequest
 
 	// AdminOrgMembersAddExecute executes the request
-	AdminOrgMembersAddExecute(r ApiAdminOrgMembersAddRequest) (*http.Response, error)
+	//  @return AdminOrgMembersAddResponse
+	AdminOrgMembersAddExecute(r ApiAdminOrgMembersAddRequest) (*AdminOrgMembersAddResponse, *http.Response, error)
 
 	/*
-	AdminOrgMembersList Method for AdminOrgMembersList
+	AdminOrgMembersList List organization members
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -101,10 +106,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgMembersList(ctx context.Context, orgId string, organizationId string) ApiAdminOrgMembersListRequest
 
 	// AdminOrgMembersListExecute executes the request
-	AdminOrgMembersListExecute(r ApiAdminOrgMembersListRequest) (*http.Response, error)
+	//  @return AdminOrgMembersListResponse
+	AdminOrgMembersListExecute(r ApiAdminOrgMembersListRequest) (*AdminOrgMembersListResponse, *http.Response, error)
 
 	/*
-	AdminOrgMembersRemove Method for AdminOrgMembersRemove
+	AdminOrgMembersRemove Remove a member from an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -115,10 +121,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgMembersRemove(ctx context.Context, orgId string, organizationId string, userId string) ApiAdminOrgMembersRemoveRequest
 
 	// AdminOrgMembersRemoveExecute executes the request
-	AdminOrgMembersRemoveExecute(r ApiAdminOrgMembersRemoveRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminOrgMembersRemoveExecute(r ApiAdminOrgMembersRemoveRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminOrgRolesCreate Method for AdminOrgRolesCreate
+	AdminOrgRolesCreate Create an organization role
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -128,10 +135,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgRolesCreate(ctx context.Context, orgId string, organizationId string) ApiAdminOrgRolesCreateRequest
 
 	// AdminOrgRolesCreateExecute executes the request
-	AdminOrgRolesCreateExecute(r ApiAdminOrgRolesCreateRequest) (*http.Response, error)
+	//  @return AdminOrgRolesCreateResponse
+	AdminOrgRolesCreateExecute(r ApiAdminOrgRolesCreateRequest) (*AdminOrgRolesCreateResponse, *http.Response, error)
 
 	/*
-	AdminOrgRolesDelete Method for AdminOrgRolesDelete
+	AdminOrgRolesDelete Delete an organization role
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -142,10 +150,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgRolesDelete(ctx context.Context, orgId string, organizationId string, roleId string) ApiAdminOrgRolesDeleteRequest
 
 	// AdminOrgRolesDeleteExecute executes the request
-	AdminOrgRolesDeleteExecute(r ApiAdminOrgRolesDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminOrgRolesDeleteExecute(r ApiAdminOrgRolesDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminOrgRolesList Method for AdminOrgRolesList
+	AdminOrgRolesList List organization roles
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -155,10 +164,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrgRolesList(ctx context.Context, orgId string, organizationId string) ApiAdminOrgRolesListRequest
 
 	// AdminOrgRolesListExecute executes the request
-	AdminOrgRolesListExecute(r ApiAdminOrgRolesListRequest) (*http.Response, error)
+	//  @return AdminOrgRolesListResponse
+	AdminOrgRolesListExecute(r ApiAdminOrgRolesListRequest) (*AdminOrgRolesListResponse, *http.Response, error)
 
 	/*
-	AdminOrganizationsCreate Method for AdminOrganizationsCreate
+	AdminOrganizationsCreate Create an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -167,10 +177,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrganizationsCreate(ctx context.Context, orgId string) ApiAdminOrganizationsCreateRequest
 
 	// AdminOrganizationsCreateExecute executes the request
-	AdminOrganizationsCreateExecute(r ApiAdminOrganizationsCreateRequest) (*http.Response, error)
+	//  @return AdminOrganizationsCreateResponse
+	AdminOrganizationsCreateExecute(r ApiAdminOrganizationsCreateRequest) (*AdminOrganizationsCreateResponse, *http.Response, error)
 
 	/*
-	AdminOrganizationsDelete Method for AdminOrganizationsDelete
+	AdminOrganizationsDelete Delete an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -180,10 +191,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrganizationsDelete(ctx context.Context, orgId string, organizationId string) ApiAdminOrganizationsDeleteRequest
 
 	// AdminOrganizationsDeleteExecute executes the request
-	AdminOrganizationsDeleteExecute(r ApiAdminOrganizationsDeleteRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminOrganizationsDeleteExecute(r ApiAdminOrganizationsDeleteRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminOrganizationsGet Method for AdminOrganizationsGet
+	AdminOrganizationsGet Get an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -193,10 +205,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrganizationsGet(ctx context.Context, orgId string, organizationId string) ApiAdminOrganizationsGetRequest
 
 	// AdminOrganizationsGetExecute executes the request
-	AdminOrganizationsGetExecute(r ApiAdminOrganizationsGetRequest) (*http.Response, error)
+	//  @return AdminOrganizationsGetResponse
+	AdminOrganizationsGetExecute(r ApiAdminOrganizationsGetRequest) (*AdminOrganizationsGetResponse, *http.Response, error)
 
 	/*
-	AdminOrganizationsList Method for AdminOrganizationsList
+	AdminOrganizationsList List organizations
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -205,10 +218,11 @@ type AdminOrganizationsAPI interface {
 	AdminOrganizationsList(ctx context.Context, orgId string) ApiAdminOrganizationsListRequest
 
 	// AdminOrganizationsListExecute executes the request
-	AdminOrganizationsListExecute(r ApiAdminOrganizationsListRequest) (*http.Response, error)
+	//  @return AdminOrganizationsListResponse
+	AdminOrganizationsListExecute(r ApiAdminOrganizationsListRequest) (*AdminOrganizationsListResponse, *http.Response, error)
 
 	/*
-	PatchAdminOrgMembersUpdate Method for PatchAdminOrgMembersUpdate
+	PatchAdminOrgMembersUpdate Update a member's role or status
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -219,10 +233,11 @@ type AdminOrganizationsAPI interface {
 	PatchAdminOrgMembersUpdate(ctx context.Context, orgId string, organizationId string, userId string) ApiPatchAdminOrgMembersUpdateRequest
 
 	// PatchAdminOrgMembersUpdateExecute executes the request
-	PatchAdminOrgMembersUpdateExecute(r ApiPatchAdminOrgMembersUpdateRequest) (*http.Response, error)
+	//  @return PutAdminOrgMembersUpdateResponse
+	PatchAdminOrgMembersUpdateExecute(r ApiPatchAdminOrgMembersUpdateRequest) (*PutAdminOrgMembersUpdateResponse, *http.Response, error)
 
 	/*
-	PatchAdminOrgRolesUpdate Method for PatchAdminOrgRolesUpdate
+	PatchAdminOrgRolesUpdate Update an organization role
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -233,10 +248,11 @@ type AdminOrganizationsAPI interface {
 	PatchAdminOrgRolesUpdate(ctx context.Context, orgId string, organizationId string, roleId string) ApiPatchAdminOrgRolesUpdateRequest
 
 	// PatchAdminOrgRolesUpdateExecute executes the request
-	PatchAdminOrgRolesUpdateExecute(r ApiPatchAdminOrgRolesUpdateRequest) (*http.Response, error)
+	//  @return AdminOrgRolesCreateResponse
+	PatchAdminOrgRolesUpdateExecute(r ApiPatchAdminOrgRolesUpdateRequest) (*AdminOrgRolesCreateResponse, *http.Response, error)
 
 	/*
-	PatchAdminOrganizationsUpdate Method for PatchAdminOrganizationsUpdate
+	PatchAdminOrganizationsUpdate Update an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -246,10 +262,11 @@ type AdminOrganizationsAPI interface {
 	PatchAdminOrganizationsUpdate(ctx context.Context, orgId string, organizationId string) ApiPatchAdminOrganizationsUpdateRequest
 
 	// PatchAdminOrganizationsUpdateExecute executes the request
-	PatchAdminOrganizationsUpdateExecute(r ApiPatchAdminOrganizationsUpdateRequest) (*http.Response, error)
+	//  @return AdminOrganizationsGetResponse
+	PatchAdminOrganizationsUpdateExecute(r ApiPatchAdminOrganizationsUpdateRequest) (*AdminOrganizationsGetResponse, *http.Response, error)
 
 	/*
-	PutAdminOrgMembersUpdate Method for PutAdminOrgMembersUpdate
+	PutAdminOrgMembersUpdate Update a member's role or status
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -260,10 +277,11 @@ type AdminOrganizationsAPI interface {
 	PutAdminOrgMembersUpdate(ctx context.Context, orgId string, organizationId string, userId string) ApiPutAdminOrgMembersUpdateRequest
 
 	// PutAdminOrgMembersUpdateExecute executes the request
-	PutAdminOrgMembersUpdateExecute(r ApiPutAdminOrgMembersUpdateRequest) (*http.Response, error)
+	//  @return PutAdminOrgMembersUpdateResponse
+	PutAdminOrgMembersUpdateExecute(r ApiPutAdminOrgMembersUpdateRequest) (*PutAdminOrgMembersUpdateResponse, *http.Response, error)
 
 	/*
-	PutAdminOrgRolesUpdate Method for PutAdminOrgRolesUpdate
+	PutAdminOrgRolesUpdate Update an organization role
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -274,10 +292,11 @@ type AdminOrganizationsAPI interface {
 	PutAdminOrgRolesUpdate(ctx context.Context, orgId string, organizationId string, roleId string) ApiPutAdminOrgRolesUpdateRequest
 
 	// PutAdminOrgRolesUpdateExecute executes the request
-	PutAdminOrgRolesUpdateExecute(r ApiPutAdminOrgRolesUpdateRequest) (*http.Response, error)
+	//  @return AdminOrgRolesCreateResponse
+	PutAdminOrgRolesUpdateExecute(r ApiPutAdminOrgRolesUpdateRequest) (*AdminOrgRolesCreateResponse, *http.Response, error)
 
 	/*
-	PutAdminOrganizationsUpdate Method for PutAdminOrganizationsUpdate
+	PutAdminOrganizationsUpdate Update an organization
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -287,7 +306,8 @@ type AdminOrganizationsAPI interface {
 	PutAdminOrganizationsUpdate(ctx context.Context, orgId string, organizationId string) ApiPutAdminOrganizationsUpdateRequest
 
 	// PutAdminOrganizationsUpdateExecute executes the request
-	PutAdminOrganizationsUpdateExecute(r ApiPutAdminOrganizationsUpdateRequest) (*http.Response, error)
+	//  @return AdminOrganizationsGetResponse
+	PutAdminOrganizationsUpdateExecute(r ApiPutAdminOrganizationsUpdateRequest) (*AdminOrganizationsGetResponse, *http.Response, error)
 }
 
 // AdminOrganizationsAPIService AdminOrganizationsAPI service
@@ -300,12 +320,12 @@ type ApiAdminOrgInvitationsCreateRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrgInvitationsCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgInvitationsCreateRequest) Execute() (*AdminOrgInvitationsCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgInvitationsCreateExecute(r)
 }
 
 /*
-AdminOrgInvitationsCreate Method for AdminOrgInvitationsCreate
+AdminOrgInvitationsCreate Invite a user to an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -322,16 +342,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreate(ctx context.Con
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdminOrgInvitationsCreateRequest) (*http.Response, error) {
+//  @return AdminOrgInvitationsCreateResponse
+func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdminOrgInvitationsCreateRequest) (*AdminOrgInvitationsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgInvitationsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgInvitationsCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations"
@@ -352,7 +374,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdm
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -375,19 +397,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdm
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -395,10 +417,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsCreateExecute(r ApiAdm
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgInvitationsListRequest struct {
@@ -408,12 +439,12 @@ type ApiAdminOrgInvitationsListRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrgInvitationsListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgInvitationsListRequest) Execute() (*AdminOrgInvitationsListResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgInvitationsListExecute(r)
 }
 
 /*
-AdminOrgInvitationsList Method for AdminOrgInvitationsList
+AdminOrgInvitationsList List organization invitations
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -430,16 +461,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsList(ctx context.Conte
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgInvitationsListExecute(r ApiAdminOrgInvitationsListRequest) (*http.Response, error) {
+//  @return AdminOrgInvitationsListResponse
+func (a *AdminOrganizationsAPIService) AdminOrgInvitationsListExecute(r ApiAdminOrgInvitationsListRequest) (*AdminOrgInvitationsListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgInvitationsListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgInvitationsList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations"
@@ -460,7 +493,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsListExecute(r ApiAdmin
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -483,19 +516,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsListExecute(r ApiAdmin
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -503,10 +536,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsListExecute(r ApiAdmin
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgInvitationsResendRequest struct {
@@ -517,12 +559,12 @@ type ApiAdminOrgInvitationsResendRequest struct {
 	invId string
 }
 
-func (r ApiAdminOrgInvitationsResendRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgInvitationsResendRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgInvitationsResendExecute(r)
 }
 
 /*
-AdminOrgInvitationsResend Method for AdminOrgInvitationsResend
+AdminOrgInvitationsResend Resend an invitation
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -541,16 +583,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsResend(ctx context.Con
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgInvitationsResendExecute(r ApiAdminOrgInvitationsResendRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminOrganizationsAPIService) AdminOrgInvitationsResendExecute(r ApiAdminOrgInvitationsResendRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgInvitationsResend")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend"
@@ -572,7 +616,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsResendExecute(r ApiAdm
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -595,19 +639,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsResendExecute(r ApiAdm
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -615,10 +659,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsResendExecute(r ApiAdm
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgInvitationsRevokeRequest struct {
@@ -629,12 +682,12 @@ type ApiAdminOrgInvitationsRevokeRequest struct {
 	invId string
 }
 
-func (r ApiAdminOrgInvitationsRevokeRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgInvitationsRevokeRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgInvitationsRevokeExecute(r)
 }
 
 /*
-AdminOrgInvitationsRevoke Method for AdminOrgInvitationsRevoke
+AdminOrgInvitationsRevoke Revoke an invitation
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -653,16 +706,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsRevoke(ctx context.Con
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgInvitationsRevokeExecute(r ApiAdminOrgInvitationsRevokeRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminOrganizationsAPIService) AdminOrgInvitationsRevokeExecute(r ApiAdminOrgInvitationsRevokeRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgInvitationsRevoke")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}"
@@ -684,7 +739,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsRevokeExecute(r ApiAdm
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -707,19 +762,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsRevokeExecute(r ApiAdm
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -727,10 +782,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgInvitationsRevokeExecute(r ApiAdm
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgMembersAddRequest struct {
@@ -740,12 +804,12 @@ type ApiAdminOrgMembersAddRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrgMembersAddRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgMembersAddRequest) Execute() (*AdminOrgMembersAddResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgMembersAddExecute(r)
 }
 
 /*
-AdminOrgMembersAdd Method for AdminOrgMembersAdd
+AdminOrgMembersAdd Add a member to an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -762,16 +826,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersAdd(ctx context.Context, o
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMembersAddRequest) (*http.Response, error) {
+//  @return AdminOrgMembersAddResponse
+func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMembersAddRequest) (*AdminOrgMembersAddResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgMembersAddResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgMembersAdd")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members"
@@ -792,7 +858,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -815,19 +881,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMe
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -835,10 +901,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersAddExecute(r ApiAdminOrgMe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgMembersListRequest struct {
@@ -848,12 +923,12 @@ type ApiAdminOrgMembersListRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrgMembersListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgMembersListRequest) Execute() (*AdminOrgMembersListResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgMembersListExecute(r)
 }
 
 /*
-AdminOrgMembersList Method for AdminOrgMembersList
+AdminOrgMembersList List organization members
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -870,16 +945,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersList(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgMembersListExecute(r ApiAdminOrgMembersListRequest) (*http.Response, error) {
+//  @return AdminOrgMembersListResponse
+func (a *AdminOrganizationsAPIService) AdminOrgMembersListExecute(r ApiAdminOrgMembersListRequest) (*AdminOrgMembersListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgMembersListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgMembersList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members"
@@ -900,7 +977,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersListExecute(r ApiAdminOrgM
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -923,19 +1000,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersListExecute(r ApiAdminOrgM
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -943,10 +1020,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersListExecute(r ApiAdminOrgM
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgMembersRemoveRequest struct {
@@ -957,12 +1043,12 @@ type ApiAdminOrgMembersRemoveRequest struct {
 	userId string
 }
 
-func (r ApiAdminOrgMembersRemoveRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgMembersRemoveRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgMembersRemoveExecute(r)
 }
 
 /*
-AdminOrgMembersRemove Method for AdminOrgMembersRemove
+AdminOrgMembersRemove Remove a member from an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -981,16 +1067,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersRemove(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgMembersRemoveExecute(r ApiAdminOrgMembersRemoveRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminOrganizationsAPIService) AdminOrgMembersRemoveExecute(r ApiAdminOrgMembersRemoveRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgMembersRemove")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}"
@@ -1012,7 +1100,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersRemoveExecute(r ApiAdminOr
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1035,19 +1123,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersRemoveExecute(r ApiAdminOr
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1055,10 +1143,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgMembersRemoveExecute(r ApiAdminOr
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgRolesCreateRequest struct {
@@ -1068,12 +1165,12 @@ type ApiAdminOrgRolesCreateRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrgRolesCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgRolesCreateRequest) Execute() (*AdminOrgRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgRolesCreateExecute(r)
 }
 
 /*
-AdminOrgRolesCreate Method for AdminOrgRolesCreate
+AdminOrgRolesCreate Create an organization role
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1090,16 +1187,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesCreate(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgRolesCreateRequest) (*http.Response, error) {
+//  @return AdminOrgRolesCreateResponse
+func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgRolesCreateRequest) (*AdminOrgRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgRolesCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles"
@@ -1120,7 +1219,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1143,19 +1242,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1163,10 +1262,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesCreateExecute(r ApiAdminOrgR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgRolesDeleteRequest struct {
@@ -1177,12 +1285,12 @@ type ApiAdminOrgRolesDeleteRequest struct {
 	roleId string
 }
 
-func (r ApiAdminOrgRolesDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgRolesDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgRolesDeleteExecute(r)
 }
 
 /*
-AdminOrgRolesDelete Method for AdminOrgRolesDelete
+AdminOrgRolesDelete Delete an organization role
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1201,16 +1309,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesDelete(ctx context.Context, 
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgRolesDeleteExecute(r ApiAdminOrgRolesDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminOrganizationsAPIService) AdminOrgRolesDeleteExecute(r ApiAdminOrgRolesDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgRolesDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}"
@@ -1232,7 +1342,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesDeleteExecute(r ApiAdminOrgR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1255,19 +1365,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesDeleteExecute(r ApiAdminOrgR
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1275,10 +1385,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesDeleteExecute(r ApiAdminOrgR
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrgRolesListRequest struct {
@@ -1288,12 +1407,12 @@ type ApiAdminOrgRolesListRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrgRolesListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrgRolesListRequest) Execute() (*AdminOrgRolesListResponse, *http.Response, error) {
 	return r.ApiService.AdminOrgRolesListExecute(r)
 }
 
 /*
-AdminOrgRolesList Method for AdminOrgRolesList
+AdminOrgRolesList List organization roles
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1310,16 +1429,18 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesList(ctx context.Context, or
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrgRolesListExecute(r ApiAdminOrgRolesListRequest) (*http.Response, error) {
+//  @return AdminOrgRolesListResponse
+func (a *AdminOrganizationsAPIService) AdminOrgRolesListExecute(r ApiAdminOrgRolesListRequest) (*AdminOrgRolesListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgRolesListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrgRolesList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles"
@@ -1340,7 +1461,7 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesListExecute(r ApiAdminOrgRol
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1363,19 +1484,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesListExecute(r ApiAdminOrgRol
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1383,10 +1504,19 @@ func (a *AdminOrganizationsAPIService) AdminOrgRolesListExecute(r ApiAdminOrgRol
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrganizationsCreateRequest struct {
@@ -1395,12 +1525,12 @@ type ApiAdminOrganizationsCreateRequest struct {
 	orgId string
 }
 
-func (r ApiAdminOrganizationsCreateRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrganizationsCreateRequest) Execute() (*AdminOrganizationsCreateResponse, *http.Response, error) {
 	return r.ApiService.AdminOrganizationsCreateExecute(r)
 }
 
 /*
-AdminOrganizationsCreate Method for AdminOrganizationsCreate
+AdminOrganizationsCreate Create an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1415,16 +1545,18 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsCreate(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdminOrganizationsCreateRequest) (*http.Response, error) {
+//  @return AdminOrganizationsCreateResponse
+func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdminOrganizationsCreateRequest) (*AdminOrganizationsCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrganizationsCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrganizationsCreate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations"
@@ -1444,7 +1576,7 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdmi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1467,19 +1599,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdmi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1487,10 +1619,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsCreateExecute(r ApiAdmi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrganizationsDeleteRequest struct {
@@ -1500,12 +1641,12 @@ type ApiAdminOrganizationsDeleteRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrganizationsDeleteRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrganizationsDeleteRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminOrganizationsDeleteExecute(r)
 }
 
 /*
-AdminOrganizationsDelete Method for AdminOrganizationsDelete
+AdminOrganizationsDelete Delete an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1522,16 +1663,18 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsDelete(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrganizationsDeleteExecute(r ApiAdminOrganizationsDeleteRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminOrganizationsAPIService) AdminOrganizationsDeleteExecute(r ApiAdminOrganizationsDeleteRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodDelete
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrganizationsDelete")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}"
@@ -1552,7 +1695,7 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsDeleteExecute(r ApiAdmi
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1575,19 +1718,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsDeleteExecute(r ApiAdmi
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1595,10 +1738,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsDeleteExecute(r ApiAdmi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrganizationsGetRequest struct {
@@ -1608,12 +1760,12 @@ type ApiAdminOrganizationsGetRequest struct {
 	organizationId string
 }
 
-func (r ApiAdminOrganizationsGetRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrganizationsGetRequest) Execute() (*AdminOrganizationsGetResponse, *http.Response, error) {
 	return r.ApiService.AdminOrganizationsGetExecute(r)
 }
 
 /*
-AdminOrganizationsGet Method for AdminOrganizationsGet
+AdminOrganizationsGet Get an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1630,16 +1782,18 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsGet(ctx context.Context
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrganizationsGetExecute(r ApiAdminOrganizationsGetRequest) (*http.Response, error) {
+//  @return AdminOrganizationsGetResponse
+func (a *AdminOrganizationsAPIService) AdminOrganizationsGetExecute(r ApiAdminOrganizationsGetRequest) (*AdminOrganizationsGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrganizationsGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrganizationsGet")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}"
@@ -1660,7 +1814,7 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsGetExecute(r ApiAdminOr
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1683,19 +1837,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsGetExecute(r ApiAdminOr
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1703,10 +1857,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsGetExecute(r ApiAdminOr
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminOrganizationsListRequest struct {
@@ -1715,12 +1878,12 @@ type ApiAdminOrganizationsListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminOrganizationsListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminOrganizationsListRequest) Execute() (*AdminOrganizationsListResponse, *http.Response, error) {
 	return r.ApiService.AdminOrganizationsListExecute(r)
 }
 
 /*
-AdminOrganizationsList Method for AdminOrganizationsList
+AdminOrganizationsList List organizations
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1735,16 +1898,18 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsList(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) AdminOrganizationsListExecute(r ApiAdminOrganizationsListRequest) (*http.Response, error) {
+//  @return AdminOrganizationsListResponse
+func (a *AdminOrganizationsAPIService) AdminOrganizationsListExecute(r ApiAdminOrganizationsListRequest) (*AdminOrganizationsListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrganizationsListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.AdminOrganizationsList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations"
@@ -1764,7 +1929,7 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsListExecute(r ApiAdminO
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1787,19 +1952,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsListExecute(r ApiAdminO
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1807,10 +1972,19 @@ func (a *AdminOrganizationsAPIService) AdminOrganizationsListExecute(r ApiAdminO
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminOrgMembersUpdateRequest struct {
@@ -1821,12 +1995,12 @@ type ApiPatchAdminOrgMembersUpdateRequest struct {
 	userId string
 }
 
-func (r ApiPatchAdminOrgMembersUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminOrgMembersUpdateRequest) Execute() (*PutAdminOrgMembersUpdateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminOrgMembersUpdateExecute(r)
 }
 
 /*
-PatchAdminOrgMembersUpdate Method for PatchAdminOrgMembersUpdate
+PatchAdminOrgMembersUpdate Update a member's role or status
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1845,16 +2019,18 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdate(ctx context.Co
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPatchAdminOrgMembersUpdateRequest) (*http.Response, error) {
+//  @return PutAdminOrgMembersUpdateResponse
+func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPatchAdminOrgMembersUpdateRequest) (*PutAdminOrgMembersUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminOrgMembersUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.PatchAdminOrgMembersUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}"
@@ -1876,7 +2052,7 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPa
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1899,19 +2075,19 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPa
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1919,10 +2095,19 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgMembersUpdateExecute(r ApiPa
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminOrgRolesUpdateRequest struct {
@@ -1933,12 +2118,12 @@ type ApiPatchAdminOrgRolesUpdateRequest struct {
 	roleId string
 }
 
-func (r ApiPatchAdminOrgRolesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminOrgRolesUpdateRequest) Execute() (*AdminOrgRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminOrgRolesUpdateExecute(r)
 }
 
 /*
-PatchAdminOrgRolesUpdate Method for PatchAdminOrgRolesUpdate
+PatchAdminOrgRolesUpdate Update an organization role
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1957,16 +2142,18 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdate(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatchAdminOrgRolesUpdateRequest) (*http.Response, error) {
+//  @return AdminOrgRolesCreateResponse
+func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatchAdminOrgRolesUpdateRequest) (*AdminOrgRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.PatchAdminOrgRolesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}"
@@ -1988,7 +2175,7 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatc
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2011,19 +2198,19 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatc
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2031,10 +2218,19 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrgRolesUpdateExecute(r ApiPatc
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPatchAdminOrganizationsUpdateRequest struct {
@@ -2044,12 +2240,12 @@ type ApiPatchAdminOrganizationsUpdateRequest struct {
 	organizationId string
 }
 
-func (r ApiPatchAdminOrganizationsUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPatchAdminOrganizationsUpdateRequest) Execute() (*AdminOrganizationsGetResponse, *http.Response, error) {
 	return r.ApiService.PatchAdminOrganizationsUpdateExecute(r)
 }
 
 /*
-PatchAdminOrganizationsUpdate Method for PatchAdminOrganizationsUpdate
+PatchAdminOrganizationsUpdate Update an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2066,16 +2262,18 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdate(ctx context
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r ApiPatchAdminOrganizationsUpdateRequest) (*http.Response, error) {
+//  @return AdminOrganizationsGetResponse
+func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r ApiPatchAdminOrganizationsUpdateRequest) (*AdminOrganizationsGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPatch
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrganizationsGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.PatchAdminOrganizationsUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}"
@@ -2096,7 +2294,7 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r Ap
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2119,19 +2317,19 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r Ap
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2139,10 +2337,19 @@ func (a *AdminOrganizationsAPIService) PatchAdminOrganizationsUpdateExecute(r Ap
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminOrgMembersUpdateRequest struct {
@@ -2153,12 +2360,12 @@ type ApiPutAdminOrgMembersUpdateRequest struct {
 	userId string
 }
 
-func (r ApiPutAdminOrgMembersUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminOrgMembersUpdateRequest) Execute() (*PutAdminOrgMembersUpdateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminOrgMembersUpdateExecute(r)
 }
 
 /*
-PutAdminOrgMembersUpdate Method for PutAdminOrgMembersUpdate
+PutAdminOrgMembersUpdate Update a member's role or status
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2177,16 +2384,18 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdate(ctx context.Cont
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutAdminOrgMembersUpdateRequest) (*http.Response, error) {
+//  @return PutAdminOrgMembersUpdateResponse
+func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutAdminOrgMembersUpdateRequest) (*PutAdminOrgMembersUpdateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *PutAdminOrgMembersUpdateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.PutAdminOrgMembersUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}"
@@ -2208,7 +2417,7 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutA
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2231,19 +2440,19 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutA
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2251,10 +2460,19 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgMembersUpdateExecute(r ApiPutA
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminOrgRolesUpdateRequest struct {
@@ -2265,12 +2483,12 @@ type ApiPutAdminOrgRolesUpdateRequest struct {
 	roleId string
 }
 
-func (r ApiPutAdminOrgRolesUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminOrgRolesUpdateRequest) Execute() (*AdminOrgRolesCreateResponse, *http.Response, error) {
 	return r.ApiService.PutAdminOrgRolesUpdateExecute(r)
 }
 
 /*
-PutAdminOrgRolesUpdate Method for PutAdminOrgRolesUpdate
+PutAdminOrgRolesUpdate Update an organization role
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2289,16 +2507,18 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdate(ctx context.Contex
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdminOrgRolesUpdateRequest) (*http.Response, error) {
+//  @return AdminOrgRolesCreateResponse
+func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdminOrgRolesUpdateRequest) (*AdminOrgRolesCreateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrgRolesCreateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.PutAdminOrgRolesUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}"
@@ -2320,7 +2540,7 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdm
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2343,19 +2563,19 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdm
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2363,10 +2583,19 @@ func (a *AdminOrganizationsAPIService) PutAdminOrgRolesUpdateExecute(r ApiPutAdm
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiPutAdminOrganizationsUpdateRequest struct {
@@ -2376,12 +2605,12 @@ type ApiPutAdminOrganizationsUpdateRequest struct {
 	organizationId string
 }
 
-func (r ApiPutAdminOrganizationsUpdateRequest) Execute() (*http.Response, error) {
+func (r ApiPutAdminOrganizationsUpdateRequest) Execute() (*AdminOrganizationsGetResponse, *http.Response, error) {
 	return r.ApiService.PutAdminOrganizationsUpdateExecute(r)
 }
 
 /*
-PutAdminOrganizationsUpdate Method for PutAdminOrganizationsUpdate
+PutAdminOrganizationsUpdate Update an organization
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -2398,16 +2627,18 @@ func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdate(ctx context.C
 }
 
 // Execute executes the request
-func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiPutAdminOrganizationsUpdateRequest) (*http.Response, error) {
+//  @return AdminOrganizationsGetResponse
+func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiPutAdminOrganizationsUpdateRequest) (*AdminOrganizationsGetResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPut
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminOrganizationsGetResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOrganizationsAPIService.PutAdminOrganizationsUpdate")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}"
@@ -2428,7 +2659,7 @@ func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiP
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -2451,19 +2682,19 @@ func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiP
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -2471,8 +2702,17 @@ func (a *AdminOrganizationsAPIService) PutAdminOrganizationsUpdateExecute(r ApiP
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

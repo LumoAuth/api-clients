@@ -21,6 +21,60 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AddUserGroupResponse } from '../models';
+// @ts-ignore
+import type { AddUserPermissionResponse } from '../models';
+// @ts-ignore
+import type { AddUserRoleResponse } from '../models';
+// @ts-ignore
+import type { AdminAgentsGetResponse } from '../models';
+// @ts-ignore
+import type { AdminGroupsGroupsGetRolesResponse } from '../models';
+// @ts-ignore
+import type { AdminIdentitiesLegacySamlRelinkRequest } from '../models';
+// @ts-ignore
+import type { AdminIdentitiesLegacySamlRelinkResponse } from '../models';
+// @ts-ignore
+import type { AdminIdentitiesLegacySamlReportResponse } from '../models';
+// @ts-ignore
+import type { AdminIdentitiesLinkRequest } from '../models';
+// @ts-ignore
+import type { AdminIdentitiesListResponse } from '../models';
+// @ts-ignore
+import type { AdminRolesGetPermissionsResponse } from '../models';
+// @ts-ignore
+import type { BlockUserResponse } from '../models';
+// @ts-ignore
+import type { CreateUserResponse } from '../models';
+// @ts-ignore
+import type { DeleteUserResponse } from '../models';
+// @ts-ignore
+import type { GetUserResponse } from '../models';
+// @ts-ignore
+import type { ListUsersResponse } from '../models';
+// @ts-ignore
+import type { MarkUserVerifiedResponse } from '../models';
+// @ts-ignore
+import type { RemoveUserGroupResponse } from '../models';
+// @ts-ignore
+import type { RemoveUserPermissionResponse } from '../models';
+// @ts-ignore
+import type { RemoveUserRoleResponse } from '../models';
+// @ts-ignore
+import type { SendUserVerificationEmailResponse } from '../models';
+// @ts-ignore
+import type { SetUserPasswordPostResponse } from '../models';
+// @ts-ignore
+import type { TriggerUserPasswordResetResponse } from '../models';
+// @ts-ignore
+import type { UnblockUserResponse } from '../models';
+// @ts-ignore
+import type { UpdateUserGroupsResponse } from '../models';
+// @ts-ignore
+import type { UpdateUserResponse } from '../models';
+// @ts-ignore
+import type { UpdateUserRolesResponse } from '../models';
 /**
  * AdminUsersApi - axios parameter creator
  * @export
@@ -29,6 +83,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * 
+         * @summary Add a user to a group
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -73,6 +128,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Assign a permission to a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -117,6 +173,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Assign a role to a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -160,7 +217,246 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
+         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+         * @summary Relink legacy SAML users to an IdP
+         * @param {string} orgId 
+         * @param {AdminIdentitiesLegacySamlRelinkRequest} adminIdentitiesLegacySamlRelinkRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesLegacySamlRelink: async (orgId: string, adminIdentitiesLegacySamlRelinkRequest: AdminIdentitiesLegacySamlRelinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminIdentitiesLegacySamlRelink', 'orgId', orgId)
+            // verify required parameter 'adminIdentitiesLegacySamlRelinkRequest' is not null or undefined
+            assertParamExists('adminIdentitiesLegacySamlRelink', 'adminIdentitiesLegacySamlRelinkRequest', adminIdentitiesLegacySamlRelinkRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/identities/legacy-saml`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminIdentitiesLegacySamlRelinkRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+         * @summary Legacy SAML bindings report
+         * @param {string} orgId 
+         * @param {number} [idpId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesLegacySamlReport: async (orgId: string, idpId?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminIdentitiesLegacySamlReport', 'orgId', orgId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/identities/legacy-saml`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (idpId !== undefined) {
+                localVarQueryParameter['idp_id'] = idpId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+         * @summary Link a SAML or LDAP identity to a user
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {AdminIdentitiesLinkRequest} adminIdentitiesLinkRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesLink: async (orgId: string, userId: string, adminIdentitiesLinkRequest: AdminIdentitiesLinkRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminIdentitiesLink', 'orgId', orgId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('adminIdentitiesLink', 'userId', userId)
+            // verify required parameter 'adminIdentitiesLinkRequest' is not null or undefined
+            assertParamExists('adminIdentitiesLink', 'adminIdentitiesLinkRequest', adminIdentitiesLinkRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/identities`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminIdentitiesLinkRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+         * @summary List a user\'s federated identity links
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesList: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminIdentitiesList', 'orgId', orgId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('adminIdentitiesList', 'userId', userId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/identities`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+         * @summary Unlink a user\'s SAML, LDAP or social identity
+         * @param {AdminIdentitiesUnlinkType} type 
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesUnlink: async (type: AdminIdentitiesUnlinkType, orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'type' is not null or undefined
+            assertParamExists('adminIdentitiesUnlink', 'type', type)
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminIdentitiesUnlink', 'orgId', orgId)
+            // verify required parameter 'userId' is not null or undefined
+            assertParamExists('adminIdentitiesUnlink', 'userId', userId)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}`
+                .replace(`{${"type"}}`, encodeURIComponent(String(type)))
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"userId"}}`, encodeURIComponent(String(userId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
+         * @summary Block a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -205,6 +501,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Create a user
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -245,6 +542,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Delete a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -289,6 +587,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Get a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -333,6 +632,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List a user\'s groups
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -377,6 +677,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List a user\'s direct permissions
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -421,6 +722,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List a user\'s roles
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -465,6 +767,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List users
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -505,6 +808,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Mark a user\'s email as verified
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -549,6 +853,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -593,6 +898,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Remove a user from a group
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} groupId 
@@ -641,6 +947,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Remove a permission from a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} permissionId 
@@ -689,6 +996,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Remove a role from a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} roleId 
@@ -736,10 +1044,12 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
             };
         },
         /**
-         * 
+         * Removed: admins cannot disable a user\'s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
+         * @summary Reset MFA (removed)
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         resetUserMfa: async (orgId: string, userId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -781,6 +1091,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Send a verification email
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -825,6 +1136,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -869,6 +1181,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -913,6 +1226,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Send a password reset email
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -957,6 +1271,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Unblock a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1001,6 +1316,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1045,6 +1361,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Replace a user\'s groups
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1089,6 +1406,7 @@ export const AdminUsersApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Replace a user\'s roles
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
@@ -1143,12 +1461,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Add a user to a group
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUserGroup(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async addUserGroup(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserGroupResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addUserGroup(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.addUserGroup']?.[localVarOperationServerIndex]?.url;
@@ -1156,12 +1475,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Assign a permission to a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUserPermission(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async addUserPermission(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserPermissionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addUserPermission(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.addUserPermission']?.[localVarOperationServerIndex]?.url;
@@ -1169,25 +1489,99 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Assign a role to a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async addUserRole(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async addUserRole(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AddUserRoleResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.addUserRole(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.addUserRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+         * @summary Relink legacy SAML users to an IdP
+         * @param {string} orgId 
+         * @param {AdminIdentitiesLegacySamlRelinkRequest} adminIdentitiesLegacySamlRelinkRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminIdentitiesLegacySamlRelink(orgId: string, adminIdentitiesLegacySamlRelinkRequest: AdminIdentitiesLegacySamlRelinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminIdentitiesLegacySamlRelinkResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminIdentitiesLegacySamlRelink(orgId, adminIdentitiesLegacySamlRelinkRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminIdentitiesLegacySamlRelink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+         * @summary Legacy SAML bindings report
+         * @param {string} orgId 
+         * @param {number} [idpId] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminIdentitiesLegacySamlReport(orgId: string, idpId?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminIdentitiesLegacySamlReportResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminIdentitiesLegacySamlReport(orgId, idpId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminIdentitiesLegacySamlReport']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+         * @summary Link a SAML or LDAP identity to a user
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {AdminIdentitiesLinkRequest} adminIdentitiesLinkRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminIdentitiesLink(orgId: string, userId: string, adminIdentitiesLinkRequest: AdminIdentitiesLinkRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsGetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminIdentitiesLink(orgId, userId, adminIdentitiesLinkRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminIdentitiesLink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+         * @summary List a user\'s federated identity links
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async blockUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminIdentitiesList(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminIdentitiesListResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminIdentitiesList(orgId, userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminIdentitiesList']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+         * @summary Unlink a user\'s SAML, LDAP or social identity
+         * @param {AdminIdentitiesUnlinkType} type 
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminIdentitiesUnlink(type: AdminIdentitiesUnlinkType, orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsGetResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminIdentitiesUnlink(type, orgId, userId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.adminIdentitiesUnlink']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Block a user
+         * @param {string} orgId 
+         * @param {string} userId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async blockUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlockUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.blockUser(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.blockUser']?.[localVarOperationServerIndex]?.url;
@@ -1195,11 +1589,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create a user
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUser(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createUser(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createUser(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.createUser']?.[localVarOperationServerIndex]?.url;
@@ -1207,12 +1602,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeleteUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteUser(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.deleteUser']?.[localVarOperationServerIndex]?.url;
@@ -1220,12 +1616,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.getUser']?.[localVarOperationServerIndex]?.url;
@@ -1233,12 +1630,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List a user\'s groups
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listUserGroups(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listUserGroups(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsGroupsGetRolesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listUserGroups(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.listUserGroups']?.[localVarOperationServerIndex]?.url;
@@ -1246,12 +1644,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List a user\'s direct permissions
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listUserPermissions(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listUserPermissions(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminRolesGetPermissionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listUserPermissions(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.listUserPermissions']?.[localVarOperationServerIndex]?.url;
@@ -1259,12 +1658,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List a user\'s roles
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listUserRoles(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listUserRoles(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminGroupsGroupsGetRolesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listUserRoles(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.listUserRoles']?.[localVarOperationServerIndex]?.url;
@@ -1272,11 +1672,12 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List users
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listUsers(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listUsers(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListUsersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listUsers(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.listUsers']?.[localVarOperationServerIndex]?.url;
@@ -1284,12 +1685,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Mark a user\'s email as verified
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async markUserVerified(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async markUserVerified(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MarkUserVerifiedResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.markUserVerified(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.markUserVerified']?.[localVarOperationServerIndex]?.url;
@@ -1297,12 +1699,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchUser(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.patchUser']?.[localVarOperationServerIndex]?.url;
@@ -1310,13 +1713,14 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Remove a user from a group
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} groupId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async removeUserGroup(orgId: string, userId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async removeUserGroup(orgId: string, userId: string, groupId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RemoveUserGroupResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.removeUserGroup(orgId, userId, groupId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.removeUserGroup']?.[localVarOperationServerIndex]?.url;
@@ -1324,13 +1728,14 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Remove a permission from a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} permissionId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async removeUserPermission(orgId: string, userId: string, permissionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async removeUserPermission(orgId: string, userId: string, permissionId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RemoveUserPermissionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.removeUserPermission(orgId, userId, permissionId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.removeUserPermission']?.[localVarOperationServerIndex]?.url;
@@ -1338,23 +1743,26 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Remove a role from a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} roleId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async removeUserRole(orgId: string, userId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async removeUserRole(orgId: string, userId: string, roleId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RemoveUserRoleResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.removeUserRole(orgId, userId, roleId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.removeUserRole']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Removed: admins cannot disable a user\'s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
+         * @summary Reset MFA (removed)
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async resetUserMfa(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
@@ -1365,12 +1773,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Send a verification email
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sendUserVerificationEmail(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async sendUserVerificationEmail(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SendUserVerificationEmailResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.sendUserVerificationEmail(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.sendUserVerificationEmail']?.[localVarOperationServerIndex]?.url;
@@ -1378,12 +1787,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setUserPassword(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async setUserPassword(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserPasswordPostResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPassword(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.setUserPassword']?.[localVarOperationServerIndex]?.url;
@@ -1391,12 +1801,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Set a user\'s password
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setUserPasswordPost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async setUserPasswordPost(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserPasswordPostResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.setUserPasswordPost(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.setUserPasswordPost']?.[localVarOperationServerIndex]?.url;
@@ -1404,12 +1815,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Send a password reset email
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async triggerUserPasswordReset(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async triggerUserPasswordReset(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TriggerUserPasswordResetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.triggerUserPasswordReset(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.triggerUserPasswordReset']?.[localVarOperationServerIndex]?.url;
@@ -1417,12 +1829,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Unblock a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async unblockUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async unblockUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UnblockUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.unblockUser(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.unblockUser']?.[localVarOperationServerIndex]?.url;
@@ -1430,12 +1843,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Update a user
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateUser(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.updateUser']?.[localVarOperationServerIndex]?.url;
@@ -1443,12 +1857,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Replace a user\'s groups
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUserGroups(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateUserGroups(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserGroupsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserGroups(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.updateUserGroups']?.[localVarOperationServerIndex]?.url;
@@ -1456,12 +1871,13 @@ export const AdminUsersApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Replace a user\'s roles
          * @param {string} orgId 
          * @param {string} userId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUserRoles(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateUserRoles(orgId: string, userId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateUserRolesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUserRoles(orgId, userId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminUsersApi.updateUserRoles']?.[localVarOperationServerIndex]?.url;
@@ -1479,152 +1895,220 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * 
+         * @summary Add a user to a group
          * @param {AdminUsersApiAddUserGroupRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserGroupResponse> {
             return localVarFp.addUserGroup(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Assign a permission to a user
          * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUserPermission(requestParameters: AdminUsersApiAddUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        addUserPermission(requestParameters: AdminUsersApiAddUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserPermissionResponse> {
             return localVarFp.addUserPermission(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Assign a role to a user
          * @param {AdminUsersApiAddUserRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserRoleResponse> {
             return localVarFp.addUserRole(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+         * @summary Relink legacy SAML users to an IdP
+         * @param {AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesLegacySamlRelink(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesLegacySamlRelinkResponse> {
+            return localVarFp.adminIdentitiesLegacySamlRelink(requestParameters.orgId, requestParameters.adminIdentitiesLegacySamlRelinkRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+         * @summary Legacy SAML bindings report
+         * @param {AdminUsersApiAdminIdentitiesLegacySamlReportRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesLegacySamlReport(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesLegacySamlReportResponse> {
+            return localVarFp.adminIdentitiesLegacySamlReport(requestParameters.orgId, requestParameters.idpId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+         * @summary Link a SAML or LDAP identity to a user
+         * @param {AdminUsersApiAdminIdentitiesLinkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesLink(requestParameters: AdminUsersApiAdminIdentitiesLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse> {
+            return localVarFp.adminIdentitiesLink(requestParameters.orgId, requestParameters.userId, requestParameters.adminIdentitiesLinkRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+         * @summary List a user\'s federated identity links
+         * @param {AdminUsersApiAdminIdentitiesListRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesList(requestParameters: AdminUsersApiAdminIdentitiesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesListResponse> {
+            return localVarFp.adminIdentitiesList(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+         * @summary Unlink a user\'s SAML, LDAP or social identity
+         * @param {AdminUsersApiAdminIdentitiesUnlinkRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminIdentitiesUnlink(requestParameters: AdminUsersApiAdminIdentitiesUnlinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse> {
+            return localVarFp.adminIdentitiesUnlink(requestParameters.type, requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
+         * @summary Block a user
          * @param {AdminUsersApiBlockUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        blockUser(requestParameters: AdminUsersApiBlockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        blockUser(requestParameters: AdminUsersApiBlockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlockUserResponse> {
             return localVarFp.blockUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Create a user
          * @param {AdminUsersApiCreateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUser(requestParameters: AdminUsersApiCreateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createUser(requestParameters: AdminUsersApiCreateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateUserResponse> {
             return localVarFp.createUser(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Delete a user
          * @param {AdminUsersApiDeleteUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteUser(requestParameters: AdminUsersApiDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteUser(requestParameters: AdminUsersApiDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeleteUserResponse> {
             return localVarFp.deleteUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Get a user
          * @param {AdminUsersApiGetUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser(requestParameters: AdminUsersApiGetUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getUser(requestParameters: AdminUsersApiGetUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetUserResponse> {
             return localVarFp.getUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List a user\'s groups
          * @param {AdminUsersApiListUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listUserGroups(requestParameters: AdminUsersApiListUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listUserGroups(requestParameters: AdminUsersApiListUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGroupsGetRolesResponse> {
             return localVarFp.listUserGroups(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List a user\'s direct permissions
          * @param {AdminUsersApiListUserPermissionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listUserPermissions(requestParameters: AdminUsersApiListUserPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listUserPermissions(requestParameters: AdminUsersApiListUserPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetPermissionsResponse> {
             return localVarFp.listUserPermissions(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List a user\'s roles
          * @param {AdminUsersApiListUserRolesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listUserRoles(requestParameters: AdminUsersApiListUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listUserRoles(requestParameters: AdminUsersApiListUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGroupsGetRolesResponse> {
             return localVarFp.listUserRoles(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List users
          * @param {AdminUsersApiListUsersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listUsers(requestParameters: AdminUsersApiListUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listUsers(requestParameters: AdminUsersApiListUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListUsersResponse> {
             return localVarFp.listUsers(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Mark a user\'s email as verified
          * @param {AdminUsersApiMarkUserVerifiedRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        markUserVerified(requestParameters: AdminUsersApiMarkUserVerifiedRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        markUserVerified(requestParameters: AdminUsersApiMarkUserVerifiedRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarkUserVerifiedResponse> {
             return localVarFp.markUserVerified(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update a user
          * @param {AdminUsersApiPatchUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchUser(requestParameters: AdminUsersApiPatchUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchUser(requestParameters: AdminUsersApiPatchUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserResponse> {
             return localVarFp.patchUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Remove a user from a group
          * @param {AdminUsersApiRemoveUserGroupRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeUserGroup(requestParameters: AdminUsersApiRemoveUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        removeUserGroup(requestParameters: AdminUsersApiRemoveUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<RemoveUserGroupResponse> {
             return localVarFp.removeUserGroup(requestParameters.orgId, requestParameters.userId, requestParameters.groupId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Remove a permission from a user
          * @param {AdminUsersApiRemoveUserPermissionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeUserPermission(requestParameters: AdminUsersApiRemoveUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        removeUserPermission(requestParameters: AdminUsersApiRemoveUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<RemoveUserPermissionResponse> {
             return localVarFp.removeUserPermission(requestParameters.orgId, requestParameters.userId, requestParameters.permissionId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Remove a role from a user
          * @param {AdminUsersApiRemoveUserRoleRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        removeUserRole(requestParameters: AdminUsersApiRemoveUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        removeUserRole(requestParameters: AdminUsersApiRemoveUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<RemoveUserRoleResponse> {
             return localVarFp.removeUserRole(requestParameters.orgId, requestParameters.userId, requestParameters.roleId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Removed: admins cannot disable a user\'s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
+         * @summary Reset MFA (removed)
          * @param {AdminUsersApiResetUserMfaRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         resetUserMfa(requestParameters: AdminUsersApiResetUserMfaRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
@@ -1632,74 +2116,82 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
+         * @summary Send a verification email
          * @param {AdminUsersApiSendUserVerificationEmailRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sendUserVerificationEmail(requestParameters: AdminUsersApiSendUserVerificationEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        sendUserVerificationEmail(requestParameters: AdminUsersApiSendUserVerificationEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<SendUserVerificationEmailResponse> {
             return localVarFp.sendUserVerificationEmail(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Set a user\'s password
          * @param {AdminUsersApiSetUserPasswordRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse> {
             return localVarFp.setUserPassword(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Set a user\'s password
          * @param {AdminUsersApiSetUserPasswordPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setUserPasswordPost(requestParameters: AdminUsersApiSetUserPasswordPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        setUserPasswordPost(requestParameters: AdminUsersApiSetUserPasswordPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse> {
             return localVarFp.setUserPasswordPost(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Send a password reset email
          * @param {AdminUsersApiTriggerUserPasswordResetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        triggerUserPasswordReset(requestParameters: AdminUsersApiTriggerUserPasswordResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        triggerUserPasswordReset(requestParameters: AdminUsersApiTriggerUserPasswordResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<TriggerUserPasswordResetResponse> {
             return localVarFp.triggerUserPasswordReset(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Unblock a user
          * @param {AdminUsersApiUnblockUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        unblockUser(requestParameters: AdminUsersApiUnblockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        unblockUser(requestParameters: AdminUsersApiUnblockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UnblockUserResponse> {
             return localVarFp.unblockUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Update a user
          * @param {AdminUsersApiUpdateUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(requestParameters: AdminUsersApiUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateUser(requestParameters: AdminUsersApiUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserResponse> {
             return localVarFp.updateUser(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Replace a user\'s groups
          * @param {AdminUsersApiUpdateUserGroupsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserGroups(requestParameters: AdminUsersApiUpdateUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateUserGroups(requestParameters: AdminUsersApiUpdateUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserGroupsResponse> {
             return localVarFp.updateUserGroups(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Replace a user\'s roles
          * @param {AdminUsersApiUpdateUserRolesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUserRoles(requestParameters: AdminUsersApiUpdateUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateUserRoles(requestParameters: AdminUsersApiUpdateUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserRolesResponse> {
             return localVarFp.updateUserRoles(requestParameters.orgId, requestParameters.userId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1713,152 +2205,220 @@ export const AdminUsersApiFactory = function (configuration?: Configuration, bas
 export interface AdminUsersApiInterface {
     /**
      * 
+     * @summary Add a user to a group
      * @param {AdminUsersApiAddUserGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    addUserGroup(requestParameters: AdminUsersApiAddUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserGroupResponse>;
 
     /**
      * 
+     * @summary Assign a permission to a user
      * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    addUserPermission(requestParameters: AdminUsersApiAddUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    addUserPermission(requestParameters: AdminUsersApiAddUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserPermissionResponse>;
 
     /**
      * 
+     * @summary Assign a role to a user
      * @param {AdminUsersApiAddUserRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    addUserRole(requestParameters: AdminUsersApiAddUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<AddUserRoleResponse>;
+
+    /**
+     * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * @summary Relink legacy SAML users to an IdP
+     * @param {AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApiInterface
+     */
+    adminIdentitiesLegacySamlRelink(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesLegacySamlRelinkResponse>;
+
+    /**
+     * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+     * @summary Legacy SAML bindings report
+     * @param {AdminUsersApiAdminIdentitiesLegacySamlReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApiInterface
+     */
+    adminIdentitiesLegacySamlReport(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlReportRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesLegacySamlReportResponse>;
+
+    /**
+     * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @summary Link a SAML or LDAP identity to a user
+     * @param {AdminUsersApiAdminIdentitiesLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApiInterface
+     */
+    adminIdentitiesLink(requestParameters: AdminUsersApiAdminIdentitiesLinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse>;
+
+    /**
+     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * @summary List a user\'s federated identity links
+     * @param {AdminUsersApiAdminIdentitiesListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApiInterface
+     */
+    adminIdentitiesList(requestParameters: AdminUsersApiAdminIdentitiesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminIdentitiesListResponse>;
+
+    /**
+     * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @summary Unlink a user\'s SAML, LDAP or social identity
+     * @param {AdminUsersApiAdminIdentitiesUnlinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApiInterface
+     */
+    adminIdentitiesUnlink(requestParameters: AdminUsersApiAdminIdentitiesUnlinkRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsGetResponse>;
 
     /**
      * 
+     * @summary Block a user
      * @param {AdminUsersApiBlockUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    blockUser(requestParameters: AdminUsersApiBlockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    blockUser(requestParameters: AdminUsersApiBlockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<BlockUserResponse>;
 
     /**
      * 
+     * @summary Create a user
      * @param {AdminUsersApiCreateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    createUser(requestParameters: AdminUsersApiCreateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    createUser(requestParameters: AdminUsersApiCreateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateUserResponse>;
 
     /**
      * 
+     * @summary Delete a user
      * @param {AdminUsersApiDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    deleteUser(requestParameters: AdminUsersApiDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    deleteUser(requestParameters: AdminUsersApiDeleteUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeleteUserResponse>;
 
     /**
      * 
+     * @summary Get a user
      * @param {AdminUsersApiGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    getUser(requestParameters: AdminUsersApiGetUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getUser(requestParameters: AdminUsersApiGetUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetUserResponse>;
 
     /**
      * 
+     * @summary List a user\'s groups
      * @param {AdminUsersApiListUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    listUserGroups(requestParameters: AdminUsersApiListUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listUserGroups(requestParameters: AdminUsersApiListUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGroupsGetRolesResponse>;
 
     /**
      * 
+     * @summary List a user\'s direct permissions
      * @param {AdminUsersApiListUserPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    listUserPermissions(requestParameters: AdminUsersApiListUserPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listUserPermissions(requestParameters: AdminUsersApiListUserPermissionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminRolesGetPermissionsResponse>;
 
     /**
      * 
+     * @summary List a user\'s roles
      * @param {AdminUsersApiListUserRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    listUserRoles(requestParameters: AdminUsersApiListUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listUserRoles(requestParameters: AdminUsersApiListUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminGroupsGroupsGetRolesResponse>;
 
     /**
      * 
+     * @summary List users
      * @param {AdminUsersApiListUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    listUsers(requestParameters: AdminUsersApiListUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listUsers(requestParameters: AdminUsersApiListUsersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListUsersResponse>;
 
     /**
      * 
+     * @summary Mark a user\'s email as verified
      * @param {AdminUsersApiMarkUserVerifiedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    markUserVerified(requestParameters: AdminUsersApiMarkUserVerifiedRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    markUserVerified(requestParameters: AdminUsersApiMarkUserVerifiedRequest, options?: RawAxiosRequestConfig): AxiosPromise<MarkUserVerifiedResponse>;
 
     /**
      * 
+     * @summary Update a user
      * @param {AdminUsersApiPatchUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    patchUser(requestParameters: AdminUsersApiPatchUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchUser(requestParameters: AdminUsersApiPatchUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserResponse>;
 
     /**
      * 
+     * @summary Remove a user from a group
      * @param {AdminUsersApiRemoveUserGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    removeUserGroup(requestParameters: AdminUsersApiRemoveUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    removeUserGroup(requestParameters: AdminUsersApiRemoveUserGroupRequest, options?: RawAxiosRequestConfig): AxiosPromise<RemoveUserGroupResponse>;
 
     /**
      * 
+     * @summary Remove a permission from a user
      * @param {AdminUsersApiRemoveUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    removeUserPermission(requestParameters: AdminUsersApiRemoveUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    removeUserPermission(requestParameters: AdminUsersApiRemoveUserPermissionRequest, options?: RawAxiosRequestConfig): AxiosPromise<RemoveUserPermissionResponse>;
 
     /**
      * 
+     * @summary Remove a role from a user
      * @param {AdminUsersApiRemoveUserRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    removeUserRole(requestParameters: AdminUsersApiRemoveUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    removeUserRole(requestParameters: AdminUsersApiRemoveUserRoleRequest, options?: RawAxiosRequestConfig): AxiosPromise<RemoveUserRoleResponse>;
 
     /**
-     * 
+     * Removed: admins cannot disable a user\'s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
+     * @summary Reset MFA (removed)
      * @param {AdminUsersApiResetUserMfaRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
@@ -1866,75 +2426,83 @@ export interface AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Send a verification email
      * @param {AdminUsersApiSendUserVerificationEmailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    sendUserVerificationEmail(requestParameters: AdminUsersApiSendUserVerificationEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    sendUserVerificationEmail(requestParameters: AdminUsersApiSendUserVerificationEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<SendUserVerificationEmailResponse>;
 
     /**
      * 
+     * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    setUserPassword(requestParameters: AdminUsersApiSetUserPasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse>;
 
     /**
      * 
+     * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    setUserPasswordPost(requestParameters: AdminUsersApiSetUserPasswordPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    setUserPasswordPost(requestParameters: AdminUsersApiSetUserPasswordPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserPasswordPostResponse>;
 
     /**
      * 
+     * @summary Send a password reset email
      * @param {AdminUsersApiTriggerUserPasswordResetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    triggerUserPasswordReset(requestParameters: AdminUsersApiTriggerUserPasswordResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    triggerUserPasswordReset(requestParameters: AdminUsersApiTriggerUserPasswordResetRequest, options?: RawAxiosRequestConfig): AxiosPromise<TriggerUserPasswordResetResponse>;
 
     /**
      * 
+     * @summary Unblock a user
      * @param {AdminUsersApiUnblockUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    unblockUser(requestParameters: AdminUsersApiUnblockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    unblockUser(requestParameters: AdminUsersApiUnblockUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UnblockUserResponse>;
 
     /**
      * 
+     * @summary Update a user
      * @param {AdminUsersApiUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    updateUser(requestParameters: AdminUsersApiUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    updateUser(requestParameters: AdminUsersApiUpdateUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserResponse>;
 
     /**
      * 
+     * @summary Replace a user\'s groups
      * @param {AdminUsersApiUpdateUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    updateUserGroups(requestParameters: AdminUsersApiUpdateUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    updateUserGroups(requestParameters: AdminUsersApiUpdateUserGroupsRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserGroupsResponse>;
 
     /**
      * 
+     * @summary Replace a user\'s roles
      * @param {AdminUsersApiUpdateUserRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminUsersApiInterface
      */
-    updateUserRoles(requestParameters: AdminUsersApiUpdateUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    updateUserRoles(requestParameters: AdminUsersApiUpdateUserRolesRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateUserRolesResponse>;
 
 }
 
@@ -1997,6 +2565,125 @@ export interface AdminUsersApiAddUserRoleRequest {
      * 
      * @type {string}
      * @memberof AdminUsersApiAddUserRole
+     */
+    readonly userId: string
+}
+
+/**
+ * Request parameters for adminIdentitiesLegacySamlRelink operation in AdminUsersApi.
+ * @export
+ * @interface AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest
+ */
+export interface AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesLegacySamlRelink
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminIdentitiesLegacySamlRelinkRequest}
+     * @memberof AdminUsersApiAdminIdentitiesLegacySamlRelink
+     */
+    readonly adminIdentitiesLegacySamlRelinkRequest: AdminIdentitiesLegacySamlRelinkRequest
+}
+
+/**
+ * Request parameters for adminIdentitiesLegacySamlReport operation in AdminUsersApi.
+ * @export
+ * @interface AdminUsersApiAdminIdentitiesLegacySamlReportRequest
+ */
+export interface AdminUsersApiAdminIdentitiesLegacySamlReportRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesLegacySamlReport
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AdminUsersApiAdminIdentitiesLegacySamlReport
+     */
+    readonly idpId?: number
+}
+
+/**
+ * Request parameters for adminIdentitiesLink operation in AdminUsersApi.
+ * @export
+ * @interface AdminUsersApiAdminIdentitiesLinkRequest
+ */
+export interface AdminUsersApiAdminIdentitiesLinkRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesLink
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesLink
+     */
+    readonly userId: string
+
+    /**
+     * 
+     * @type {AdminIdentitiesLinkRequest}
+     * @memberof AdminUsersApiAdminIdentitiesLink
+     */
+    readonly adminIdentitiesLinkRequest: AdminIdentitiesLinkRequest
+}
+
+/**
+ * Request parameters for adminIdentitiesList operation in AdminUsersApi.
+ * @export
+ * @interface AdminUsersApiAdminIdentitiesListRequest
+ */
+export interface AdminUsersApiAdminIdentitiesListRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesList
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesList
+     */
+    readonly userId: string
+}
+
+/**
+ * Request parameters for adminIdentitiesUnlink operation in AdminUsersApi.
+ * @export
+ * @interface AdminUsersApiAdminIdentitiesUnlinkRequest
+ */
+export interface AdminUsersApiAdminIdentitiesUnlinkRequest {
+    /**
+     * 
+     * @type {'saml' | 'ldap' | 'social'}
+     * @memberof AdminUsersApiAdminIdentitiesUnlink
+     */
+    readonly type: AdminIdentitiesUnlinkType
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesUnlink
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminUsersApiAdminIdentitiesUnlink
      */
     readonly userId: string
 }
@@ -2479,6 +3166,7 @@ export interface AdminUsersApiUpdateUserRolesRequest {
 export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     /**
      * 
+     * @summary Add a user to a group
      * @param {AdminUsersApiAddUserGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2490,6 +3178,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Assign a permission to a user
      * @param {AdminUsersApiAddUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2501,6 +3190,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Assign a role to a user
      * @param {AdminUsersApiAddUserRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2511,7 +3201,68 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
+     * Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP\'s allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user\'s sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+     * @summary Relink legacy SAML users to an IdP
+     * @param {AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApi
+     */
+    public adminIdentitiesLegacySamlRelink(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlRelinkRequest, options?: RawAxiosRequestConfig) {
+        return AdminUsersApiFp(this.configuration).adminIdentitiesLegacySamlRelink(requestParameters.orgId, requestParameters.adminIdentitiesLegacySamlRelinkRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+     * @summary Legacy SAML bindings report
+     * @param {AdminUsersApiAdminIdentitiesLegacySamlReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApi
+     */
+    public adminIdentitiesLegacySamlReport(requestParameters: AdminUsersApiAdminIdentitiesLegacySamlReportRequest, options?: RawAxiosRequestConfig) {
+        return AdminUsersApiFp(this.configuration).adminIdentitiesLegacySamlReport(requestParameters.orgId, requestParameters.idpId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Sets (or replaces) the user\'s SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user\'s email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+     * @summary Link a SAML or LDAP identity to a user
+     * @param {AdminUsersApiAdminIdentitiesLinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApi
+     */
+    public adminIdentitiesLink(requestParameters: AdminUsersApiAdminIdentitiesLinkRequest, options?: RawAxiosRequestConfig) {
+        return AdminUsersApiFp(this.configuration).adminIdentitiesLink(requestParameters.orgId, requestParameters.userId, requestParameters.adminIdentitiesLinkRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+     * @summary List a user\'s federated identity links
+     * @param {AdminUsersApiAdminIdentitiesListRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApi
+     */
+    public adminIdentitiesList(requestParameters: AdminUsersApiAdminIdentitiesListRequest, options?: RawAxiosRequestConfig) {
+        return AdminUsersApiFp(this.configuration).adminIdentitiesList(requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user\'s sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+     * @summary Unlink a user\'s SAML, LDAP or social identity
+     * @param {AdminUsersApiAdminIdentitiesUnlinkRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminUsersApi
+     */
+    public adminIdentitiesUnlink(requestParameters: AdminUsersApiAdminIdentitiesUnlinkRequest, options?: RawAxiosRequestConfig) {
+        return AdminUsersApiFp(this.configuration).adminIdentitiesUnlink(requestParameters.type, requestParameters.orgId, requestParameters.userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * 
+     * @summary Block a user
      * @param {AdminUsersApiBlockUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2523,6 +3274,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Create a user
      * @param {AdminUsersApiCreateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2534,6 +3286,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Delete a user
      * @param {AdminUsersApiDeleteUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2545,6 +3298,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Get a user
      * @param {AdminUsersApiGetUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2556,6 +3310,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary List a user\'s groups
      * @param {AdminUsersApiListUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2567,6 +3322,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary List a user\'s direct permissions
      * @param {AdminUsersApiListUserPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2578,6 +3334,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary List a user\'s roles
      * @param {AdminUsersApiListUserRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2589,6 +3346,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary List users
      * @param {AdminUsersApiListUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2600,6 +3358,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Mark a user\'s email as verified
      * @param {AdminUsersApiMarkUserVerifiedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2611,6 +3370,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Update a user
      * @param {AdminUsersApiPatchUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2622,6 +3382,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Remove a user from a group
      * @param {AdminUsersApiRemoveUserGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2633,6 +3394,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Remove a permission from a user
      * @param {AdminUsersApiRemoveUserPermissionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2644,6 +3406,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Remove a role from a user
      * @param {AdminUsersApiRemoveUserRoleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2654,9 +3417,11 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 
     /**
-     * 
+     * Removed: admins cannot disable a user\'s MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
+     * @summary Reset MFA (removed)
      * @param {AdminUsersApiResetUserMfaRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof AdminUsersApi
      */
@@ -2666,6 +3431,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Send a verification email
      * @param {AdminUsersApiSendUserVerificationEmailRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2677,6 +3443,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2688,6 +3455,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Set a user\'s password
      * @param {AdminUsersApiSetUserPasswordPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2699,6 +3467,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Send a password reset email
      * @param {AdminUsersApiTriggerUserPasswordResetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2710,6 +3479,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Unblock a user
      * @param {AdminUsersApiUnblockUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2721,6 +3491,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Update a user
      * @param {AdminUsersApiUpdateUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2732,6 +3503,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Replace a user\'s groups
      * @param {AdminUsersApiUpdateUserGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2743,6 +3515,7 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
 
     /**
      * 
+     * @summary Replace a user\'s roles
      * @param {AdminUsersApiUpdateUserRolesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2753,3 +3526,12 @@ export class AdminUsersApi extends BaseAPI implements AdminUsersApiInterface {
     }
 }
 
+/**
+  * @export
+  * @enum {string}
+  */
+export enum AdminIdentitiesUnlinkType {
+    SAML = 'saml',
+    LDAP = 'ldap',
+    SOCIAL = 'social'
+}

@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersAvailable(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersAvailable(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -41,9 +42,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCallbackUrls(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCallbackUrls(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -54,9 +56,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCreate(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersCreate(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -68,9 +71,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 		var orgId string
 		var providerId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDelete(context.Background(), orgId, providerId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDelete(context.Background(), orgId, providerId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -82,9 +86,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 		var orgId string
 		var providerId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDisable(context.Background(), orgId, providerId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersDisable(context.Background(), orgId, providerId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -96,9 +101,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 		var orgId string
 		var providerId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersEnable(context.Background(), orgId, providerId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersEnable(context.Background(), orgId, providerId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -110,9 +116,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 		var orgId string
 		var providerId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersGet(context.Background(), orgId, providerId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersGet(context.Background(), orgId, providerId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -123,9 +130,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -136,9 +144,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersTypes(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.AdminSocialProvidersTypes(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -150,9 +159,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 		var orgId string
 		var providerId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.PatchAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -164,9 +174,10 @@ func Test_lumoauthclient_AdminIdentityProvidersAPIService(t *testing.T) {
 		var orgId string
 		var providerId string
 
-		httpRes, err := apiClient.AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
+		resp, httpRes, err := apiClient.AdminIdentityProvidersAPI.PutAdminSocialProvidersUpdate(context.Background(), orgId, providerId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

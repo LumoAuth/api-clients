@@ -4,25 +4,25 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**abac_attributes_create**](AdminAbacApi.md#abac_attributes_create) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create a new attribute definition
+[**abac_attributes_create**](AdminAbacApi.md#abac_attributes_create) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create an attribute definition
 [**abac_attributes_delete**](AdminAbacApi.md#abac_attributes_delete) | **DELETE** /orgs/{orgId}/api/v1/abac/attributes/{id} | Delete an attribute definition
-[**abac_attributes_get**](AdminAbacApi.md#abac_attributes_get) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get a single attribute definition
-[**abac_attributes_list**](AdminAbacApi.md#abac_attributes_list) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List all attribute definitions
-[**abac_policies_create**](AdminAbacApi.md#abac_policies_create) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create a new ABAC policy
+[**abac_attributes_get**](AdminAbacApi.md#abac_attributes_get) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get an attribute definition
+[**abac_attributes_list**](AdminAbacApi.md#abac_attributes_list) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List attribute definitions
+[**abac_policies_create**](AdminAbacApi.md#abac_policies_create) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create an ABAC policy
 [**abac_policies_delete**](AdminAbacApi.md#abac_policies_delete) | **DELETE** /orgs/{orgId}/api/v1/abac/policies/{id} | Delete an ABAC policy
-[**abac_policies_get**](AdminAbacApi.md#abac_policies_get) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get a single ABAC policy
-[**abac_policies_list**](AdminAbacApi.md#abac_policies_list) | **GET** /orgs/{orgId}/api/v1/abac/policies | List all ABAC policies
-[**abac_policies_toggle**](AdminAbacApi.md#abac_policies_toggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle policy active status
-[**patch_abac_attributes_update**](AdminAbacApi.md#patch_abac_attributes_update) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition
-[**patch_abac_policies_update**](AdminAbacApi.md#patch_abac_policies_update) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy
+[**abac_policies_get**](AdminAbacApi.md#abac_policies_get) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get an ABAC policy
+[**abac_policies_list**](AdminAbacApi.md#abac_policies_list) | **GET** /orgs/{orgId}/api/v1/abac/policies | List ABAC policies
+[**abac_policies_toggle**](AdminAbacApi.md#abac_policies_toggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle a policy between active and inactive
+[**patch_abac_attributes_update**](AdminAbacApi.md#patch_abac_attributes_update) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Partially update an attribute definition
+[**patch_abac_policies_update**](AdminAbacApi.md#patch_abac_policies_update) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Partially update an ABAC policy
 [**put_abac_attributes_update**](AdminAbacApi.md#put_abac_attributes_update) | **PUT** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition
 [**put_abac_policies_update**](AdminAbacApi.md#put_abac_policies_update) | **PUT** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy
 
 
 # **abac_attributes_create**
-> abac_attributes_create(org_id)
+> AbacAttributesCreateResponse abac_attributes_create(org_id)
 
-Create a new attribute definition
+Create an attribute definition
 
 ### Example
 
@@ -31,6 +31,7 @@ Create a new attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_attributes_create_response import AbacAttributesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -63,8 +64,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Create a new attribute definition
-        api_instance.abac_attributes_create(org_id)
+        # Create an attribute definition
+        api_response = api_instance.abac_attributes_create(org_id)
+        print("The response of AdminAbacApi->abac_attributes_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_attributes_create: %s\n" % e)
 ```
@@ -80,7 +83,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacAttributesCreateResponse**](AbacAttributesCreateResponse.md)
 
 ### Authorization
 
@@ -89,18 +92,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created |  -  |
+**409** | An attribute with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_attributes_delete**
-> abac_attributes_delete(org_id, id)
+> MessageResponse abac_attributes_delete(org_id, id)
 
 Delete an attribute definition
 
@@ -111,6 +115,7 @@ Delete an attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -145,7 +150,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete an attribute definition
-        api_instance.abac_attributes_delete(org_id, id)
+        api_response = api_instance.abac_attributes_delete(org_id, id)
+        print("The response of AdminAbacApi->abac_attributes_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_attributes_delete: %s\n" % e)
 ```
@@ -162,7 +169,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -171,20 +178,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
+**403** | System attribute definitions cannot be deleted |  -  |
+**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_attributes_get**
-> abac_attributes_get(org_id, id)
+> AbacAttributesGetResponse abac_attributes_get(org_id, id)
 
-Get a single attribute definition
+Get an attribute definition
 
 ### Example
 
@@ -193,6 +202,7 @@ Get a single attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_attributes_get_response import AbacAttributesGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -226,8 +236,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
 
     try:
-        # Get a single attribute definition
-        api_instance.abac_attributes_get(org_id, id)
+        # Get an attribute definition
+        api_response = api_instance.abac_attributes_get(org_id, id)
+        print("The response of AdminAbacApi->abac_attributes_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_attributes_get: %s\n" % e)
 ```
@@ -244,7 +256,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacAttributesGetResponse**](AbacAttributesGetResponse.md)
 
 ### Authorization
 
@@ -253,20 +265,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Attribute definition |  -  |
+**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_attributes_list**
-> abac_attributes_list(org_id)
+> AbacAttributesListResponse abac_attributes_list(org_id)
 
-List all attribute definitions
+List attribute definitions
 
 ### Example
 
@@ -275,6 +288,7 @@ List all attribute definitions
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_attributes_list_response import AbacAttributesListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -307,8 +321,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all attribute definitions
-        api_instance.abac_attributes_list(org_id)
+        # List attribute definitions
+        api_response = api_instance.abac_attributes_list(org_id)
+        print("The response of AdminAbacApi->abac_attributes_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_attributes_list: %s\n" % e)
 ```
@@ -324,7 +340,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacAttributesListResponse**](AbacAttributesListResponse.md)
 
 ### Authorization
 
@@ -333,20 +349,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Paginated attribute definitions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_create**
-> abac_policies_create(org_id)
+> AbacPoliciesCreateResponse abac_policies_create(org_id)
 
-Create a new ABAC policy
+Create an ABAC policy
 
 ### Example
 
@@ -355,6 +371,7 @@ Create a new ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_policies_create_response import AbacPoliciesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -387,8 +404,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Create a new ABAC policy
-        api_instance.abac_policies_create(org_id)
+        # Create an ABAC policy
+        api_response = api_instance.abac_policies_create(org_id)
+        print("The response of AdminAbacApi->abac_policies_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_policies_create: %s\n" % e)
 ```
@@ -404,7 +423,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesCreateResponse**](AbacPoliciesCreateResponse.md)
 
 ### Authorization
 
@@ -413,18 +432,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created |  -  |
+**400** | Invalid effect or policy conditions |  -  |
+**409** | A policy with this slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_delete**
-> abac_policies_delete(org_id, id)
+> MessageResponse abac_policies_delete(org_id, id)
 
 Delete an ABAC policy
 
@@ -435,6 +456,7 @@ Delete an ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -469,7 +491,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete an ABAC policy
-        api_instance.abac_policies_delete(org_id, id)
+        api_response = api_instance.abac_policies_delete(org_id, id)
+        print("The response of AdminAbacApi->abac_policies_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_policies_delete: %s\n" % e)
 ```
@@ -486,7 +510,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -495,20 +519,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
+**403** | System policies cannot be deleted |  -  |
+**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_get**
-> abac_policies_get(org_id, id)
+> AbacPoliciesGetResponse abac_policies_get(org_id, id)
 
-Get a single ABAC policy
+Get an ABAC policy
 
 ### Example
 
@@ -517,6 +543,7 @@ Get a single ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_policies_get_response import AbacPoliciesGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -550,8 +577,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
 
     try:
-        # Get a single ABAC policy
-        api_instance.abac_policies_get(org_id, id)
+        # Get an ABAC policy
+        api_response = api_instance.abac_policies_get(org_id, id)
+        print("The response of AdminAbacApi->abac_policies_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_policies_get: %s\n" % e)
 ```
@@ -568,7 +597,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesGetResponse**](AbacPoliciesGetResponse.md)
 
 ### Authorization
 
@@ -577,20 +606,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Policy |  -  |
+**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_list**
-> abac_policies_list(org_id)
+> AbacPoliciesListResponse abac_policies_list(org_id)
 
-List all ABAC policies
+List ABAC policies
 
 ### Example
 
@@ -599,6 +629,7 @@ List all ABAC policies
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_policies_list_response import AbacPoliciesListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -631,8 +662,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List all ABAC policies
-        api_instance.abac_policies_list(org_id)
+        # List ABAC policies
+        api_response = api_instance.abac_policies_list(org_id)
+        print("The response of AdminAbacApi->abac_policies_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_policies_list: %s\n" % e)
 ```
@@ -648,7 +681,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesListResponse**](AbacPoliciesListResponse.md)
 
 ### Authorization
 
@@ -657,20 +690,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Paginated policies |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **abac_policies_toggle**
-> abac_policies_toggle(org_id, id)
+> AbacPoliciesToggleResponse abac_policies_toggle(org_id, id)
 
-Toggle policy active status
+Toggle a policy between active and inactive
 
 ### Example
 
@@ -679,6 +712,7 @@ Toggle policy active status
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.abac_policies_toggle_response import AbacPoliciesToggleResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -712,8 +746,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
 
     try:
-        # Toggle policy active status
-        api_instance.abac_policies_toggle(org_id, id)
+        # Toggle a policy between active and inactive
+        api_response = api_instance.abac_policies_toggle(org_id, id)
+        print("The response of AdminAbacApi->abac_policies_toggle:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->abac_policies_toggle: %s\n" % e)
 ```
@@ -730,7 +766,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AbacPoliciesToggleResponse**](AbacPoliciesToggleResponse.md)
 
 ### Authorization
 
@@ -739,20 +775,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Toggled policy |  -  |
+**403** | System policies cannot be modified |  -  |
+**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_abac_attributes_update**
-> patch_abac_attributes_update(org_id, id)
+> PutAbacAttributesUpdateResponse patch_abac_attributes_update(org_id, id)
 
-Update an attribute definition
+Partially update an attribute definition
 
 ### Example
 
@@ -761,6 +799,7 @@ Update an attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -794,8 +833,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
 
     try:
-        # Update an attribute definition
-        api_instance.patch_abac_attributes_update(org_id, id)
+        # Partially update an attribute definition
+        api_response = api_instance.patch_abac_attributes_update(org_id, id)
+        print("The response of AdminAbacApi->patch_abac_attributes_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->patch_abac_attributes_update: %s\n" % e)
 ```
@@ -812,7 +853,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -821,20 +862,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated |  -  |
+**403** | System attribute definitions cannot be modified |  -  |
+**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_abac_policies_update**
-> patch_abac_policies_update(org_id, id)
+> PutAbacPoliciesUpdateResponse patch_abac_policies_update(org_id, id)
 
-Update an ABAC policy
+Partially update an ABAC policy
 
 ### Example
 
@@ -843,6 +886,7 @@ Update an ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -876,8 +920,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     id = 'id_example' # str | 
 
     try:
-        # Update an ABAC policy
-        api_instance.patch_abac_policies_update(org_id, id)
+        # Partially update an ABAC policy
+        api_response = api_instance.patch_abac_policies_update(org_id, id)
+        print("The response of AdminAbacApi->patch_abac_policies_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->patch_abac_policies_update: %s\n" % e)
 ```
@@ -894,7 +940,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -903,18 +949,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated |  -  |
+**403** | System policies cannot be modified |  -  |
+**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_abac_attributes_update**
-> put_abac_attributes_update(org_id, id)
+> PutAbacAttributesUpdateResponse put_abac_attributes_update(org_id, id)
 
 Update an attribute definition
 
@@ -925,6 +973,7 @@ Update an attribute definition
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_attributes_update_response import PutAbacAttributesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -959,7 +1008,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update an attribute definition
-        api_instance.put_abac_attributes_update(org_id, id)
+        api_response = api_instance.put_abac_attributes_update(org_id, id)
+        print("The response of AdminAbacApi->put_abac_attributes_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->put_abac_attributes_update: %s\n" % e)
 ```
@@ -976,7 +1027,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAbacAttributesUpdateResponse**](PutAbacAttributesUpdateResponse.md)
 
 ### Authorization
 
@@ -985,18 +1036,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated |  -  |
+**403** | System attribute definitions cannot be modified |  -  |
+**404** | Attribute definition not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_abac_policies_update**
-> put_abac_policies_update(org_id, id)
+> PutAbacPoliciesUpdateResponse put_abac_policies_update(org_id, id)
 
 Update an ABAC policy
 
@@ -1007,6 +1060,7 @@ Update an ABAC policy
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_abac_policies_update_response import PutAbacPoliciesUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1041,7 +1095,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update an ABAC policy
-        api_instance.put_abac_policies_update(org_id, id)
+        api_response = api_instance.put_abac_policies_update(org_id, id)
+        print("The response of AdminAbacApi->put_abac_policies_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAbacApi->put_abac_policies_update: %s\n" % e)
 ```
@@ -1058,7 +1114,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAbacPoliciesUpdateResponse**](PutAbacPoliciesUpdateResponse.md)
 
 ### Authorization
 
@@ -1067,13 +1123,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated |  -  |
+**403** | System policies cannot be modified |  -  |
+**404** | Policy not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

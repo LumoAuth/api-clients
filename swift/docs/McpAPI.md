@@ -4,22 +4,22 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getProtectedResourceMetadata**](McpAPI.md#getprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728)
-[**getProtectedResourceMetadataRoot**](McpAPI.md#getprotectedresourcemetadataroot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata
+[**getProtectedResourceMetadata**](McpAPI.md#getprotectedresourcemetadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728)
+[**getProtectedResourceMetadataRoot**](McpAPI.md#getprotectedresourcemetadataroot) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728)
 [**getServer**](McpAPI.md#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
-[**getServerChallenge**](McpAPI.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.
+[**getServerChallenge**](McpAPI.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 [**listServers**](McpAPI.md#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
-[**postServerChallenge**](McpAPI.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.
+[**postServerChallenge**](McpAPI.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 
 
 # **getProtectedResourceMetadata**
 ```swift
-    open class func getProtectedResourceMetadata(orgId: String, serverId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func getProtectedResourceMetadata(orgId: String, serverId: String, completion: @escaping (_ data: ProtectedResourceMetadata?, _ error: Error?) -> Void)
 ```
 
-OAuth 2.0 Protected Resource Metadata (RFC 9728)
+MCP server protected resource metadata (RFC 9728)
 
-Well-known endpoint for MCP servers with path-specific metadata. Example: /.well-known/oauth-protected-resource/mcp/{serverId}  MCP clients MUST support this discovery mechanism per the MCP Authorization spec.
+Public discovery document for one MCP server, served both under the organization prefix and at the root-level well-known suffix form (MCP 2025-11-25). Cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 ```swift
@@ -29,7 +29,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let serverId = "serverId_example" // String | 
 
-// OAuth 2.0 Protected Resource Metadata (RFC 9728)
+// MCP server protected resource metadata (RFC 9728)
 McpAPI.getProtectedResourceMetadata(orgId: orgId, serverId: serverId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -51,7 +51,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**ProtectedResourceMetadata**](ProtectedResourceMetadata.md)
 
 ### Authorization
 
@@ -60,18 +60,18 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getProtectedResourceMetadataRoot**
 ```swift
-    open class func getProtectedResourceMetadataRoot(orgId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func getProtectedResourceMetadataRoot(orgId: String, completion: @escaping (_ data: GetProtectedResourceMetadataRoot200Response?, _ error: Error?) -> Void)
 ```
 
-Root-level Protected Resource Metadata
+Organization-level protected resource metadata (RFC 9728)
 
-Fallback well-known endpoint per RFC 9728 when no path-specific metadata exists. Returns metadata for the first active MCP server, or a list of available servers.
+Root fallback: with exactly one protected MCP server its metadata document is returned directly; with several, a list of resources pointing at their per-server metadata URLs. Public and cacheable (Cache-Control: public, max-age=3600).
 
 ### Example
 ```swift
@@ -80,7 +80,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 
-// Root-level Protected Resource Metadata
+// Organization-level protected resource metadata (RFC 9728)
 McpAPI.getProtectedResourceMetadataRoot(orgId: orgId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -101,7 +101,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**GetProtectedResourceMetadataRoot200Response**](GetProtectedResourceMetadataRoot200Response.md)
 
 ### Authorization
 
@@ -110,7 +110,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -168,12 +168,12 @@ Name | Type | Description  | Notes
 
 # **getServerChallenge**
 ```swift
-    open class func getServerChallenge(orgId: String, serverId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func getServerChallenge(orgId: String, serverId: String, completion: @escaping (_ data: GetServerChallengeResponse?, _ error: Error?) -> Void)
 ```
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Test endpoint that behaves like the MCP server's protected endpoint: validates the presented Bearer / DPoP access token (audience, scopes, DPoP binding) or answers the MCP-spec 401 challenge pointing at the protected resource metadata.
 
 ### Example
 ```swift
@@ -183,7 +183,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let serverId = "serverId_example" // String | 
 
-// Simulated MCP Server 401 challenge endpoint.
+// Simulated MCP server authorization challenge
 McpAPI.getServerChallenge(orgId: orgId, serverId: serverId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -205,7 +205,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -214,7 +214,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -270,12 +270,12 @@ Name | Type | Description  | Notes
 
 # **postServerChallenge**
 ```swift
-    open class func postServerChallenge(orgId: String, serverId: String, completion: @escaping (_ data: Void?, _ error: Error?) -> Void)
+    open class func postServerChallenge(orgId: String, serverId: String, completion: @escaping (_ data: GetServerChallengeResponse?, _ error: Error?) -> Void)
 ```
 
-Simulated MCP Server 401 challenge endpoint.
+Simulated MCP server authorization challenge (POST)
 
-When an MCP client sends an unauthenticated request, the MCP server MUST respond with 401 including WWW-Authenticate header per the spec.  This endpoint allows testing the challenge flow.
+Identical to GET; the HTTP method is only recorded in the audit trail.
 
 ### Example
 ```swift
@@ -285,7 +285,7 @@ import LumoAuthAPIClient
 let orgId = "orgId_example" // String | 
 let serverId = "serverId_example" // String | 
 
-// Simulated MCP Server 401 challenge endpoint.
+// Simulated MCP server authorization challenge (POST)
 McpAPI.postServerChallenge(orgId: orgId, serverId: serverId) { (response, error) in
     guard error == nil else {
         print(error)
@@ -307,7 +307,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-Void (empty response body)
+[**GetServerChallengeResponse**](GetServerChallengeResponse.md)
 
 ### Authorization
 
@@ -316,7 +316,7 @@ Void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

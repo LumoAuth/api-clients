@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -60,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Authorize(orgId);
+            //var response = instance.Authorize(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -71,7 +74,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.BackchannelAuthorize(orgId);
+            //var response = instance.BackchannelAuthorize(orgId);
+            //Assert.IsType<BackchannelAuthorizeResponse>(response);
         }
 
         /// <summary>
@@ -82,7 +86,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.DeviceAuthorization(orgId);
+            //var response = instance.DeviceAuthorization(orgId);
+            //Assert.IsType<DeviceAuthorizationResponse>(response);
         }
 
         /// <summary>
@@ -94,7 +99,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string clientId = null;
-            //instance.GetClientConfiguration(orgId, clientId);
+            //var response = instance.GetClientConfiguration(orgId, clientId);
+            //Assert.IsType<RegisteredClientMetadata>(response);
         }
 
         /// <summary>
@@ -105,7 +111,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetDeviceVerification(orgId);
+            //var response = instance.GetDeviceVerification(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -116,7 +123,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetOrgSelection(orgId);
+            //var response = instance.GetOrgSelection(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -127,7 +135,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Introspect(orgId);
+            //var response = instance.Introspect(orgId);
+            //Assert.IsType<IntrospectResponse>(response);
         }
 
         /// <summary>
@@ -138,7 +147,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Par(orgId);
+            //var response = instance.Par(orgId);
+            //Assert.IsType<ParResponse>(response);
         }
 
         /// <summary>
@@ -160,7 +170,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.RegisterClient(orgId);
+            //var response = instance.RegisterClient(orgId);
+            //Assert.IsType<RegisterClientResponse>(response);
         }
 
         /// <summary>
@@ -171,7 +182,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Revoke(orgId);
+            //var response = instance.Revoke(orgId);
+            //Assert.IsType<Object>(response);
         }
 
         /// <summary>
@@ -218,7 +230,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.SubmitAuthorization(orgId);
+            //var response = instance.SubmitAuthorization(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -229,7 +242,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.SubmitDeviceVerification(orgId);
+            //var response = instance.SubmitDeviceVerification(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -251,7 +265,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.SubmitLoginJson(orgId);
+            //var response = instance.SubmitLoginJson(orgId);
+            //Assert.IsType<SubmitLoginJsonResponse>(response);
         }
 
         /// <summary>
@@ -262,7 +277,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.SubmitOrgSelection(orgId);
+            //var response = instance.SubmitOrgSelection(orgId);
+            //Assert.IsType<string>(response);
         }
 
         /// <summary>
@@ -273,7 +289,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.Token(orgId);
+            //var response = instance.Token(orgId);
+            //Assert.IsType<TokenResponse>(response);
         }
     }
 }

@@ -4,7 +4,8 @@
 
 | Name | Type | Description | Notes |
 | ---- | ---- | ----------- | ----- |
-| **reason** | **String** | Optional denial reason. | [optional] |
+| **reason** | **String** | Optional denial reason (internal; never shown to the agent). | [optional] |
+| **agent_message** | **String** | Optional message the agent MAY read on the status endpoint / callback. | [optional] |
 
 ## Example
 
@@ -12,7 +13,8 @@
 require 'lumoauth_api_client'
 
 instance = LumoAuthApiClient::DenyRequestRequest.new(
-  reason: null
+  reason: null,
+  agent_message: null
 )
 ```
 

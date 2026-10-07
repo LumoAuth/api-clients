@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesAddPermissions(orgId, roleId);
+            //var response = instance.AdminRolesAddPermissions(orgId, roleId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -73,7 +76,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesAddUser(orgId, roleId);
+            //var response = instance.AdminRolesAddUser(orgId, roleId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -84,7 +88,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminRolesCreate(orgId);
+            //var response = instance.AdminRolesCreate(orgId);
+            //Assert.IsType<AdminRolesCreateResponse>(response);
         }
 
         /// <summary>
@@ -96,7 +101,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesDelete(orgId, roleId);
+            //var response = instance.AdminRolesDelete(orgId, roleId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -108,7 +114,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesGet(orgId, roleId);
+            //var response = instance.AdminRolesGet(orgId, roleId);
+            //Assert.IsType<AdminRolesGetResponse>(response);
         }
 
         /// <summary>
@@ -120,7 +127,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesGetPermissions(orgId, roleId);
+            //var response = instance.AdminRolesGetPermissions(orgId, roleId);
+            //Assert.IsType<AdminRolesGetPermissionsResponse>(response);
         }
 
         /// <summary>
@@ -132,7 +140,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesGetUsers(orgId, roleId);
+            //var response = instance.AdminRolesGetUsers(orgId, roleId);
+            //Assert.IsType<AdminRolesGetUsersResponse>(response);
         }
 
         /// <summary>
@@ -143,7 +152,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.AdminRolesList(orgId);
+            //var response = instance.AdminRolesList(orgId);
+            //Assert.IsType<AdminRolesListResponse>(response);
         }
 
         /// <summary>
@@ -156,7 +166,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string roleId = null;
             //string permissionId = null;
-            //instance.AdminRolesRemovePermission(orgId, roleId, permissionId);
+            //var response = instance.AdminRolesRemovePermission(orgId, roleId, permissionId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -169,7 +180,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string roleId = null;
             //string userId = null;
-            //instance.AdminRolesRemoveUser(orgId, roleId, userId);
+            //var response = instance.AdminRolesRemoveUser(orgId, roleId, userId);
+            //Assert.IsType<MessageResponse>(response);
         }
 
         /// <summary>
@@ -181,7 +193,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.AdminRolesUpdatePermissions(orgId, roleId);
+            //var response = instance.AdminRolesUpdatePermissions(orgId, roleId);
+            //Assert.IsType<AdminRolesCreateResponse>(response);
         }
 
         /// <summary>
@@ -193,7 +206,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.PatchAdminRolesUpdate(orgId, roleId);
+            //var response = instance.PatchAdminRolesUpdate(orgId, roleId);
+            //Assert.IsType<AdminRolesCreateResponse>(response);
         }
 
         /// <summary>
@@ -205,7 +219,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string roleId = null;
-            //instance.PutAdminRolesUpdate(orgId, roleId);
+            //var response = instance.PutAdminRolesUpdate(orgId, roleId);
+            //Assert.IsType<AdminRolesCreateResponse>(response);
         }
     }
 }

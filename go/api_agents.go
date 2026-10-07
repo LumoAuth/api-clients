@@ -43,7 +43,9 @@ Body: {
 	AskExecute(r ApiAskRequest) (*AskResponse, *http.Response, error)
 
 	/*
-	Attest Method for Attest
+	Attest Workload attestation: exchange a cloud OIDC token for an agent access token
+
+	Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -53,7 +55,8 @@ Body: {
 	Attest(ctx context.Context, orgId string, agentId string) ApiAttestRequest
 
 	// AttestExecute executes the request
-	AttestExecute(r ApiAttestRequest) (*http.Response, error)
+	//  @return AttestResponse
+	AttestExecute(r ApiAttestRequest) (*AttestResponse, *http.Response, error)
 
 	/*
 	AuthorizeMcp Per-MCP-tool authorization for the authenticated agent (dx B3).
@@ -91,7 +94,9 @@ Body: { "server_id": "invoices", "tool": "send_payment_reminder" }
 	CreateApprovalExecute(r ApiCreateApprovalRequest) (*CreateApprovalResponse, *http.Response, error)
 
 	/*
-	GetAgentCard Method for GetAgentCard
+	GetAgentCard Signed A2A agent card
+
+	Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -101,7 +106,8 @@ Body: { "server_id": "invoices", "tool": "send_payment_reminder" }
 	GetAgentCard(ctx context.Context, orgId string, agentId string) ApiGetAgentCardRequest
 
 	// GetAgentCardExecute executes the request
-	GetAgentCardExecute(r ApiGetAgentCardRequest) (*http.Response, error)
+	//  @return SignedAgentCard
+	GetAgentCardExecute(r ApiGetAgentCardRequest) (*SignedAgentCard, *http.Response, error)
 
 	/*
 	GetApprovalStatus Method for GetApprovalStatus
@@ -133,7 +139,7 @@ Body: { "server_id": "invoices", "tool": "send_payment_reminder" }
 	GetCurrentAgentExecute(r ApiGetCurrentAgentRequest) (*GetCurrentAgentResponse, *http.Response, error)
 
 	/*
-	RegisterAgent Method for RegisterAgent
+	RegisterAgent Register (or re-register) an agent
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -142,10 +148,13 @@ Body: { "server_id": "invoices", "tool": "send_payment_reminder" }
 	RegisterAgent(ctx context.Context, orgId string) ApiRegisterAgentRequest
 
 	// RegisterAgentExecute executes the request
-	RegisterAgentExecute(r ApiRegisterAgentRequest) (*http.Response, error)
+	//  @return RegisterAgentResponse
+	RegisterAgentExecute(r ApiRegisterAgentRequest) (*RegisterAgentResponse, *http.Response, error)
 
 	/*
-	VerifyAgentCard Method for VerifyAgentCard
+	VerifyAgentCard Verify a signed A2A agent card
+
+	Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {"card": {...}, "jwks_uri": "https://..."} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -154,7 +163,8 @@ Body: { "server_id": "invoices", "tool": "send_payment_reminder" }
 	VerifyAgentCard(ctx context.Context, orgId string) ApiVerifyAgentCardRequest
 
 	// VerifyAgentCardExecute executes the request
-	VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (*http.Response, error)
+	//  @return VerifyAgentCardResponse
+	VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (*VerifyAgentCardResponse, *http.Response, error)
 }
 
 // AgentsAPIService AgentsAPI service
@@ -297,14 +307,22 @@ type ApiAttestRequest struct {
 	ApiService AgentsAPI
 	orgId string
 	agentId string
+	attestRequest *AttestRequest
 }
 
-func (r ApiAttestRequest) Execute() (*http.Response, error) {
+func (r ApiAttestRequest) AttestRequest(attestRequest AttestRequest) ApiAttestRequest {
+	r.attestRequest = &attestRequest
+	return r
+}
+
+func (r ApiAttestRequest) Execute() (*AttestResponse, *http.Response, error) {
 	return r.ApiService.AttestExecute(r)
 }
 
 /*
-Attest Method for Attest
+Attest Workload attestation: exchange a cloud OIDC token for an agent access token
+
+Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -321,16 +339,18 @@ func (a *AgentsAPIService) Attest(ctx context.Context, orgId string, agentId str
 }
 
 // Execute executes the request
-func (a *AgentsAPIService) AttestExecute(r ApiAttestRequest) (*http.Response, error) {
+//  @return AttestResponse
+func (a *AgentsAPIService) AttestExecute(r ApiAttestRequest) (*AttestResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AttestResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.Attest")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/{agentId}/attest"
@@ -340,9 +360,12 @@ func (a *AgentsAPIService) AttestExecute(r ApiAttestRequest) (*http.Response, er
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.attestRequest == nil {
+		return localVarReturnValue, nil, reportError("attestRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -351,13 +374,15 @@ func (a *AgentsAPIService) AttestExecute(r ApiAttestRequest) (*http.Response, er
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.attestRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -374,19 +399,19 @@ func (a *AgentsAPIService) AttestExecute(r ApiAttestRequest) (*http.Response, er
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -394,10 +419,19 @@ func (a *AgentsAPIService) AttestExecute(r ApiAttestRequest) (*http.Response, er
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAuthorizeMcpRequest struct {
@@ -668,12 +702,14 @@ type ApiGetAgentCardRequest struct {
 	agentId string
 }
 
-func (r ApiGetAgentCardRequest) Execute() (*http.Response, error) {
+func (r ApiGetAgentCardRequest) Execute() (*SignedAgentCard, *http.Response, error) {
 	return r.ApiService.GetAgentCardExecute(r)
 }
 
 /*
-GetAgentCard Method for GetAgentCard
+GetAgentCard Signed A2A agent card
+
+Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -690,16 +726,18 @@ func (a *AgentsAPIService) GetAgentCard(ctx context.Context, orgId string, agent
 }
 
 // Execute executes the request
-func (a *AgentsAPIService) GetAgentCardExecute(r ApiGetAgentCardRequest) (*http.Response, error) {
+//  @return SignedAgentCard
+func (a *AgentsAPIService) GetAgentCardExecute(r ApiGetAgentCardRequest) (*SignedAgentCard, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SignedAgentCard
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.GetAgentCard")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/{agentId}/agent-card"
@@ -720,7 +758,7 @@ func (a *AgentsAPIService) GetAgentCardExecute(r ApiGetAgentCardRequest) (*http.
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -729,19 +767,19 @@ func (a *AgentsAPIService) GetAgentCardExecute(r ApiGetAgentCardRequest) (*http.
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -749,10 +787,19 @@ func (a *AgentsAPIService) GetAgentCardExecute(r ApiGetAgentCardRequest) (*http.
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiGetApprovalStatusRequest struct {
@@ -997,12 +1044,12 @@ type ApiRegisterAgentRequest struct {
 	orgId string
 }
 
-func (r ApiRegisterAgentRequest) Execute() (*http.Response, error) {
+func (r ApiRegisterAgentRequest) Execute() (*RegisterAgentResponse, *http.Response, error) {
 	return r.ApiService.RegisterAgentExecute(r)
 }
 
 /*
-RegisterAgent Method for RegisterAgent
+RegisterAgent Register (or re-register) an agent
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1017,16 +1064,18 @@ func (a *AgentsAPIService) RegisterAgent(ctx context.Context, orgId string) ApiR
 }
 
 // Execute executes the request
-func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*http.Response, error) {
+//  @return RegisterAgentResponse
+func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*RegisterAgentResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *RegisterAgentResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.RegisterAgent")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/register"
@@ -1046,7 +1095,7 @@ func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*htt
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1069,19 +1118,19 @@ func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*htt
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1089,24 +1138,41 @@ func (a *AgentsAPIService) RegisterAgentExecute(r ApiRegisterAgentRequest) (*htt
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiVerifyAgentCardRequest struct {
 	ctx context.Context
 	ApiService AgentsAPI
 	orgId string
+	requestBody *map[string]interface{}
 }
 
-func (r ApiVerifyAgentCardRequest) Execute() (*http.Response, error) {
+func (r ApiVerifyAgentCardRequest) RequestBody(requestBody map[string]interface{}) ApiVerifyAgentCardRequest {
+	r.requestBody = &requestBody
+	return r
+}
+
+func (r ApiVerifyAgentCardRequest) Execute() (*VerifyAgentCardResponse, *http.Response, error) {
 	return r.ApiService.VerifyAgentCardExecute(r)
 }
 
 /*
-VerifyAgentCard Method for VerifyAgentCard
+VerifyAgentCard Verify a signed A2A agent card
+
+Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {"card": {...}, "jwks_uri": "https://..."} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -1121,16 +1187,18 @@ func (a *AgentsAPIService) VerifyAgentCard(ctx context.Context, orgId string) Ap
 }
 
 // Execute executes the request
-func (a *AgentsAPIService) VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (*http.Response, error) {
+//  @return VerifyAgentCardResponse
+func (a *AgentsAPIService) VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (*VerifyAgentCardResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *VerifyAgentCardResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AgentsAPIService.VerifyAgentCard")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/agents/agent-card/verify"
@@ -1139,9 +1207,12 @@ func (a *AgentsAPIService) VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.requestBody == nil {
+		return localVarReturnValue, nil, reportError("requestBody is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1150,13 +1221,15 @@ func (a *AgentsAPIService) VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.requestBody
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -1173,19 +1246,19 @@ func (a *AgentsAPIService) VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -1193,8 +1266,17 @@ func (a *AgentsAPIService) VerifyAgentCardExecute(r ApiVerifyAgentCardRequest) (
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersAvailableError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum AdminSocialProvidersAvailableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersCallbackUrlsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,7 @@ pub enum AdminSocialProvidersCallbackUrlsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersCreateError {
-    DefaultResponse(),
+    Status409(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +41,7 @@ pub enum AdminSocialProvidersCreateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersDeleteError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +49,7 @@ pub enum AdminSocialProvidersDeleteError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersDisableError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +57,7 @@ pub enum AdminSocialProvidersDisableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersEnableError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +65,7 @@ pub enum AdminSocialProvidersEnableError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersGetError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +73,6 @@ pub enum AdminSocialProvidersGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersListError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +80,6 @@ pub enum AdminSocialProvidersListError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum AdminSocialProvidersTypesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +87,7 @@ pub enum AdminSocialProvidersTypesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PatchAdminSocialProvidersUpdateError {
-    DefaultResponse(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
@@ -99,12 +95,11 @@ pub enum PatchAdminSocialProvidersUpdateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PutAdminSocialProvidersUpdateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
-pub async fn admin_social_providers_available(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSocialProvidersAvailableError>> {
+pub async fn admin_social_providers_available(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSocialProvidersAvailableResponse, Error<AdminSocialProvidersAvailableError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -130,9 +125,20 @@ pub async fn admin_social_providers_available(configuration: &configuration::Con
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersAvailableResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersAvailableResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersAvailableError> = serde_json::from_str(&content).ok();
@@ -140,7 +146,7 @@ pub async fn admin_social_providers_available(configuration: &configuration::Con
     }
 }
 
-pub async fn admin_social_providers_callback_urls(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSocialProvidersCallbackUrlsError>> {
+pub async fn admin_social_providers_callback_urls(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSocialProvidersCallbackUrlsResponse, Error<AdminSocialProvidersCallbackUrlsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -166,9 +172,20 @@ pub async fn admin_social_providers_callback_urls(configuration: &configuration:
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersCallbackUrlsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersCallbackUrlsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersCallbackUrlsError> = serde_json::from_str(&content).ok();
@@ -176,7 +193,7 @@ pub async fn admin_social_providers_callback_urls(configuration: &configuration:
     }
 }
 
-pub async fn admin_social_providers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSocialProvidersCreateError>> {
+pub async fn admin_social_providers_create(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<AdminSocialProvidersCreateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -202,9 +219,20 @@ pub async fn admin_social_providers_create(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersCreateError> = serde_json::from_str(&content).ok();
@@ -212,7 +240,7 @@ pub async fn admin_social_providers_create(configuration: &configuration::Config
     }
 }
 
-pub async fn admin_social_providers_delete(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<(), Error<AdminSocialProvidersDeleteError>> {
+pub async fn admin_social_providers_delete(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::MessageResponse, Error<AdminSocialProvidersDeleteError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
@@ -239,9 +267,20 @@ pub async fn admin_social_providers_delete(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::MessageResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::MessageResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersDeleteError> = serde_json::from_str(&content).ok();
@@ -249,7 +288,7 @@ pub async fn admin_social_providers_delete(configuration: &configuration::Config
     }
 }
 
-pub async fn admin_social_providers_disable(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<(), Error<AdminSocialProvidersDisableError>> {
+pub async fn admin_social_providers_disable(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<AdminSocialProvidersDisableError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
@@ -276,9 +315,20 @@ pub async fn admin_social_providers_disable(configuration: &configuration::Confi
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersDisableError> = serde_json::from_str(&content).ok();
@@ -286,7 +336,7 @@ pub async fn admin_social_providers_disable(configuration: &configuration::Confi
     }
 }
 
-pub async fn admin_social_providers_enable(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<(), Error<AdminSocialProvidersEnableError>> {
+pub async fn admin_social_providers_enable(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<AdminSocialProvidersEnableError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
@@ -313,9 +363,20 @@ pub async fn admin_social_providers_enable(configuration: &configuration::Config
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersEnableError> = serde_json::from_str(&content).ok();
@@ -323,7 +384,7 @@ pub async fn admin_social_providers_enable(configuration: &configuration::Config
     }
 }
 
-pub async fn admin_social_providers_get(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<(), Error<AdminSocialProvidersGetError>> {
+pub async fn admin_social_providers_get(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersGetResponse, Error<AdminSocialProvidersGetError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
@@ -350,9 +411,20 @@ pub async fn admin_social_providers_get(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersGetResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersGetResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersGetError> = serde_json::from_str(&content).ok();
@@ -360,7 +432,7 @@ pub async fn admin_social_providers_get(configuration: &configuration::Configura
     }
 }
 
-pub async fn admin_social_providers_list(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSocialProvidersListError>> {
+pub async fn admin_social_providers_list(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSocialProvidersListResponse, Error<AdminSocialProvidersListError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -386,9 +458,20 @@ pub async fn admin_social_providers_list(configuration: &configuration::Configur
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersListResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersListResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersListError> = serde_json::from_str(&content).ok();
@@ -396,7 +479,7 @@ pub async fn admin_social_providers_list(configuration: &configuration::Configur
     }
 }
 
-pub async fn admin_social_providers_types(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<AdminSocialProvidersTypesError>> {
+pub async fn admin_social_providers_types(configuration: &configuration::Configuration, org_id: &str) -> Result<models::AdminSocialProvidersAvailableResponse, Error<AdminSocialProvidersTypesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -422,9 +505,20 @@ pub async fn admin_social_providers_types(configuration: &configuration::Configu
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersAvailableResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersAvailableResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<AdminSocialProvidersTypesError> = serde_json::from_str(&content).ok();
@@ -432,7 +526,7 @@ pub async fn admin_social_providers_types(configuration: &configuration::Configu
     }
 }
 
-pub async fn patch_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<(), Error<PatchAdminSocialProvidersUpdateError>> {
+pub async fn patch_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<PatchAdminSocialProvidersUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
@@ -459,9 +553,20 @@ pub async fn patch_admin_social_providers_update(configuration: &configuration::
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PatchAdminSocialProvidersUpdateError> = serde_json::from_str(&content).ok();
@@ -469,7 +574,7 @@ pub async fn patch_admin_social_providers_update(configuration: &configuration::
     }
 }
 
-pub async fn put_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<(), Error<PutAdminSocialProvidersUpdateError>> {
+pub async fn put_admin_social_providers_update(configuration: &configuration::Configuration, org_id: &str, provider_id: &str) -> Result<models::AdminSocialProvidersCreateResponse, Error<PutAdminSocialProvidersUpdateError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_provider_id = provider_id;
@@ -496,9 +601,20 @@ pub async fn put_admin_social_providers_update(configuration: &configuration::Co
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminSocialProvidersCreateResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<PutAdminSocialProvidersUpdateError> = serde_json::from_str(&content).ok();

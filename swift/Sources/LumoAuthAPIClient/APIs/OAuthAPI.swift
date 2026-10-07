@@ -13,21 +13,24 @@ import AnyCodable
 open class OAuthAPI {
 
     /**
-
+     OAuth 2.1 / OIDC authorization endpoint
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func authorize(orgId: String) async throws {
+    open class func authorize(orgId: String) async throws -> String {
         return try await authorizeWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     OAuth 2.1 / OIDC authorization endpoint
      - GET /orgs/{orgId}/api/v1/oauth/authorize
+     - Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client's redirect_uri in the requested response_mode. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func authorizeWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func authorizeWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/authorize"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -43,30 +46,33 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-
+     CIBA backchannel authentication request
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: BackchannelAuthorizeResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func backchannelAuthorize(orgId: String) async throws {
+    open class func backchannelAuthorize(orgId: String) async throws -> BackchannelAuthorizeResponse {
         return try await backchannelAuthorizeWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     CIBA backchannel authentication request
      - POST /orgs/{orgId}/api/v1/oauth/bc-authorize
+     - OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
      - BASIC:
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<BackchannelAuthorizeResponse> 
      */
-    open class func backchannelAuthorizeWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func backchannelAuthorizeWithRequestBuilder(orgId: String) -> RequestBuilder<BackchannelAuthorizeResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/bc-authorize"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -82,33 +88,33 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<BackchannelAuthorizeResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+     Device authorization request (RFC 8628)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: DeviceAuthorizationResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func deviceAuthorization(orgId: String) async throws {
+    open class func deviceAuthorization(orgId: String) async throws -> DeviceAuthorizationResponse {
         return try await deviceAuthorizationWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+     Device authorization request (RFC 8628)
      - POST /orgs/{orgId}/api/v1/oauth/device_authorization
-     - The device makes a request to the authorization server's device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+     - Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      - BASIC:
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<DeviceAuthorizationResponse> 
      */
-    open class func deviceAuthorizationWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func deviceAuthorizationWithRequestBuilder(orgId: String) -> RequestBuilder<DeviceAuthorizationResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/device_authorization"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -124,26 +130,27 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<DeviceAuthorizationResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Client Configuration Endpoint per OIDC spec Section 4
+     Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
      
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: Void
+     - returns: RegisteredClientMetadata
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getClientConfiguration(orgId: String, clientId: String) async throws {
+    open class func getClientConfiguration(orgId: String, clientId: String) async throws -> RegisteredClientMetadata {
         return try await getClientConfigurationWithRequestBuilder(orgId: orgId, clientId: clientId).execute().body
     }
 
     /**
-     Client Configuration Endpoint per OIDC spec Section 4
+     Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
      - GET /orgs/{orgId}/api/v1/connect/register/{clientId}
+     - Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -152,9 +159,9 @@ open class OAuthAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter clientId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<RegisteredClientMetadata> 
      */
-    open class func getClientConfigurationWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<Void> {
+    open class func getClientConfigurationWithRequestBuilder(orgId: String, clientId: String) -> RequestBuilder<RegisteredClientMetadata> {
         var localVariablePath = "/orgs/{orgId}/api/v1/connect/register/{clientId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -173,30 +180,30 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<RegisteredClientMetadata>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Device Verification Page (RFC 8628 Section 3.3)
+     Device verification page (RFC 8628 §3.3)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getDeviceVerification(orgId: String) async throws {
+    open class func getDeviceVerification(orgId: String) async throws -> String {
         return try await getDeviceVerificationWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Device Verification Page (RFC 8628 Section 3.3)
+     Device verification page (RFC 8628 §3.3)
      - GET /orgs/{orgId}/api/v1/oauth/device
-     - This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     - Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func getDeviceVerificationWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func getDeviceVerificationWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/device"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -212,27 +219,30 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-
+     Organization selector page
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getOrgSelection(orgId: String) async throws {
+    open class func getOrgSelection(orgId: String) async throws -> String {
         return try await getOrgSelectionWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     Organization selector page
      - GET /orgs/{orgId}/api/v1/oauth/org-select
+     - Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func getOrgSelectionWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func getOrgSelectionWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/org-select"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -248,33 +258,33 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-     RFC 7662 - Token Introspection Endpoint
+     Token introspection (RFC 7662)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: IntrospectResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func introspect(orgId: String) async throws {
+    open class func introspect(orgId: String) async throws -> IntrospectResponse {
         return try await introspectWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     RFC 7662 - Token Introspection Endpoint
+     Token introspection (RFC 7662)
      - POST /orgs/{orgId}/api/v1/oauth/introspect
-     - Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+     - Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      - BASIC:
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<IntrospectResponse> 
      */
-    open class func introspectWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func introspectWithRequestBuilder(orgId: String) -> RequestBuilder<IntrospectResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/introspect"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -290,30 +300,33 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<IntrospectResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Pushed authorization request (RFC 9126)
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: ParResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func par(orgId: String) async throws {
+    open class func par(orgId: String) async throws -> ParResponse {
         return try await parWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     Pushed authorization request (RFC 9126)
      - POST /orgs/{orgId}/api/v1/oauth/par
+     - Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
      - BASIC:
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<ParResponse> 
      */
-    open class func parWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func parWithRequestBuilder(orgId: String) -> RequestBuilder<ParResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/par"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -329,13 +342,14 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<ParResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-
+     Passkey login entry point
+     
      - parameter orgId: (path)  
      - returns: Void
      */
@@ -345,7 +359,9 @@ open class OAuthAPI {
     }
 
     /**
+     Passkey login entry point
      - GET /orgs/{orgId}/api/v1/oauth/passkey-login
+     - Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
      - parameter orgId: (path)  
      - returns: RequestBuilder<Void> 
      */
@@ -371,19 +387,20 @@ open class OAuthAPI {
     }
 
     /**
-     Client Registration Endpoint per OIDC spec Section 3
+     Dynamic client registration (RFC 7591 / OIDC DCR)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: RegisterClientResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func registerClient(orgId: String) async throws {
+    open class func registerClient(orgId: String) async throws -> RegisterClientResponse {
         return try await registerClientWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Client Registration Endpoint per OIDC spec Section 3
+     Dynamic client registration (RFC 7591 / OIDC DCR)
      - POST /orgs/{orgId}/api/v1/connect/register
+     - Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -391,9 +408,9 @@ open class OAuthAPI {
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<RegisterClientResponse> 
      */
-    open class func registerClientWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func registerClientWithRequestBuilder(orgId: String) -> RequestBuilder<RegisterClientResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/connect/register"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -409,33 +426,33 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<RegisterClientResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     RFC 7009 - Token Revocation Endpoint
+     Token revocation (RFC 7009)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: AnyCodable
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func revoke(orgId: String) async throws {
+    open class func revoke(orgId: String) async throws -> AnyCodable {
         return try await revokeWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     RFC 7009 - Token Revocation Endpoint
+     Token revocation (RFC 7009)
      - POST /orgs/{orgId}/api/v1/oauth/revoke
-     - Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+     - Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      - BASIC:
        - type: http
        - name: ClientAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<AnyCodable> 
      */
-    open class func revokeWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func revokeWithRequestBuilder(orgId: String) -> RequestBuilder<AnyCodable> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/revoke"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -451,13 +468,13 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AnyCodable>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     Handle social login callback from provider.
+     Social / enterprise identity-provider callback
      
      - parameter orgId: (path)  
      - parameter provider: (path)  
@@ -469,8 +486,9 @@ open class OAuthAPI {
     }
 
     /**
-     Handle social login callback from provider.
+     Social / enterprise identity-provider callback
      - GET /orgs/{orgId}/api/v1/oauth/social/{provider}/callback
+     - Receives the provider's authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
      - parameter orgId: (path)  
      - parameter provider: (path)  
      - returns: RequestBuilder<Void> 
@@ -500,7 +518,7 @@ open class OAuthAPI {
     }
 
     /**
-     Handle social login callback from provider.
+     Social / enterprise identity-provider callback (form_post)
      
      - parameter orgId: (path)  
      - parameter provider: (path)  
@@ -512,8 +530,9 @@ open class OAuthAPI {
     }
 
     /**
-     Handle social login callback from provider.
+     Social / enterprise identity-provider callback (form_post)
      - POST /orgs/{orgId}/api/v1/oauth/social/{provider}/callback
+     - Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
      - parameter orgId: (path)  
      - parameter provider: (path)  
      - returns: RequestBuilder<Void> 
@@ -543,7 +562,7 @@ open class OAuthAPI {
     }
 
     /**
-     Initiate social login flow.
+     Start social / enterprise identity-provider login
      
      - parameter orgId: (path)  
      - parameter provider: (path)  
@@ -555,9 +574,9 @@ open class OAuthAPI {
     }
 
     /**
-     Initiate social login flow.
+     Start social / enterprise identity-provider login
      - GET /orgs/{orgId}/api/v1/oauth/social/{provider}
-     - Redirects to the external provider's authorization endpoint.
+     - Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider's authorization endpoint. Not a JSON API.
      - parameter orgId: (path)  
      - parameter provider: (path)  
      - returns: RequestBuilder<Void> 
@@ -587,21 +606,24 @@ open class OAuthAPI {
     }
 
     /**
-
+     OAuth 2.1 / OIDC authorization endpoint (form submission)
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func submitAuthorization(orgId: String) async throws {
+    open class func submitAuthorization(orgId: String) async throws -> String {
         return try await submitAuthorizationWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     OAuth 2.1 / OIDC authorization endpoint (form submission)
      - POST /orgs/{orgId}/api/v1/oauth/authorize
+     - Same as GET; also receives the consent form submission. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func submitAuthorizationWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func submitAuthorizationWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/authorize"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -617,30 +639,30 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-     Device Verification Page (RFC 8628 Section 3.3)
+     Submit device verification
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func submitDeviceVerification(orgId: String) async throws {
+    open class func submitDeviceVerification(orgId: String) async throws -> String {
         return try await submitDeviceVerificationWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     Device Verification Page (RFC 8628 Section 3.3)
+     Submit device verification
      - POST /orgs/{orgId}/api/v1/oauth/device
-     - This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     - Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func submitDeviceVerificationWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func submitDeviceVerificationWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/device"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -656,13 +678,14 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-
+     Hosted login form submission
+     
      - parameter orgId: (path)  
      - returns: Void
      */
@@ -672,7 +695,9 @@ open class OAuthAPI {
     }
 
     /**
+     Hosted login form submission
      - POST /orgs/{orgId}/api/v1/oauth/login/submit
+     - Receives the hosted OAuth login page's form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
      - parameter orgId: (path)  
      - returns: RequestBuilder<Void> 
      */
@@ -698,24 +723,24 @@ open class OAuthAPI {
     }
 
     /**
-     JSON credential login, for applications that render their own sign-in form.
+     Programmatic (JSON) login for the authorization flow
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: SubmitLoginJsonResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func submitLoginJson(orgId: String) async throws {
+    open class func submitLoginJson(orgId: String) async throws -> SubmitLoginJsonResponse {
         return try await submitLoginJsonWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     JSON credential login, for applications that render their own sign-in form.
+     Programmatic (JSON) login for the authorization flow
      - POST /orgs/{orgId}/api/v1/oauth/login/json
-     - The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
+     - Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<SubmitLoginJsonResponse> 
      */
-    open class func submitLoginJsonWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func submitLoginJsonWithRequestBuilder(orgId: String) -> RequestBuilder<SubmitLoginJsonResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/login/json"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -731,27 +756,30 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<SubmitLoginJsonResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-
+     Submit organization selection
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func submitOrgSelection(orgId: String) async throws {
+    open class func submitOrgSelection(orgId: String) async throws -> String {
         return try await submitOrgSelectionWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     Submit organization selection
      - POST /orgs/{orgId}/api/v1/oauth/org-select
+     - Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func submitOrgSelectionWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func submitOrgSelectionWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/org-select"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -767,32 +795,34 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-     OAuth 2.1 Token Endpoint
+     OAuth 2.1 token endpoint
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: TokenResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func token(orgId: String) async throws {
+    open class func token(orgId: String) async throws -> TokenResponse {
         return try await tokenWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     OAuth 2.1 Token Endpoint
+     OAuth 2.1 token endpoint
      - POST /orgs/{orgId}/api/v1/oauth/token
+     - Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      - BASIC:
        - type: http
        - name: ClientAuth
+     - responseHeaders: [DPoP-Nonce(String)]
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<TokenResponse> 
      */
-    open class func tokenWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func tokenWithRequestBuilder(orgId: String) -> RequestBuilder<TokenResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/token"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -808,7 +838,7 @@ open class OAuthAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<TokenResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

@@ -4,32 +4,32 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminOrgInvitationsCreate**](AdminOrganizationsApi.md#adminorginvitationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations |  |
-| [**AdminOrgInvitationsList**](AdminOrganizationsApi.md#adminorginvitationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations |  |
-| [**AdminOrgInvitationsResend**](AdminOrganizationsApi.md#adminorginvitationsresend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend |  |
-| [**AdminOrgInvitationsRevoke**](AdminOrganizationsApi.md#adminorginvitationsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} |  |
-| [**AdminOrgMembersAdd**](AdminOrganizationsApi.md#adminorgmembersadd) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members |  |
-| [**AdminOrgMembersList**](AdminOrganizationsApi.md#adminorgmemberslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members |  |
-| [**AdminOrgMembersRemove**](AdminOrganizationsApi.md#adminorgmembersremove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**AdminOrgRolesCreate**](AdminOrganizationsApi.md#adminorgrolescreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles |  |
-| [**AdminOrgRolesDelete**](AdminOrganizationsApi.md#adminorgrolesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**AdminOrgRolesList**](AdminOrganizationsApi.md#adminorgroleslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles |  |
-| [**AdminOrganizationsCreate**](AdminOrganizationsApi.md#adminorganizationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations |  |
-| [**AdminOrganizationsDelete**](AdminOrganizationsApi.md#adminorganizationsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**AdminOrganizationsGet**](AdminOrganizationsApi.md#adminorganizationsget) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**AdminOrganizationsList**](AdminOrganizationsApi.md#adminorganizationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations |  |
-| [**PatchAdminOrgMembersUpdate**](AdminOrganizationsApi.md#patchadminorgmembersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**PatchAdminOrgRolesUpdate**](AdminOrganizationsApi.md#patchadminorgrolesupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**PatchAdminOrganizationsUpdate**](AdminOrganizationsApi.md#patchadminorganizationsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
-| [**PutAdminOrgMembersUpdate**](AdminOrganizationsApi.md#putadminorgmembersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} |  |
-| [**PutAdminOrgRolesUpdate**](AdminOrganizationsApi.md#putadminorgrolesupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} |  |
-| [**PutAdminOrganizationsUpdate**](AdminOrganizationsApi.md#putadminorganizationsupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} |  |
+| [**AdminOrgInvitationsCreate**](AdminOrganizationsApi.md#adminorginvitationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization |
+| [**AdminOrgInvitationsList**](AdminOrganizationsApi.md#adminorginvitationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations |
+| [**AdminOrgInvitationsResend**](AdminOrganizationsApi.md#adminorginvitationsresend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation |
+| [**AdminOrgInvitationsRevoke**](AdminOrganizationsApi.md#adminorginvitationsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation |
+| [**AdminOrgMembersAdd**](AdminOrganizationsApi.md#adminorgmembersadd) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization |
+| [**AdminOrgMembersList**](AdminOrganizationsApi.md#adminorgmemberslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members |
+| [**AdminOrgMembersRemove**](AdminOrganizationsApi.md#adminorgmembersremove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization |
+| [**AdminOrgRolesCreate**](AdminOrganizationsApi.md#adminorgrolescreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role |
+| [**AdminOrgRolesDelete**](AdminOrganizationsApi.md#adminorgrolesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role |
+| [**AdminOrgRolesList**](AdminOrganizationsApi.md#adminorgroleslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles |
+| [**AdminOrganizationsCreate**](AdminOrganizationsApi.md#adminorganizationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization |
+| [**AdminOrganizationsDelete**](AdminOrganizationsApi.md#adminorganizationsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization |
+| [**AdminOrganizationsGet**](AdminOrganizationsApi.md#adminorganizationsget) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization |
+| [**AdminOrganizationsList**](AdminOrganizationsApi.md#adminorganizationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations |
+| [**PatchAdminOrgMembersUpdate**](AdminOrganizationsApi.md#patchadminorgmembersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status |
+| [**PatchAdminOrgRolesUpdate**](AdminOrganizationsApi.md#patchadminorgrolesupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role |
+| [**PatchAdminOrganizationsUpdate**](AdminOrganizationsApi.md#patchadminorganizationsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization |
+| [**PutAdminOrgMembersUpdate**](AdminOrganizationsApi.md#putadminorgmembersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status |
+| [**PutAdminOrgRolesUpdate**](AdminOrganizationsApi.md#putadminorgrolesupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role |
+| [**PutAdminOrganizationsUpdate**](AdminOrganizationsApi.md#putadminorganizationsupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization |
 
 <a id="adminorginvitationscreate"></a>
 # **AdminOrgInvitationsCreate**
-> void AdminOrgInvitationsCreate (string orgId, string organizationId)
+> AdminOrgInvitationsCreateResponse AdminOrgInvitationsCreate (string orgId, string organizationId)
 
-
+Invite a user to an organization
 
 ### Example
 ```csharp
@@ -64,7 +64,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgInvitationsCreate(orgId, organizationId);
+                // Invite a user to an organization
+                AdminOrgInvitationsCreateResponse result = apiInstance.AdminOrgInvitationsCreate(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -83,7 +85,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgInvitationsCreateWithHttpInfo(orgId, organizationId);
+    // Invite a user to an organization
+    ApiResponse<AdminOrgInvitationsCreateResponse> response = apiInstance.AdminOrgInvitationsCreateWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -102,7 +108,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgInvitationsCreateResponse**](AdminOrgInvitationsCreateResponse.md)
 
 ### Authorization
 
@@ -111,21 +117,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Invitation sent |  -  |
+| **400** | Invalid role for this organization |  -  |
+| **404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorginvitationslist"></a>
 # **AdminOrgInvitationsList**
-> void AdminOrgInvitationsList (string orgId, string organizationId)
+> AdminOrgInvitationsListResponse AdminOrgInvitationsList (string orgId, string organizationId)
 
-
+List organization invitations
 
 ### Example
 ```csharp
@@ -160,7 +168,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgInvitationsList(orgId, organizationId);
+                // List organization invitations
+                AdminOrgInvitationsListResponse result = apiInstance.AdminOrgInvitationsList(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -179,7 +189,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgInvitationsListWithHttpInfo(orgId, organizationId);
+    // List organization invitations
+    ApiResponse<AdminOrgInvitationsListResponse> response = apiInstance.AdminOrgInvitationsListWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -198,7 +212,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgInvitationsListResponse**](AdminOrgInvitationsListResponse.md)
 
 ### Authorization
 
@@ -207,21 +221,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Invitations |  -  |
+| **404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorginvitationsresend"></a>
 # **AdminOrgInvitationsResend**
-> void AdminOrgInvitationsResend (string orgId, string organizationId, string invId)
+> MessageResponse AdminOrgInvitationsResend (string orgId, string organizationId, string invId)
 
-
+Resend an invitation
 
 ### Example
 ```csharp
@@ -257,7 +272,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgInvitationsResend(orgId, organizationId, invId);
+                // Resend an invitation
+                MessageResponse result = apiInstance.AdminOrgInvitationsResend(orgId, organizationId, invId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -276,7 +293,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgInvitationsResendWithHttpInfo(orgId, organizationId, invId);
+    // Resend an invitation
+    ApiResponse<MessageResponse> response = apiInstance.AdminOrgInvitationsResendWithHttpInfo(orgId, organizationId, invId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -296,7 +317,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -305,21 +326,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Invitation resent |  -  |
+| **404** | Organization or invitation not found |  -  |
+| **422** | Unable to resend invitation |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorginvitationsrevoke"></a>
 # **AdminOrgInvitationsRevoke**
-> void AdminOrgInvitationsRevoke (string orgId, string organizationId, string invId)
+> MessageResponse AdminOrgInvitationsRevoke (string orgId, string organizationId, string invId)
 
-
+Revoke an invitation
 
 ### Example
 ```csharp
@@ -355,7 +378,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgInvitationsRevoke(orgId, organizationId, invId);
+                // Revoke an invitation
+                MessageResponse result = apiInstance.AdminOrgInvitationsRevoke(orgId, organizationId, invId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -374,7 +399,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgInvitationsRevokeWithHttpInfo(orgId, organizationId, invId);
+    // Revoke an invitation
+    ApiResponse<MessageResponse> response = apiInstance.AdminOrgInvitationsRevokeWithHttpInfo(orgId, organizationId, invId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -394,7 +423,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -403,21 +432,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Invitation revoked |  -  |
+| **404** | Organization or invitation not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorgmembersadd"></a>
 # **AdminOrgMembersAdd**
-> void AdminOrgMembersAdd (string orgId, string organizationId)
+> AdminOrgMembersAddResponse AdminOrgMembersAdd (string orgId, string organizationId)
 
-
+Add a member to an organization
 
 ### Example
 ```csharp
@@ -452,7 +482,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgMembersAdd(orgId, organizationId);
+                // Add a member to an organization
+                AdminOrgMembersAddResponse result = apiInstance.AdminOrgMembersAdd(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -471,7 +503,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgMembersAddWithHttpInfo(orgId, organizationId);
+    // Add a member to an organization
+    ApiResponse<AdminOrgMembersAddResponse> response = apiInstance.AdminOrgMembersAddWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -490,7 +526,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgMembersAddResponse**](AdminOrgMembersAddResponse.md)
 
 ### Authorization
 
@@ -499,21 +535,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Member added |  -  |
+| **404** | Organization, user or role not found |  -  |
+| **409** | User is already a member |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorgmemberslist"></a>
 # **AdminOrgMembersList**
-> void AdminOrgMembersList (string orgId, string organizationId)
+> AdminOrgMembersListResponse AdminOrgMembersList (string orgId, string organizationId)
 
-
+List organization members
 
 ### Example
 ```csharp
@@ -548,7 +586,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgMembersList(orgId, organizationId);
+                // List organization members
+                AdminOrgMembersListResponse result = apiInstance.AdminOrgMembersList(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -567,7 +607,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgMembersListWithHttpInfo(orgId, organizationId);
+    // List organization members
+    ApiResponse<AdminOrgMembersListResponse> response = apiInstance.AdminOrgMembersListWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -586,7 +630,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgMembersListResponse**](AdminOrgMembersListResponse.md)
 
 ### Authorization
 
@@ -595,21 +639,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Members |  -  |
+| **404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorgmembersremove"></a>
 # **AdminOrgMembersRemove**
-> void AdminOrgMembersRemove (string orgId, string organizationId, string userId)
+> MessageResponse AdminOrgMembersRemove (string orgId, string organizationId, string userId)
 
-
+Remove a member from an organization
 
 ### Example
 ```csharp
@@ -645,7 +690,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgMembersRemove(orgId, organizationId, userId);
+                // Remove a member from an organization
+                MessageResponse result = apiInstance.AdminOrgMembersRemove(orgId, organizationId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -664,7 +711,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgMembersRemoveWithHttpInfo(orgId, organizationId, userId);
+    // Remove a member from an organization
+    ApiResponse<MessageResponse> response = apiInstance.AdminOrgMembersRemoveWithHttpInfo(orgId, organizationId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -684,7 +735,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -693,21 +744,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Member removed |  -  |
+| **404** | Organization or user not found |  -  |
+| **422** | Unable to remove member |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorgrolescreate"></a>
 # **AdminOrgRolesCreate**
-> void AdminOrgRolesCreate (string orgId, string organizationId)
+> AdminOrgRolesCreateResponse AdminOrgRolesCreate (string orgId, string organizationId)
 
-
+Create an organization role
 
 ### Example
 ```csharp
@@ -742,7 +795,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgRolesCreate(orgId, organizationId);
+                // Create an organization role
+                AdminOrgRolesCreateResponse result = apiInstance.AdminOrgRolesCreate(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -761,7 +816,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgRolesCreateWithHttpInfo(orgId, organizationId);
+    // Create an organization role
+    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.AdminOrgRolesCreateWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -780,7 +839,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -789,21 +848,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Role created |  -  |
+| **404** | Organization not found |  -  |
+| **409** | A role with this name or slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorgrolesdelete"></a>
 # **AdminOrgRolesDelete**
-> void AdminOrgRolesDelete (string orgId, string organizationId, string roleId)
+> MessageResponse AdminOrgRolesDelete (string orgId, string organizationId, string roleId)
 
-
+Delete an organization role
 
 ### Example
 ```csharp
@@ -839,7 +900,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgRolesDelete(orgId, organizationId, roleId);
+                // Delete an organization role
+                MessageResponse result = apiInstance.AdminOrgRolesDelete(orgId, organizationId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -858,7 +921,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgRolesDeleteWithHttpInfo(orgId, organizationId, roleId);
+    // Delete an organization role
+    ApiResponse<MessageResponse> response = apiInstance.AdminOrgRolesDeleteWithHttpInfo(orgId, organizationId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -878,7 +945,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -887,21 +954,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Role deleted |  -  |
+| **404** | Organization or role not found |  -  |
+| **422** | Role still in use |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorgroleslist"></a>
 # **AdminOrgRolesList**
-> void AdminOrgRolesList (string orgId, string organizationId)
+> AdminOrgRolesListResponse AdminOrgRolesList (string orgId, string organizationId)
 
-
+List organization roles
 
 ### Example
 ```csharp
@@ -936,7 +1005,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrgRolesList(orgId, organizationId);
+                // List organization roles
+                AdminOrgRolesListResponse result = apiInstance.AdminOrgRolesList(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -955,7 +1026,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrgRolesListWithHttpInfo(orgId, organizationId);
+    // List organization roles
+    ApiResponse<AdminOrgRolesListResponse> response = apiInstance.AdminOrgRolesListWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -974,7 +1049,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesListResponse**](AdminOrgRolesListResponse.md)
 
 ### Authorization
 
@@ -983,21 +1058,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Roles |  -  |
+| **404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorganizationscreate"></a>
 # **AdminOrganizationsCreate**
-> void AdminOrganizationsCreate (string orgId)
+> AdminOrganizationsCreateResponse AdminOrganizationsCreate (string orgId)
 
-
+Create an organization
 
 ### Example
 ```csharp
@@ -1031,7 +1107,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrganizationsCreate(orgId);
+                // Create an organization
+                AdminOrganizationsCreateResponse result = apiInstance.AdminOrganizationsCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1050,7 +1128,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrganizationsCreateWithHttpInfo(orgId);
+    // Create an organization
+    ApiResponse<AdminOrganizationsCreateResponse> response = apiInstance.AdminOrganizationsCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1068,7 +1150,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsCreateResponse**](AdminOrganizationsCreateResponse.md)
 
 ### Authorization
 
@@ -1077,21 +1159,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Organization created |  -  |
+| **409** | Organization already exists or data invalid |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorganizationsdelete"></a>
 # **AdminOrganizationsDelete**
-> void AdminOrganizationsDelete (string orgId, string organizationId)
+> MessageResponse AdminOrganizationsDelete (string orgId, string organizationId)
 
-
+Delete an organization
 
 ### Example
 ```csharp
@@ -1126,7 +1209,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrganizationsDelete(orgId, organizationId);
+                // Delete an organization
+                MessageResponse result = apiInstance.AdminOrganizationsDelete(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1145,7 +1230,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrganizationsDeleteWithHttpInfo(orgId, organizationId);
+    // Delete an organization
+    ApiResponse<MessageResponse> response = apiInstance.AdminOrganizationsDeleteWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1164,7 +1253,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -1173,21 +1262,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization deleted |  -  |
+| **404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorganizationsget"></a>
 # **AdminOrganizationsGet**
-> void AdminOrganizationsGet (string orgId, string organizationId)
+> AdminOrganizationsGetResponse AdminOrganizationsGet (string orgId, string organizationId)
 
-
+Get an organization
 
 ### Example
 ```csharp
@@ -1222,7 +1312,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrganizationsGet(orgId, organizationId);
+                // Get an organization
+                AdminOrganizationsGetResponse result = apiInstance.AdminOrganizationsGet(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1241,7 +1333,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrganizationsGetWithHttpInfo(orgId, organizationId);
+    // Get an organization
+    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.AdminOrganizationsGetWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1260,7 +1356,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1269,21 +1365,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization |  -  |
+| **404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminorganizationslist"></a>
 # **AdminOrganizationsList**
-> void AdminOrganizationsList (string orgId)
+> AdminOrganizationsListResponse AdminOrganizationsList (string orgId)
 
-
+List organizations
 
 ### Example
 ```csharp
@@ -1317,7 +1414,9 @@ namespace Example
 
             try
             {
-                apiInstance.AdminOrganizationsList(orgId);
+                // List organizations
+                AdminOrganizationsListResponse result = apiInstance.AdminOrganizationsList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1336,7 +1435,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AdminOrganizationsListWithHttpInfo(orgId);
+    // List organizations
+    ApiResponse<AdminOrganizationsListResponse> response = apiInstance.AdminOrganizationsListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1354,7 +1457,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsListResponse**](AdminOrganizationsListResponse.md)
 
 ### Authorization
 
@@ -1363,21 +1466,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organizations |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminorgmembersupdate"></a>
 # **PatchAdminOrgMembersUpdate**
-> void PatchAdminOrgMembersUpdate (string orgId, string organizationId, string userId)
+> PutAdminOrgMembersUpdateResponse PatchAdminOrgMembersUpdate (string orgId, string organizationId, string userId)
 
-
+Update a member's role or status
 
 ### Example
 ```csharp
@@ -1413,7 +1516,9 @@ namespace Example
 
             try
             {
-                apiInstance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId);
+                // Update a member's role or status
+                PutAdminOrgMembersUpdateResponse result = apiInstance.PatchAdminOrgMembersUpdate(orgId, organizationId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1432,7 +1537,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PatchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    // Update a member's role or status
+    ApiResponse<PutAdminOrgMembersUpdateResponse> response = apiInstance.PatchAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1452,7 +1561,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1461,21 +1570,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated member |  -  |
+| **404** | Organization, member or role not found |  -  |
+| **422** | Unable to update member role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminorgrolesupdate"></a>
 # **PatchAdminOrgRolesUpdate**
-> void PatchAdminOrgRolesUpdate (string orgId, string organizationId, string roleId)
+> AdminOrgRolesCreateResponse PatchAdminOrgRolesUpdate (string orgId, string organizationId, string roleId)
 
-
+Update an organization role
 
 ### Example
 ```csharp
@@ -1511,7 +1622,9 @@ namespace Example
 
             try
             {
-                apiInstance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+                // Update an organization role
+                AdminOrgRolesCreateResponse result = apiInstance.PatchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1530,7 +1643,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PatchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    // Update an organization role
+    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.PatchAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1550,7 +1667,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1559,21 +1676,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
+| **404** | Organization or role not found |  -  |
+| **422** | Unable to update role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminorganizationsupdate"></a>
 # **PatchAdminOrganizationsUpdate**
-> void PatchAdminOrganizationsUpdate (string orgId, string organizationId)
+> AdminOrganizationsGetResponse PatchAdminOrganizationsUpdate (string orgId, string organizationId)
 
-
+Update an organization
 
 ### Example
 ```csharp
@@ -1608,7 +1727,9 @@ namespace Example
 
             try
             {
-                apiInstance.PatchAdminOrganizationsUpdate(orgId, organizationId);
+                // Update an organization
+                AdminOrganizationsGetResponse result = apiInstance.PatchAdminOrganizationsUpdate(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1627,7 +1748,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PatchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    // Update an organization
+    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.PatchAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1646,7 +1771,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1655,21 +1780,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization |  -  |
+| **404** | Organization not found |  -  |
+| **409** | Data invalid or conflicts with an existing record |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminorgmembersupdate"></a>
 # **PutAdminOrgMembersUpdate**
-> void PutAdminOrgMembersUpdate (string orgId, string organizationId, string userId)
+> PutAdminOrgMembersUpdateResponse PutAdminOrgMembersUpdate (string orgId, string organizationId, string userId)
 
-
+Update a member's role or status
 
 ### Example
 ```csharp
@@ -1705,7 +1832,9 @@ namespace Example
 
             try
             {
-                apiInstance.PutAdminOrgMembersUpdate(orgId, organizationId, userId);
+                // Update a member's role or status
+                PutAdminOrgMembersUpdateResponse result = apiInstance.PutAdminOrgMembersUpdate(orgId, organizationId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1724,7 +1853,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PutAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    // Update a member's role or status
+    ApiResponse<PutAdminOrgMembersUpdateResponse> response = apiInstance.PutAdminOrgMembersUpdateWithHttpInfo(orgId, organizationId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1744,7 +1877,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1753,21 +1886,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated member |  -  |
+| **404** | Organization, member or role not found |  -  |
+| **422** | Unable to update member role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminorgrolesupdate"></a>
 # **PutAdminOrgRolesUpdate**
-> void PutAdminOrgRolesUpdate (string orgId, string organizationId, string roleId)
+> AdminOrgRolesCreateResponse PutAdminOrgRolesUpdate (string orgId, string organizationId, string roleId)
 
-
+Update an organization role
 
 ### Example
 ```csharp
@@ -1803,7 +1938,9 @@ namespace Example
 
             try
             {
-                apiInstance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId);
+                // Update an organization role
+                AdminOrgRolesCreateResponse result = apiInstance.PutAdminOrgRolesUpdate(orgId, organizationId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1822,7 +1959,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PutAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    // Update an organization role
+    ApiResponse<AdminOrgRolesCreateResponse> response = apiInstance.PutAdminOrgRolesUpdateWithHttpInfo(orgId, organizationId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1842,7 +1983,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1851,21 +1992,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated role |  -  |
+| **404** | Organization or role not found |  -  |
+| **422** | Unable to update role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminorganizationsupdate"></a>
 # **PutAdminOrganizationsUpdate**
-> void PutAdminOrganizationsUpdate (string orgId, string organizationId)
+> AdminOrganizationsGetResponse PutAdminOrganizationsUpdate (string orgId, string organizationId)
 
-
+Update an organization
 
 ### Example
 ```csharp
@@ -1900,7 +2043,9 @@ namespace Example
 
             try
             {
-                apiInstance.PutAdminOrganizationsUpdate(orgId, organizationId);
+                // Update an organization
+                AdminOrganizationsGetResponse result = apiInstance.PutAdminOrganizationsUpdate(orgId, organizationId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1919,7 +2064,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PutAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    // Update an organization
+    ApiResponse<AdminOrganizationsGetResponse> response = apiInstance.PutAdminOrganizationsUpdateWithHttpInfo(orgId, organizationId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1938,7 +2087,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1947,13 +2096,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization |  -  |
+| **404** | Organization not found |  -  |
+| **409** | Data invalid or conflicts with an existing record |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

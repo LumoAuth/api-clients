@@ -21,6 +21,18 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminAuditLogsActionsResponse } from '../models';
+// @ts-ignore
+import type { AdminAuditLogsExportResponse } from '../models';
+// @ts-ignore
+import type { AdminAuditLogsGetResponse } from '../models';
+// @ts-ignore
+import type { AdminAuditLogsListResponse } from '../models';
+// @ts-ignore
+import type { AdminAuditLogsRetentionResponse } from '../models';
+// @ts-ignore
+import type { AdminAuditLogsStatsResponse } from '../models';
 /**
  * AdminAuditLogsApi - axios parameter creator
  * @export
@@ -29,7 +41,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
     return {
         /**
          * 
-         * @summary List available audit action types for this tenant
+         * @summary List the distinct audit action types recorded for the tenant
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -70,7 +82,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Export audit logs as CSV or JSON
+         * @summary Export audit logs as CSV (default) or JSON
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -111,7 +123,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Get a single audit log entry
+         * @summary Get an audit log entry
          * @param {string} orgId 
          * @param {string} logId 
          * @param {*} [options] Override http request option.
@@ -156,7 +168,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary List audit logs for the tenant
+         * @summary List audit log entries
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -238,7 +250,7 @@ export const AdminAuditLogsApiAxiosParamCreator = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Get audit log statistics
+         * @summary Audit log statistics for a period (default: last 30 days)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -371,12 +383,12 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary List available audit action types for this tenant
+         * @summary List the distinct audit action types recorded for the tenant
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsActions(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAuditLogsActions(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsActionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsActions(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsActions']?.[localVarOperationServerIndex]?.url;
@@ -384,12 +396,12 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Export audit logs as CSV or JSON
+         * @summary Export audit logs as CSV (default) or JSON
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsExport(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAuditLogsExport(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsExport(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsExport']?.[localVarOperationServerIndex]?.url;
@@ -397,13 +409,13 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get a single audit log entry
+         * @summary Get an audit log entry
          * @param {string} orgId 
          * @param {string} logId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsGet(orgId: string, logId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAuditLogsGet(orgId: string, logId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsGetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsGet(orgId, logId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsGet']?.[localVarOperationServerIndex]?.url;
@@ -411,12 +423,12 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary List audit logs for the tenant
+         * @summary List audit log entries
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAuditLogsList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsList']?.[localVarOperationServerIndex]?.url;
@@ -429,7 +441,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsRetention(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAuditLogsRetention(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsRetention(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsRetention']?.[localVarOperationServerIndex]?.url;
@@ -437,12 +449,12 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get audit log statistics
+         * @summary Audit log statistics for a period (default: last 30 days)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAuditLogsStats(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminAuditLogsStats(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsStatsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAuditLogsStats(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.adminAuditLogsStats']?.[localVarOperationServerIndex]?.url;
@@ -455,7 +467,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async patchAdminAuditLogsRetentionUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async patchAdminAuditLogsRetentionUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.patchAdminAuditLogsRetentionUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.patchAdminAuditLogsRetentionUpdate']?.[localVarOperationServerIndex]?.url;
@@ -468,7 +480,7 @@ export const AdminAuditLogsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putAdminAuditLogsRetentionUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async putAdminAuditLogsRetentionUpdate(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAuditLogsRetentionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.putAdminAuditLogsRetentionUpdate(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAuditLogsApi.putAdminAuditLogsRetentionUpdate']?.[localVarOperationServerIndex]?.url;
@@ -486,42 +498,42 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
     return {
         /**
          * 
-         * @summary List available audit action types for this tenant
+         * @summary List the distinct audit action types recorded for the tenant
          * @param {AdminAuditLogsApiAdminAuditLogsActionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsActions(requestParameters: AdminAuditLogsApiAdminAuditLogsActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAuditLogsActions(requestParameters: AdminAuditLogsApiAdminAuditLogsActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsActionsResponse> {
             return localVarFp.adminAuditLogsActions(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Export audit logs as CSV or JSON
+         * @summary Export audit logs as CSV (default) or JSON
          * @param {AdminAuditLogsApiAdminAuditLogsExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsExport(requestParameters: AdminAuditLogsApiAdminAuditLogsExportRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAuditLogsExport(requestParameters: AdminAuditLogsApiAdminAuditLogsExportRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.adminAuditLogsExport(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get a single audit log entry
+         * @summary Get an audit log entry
          * @param {AdminAuditLogsApiAdminAuditLogsGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsGet(requestParameters: AdminAuditLogsApiAdminAuditLogsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAuditLogsGet(requestParameters: AdminAuditLogsApiAdminAuditLogsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsGetResponse> {
             return localVarFp.adminAuditLogsGet(requestParameters.orgId, requestParameters.logId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary List audit logs for the tenant
+         * @summary List audit log entries
          * @param {AdminAuditLogsApiAdminAuditLogsListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsList(requestParameters: AdminAuditLogsApiAdminAuditLogsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAuditLogsList(requestParameters: AdminAuditLogsApiAdminAuditLogsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsListResponse> {
             return localVarFp.adminAuditLogsList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -531,17 +543,17 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsRetention(requestParameters: AdminAuditLogsApiAdminAuditLogsRetentionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAuditLogsRetention(requestParameters: AdminAuditLogsApiAdminAuditLogsRetentionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse> {
             return localVarFp.adminAuditLogsRetention(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Get audit log statistics
+         * @summary Audit log statistics for a period (default: last 30 days)
          * @param {AdminAuditLogsApiAdminAuditLogsStatsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAuditLogsStats(requestParameters: AdminAuditLogsApiAdminAuditLogsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminAuditLogsStats(requestParameters: AdminAuditLogsApiAdminAuditLogsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsStatsResponse> {
             return localVarFp.adminAuditLogsStats(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -551,7 +563,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse> {
             return localVarFp.patchAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -561,7 +573,7 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        putAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse> {
             return localVarFp.putAdminAuditLogsRetentionUpdate(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -575,43 +587,43 @@ export const AdminAuditLogsApiFactory = function (configuration?: Configuration,
 export interface AdminAuditLogsApiInterface {
     /**
      * 
-     * @summary List available audit action types for this tenant
+     * @summary List the distinct audit action types recorded for the tenant
      * @param {AdminAuditLogsApiAdminAuditLogsActionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    adminAuditLogsActions(requestParameters: AdminAuditLogsApiAdminAuditLogsActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAuditLogsActions(requestParameters: AdminAuditLogsApiAdminAuditLogsActionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsActionsResponse>;
 
     /**
      * 
-     * @summary Export audit logs as CSV or JSON
+     * @summary Export audit logs as CSV (default) or JSON
      * @param {AdminAuditLogsApiAdminAuditLogsExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    adminAuditLogsExport(requestParameters: AdminAuditLogsApiAdminAuditLogsExportRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAuditLogsExport(requestParameters: AdminAuditLogsApiAdminAuditLogsExportRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
      * 
-     * @summary Get a single audit log entry
+     * @summary Get an audit log entry
      * @param {AdminAuditLogsApiAdminAuditLogsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    adminAuditLogsGet(requestParameters: AdminAuditLogsApiAdminAuditLogsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAuditLogsGet(requestParameters: AdminAuditLogsApiAdminAuditLogsGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsGetResponse>;
 
     /**
      * 
-     * @summary List audit logs for the tenant
+     * @summary List audit log entries
      * @param {AdminAuditLogsApiAdminAuditLogsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    adminAuditLogsList(requestParameters: AdminAuditLogsApiAdminAuditLogsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAuditLogsList(requestParameters: AdminAuditLogsApiAdminAuditLogsListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsListResponse>;
 
     /**
      * 
@@ -621,17 +633,17 @@ export interface AdminAuditLogsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    adminAuditLogsRetention(requestParameters: AdminAuditLogsApiAdminAuditLogsRetentionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAuditLogsRetention(requestParameters: AdminAuditLogsApiAdminAuditLogsRetentionRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse>;
 
     /**
      * 
-     * @summary Get audit log statistics
+     * @summary Audit log statistics for a period (default: last 30 days)
      * @param {AdminAuditLogsApiAdminAuditLogsStatsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    adminAuditLogsStats(requestParameters: AdminAuditLogsApiAdminAuditLogsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminAuditLogsStats(requestParameters: AdminAuditLogsApiAdminAuditLogsStatsRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsStatsResponse>;
 
     /**
      * 
@@ -641,7 +653,7 @@ export interface AdminAuditLogsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    patchAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPatchAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse>;
 
     /**
      * 
@@ -651,7 +663,7 @@ export interface AdminAuditLogsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAuditLogsApiInterface
      */
-    putAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    putAdminAuditLogsRetentionUpdate(requestParameters: AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAuditLogsRetentionResponse>;
 
 }
 
@@ -783,7 +795,7 @@ export interface AdminAuditLogsApiPutAdminAuditLogsRetentionUpdateRequest {
 export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInterface {
     /**
      * 
-     * @summary List available audit action types for this tenant
+     * @summary List the distinct audit action types recorded for the tenant
      * @param {AdminAuditLogsApiAdminAuditLogsActionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -795,7 +807,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
 
     /**
      * 
-     * @summary Export audit logs as CSV or JSON
+     * @summary Export audit logs as CSV (default) or JSON
      * @param {AdminAuditLogsApiAdminAuditLogsExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -807,7 +819,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
 
     /**
      * 
-     * @summary Get a single audit log entry
+     * @summary Get an audit log entry
      * @param {AdminAuditLogsApiAdminAuditLogsGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -819,7 +831,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
 
     /**
      * 
-     * @summary List audit logs for the tenant
+     * @summary List audit log entries
      * @param {AdminAuditLogsApiAdminAuditLogsListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -843,7 +855,7 @@ export class AdminAuditLogsApi extends BaseAPI implements AdminAuditLogsApiInter
 
     /**
      * 
-     * @summary Get audit log statistics
+     * @summary Audit log statistics for a period (default: last 30 days)
      * @param {AdminAuditLogsApiAdminAuditLogsStatsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

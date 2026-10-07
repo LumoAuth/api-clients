@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,16 +29,16 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Revoke all tokens for a client
+        /// Revoke all tokens of a client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void AdminClientTokensRevokeAll(string orgId, string clientId);
+        /// <returns>AdminClientTokensRevokeAllResponse</returns>
+        AdminClientTokensRevokeAllResponse AdminClientTokensRevokeAll(string orgId, string clientId);
 
         /// <summary>
-        /// Revoke all tokens for a client
+        /// Revoke all tokens of a client
         /// </summary>
         /// <remarks>
         /// 
@@ -45,19 +46,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminClientTokensRevokeAllWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of AdminClientTokensRevokeAllResponse</returns>
+        ApiResponse<AdminClientTokensRevokeAllResponse> AdminClientTokensRevokeAllWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Revoke all tokens for a client via POST
+        /// Revoke all tokens of a client (POST alias)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        void AdminClientTokensRevokePost(string orgId, string clientId);
+        /// <returns>AdminUserTokensRevokePostResponse</returns>
+        AdminUserTokensRevokePostResponse AdminClientTokensRevokePost(string orgId, string clientId);
 
         /// <summary>
-        /// Revoke all tokens for a client via POST
+        /// Revoke all tokens of a client (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -65,55 +66,58 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminClientTokensRevokePostWithHttpInfo(string orgId, string clientId);
+        /// <returns>ApiResponse of AdminUserTokensRevokePostResponse</returns>
+        ApiResponse<AdminUserTokensRevokePostResponse> AdminClientTokensRevokePostWithHttpInfo(string orgId, string clientId);
         /// <summary>
-        /// Get active session count for the tenant
+        /// Active session count
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSessionsCount(string orgId);
+        /// <returns>AdminSessionsCountResponse</returns>
+        AdminSessionsCountResponse AdminSessionsCount(string orgId);
 
         /// <summary>
-        /// Get active session count for the tenant
+        /// Active session count
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSessionsCountWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSessionsCountResponse</returns>
+        ApiResponse<AdminSessionsCountResponse> AdminSessionsCountWithHttpInfo(string orgId);
         /// <summary>
-        /// List active sessions for the tenant
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSessionsList(string orgId);
-
-        /// <summary>
-        /// List active sessions for the tenant
+        /// List active sessions
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSessionsListWithHttpInfo(string orgId);
+        /// <returns>AdminSessionsListResponse</returns>
+        AdminSessionsListResponse AdminSessionsList(string orgId);
+
         /// <summary>
-        /// Revoke a specific session
+        /// List active sessions
+        /// </summary>
+        /// <remarks>
+        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminSessionsListResponse</returns>
+        ApiResponse<AdminSessionsListResponse> AdminSessionsListWithHttpInfo(string orgId);
+        /// <summary>
+        /// Revoke a session
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
-        /// <returns></returns>
-        void AdminSessionsRevoke(string orgId, string sessionId);
+        /// <returns>AdminSessionsRevokeResponse</returns>
+        AdminSessionsRevokeResponse AdminSessionsRevoke(string orgId, string sessionId);
 
         /// <summary>
-        /// Revoke a specific session
+        /// Revoke a session
         /// </summary>
         /// <remarks>
         /// 
@@ -121,70 +125,78 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSessionsRevokeWithHttpInfo(string orgId, string sessionId);
+        /// <returns>ApiResponse of AdminSessionsRevokeResponse</returns>
+        ApiResponse<AdminSessionsRevokeResponse> AdminSessionsRevokeWithHttpInfo(string orgId, string sessionId);
         /// <summary>
-        /// Revoke all tenant sessions via POST
+        /// Revoke every session in the tenant
+        /// </summary>
+        /// <remarks>
+        /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminSessionsRevokeAllRequest"></param>
+        /// <returns>AdminSessionsRevokeAllResponse</returns>
+        AdminSessionsRevokeAllResponse AdminSessionsRevokeAll(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest);
+
+        /// <summary>
+        /// Revoke every session in the tenant
+        /// </summary>
+        /// <remarks>
+        /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminSessionsRevokeAllRequest"></param>
+        /// <returns>ApiResponse of AdminSessionsRevokeAllResponse</returns>
+        ApiResponse<AdminSessionsRevokeAllResponse> AdminSessionsRevokeAllWithHttpInfo(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest);
+        /// <summary>
+        /// Session statistics
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSessionsRevokeAll(string orgId);
+        /// <returns>AdminSessionsStatsResponse</returns>
+        AdminSessionsStatsResponse AdminSessionsStats(string orgId);
 
         /// <summary>
-        /// Revoke all tenant sessions via POST
+        /// Session statistics
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSessionsRevokeAllWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminSessionsStatsResponse</returns>
+        ApiResponse<AdminSessionsStatsResponse> AdminSessionsStatsWithHttpInfo(string orgId);
         /// <summary>
-        /// Get session statistics for the tenant
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminSessionsStats(string orgId);
-
-        /// <summary>
-        /// Get session statistics for the tenant
+        /// List access tokens
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminSessionsStatsWithHttpInfo(string orgId);
-        /// <summary>
-        /// List access tokens for the tenant
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminTokensList(string orgId);
+        /// <returns>AdminTokensListResponse</returns>
+        AdminTokensListResponse AdminTokensList(string orgId);
 
         /// <summary>
-        /// List access tokens for the tenant
+        /// List access tokens
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminTokensListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminTokensListResponse</returns>
+        ApiResponse<AdminTokensListResponse> AdminTokensListWithHttpInfo(string orgId);
         /// <summary>
         /// Revoke a token
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
-        /// <returns></returns>
-        void AdminTokensRevoke(string orgId, string tokenId);
+        /// <returns>AdminTokensRevokeResponse</returns>
+        AdminTokensRevokeResponse AdminTokensRevoke(string orgId, string tokenId);
 
         /// <summary>
         /// Revoke a token
@@ -195,19 +207,42 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminTokensRevokeWithHttpInfo(string orgId, string tokenId);
+        /// <returns>ApiResponse of AdminTokensRevokeResponse</returns>
+        ApiResponse<AdminTokensRevokeResponse> AdminTokensRevokeWithHttpInfo(string orgId, string tokenId);
         /// <summary>
-        /// Get sessions for a specific user
+        /// List a user&#39;s active sessions
+        /// </summary>
+        /// <remarks>
+        /// All active sessions of one user (UUID or email), returned as a single page.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <returns>AdminUserSessionsListResponse</returns>
+        AdminUserSessionsListResponse AdminUserSessionsList(string orgId, string userId);
+
+        /// <summary>
+        /// List a user&#39;s active sessions
+        /// </summary>
+        /// <remarks>
+        /// All active sessions of one user (UUID or email), returned as a single page.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="userId"></param>
+        /// <returns>ApiResponse of AdminUserSessionsListResponse</returns>
+        ApiResponse<AdminUserSessionsListResponse> AdminUserSessionsListWithHttpInfo(string orgId, string userId);
+        /// <summary>
+        /// Revoke all sessions of a user
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        void AdminUserSessionsList(string orgId, string userId);
+        /// <returns>AdminUserSessionsRevokeAllResponse</returns>
+        AdminUserSessionsRevokeAllResponse AdminUserSessionsRevokeAll(string orgId, string userId);
 
         /// <summary>
-        /// Get sessions for a specific user
+        /// Revoke all sessions of a user
         /// </summary>
         /// <remarks>
         /// 
@@ -215,19 +250,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminUserSessionsListWithHttpInfo(string orgId, string userId);
+        /// <returns>ApiResponse of AdminUserSessionsRevokeAllResponse</returns>
+        ApiResponse<AdminUserSessionsRevokeAllResponse> AdminUserSessionsRevokeAllWithHttpInfo(string orgId, string userId);
         /// <summary>
-        /// Revoke all sessions for a user
+        /// Revoke all sessions of a user (POST alias)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        void AdminUserSessionsRevokeAll(string orgId, string userId);
+        /// <returns>AdminUserSessionsRevokePostResponse</returns>
+        AdminUserSessionsRevokePostResponse AdminUserSessionsRevokePost(string orgId, string userId);
 
         /// <summary>
-        /// Revoke all sessions for a user
+        /// Revoke all sessions of a user (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -235,19 +270,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminUserSessionsRevokeAllWithHttpInfo(string orgId, string userId);
+        /// <returns>ApiResponse of AdminUserSessionsRevokePostResponse</returns>
+        ApiResponse<AdminUserSessionsRevokePostResponse> AdminUserSessionsRevokePostWithHttpInfo(string orgId, string userId);
         /// <summary>
-        /// Revoke all sessions for a user via POST
+        /// Revoke all tokens of a user
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        void AdminUserSessionsRevokePost(string orgId, string userId);
+        /// <returns>AdminUserTokensRevokeAllResponse</returns>
+        AdminUserTokensRevokeAllResponse AdminUserTokensRevokeAll(string orgId, string userId);
 
         /// <summary>
-        /// Revoke all sessions for a user via POST
+        /// Revoke all tokens of a user
         /// </summary>
         /// <remarks>
         /// 
@@ -255,19 +290,19 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminUserSessionsRevokePostWithHttpInfo(string orgId, string userId);
+        /// <returns>ApiResponse of AdminUserTokensRevokeAllResponse</returns>
+        ApiResponse<AdminUserTokensRevokeAllResponse> AdminUserTokensRevokeAllWithHttpInfo(string orgId, string userId);
         /// <summary>
-        /// Revoke all tokens for a user
+        /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        void AdminUserTokensRevokeAll(string orgId, string userId);
+        /// <returns>AdminUserTokensRevokePostResponse</returns>
+        AdminUserTokensRevokePostResponse AdminUserTokensRevokePost(string orgId, string userId);
 
         /// <summary>
-        /// Revoke all tokens for a user
+        /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -275,28 +310,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminUserTokensRevokeAllWithHttpInfo(string orgId, string userId);
-        /// <summary>
-        /// Revoke all tokens for a user via POST
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        void AdminUserTokensRevokePost(string orgId, string userId);
-
-        /// <summary>
-        /// Revoke all tokens for a user via POST
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminUserTokensRevokePostWithHttpInfo(string orgId, string userId);
+        /// <returns>ApiResponse of AdminUserTokensRevokePostResponse</returns>
+        ApiResponse<AdminUserTokensRevokePostResponse> AdminUserTokensRevokePostWithHttpInfo(string orgId, string userId);
         #endregion Synchronous Operations
     }
 
@@ -307,7 +322,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// Revoke all tokens for a client
+        /// Revoke all tokens of a client
         /// </summary>
         /// <remarks>
         /// 
@@ -316,11 +331,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminClientTokensRevokeAllAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminClientTokensRevokeAllResponse</returns>
+        System.Threading.Tasks.Task<AdminClientTokensRevokeAllResponse> AdminClientTokensRevokeAllAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all tokens for a client
+        /// Revoke all tokens of a client
         /// </summary>
         /// <remarks>
         /// 
@@ -329,10 +344,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminClientTokensRevokeAllWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminClientTokensRevokeAllResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminClientTokensRevokeAllResponse>> AdminClientTokensRevokeAllWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke all tokens for a client via POST
+        /// Revoke all tokens of a client (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -341,11 +356,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminClientTokensRevokePostAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminUserTokensRevokePostResponse</returns>
+        System.Threading.Tasks.Task<AdminUserTokensRevokePostResponse> AdminClientTokensRevokePostAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all tokens for a client via POST
+        /// Revoke all tokens of a client (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -354,10 +369,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminClientTokensRevokePostWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminUserTokensRevokePostResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUserTokensRevokePostResponse>> AdminClientTokensRevokePostWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get active session count for the tenant
+        /// Active session count
         /// </summary>
         /// <remarks>
         /// 
@@ -365,11 +380,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSessionsCountAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSessionsCountResponse</returns>
+        System.Threading.Tasks.Task<AdminSessionsCountResponse> AdminSessionsCountAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get active session count for the tenant
+        /// Active session count
         /// </summary>
         /// <remarks>
         /// 
@@ -377,33 +392,33 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSessionsCountWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSessionsCountResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSessionsCountResponse>> AdminSessionsCountWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List active sessions for the tenant
+        /// List active sessions
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSessionsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSessionsListResponse</returns>
+        System.Threading.Tasks.Task<AdminSessionsListResponse> AdminSessionsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List active sessions for the tenant
+        /// List active sessions
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSessionsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSessionsListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSessionsListResponse>> AdminSessionsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke a specific session
+        /// Revoke a session
         /// </summary>
         /// <remarks>
         /// 
@@ -412,11 +427,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSessionsRevokeAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSessionsRevokeResponse</returns>
+        System.Threading.Tasks.Task<AdminSessionsRevokeResponse> AdminSessionsRevokeAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke a specific session
+        /// Revoke a session
         /// </summary>
         /// <remarks>
         /// 
@@ -425,33 +440,35 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSessionsRevokeWithHttpInfoAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSessionsRevokeResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSessionsRevokeResponse>> AdminSessionsRevokeWithHttpInfoAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke all tenant sessions via POST
+        /// Revoke every session in the tenant
         /// </summary>
         /// <remarks>
-        /// 
+        /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSessionsRevokeAllRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSessionsRevokeAllAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSessionsRevokeAllResponse</returns>
+        System.Threading.Tasks.Task<AdminSessionsRevokeAllResponse> AdminSessionsRevokeAllAsync(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all tenant sessions via POST
+        /// Revoke every session in the tenant
         /// </summary>
         /// <remarks>
-        /// 
+        /// Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSessionsRevokeAllRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSessionsRevokeAllWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSessionsRevokeAllResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSessionsRevokeAllResponse>> AdminSessionsRevokeAllWithHttpInfoAsync(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get session statistics for the tenant
+        /// Session statistics
         /// </summary>
         /// <remarks>
         /// 
@@ -459,11 +476,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminSessionsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminSessionsStatsResponse</returns>
+        System.Threading.Tasks.Task<AdminSessionsStatsResponse> AdminSessionsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get session statistics for the tenant
+        /// Session statistics
         /// </summary>
         /// <remarks>
         /// 
@@ -471,31 +488,31 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminSessionsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminSessionsStatsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminSessionsStatsResponse>> AdminSessionsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List access tokens for the tenant
+        /// List access tokens
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminTokensListResponse</returns>
+        System.Threading.Tasks.Task<AdminTokensListResponse> AdminTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List access tokens for the tenant
+        /// List access tokens
         /// </summary>
         /// <remarks>
-        /// 
+        /// Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminTokensListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminTokensListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminTokensListResponse>> AdminTokensListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Revoke a token
         /// </summary>
@@ -506,8 +523,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminTokensRevokeAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminTokensRevokeResponse</returns>
+        System.Threading.Tasks.Task<AdminTokensRevokeResponse> AdminTokensRevokeAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Revoke a token
@@ -519,35 +536,35 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminTokensRevokeWithHttpInfoAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminTokensRevokeResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminTokensRevokeResponse>> AdminTokensRevokeWithHttpInfoAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get sessions for a specific user
+        /// List a user&#39;s active sessions
         /// </summary>
         /// <remarks>
-        /// 
+        /// All active sessions of one user (UUID or email), returned as a single page.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminUserSessionsListAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminUserSessionsListResponse</returns>
+        System.Threading.Tasks.Task<AdminUserSessionsListResponse> AdminUserSessionsListAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get sessions for a specific user
+        /// List a user&#39;s active sessions
         /// </summary>
         /// <remarks>
-        /// 
+        /// All active sessions of one user (UUID or email), returned as a single page.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminUserSessionsListWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminUserSessionsListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUserSessionsListResponse>> AdminUserSessionsListWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke all sessions for a user
+        /// Revoke all sessions of a user
         /// </summary>
         /// <remarks>
         /// 
@@ -556,11 +573,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminUserSessionsRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminUserSessionsRevokeAllResponse</returns>
+        System.Threading.Tasks.Task<AdminUserSessionsRevokeAllResponse> AdminUserSessionsRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all sessions for a user
+        /// Revoke all sessions of a user
         /// </summary>
         /// <remarks>
         /// 
@@ -569,10 +586,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminUserSessionsRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminUserSessionsRevokeAllResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUserSessionsRevokeAllResponse>> AdminUserSessionsRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke all sessions for a user via POST
+        /// Revoke all sessions of a user (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -581,11 +598,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminUserSessionsRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminUserSessionsRevokePostResponse</returns>
+        System.Threading.Tasks.Task<AdminUserSessionsRevokePostResponse> AdminUserSessionsRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all sessions for a user via POST
+        /// Revoke all sessions of a user (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -594,10 +611,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminUserSessionsRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminUserSessionsRevokePostResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUserSessionsRevokePostResponse>> AdminUserSessionsRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke all tokens for a user
+        /// Revoke all tokens of a user
         /// </summary>
         /// <remarks>
         /// 
@@ -606,11 +623,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminUserTokensRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminUserTokensRevokeAllResponse</returns>
+        System.Threading.Tasks.Task<AdminUserTokensRevokeAllResponse> AdminUserTokensRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all tokens for a user
+        /// Revoke all tokens of a user
         /// </summary>
         /// <remarks>
         /// 
@@ -619,10 +636,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminUserTokensRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminUserTokensRevokeAllResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUserTokensRevokeAllResponse>> AdminUserTokensRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Revoke all tokens for a user via POST
+        /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -631,11 +648,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminUserTokensRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminUserTokensRevokePostResponse</returns>
+        System.Threading.Tasks.Task<AdminUserTokensRevokePostResponse> AdminUserTokensRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Revoke all tokens for a user via POST
+        /// Revoke all tokens of a user (POST alias)
         /// </summary>
         /// <remarks>
         /// 
@@ -644,8 +661,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminUserTokensRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminUserTokensRevokePostResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminUserTokensRevokePostResponse>> AdminUserTokensRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -860,25 +877,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a client 
+        /// Revoke all tokens of a client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void AdminClientTokensRevokeAll(string orgId, string clientId)
+        /// <returns>AdminClientTokensRevokeAllResponse</returns>
+        public AdminClientTokensRevokeAllResponse AdminClientTokensRevokeAll(string orgId, string clientId)
         {
-            AdminClientTokensRevokeAllWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminClientTokensRevokeAllResponse> localVarResponse = AdminClientTokensRevokeAllWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a client 
+        /// Revoke all tokens of a client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminClientTokensRevokeAllWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of AdminClientTokensRevokeAllResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminClientTokensRevokeAllResponse> AdminClientTokensRevokeAllWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -895,6 +913,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -919,7 +938,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<AdminClientTokensRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -931,27 +950,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a client 
+        /// Revoke all tokens of a client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminClientTokensRevokeAllAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminClientTokensRevokeAllResponse</returns>
+        public async System.Threading.Tasks.Task<AdminClientTokensRevokeAllResponse> AdminClientTokensRevokeAllAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminClientTokensRevokeAllWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminClientTokensRevokeAllResponse> localVarResponse = await AdminClientTokensRevokeAllWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a client 
+        /// Revoke all tokens of a client 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminClientTokensRevokeAllWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminClientTokensRevokeAllResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminClientTokensRevokeAllResponse>> AdminClientTokensRevokeAllWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -969,6 +989,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -995,7 +1016,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminClientTokensRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1007,25 +1028,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a client via POST 
+        /// Revoke all tokens of a client (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns></returns>
-        public void AdminClientTokensRevokePost(string orgId, string clientId)
+        /// <returns>AdminUserTokensRevokePostResponse</returns>
+        public AdminUserTokensRevokePostResponse AdminClientTokensRevokePost(string orgId, string clientId)
         {
-            AdminClientTokensRevokePostWithHttpInfo(orgId, clientId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse> localVarResponse = AdminClientTokensRevokePostWithHttpInfo(orgId, clientId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a client via POST 
+        /// Revoke all tokens of a client (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminClientTokensRevokePostWithHttpInfo(string orgId, string clientId)
+        /// <returns>ApiResponse of AdminUserTokensRevokePostResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse> AdminClientTokensRevokePostWithHttpInfo(string orgId, string clientId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1042,6 +1064,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1066,7 +1089,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminUserTokensRevokePostResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1078,27 +1101,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a client via POST 
+        /// Revoke all tokens of a client (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminClientTokensRevokePostAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminUserTokensRevokePostResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUserTokensRevokePostResponse> AdminClientTokensRevokePostAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminClientTokensRevokePostWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse> localVarResponse = await AdminClientTokensRevokePostWithHttpInfoAsync(orgId, clientId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a client via POST 
+        /// Revoke all tokens of a client (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="clientId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminClientTokensRevokePostWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminUserTokensRevokePostResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse>> AdminClientTokensRevokePostWithHttpInfoAsync(string orgId, string clientId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1116,6 +1140,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1142,7 +1167,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminUserTokensRevokePostResponse>("/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1154,23 +1179,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get active session count for the tenant 
+        /// Active session count 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSessionsCount(string orgId)
+        /// <returns>AdminSessionsCountResponse</returns>
+        public AdminSessionsCountResponse AdminSessionsCount(string orgId)
         {
-            AdminSessionsCountWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsCountResponse> localVarResponse = AdminSessionsCountWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get active session count for the tenant 
+        /// Active session count 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSessionsCountWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSessionsCountResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsCountResponse> AdminSessionsCountWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1183,6 +1209,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1206,7 +1233,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/sessions/count", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSessionsCountResponse>("/orgs/{orgId}/api/v1/admin/sessions/count", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1218,25 +1245,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get active session count for the tenant 
+        /// Active session count 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSessionsCountAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSessionsCountResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSessionsCountResponse> AdminSessionsCountAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSessionsCountWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsCountResponse> localVarResponse = await AdminSessionsCountWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get active session count for the tenant 
+        /// Active session count 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSessionsCountWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSessionsCountResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsCountResponse>> AdminSessionsCountWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1250,6 +1278,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1275,7 +1304,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/sessions/count", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSessionsCountResponse>("/orgs/{orgId}/api/v1/admin/sessions/count", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1287,23 +1316,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List active sessions for the tenant 
+        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSessionsList(string orgId)
+        /// <returns>AdminSessionsListResponse</returns>
+        public AdminSessionsListResponse AdminSessionsList(string orgId)
         {
-            AdminSessionsListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsListResponse> localVarResponse = AdminSessionsListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List active sessions for the tenant 
+        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSessionsListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSessionsListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsListResponse> AdminSessionsListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1316,6 +1346,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1339,7 +1370,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/sessions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSessionsListResponse>("/orgs/{orgId}/api/v1/admin/sessions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1351,25 +1382,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List active sessions for the tenant 
+        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSessionsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSessionsListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSessionsListResponse> AdminSessionsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSessionsListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsListResponse> localVarResponse = await AdminSessionsListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List active sessions for the tenant 
+        /// List active sessions Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSessionsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSessionsListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsListResponse>> AdminSessionsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1383,6 +1415,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1408,7 +1441,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/sessions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSessionsListResponse>("/orgs/{orgId}/api/v1/admin/sessions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1420,25 +1453,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke a specific session 
+        /// Revoke a session 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
-        /// <returns></returns>
-        public void AdminSessionsRevoke(string orgId, string sessionId)
+        /// <returns>AdminSessionsRevokeResponse</returns>
+        public AdminSessionsRevokeResponse AdminSessionsRevoke(string orgId, string sessionId)
         {
-            AdminSessionsRevokeWithHttpInfo(orgId, sessionId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeResponse> localVarResponse = AdminSessionsRevokeWithHttpInfo(orgId, sessionId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke a specific session 
+        /// Revoke a session 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSessionsRevokeWithHttpInfo(string orgId, string sessionId)
+        /// <returns>ApiResponse of AdminSessionsRevokeResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeResponse> AdminSessionsRevokeWithHttpInfo(string orgId, string sessionId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1455,6 +1489,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1479,7 +1514,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/sessions/{sessionId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<AdminSessionsRevokeResponse>("/orgs/{orgId}/api/v1/admin/sessions/{sessionId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1491,27 +1526,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke a specific session 
+        /// Revoke a session 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSessionsRevokeAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSessionsRevokeResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSessionsRevokeResponse> AdminSessionsRevokeAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSessionsRevokeWithHttpInfoAsync(orgId, sessionId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeResponse> localVarResponse = await AdminSessionsRevokeWithHttpInfoAsync(orgId, sessionId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke a specific session 
+        /// Revoke a session 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="sessionId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSessionsRevokeWithHttpInfoAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSessionsRevokeResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeResponse>> AdminSessionsRevokeWithHttpInfoAsync(string orgId, string sessionId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1529,6 +1565,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1555,7 +1592,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/sessions/{sessionId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminSessionsRevokeResponse>("/orgs/{orgId}/api/v1/admin/sessions/{sessionId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1567,35 +1604,44 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tenant sessions via POST 
+        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSessionsRevokeAll(string orgId)
+        /// <param name="adminSessionsRevokeAllRequest"></param>
+        /// <returns>AdminSessionsRevokeAllResponse</returns>
+        public AdminSessionsRevokeAllResponse AdminSessionsRevokeAll(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest)
         {
-            AdminSessionsRevokeAllWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeAllResponse> localVarResponse = AdminSessionsRevokeAllWithHttpInfo(orgId, adminSessionsRevokeAllRequest);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tenant sessions via POST 
+        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSessionsRevokeAllWithHttpInfo(string orgId)
+        /// <param name="adminSessionsRevokeAllRequest"></param>
+        /// <returns>ApiResponse of AdminSessionsRevokeAllResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeAllResponse> AdminSessionsRevokeAllWithHttpInfo(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSessionsApi->AdminSessionsRevokeAll");
 
+            // verify the required parameter 'adminSessionsRevokeAllRequest' is set
+            if (adminSessionsRevokeAllRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminSessionsRevokeAllRequest' when calling AdminSessionsApi->AdminSessionsRevokeAll");
+
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1605,6 +1651,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminSessionsRevokeAllRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1619,7 +1666,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/sessions/revoke-all", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminSessionsRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/sessions/revoke-all", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1631,38 +1678,47 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tenant sessions via POST 
+        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSessionsRevokeAllRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSessionsRevokeAllAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSessionsRevokeAllResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSessionsRevokeAllResponse> AdminSessionsRevokeAllAsync(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSessionsRevokeAllWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeAllResponse> localVarResponse = await AdminSessionsRevokeAllWithHttpInfoAsync(orgId, adminSessionsRevokeAllRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tenant sessions via POST 
+        /// Revoke every session in the tenant Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
+        /// <param name="adminSessionsRevokeAllRequest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSessionsRevokeAllWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSessionsRevokeAllResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsRevokeAllResponse>> AdminSessionsRevokeAllWithHttpInfoAsync(string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
                 throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminSessionsApi->AdminSessionsRevokeAll");
 
+            // verify the required parameter 'adminSessionsRevokeAllRequest' is set
+            if (adminSessionsRevokeAllRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminSessionsRevokeAllRequest' when calling AdminSessionsApi->AdminSessionsRevokeAll");
+
 
             LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
 
             string[] _contentTypes = new string[] {
+                "application/json"
             };
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1673,6 +1729,7 @@ namespace LumoAuth.ApiClient.Api
             if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminSessionsRevokeAllRequest;
 
             // authentication (ApiKeyAuth) required
             if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
@@ -1688,7 +1745,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/sessions/revoke-all", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminSessionsRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/sessions/revoke-all", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1700,23 +1757,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get session statistics for the tenant 
+        /// Session statistics 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminSessionsStats(string orgId)
+        /// <returns>AdminSessionsStatsResponse</returns>
+        public AdminSessionsStatsResponse AdminSessionsStats(string orgId)
         {
-            AdminSessionsStatsWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsStatsResponse> localVarResponse = AdminSessionsStatsWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get session statistics for the tenant 
+        /// Session statistics 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminSessionsStatsWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminSessionsStatsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsStatsResponse> AdminSessionsStatsWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1729,6 +1787,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1752,7 +1811,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/sessions/stats", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminSessionsStatsResponse>("/orgs/{orgId}/api/v1/admin/sessions/stats", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1764,25 +1823,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get session statistics for the tenant 
+        /// Session statistics 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminSessionsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminSessionsStatsResponse</returns>
+        public async System.Threading.Tasks.Task<AdminSessionsStatsResponse> AdminSessionsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminSessionsStatsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsStatsResponse> localVarResponse = await AdminSessionsStatsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get session statistics for the tenant 
+        /// Session statistics 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminSessionsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminSessionsStatsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminSessionsStatsResponse>> AdminSessionsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1796,6 +1856,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1821,7 +1882,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/sessions/stats", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminSessionsStatsResponse>("/orgs/{orgId}/api/v1/admin/sessions/stats", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1833,23 +1894,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List access tokens for the tenant 
+        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminTokensList(string orgId)
+        /// <returns>AdminTokensListResponse</returns>
+        public AdminTokensListResponse AdminTokensList(string orgId)
         {
-            AdminTokensListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminTokensListResponse> localVarResponse = AdminTokensListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List access tokens for the tenant 
+        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminTokensListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminTokensListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminTokensListResponse> AdminTokensListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1862,6 +1924,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1885,7 +1948,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/tokens", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminTokensListResponse>("/orgs/{orgId}/api/v1/admin/tokens", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1897,25 +1960,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List access tokens for the tenant 
+        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminTokensListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminTokensListResponse> AdminTokensListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminTokensListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminTokensListResponse> localVarResponse = await AdminTokensListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List access tokens for the tenant 
+        /// List access tokens Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminTokensListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminTokensListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminTokensListResponse>> AdminTokensListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1929,6 +1993,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1954,7 +2019,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminTokensListResponse>("/orgs/{orgId}/api/v1/admin/tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1971,10 +2036,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
-        /// <returns></returns>
-        public void AdminTokensRevoke(string orgId, string tokenId)
+        /// <returns>AdminTokensRevokeResponse</returns>
+        public AdminTokensRevokeResponse AdminTokensRevoke(string orgId, string tokenId)
         {
-            AdminTokensRevokeWithHttpInfo(orgId, tokenId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminTokensRevokeResponse> localVarResponse = AdminTokensRevokeWithHttpInfo(orgId, tokenId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1983,8 +2049,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminTokensRevokeWithHttpInfo(string orgId, string tokenId)
+        /// <returns>ApiResponse of AdminTokensRevokeResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminTokensRevokeResponse> AdminTokensRevokeWithHttpInfo(string orgId, string tokenId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2001,6 +2067,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2025,7 +2092,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/tokens/{tokenId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<AdminTokensRevokeResponse>("/orgs/{orgId}/api/v1/admin/tokens/{tokenId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2043,10 +2110,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminTokensRevokeAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminTokensRevokeResponse</returns>
+        public async System.Threading.Tasks.Task<AdminTokensRevokeResponse> AdminTokensRevokeAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminTokensRevokeWithHttpInfoAsync(orgId, tokenId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminTokensRevokeResponse> localVarResponse = await AdminTokensRevokeWithHttpInfoAsync(orgId, tokenId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -2056,8 +2124,8 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="tokenId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminTokensRevokeWithHttpInfoAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminTokensRevokeResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminTokensRevokeResponse>> AdminTokensRevokeWithHttpInfoAsync(string orgId, string tokenId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2075,6 +2143,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2101,7 +2170,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/tokens/{tokenId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminTokensRevokeResponse>("/orgs/{orgId}/api/v1/admin/tokens/{tokenId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2113,25 +2182,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get sessions for a specific user 
+        /// List a user&#39;s active sessions All active sessions of one user (UUID or email), returned as a single page.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        public void AdminUserSessionsList(string orgId, string userId)
+        /// <returns>AdminUserSessionsListResponse</returns>
+        public AdminUserSessionsListResponse AdminUserSessionsList(string orgId, string userId)
         {
-            AdminUserSessionsListWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsListResponse> localVarResponse = AdminUserSessionsListWithHttpInfo(orgId, userId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get sessions for a specific user 
+        /// List a user&#39;s active sessions All active sessions of one user (UUID or email), returned as a single page.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminUserSessionsListWithHttpInfo(string orgId, string userId)
+        /// <returns>ApiResponse of AdminUserSessionsListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsListResponse> AdminUserSessionsListWithHttpInfo(string orgId, string userId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2148,6 +2218,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2172,7 +2243,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminUserSessionsListResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2184,27 +2255,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get sessions for a specific user 
+        /// List a user&#39;s active sessions All active sessions of one user (UUID or email), returned as a single page.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminUserSessionsListAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminUserSessionsListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUserSessionsListResponse> AdminUserSessionsListAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminUserSessionsListWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsListResponse> localVarResponse = await AdminUserSessionsListWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get sessions for a specific user 
+        /// List a user&#39;s active sessions All active sessions of one user (UUID or email), returned as a single page.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminUserSessionsListWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminUserSessionsListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsListResponse>> AdminUserSessionsListWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2222,6 +2294,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2248,7 +2321,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminUserSessionsListResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2260,25 +2333,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all sessions for a user 
+        /// Revoke all sessions of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        public void AdminUserSessionsRevokeAll(string orgId, string userId)
+        /// <returns>AdminUserSessionsRevokeAllResponse</returns>
+        public AdminUserSessionsRevokeAllResponse AdminUserSessionsRevokeAll(string orgId, string userId)
         {
-            AdminUserSessionsRevokeAllWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokeAllResponse> localVarResponse = AdminUserSessionsRevokeAllWithHttpInfo(orgId, userId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all sessions for a user 
+        /// Revoke all sessions of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminUserSessionsRevokeAllWithHttpInfo(string orgId, string userId)
+        /// <returns>ApiResponse of AdminUserSessionsRevokeAllResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokeAllResponse> AdminUserSessionsRevokeAllWithHttpInfo(string orgId, string userId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2295,6 +2369,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2319,7 +2394,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<AdminUserSessionsRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2331,27 +2406,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all sessions for a user 
+        /// Revoke all sessions of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminUserSessionsRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminUserSessionsRevokeAllResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUserSessionsRevokeAllResponse> AdminUserSessionsRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminUserSessionsRevokeAllWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokeAllResponse> localVarResponse = await AdminUserSessionsRevokeAllWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all sessions for a user 
+        /// Revoke all sessions of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminUserSessionsRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminUserSessionsRevokeAllResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokeAllResponse>> AdminUserSessionsRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2369,6 +2445,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2395,7 +2472,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminUserSessionsRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2407,25 +2484,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all sessions for a user via POST 
+        /// Revoke all sessions of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        public void AdminUserSessionsRevokePost(string orgId, string userId)
+        /// <returns>AdminUserSessionsRevokePostResponse</returns>
+        public AdminUserSessionsRevokePostResponse AdminUserSessionsRevokePost(string orgId, string userId)
         {
-            AdminUserSessionsRevokePostWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokePostResponse> localVarResponse = AdminUserSessionsRevokePostWithHttpInfo(orgId, userId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all sessions for a user via POST 
+        /// Revoke all sessions of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminUserSessionsRevokePostWithHttpInfo(string orgId, string userId)
+        /// <returns>ApiResponse of AdminUserSessionsRevokePostResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokePostResponse> AdminUserSessionsRevokePostWithHttpInfo(string orgId, string userId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2442,6 +2520,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2466,7 +2545,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminUserSessionsRevokePostResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2478,27 +2557,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all sessions for a user via POST 
+        /// Revoke all sessions of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminUserSessionsRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminUserSessionsRevokePostResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUserSessionsRevokePostResponse> AdminUserSessionsRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminUserSessionsRevokePostWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokePostResponse> localVarResponse = await AdminUserSessionsRevokePostWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all sessions for a user via POST 
+        /// Revoke all sessions of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminUserSessionsRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminUserSessionsRevokePostResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUserSessionsRevokePostResponse>> AdminUserSessionsRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2516,6 +2596,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2542,7 +2623,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminUserSessionsRevokePostResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2554,25 +2635,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a user 
+        /// Revoke all tokens of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        public void AdminUserTokensRevokeAll(string orgId, string userId)
+        /// <returns>AdminUserTokensRevokeAllResponse</returns>
+        public AdminUserTokensRevokeAllResponse AdminUserTokensRevokeAll(string orgId, string userId)
         {
-            AdminUserTokensRevokeAllWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokeAllResponse> localVarResponse = AdminUserTokensRevokeAllWithHttpInfo(orgId, userId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a user 
+        /// Revoke all tokens of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminUserTokensRevokeAllWithHttpInfo(string orgId, string userId)
+        /// <returns>ApiResponse of AdminUserTokensRevokeAllResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokeAllResponse> AdminUserTokensRevokeAllWithHttpInfo(string orgId, string userId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2589,6 +2671,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2613,7 +2696,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<AdminUserTokensRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2625,27 +2708,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a user 
+        /// Revoke all tokens of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminUserTokensRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminUserTokensRevokeAllResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUserTokensRevokeAllResponse> AdminUserTokensRevokeAllAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminUserTokensRevokeAllWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokeAllResponse> localVarResponse = await AdminUserTokensRevokeAllWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a user 
+        /// Revoke all tokens of a user 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminUserTokensRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminUserTokensRevokeAllResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokeAllResponse>> AdminUserTokensRevokeAllWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2663,6 +2747,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2689,7 +2774,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<AdminUserTokensRevokeAllResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -2701,25 +2786,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a user via POST 
+        /// Revoke all tokens of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns></returns>
-        public void AdminUserTokensRevokePost(string orgId, string userId)
+        /// <returns>AdminUserTokensRevokePostResponse</returns>
+        public AdminUserTokensRevokePostResponse AdminUserTokensRevokePost(string orgId, string userId)
         {
-            AdminUserTokensRevokePostWithHttpInfo(orgId, userId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse> localVarResponse = AdminUserTokensRevokePostWithHttpInfo(orgId, userId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a user via POST 
+        /// Revoke all tokens of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminUserTokensRevokePostWithHttpInfo(string orgId, string userId)
+        /// <returns>ApiResponse of AdminUserTokensRevokePostResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse> AdminUserTokensRevokePostWithHttpInfo(string orgId, string userId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2736,6 +2822,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -2760,7 +2847,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<AdminUserTokensRevokePostResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -2772,27 +2859,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Revoke all tokens for a user via POST 
+        /// Revoke all tokens of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminUserTokensRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminUserTokensRevokePostResponse</returns>
+        public async System.Threading.Tasks.Task<AdminUserTokensRevokePostResponse> AdminUserTokensRevokePostAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminUserTokensRevokePostWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse> localVarResponse = await AdminUserTokensRevokePostWithHttpInfoAsync(orgId, userId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Revoke all tokens for a user via POST 
+        /// Revoke all tokens of a user (POST alias) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="userId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminUserTokensRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminUserTokensRevokePostResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminUserTokensRevokePostResponse>> AdminUserTokensRevokePostWithHttpInfoAsync(string orgId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -2810,6 +2898,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -2836,7 +2925,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminUserTokensRevokePostResponse>("/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

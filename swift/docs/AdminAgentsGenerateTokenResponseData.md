@@ -1,0 +1,13 @@
+# AdminAgentsGenerateTokenResponseData
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**accessToken** | **String** |  | [optional] 
+**tokenType** | **String** |  | [optional] 
+**expiresIn** | **Int** |  | [optional] 
+**scopes** | **[String]** |  | [optional] 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

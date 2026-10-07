@@ -57,11 +57,23 @@ export interface GetRequestStatusResponse {
      */
     'granted_ttl'?: number;
     /**
-     * Present when denied.
+     * Present when decided: whether the reviewer left notes (the notes themselves are never returned).
+     * @type {boolean}
+     * @memberof GetRequestStatusResponse
+     */
+    'has_notes'?: boolean;
+    /**
+     * Present when decided: message the reviewer explicitly wrote for the agent.
      * @type {string}
      * @memberof GetRequestStatusResponse
      */
-    'review_notes'?: string;
+    'agent_message'?: string | null;
+    /**
+     * Present when pending: the on_behalf_of user must consent.
+     * @type {boolean}
+     * @memberof GetRequestStatusResponse
+     */
+    'delegation_consent_required'?: boolean;
     /**
      * Present when pending.
      * @type {string}

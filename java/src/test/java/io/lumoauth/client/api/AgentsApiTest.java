@@ -16,6 +16,8 @@ package io.lumoauth.client.api;
 import io.lumoauth.client.ApiException;
 import io.lumoauth.client.model.AskRequest;
 import io.lumoauth.client.model.AskResponse;
+import io.lumoauth.client.model.AttestRequest;
+import io.lumoauth.client.model.AttestResponse;
 import io.lumoauth.client.model.AuthorizeMcpRequest;
 import io.lumoauth.client.model.AuthorizeMcpResponse;
 import io.lumoauth.client.model.CreateApprovalRequest;
@@ -23,6 +25,9 @@ import io.lumoauth.client.model.CreateApprovalResponse;
 import io.lumoauth.client.model.CreateApprovalResponse202;
 import io.lumoauth.client.model.GetApprovalStatusResponse;
 import io.lumoauth.client.model.GetCurrentAgentResponse;
+import io.lumoauth.client.model.RegisterAgentResponse;
+import io.lumoauth.client.model.SignedAgentCard;
+import io.lumoauth.client.model.VerifyAgentCardResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -55,13 +60,18 @@ public class AgentsApiTest {
     }
 
     /**
+     * Workload attestation: exchange a cloud OIDC token for an agent access token
+     *
+     * Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void attestTest() throws ApiException {
         String orgId = null;
         String agentId = null;
-        api.attest(orgId, agentId);
+        AttestRequest attestRequest = null;
+        AttestResponse response = api.attest(orgId, agentId, attestRequest);
         // TODO: test validations
     }
 
@@ -92,13 +102,17 @@ public class AgentsApiTest {
     }
 
     /**
+     * Signed A2A agent card
+     *
+     * Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getAgentCardTest() throws ApiException {
         String orgId = null;
         String agentId = null;
-        api.getAgentCard(orgId, agentId);
+        SignedAgentCard response = api.getAgentCard(orgId, agentId);
         // TODO: test validations
     }
 
@@ -128,22 +142,29 @@ public class AgentsApiTest {
     }
 
     /**
+     * Register (or re-register) an agent
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void registerAgentTest() throws ApiException {
         String orgId = null;
-        api.registerAgent(orgId);
+        RegisterAgentResponse response = api.registerAgent(orgId);
         // TODO: test validations
     }
 
     /**
+     * Verify a signed A2A agent card
+     *
+     * Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void verifyAgentCardTest() throws ApiException {
         String orgId = null;
-        api.verifyAgentCard(orgId);
+        Map<String, Object> requestBody = null;
+        VerifyAgentCardResponse response = api.verifyAgentCard(orgId, requestBody);
         // TODO: test validations
     }
 

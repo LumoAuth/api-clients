@@ -14,6 +14,17 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminOrgInvitationsCreateResponse;
+import io.lumoauth.client.model.AdminOrgInvitationsListResponse;
+import io.lumoauth.client.model.AdminOrgMembersAddResponse;
+import io.lumoauth.client.model.AdminOrgMembersListResponse;
+import io.lumoauth.client.model.AdminOrgRolesCreateResponse;
+import io.lumoauth.client.model.AdminOrgRolesListResponse;
+import io.lumoauth.client.model.AdminOrganizationsCreateResponse;
+import io.lumoauth.client.model.AdminOrganizationsGetResponse;
+import io.lumoauth.client.model.AdminOrganizationsListResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminOrgMembersUpdateResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,28 +42,34 @@ public class AdminOrganizationsApiTest {
     private final AdminOrganizationsApi api = new AdminOrganizationsApi();
 
     /**
+     * Invite a user to an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrgInvitationsCreateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrgInvitationsCreate(orgId, organizationId);
+        AdminOrgInvitationsCreateResponse response = api.adminOrgInvitationsCreate(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * List organization invitations
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrgInvitationsListTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrgInvitationsList(orgId, organizationId);
+        AdminOrgInvitationsListResponse response = api.adminOrgInvitationsList(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * Resend an invitation
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -60,11 +77,13 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String invId = null;
-        api.adminOrgInvitationsResend(orgId, organizationId, invId);
+        MessageResponse response = api.adminOrgInvitationsResend(orgId, organizationId, invId);
         // TODO: test validations
     }
 
     /**
+     * Revoke an invitation
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -72,33 +91,39 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String invId = null;
-        api.adminOrgInvitationsRevoke(orgId, organizationId, invId);
+        MessageResponse response = api.adminOrgInvitationsRevoke(orgId, organizationId, invId);
         // TODO: test validations
     }
 
     /**
+     * Add a member to an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrgMembersAddTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrgMembersAdd(orgId, organizationId);
+        AdminOrgMembersAddResponse response = api.adminOrgMembersAdd(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * List organization members
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrgMembersListTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrgMembersList(orgId, organizationId);
+        AdminOrgMembersListResponse response = api.adminOrgMembersList(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * Remove a member from an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -106,22 +131,26 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String userId = null;
-        api.adminOrgMembersRemove(orgId, organizationId, userId);
+        MessageResponse response = api.adminOrgMembersRemove(orgId, organizationId, userId);
         // TODO: test validations
     }
 
     /**
+     * Create an organization role
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrgRolesCreateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrgRolesCreate(orgId, organizationId);
+        AdminOrgRolesCreateResponse response = api.adminOrgRolesCreate(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * Delete an organization role
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -129,64 +158,76 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String roleId = null;
-        api.adminOrgRolesDelete(orgId, organizationId, roleId);
+        MessageResponse response = api.adminOrgRolesDelete(orgId, organizationId, roleId);
         // TODO: test validations
     }
 
     /**
+     * List organization roles
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrgRolesListTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrgRolesList(orgId, organizationId);
+        AdminOrgRolesListResponse response = api.adminOrgRolesList(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * Create an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrganizationsCreateTest() throws ApiException {
         String orgId = null;
-        api.adminOrganizationsCreate(orgId);
+        AdminOrganizationsCreateResponse response = api.adminOrganizationsCreate(orgId);
         // TODO: test validations
     }
 
     /**
+     * Delete an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrganizationsDeleteTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrganizationsDelete(orgId, organizationId);
+        MessageResponse response = api.adminOrganizationsDelete(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * Get an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrganizationsGetTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.adminOrganizationsGet(orgId, organizationId);
+        AdminOrganizationsGetResponse response = api.adminOrganizationsGet(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * List organizations
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminOrganizationsListTest() throws ApiException {
         String orgId = null;
-        api.adminOrganizationsList(orgId);
+        AdminOrganizationsListResponse response = api.adminOrganizationsList(orgId);
         // TODO: test validations
     }
 
     /**
+     * Update a member&#39;s role or status
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -194,11 +235,13 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String userId = null;
-        api.patchAdminOrgMembersUpdate(orgId, organizationId, userId);
+        PutAdminOrgMembersUpdateResponse response = api.patchAdminOrgMembersUpdate(orgId, organizationId, userId);
         // TODO: test validations
     }
 
     /**
+     * Update an organization role
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -206,22 +249,26 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String roleId = null;
-        api.patchAdminOrgRolesUpdate(orgId, organizationId, roleId);
+        AdminOrgRolesCreateResponse response = api.patchAdminOrgRolesUpdate(orgId, organizationId, roleId);
         // TODO: test validations
     }
 
     /**
+     * Update an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void patchAdminOrganizationsUpdateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.patchAdminOrganizationsUpdate(orgId, organizationId);
+        AdminOrganizationsGetResponse response = api.patchAdminOrganizationsUpdate(orgId, organizationId);
         // TODO: test validations
     }
 
     /**
+     * Update a member&#39;s role or status
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -229,11 +276,13 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String userId = null;
-        api.putAdminOrgMembersUpdate(orgId, organizationId, userId);
+        PutAdminOrgMembersUpdateResponse response = api.putAdminOrgMembersUpdate(orgId, organizationId, userId);
         // TODO: test validations
     }
 
     /**
+     * Update an organization role
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -241,18 +290,20 @@ public class AdminOrganizationsApiTest {
         String orgId = null;
         String organizationId = null;
         String roleId = null;
-        api.putAdminOrgRolesUpdate(orgId, organizationId, roleId);
+        AdminOrgRolesCreateResponse response = api.putAdminOrgRolesUpdate(orgId, organizationId, roleId);
         // TODO: test validations
     }
 
     /**
+     * Update an organization
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void putAdminOrganizationsUpdateTest() throws ApiException {
         String orgId = null;
         String organizationId = null;
-        api.putAdminOrganizationsUpdate(orgId, organizationId);
+        AdminOrganizationsGetResponse response = api.putAdminOrganizationsUpdate(orgId, organizationId);
         // TODO: test validations
     }
 

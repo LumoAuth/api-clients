@@ -62,7 +62,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CheckAbac(orgId);
+            //var response = instance.CheckAbac(orgId);
+            //Assert.IsType<CheckAbacResponse>(response);
         }
 
         /// <summary>
@@ -73,7 +74,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CheckAbacBulk(orgId);
+            //var response = instance.CheckAbacBulk(orgId);
+            //Assert.IsType<CheckAbacBulkResponse>(response);
         }
 
         /// <summary>
@@ -83,7 +85,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void CheckAllPermissionsTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.CheckAllPermissions();
+            //var response = instance.CheckAllPermissions();
+            //Assert.IsType<CheckAnyPermissionResponse>(response);
         }
 
         /// <summary>
@@ -93,7 +96,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void CheckAnyPermissionTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.CheckAnyPermission();
+            //var response = instance.CheckAnyPermission();
+            //Assert.IsType<CheckAnyPermissionResponse>(response);
         }
 
         /// <summary>
@@ -103,7 +107,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void CheckPermissionTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.CheckPermission();
+            //var response = instance.CheckPermission();
+            //Assert.IsType<CheckPermissionResponse>(response);
         }
 
         /// <summary>
@@ -113,7 +118,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void CheckPermissionsBulkTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.CheckPermissionsBulk();
+            //var response = instance.CheckPermissionsBulk();
+            //Assert.IsType<CheckPermissionsBulkResponse>(response);
         }
 
         /// <summary>
@@ -123,7 +129,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void CheckRelationTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.CheckRelation();
+            //var response = instance.CheckRelation();
+            //Assert.IsType<CheckRelationResponse>(response);
         }
 
         /// <summary>
@@ -134,7 +141,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CheckRelationScoped(orgId);
+            //var response = instance.CheckRelationScoped(orgId);
+            //Assert.IsType<CheckRelationScopedResponse>(response);
         }
 
         /// <summary>
@@ -144,7 +152,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void EvaluateTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.Evaluate();
+            //var response = instance.Evaluate();
+            //Assert.IsType<AuthZenDecision>(response);
         }
 
         /// <summary>
@@ -154,7 +163,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void EvaluateBatchTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.EvaluateBatch();
+            //var response = instance.EvaluateBatch();
+            //Assert.IsType<EvaluateBatchResponse>(response);
         }
 
         /// <summary>
@@ -190,7 +200,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.GetMyAttributes(orgId);
+            //var response = instance.GetMyAttributes(orgId);
+            //Assert.IsType<GetMyAttributesResponse>(response);
         }
 
         /// <summary>
@@ -203,7 +214,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string resourceType = null;
             //string resourceId = null;
-            //instance.GetResourceAttributes(orgId, resourceType, resourceId);
+            //var response = instance.GetResourceAttributes(orgId, resourceType, resourceId);
+            //Assert.IsType<GetResourceAttributesResponse>(response);
         }
 
         /// <summary>
@@ -214,7 +226,9 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.ListAttributeDefinitions(orgId);
+            //string? type = null;
+            //var response = instance.ListAttributeDefinitions(orgId, type);
+            //Assert.IsType<ListAttributeDefinitionsResponse>(response);
         }
 
         /// <summary>
@@ -224,7 +238,8 @@ namespace LumoAuth.ApiClient.Test.Api
         public void ListPermissionsTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
-            //instance.ListPermissions();
+            //var response = instance.ListPermissions();
+            //Assert.IsType<ListPermissionsResponse>(response);
         }
 
         /// <summary>
@@ -238,7 +253,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string resourceType = null;
             //string resourceId = null;
             //string attributeSlug = null;
-            //instance.SetResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+            //var response = instance.SetResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+            //Assert.IsType<SetResourceAttributeResponse>(response);
         }
 
         /// <summary>
@@ -251,7 +267,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string userId = null;
             //string attributeSlug = null;
-            //instance.SetUserAttribute(orgId, userId, attributeSlug);
+            //var response = instance.SetUserAttribute(orgId, userId, attributeSlug);
+            //Assert.IsType<SetUserAttributeResponse>(response);
         }
     }
 }

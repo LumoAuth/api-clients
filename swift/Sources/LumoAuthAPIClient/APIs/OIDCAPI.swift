@@ -13,21 +13,24 @@ import AnyCodable
 open class OIDCAPI {
 
     /**
-
+     OP session-check iframe (OIDC Session Management 1.0)
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func checkSession(orgId: String) async throws {
+    open class func checkSession(orgId: String) async throws -> String {
         return try await checkSessionWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     OP session-check iframe (OIDC Session Management 1.0)
      - GET /orgs/{orgId}/api/v1/oauth/check_session
+     - The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func checkSessionWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func checkSessionWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/check_session"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -43,27 +46,30 @@ open class OIDCAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-
+     RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func logout(orgId: String) async throws {
+    open class func logout(orgId: String) async throws -> String {
         return try await logoutWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     RP-initiated logout (OIDC RP-Initiated Logout 1.0)
      - GET /orgs/{orgId}/api/v1/oauth/logout
+     - end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func logoutWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func logoutWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/logout"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -79,27 +85,30 @@ open class OIDCAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-
+     RP-initiated logout (confirmation submission)
+     
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: String
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func logoutPost(orgId: String) async throws {
+    open class func logoutPost(orgId: String) async throws -> String {
         return try await logoutPostWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
+     RP-initiated logout (confirmation submission)
      - POST /orgs/{orgId}/api/v1/oauth/logout
+     - Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<String> 
      */
-    open class func logoutPostWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func logoutPostWithRequestBuilder(orgId: String) -> RequestBuilder<String> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/logout"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -115,33 +124,33 @@ open class OIDCAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<String>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: false)
     }
 
     /**
-     OIDC UserInfo Endpoint
+     OpenID Connect UserInfo endpoint
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: UserinfoResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func userinfo(orgId: String) async throws {
+    open class func userinfo(orgId: String) async throws -> UserinfoResponse {
         return try await userinfoWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     OIDC UserInfo Endpoint
+     OpenID Connect UserInfo endpoint
      - GET /orgs/{orgId}/api/v1/oauth/userinfo
-     - Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     - Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
      - Bearer Token:
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<UserinfoResponse> 
      */
-    open class func userinfoWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func userinfoWithRequestBuilder(orgId: String) -> RequestBuilder<UserinfoResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/userinfo"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -157,33 +166,33 @@ open class OIDCAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UserinfoResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }
 
     /**
-     OIDC UserInfo Endpoint
+     OpenID Connect UserInfo endpoint (POST)
      
      - parameter orgId: (path)  
-     - returns: Void
+     - returns: UserinfoResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func userinfoPost(orgId: String) async throws {
+    open class func userinfoPost(orgId: String) async throws -> UserinfoResponse {
         return try await userinfoPostWithRequestBuilder(orgId: orgId).execute().body
     }
 
     /**
-     OIDC UserInfo Endpoint
+     OpenID Connect UserInfo endpoint (POST)
      - POST /orgs/{orgId}/api/v1/oauth/userinfo
-     - Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+     - Identical to GET.
      - Bearer Token:
        - type: http
        - name: BearerAuth
      - parameter orgId: (path)  
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<UserinfoResponse> 
      */
-    open class func userinfoPostWithRequestBuilder(orgId: String) -> RequestBuilder<Void> {
+    open class func userinfoPostWithRequestBuilder(orgId: String) -> RequestBuilder<UserinfoResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/oauth/userinfo"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -199,7 +208,7 @@ open class OIDCAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<Void>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let localVariableRequestBuilder: RequestBuilder<UserinfoResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

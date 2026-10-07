@@ -14,6 +14,8 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.GetStreamConfig200Response;
+import io.lumoauth.client.model.SsfStream;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,41 +33,45 @@ public class SsfApiTest {
     private final SsfApi api = new SsfApi();
 
     /**
-     * Create a stream. Accepts the SSF stream-configuration shape: {   \&quot;delivery\&quot;: { \&quot;method\&quot;: \&quot;urn:ietf:rfc:8935\&quot;, \&quot;endpoint_url\&quot;: \&quot;...\&quot;,                 \&quot;authorization_token\&quot;: \&quot;...\&quot; },   \&quot;events_requested\&quot;: [\&quot;...uri...\&quot;],   \&quot;audience\&quot;: \&quot;https://receiver.example.com\&quot; }
+     * Create an SSF stream
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void createStreamConfigTest() throws ApiException {
         String orgId = null;
-        api.createStreamConfig(orgId);
+        SsfStream response = api.createStreamConfig(orgId);
         // TODO: test validations
     }
 
     /**
+     * Delete an SSF stream
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void deleteStreamConfigTest() throws ApiException {
+        String streamId = null;
         String orgId = null;
-        api.deleteStreamConfig(orgId);
+        api.deleteStreamConfig(streamId, orgId);
         // TODO: test validations
     }
 
     /**
-     * Read stream configuration(s). &#x60;?stream_id&#x3D;&#x60; returns a single config, otherwise all of the tenant&#39;s streams are returned.
+     * Read SSF stream configuration(s)
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getStreamConfigTest() throws ApiException {
         String orgId = null;
-        api.getStreamConfig(orgId);
+        String streamId = null;
+        GetStreamConfig200Response response = api.getStreamConfig(orgId, streamId);
         // TODO: test validations
     }
 
     /**
-     * SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \&quot;stream_id\&quot;: \&quot;ssf_...\&quot;, \&quot;state\&quot;: \&quot;optional-opaque-echo\&quot; }
+     * Request a stream verification event
      *
      * @throws ApiException if the Api call fails
      */

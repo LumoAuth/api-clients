@@ -14,6 +14,12 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminAuditLogsActionsResponse;
+import io.lumoauth.client.model.AdminAuditLogsExportResponse;
+import io.lumoauth.client.model.AdminAuditLogsGetResponse;
+import io.lumoauth.client.model.AdminAuditLogsListResponse;
+import io.lumoauth.client.model.AdminAuditLogsRetentionResponse;
+import io.lumoauth.client.model.AdminAuditLogsStatsResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,31 +37,31 @@ public class AdminAuditLogsApiTest {
     private final AdminAuditLogsApi api = new AdminAuditLogsApi();
 
     /**
-     * List available audit action types for this tenant
+     * List the distinct audit action types recorded for the tenant
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminAuditLogsActionsTest() throws ApiException {
         String orgId = null;
-        api.adminAuditLogsActions(orgId);
+        AdminAuditLogsActionsResponse response = api.adminAuditLogsActions(orgId);
         // TODO: test validations
     }
 
     /**
-     * Export audit logs as CSV or JSON
+     * Export audit logs as CSV (default) or JSON
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminAuditLogsExportTest() throws ApiException {
         String orgId = null;
-        api.adminAuditLogsExport(orgId);
+        String response = api.adminAuditLogsExport(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get a single audit log entry
+     * Get an audit log entry
      *
      * @throws ApiException if the Api call fails
      */
@@ -63,19 +69,19 @@ public class AdminAuditLogsApiTest {
     public void adminAuditLogsGetTest() throws ApiException {
         String orgId = null;
         String logId = null;
-        api.adminAuditLogsGet(orgId, logId);
+        AdminAuditLogsGetResponse response = api.adminAuditLogsGet(orgId, logId);
         // TODO: test validations
     }
 
     /**
-     * List audit logs for the tenant
+     * List audit log entries
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminAuditLogsListTest() throws ApiException {
         String orgId = null;
-        api.adminAuditLogsList(orgId);
+        AdminAuditLogsListResponse response = api.adminAuditLogsList(orgId);
         // TODO: test validations
     }
 
@@ -87,19 +93,19 @@ public class AdminAuditLogsApiTest {
     @Test
     public void adminAuditLogsRetentionTest() throws ApiException {
         String orgId = null;
-        api.adminAuditLogsRetention(orgId);
+        AdminAuditLogsRetentionResponse response = api.adminAuditLogsRetention(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get audit log statistics
+     * Audit log statistics for a period (default: last 30 days)
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminAuditLogsStatsTest() throws ApiException {
         String orgId = null;
-        api.adminAuditLogsStats(orgId);
+        AdminAuditLogsStatsResponse response = api.adminAuditLogsStats(orgId);
         // TODO: test validations
     }
 
@@ -111,7 +117,7 @@ public class AdminAuditLogsApiTest {
     @Test
     public void patchAdminAuditLogsRetentionUpdateTest() throws ApiException {
         String orgId = null;
-        api.patchAdminAuditLogsRetentionUpdate(orgId);
+        AdminAuditLogsRetentionResponse response = api.patchAdminAuditLogsRetentionUpdate(orgId);
         // TODO: test validations
     }
 
@@ -123,7 +129,7 @@ public class AdminAuditLogsApiTest {
     @Test
     public void putAdminAuditLogsRetentionUpdateTest() throws ApiException {
         String orgId = null;
-        api.putAdminAuditLogsRetentionUpdate(orgId);
+        AdminAuditLogsRetentionResponse response = api.putAdminAuditLogsRetentionUpdate(orgId);
         // TODO: test validations
     }
 

@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **admin_permissions_create**
-> admin_permissions_create(org_id)
+> AdminPermissionsCreateResponse admin_permissions_create(org_id)
 
 Create a custom permission for the tenant
 
@@ -27,6 +27,7 @@ Create a custom permission for the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -60,7 +61,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Create a custom permission for the tenant
-        api_instance.admin_permissions_create(org_id)
+        api_response = api_instance.admin_permissions_create(org_id)
+        print("The response of AdminPermissionsApi->admin_permissions_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_permissions_create: %s\n" % e)
 ```
@@ -76,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -85,18 +88,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_permissions_delete**
-> admin_permissions_delete(org_id, permission_id)
+> MessageResponse admin_permissions_delete(org_id, permission_id)
 
 Delete a custom permission
 
@@ -107,6 +110,7 @@ Delete a custom permission
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -141,7 +145,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete a custom permission
-        api_instance.admin_permissions_delete(org_id, permission_id)
+        api_response = api_instance.admin_permissions_delete(org_id, permission_id)
+        print("The response of AdminPermissionsApi->admin_permissions_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_permissions_delete: %s\n" % e)
 ```
@@ -158,7 +164,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -167,18 +173,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_permissions_get**
-> admin_permissions_get(org_id, permission_id)
+> AdminPermissionsGetResponse admin_permissions_get(org_id, permission_id)
 
 Get a single permission
 
@@ -189,6 +195,7 @@ Get a single permission
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_permissions_get_response import AdminPermissionsGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -223,7 +230,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get a single permission
-        api_instance.admin_permissions_get(org_id, permission_id)
+        api_response = api_instance.admin_permissions_get(org_id, permission_id)
+        print("The response of AdminPermissionsApi->admin_permissions_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_permissions_get: %s\n" % e)
 ```
@@ -240,7 +249,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsGetResponse**](AdminPermissionsGetResponse.md)
 
 ### Authorization
 
@@ -249,18 +258,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_permissions_list**
-> admin_permissions_list(org_id)
+> AdminPermissionsListResponse admin_permissions_list(org_id)
 
 List all available permissions for the tenant
 
@@ -271,6 +280,7 @@ List all available permissions for the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_permissions_list_response import AdminPermissionsListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -304,7 +314,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # List all available permissions for the tenant
-        api_instance.admin_permissions_list(org_id)
+        api_response = api_instance.admin_permissions_list(org_id)
+        print("The response of AdminPermissionsApi->admin_permissions_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_permissions_list: %s\n" % e)
 ```
@@ -320,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsListResponse**](AdminPermissionsListResponse.md)
 
 ### Authorization
 
@@ -329,18 +341,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Permissions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_permissions_update**
-> admin_permissions_update(org_id, permission_id)
+> AdminPermissionsCreateResponse admin_permissions_update(org_id, permission_id)
 
 Update a permission
 
@@ -351,6 +363,7 @@ Update a permission
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_permissions_create_response import AdminPermissionsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -385,7 +398,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update a permission
-        api_instance.admin_permissions_update(org_id, permission_id)
+        api_response = api_instance.admin_permissions_update(org_id, permission_id)
+        print("The response of AdminPermissionsApi->admin_permissions_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_permissions_update: %s\n" % e)
 ```
@@ -402,7 +417,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsCreateResponse**](AdminPermissionsCreateResponse.md)
 
 ### Authorization
 
@@ -411,18 +426,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_permissions_usage**
-> admin_permissions_usage(org_id, permission_id)
+> AdminPermissionsUsageResponse admin_permissions_usage(org_id, permission_id)
 
 Get permission usage (roles assigned to this permission)
 
@@ -433,6 +448,7 @@ Get permission usage (roles assigned to this permission)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_permissions_usage_response import AdminPermissionsUsageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -467,7 +483,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get permission usage (roles assigned to this permission)
-        api_instance.admin_permissions_usage(org_id, permission_id)
+        api_response = api_instance.admin_permissions_usage(org_id, permission_id)
+        print("The response of AdminPermissionsApi->admin_permissions_usage:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_permissions_usage: %s\n" % e)
 ```
@@ -484,7 +502,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminPermissionsUsageResponse**](AdminPermissionsUsageResponse.md)
 
 ### Authorization
 
@@ -493,18 +511,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Usage |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_scopes_create**
-> admin_scopes_create(org_id)
+> AdminScopesCreateResponse admin_scopes_create(org_id)
 
 Create a custom OAuth scope
 
@@ -515,6 +533,7 @@ Create a custom OAuth scope
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_scopes_create_response import AdminScopesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -548,7 +567,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Create a custom OAuth scope
-        api_instance.admin_scopes_create(org_id)
+        api_response = api_instance.admin_scopes_create(org_id)
+        print("The response of AdminPermissionsApi->admin_scopes_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_scopes_create: %s\n" % e)
 ```
@@ -564,7 +585,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminScopesCreateResponse**](AdminScopesCreateResponse.md)
 
 ### Authorization
 
@@ -573,18 +594,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created scope |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_scopes_delete**
-> admin_scopes_delete(org_id, scope_id)
+> MessageResponse admin_scopes_delete(org_id, scope_id)
 
 Delete a custom OAuth scope
 
@@ -595,6 +616,7 @@ Delete a custom OAuth scope
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -629,7 +651,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete a custom OAuth scope
-        api_instance.admin_scopes_delete(org_id, scope_id)
+        api_response = api_instance.admin_scopes_delete(org_id, scope_id)
+        print("The response of AdminPermissionsApi->admin_scopes_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_scopes_delete: %s\n" % e)
 ```
@@ -646,7 +670,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -655,18 +679,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_scopes_list**
-> admin_scopes_list(org_id)
+> AdminScopesListResponse admin_scopes_list(org_id)
 
 List OAuth scopes
 
@@ -677,6 +701,7 @@ List OAuth scopes
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_scopes_list_response import AdminScopesListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -710,7 +735,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # List OAuth scopes
-        api_instance.admin_scopes_list(org_id)
+        api_response = api_instance.admin_scopes_list(org_id)
+        print("The response of AdminPermissionsApi->admin_scopes_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminPermissionsApi->admin_scopes_list: %s\n" % e)
 ```
@@ -726,7 +753,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminScopesListResponse**](AdminScopesListResponse.md)
 
 ### Authorization
 
@@ -735,13 +762,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Scopes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

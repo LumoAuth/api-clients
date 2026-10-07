@@ -29,9 +29,10 @@ func Test_lumoauthclient_AdminSandboxAPIService(t *testing.T) {
 		var orgId string
 		var sandboxSlug string
 
-		httpRes, err := apiClient.AdminSandboxAPI.AdminSandboxDestroy(context.Background(), orgId, sandboxSlug).Execute()
+		resp, httpRes, err := apiClient.AdminSandboxAPI.AdminSandboxDestroy(context.Background(), orgId, sandboxSlug).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_AdminSandboxAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSandboxAPI.AdminSandboxList(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSandboxAPI.AdminSandboxList(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -55,9 +57,10 @@ func Test_lumoauthclient_AdminSandboxAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminSandboxAPI.AdminSandboxSpawn(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminSandboxAPI.AdminSandboxSpawn(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

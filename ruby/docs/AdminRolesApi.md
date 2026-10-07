@@ -21,7 +21,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 ## admin_roles_add_permissions
 
-> admin_roles_add_permissions(org_id, role_id)
+> <MessageResponse> admin_roles_add_permissions(org_id, role_id)
 
 Add permission(s) to a role
 
@@ -47,7 +47,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Add permission(s) to a role
-  api_instance.admin_roles_add_permissions(org_id, role_id)
+  result = api_instance.admin_roles_add_permissions(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_add_permissions: #{e}"
 end
@@ -55,9 +56,9 @@ end
 
 #### Using the admin_roles_add_permissions_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_add_permissions_with_http_info(org_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_add_permissions_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -65,7 +66,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_add_permissions_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_add_permissions_with_http_info: #{e}"
 end
@@ -80,7 +81,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -89,12 +90,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_add_user
 
-> admin_roles_add_user(org_id, role_id)
+> <MessageResponse> admin_roles_add_user(org_id, role_id)
 
 Assign a user to a role
 
@@ -120,7 +121,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Assign a user to a role
-  api_instance.admin_roles_add_user(org_id, role_id)
+  result = api_instance.admin_roles_add_user(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_add_user: #{e}"
 end
@@ -128,9 +130,9 @@ end
 
 #### Using the admin_roles_add_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_add_user_with_http_info(org_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_add_user_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -138,7 +140,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_add_user_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_add_user_with_http_info: #{e}"
 end
@@ -153,7 +155,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -162,12 +164,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_create
 
-> admin_roles_create(org_id)
+> <AdminRolesCreateResponse> admin_roles_create(org_id)
 
 Create a new role
 
@@ -192,7 +194,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # Create a new role
-  api_instance.admin_roles_create(org_id)
+  result = api_instance.admin_roles_create(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_create: #{e}"
 end
@@ -200,9 +203,9 @@ end
 
 #### Using the admin_roles_create_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_create_with_http_info(org_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> admin_roles_create_with_http_info(org_id)
 
 ```ruby
 begin
@@ -210,7 +213,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_create_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_create_with_http_info: #{e}"
 end
@@ -224,7 +227,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -233,12 +236,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_delete
 
-> admin_roles_delete(org_id, role_id)
+> <MessageResponse> admin_roles_delete(org_id, role_id)
 
 Delete a role
 
@@ -264,7 +267,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Delete a role
-  api_instance.admin_roles_delete(org_id, role_id)
+  result = api_instance.admin_roles_delete(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_delete: #{e}"
 end
@@ -272,9 +276,9 @@ end
 
 #### Using the admin_roles_delete_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_delete_with_http_info(org_id, role_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_delete_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -282,7 +286,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_delete_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_delete_with_http_info: #{e}"
 end
@@ -297,7 +301,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -306,12 +310,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_get
 
-> admin_roles_get(org_id, role_id)
+> <AdminRolesGetResponse> admin_roles_get(org_id, role_id)
 
 Get a single role by ID or slug
 
@@ -337,7 +341,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Get a single role by ID or slug
-  api_instance.admin_roles_get(org_id, role_id)
+  result = api_instance.admin_roles_get(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_get: #{e}"
 end
@@ -345,9 +350,9 @@ end
 
 #### Using the admin_roles_get_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_get_with_http_info(org_id, role_id)
+> <Array(<AdminRolesGetResponse>, Integer, Hash)> admin_roles_get_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -355,7 +360,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_get_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesGetResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_get_with_http_info: #{e}"
 end
@@ -370,7 +375,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesGetResponse**](AdminRolesGetResponse.md)
 
 ### Authorization
 
@@ -379,12 +384,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_get_permissions
 
-> admin_roles_get_permissions(org_id, role_id)
+> <AdminRolesGetPermissionsResponse> admin_roles_get_permissions(org_id, role_id)
 
 Get role permissions
 
@@ -410,7 +415,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Get role permissions
-  api_instance.admin_roles_get_permissions(org_id, role_id)
+  result = api_instance.admin_roles_get_permissions(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_get_permissions: #{e}"
 end
@@ -418,9 +424,9 @@ end
 
 #### Using the admin_roles_get_permissions_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_get_permissions_with_http_info(org_id, role_id)
+> <Array(<AdminRolesGetPermissionsResponse>, Integer, Hash)> admin_roles_get_permissions_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -428,7 +434,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_get_permissions_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesGetPermissionsResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_get_permissions_with_http_info: #{e}"
 end
@@ -443,7 +449,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -452,12 +458,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_get_users
 
-> admin_roles_get_users(org_id, role_id)
+> <AdminRolesGetUsersResponse> admin_roles_get_users(org_id, role_id)
 
 Get users assigned to a role
 
@@ -483,7 +489,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Get users assigned to a role
-  api_instance.admin_roles_get_users(org_id, role_id)
+  result = api_instance.admin_roles_get_users(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_get_users: #{e}"
 end
@@ -491,9 +498,9 @@ end
 
 #### Using the admin_roles_get_users_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_get_users_with_http_info(org_id, role_id)
+> <Array(<AdminRolesGetUsersResponse>, Integer, Hash)> admin_roles_get_users_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -501,7 +508,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_get_users_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesGetUsersResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_get_users_with_http_info: #{e}"
 end
@@ -516,7 +523,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesGetUsersResponse**](AdminRolesGetUsersResponse.md)
 
 ### Authorization
 
@@ -525,12 +532,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_list
 
-> admin_roles_list(org_id)
+> <AdminRolesListResponse> admin_roles_list(org_id)
 
 List all roles in the tenant
 
@@ -555,7 +562,8 @@ org_id = 'org_id_example' # String |
 
 begin
   # List all roles in the tenant
-  api_instance.admin_roles_list(org_id)
+  result = api_instance.admin_roles_list(org_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_list: #{e}"
 end
@@ -563,9 +571,9 @@ end
 
 #### Using the admin_roles_list_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_list_with_http_info(org_id)
+> <Array(<AdminRolesListResponse>, Integer, Hash)> admin_roles_list_with_http_info(org_id)
 
 ```ruby
 begin
@@ -573,7 +581,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_list_with_http_info(org_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesListResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_list_with_http_info: #{e}"
 end
@@ -587,7 +595,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesListResponse**](AdminRolesListResponse.md)
 
 ### Authorization
 
@@ -596,12 +604,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_remove_permission
 
-> admin_roles_remove_permission(org_id, role_id, permission_id)
+> <MessageResponse> admin_roles_remove_permission(org_id, role_id, permission_id)
 
 Remove a permission from a role
 
@@ -628,7 +636,8 @@ permission_id = 'permission_id_example' # String |
 
 begin
   # Remove a permission from a role
-  api_instance.admin_roles_remove_permission(org_id, role_id, permission_id)
+  result = api_instance.admin_roles_remove_permission(org_id, role_id, permission_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_remove_permission: #{e}"
 end
@@ -636,9 +645,9 @@ end
 
 #### Using the admin_roles_remove_permission_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_remove_permission_with_http_info(org_id, role_id, permission_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_remove_permission_with_http_info(org_id, role_id, permission_id)
 
 ```ruby
 begin
@@ -646,7 +655,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_remove_permission_with_http_info(org_id, role_id, permission_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_remove_permission_with_http_info: #{e}"
 end
@@ -662,7 +671,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -671,12 +680,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_remove_user
 
-> admin_roles_remove_user(org_id, role_id, user_id)
+> <MessageResponse> admin_roles_remove_user(org_id, role_id, user_id)
 
 Remove a user from a role
 
@@ -703,7 +712,8 @@ user_id = 'user_id_example' # String |
 
 begin
   # Remove a user from a role
-  api_instance.admin_roles_remove_user(org_id, role_id, user_id)
+  result = api_instance.admin_roles_remove_user(org_id, role_id, user_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_remove_user: #{e}"
 end
@@ -711,9 +721,9 @@ end
 
 #### Using the admin_roles_remove_user_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_remove_user_with_http_info(org_id, role_id, user_id)
+> <Array(<MessageResponse>, Integer, Hash)> admin_roles_remove_user_with_http_info(org_id, role_id, user_id)
 
 ```ruby
 begin
@@ -721,7 +731,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_remove_user_with_http_info(org_id, role_id, user_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <MessageResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_remove_user_with_http_info: #{e}"
 end
@@ -737,7 +747,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -746,12 +756,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## admin_roles_update_permissions
 
-> admin_roles_update_permissions(org_id, role_id)
+> <AdminRolesCreateResponse> admin_roles_update_permissions(org_id, role_id)
 
 Update role permissions (replaces all)
 
@@ -777,7 +787,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Update role permissions (replaces all)
-  api_instance.admin_roles_update_permissions(org_id, role_id)
+  result = api_instance.admin_roles_update_permissions(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_update_permissions: #{e}"
 end
@@ -785,9 +796,9 @@ end
 
 #### Using the admin_roles_update_permissions_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> admin_roles_update_permissions_with_http_info(org_id, role_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> admin_roles_update_permissions_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -795,7 +806,7 @@ begin
   data, status_code, headers = api_instance.admin_roles_update_permissions_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->admin_roles_update_permissions_with_http_info: #{e}"
 end
@@ -810,7 +821,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -819,12 +830,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## patch_admin_roles_update
 
-> patch_admin_roles_update(org_id, role_id)
+> <AdminRolesCreateResponse> patch_admin_roles_update(org_id, role_id)
 
 Update an existing role
 
@@ -850,7 +861,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Update an existing role
-  api_instance.patch_admin_roles_update(org_id, role_id)
+  result = api_instance.patch_admin_roles_update(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->patch_admin_roles_update: #{e}"
 end
@@ -858,9 +870,9 @@ end
 
 #### Using the patch_admin_roles_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> patch_admin_roles_update_with_http_info(org_id, role_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> patch_admin_roles_update_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -868,7 +880,7 @@ begin
   data, status_code, headers = api_instance.patch_admin_roles_update_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->patch_admin_roles_update_with_http_info: #{e}"
 end
@@ -883,7 +895,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -892,12 +904,12 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 
 ## put_admin_roles_update
 
-> put_admin_roles_update(org_id, role_id)
+> <AdminRolesCreateResponse> put_admin_roles_update(org_id, role_id)
 
 Update an existing role
 
@@ -923,7 +935,8 @@ role_id = 'role_id_example' # String |
 
 begin
   # Update an existing role
-  api_instance.put_admin_roles_update(org_id, role_id)
+  result = api_instance.put_admin_roles_update(org_id, role_id)
+  p result
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->put_admin_roles_update: #{e}"
 end
@@ -931,9 +944,9 @@ end
 
 #### Using the put_admin_roles_update_with_http_info variant
 
-This returns an Array which contains the response data (`nil` in this case), status code and headers.
+This returns an Array which contains the response data, status code and headers.
 
-> <Array(nil, Integer, Hash)> put_admin_roles_update_with_http_info(org_id, role_id)
+> <Array(<AdminRolesCreateResponse>, Integer, Hash)> put_admin_roles_update_with_http_info(org_id, role_id)
 
 ```ruby
 begin
@@ -941,7 +954,7 @@ begin
   data, status_code, headers = api_instance.put_admin_roles_update_with_http_info(org_id, role_id)
   p status_code # => 2xx
   p headers # => { ... }
-  p data # => nil
+  p data # => <AdminRolesCreateResponse>
 rescue LumoAuthApiClient::ApiError => e
   puts "Error when calling AdminRolesApi->put_admin_roles_update_with_http_info: #{e}"
 end
@@ -956,7 +969,7 @@ end
 
 ### Return type
 
-nil (empty response body)
+[**AdminRolesCreateResponse**](AdminRolesCreateResponse.md)
 
 ### Authorization
 
@@ -965,5 +978,5 @@ nil (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 

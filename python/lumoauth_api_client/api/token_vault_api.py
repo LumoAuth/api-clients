@@ -18,6 +18,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from typing import Optional
+from lumoauth_api_client.models.get_connection_token_request import GetConnectionTokenRequest
+from lumoauth_api_client.models.get_connection_token_response import GetConnectionTokenResponse
+from lumoauth_api_client.models.list_connections_response import ListConnectionsResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -42,6 +46,7 @@ class TokenVaultApi:
         self,
         org_id: StrictStr,
         connection_id: StrictStr,
+        get_connection_token_request: Optional[GetConnectionTokenRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -54,15 +59,17 @@ class TokenVaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Fetch a live third-party access token for a connection.
+    ) -> GetConnectionTokenResponse:
+        """Fetch a live third-party access token for a connection
 
-        POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+        Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
         :param org_id: (required)
         :type org_id: str
         :param connection_id: (required)
         :type connection_id: str
+        :param get_connection_token_request:
+        :type get_connection_token_request: GetConnectionTokenRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -88,6 +95,7 @@ class TokenVaultApi:
         _param = self._get_connection_token_serialize(
             org_id=org_id,
             connection_id=connection_id,
+            get_connection_token_request=get_connection_token_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -95,6 +103,13 @@ class TokenVaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetConnectionTokenResponse",
+            '400': None,
+            '403': None,
+            '404': None,
+            '409': None,
+            '429': None,
+            '503': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -112,6 +127,7 @@ class TokenVaultApi:
         self,
         org_id: StrictStr,
         connection_id: StrictStr,
+        get_connection_token_request: Optional[GetConnectionTokenRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -124,15 +140,17 @@ class TokenVaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Fetch a live third-party access token for a connection.
+    ) -> ApiResponse[GetConnectionTokenResponse]:
+        """Fetch a live third-party access token for a connection
 
-        POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+        Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
         :param org_id: (required)
         :type org_id: str
         :param connection_id: (required)
         :type connection_id: str
+        :param get_connection_token_request:
+        :type get_connection_token_request: GetConnectionTokenRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -158,6 +176,7 @@ class TokenVaultApi:
         _param = self._get_connection_token_serialize(
             org_id=org_id,
             connection_id=connection_id,
+            get_connection_token_request=get_connection_token_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -165,6 +184,13 @@ class TokenVaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetConnectionTokenResponse",
+            '400': None,
+            '403': None,
+            '404': None,
+            '409': None,
+            '429': None,
+            '503': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -182,6 +208,7 @@ class TokenVaultApi:
         self,
         org_id: StrictStr,
         connection_id: StrictStr,
+        get_connection_token_request: Optional[GetConnectionTokenRequest] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -195,14 +222,16 @@ class TokenVaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Fetch a live third-party access token for a connection.
+        """Fetch a live third-party access token for a connection
 
-        POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
+        Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
 
         :param org_id: (required)
         :type org_id: str
         :param connection_id: (required)
         :type connection_id: str
+        :param get_connection_token_request:
+        :type get_connection_token_request: GetConnectionTokenRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -228,6 +257,7 @@ class TokenVaultApi:
         _param = self._get_connection_token_serialize(
             org_id=org_id,
             connection_id=connection_id,
+            get_connection_token_request=get_connection_token_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -235,6 +265,13 @@ class TokenVaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetConnectionTokenResponse",
+            '400': None,
+            '403': None,
+            '404': None,
+            '409': None,
+            '429': None,
+            '503': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -247,6 +284,7 @@ class TokenVaultApi:
         self,
         org_id,
         connection_id,
+        get_connection_token_request,
         _request_auth,
         _content_type,
         _headers,
@@ -276,9 +314,31 @@ class TokenVaultApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
+        if get_connection_token_request is not None:
+            _body_params = get_connection_token_request
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -320,10 +380,10 @@ class TokenVaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List the connections this agent may use, with grant status. No secrets.
+    ) -> ListConnectionsResponse:
+        """List the outbound connections this agent may use
 
-        GET /orgs/{orgId}/api/v1/agents/me/connections
+        Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
         :param org_id: (required)
         :type org_id: str
@@ -358,6 +418,9 @@ class TokenVaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListConnectionsResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -386,10 +449,10 @@ class TokenVaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List the connections this agent may use, with grant status. No secrets.
+    ) -> ApiResponse[ListConnectionsResponse]:
+        """List the outbound connections this agent may use
 
-        GET /orgs/{orgId}/api/v1/agents/me/connections
+        Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
         :param org_id: (required)
         :type org_id: str
@@ -424,6 +487,9 @@ class TokenVaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListConnectionsResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -453,9 +519,9 @@ class TokenVaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List the connections this agent may use, with grant status. No secrets.
+        """List the outbound connections this agent may use
 
-        GET /orgs/{orgId}/api/v1/agents/me/connections
+        Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
 
         :param org_id: (required)
         :type org_id: str
@@ -490,6 +556,9 @@ class TokenVaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListConnectionsResponse",
+            '403': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -530,6 +599,13 @@ class TokenVaultApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

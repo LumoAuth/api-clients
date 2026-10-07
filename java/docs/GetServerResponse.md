@@ -18,6 +18,7 @@
 |**status** | **String** |  |  [optional] |
 |**scopesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**requirePkce** | **Boolean** |  |  [optional] |
+|**requireDpop** | **Boolean** |  |  [optional] |
 |**tokenLifetime** | **Integer** |  |  [optional] |
 |**createdAt** | **OffsetDateTime** |  |  [optional] |
 |**updatedAt** | **OffsetDateTime** |  |  [optional] |

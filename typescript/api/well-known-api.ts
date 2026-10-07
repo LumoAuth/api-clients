@@ -21,6 +21,14 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AuthorizationServerMetadata } from '../models';
+// @ts-ignore
+import type { GetSsfConfigurationResponse } from '../models';
+// @ts-ignore
+import type { JsonWebKeySet } from '../models';
+// @ts-ignore
+import type { OpenIdConfiguration } from '../models';
 /**
  * WellKnownApi - axios parameter creator
  * @export
@@ -28,7 +36,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const WellKnownApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+         * @summary OAuth 2.0 authorization server metadata (RFC 8414)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -61,7 +70,8 @@ export const WellKnownApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+         * @summary JSON Web Key Set (RFC 7517)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -94,7 +104,8 @@ export const WellKnownApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * 
+         * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+         * @summary OpenID Provider configuration (OIDC Discovery 1.0)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -128,6 +139,7 @@ export const WellKnownApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary SSF transmitter configuration metadata
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -170,36 +182,39 @@ export const WellKnownApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WellKnownApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+         * @summary OAuth 2.0 authorization server metadata (RFC 8414)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAuthorizationServerMetadata(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getAuthorizationServerMetadata(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthorizationServerMetadata>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAuthorizationServerMetadata(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WellKnownApi.getAuthorizationServerMetadata']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+         * @summary JSON Web Key Set (RFC 7517)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getJwks(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getJwks(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonWebKeySet>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getJwks(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WellKnownApi.getJwks']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+         * @summary OpenID Provider configuration (OIDC Discovery 1.0)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOpenidConfiguration(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getOpenidConfiguration(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OpenIdConfiguration>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOpenidConfiguration(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WellKnownApi.getOpenidConfiguration']?.[localVarOperationServerIndex]?.url;
@@ -207,11 +222,12 @@ export const WellKnownApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary SSF transmitter configuration metadata
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSsfConfiguration(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getSsfConfiguration(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSsfConfigurationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSsfConfiguration(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['WellKnownApi.getSsfConfiguration']?.[localVarOperationServerIndex]?.url;
@@ -228,39 +244,43 @@ export const WellKnownApiFactory = function (configuration?: Configuration, base
     const localVarFp = WellKnownApiFp(configuration)
     return {
         /**
-         * 
+         * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+         * @summary OAuth 2.0 authorization server metadata (RFC 8414)
          * @param {WellKnownApiGetAuthorizationServerMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAuthorizationServerMetadata(requestParameters: WellKnownApiGetAuthorizationServerMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getAuthorizationServerMetadata(requestParameters: WellKnownApiGetAuthorizationServerMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorizationServerMetadata> {
             return localVarFp.getAuthorizationServerMetadata(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+         * @summary JSON Web Key Set (RFC 7517)
          * @param {WellKnownApiGetJwksRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getJwks(requestParameters: WellKnownApiGetJwksRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getJwks(requestParameters: WellKnownApiGetJwksRequest, options?: RawAxiosRequestConfig): AxiosPromise<JsonWebKeySet> {
             return localVarFp.getJwks(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+         * @summary OpenID Provider configuration (OIDC Discovery 1.0)
          * @param {WellKnownApiGetOpenidConfigurationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOpenidConfiguration(requestParameters: WellKnownApiGetOpenidConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getOpenidConfiguration(requestParameters: WellKnownApiGetOpenidConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenIdConfiguration> {
             return localVarFp.getOpenidConfiguration(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary SSF transmitter configuration metadata
          * @param {WellKnownApiGetSsfConfigurationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSsfConfiguration(requestParameters: WellKnownApiGetSsfConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getSsfConfiguration(requestParameters: WellKnownApiGetSsfConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetSsfConfigurationResponse> {
             return localVarFp.getSsfConfiguration(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -273,40 +293,44 @@ export const WellKnownApiFactory = function (configuration?: Configuration, base
  */
 export interface WellKnownApiInterface {
     /**
-     * 
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+     * @summary OAuth 2.0 authorization server metadata (RFC 8414)
      * @param {WellKnownApiGetAuthorizationServerMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WellKnownApiInterface
      */
-    getAuthorizationServerMetadata(requestParameters: WellKnownApiGetAuthorizationServerMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getAuthorizationServerMetadata(requestParameters: WellKnownApiGetAuthorizationServerMetadataRequest, options?: RawAxiosRequestConfig): AxiosPromise<AuthorizationServerMetadata>;
 
     /**
-     * 
+     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+     * @summary JSON Web Key Set (RFC 7517)
      * @param {WellKnownApiGetJwksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WellKnownApiInterface
      */
-    getJwks(requestParameters: WellKnownApiGetJwksRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getJwks(requestParameters: WellKnownApiGetJwksRequest, options?: RawAxiosRequestConfig): AxiosPromise<JsonWebKeySet>;
 
     /**
-     * 
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+     * @summary OpenID Provider configuration (OIDC Discovery 1.0)
      * @param {WellKnownApiGetOpenidConfigurationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WellKnownApiInterface
      */
-    getOpenidConfiguration(requestParameters: WellKnownApiGetOpenidConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getOpenidConfiguration(requestParameters: WellKnownApiGetOpenidConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<OpenIdConfiguration>;
 
     /**
      * 
+     * @summary SSF transmitter configuration metadata
      * @param {WellKnownApiGetSsfConfigurationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WellKnownApiInterface
      */
-    getSsfConfiguration(requestParameters: WellKnownApiGetSsfConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getSsfConfiguration(requestParameters: WellKnownApiGetSsfConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetSsfConfigurationResponse>;
 
 }
 
@@ -374,7 +398,8 @@ export interface WellKnownApiGetSsfConfigurationRequest {
  */
 export class WellKnownApi extends BaseAPI implements WellKnownApiInterface {
     /**
-     * 
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+     * @summary OAuth 2.0 authorization server metadata (RFC 8414)
      * @param {WellKnownApiGetAuthorizationServerMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -385,7 +410,8 @@ export class WellKnownApi extends BaseAPI implements WellKnownApiInterface {
     }
 
     /**
-     * 
+     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600).
+     * @summary JSON Web Key Set (RFC 7517)
      * @param {WellKnownApiGetJwksRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -396,7 +422,8 @@ export class WellKnownApi extends BaseAPI implements WellKnownApiInterface {
     }
 
     /**
-     * 
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age=3600). Endpoint URLs are rewritten to the organization\'s custom domain when one is active.
+     * @summary OpenID Provider configuration (OIDC Discovery 1.0)
      * @param {WellKnownApiGetOpenidConfigurationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -408,6 +435,7 @@ export class WellKnownApi extends BaseAPI implements WellKnownApiInterface {
 
     /**
      * 
+     * @summary SSF transmitter configuration metadata
      * @param {WellKnownApiGetSsfConfigurationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

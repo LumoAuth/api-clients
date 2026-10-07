@@ -4,26 +4,26 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminClientTokensRevokeAll**](AdminSessionsApi.md#adminclienttokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens for a client |
-| [**AdminClientTokensRevokePost**](AdminSessionsApi.md#adminclienttokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens for a client via POST |
-| [**AdminSessionsCount**](AdminSessionsApi.md#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Get active session count for the tenant |
-| [**AdminSessionsList**](AdminSessionsApi.md#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions for the tenant |
-| [**AdminSessionsRevoke**](AdminSessionsApi.md#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a specific session |
-| [**AdminSessionsRevokeAll**](AdminSessionsApi.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke all tenant sessions via POST |
-| [**AdminSessionsStats**](AdminSessionsApi.md#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Get session statistics for the tenant |
-| [**AdminTokensList**](AdminSessionsApi.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens for the tenant |
+| [**AdminClientTokensRevokeAll**](AdminSessionsApi.md#adminclienttokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client |
+| [**AdminClientTokensRevokePost**](AdminSessionsApi.md#adminclienttokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias) |
+| [**AdminSessionsCount**](AdminSessionsApi.md#adminsessionscount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count |
+| [**AdminSessionsList**](AdminSessionsApi.md#adminsessionslist) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions |
+| [**AdminSessionsRevoke**](AdminSessionsApi.md#adminsessionsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session |
+| [**AdminSessionsRevokeAll**](AdminSessionsApi.md#adminsessionsrevokeall) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant |
+| [**AdminSessionsStats**](AdminSessionsApi.md#adminsessionsstats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics |
+| [**AdminTokensList**](AdminSessionsApi.md#admintokenslist) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens |
 | [**AdminTokensRevoke**](AdminSessionsApi.md#admintokensrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token |
-| [**AdminUserSessionsList**](AdminSessionsApi.md#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Get sessions for a specific user |
-| [**AdminUserSessionsRevokeAll**](AdminSessionsApi.md#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions for a user |
-| [**AdminUserSessionsRevokePost**](AdminSessionsApi.md#adminusersessionsrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions for a user via POST |
-| [**AdminUserTokensRevokeAll**](AdminSessionsApi.md#adminusertokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens for a user |
-| [**AdminUserTokensRevokePost**](AdminSessionsApi.md#adminusertokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens for a user via POST |
+| [**AdminUserSessionsList**](AdminSessionsApi.md#adminusersessionslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions |
+| [**AdminUserSessionsRevokeAll**](AdminSessionsApi.md#adminusersessionsrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user |
+| [**AdminUserSessionsRevokePost**](AdminSessionsApi.md#adminusersessionsrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions of a user (POST alias) |
+| [**AdminUserTokensRevokeAll**](AdminSessionsApi.md#adminusertokensrevokeall) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens of a user |
+| [**AdminUserTokensRevokePost**](AdminSessionsApi.md#adminusertokensrevokepost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens of a user (POST alias) |
 
 <a id="adminclienttokensrevokeall"></a>
 # **AdminClientTokensRevokeAll**
-> void AdminClientTokensRevokeAll (string orgId, string clientId)
+> AdminClientTokensRevokeAllResponse AdminClientTokensRevokeAll (string orgId, string clientId)
 
-Revoke all tokens for a client
+Revoke all tokens of a client
 
 ### Example
 ```csharp
@@ -58,8 +58,9 @@ namespace Example
 
             try
             {
-                // Revoke all tokens for a client
-                apiInstance.AdminClientTokensRevokeAll(orgId, clientId);
+                // Revoke all tokens of a client
+                AdminClientTokensRevokeAllResponse result = apiInstance.AdminClientTokensRevokeAll(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -78,8 +79,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all tokens for a client
-    apiInstance.AdminClientTokensRevokeAllWithHttpInfo(orgId, clientId);
+    // Revoke all tokens of a client
+    ApiResponse<AdminClientTokensRevokeAllResponse> response = apiInstance.AdminClientTokensRevokeAllWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -98,7 +102,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminClientTokensRevokeAllResponse**](AdminClientTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -107,21 +111,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked; the message carries the count |  -  |
+| **404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminclienttokensrevokepost"></a>
 # **AdminClientTokensRevokePost**
-> void AdminClientTokensRevokePost (string orgId, string clientId)
+> AdminUserTokensRevokePostResponse AdminClientTokensRevokePost (string orgId, string clientId)
 
-Revoke all tokens for a client via POST
+Revoke all tokens of a client (POST alias)
 
 ### Example
 ```csharp
@@ -156,8 +161,9 @@ namespace Example
 
             try
             {
-                // Revoke all tokens for a client via POST
-                apiInstance.AdminClientTokensRevokePost(orgId, clientId);
+                // Revoke all tokens of a client (POST alias)
+                AdminUserTokensRevokePostResponse result = apiInstance.AdminClientTokensRevokePost(orgId, clientId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -176,8 +182,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all tokens for a client via POST
-    apiInstance.AdminClientTokensRevokePostWithHttpInfo(orgId, clientId);
+    // Revoke all tokens of a client (POST alias)
+    ApiResponse<AdminUserTokensRevokePostResponse> response = apiInstance.AdminClientTokensRevokePostWithHttpInfo(orgId, clientId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -196,7 +205,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -205,21 +214,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked; the message carries the count |  -  |
+| **404** | Client not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsessionscount"></a>
 # **AdminSessionsCount**
-> void AdminSessionsCount (string orgId)
+> AdminSessionsCountResponse AdminSessionsCount (string orgId)
 
-Get active session count for the tenant
+Active session count
 
 ### Example
 ```csharp
@@ -253,8 +263,9 @@ namespace Example
 
             try
             {
-                // Get active session count for the tenant
-                apiInstance.AdminSessionsCount(orgId);
+                // Active session count
+                AdminSessionsCountResponse result = apiInstance.AdminSessionsCount(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -273,8 +284,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get active session count for the tenant
-    apiInstance.AdminSessionsCountWithHttpInfo(orgId);
+    // Active session count
+    ApiResponse<AdminSessionsCountResponse> response = apiInstance.AdminSessionsCountWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -292,7 +306,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSessionsCountResponse**](AdminSessionsCountResponse.md)
 
 ### Authorization
 
@@ -301,21 +315,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Active session count |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsessionslist"></a>
 # **AdminSessionsList**
-> void AdminSessionsList (string orgId)
+> AdminSessionsListResponse AdminSessionsList (string orgId)
 
-List active sessions for the tenant
+List active sessions
+
+Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional `userId` filter accepts a user UUID or email.
 
 ### Example
 ```csharp
@@ -349,8 +365,9 @@ namespace Example
 
             try
             {
-                // List active sessions for the tenant
-                apiInstance.AdminSessionsList(orgId);
+                // List active sessions
+                AdminSessionsListResponse result = apiInstance.AdminSessionsList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -369,8 +386,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List active sessions for the tenant
-    apiInstance.AdminSessionsListWithHttpInfo(orgId);
+    // List active sessions
+    ApiResponse<AdminSessionsListResponse> response = apiInstance.AdminSessionsListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -388,7 +408,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSessionsListResponse**](AdminSessionsListResponse.md)
 
 ### Authorization
 
@@ -397,21 +417,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsessionsrevoke"></a>
 # **AdminSessionsRevoke**
-> void AdminSessionsRevoke (string orgId, string sessionId)
+> AdminSessionsRevokeResponse AdminSessionsRevoke (string orgId, string sessionId)
 
-Revoke a specific session
+Revoke a session
 
 ### Example
 ```csharp
@@ -446,8 +466,9 @@ namespace Example
 
             try
             {
-                // Revoke a specific session
-                apiInstance.AdminSessionsRevoke(orgId, sessionId);
+                // Revoke a session
+                AdminSessionsRevokeResponse result = apiInstance.AdminSessionsRevoke(orgId, sessionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -466,8 +487,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke a specific session
-    apiInstance.AdminSessionsRevokeWithHttpInfo(orgId, sessionId);
+    // Revoke a session
+    ApiResponse<AdminSessionsRevokeResponse> response = apiInstance.AdminSessionsRevokeWithHttpInfo(orgId, sessionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -486,7 +510,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSessionsRevokeResponse**](AdminSessionsRevokeResponse.md)
 
 ### Authorization
 
@@ -495,21 +519,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Session revoked |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | Session not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsessionsrevokeall"></a>
 # **AdminSessionsRevokeAll**
-> void AdminSessionsRevokeAll (string orgId)
+> AdminSessionsRevokeAllResponse AdminSessionsRevokeAll (string orgId, AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest)
 
-Revoke all tenant sessions via POST
+Revoke every session in the tenant
+
+Signs out all users. Requires `confirm: true` in the body.
 
 ### Example
 ```csharp
@@ -540,11 +568,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AdminSessionsApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var adminSessionsRevokeAllRequest = new AdminSessionsRevokeAllRequest(); // AdminSessionsRevokeAllRequest | 
 
             try
             {
-                // Revoke all tenant sessions via POST
-                apiInstance.AdminSessionsRevokeAll(orgId);
+                // Revoke every session in the tenant
+                AdminSessionsRevokeAllResponse result = apiInstance.AdminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -563,8 +593,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all tenant sessions via POST
-    apiInstance.AdminSessionsRevokeAllWithHttpInfo(orgId);
+    // Revoke every session in the tenant
+    ApiResponse<AdminSessionsRevokeAllResponse> response = apiInstance.AdminSessionsRevokeAllWithHttpInfo(orgId, adminSessionsRevokeAllRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -579,10 +612,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **adminSessionsRevokeAllRequest** | [**AdminSessionsRevokeAllRequest**](AdminSessionsRevokeAllRequest.md) |  |  |
 
 ### Return type
 
-void (empty response body)
+[**AdminSessionsRevokeAllResponse**](AdminSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -590,22 +624,23 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions revoked; the message carries the count |  -  |
+| **400** | confirm: true is required |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsessionsstats"></a>
 # **AdminSessionsStats**
-> void AdminSessionsStats (string orgId)
+> AdminSessionsStatsResponse AdminSessionsStats (string orgId)
 
-Get session statistics for the tenant
+Session statistics
 
 ### Example
 ```csharp
@@ -639,8 +674,9 @@ namespace Example
 
             try
             {
-                // Get session statistics for the tenant
-                apiInstance.AdminSessionsStats(orgId);
+                // Session statistics
+                AdminSessionsStatsResponse result = apiInstance.AdminSessionsStats(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -659,8 +695,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get session statistics for the tenant
-    apiInstance.AdminSessionsStatsWithHttpInfo(orgId);
+    // Session statistics
+    ApiResponse<AdminSessionsStatsResponse> response = apiInstance.AdminSessionsStatsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -678,7 +717,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSessionsStatsResponse**](AdminSessionsStatsResponse.md)
 
 ### Authorization
 
@@ -687,21 +726,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Session counts |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admintokenslist"></a>
 # **AdminTokensList**
-> void AdminTokensList (string orgId)
+> AdminTokensListResponse AdminTokensList (string orgId)
 
-List access tokens for the tenant
+List access tokens
+
+Paginated OAuth access tokens issued by the tenant's clients. Filters: `revoked` (bool), `clientId`, `userId`.
 
 ### Example
 ```csharp
@@ -735,8 +776,9 @@ namespace Example
 
             try
             {
-                // List access tokens for the tenant
-                apiInstance.AdminTokensList(orgId);
+                // List access tokens
+                AdminTokensListResponse result = apiInstance.AdminTokensList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -755,8 +797,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List access tokens for the tenant
-    apiInstance.AdminTokensListWithHttpInfo(orgId);
+    // List access tokens
+    ApiResponse<AdminTokensListResponse> response = apiInstance.AdminTokensListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -774,7 +819,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminTokensListResponse**](AdminTokensListResponse.md)
 
 ### Authorization
 
@@ -783,19 +828,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="admintokensrevoke"></a>
 # **AdminTokensRevoke**
-> void AdminTokensRevoke (string orgId, string tokenId)
+> AdminTokensRevokeResponse AdminTokensRevoke (string orgId, string tokenId)
 
 Revoke a token
 
@@ -833,7 +878,8 @@ namespace Example
             try
             {
                 // Revoke a token
-                apiInstance.AdminTokensRevoke(orgId, tokenId);
+                AdminTokensRevokeResponse result = apiInstance.AdminTokensRevoke(orgId, tokenId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -853,7 +899,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Revoke a token
-    apiInstance.AdminTokensRevokeWithHttpInfo(orgId, tokenId);
+    ApiResponse<AdminTokensRevokeResponse> response = apiInstance.AdminTokensRevokeWithHttpInfo(orgId, tokenId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -872,7 +921,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminTokensRevokeResponse**](AdminTokensRevokeResponse.md)
 
 ### Authorization
 
@@ -881,21 +930,25 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Token revoked |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | Token not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminusersessionslist"></a>
 # **AdminUserSessionsList**
-> void AdminUserSessionsList (string orgId, string userId)
+> AdminUserSessionsListResponse AdminUserSessionsList (string orgId, string userId)
 
-Get sessions for a specific user
+List a user's active sessions
+
+All active sessions of one user (UUID or email), returned as a single page.
 
 ### Example
 ```csharp
@@ -930,8 +983,9 @@ namespace Example
 
             try
             {
-                // Get sessions for a specific user
-                apiInstance.AdminUserSessionsList(orgId, userId);
+                // List a user's active sessions
+                AdminUserSessionsListResponse result = apiInstance.AdminUserSessionsList(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -950,8 +1004,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get sessions for a specific user
-    apiInstance.AdminUserSessionsListWithHttpInfo(orgId, userId);
+    // List a user's active sessions
+    ApiResponse<AdminUserSessionsListResponse> response = apiInstance.AdminUserSessionsListWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -970,7 +1027,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminUserSessionsListResponse**](AdminUserSessionsListResponse.md)
 
 ### Authorization
 
@@ -979,21 +1036,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions |  -  |
+| **404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminusersessionsrevokeall"></a>
 # **AdminUserSessionsRevokeAll**
-> void AdminUserSessionsRevokeAll (string orgId, string userId)
+> AdminUserSessionsRevokeAllResponse AdminUserSessionsRevokeAll (string orgId, string userId)
 
-Revoke all sessions for a user
+Revoke all sessions of a user
 
 ### Example
 ```csharp
@@ -1028,8 +1086,9 @@ namespace Example
 
             try
             {
-                // Revoke all sessions for a user
-                apiInstance.AdminUserSessionsRevokeAll(orgId, userId);
+                // Revoke all sessions of a user
+                AdminUserSessionsRevokeAllResponse result = apiInstance.AdminUserSessionsRevokeAll(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1048,8 +1107,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all sessions for a user
-    apiInstance.AdminUserSessionsRevokeAllWithHttpInfo(orgId, userId);
+    // Revoke all sessions of a user
+    ApiResponse<AdminUserSessionsRevokeAllResponse> response = apiInstance.AdminUserSessionsRevokeAllWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1068,7 +1130,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminUserSessionsRevokeAllResponse**](AdminUserSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -1077,21 +1139,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions revoked; the message carries the count |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminusersessionsrevokepost"></a>
 # **AdminUserSessionsRevokePost**
-> void AdminUserSessionsRevokePost (string orgId, string userId)
+> AdminUserSessionsRevokePostResponse AdminUserSessionsRevokePost (string orgId, string userId)
 
-Revoke all sessions for a user via POST
+Revoke all sessions of a user (POST alias)
 
 ### Example
 ```csharp
@@ -1126,8 +1190,9 @@ namespace Example
 
             try
             {
-                // Revoke all sessions for a user via POST
-                apiInstance.AdminUserSessionsRevokePost(orgId, userId);
+                // Revoke all sessions of a user (POST alias)
+                AdminUserSessionsRevokePostResponse result = apiInstance.AdminUserSessionsRevokePost(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1146,8 +1211,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all sessions for a user via POST
-    apiInstance.AdminUserSessionsRevokePostWithHttpInfo(orgId, userId);
+    // Revoke all sessions of a user (POST alias)
+    ApiResponse<AdminUserSessionsRevokePostResponse> response = apiInstance.AdminUserSessionsRevokePostWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1166,7 +1234,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminUserSessionsRevokePostResponse**](AdminUserSessionsRevokePostResponse.md)
 
 ### Authorization
 
@@ -1175,21 +1243,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions revoked; the message carries the count |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminusertokensrevokeall"></a>
 # **AdminUserTokensRevokeAll**
-> void AdminUserTokensRevokeAll (string orgId, string userId)
+> AdminUserTokensRevokeAllResponse AdminUserTokensRevokeAll (string orgId, string userId)
 
-Revoke all tokens for a user
+Revoke all tokens of a user
 
 ### Example
 ```csharp
@@ -1224,8 +1294,9 @@ namespace Example
 
             try
             {
-                // Revoke all tokens for a user
-                apiInstance.AdminUserTokensRevokeAll(orgId, userId);
+                // Revoke all tokens of a user
+                AdminUserTokensRevokeAllResponse result = apiInstance.AdminUserTokensRevokeAll(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1244,8 +1315,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all tokens for a user
-    apiInstance.AdminUserTokensRevokeAllWithHttpInfo(orgId, userId);
+    // Revoke all tokens of a user
+    ApiResponse<AdminUserTokensRevokeAllResponse> response = apiInstance.AdminUserTokensRevokeAllWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1264,7 +1338,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminUserTokensRevokeAllResponse**](AdminUserTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -1273,21 +1347,23 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminusertokensrevokepost"></a>
 # **AdminUserTokensRevokePost**
-> void AdminUserTokensRevokePost (string orgId, string userId)
+> AdminUserTokensRevokePostResponse AdminUserTokensRevokePost (string orgId, string userId)
 
-Revoke all tokens for a user via POST
+Revoke all tokens of a user (POST alias)
 
 ### Example
 ```csharp
@@ -1322,8 +1398,9 @@ namespace Example
 
             try
             {
-                // Revoke all tokens for a user via POST
-                apiInstance.AdminUserTokensRevokePost(orgId, userId);
+                // Revoke all tokens of a user (POST alias)
+                AdminUserTokensRevokePostResponse result = apiInstance.AdminUserTokensRevokePost(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1342,8 +1419,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Revoke all tokens for a user via POST
-    apiInstance.AdminUserTokensRevokePostWithHttpInfo(orgId, userId);
+    // Revoke all tokens of a user (POST alias)
+    ApiResponse<AdminUserTokensRevokePostResponse> response = apiInstance.AdminUserTokensRevokePostWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1362,7 +1442,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -1371,13 +1451,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked; the message carries the count |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

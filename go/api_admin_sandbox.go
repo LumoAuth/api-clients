@@ -24,7 +24,7 @@ import (
 type AdminSandboxAPI interface {
 
 	/*
-	AdminSandboxDestroy POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+	AdminSandboxDestroy Destroy a sandbox tenant
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -34,10 +34,11 @@ type AdminSandboxAPI interface {
 	AdminSandboxDestroy(ctx context.Context, orgId string, sandboxSlug string) ApiAdminSandboxDestroyRequest
 
 	// AdminSandboxDestroyExecute executes the request
-	AdminSandboxDestroyExecute(r ApiAdminSandboxDestroyRequest) (*http.Response, error)
+	//  @return MessageResponse
+	AdminSandboxDestroyExecute(r ApiAdminSandboxDestroyRequest) (*MessageResponse, *http.Response, error)
 
 	/*
-	AdminSandboxList GET / Lists the caller's active sandbox tenants (their own only).
+	AdminSandboxList List the caller's sandbox tenants
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -46,10 +47,11 @@ type AdminSandboxAPI interface {
 	AdminSandboxList(ctx context.Context, orgId string) ApiAdminSandboxListRequest
 
 	// AdminSandboxListExecute executes the request
-	AdminSandboxListExecute(r ApiAdminSandboxListRequest) (*http.Response, error)
+	//  @return AdminSandboxListResponse
+	AdminSandboxListExecute(r ApiAdminSandboxListRequest) (*AdminSandboxListResponse, *http.Response, error)
 
 	/*
-	AdminSandboxSpawn POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+	AdminSandboxSpawn Spawn a sandbox tenant
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -58,7 +60,8 @@ type AdminSandboxAPI interface {
 	AdminSandboxSpawn(ctx context.Context, orgId string) ApiAdminSandboxSpawnRequest
 
 	// AdminSandboxSpawnExecute executes the request
-	AdminSandboxSpawnExecute(r ApiAdminSandboxSpawnRequest) (*http.Response, error)
+	//  @return AdminSandboxSpawnResponse
+	AdminSandboxSpawnExecute(r ApiAdminSandboxSpawnRequest) (*AdminSandboxSpawnResponse, *http.Response, error)
 }
 
 // AdminSandboxAPIService AdminSandboxAPI service
@@ -71,12 +74,12 @@ type ApiAdminSandboxDestroyRequest struct {
 	sandboxSlug string
 }
 
-func (r ApiAdminSandboxDestroyRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSandboxDestroyRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.AdminSandboxDestroyExecute(r)
 }
 
 /*
-AdminSandboxDestroy POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+AdminSandboxDestroy Destroy a sandbox tenant
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -93,16 +96,18 @@ func (a *AdminSandboxAPIService) AdminSandboxDestroy(ctx context.Context, orgId 
 }
 
 // Execute executes the request
-func (a *AdminSandboxAPIService) AdminSandboxDestroyExecute(r ApiAdminSandboxDestroyRequest) (*http.Response, error) {
+//  @return MessageResponse
+func (a *AdminSandboxAPIService) AdminSandboxDestroyExecute(r ApiAdminSandboxDestroyRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSandboxAPIService.AdminSandboxDestroy")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy"
@@ -123,7 +128,7 @@ func (a *AdminSandboxAPIService) AdminSandboxDestroyExecute(r ApiAdminSandboxDes
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -146,19 +151,19 @@ func (a *AdminSandboxAPIService) AdminSandboxDestroyExecute(r ApiAdminSandboxDes
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -166,10 +171,19 @@ func (a *AdminSandboxAPIService) AdminSandboxDestroyExecute(r ApiAdminSandboxDes
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSandboxListRequest struct {
@@ -178,12 +192,12 @@ type ApiAdminSandboxListRequest struct {
 	orgId string
 }
 
-func (r ApiAdminSandboxListRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSandboxListRequest) Execute() (*AdminSandboxListResponse, *http.Response, error) {
 	return r.ApiService.AdminSandboxListExecute(r)
 }
 
 /*
-AdminSandboxList GET / Lists the caller's active sandbox tenants (their own only).
+AdminSandboxList List the caller's sandbox tenants
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -198,16 +212,18 @@ func (a *AdminSandboxAPIService) AdminSandboxList(ctx context.Context, orgId str
 }
 
 // Execute executes the request
-func (a *AdminSandboxAPIService) AdminSandboxListExecute(r ApiAdminSandboxListRequest) (*http.Response, error) {
+//  @return AdminSandboxListResponse
+func (a *AdminSandboxAPIService) AdminSandboxListExecute(r ApiAdminSandboxListRequest) (*AdminSandboxListResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSandboxListResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSandboxAPIService.AdminSandboxList")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sandbox"
@@ -227,7 +243,7 @@ func (a *AdminSandboxAPIService) AdminSandboxListExecute(r ApiAdminSandboxListRe
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -250,19 +266,19 @@ func (a *AdminSandboxAPIService) AdminSandboxListExecute(r ApiAdminSandboxListRe
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -270,24 +286,39 @@ func (a *AdminSandboxAPIService) AdminSandboxListExecute(r ApiAdminSandboxListRe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiAdminSandboxSpawnRequest struct {
 	ctx context.Context
 	ApiService AdminSandboxAPI
 	orgId string
+	adminSandboxSpawnRequest *AdminSandboxSpawnRequest
 }
 
-func (r ApiAdminSandboxSpawnRequest) Execute() (*http.Response, error) {
+func (r ApiAdminSandboxSpawnRequest) AdminSandboxSpawnRequest(adminSandboxSpawnRequest AdminSandboxSpawnRequest) ApiAdminSandboxSpawnRequest {
+	r.adminSandboxSpawnRequest = &adminSandboxSpawnRequest
+	return r
+}
+
+func (r ApiAdminSandboxSpawnRequest) Execute() (*AdminSandboxSpawnResponse, *http.Response, error) {
 	return r.ApiService.AdminSandboxSpawnExecute(r)
 }
 
 /*
-AdminSandboxSpawn POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+AdminSandboxSpawn Spawn a sandbox tenant
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -302,16 +333,18 @@ func (a *AdminSandboxAPIService) AdminSandboxSpawn(ctx context.Context, orgId st
 }
 
 // Execute executes the request
-func (a *AdminSandboxAPIService) AdminSandboxSpawnExecute(r ApiAdminSandboxSpawnRequest) (*http.Response, error) {
+//  @return AdminSandboxSpawnResponse
+func (a *AdminSandboxAPIService) AdminSandboxSpawnExecute(r ApiAdminSandboxSpawnRequest) (*AdminSandboxSpawnResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *AdminSandboxSpawnResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminSandboxAPIService.AdminSandboxSpawn")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/sandbox/spawn"
@@ -322,7 +355,7 @@ func (a *AdminSandboxAPIService) AdminSandboxSpawnExecute(r ApiAdminSandboxSpawn
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -331,13 +364,15 @@ func (a *AdminSandboxAPIService) AdminSandboxSpawnExecute(r ApiAdminSandboxSpawn
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	// body params
+	localVarPostBody = r.adminSandboxSpawnRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -354,19 +389,19 @@ func (a *AdminSandboxAPIService) AdminSandboxSpawnExecute(r ApiAdminSandboxSpawn
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -374,8 +409,17 @@ func (a *AdminSandboxAPIService) AdminSandboxSpawnExecute(r ApiAdminSandboxSpawn
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

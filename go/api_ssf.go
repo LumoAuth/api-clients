@@ -24,7 +24,7 @@ import (
 type SsfAPI interface {
 
 	/*
-	CreateStreamConfig Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+	CreateStreamConfig Create an SSF stream
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,10 +33,11 @@ type SsfAPI interface {
 	CreateStreamConfig(ctx context.Context, orgId string) ApiCreateStreamConfigRequest
 
 	// CreateStreamConfigExecute executes the request
-	CreateStreamConfigExecute(r ApiCreateStreamConfigRequest) (*http.Response, error)
+	//  @return SsfStream
+	CreateStreamConfigExecute(r ApiCreateStreamConfigRequest) (*SsfStream, *http.Response, error)
 
 	/*
-	DeleteStreamConfig Method for DeleteStreamConfig
+	DeleteStreamConfig Delete an SSF stream
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -48,7 +49,7 @@ type SsfAPI interface {
 	DeleteStreamConfigExecute(r ApiDeleteStreamConfigRequest) (*http.Response, error)
 
 	/*
-	GetStreamConfig Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+	GetStreamConfig Read SSF stream configuration(s)
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -57,10 +58,11 @@ type SsfAPI interface {
 	GetStreamConfig(ctx context.Context, orgId string) ApiGetStreamConfigRequest
 
 	// GetStreamConfigExecute executes the request
-	GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*http.Response, error)
+	//  @return GetStreamConfig200Response
+	GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*GetStreamConfig200Response, *http.Response, error)
 
 	/*
-	VerifyStream SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+	VerifyStream Request a stream verification event
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -81,12 +83,12 @@ type ApiCreateStreamConfigRequest struct {
 	orgId string
 }
 
-func (r ApiCreateStreamConfigRequest) Execute() (*http.Response, error) {
+func (r ApiCreateStreamConfigRequest) Execute() (*SsfStream, *http.Response, error) {
 	return r.ApiService.CreateStreamConfigExecute(r)
 }
 
 /*
-CreateStreamConfig Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
+CreateStreamConfig Create an SSF stream
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -101,16 +103,18 @@ func (a *SsfAPIService) CreateStreamConfig(ctx context.Context, orgId string) Ap
 }
 
 // Execute executes the request
-func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest) (*http.Response, error) {
+//  @return SsfStream
+func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest) (*SsfStream, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *SsfStream
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SsfAPIService.CreateStreamConfig")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/ssf/stream"
@@ -130,7 +134,7 @@ func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -153,19 +157,19 @@ func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -173,16 +177,31 @@ func (a *SsfAPIService) CreateStreamConfigExecute(r ApiCreateStreamConfigRequest
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiDeleteStreamConfigRequest struct {
 	ctx context.Context
 	ApiService SsfAPI
+	streamId *string
 	orgId string
+}
+
+func (r ApiDeleteStreamConfigRequest) StreamId(streamId string) ApiDeleteStreamConfigRequest {
+	r.streamId = &streamId
+	return r
 }
 
 func (r ApiDeleteStreamConfigRequest) Execute() (*http.Response, error) {
@@ -190,7 +209,7 @@ func (r ApiDeleteStreamConfigRequest) Execute() (*http.Response, error) {
 }
 
 /*
-DeleteStreamConfig Method for DeleteStreamConfig
+DeleteStreamConfig Delete an SSF stream
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -223,7 +242,11 @@ func (a *SsfAPIService) DeleteStreamConfigExecute(r ApiDeleteStreamConfigRequest
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
+	if r.streamId == nil {
+		return nil, reportError("streamId is required and must be specified")
+	}
 
+	parameterAddToHeaderOrQuery(localVarQueryParams, "stream_id", r.streamId, "form", "")
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -287,14 +310,20 @@ type ApiGetStreamConfigRequest struct {
 	ctx context.Context
 	ApiService SsfAPI
 	orgId string
+	streamId *string
 }
 
-func (r ApiGetStreamConfigRequest) Execute() (*http.Response, error) {
+func (r ApiGetStreamConfigRequest) StreamId(streamId string) ApiGetStreamConfigRequest {
+	r.streamId = &streamId
+	return r
+}
+
+func (r ApiGetStreamConfigRequest) Execute() (*GetStreamConfig200Response, *http.Response, error) {
 	return r.ApiService.GetStreamConfigExecute(r)
 }
 
 /*
-GetStreamConfig Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
+GetStreamConfig Read SSF stream configuration(s)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -309,16 +338,18 @@ func (a *SsfAPIService) GetStreamConfig(ctx context.Context, orgId string) ApiGe
 }
 
 // Execute executes the request
-func (a *SsfAPIService) GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*http.Response, error) {
+//  @return GetStreamConfig200Response
+func (a *SsfAPIService) GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*GetStreamConfig200Response, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *GetStreamConfig200Response
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SsfAPIService.GetStreamConfig")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/ssf/stream"
@@ -328,6 +359,9 @@ func (a *SsfAPIService) GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*ht
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.streamId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_id", r.streamId, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -338,7 +372,7 @@ func (a *SsfAPIService) GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*ht
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -361,19 +395,19 @@ func (a *SsfAPIService) GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*ht
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -381,10 +415,19 @@ func (a *SsfAPIService) GetStreamConfigExecute(r ApiGetStreamConfigRequest) (*ht
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiVerifyStreamRequest struct {
@@ -398,7 +441,7 @@ func (r ApiVerifyStreamRequest) Execute() (*http.Response, error) {
 }
 
 /*
-VerifyStream SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
+VerifyStream Request a stream verification event
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId

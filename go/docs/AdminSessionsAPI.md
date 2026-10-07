@@ -4,28 +4,28 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminClientTokensRevokeAll**](AdminSessionsAPI.md#AdminClientTokensRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens for a client
-[**AdminClientTokensRevokePost**](AdminSessionsAPI.md#AdminClientTokensRevokePost) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens for a client via POST
-[**AdminSessionsCount**](AdminSessionsAPI.md#AdminSessionsCount) | **Get** /orgs/{orgId}/api/v1/admin/sessions/count | Get active session count for the tenant
-[**AdminSessionsList**](AdminSessionsAPI.md#AdminSessionsList) | **Get** /orgs/{orgId}/api/v1/admin/sessions | List active sessions for the tenant
-[**AdminSessionsRevoke**](AdminSessionsAPI.md#AdminSessionsRevoke) | **Delete** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a specific session
-[**AdminSessionsRevokeAll**](AdminSessionsAPI.md#AdminSessionsRevokeAll) | **Post** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke all tenant sessions via POST
-[**AdminSessionsStats**](AdminSessionsAPI.md#AdminSessionsStats) | **Get** /orgs/{orgId}/api/v1/admin/sessions/stats | Get session statistics for the tenant
-[**AdminTokensList**](AdminSessionsAPI.md#AdminTokensList) | **Get** /orgs/{orgId}/api/v1/admin/tokens | List access tokens for the tenant
+[**AdminClientTokensRevokeAll**](AdminSessionsAPI.md#AdminClientTokensRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client
+[**AdminClientTokensRevokePost**](AdminSessionsAPI.md#AdminClientTokensRevokePost) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias)
+[**AdminSessionsCount**](AdminSessionsAPI.md#AdminSessionsCount) | **Get** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
+[**AdminSessionsList**](AdminSessionsAPI.md#AdminSessionsList) | **Get** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
+[**AdminSessionsRevoke**](AdminSessionsAPI.md#AdminSessionsRevoke) | **Delete** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
+[**AdminSessionsRevokeAll**](AdminSessionsAPI.md#AdminSessionsRevokeAll) | **Post** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+[**AdminSessionsStats**](AdminSessionsAPI.md#AdminSessionsStats) | **Get** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
+[**AdminTokensList**](AdminSessionsAPI.md#AdminTokensList) | **Get** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
 [**AdminTokensRevoke**](AdminSessionsAPI.md#AdminTokensRevoke) | **Delete** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
-[**AdminUserSessionsList**](AdminSessionsAPI.md#AdminUserSessionsList) | **Get** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Get sessions for a specific user
-[**AdminUserSessionsRevokeAll**](AdminSessionsAPI.md#AdminUserSessionsRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions for a user
-[**AdminUserSessionsRevokePost**](AdminSessionsAPI.md#AdminUserSessionsRevokePost) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions for a user via POST
-[**AdminUserTokensRevokeAll**](AdminSessionsAPI.md#AdminUserTokensRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens for a user
-[**AdminUserTokensRevokePost**](AdminSessionsAPI.md#AdminUserTokensRevokePost) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens for a user via POST
+[**AdminUserSessionsList**](AdminSessionsAPI.md#AdminUserSessionsList) | **Get** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions
+[**AdminUserSessionsRevokeAll**](AdminSessionsAPI.md#AdminUserSessionsRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
+[**AdminUserSessionsRevokePost**](AdminSessionsAPI.md#AdminUserSessionsRevokePost) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions of a user (POST alias)
+[**AdminUserTokensRevokeAll**](AdminSessionsAPI.md#AdminUserTokensRevokeAll) | **Delete** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens of a user
+[**AdminUserTokensRevokePost**](AdminSessionsAPI.md#AdminUserTokensRevokePost) | **Post** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens of a user (POST alias)
 
 
 
 ## AdminClientTokensRevokeAll
 
-> AdminClientTokensRevokeAll(ctx, orgId, clientId).Execute()
+> AdminClientTokensRevokeAllResponse AdminClientTokensRevokeAll(ctx, orgId, clientId).Execute()
 
-Revoke all tokens for a client
+Revoke all tokens of a client
 
 ### Example
 
@@ -45,11 +45,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokeAll(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokeAll(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminClientTokensRevokeAll``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminClientTokensRevokeAll`: AdminClientTokensRevokeAllResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminClientTokensRevokeAll`: %v\n", resp)
 }
 ```
 
@@ -74,7 +76,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminClientTokensRevokeAllResponse**](AdminClientTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -83,7 +85,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -92,9 +94,9 @@ Name | Type | Description  | Notes
 
 ## AdminClientTokensRevokePost
 
-> AdminClientTokensRevokePost(ctx, orgId, clientId).Execute()
+> AdminUserTokensRevokePostResponse AdminClientTokensRevokePost(ctx, orgId, clientId).Execute()
 
-Revoke all tokens for a client via POST
+Revoke all tokens of a client (POST alias)
 
 ### Example
 
@@ -114,11 +116,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokePost(context.Background(), orgId, clientId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminClientTokensRevokePost(context.Background(), orgId, clientId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminClientTokensRevokePost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminClientTokensRevokePost`: AdminUserTokensRevokePostResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminClientTokensRevokePost`: %v\n", resp)
 }
 ```
 
@@ -143,7 +147,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -152,7 +156,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -161,9 +165,9 @@ Name | Type | Description  | Notes
 
 ## AdminSessionsCount
 
-> AdminSessionsCount(ctx, orgId).Execute()
+> AdminSessionsCountResponse AdminSessionsCount(ctx, orgId).Execute()
 
-Get active session count for the tenant
+Active session count
 
 ### Example
 
@@ -182,11 +186,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminSessionsCount(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminSessionsCount(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminSessionsCount``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSessionsCount`: AdminSessionsCountResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminSessionsCount`: %v\n", resp)
 }
 ```
 
@@ -209,7 +215,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSessionsCountResponse**](AdminSessionsCountResponse.md)
 
 ### Authorization
 
@@ -218,7 +224,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -227,9 +233,11 @@ Name | Type | Description  | Notes
 
 ## AdminSessionsList
 
-> AdminSessionsList(ctx, orgId).Execute()
+> AdminSessionsListResponse AdminSessionsList(ctx, orgId).Execute()
 
-List active sessions for the tenant
+List active sessions
+
+
 
 ### Example
 
@@ -248,11 +256,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminSessionsList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminSessionsList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminSessionsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSessionsList`: AdminSessionsListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminSessionsList`: %v\n", resp)
 }
 ```
 
@@ -275,7 +285,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSessionsListResponse**](AdminSessionsListResponse.md)
 
 ### Authorization
 
@@ -284,7 +294,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -293,9 +303,9 @@ Name | Type | Description  | Notes
 
 ## AdminSessionsRevoke
 
-> AdminSessionsRevoke(ctx, orgId, sessionId).Execute()
+> AdminSessionsRevokeResponse AdminSessionsRevoke(ctx, orgId, sessionId).Execute()
 
-Revoke a specific session
+Revoke a session
 
 ### Example
 
@@ -315,11 +325,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminSessionsRevoke(context.Background(), orgId, sessionId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminSessionsRevoke(context.Background(), orgId, sessionId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminSessionsRevoke``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSessionsRevoke`: AdminSessionsRevokeResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminSessionsRevoke`: %v\n", resp)
 }
 ```
 
@@ -344,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSessionsRevokeResponse**](AdminSessionsRevokeResponse.md)
 
 ### Authorization
 
@@ -353,7 +365,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -362,9 +374,11 @@ Name | Type | Description  | Notes
 
 ## AdminSessionsRevokeAll
 
-> AdminSessionsRevokeAll(ctx, orgId).Execute()
+> AdminSessionsRevokeAllResponse AdminSessionsRevokeAll(ctx, orgId).AdminSessionsRevokeAllRequest(adminSessionsRevokeAllRequest).Execute()
 
-Revoke all tenant sessions via POST
+Revoke every session in the tenant
+
+
 
 ### Example
 
@@ -380,14 +394,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminSessionsRevokeAllRequest := *openapiclient.NewAdminSessionsRevokeAllRequest(true) // AdminSessionsRevokeAllRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminSessionsRevokeAll(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminSessionsRevokeAll(context.Background(), orgId).AdminSessionsRevokeAllRequest(adminSessionsRevokeAllRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminSessionsRevokeAll``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSessionsRevokeAll`: AdminSessionsRevokeAllResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminSessionsRevokeAll`: %v\n", resp)
 }
 ```
 
@@ -407,10 +424,11 @@ Other parameters are passed through a pointer to a apiAdminSessionsRevokeAllRequ
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminSessionsRevokeAllRequest** | [**AdminSessionsRevokeAllRequest**](AdminSessionsRevokeAllRequest.md) |  | 
 
 ### Return type
 
- (empty response body)
+[**AdminSessionsRevokeAllResponse**](AdminSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -418,8 +436,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -428,9 +446,9 @@ Name | Type | Description  | Notes
 
 ## AdminSessionsStats
 
-> AdminSessionsStats(ctx, orgId).Execute()
+> AdminSessionsStatsResponse AdminSessionsStats(ctx, orgId).Execute()
 
-Get session statistics for the tenant
+Session statistics
 
 ### Example
 
@@ -449,11 +467,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminSessionsStats(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminSessionsStats(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminSessionsStats``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSessionsStats`: AdminSessionsStatsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminSessionsStats`: %v\n", resp)
 }
 ```
 
@@ -476,7 +496,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSessionsStatsResponse**](AdminSessionsStatsResponse.md)
 
 ### Authorization
 
@@ -485,7 +505,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -494,9 +514,11 @@ Name | Type | Description  | Notes
 
 ## AdminTokensList
 
-> AdminTokensList(ctx, orgId).Execute()
+> AdminTokensListResponse AdminTokensList(ctx, orgId).Execute()
 
-List access tokens for the tenant
+List access tokens
+
+
 
 ### Example
 
@@ -515,11 +537,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminTokensList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminTokensList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminTokensList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminTokensList`: AdminTokensListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminTokensList`: %v\n", resp)
 }
 ```
 
@@ -542,7 +566,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminTokensListResponse**](AdminTokensListResponse.md)
 
 ### Authorization
 
@@ -551,7 +575,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -560,7 +584,7 @@ Name | Type | Description  | Notes
 
 ## AdminTokensRevoke
 
-> AdminTokensRevoke(ctx, orgId, tokenId).Execute()
+> AdminTokensRevokeResponse AdminTokensRevoke(ctx, orgId, tokenId).Execute()
 
 Revoke a token
 
@@ -582,11 +606,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminTokensRevoke(context.Background(), orgId, tokenId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminTokensRevoke(context.Background(), orgId, tokenId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminTokensRevoke``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminTokensRevoke`: AdminTokensRevokeResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminTokensRevoke`: %v\n", resp)
 }
 ```
 
@@ -611,7 +637,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminTokensRevokeResponse**](AdminTokensRevokeResponse.md)
 
 ### Authorization
 
@@ -620,7 +646,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -629,9 +655,11 @@ Name | Type | Description  | Notes
 
 ## AdminUserSessionsList
 
-> AdminUserSessionsList(ctx, orgId, userId).Execute()
+> AdminUserSessionsListResponse AdminUserSessionsList(ctx, orgId, userId).Execute()
 
-Get sessions for a specific user
+List a user's active sessions
+
+
 
 ### Example
 
@@ -651,11 +679,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminUserSessionsList(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminUserSessionsList(context.Background(), orgId, userId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminUserSessionsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminUserSessionsList`: AdminUserSessionsListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminUserSessionsList`: %v\n", resp)
 }
 ```
 
@@ -680,7 +710,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminUserSessionsListResponse**](AdminUserSessionsListResponse.md)
 
 ### Authorization
 
@@ -689,7 +719,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -698,9 +728,9 @@ Name | Type | Description  | Notes
 
 ## AdminUserSessionsRevokeAll
 
-> AdminUserSessionsRevokeAll(ctx, orgId, userId).Execute()
+> AdminUserSessionsRevokeAllResponse AdminUserSessionsRevokeAll(ctx, orgId, userId).Execute()
 
-Revoke all sessions for a user
+Revoke all sessions of a user
 
 ### Example
 
@@ -720,11 +750,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokeAll(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokeAll(context.Background(), orgId, userId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminUserSessionsRevokeAll``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminUserSessionsRevokeAll`: AdminUserSessionsRevokeAllResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminUserSessionsRevokeAll`: %v\n", resp)
 }
 ```
 
@@ -749,7 +781,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminUserSessionsRevokeAllResponse**](AdminUserSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -758,7 +790,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -767,9 +799,9 @@ Name | Type | Description  | Notes
 
 ## AdminUserSessionsRevokePost
 
-> AdminUserSessionsRevokePost(ctx, orgId, userId).Execute()
+> AdminUserSessionsRevokePostResponse AdminUserSessionsRevokePost(ctx, orgId, userId).Execute()
 
-Revoke all sessions for a user via POST
+Revoke all sessions of a user (POST alias)
 
 ### Example
 
@@ -789,11 +821,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokePost(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminUserSessionsRevokePost(context.Background(), orgId, userId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminUserSessionsRevokePost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminUserSessionsRevokePost`: AdminUserSessionsRevokePostResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminUserSessionsRevokePost`: %v\n", resp)
 }
 ```
 
@@ -818,7 +852,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminUserSessionsRevokePostResponse**](AdminUserSessionsRevokePostResponse.md)
 
 ### Authorization
 
@@ -827,7 +861,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -836,9 +870,9 @@ Name | Type | Description  | Notes
 
 ## AdminUserTokensRevokeAll
 
-> AdminUserTokensRevokeAll(ctx, orgId, userId).Execute()
+> AdminUserTokensRevokeAllResponse AdminUserTokensRevokeAll(ctx, orgId, userId).Execute()
 
-Revoke all tokens for a user
+Revoke all tokens of a user
 
 ### Example
 
@@ -858,11 +892,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokeAll(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokeAll(context.Background(), orgId, userId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminUserTokensRevokeAll``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminUserTokensRevokeAll`: AdminUserTokensRevokeAllResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminUserTokensRevokeAll`: %v\n", resp)
 }
 ```
 
@@ -887,7 +923,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminUserTokensRevokeAllResponse**](AdminUserTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -896,7 +932,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -905,9 +941,9 @@ Name | Type | Description  | Notes
 
 ## AdminUserTokensRevokePost
 
-> AdminUserTokensRevokePost(ctx, orgId, userId).Execute()
+> AdminUserTokensRevokePostResponse AdminUserTokensRevokePost(ctx, orgId, userId).Execute()
 
-Revoke all tokens for a user via POST
+Revoke all tokens of a user (POST alias)
 
 ### Example
 
@@ -927,11 +963,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokePost(context.Background(), orgId, userId).Execute()
+	resp, r, err := apiClient.AdminSessionsAPI.AdminUserTokensRevokePost(context.Background(), orgId, userId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSessionsAPI.AdminUserTokensRevokePost``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminUserTokensRevokePost`: AdminUserTokensRevokePostResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSessionsAPI.AdminUserTokensRevokePost`: %v\n", resp)
 }
 ```
 
@@ -956,7 +994,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -965,7 +1003,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

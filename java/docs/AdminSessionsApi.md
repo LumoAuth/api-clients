@@ -4,27 +4,27 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminClientTokensRevokeAll**](AdminSessionsApi.md#adminClientTokensRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens for a client |
-| [**adminClientTokensRevokePost**](AdminSessionsApi.md#adminClientTokensRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens for a client via POST |
-| [**adminSessionsCount**](AdminSessionsApi.md#adminSessionsCount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Get active session count for the tenant |
-| [**adminSessionsList**](AdminSessionsApi.md#adminSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions for the tenant |
-| [**adminSessionsRevoke**](AdminSessionsApi.md#adminSessionsRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a specific session |
-| [**adminSessionsRevokeAll**](AdminSessionsApi.md#adminSessionsRevokeAll) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke all tenant sessions via POST |
-| [**adminSessionsStats**](AdminSessionsApi.md#adminSessionsStats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Get session statistics for the tenant |
-| [**adminTokensList**](AdminSessionsApi.md#adminTokensList) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens for the tenant |
+| [**adminClientTokensRevokeAll**](AdminSessionsApi.md#adminClientTokensRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client |
+| [**adminClientTokensRevokePost**](AdminSessionsApi.md#adminClientTokensRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias) |
+| [**adminSessionsCount**](AdminSessionsApi.md#adminSessionsCount) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count |
+| [**adminSessionsList**](AdminSessionsApi.md#adminSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions |
+| [**adminSessionsRevoke**](AdminSessionsApi.md#adminSessionsRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session |
+| [**adminSessionsRevokeAll**](AdminSessionsApi.md#adminSessionsRevokeAll) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant |
+| [**adminSessionsStats**](AdminSessionsApi.md#adminSessionsStats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics |
+| [**adminTokensList**](AdminSessionsApi.md#adminTokensList) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens |
 | [**adminTokensRevoke**](AdminSessionsApi.md#adminTokensRevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token |
-| [**adminUserSessionsList**](AdminSessionsApi.md#adminUserSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Get sessions for a specific user |
-| [**adminUserSessionsRevokeAll**](AdminSessionsApi.md#adminUserSessionsRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions for a user |
-| [**adminUserSessionsRevokePost**](AdminSessionsApi.md#adminUserSessionsRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions for a user via POST |
-| [**adminUserTokensRevokeAll**](AdminSessionsApi.md#adminUserTokensRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens for a user |
-| [**adminUserTokensRevokePost**](AdminSessionsApi.md#adminUserTokensRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens for a user via POST |
+| [**adminUserSessionsList**](AdminSessionsApi.md#adminUserSessionsList) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user&#39;s active sessions |
+| [**adminUserSessionsRevokeAll**](AdminSessionsApi.md#adminUserSessionsRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user |
+| [**adminUserSessionsRevokePost**](AdminSessionsApi.md#adminUserSessionsRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions of a user (POST alias) |
+| [**adminUserTokensRevokeAll**](AdminSessionsApi.md#adminUserTokensRevokeAll) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens of a user |
+| [**adminUserTokensRevokePost**](AdminSessionsApi.md#adminUserTokensRevokePost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens of a user (POST alias) |
 
 
 <a id="adminClientTokensRevokeAll"></a>
 # **adminClientTokensRevokeAll**
-> adminClientTokensRevokeAll(orgId, clientId)
+> AdminClientTokensRevokeAllResponse adminClientTokensRevokeAll(orgId, clientId)
 
-Revoke all tokens for a client
+Revoke all tokens of a client
 
 ### Example
 ```java
@@ -55,7 +55,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String clientId = "clientId_example"; // String | 
     try {
-      apiInstance.adminClientTokensRevokeAll(orgId, clientId);
+      AdminClientTokensRevokeAllResponse result = apiInstance.adminClientTokensRevokeAll(orgId, clientId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminClientTokensRevokeAll");
       System.err.println("Status code: " + e.getCode());
@@ -76,7 +77,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminClientTokensRevokeAllResponse**](AdminClientTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -85,18 +86,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked; the message carries the count |  -  |
+| **404** | Client not found |  -  |
 
 <a id="adminClientTokensRevokePost"></a>
 # **adminClientTokensRevokePost**
-> adminClientTokensRevokePost(orgId, clientId)
+> AdminUserTokensRevokePostResponse adminClientTokensRevokePost(orgId, clientId)
 
-Revoke all tokens for a client via POST
+Revoke all tokens of a client (POST alias)
 
 ### Example
 ```java
@@ -127,7 +129,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String clientId = "clientId_example"; // String | 
     try {
-      apiInstance.adminClientTokensRevokePost(orgId, clientId);
+      AdminUserTokensRevokePostResponse result = apiInstance.adminClientTokensRevokePost(orgId, clientId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminClientTokensRevokePost");
       System.err.println("Status code: " + e.getCode());
@@ -148,7 +151,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -157,18 +160,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked; the message carries the count |  -  |
+| **404** | Client not found |  -  |
 
 <a id="adminSessionsCount"></a>
 # **adminSessionsCount**
-> adminSessionsCount(orgId)
+> AdminSessionsCountResponse adminSessionsCount(orgId)
 
-Get active session count for the tenant
+Active session count
 
 ### Example
 ```java
@@ -198,7 +202,8 @@ public class Example {
     AdminSessionsApi apiInstance = new AdminSessionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSessionsCount(orgId);
+      AdminSessionsCountResponse result = apiInstance.adminSessionsCount(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminSessionsCount");
       System.err.println("Status code: " + e.getCode());
@@ -218,7 +223,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSessionsCountResponse**](AdminSessionsCountResponse.md)
 
 ### Authorization
 
@@ -227,18 +232,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Active session count |  -  |
 
 <a id="adminSessionsList"></a>
 # **adminSessionsList**
-> adminSessionsList(orgId)
+> AdminSessionsListResponse adminSessionsList(orgId)
 
-List active sessions for the tenant
+List active sessions
+
+Paginated active sessions for the tenant (expired and idle-timed-out sessions are invalidated first). Optional &#x60;userId&#x60; filter accepts a user UUID or email.
 
 ### Example
 ```java
@@ -268,7 +275,8 @@ public class Example {
     AdminSessionsApi apiInstance = new AdminSessionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSessionsList(orgId);
+      AdminSessionsListResponse result = apiInstance.adminSessionsList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminSessionsList");
       System.err.println("Status code: " + e.getCode());
@@ -288,7 +296,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSessionsListResponse**](AdminSessionsListResponse.md)
 
 ### Authorization
 
@@ -297,18 +305,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions |  -  |
 
 <a id="adminSessionsRevoke"></a>
 # **adminSessionsRevoke**
-> adminSessionsRevoke(orgId, sessionId)
+> AdminSessionsRevokeResponse adminSessionsRevoke(orgId, sessionId)
 
-Revoke a specific session
+Revoke a session
 
 ### Example
 ```java
@@ -339,7 +347,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String sessionId = "sessionId_example"; // String | 
     try {
-      apiInstance.adminSessionsRevoke(orgId, sessionId);
+      AdminSessionsRevokeResponse result = apiInstance.adminSessionsRevoke(orgId, sessionId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminSessionsRevoke");
       System.err.println("Status code: " + e.getCode());
@@ -360,7 +369,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSessionsRevokeResponse**](AdminSessionsRevokeResponse.md)
 
 ### Authorization
 
@@ -369,18 +378,22 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Session revoked |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | Session not found |  -  |
 
 <a id="adminSessionsRevokeAll"></a>
 # **adminSessionsRevokeAll**
-> adminSessionsRevokeAll(orgId)
+> AdminSessionsRevokeAllResponse adminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest)
 
-Revoke all tenant sessions via POST
+Revoke every session in the tenant
+
+Signs out all users. Requires &#x60;confirm: true&#x60; in the body.
 
 ### Example
 ```java
@@ -409,8 +422,10 @@ public class Example {
 
     AdminSessionsApi apiInstance = new AdminSessionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    AdminSessionsRevokeAllRequest adminSessionsRevokeAllRequest = new AdminSessionsRevokeAllRequest(); // AdminSessionsRevokeAllRequest | 
     try {
-      apiInstance.adminSessionsRevokeAll(orgId);
+      AdminSessionsRevokeAllResponse result = apiInstance.adminSessionsRevokeAll(orgId, adminSessionsRevokeAllRequest);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminSessionsRevokeAll");
       System.err.println("Status code: " + e.getCode());
@@ -427,10 +442,11 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **adminSessionsRevokeAllRequest** | [**AdminSessionsRevokeAllRequest**](AdminSessionsRevokeAllRequest.md)|  | |
 
 ### Return type
 
-null (empty response body)
+[**AdminSessionsRevokeAllResponse**](AdminSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -438,19 +454,20 @@ null (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions revoked; the message carries the count |  -  |
+| **400** | confirm: true is required |  -  |
 
 <a id="adminSessionsStats"></a>
 # **adminSessionsStats**
-> adminSessionsStats(orgId)
+> AdminSessionsStatsResponse adminSessionsStats(orgId)
 
-Get session statistics for the tenant
+Session statistics
 
 ### Example
 ```java
@@ -480,7 +497,8 @@ public class Example {
     AdminSessionsApi apiInstance = new AdminSessionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSessionsStats(orgId);
+      AdminSessionsStatsResponse result = apiInstance.adminSessionsStats(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminSessionsStats");
       System.err.println("Status code: " + e.getCode());
@@ -500,7 +518,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSessionsStatsResponse**](AdminSessionsStatsResponse.md)
 
 ### Authorization
 
@@ -509,18 +527,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Session counts |  -  |
 
 <a id="adminTokensList"></a>
 # **adminTokensList**
-> adminTokensList(orgId)
+> AdminTokensListResponse adminTokensList(orgId)
 
-List access tokens for the tenant
+List access tokens
+
+Paginated OAuth access tokens issued by the tenant&#39;s clients. Filters: &#x60;revoked&#x60; (bool), &#x60;clientId&#x60;, &#x60;userId&#x60;.
 
 ### Example
 ```java
@@ -550,7 +570,8 @@ public class Example {
     AdminSessionsApi apiInstance = new AdminSessionsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminTokensList(orgId);
+      AdminTokensListResponse result = apiInstance.adminTokensList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminTokensList");
       System.err.println("Status code: " + e.getCode());
@@ -570,7 +591,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminTokensListResponse**](AdminTokensListResponse.md)
 
 ### Authorization
 
@@ -579,16 +600,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens |  -  |
 
 <a id="adminTokensRevoke"></a>
 # **adminTokensRevoke**
-> adminTokensRevoke(orgId, tokenId)
+> AdminTokensRevokeResponse adminTokensRevoke(orgId, tokenId)
 
 Revoke a token
 
@@ -621,7 +642,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String tokenId = "tokenId_example"; // String | 
     try {
-      apiInstance.adminTokensRevoke(orgId, tokenId);
+      AdminTokensRevokeResponse result = apiInstance.adminTokensRevoke(orgId, tokenId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminTokensRevoke");
       System.err.println("Status code: " + e.getCode());
@@ -642,7 +664,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminTokensRevokeResponse**](AdminTokensRevokeResponse.md)
 
 ### Authorization
 
@@ -651,18 +673,22 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Token revoked |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | Token not found |  -  |
 
 <a id="adminUserSessionsList"></a>
 # **adminUserSessionsList**
-> adminUserSessionsList(orgId, userId)
+> AdminUserSessionsListResponse adminUserSessionsList(orgId, userId)
 
-Get sessions for a specific user
+List a user&#39;s active sessions
+
+All active sessions of one user (UUID or email), returned as a single page.
 
 ### Example
 ```java
@@ -693,7 +719,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminUserSessionsList(orgId, userId);
+      AdminUserSessionsListResponse result = apiInstance.adminUserSessionsList(orgId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminUserSessionsList");
       System.err.println("Status code: " + e.getCode());
@@ -714,7 +741,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminUserSessionsListResponse**](AdminUserSessionsListResponse.md)
 
 ### Authorization
 
@@ -723,18 +750,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions |  -  |
+| **404** | User not found |  -  |
 
 <a id="adminUserSessionsRevokeAll"></a>
 # **adminUserSessionsRevokeAll**
-> adminUserSessionsRevokeAll(orgId, userId)
+> AdminUserSessionsRevokeAllResponse adminUserSessionsRevokeAll(orgId, userId)
 
-Revoke all sessions for a user
+Revoke all sessions of a user
 
 ### Example
 ```java
@@ -765,7 +793,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminUserSessionsRevokeAll(orgId, userId);
+      AdminUserSessionsRevokeAllResponse result = apiInstance.adminUserSessionsRevokeAll(orgId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminUserSessionsRevokeAll");
       System.err.println("Status code: " + e.getCode());
@@ -786,7 +815,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminUserSessionsRevokeAllResponse**](AdminUserSessionsRevokeAllResponse.md)
 
 ### Authorization
 
@@ -795,18 +824,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions revoked; the message carries the count |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 <a id="adminUserSessionsRevokePost"></a>
 # **adminUserSessionsRevokePost**
-> adminUserSessionsRevokePost(orgId, userId)
+> AdminUserSessionsRevokePostResponse adminUserSessionsRevokePost(orgId, userId)
 
-Revoke all sessions for a user via POST
+Revoke all sessions of a user (POST alias)
 
 ### Example
 ```java
@@ -837,7 +868,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminUserSessionsRevokePost(orgId, userId);
+      AdminUserSessionsRevokePostResponse result = apiInstance.adminUserSessionsRevokePost(orgId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminUserSessionsRevokePost");
       System.err.println("Status code: " + e.getCode());
@@ -858,7 +890,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminUserSessionsRevokePostResponse**](AdminUserSessionsRevokePostResponse.md)
 
 ### Authorization
 
@@ -867,18 +899,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Sessions revoked; the message carries the count |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 <a id="adminUserTokensRevokeAll"></a>
 # **adminUserTokensRevokeAll**
-> adminUserTokensRevokeAll(orgId, userId)
+> AdminUserTokensRevokeAllResponse adminUserTokensRevokeAll(orgId, userId)
 
-Revoke all tokens for a user
+Revoke all tokens of a user
 
 ### Example
 ```java
@@ -909,7 +943,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminUserTokensRevokeAll(orgId, userId);
+      AdminUserTokensRevokeAllResponse result = apiInstance.adminUserTokensRevokeAll(orgId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminUserTokensRevokeAll");
       System.err.println("Status code: " + e.getCode());
@@ -930,7 +965,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminUserTokensRevokeAllResponse**](AdminUserTokensRevokeAllResponse.md)
 
 ### Authorization
 
@@ -939,18 +974,20 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 
 <a id="adminUserTokensRevokePost"></a>
 # **adminUserTokensRevokePost**
-> adminUserTokensRevokePost(orgId, userId)
+> AdminUserTokensRevokePostResponse adminUserTokensRevokePost(orgId, userId)
 
-Revoke all tokens for a user via POST
+Revoke all tokens of a user (POST alias)
 
 ### Example
 ```java
@@ -981,7 +1018,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String userId = "userId_example"; // String | 
     try {
-      apiInstance.adminUserTokensRevokePost(orgId, userId);
+      AdminUserTokensRevokePostResponse result = apiInstance.adminUserTokensRevokePost(orgId, userId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSessionsApi#adminUserTokensRevokePost");
       System.err.println("Status code: " + e.getCode());
@@ -1002,7 +1040,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminUserTokensRevokePostResponse**](AdminUserTokensRevokePostResponse.md)
 
 ### Authorization
 
@@ -1011,10 +1049,12 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Tokens revoked; the message carries the count |  -  |
+| **403** | Target holds privileges the actor lacks |  -  |
+| **404** | User not found |  -  |
 

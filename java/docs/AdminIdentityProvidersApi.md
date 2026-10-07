@@ -4,24 +4,24 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminSocialProvidersAvailable**](AdminIdentityProvidersApi.md#adminSocialProvidersAvailable) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types |
-| [**adminSocialProvidersCallbackUrls**](AdminIdentityProvidersApi.md#adminSocialProvidersCallbackUrls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers |
-| [**adminSocialProvidersCreate**](AdminIdentityProvidersApi.md#adminSocialProvidersCreate) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider |
+| [**adminSocialProvidersAvailable**](AdminIdentityProvidersApi.md#adminSocialProvidersAvailable) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types |
+| [**adminSocialProvidersCallbackUrls**](AdminIdentityProvidersApi.md#adminSocialProvidersCallbackUrls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider |
+| [**adminSocialProvidersCreate**](AdminIdentityProvidersApi.md#adminSocialProvidersCreate) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider |
 | [**adminSocialProvidersDelete**](AdminIdentityProvidersApi.md#adminSocialProvidersDelete) | **DELETE** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider |
 | [**adminSocialProvidersDisable**](AdminIdentityProvidersApi.md#adminSocialProvidersDisable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider |
 | [**adminSocialProvidersEnable**](AdminIdentityProvidersApi.md#adminSocialProvidersEnable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider |
-| [**adminSocialProvidersGet**](AdminIdentityProvidersApi.md#adminSocialProvidersGet) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name) |
-| [**adminSocialProvidersList**](AdminIdentityProvidersApi.md#adminSocialProvidersList) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers |
-| [**adminSocialProvidersTypes**](AdminIdentityProvidersApi.md#adminSocialProvidersTypes) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types |
-| [**patchAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#patchAdminSocialProvidersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH |
-| [**putAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#putAdminSocialProvidersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH |
+| [**adminSocialProvidersGet**](AdminIdentityProvidersApi.md#adminSocialProvidersGet) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider |
+| [**adminSocialProvidersList**](AdminIdentityProvidersApi.md#adminSocialProvidersList) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers |
+| [**adminSocialProvidersTypes**](AdminIdentityProvidersApi.md#adminSocialProvidersTypes) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types |
+| [**patchAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#patchAdminSocialProvidersUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider |
+| [**putAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#putAdminSocialProvidersUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider |
 
 
 <a id="adminSocialProvidersAvailable"></a>
 # **adminSocialProvidersAvailable**
-> adminSocialProvidersAvailable(orgId)
+> AdminSocialProvidersAvailableResponse adminSocialProvidersAvailable(orgId)
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 ```java
@@ -51,7 +51,8 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersAvailable(orgId);
+      AdminSocialProvidersAvailableResponse result = apiInstance.adminSocialProvidersAvailable(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersAvailable");
       System.err.println("Status code: " + e.getCode());
@@ -71,7 +72,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -80,18 +81,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider types |  -  |
 
 <a id="adminSocialProvidersCallbackUrls"></a>
 # **adminSocialProvidersCallbackUrls**
-> adminSocialProvidersCallbackUrls(orgId)
+> AdminSocialProvidersCallbackUrlsResponse adminSocialProvidersCallbackUrls(orgId)
 
-Get callback URLs for all configured providers
+Get the OAuth callback URL of every configured provider
 
 ### Example
 ```java
@@ -121,7 +122,8 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersCallbackUrls(orgId);
+      AdminSocialProvidersCallbackUrlsResponse result = apiInstance.adminSocialProvidersCallbackUrls(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersCallbackUrls");
       System.err.println("Status code: " + e.getCode());
@@ -141,7 +143,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersCallbackUrlsResponse**](AdminSocialProvidersCallbackUrlsResponse.md)
 
 ### Authorization
 
@@ -150,18 +152,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Map of provider name to callback URL |  -  |
 
 <a id="adminSocialProvidersCreate"></a>
 # **adminSocialProvidersCreate**
-> adminSocialProvidersCreate(orgId)
+> AdminSocialProvidersCreateResponse adminSocialProvidersCreate(orgId)
 
-Create a new social login provider
+Create a social login provider
 
 ### Example
 ```java
@@ -191,7 +193,8 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersCreate(orgId);
+      AdminSocialProvidersCreateResponse result = apiInstance.adminSocialProvidersCreate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersCreate");
       System.err.println("Status code: " + e.getCode());
@@ -211,7 +214,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -220,16 +223,17 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created provider (detailed; secrets redacted) |  -  |
+| **409** | Provider already configured |  -  |
 
 <a id="adminSocialProvidersDelete"></a>
 # **adminSocialProvidersDelete**
-> adminSocialProvidersDelete(orgId, providerId)
+> MessageResponse adminSocialProvidersDelete(orgId, providerId)
 
 Delete a social login provider
 
@@ -262,7 +266,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersDelete(orgId, providerId);
+      MessageResponse result = apiInstance.adminSocialProvidersDelete(orgId, providerId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersDelete");
       System.err.println("Status code: " + e.getCode());
@@ -283,7 +288,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -292,16 +297,17 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **404** | Social login provider not found |  -  |
 
 <a id="adminSocialProvidersDisable"></a>
 # **adminSocialProvidersDisable**
-> adminSocialProvidersDisable(orgId, providerId)
+> AdminSocialProvidersCreateResponse adminSocialProvidersDisable(orgId, providerId)
 
 Disable a social login provider
 
@@ -334,7 +340,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersDisable(orgId, providerId);
+      AdminSocialProvidersCreateResponse result = apiInstance.adminSocialProvidersDisable(orgId, providerId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersDisable");
       System.err.println("Status code: " + e.getCode());
@@ -355,7 +362,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -364,16 +371,17 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider disabled (summary fields only) |  -  |
+| **404** | Social login provider not found |  -  |
 
 <a id="adminSocialProvidersEnable"></a>
 # **adminSocialProvidersEnable**
-> adminSocialProvidersEnable(orgId, providerId)
+> AdminSocialProvidersCreateResponse adminSocialProvidersEnable(orgId, providerId)
 
 Enable a social login provider
 
@@ -406,7 +414,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersEnable(orgId, providerId);
+      AdminSocialProvidersCreateResponse result = apiInstance.adminSocialProvidersEnable(orgId, providerId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersEnable");
       System.err.println("Status code: " + e.getCode());
@@ -427,7 +436,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -436,18 +445,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider enabled (summary fields only) |  -  |
+| **404** | Social login provider not found |  -  |
 
 <a id="adminSocialProvidersGet"></a>
 # **adminSocialProvidersGet**
-> adminSocialProvidersGet(orgId, providerId)
+> AdminSocialProvidersGetResponse adminSocialProvidersGet(orgId, providerId)
 
-Get a single social login provider (by ID or by provider name)
+Get a social login provider
 
 ### Example
 ```java
@@ -478,7 +488,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersGet(orgId, providerId);
+      AdminSocialProvidersGetResponse result = apiInstance.adminSocialProvidersGet(orgId, providerId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersGet");
       System.err.println("Status code: " + e.getCode());
@@ -499,7 +510,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersGetResponse**](AdminSocialProvidersGetResponse.md)
 
 ### Authorization
 
@@ -508,18 +519,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider (detailed; secrets redacted) |  -  |
+| **404** | Social login provider not found |  -  |
 
 <a id="adminSocialProvidersList"></a>
 # **adminSocialProvidersList**
-> adminSocialProvidersList(orgId)
+> AdminSocialProvidersListResponse adminSocialProvidersList(orgId)
 
-List all configured social login providers
+List social login providers
 
 ### Example
 ```java
@@ -549,7 +561,8 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersList(orgId);
+      AdminSocialProvidersListResponse result = apiInstance.adminSocialProvidersList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersList");
       System.err.println("Status code: " + e.getCode());
@@ -569,7 +582,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersListResponse**](AdminSocialProvidersListResponse.md)
 
 ### Authorization
 
@@ -578,18 +591,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Providers (summary fields only) |  -  |
 
 <a id="adminSocialProvidersTypes"></a>
 # **adminSocialProvidersTypes**
-> adminSocialProvidersTypes(orgId)
+> AdminSocialProvidersAvailableResponse adminSocialProvidersTypes(orgId)
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 ```java
@@ -619,7 +632,8 @@ public class Example {
     AdminIdentityProvidersApi apiInstance = new AdminIdentityProvidersApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSocialProvidersTypes(orgId);
+      AdminSocialProvidersAvailableResponse result = apiInstance.adminSocialProvidersTypes(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#adminSocialProvidersTypes");
       System.err.println("Status code: " + e.getCode());
@@ -639,7 +653,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -648,18 +662,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider types |  -  |
 
 <a id="patchAdminSocialProvidersUpdate"></a>
 # **patchAdminSocialProvidersUpdate**
-> patchAdminSocialProvidersUpdate(orgId, providerId)
+> AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate(orgId, providerId)
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Update a social login provider
 
 ### Example
 ```java
@@ -690,7 +704,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
     try {
-      apiInstance.patchAdminSocialProvidersUpdate(orgId, providerId);
+      AdminSocialProvidersCreateResponse result = apiInstance.patchAdminSocialProvidersUpdate(orgId, providerId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#patchAdminSocialProvidersUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -711,7 +726,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -720,18 +735,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated provider (detailed) |  -  |
+| **404** | Social login provider not found |  -  |
 
 <a id="putAdminSocialProvidersUpdate"></a>
 # **putAdminSocialProvidersUpdate**
-> putAdminSocialProvidersUpdate(orgId, providerId)
+> AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate(orgId, providerId)
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Create or replace a social login provider
 
 ### Example
 ```java
@@ -762,7 +778,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String providerId = "providerId_example"; // String | 
     try {
-      apiInstance.putAdminSocialProvidersUpdate(orgId, providerId);
+      AdminSocialProvidersCreateResponse result = apiInstance.putAdminSocialProvidersUpdate(orgId, providerId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminIdentityProvidersApi#putAdminSocialProvidersUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -783,7 +800,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -792,10 +809,11 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated provider (detailed) |  -  |
+| **201** | Provider did not exist and was created |  -  |
 

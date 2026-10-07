@@ -28,9 +28,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.CreateClient(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.CreateClient(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -42,9 +43,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.DeleteClient(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.DeleteClient(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -56,9 +58,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.DisableClient(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.DisableClient(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -70,9 +73,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.EnableClient(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.EnableClient(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -84,9 +88,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.GetClient(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.GetClient(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -98,9 +103,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.ListClientScopes(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.ListClientScopes(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -111,9 +117,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.ListClients(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.ListClients(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -125,9 +132,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.PatchClient(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.PatchClient(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -139,9 +147,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.RotateClientSecret(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.RotateClientSecret(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -153,9 +162,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.SetClientScopes(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.SetClientScopes(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -167,9 +177,10 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.AdminOAuthClientsAPI.UpdateClient(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.UpdateClient(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

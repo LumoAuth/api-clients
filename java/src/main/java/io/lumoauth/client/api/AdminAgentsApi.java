@@ -34,6 +34,7 @@ import io.lumoauth.client.model.AdminAgentsAgentsRotateKeyResponse;
 import io.lumoauth.client.model.AdminAgentsCreateRequest;
 import io.lumoauth.client.model.AdminAgentsCreateResponse;
 import io.lumoauth.client.model.AdminAgentsDeactivateResponse;
+import io.lumoauth.client.model.AdminAgentsDeleteResponse;
 import io.lumoauth.client.model.AdminAgentsGenerateTokenRequest;
 import io.lumoauth.client.model.AdminAgentsGenerateTokenResponse;
 import io.lumoauth.client.model.AdminAgentsGetResponse;
@@ -43,7 +44,6 @@ import io.lumoauth.client.model.AdminAgentsRevokeKeyResponse;
 import io.lumoauth.client.model.AdminAgentsRotateCredentialsResponse;
 import io.lumoauth.client.model.AdminAgentsSetScopesRequest;
 import io.lumoauth.client.model.AdminAgentsSetScopesResponse;
-import io.lumoauth.client.model.MessageResponse;
 import io.lumoauth.client.model.PutAdminAgentsUpdateRequest;
 import io.lumoauth.client.model.PutAdminAgentsUpdateResponse;
 
@@ -1072,7 +1072,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
-     * @return MessageResponse
+     * @return AdminAgentsDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -1084,8 +1084,8 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public MessageResponse adminAgentsDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
-        ApiResponse<MessageResponse> localVarResp = adminAgentsDeleteWithHttpInfo(orgId, agentId);
+    public AdminAgentsDeleteResponse adminAgentsDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
+        ApiResponse<AdminAgentsDeleteResponse> localVarResp = adminAgentsDeleteWithHttpInfo(orgId, agentId);
         return localVarResp.getData();
     }
 
@@ -1094,7 +1094,7 @@ public class AdminAgentsApi {
      * 
      * @param orgId  (required)
      * @param agentId  (required)
-     * @return ApiResponse&lt;MessageResponse&gt;
+     * @return ApiResponse&lt;AdminAgentsDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
@@ -1106,9 +1106,9 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MessageResponse> adminAgentsDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
+    public ApiResponse<AdminAgentsDeleteResponse> adminAgentsDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId) throws ApiException {
         okhttp3.Call localVarCall = adminAgentsDeleteValidateBeforeCall(orgId, agentId, null);
-        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<AdminAgentsDeleteResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -1130,10 +1130,10 @@ public class AdminAgentsApi {
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminAgentsDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<MessageResponse> _callback) throws ApiException {
+    public okhttp3.Call adminAgentsDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String agentId, final ApiCallback<AdminAgentsDeleteResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminAgentsDeleteValidateBeforeCall(orgId, agentId, _callback);
-        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<AdminAgentsDeleteResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1150,7 +1150,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Cannot generate token for inactive agent. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -1232,7 +1232,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Cannot generate token for inactive agent. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -1256,7 +1256,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Cannot generate token for inactive agent. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -1282,7 +1282,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Cannot generate token for inactive agent. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>

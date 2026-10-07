@@ -18,6 +18,14 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.create_client_response import CreateClientResponse
+from lumoauth_api_client.models.get_client_response import GetClientResponse
+from lumoauth_api_client.models.list_client_scopes_response import ListClientScopesResponse
+from lumoauth_api_client.models.list_clients_response import ListClientsResponse
+from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.rotate_client_secret_response import RotateClientSecretResponse
+from lumoauth_api_client.models.set_client_scopes_response import SetClientScopesResponse
+from lumoauth_api_client.models.update_client_response import UpdateClientResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,8 +61,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Create a new OAuth client
+    ) -> CreateClientResponse:
+        """Create an OAuth client
 
 
         :param org_id: (required)
@@ -90,6 +98,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateClientResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,8 +127,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Create a new OAuth client
+    ) -> ApiResponse[CreateClientResponse]:
+        """Create an OAuth client
 
 
         :param org_id: (required)
@@ -155,6 +164,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateClientResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,7 +194,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a new OAuth client
+        """Create an OAuth client
 
 
         :param org_id: (required)
@@ -220,6 +230,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "CreateClientResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +271,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -303,7 +321,7 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete an OAuth client
 
 
@@ -343,6 +361,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -372,7 +392,7 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete an OAuth client
 
 
@@ -412,6 +432,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -481,6 +503,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -524,6 +548,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -567,8 +598,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Disable OAuth client
+    ) -> UpdateClientResponse:
+        """Disable an OAuth client
 
 
         :param org_id: (required)
@@ -607,6 +638,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -636,8 +669,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Disable OAuth client
+    ) -> ApiResponse[UpdateClientResponse]:
+        """Disable an OAuth client
 
 
         :param org_id: (required)
@@ -676,6 +709,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -706,7 +741,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Disable OAuth client
+        """Disable an OAuth client
 
 
         :param org_id: (required)
@@ -745,6 +780,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +825,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -831,8 +875,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Enable OAuth client
+    ) -> UpdateClientResponse:
+        """Enable an OAuth client
 
 
         :param org_id: (required)
@@ -871,6 +915,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -900,8 +946,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Enable OAuth client
+    ) -> ApiResponse[UpdateClientResponse]:
+        """Enable an OAuth client
 
 
         :param org_id: (required)
@@ -940,6 +986,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -970,7 +1018,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Enable OAuth client
+        """Enable an OAuth client
 
 
         :param org_id: (required)
@@ -1009,6 +1057,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1052,6 +1102,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1095,8 +1152,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single OAuth client by ID or clientId
+    ) -> GetClientResponse:
+        """Get an OAuth client
 
 
         :param org_id: (required)
@@ -1135,6 +1192,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1164,8 +1223,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single OAuth client by ID or clientId
+    ) -> ApiResponse[GetClientResponse]:
+        """Get an OAuth client
 
 
         :param org_id: (required)
@@ -1204,6 +1263,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1234,7 +1295,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single OAuth client by ID or clientId
+        """Get an OAuth client
 
 
         :param org_id: (required)
@@ -1273,6 +1334,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "GetClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1316,6 +1379,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1359,8 +1429,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get client scopes
+    ) -> ListClientScopesResponse:
+        """List the scopes granted to an OAuth client
 
 
         :param org_id: (required)
@@ -1399,6 +1469,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListClientScopesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1428,8 +1500,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get client scopes
+    ) -> ApiResponse[ListClientScopesResponse]:
+        """List the scopes granted to an OAuth client
 
 
         :param org_id: (required)
@@ -1468,6 +1540,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListClientScopesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1498,7 +1572,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get client scopes
+        """List the scopes granted to an OAuth client
 
 
         :param org_id: (required)
@@ -1537,6 +1611,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListClientScopesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1580,6 +1656,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1622,8 +1705,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List all OAuth clients in the tenant
+    ) -> ListClientsResponse:
+        """List OAuth clients
 
 
         :param org_id: (required)
@@ -1659,6 +1742,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListClientsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1687,8 +1771,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List all OAuth clients in the tenant
+    ) -> ApiResponse[ListClientsResponse]:
+        """List OAuth clients
 
 
         :param org_id: (required)
@@ -1724,6 +1808,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListClientsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1753,7 +1838,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all OAuth clients in the tenant
+        """List OAuth clients
 
 
         :param org_id: (required)
@@ -1789,6 +1874,7 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ListClientsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1829,6 +1915,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1872,8 +1965,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update an existing OAuth client
+    ) -> UpdateClientResponse:
+        """Update an OAuth client
 
 
         :param org_id: (required)
@@ -1912,6 +2005,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1941,8 +2036,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update an existing OAuth client
+    ) -> ApiResponse[UpdateClientResponse]:
+        """Update an OAuth client
 
 
         :param org_id: (required)
@@ -1981,6 +2076,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2011,7 +2108,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update an existing OAuth client
+        """Update an OAuth client
 
 
         :param org_id: (required)
@@ -2050,6 +2147,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2093,6 +2192,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2136,8 +2242,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Rotate client secret
+    ) -> RotateClientSecretResponse:
+        """Rotate an OAuth client secret
 
 
         :param org_id: (required)
@@ -2176,6 +2282,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RotateClientSecretResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2205,8 +2313,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Rotate client secret
+    ) -> ApiResponse[RotateClientSecretResponse]:
+        """Rotate an OAuth client secret
 
 
         :param org_id: (required)
@@ -2245,6 +2353,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RotateClientSecretResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2275,7 +2385,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Rotate client secret
+        """Rotate an OAuth client secret
 
 
         :param org_id: (required)
@@ -2314,6 +2424,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "RotateClientSecretResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2357,6 +2469,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2400,8 +2519,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Set client scopes
+    ) -> SetClientScopesResponse:
+        """Replace the scopes granted to an OAuth client
 
 
         :param org_id: (required)
@@ -2440,6 +2559,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetClientScopesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2469,8 +2590,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Set client scopes
+    ) -> ApiResponse[SetClientScopesResponse]:
+        """Replace the scopes granted to an OAuth client
 
 
         :param org_id: (required)
@@ -2509,6 +2630,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetClientScopesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2539,7 +2662,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Set client scopes
+        """Replace the scopes granted to an OAuth client
 
 
         :param org_id: (required)
@@ -2578,6 +2701,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SetClientScopesResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2621,6 +2746,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2664,8 +2796,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update an existing OAuth client
+    ) -> UpdateClientResponse:
+        """Replace an OAuth client
 
 
         :param org_id: (required)
@@ -2704,6 +2836,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2733,8 +2867,8 @@ class AdminOAuthClientsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update an existing OAuth client
+    ) -> ApiResponse[UpdateClientResponse]:
+        """Replace an OAuth client
 
 
         :param org_id: (required)
@@ -2773,6 +2907,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2803,7 +2939,7 @@ class AdminOAuthClientsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update an existing OAuth client
+        """Replace an OAuth client
 
 
         :param org_id: (required)
@@ -2842,6 +2978,8 @@ class AdminOAuthClientsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UpdateClientResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2885,6 +3023,13 @@ class AdminOAuthClientsApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

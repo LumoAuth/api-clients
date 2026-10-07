@@ -18,6 +18,8 @@ using Xunit;
 
 using LumoAuth.ApiClient.Client;
 using LumoAuth.ApiClient.Api;
+// uncomment below to import models
+//using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Test.Api
 {
@@ -61,7 +63,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AddUserGroup(orgId, userId);
+            //var response = instance.AddUserGroup(orgId, userId);
+            //Assert.IsType<AddUserGroupResponse>(response);
         }
 
         /// <summary>
@@ -73,7 +76,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AddUserPermission(orgId, userId);
+            //var response = instance.AddUserPermission(orgId, userId);
+            //Assert.IsType<AddUserPermissionResponse>(response);
         }
 
         /// <summary>
@@ -85,7 +89,75 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.AddUserRole(orgId, userId);
+            //var response = instance.AddUserRole(orgId, userId);
+            //Assert.IsType<AddUserRoleResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminIdentitiesLegacySamlRelink
+        /// </summary>
+        [Fact]
+        public void AdminIdentitiesLegacySamlRelinkTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest = null;
+            //var response = instance.AdminIdentitiesLegacySamlRelink(orgId, adminIdentitiesLegacySamlRelinkRequest);
+            //Assert.IsType<AdminIdentitiesLegacySamlRelinkResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminIdentitiesLegacySamlReport
+        /// </summary>
+        [Fact]
+        public void AdminIdentitiesLegacySamlReportTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //int? idpId = null;
+            //var response = instance.AdminIdentitiesLegacySamlReport(orgId, idpId);
+            //Assert.IsType<AdminIdentitiesLegacySamlReportResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminIdentitiesLink
+        /// </summary>
+        [Fact]
+        public void AdminIdentitiesLinkTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string userId = null;
+            //AdminIdentitiesLinkRequest adminIdentitiesLinkRequest = null;
+            //var response = instance.AdminIdentitiesLink(orgId, userId, adminIdentitiesLinkRequest);
+            //Assert.IsType<AdminAgentsGetResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminIdentitiesList
+        /// </summary>
+        [Fact]
+        public void AdminIdentitiesListTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string userId = null;
+            //var response = instance.AdminIdentitiesList(orgId, userId);
+            //Assert.IsType<AdminIdentitiesListResponse>(response);
+        }
+
+        /// <summary>
+        /// Test AdminIdentitiesUnlink
+        /// </summary>
+        [Fact]
+        public void AdminIdentitiesUnlinkTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string type = null;
+            //string orgId = null;
+            //string userId = null;
+            //var response = instance.AdminIdentitiesUnlink(type, orgId, userId);
+            //Assert.IsType<AdminAgentsGetResponse>(response);
         }
 
         /// <summary>
@@ -97,7 +169,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.BlockUser(orgId, userId);
+            //var response = instance.BlockUser(orgId, userId);
+            //Assert.IsType<BlockUserResponse>(response);
         }
 
         /// <summary>
@@ -108,7 +181,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.CreateUser(orgId);
+            //var response = instance.CreateUser(orgId);
+            //Assert.IsType<CreateUserResponse>(response);
         }
 
         /// <summary>
@@ -120,7 +194,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.DeleteUser(orgId, userId);
+            //var response = instance.DeleteUser(orgId, userId);
+            //Assert.IsType<DeleteUserResponse>(response);
         }
 
         /// <summary>
@@ -132,7 +207,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.GetUser(orgId, userId);
+            //var response = instance.GetUser(orgId, userId);
+            //Assert.IsType<GetUserResponse>(response);
         }
 
         /// <summary>
@@ -144,7 +220,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.ListUserGroups(orgId, userId);
+            //var response = instance.ListUserGroups(orgId, userId);
+            //Assert.IsType<AdminGroupsGroupsGetRolesResponse>(response);
         }
 
         /// <summary>
@@ -156,7 +233,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.ListUserPermissions(orgId, userId);
+            //var response = instance.ListUserPermissions(orgId, userId);
+            //Assert.IsType<AdminRolesGetPermissionsResponse>(response);
         }
 
         /// <summary>
@@ -168,7 +246,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.ListUserRoles(orgId, userId);
+            //var response = instance.ListUserRoles(orgId, userId);
+            //Assert.IsType<AdminGroupsGroupsGetRolesResponse>(response);
         }
 
         /// <summary>
@@ -179,7 +258,8 @@ namespace LumoAuth.ApiClient.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
-            //instance.ListUsers(orgId);
+            //var response = instance.ListUsers(orgId);
+            //Assert.IsType<ListUsersResponse>(response);
         }
 
         /// <summary>
@@ -191,7 +271,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.MarkUserVerified(orgId, userId);
+            //var response = instance.MarkUserVerified(orgId, userId);
+            //Assert.IsType<MarkUserVerifiedResponse>(response);
         }
 
         /// <summary>
@@ -203,7 +284,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.PatchUser(orgId, userId);
+            //var response = instance.PatchUser(orgId, userId);
+            //Assert.IsType<UpdateUserResponse>(response);
         }
 
         /// <summary>
@@ -216,7 +298,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string userId = null;
             //string groupId = null;
-            //instance.RemoveUserGroup(orgId, userId, groupId);
+            //var response = instance.RemoveUserGroup(orgId, userId, groupId);
+            //Assert.IsType<RemoveUserGroupResponse>(response);
         }
 
         /// <summary>
@@ -229,7 +312,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string userId = null;
             //string permissionId = null;
-            //instance.RemoveUserPermission(orgId, userId, permissionId);
+            //var response = instance.RemoveUserPermission(orgId, userId, permissionId);
+            //Assert.IsType<RemoveUserPermissionResponse>(response);
         }
 
         /// <summary>
@@ -242,7 +326,8 @@ namespace LumoAuth.ApiClient.Test.Api
             //string orgId = null;
             //string userId = null;
             //string roleId = null;
-            //instance.RemoveUserRole(orgId, userId, roleId);
+            //var response = instance.RemoveUserRole(orgId, userId, roleId);
+            //Assert.IsType<RemoveUserRoleResponse>(response);
         }
 
         /// <summary>
@@ -266,7 +351,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.SendUserVerificationEmail(orgId, userId);
+            //var response = instance.SendUserVerificationEmail(orgId, userId);
+            //Assert.IsType<SendUserVerificationEmailResponse>(response);
         }
 
         /// <summary>
@@ -278,7 +364,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.SetUserPassword(orgId, userId);
+            //var response = instance.SetUserPassword(orgId, userId);
+            //Assert.IsType<SetUserPasswordPostResponse>(response);
         }
 
         /// <summary>
@@ -290,7 +377,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.SetUserPasswordPost(orgId, userId);
+            //var response = instance.SetUserPasswordPost(orgId, userId);
+            //Assert.IsType<SetUserPasswordPostResponse>(response);
         }
 
         /// <summary>
@@ -302,7 +390,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.TriggerUserPasswordReset(orgId, userId);
+            //var response = instance.TriggerUserPasswordReset(orgId, userId);
+            //Assert.IsType<TriggerUserPasswordResetResponse>(response);
         }
 
         /// <summary>
@@ -314,7 +403,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.UnblockUser(orgId, userId);
+            //var response = instance.UnblockUser(orgId, userId);
+            //Assert.IsType<UnblockUserResponse>(response);
         }
 
         /// <summary>
@@ -326,7 +416,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.UpdateUser(orgId, userId);
+            //var response = instance.UpdateUser(orgId, userId);
+            //Assert.IsType<UpdateUserResponse>(response);
         }
 
         /// <summary>
@@ -338,7 +429,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.UpdateUserGroups(orgId, userId);
+            //var response = instance.UpdateUserGroups(orgId, userId);
+            //Assert.IsType<UpdateUserGroupsResponse>(response);
         }
 
         /// <summary>
@@ -350,7 +442,8 @@ namespace LumoAuth.ApiClient.Test.Api
             // TODO uncomment below to test the method and replace null with proper value
             //string orgId = null;
             //string userId = null;
-            //instance.UpdateUserRoles(orgId, userId);
+            //var response = instance.UpdateUserRoles(orgId, userId);
+            //Assert.IsType<UpdateUserRolesResponse>(response);
         }
     }
 }

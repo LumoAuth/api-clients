@@ -308,10 +308,10 @@ open class AdminAgentsAPI {
      
      - parameter orgId: (path)  
      - parameter agentId: (path)  
-     - returns: MessageResponse
+     - returns: AdminAgentsDeleteResponse
      */
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func adminAgentsDelete(orgId: String, agentId: String) async throws -> MessageResponse {
+    open class func adminAgentsDelete(orgId: String, agentId: String) async throws -> AdminAgentsDeleteResponse {
         return try await adminAgentsDeleteWithRequestBuilder(orgId: orgId, agentId: agentId).execute().body
     }
 
@@ -326,9 +326,9 @@ open class AdminAgentsAPI {
        - name: BearerAuth
      - parameter orgId: (path)  
      - parameter agentId: (path)  
-     - returns: RequestBuilder<MessageResponse> 
+     - returns: RequestBuilder<AdminAgentsDeleteResponse> 
      */
-    open class func adminAgentsDeleteWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<MessageResponse> {
+    open class func adminAgentsDeleteWithRequestBuilder(orgId: String, agentId: String) -> RequestBuilder<AdminAgentsDeleteResponse> {
         var localVariablePath = "/orgs/{orgId}/api/v1/admin/agents/{agentId}"
         let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
         let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -347,7 +347,7 @@ open class AdminAgentsAPI {
 
         let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
 
-        let localVariableRequestBuilder: RequestBuilder<MessageResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+        let localVariableRequestBuilder: RequestBuilder<AdminAgentsDeleteResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
 
         return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
     }

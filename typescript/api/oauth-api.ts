@@ -21,6 +21,22 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { BackchannelAuthorizeResponse } from '../models';
+// @ts-ignore
+import type { DeviceAuthorizationResponse } from '../models';
+// @ts-ignore
+import type { IntrospectResponse } from '../models';
+// @ts-ignore
+import type { ParResponse } from '../models';
+// @ts-ignore
+import type { RegisterClientResponse } from '../models';
+// @ts-ignore
+import type { RegisteredClientMetadata } from '../models';
+// @ts-ignore
+import type { SubmitLoginJsonResponse } from '../models';
+// @ts-ignore
+import type { TokenResponse } from '../models';
 /**
  * OAuthApi - axios parameter creator
  * @export
@@ -28,7 +44,8 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 export const OAuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client\'s redirect_uri in the requested response_mode. Not a JSON API.
+         * @summary OAuth 2.1 / OIDC authorization endpoint
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -61,7 +78,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
+         * @summary CIBA backchannel authentication request
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -98,8 +116,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * The device makes a request to the authorization server\'s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
-         * @summary Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+         * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+         * @summary Device authorization request (RFC 8628)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -136,8 +154,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Client Configuration Endpoint per OIDC spec Section 4
+         * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
+         * @summary Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
@@ -181,8 +199,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-         * @summary Device Verification Page (RFC 8628 Section 3.3)
+         * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+         * @summary Device verification page (RFC 8628 §3.3)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -215,7 +233,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+         * @summary Organization selector page
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -248,8 +267,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
-         * @summary RFC 7662 - Token Introspection Endpoint
+         * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+         * @summary Token introspection (RFC 7662)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -286,7 +305,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+         * @summary Pushed authorization request (RFC 9126)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -323,7 +343,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+         * @summary Passkey login entry point
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -356,8 +377,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Client Registration Endpoint per OIDC spec Section 3
+         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+         * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -397,8 +418,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
-         * @summary RFC 7009 - Token Revocation Endpoint
+         * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
+         * @summary Token revocation (RFC 7009)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -435,8 +456,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Handle social login callback from provider.
+         * Receives the provider\'s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
+         * @summary Social / enterprise identity-provider callback
          * @param {string} orgId 
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -473,8 +494,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary Handle social login callback from provider.
+         * Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
+         * @summary Social / enterprise identity-provider callback (form_post)
          * @param {string} orgId 
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -511,8 +532,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Redirects to the external provider\'s authorization endpoint.
-         * @summary Initiate social login flow.
+         * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider\'s authorization endpoint. Not a JSON API.
+         * @summary Start social / enterprise identity-provider login
          * @param {string} orgId 
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -549,7 +570,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Same as GET; also receives the consent form submission. Not a JSON API.
+         * @summary OAuth 2.1 / OIDC authorization endpoint (form submission)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -582,8 +604,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-         * @summary Device Verification Page (RFC 8628 Section 3.3)
+         * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
+         * @summary Submit device verification
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -616,7 +638,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+         * @summary Hosted login form submission
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -649,8 +672,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
-         * @summary JSON credential login, for applications that render their own sign-in form.
+         * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
+         * @summary Programmatic (JSON) login for the authorization flow
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -683,7 +706,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
+         * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+         * @summary Submit organization selection
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -716,8 +740,8 @@ export const OAuthApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 
-         * @summary OAuth 2.1 Token Endpoint
+         * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+         * @summary OAuth 2.1 token endpoint
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -764,108 +788,113 @@ export const OAuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OAuthApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client\'s redirect_uri in the requested response_mode. Not a JSON API.
+         * @summary OAuth 2.1 / OIDC authorization endpoint
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authorize(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async authorize(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authorize(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.authorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
+         * @summary CIBA backchannel authentication request
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async backchannelAuthorize(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async backchannelAuthorize(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BackchannelAuthorizeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.backchannelAuthorize(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.backchannelAuthorize']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The device makes a request to the authorization server\'s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
-         * @summary Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+         * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+         * @summary Device authorization request (RFC 8628)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deviceAuthorization(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deviceAuthorization(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeviceAuthorizationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deviceAuthorization(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.deviceAuthorization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Client Configuration Endpoint per OIDC spec Section 4
+         * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
+         * @summary Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
          * @param {string} orgId 
          * @param {string} clientId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getClientConfiguration(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getClientConfiguration(orgId: string, clientId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisteredClientMetadata>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getClientConfiguration(orgId, clientId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.getClientConfiguration']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-         * @summary Device Verification Page (RFC 8628 Section 3.3)
+         * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+         * @summary Device verification page (RFC 8628 §3.3)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDeviceVerification(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getDeviceVerification(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDeviceVerification(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.getDeviceVerification']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+         * @summary Organization selector page
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrgSelection(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getOrgSelection(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrgSelection(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.getOrgSelection']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
-         * @summary RFC 7662 - Token Introspection Endpoint
+         * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+         * @summary Token introspection (RFC 7662)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async introspect(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async introspect(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<IntrospectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.introspect(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.introspect']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+         * @summary Pushed authorization request (RFC 9126)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async par(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async par(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ParResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.par(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.par']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+         * @summary Passkey login entry point
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -877,34 +906,34 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Client Registration Endpoint per OIDC spec Section 3
+         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+         * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerClient(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async registerClient(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterClientResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerClient(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.registerClient']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
-         * @summary RFC 7009 - Token Revocation Endpoint
+         * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
+         * @summary Token revocation (RFC 7009)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async revoke(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async revoke(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.revoke(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.revoke']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Handle social login callback from provider.
+         * Receives the provider\'s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
+         * @summary Social / enterprise identity-provider callback
          * @param {string} orgId 
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -917,8 +946,8 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary Handle social login callback from provider.
+         * Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
+         * @summary Social / enterprise identity-provider callback (form_post)
          * @param {string} orgId 
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -931,8 +960,8 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * Redirects to the external provider\'s authorization endpoint.
-         * @summary Initiate social login flow.
+         * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider\'s authorization endpoint. Not a JSON API.
+         * @summary Start social / enterprise identity-provider login
          * @param {string} orgId 
          * @param {string} provider 
          * @param {*} [options] Override http request option.
@@ -945,32 +974,34 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Same as GET; also receives the consent form submission. Not a JSON API.
+         * @summary OAuth 2.1 / OIDC authorization endpoint (form submission)
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitAuthorization(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async submitAuthorization(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.submitAuthorization(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitAuthorization']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-         * @summary Device Verification Page (RFC 8628 Section 3.3)
+         * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
+         * @summary Submit device verification
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitDeviceVerification(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async submitDeviceVerification(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.submitDeviceVerification(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitDeviceVerification']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+         * @summary Hosted login form submission
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -982,38 +1013,39 @@ export const OAuthApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
-         * @summary JSON credential login, for applications that render their own sign-in form.
+         * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
+         * @summary Programmatic (JSON) login for the authorization flow
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitLoginJson(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async submitLoginJson(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SubmitLoginJsonResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.submitLoginJson(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitLoginJson']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
+         * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+         * @summary Submit organization selection
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async submitOrgSelection(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async submitOrgSelection(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.submitOrgSelection(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.submitOrgSelection']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * 
-         * @summary OAuth 2.1 Token Endpoint
+         * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+         * @summary OAuth 2.1 token endpoint
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async token(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async token(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.token(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OAuthApi.token']?.[localVarOperationServerIndex]?.url;
@@ -1030,83 +1062,88 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
     const localVarFp = OAuthApiFp(configuration)
     return {
         /**
-         * 
+         * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client\'s redirect_uri in the requested response_mode. Not a JSON API.
+         * @summary OAuth 2.1 / OIDC authorization endpoint
          * @param {OAuthApiAuthorizeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authorize(requestParameters: OAuthApiAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        authorize(requestParameters: OAuthApiAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.authorize(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
+         * @summary CIBA backchannel authentication request
          * @param {OAuthApiBackchannelAuthorizeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackchannelAuthorizeResponse> {
             return localVarFp.backchannelAuthorize(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * The device makes a request to the authorization server\'s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
-         * @summary Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+         * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+         * @summary Device authorization request (RFC 8628)
          * @param {OAuthApiDeviceAuthorizationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deviceAuthorization(requestParameters: OAuthApiDeviceAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deviceAuthorization(requestParameters: OAuthApiDeviceAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceAuthorizationResponse> {
             return localVarFp.deviceAuthorization(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Client Configuration Endpoint per OIDC spec Section 4
+         * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
+         * @summary Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
          * @param {OAuthApiGetClientConfigurationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getClientConfiguration(requestParameters: OAuthApiGetClientConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getClientConfiguration(requestParameters: OAuthApiGetClientConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisteredClientMetadata> {
             return localVarFp.getClientConfiguration(requestParameters.orgId, requestParameters.clientId, options).then((request) => request(axios, basePath));
         },
         /**
-         * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-         * @summary Device Verification Page (RFC 8628 Section 3.3)
+         * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+         * @summary Device verification page (RFC 8628 §3.3)
          * @param {OAuthApiGetDeviceVerificationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeviceVerification(requestParameters: OAuthApiGetDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getDeviceVerification(requestParameters: OAuthApiGetDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.getDeviceVerification(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+         * @summary Organization selector page
          * @param {OAuthApiGetOrgSelectionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrgSelection(requestParameters: OAuthApiGetOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getOrgSelection(requestParameters: OAuthApiGetOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.getOrgSelection(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
-         * @summary RFC 7662 - Token Introspection Endpoint
+         * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+         * @summary Token introspection (RFC 7662)
          * @param {OAuthApiIntrospectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        introspect(requestParameters: OAuthApiIntrospectRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        introspect(requestParameters: OAuthApiIntrospectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IntrospectResponse> {
             return localVarFp.introspect(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+         * @summary Pushed authorization request (RFC 9126)
          * @param {OAuthApiParRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParResponse> {
             return localVarFp.par(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+         * @summary Passkey login entry point
          * @param {OAuthApiPasskeyLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1115,28 +1152,28 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.passkeyLogin(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Client Registration Endpoint per OIDC spec Section 3
+         * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+         * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
          * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterClientResponse> {
             return localVarFp.registerClient(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
-         * @summary RFC 7009 - Token Revocation Endpoint
+         * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
+         * @summary Token revocation (RFC 7009)
          * @param {OAuthApiRevokeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        revoke(requestParameters: OAuthApiRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        revoke(requestParameters: OAuthApiRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
             return localVarFp.revoke(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Handle social login callback from provider.
+         * Receives the provider\'s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
+         * @summary Social / enterprise identity-provider callback
          * @param {OAuthApiSocialCallbackRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1145,8 +1182,8 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.socialCallback(requestParameters.orgId, requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Handle social login callback from provider.
+         * Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
+         * @summary Social / enterprise identity-provider callback (form_post)
          * @param {OAuthApiSocialCallbackPostRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1155,8 +1192,8 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.socialCallbackPost(requestParameters.orgId, requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * Redirects to the external provider\'s authorization endpoint.
-         * @summary Initiate social login flow.
+         * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider\'s authorization endpoint. Not a JSON API.
+         * @summary Start social / enterprise identity-provider login
          * @param {OAuthApiSocialLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1165,26 +1202,28 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.socialLogin(requestParameters.orgId, requestParameters.provider, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Same as GET; also receives the consent form submission. Not a JSON API.
+         * @summary OAuth 2.1 / OIDC authorization endpoint (form submission)
          * @param {OAuthApiSubmitAuthorizationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitAuthorization(requestParameters: OAuthApiSubmitAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        submitAuthorization(requestParameters: OAuthApiSubmitAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.submitAuthorization(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-         * @summary Device Verification Page (RFC 8628 Section 3.3)
+         * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
+         * @summary Submit device verification
          * @param {OAuthApiSubmitDeviceVerificationRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.submitDeviceVerification(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+         * @summary Hosted login form submission
          * @param {OAuthApiSubmitLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1193,32 +1232,33 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.submitLogin(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
-         * @summary JSON credential login, for applications that render their own sign-in form.
+         * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
+         * @summary Programmatic (JSON) login for the authorization flow
          * @param {OAuthApiSubmitLoginJsonRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitLoginJson(requestParameters: OAuthApiSubmitLoginJsonRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        submitLoginJson(requestParameters: OAuthApiSubmitLoginJsonRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubmitLoginJsonResponse> {
             return localVarFp.submitLoginJson(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+         * @summary Submit organization selection
          * @param {OAuthApiSubmitOrgSelectionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        submitOrgSelection(requestParameters: OAuthApiSubmitOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        submitOrgSelection(requestParameters: OAuthApiSubmitOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.submitOrgSelection(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary OAuth 2.1 Token Endpoint
+         * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+         * @summary OAuth 2.1 token endpoint
          * @param {OAuthApiTokenRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        token(requestParameters: OAuthApiTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        token(requestParameters: OAuthApiTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
             return localVarFp.token(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
     };
@@ -1231,83 +1271,88 @@ export const OAuthApiFactory = function (configuration?: Configuration, basePath
  */
 export interface OAuthApiInterface {
     /**
-     * 
+     * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client\'s redirect_uri in the requested response_mode. Not a JSON API.
+     * @summary OAuth 2.1 / OIDC authorization endpoint
      * @param {OAuthApiAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    authorize(requestParameters: OAuthApiAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    authorize(requestParameters: OAuthApiAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * 
+     * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
+     * @summary CIBA backchannel authentication request
      * @param {OAuthApiBackchannelAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    backchannelAuthorize(requestParameters: OAuthApiBackchannelAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<BackchannelAuthorizeResponse>;
 
     /**
-     * The device makes a request to the authorization server\'s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
-     * @summary Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     * @summary Device authorization request (RFC 8628)
      * @param {OAuthApiDeviceAuthorizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    deviceAuthorization(requestParameters: OAuthApiDeviceAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    deviceAuthorization(requestParameters: OAuthApiDeviceAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<DeviceAuthorizationResponse>;
 
     /**
-     * 
-     * @summary Client Configuration Endpoint per OIDC spec Section 4
+     * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
+     * @summary Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
      * @param {OAuthApiGetClientConfigurationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    getClientConfiguration(requestParameters: OAuthApiGetClientConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getClientConfiguration(requestParameters: OAuthApiGetClientConfigurationRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisteredClientMetadata>;
 
     /**
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-     * @summary Device Verification Page (RFC 8628 Section 3.3)
+     * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+     * @summary Device verification page (RFC 8628 §3.3)
      * @param {OAuthApiGetDeviceVerificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    getDeviceVerification(requestParameters: OAuthApiGetDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getDeviceVerification(requestParameters: OAuthApiGetDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * 
+     * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+     * @summary Organization selector page
      * @param {OAuthApiGetOrgSelectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    getOrgSelection(requestParameters: OAuthApiGetOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getOrgSelection(requestParameters: OAuthApiGetOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
-     * @summary RFC 7662 - Token Introspection Endpoint
+     * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+     * @summary Token introspection (RFC 7662)
      * @param {OAuthApiIntrospectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    introspect(requestParameters: OAuthApiIntrospectRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    introspect(requestParameters: OAuthApiIntrospectRequest, options?: RawAxiosRequestConfig): AxiosPromise<IntrospectResponse>;
 
     /**
-     * 
+     * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+     * @summary Pushed authorization request (RFC 9126)
      * @param {OAuthApiParRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    par(requestParameters: OAuthApiParRequest, options?: RawAxiosRequestConfig): AxiosPromise<ParResponse>;
 
     /**
-     * 
+     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+     * @summary Passkey login entry point
      * @param {OAuthApiPasskeyLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1316,28 +1361,28 @@ export interface OAuthApiInterface {
     passkeyLogin(requestParameters: OAuthApiPasskeyLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * 
-     * @summary Client Registration Endpoint per OIDC spec Section 3
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
      * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    registerClient(requestParameters: OAuthApiRegisterClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<RegisterClientResponse>;
 
     /**
-     * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
-     * @summary RFC 7009 - Token Revocation Endpoint
+     * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
+     * @summary Token revocation (RFC 7009)
      * @param {OAuthApiRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    revoke(requestParameters: OAuthApiRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    revoke(requestParameters: OAuthApiRevokeRequest, options?: RawAxiosRequestConfig): AxiosPromise<object>;
 
     /**
-     * 
-     * @summary Handle social login callback from provider.
+     * Receives the provider\'s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
+     * @summary Social / enterprise identity-provider callback
      * @param {OAuthApiSocialCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1346,8 +1391,8 @@ export interface OAuthApiInterface {
     socialCallback(requestParameters: OAuthApiSocialCallbackRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * 
-     * @summary Handle social login callback from provider.
+     * Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
+     * @summary Social / enterprise identity-provider callback (form_post)
      * @param {OAuthApiSocialCallbackPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1356,8 +1401,8 @@ export interface OAuthApiInterface {
     socialCallbackPost(requestParameters: OAuthApiSocialCallbackPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Redirects to the external provider\'s authorization endpoint.
-     * @summary Initiate social login flow.
+     * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider\'s authorization endpoint. Not a JSON API.
+     * @summary Start social / enterprise identity-provider login
      * @param {OAuthApiSocialLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1366,26 +1411,28 @@ export interface OAuthApiInterface {
     socialLogin(requestParameters: OAuthApiSocialLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * 
+     * Same as GET; also receives the consent form submission. Not a JSON API.
+     * @summary OAuth 2.1 / OIDC authorization endpoint (form submission)
      * @param {OAuthApiSubmitAuthorizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    submitAuthorization(requestParameters: OAuthApiSubmitAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    submitAuthorization(requestParameters: OAuthApiSubmitAuthorizationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-     * @summary Device Verification Page (RFC 8628 Section 3.3)
+     * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
+     * @summary Submit device verification
      * @param {OAuthApiSubmitDeviceVerificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    submitDeviceVerification(requestParameters: OAuthApiSubmitDeviceVerificationRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * 
+     * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+     * @summary Hosted login form submission
      * @param {OAuthApiSubmitLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1394,33 +1441,34 @@ export interface OAuthApiInterface {
     submitLogin(requestParameters: OAuthApiSubmitLoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
-     * @summary JSON credential login, for applications that render their own sign-in form.
+     * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
+     * @summary Programmatic (JSON) login for the authorization flow
      * @param {OAuthApiSubmitLoginJsonRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    submitLoginJson(requestParameters: OAuthApiSubmitLoginJsonRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    submitLoginJson(requestParameters: OAuthApiSubmitLoginJsonRequest, options?: RawAxiosRequestConfig): AxiosPromise<SubmitLoginJsonResponse>;
 
     /**
-     * 
+     * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+     * @summary Submit organization selection
      * @param {OAuthApiSubmitOrgSelectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    submitOrgSelection(requestParameters: OAuthApiSubmitOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    submitOrgSelection(requestParameters: OAuthApiSubmitOrgSelectionRequest, options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
     /**
-     * 
-     * @summary OAuth 2.1 Token Endpoint
+     * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+     * @summary OAuth 2.1 token endpoint
      * @param {OAuthApiTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OAuthApiInterface
      */
-    token(requestParameters: OAuthApiTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    token(requestParameters: OAuthApiTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse>;
 
 }
 
@@ -1740,7 +1788,8 @@ export interface OAuthApiTokenRequest {
  */
 export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     /**
-     * 
+     * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client\'s redirect_uri in the requested response_mode. Not a JSON API.
+     * @summary OAuth 2.1 / OIDC authorization endpoint
      * @param {OAuthApiAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1751,7 +1800,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type=urn:openid:params:grant-type:ciba and the returned auth_req_id.
+     * @summary CIBA backchannel authentication request
      * @param {OAuthApiBackchannelAuthorizeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1762,8 +1812,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * The device makes a request to the authorization server\'s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
-     * @summary Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
+     * @summary Device authorization request (RFC 8628)
      * @param {OAuthApiDeviceAuthorizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1774,8 +1824,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
-     * @summary Client Configuration Endpoint per OIDC spec Section 4
+     * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
+     * @summary Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
      * @param {OAuthApiGetClientConfigurationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1786,8 +1836,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-     * @summary Device Verification Page (RFC 8628 Section 3.3)
+     * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
+     * @summary Device verification page (RFC 8628 §3.3)
      * @param {OAuthApiGetDeviceVerificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1798,7 +1848,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+     * @summary Organization selector page
      * @param {OAuthApiGetOrgSelectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1809,8 +1860,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
-     * @summary RFC 7662 - Token Introspection Endpoint
+     * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
+     * @summary Token introspection (RFC 7662)
      * @param {OAuthApiIntrospectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1821,7 +1872,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+     * @summary Pushed authorization request (RFC 9126)
      * @param {OAuthApiParRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1832,7 +1884,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+     * @summary Passkey login entry point
      * @param {OAuthApiPasskeyLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1843,8 +1896,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
-     * @summary Client Registration Endpoint per OIDC spec Section 3
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
+     * @summary Dynamic client registration (RFC 7591 / OIDC DCR)
      * @param {OAuthApiRegisterClientRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1855,8 +1908,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
-     * @summary RFC 7009 - Token Revocation Endpoint
+     * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
+     * @summary Token revocation (RFC 7009)
      * @param {OAuthApiRevokeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1867,8 +1920,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
-     * @summary Handle social login callback from provider.
+     * Receives the provider\'s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
+     * @summary Social / enterprise identity-provider callback
      * @param {OAuthApiSocialCallbackRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1879,8 +1932,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
-     * @summary Handle social login callback from provider.
+     * Same as GET for providers that deliver the authorization response with response_mode=form_post. Not a JSON API.
+     * @summary Social / enterprise identity-provider callback (form_post)
      * @param {OAuthApiSocialCallbackPostRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1891,8 +1944,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * Redirects to the external provider\'s authorization endpoint.
-     * @summary Initiate social login flow.
+     * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider\'s authorization endpoint. Not a JSON API.
+     * @summary Start social / enterprise identity-provider login
      * @param {OAuthApiSocialLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1903,7 +1956,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * Same as GET; also receives the consent form submission. Not a JSON API.
+     * @summary OAuth 2.1 / OIDC authorization endpoint (form submission)
      * @param {OAuthApiSubmitAuthorizationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1914,8 +1968,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
-     * @summary Device Verification Page (RFC 8628 Section 3.3)
+     * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
+     * @summary Submit device verification
      * @param {OAuthApiSubmitDeviceVerificationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1926,7 +1980,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * Receives the hosted OAuth login page\'s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+     * @summary Hosted login form submission
      * @param {OAuthApiSubmitLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1937,8 +1992,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * The form-post sibling below (`/login/submit`) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\"status\":\"complete\"}          — signed in, continue to /authorize   200 {\"status\":\"mfa_required\"}      — challenge the second factor   401 {\"status\":\"invalid_credentials\"}   403 {\"status\":\"blocked\"|\"inactive\"}   429 {\"status\":\"rate_limited\"}
-     * @summary JSON credential login, for applications that render their own sign-in form.
+     * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
+     * @summary Programmatic (JSON) login for the authorization flow
      * @param {OAuthApiSubmitLoginJsonRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1949,7 +2004,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
+     * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+     * @summary Submit organization selection
      * @param {OAuthApiSubmitOrgSelectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1960,8 +2016,8 @@ export class OAuthApi extends BaseAPI implements OAuthApiInterface {
     }
 
     /**
-     * 
-     * @summary OAuth 2.1 Token Endpoint
+     * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
+     * @summary OAuth 2.1 token endpoint
      * @param {OAuthApiTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

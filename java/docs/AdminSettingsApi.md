@@ -7,7 +7,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminAnalyticsDashboard**](AdminSettingsApi.md#adminAnalyticsDashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics |
 | [**adminAnalyticsLogins**](AdminSettingsApi.md#adminAnalyticsLogins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics |
 | [**adminAnalyticsUsers**](AdminSettingsApi.md#adminAnalyticsUsers) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics |
-| [**adminOrganizationGet**](AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information |
+| [**adminOrganizationGet**](AdminSettingsApi.md#adminOrganizationGet) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile |
 | [**adminSettingsAll**](AdminSettingsApi.md#adminSettingsAll) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined) |
 | [**adminSettingsAuthGet**](AdminSettingsApi.md#adminSettingsAuthGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings |
 | [**adminSettingsAuthenticationGet**](AdminSettingsApi.md#adminSettingsAuthenticationGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth) |
@@ -16,8 +16,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**adminSettingsGeneralGet**](AdminSettingsApi.md#adminSettingsGeneralGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings |
 | [**adminSettingsScimGet**](AdminSettingsApi.md#adminSettingsScimGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings |
 | [**adminSettingsSecurityGet**](AdminSettingsApi.md#adminSettingsSecurityGet) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings |
-| [**adminTenantGet**](AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information |
-| [**patchAdminOrganizationUpdate**](AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings |
+| [**adminTenantGet**](AdminSettingsApi.md#adminTenantGet) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile |
+| [**patchAdminOrganizationUpdate**](AdminSettingsApi.md#patchAdminOrganizationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
 | [**patchAdminSettingsAuthUpdate**](AdminSettingsApi.md#patchAdminSettingsAuthUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**patchAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#patchAdminSettingsAuthenticationUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**patchAdminSettingsBrandingUpdate**](AdminSettingsApi.md#patchAdminSettingsBrandingUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -25,8 +25,8 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**patchAdminSettingsGeneralUpdate**](AdminSettingsApi.md#patchAdminSettingsGeneralUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**patchAdminSettingsScimUpdate**](AdminSettingsApi.md#patchAdminSettingsScimUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**patchAdminSettingsSecurityUpdate**](AdminSettingsApi.md#patchAdminSettingsSecurityUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**patchAdminTenantUpdate**](AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings |
-| [**putAdminOrganizationUpdate**](AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings |
+| [**patchAdminTenantUpdate**](AdminSettingsApi.md#patchAdminTenantUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
+| [**putAdminOrganizationUpdate**](AdminSettingsApi.md#putAdminOrganizationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings |
 | [**putAdminSettingsAuthUpdate**](AdminSettingsApi.md#putAdminSettingsAuthUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings |
 | [**putAdminSettingsAuthenticationUpdate**](AdminSettingsApi.md#putAdminSettingsAuthenticationUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth) |
 | [**putAdminSettingsBrandingUpdate**](AdminSettingsApi.md#putAdminSettingsBrandingUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings |
@@ -34,12 +34,12 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**putAdminSettingsGeneralUpdate**](AdminSettingsApi.md#putAdminSettingsGeneralUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings |
 | [**putAdminSettingsScimUpdate**](AdminSettingsApi.md#putAdminSettingsScimUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings |
 | [**putAdminSettingsSecurityUpdate**](AdminSettingsApi.md#putAdminSettingsSecurityUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings |
-| [**putAdminTenantUpdate**](AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings |
+| [**putAdminTenantUpdate**](AdminSettingsApi.md#putAdminTenantUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings |
 
 
 <a id="adminAnalyticsDashboard"></a>
 # **adminAnalyticsDashboard**
-> adminAnalyticsDashboard(orgId)
+> AdminAnalyticsDashboardResponse adminAnalyticsDashboard(orgId)
 
 Get dashboard analytics
 
@@ -71,7 +71,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminAnalyticsDashboard(orgId);
+      AdminAnalyticsDashboardResponse result = apiInstance.adminAnalyticsDashboard(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminAnalyticsDashboard");
       System.err.println("Status code: " + e.getCode());
@@ -91,7 +92,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAnalyticsDashboardResponse**](AdminAnalyticsDashboardResponse.md)
 
 ### Authorization
 
@@ -100,16 +101,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Dashboard counters |  -  |
 
 <a id="adminAnalyticsLogins"></a>
 # **adminAnalyticsLogins**
-> adminAnalyticsLogins(orgId)
+> AdminAnalyticsLoginsResponse adminAnalyticsLogins(orgId, days)
 
 Get login analytics
 
@@ -140,8 +141,10 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    Integer days = 30; // Integer | Window in days (1-90, default 30).
     try {
-      apiInstance.adminAnalyticsLogins(orgId);
+      AdminAnalyticsLoginsResponse result = apiInstance.adminAnalyticsLogins(orgId, days);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminAnalyticsLogins");
       System.err.println("Status code: " + e.getCode());
@@ -158,10 +161,11 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **days** | **Integer**| Window in days (1-90, default 30). | [optional] [default to 30] |
 
 ### Return type
 
-null (empty response body)
+[**AdminAnalyticsLoginsResponse**](AdminAnalyticsLoginsResponse.md)
 
 ### Authorization
 
@@ -170,16 +174,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Daily login attempts |  -  |
 
 <a id="adminAnalyticsUsers"></a>
 # **adminAnalyticsUsers**
-> adminAnalyticsUsers(orgId)
+> AdminAnalyticsUsersResponse adminAnalyticsUsers(orgId, days)
 
 Get user growth analytics
 
@@ -210,8 +214,10 @@ public class Example {
 
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
+    Integer days = 30; // Integer | Window in days (1-90, default 30).
     try {
-      apiInstance.adminAnalyticsUsers(orgId);
+      AdminAnalyticsUsersResponse result = apiInstance.adminAnalyticsUsers(orgId, days);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminAnalyticsUsers");
       System.err.println("Status code: " + e.getCode());
@@ -228,10 +234,11 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **orgId** | **String**|  | |
+| **days** | **Integer**| Window in days (1-90, default 30). | [optional] [default to 30] |
 
 ### Return type
 
-null (empty response body)
+[**AdminAnalyticsUsersResponse**](AdminAnalyticsUsersResponse.md)
 
 ### Authorization
 
@@ -240,18 +247,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Daily registrations and user breakdowns |  -  |
 
 <a id="adminOrganizationGet"></a>
 # **adminOrganizationGet**
-> adminOrganizationGet(orgId)
+> AdminTenantGetResponse adminOrganizationGet(orgId)
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 ```java
@@ -281,7 +288,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminOrganizationGet(orgId);
+      AdminTenantGetResponse result = apiInstance.adminOrganizationGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminOrganizationGet");
       System.err.println("Status code: " + e.getCode());
@@ -301,7 +309,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -310,16 +318,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization profile |  -  |
 
 <a id="adminSettingsAll"></a>
 # **adminSettingsAll**
-> adminSettingsAll(orgId)
+> AdminSettingsAllResponse adminSettingsAll(orgId)
 
 Get all settings (combined)
 
@@ -351,7 +359,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsAll(orgId);
+      AdminSettingsAllResponse result = apiInstance.adminSettingsAll(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsAll");
       System.err.println("Status code: " + e.getCode());
@@ -371,7 +380,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsAllResponse**](AdminSettingsAllResponse.md)
 
 ### Authorization
 
@@ -380,16 +389,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Combined settings |  -  |
 
 <a id="adminSettingsAuthGet"></a>
 # **adminSettingsAuthGet**
-> adminSettingsAuthGet(orgId)
+> AdminSettingsAuthenticationGetResponse adminSettingsAuthGet(orgId)
 
 Get authentication settings
 
@@ -421,7 +430,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsAuthGet(orgId);
+      AdminSettingsAuthenticationGetResponse result = apiInstance.adminSettingsAuthGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsAuthGet");
       System.err.println("Status code: " + e.getCode());
@@ -441,7 +451,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -450,16 +460,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Authentication settings |  -  |
 
 <a id="adminSettingsAuthenticationGet"></a>
 # **adminSettingsAuthenticationGet**
-> adminSettingsAuthenticationGet(orgId)
+> AdminSettingsAuthenticationGetResponse adminSettingsAuthenticationGet(orgId)
 
 Get authentication settings (alias for settings/auth)
 
@@ -491,7 +501,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsAuthenticationGet(orgId);
+      AdminSettingsAuthenticationGetResponse result = apiInstance.adminSettingsAuthenticationGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsAuthenticationGet");
       System.err.println("Status code: " + e.getCode());
@@ -511,7 +522,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -520,16 +531,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Authentication settings |  -  |
 
 <a id="adminSettingsBrandingGet"></a>
 # **adminSettingsBrandingGet**
-> adminSettingsBrandingGet(orgId)
+> AdminSettingsBrandingGetResponse adminSettingsBrandingGet(orgId)
 
 Get branding/login page settings
 
@@ -561,7 +572,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsBrandingGet(orgId);
+      AdminSettingsBrandingGetResponse result = apiInstance.adminSettingsBrandingGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsBrandingGet");
       System.err.println("Status code: " + e.getCode());
@@ -581,7 +593,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsBrandingGetResponse**](AdminSettingsBrandingGetResponse.md)
 
 ### Authorization
 
@@ -590,16 +602,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Branding settings |  -  |
 
 <a id="adminSettingsEmailGet"></a>
 # **adminSettingsEmailGet**
-> adminSettingsEmailGet(orgId)
+> AdminSettingsEmailGetResponse adminSettingsEmailGet(orgId)
 
 Get email settings
 
@@ -631,7 +643,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsEmailGet(orgId);
+      AdminSettingsEmailGetResponse result = apiInstance.adminSettingsEmailGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsEmailGet");
       System.err.println("Status code: " + e.getCode());
@@ -651,7 +664,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsEmailGetResponse**](AdminSettingsEmailGetResponse.md)
 
 ### Authorization
 
@@ -660,16 +673,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Email settings |  -  |
 
 <a id="adminSettingsGeneralGet"></a>
 # **adminSettingsGeneralGet**
-> adminSettingsGeneralGet(orgId)
+> AdminSettingsGeneralGetResponse adminSettingsGeneralGet(orgId)
 
 Get general settings
 
@@ -701,7 +714,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsGeneralGet(orgId);
+      AdminSettingsGeneralGetResponse result = apiInstance.adminSettingsGeneralGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsGeneralGet");
       System.err.println("Status code: " + e.getCode());
@@ -721,7 +735,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsGeneralGetResponse**](AdminSettingsGeneralGetResponse.md)
 
 ### Authorization
 
@@ -730,16 +744,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | General settings |  -  |
 
 <a id="adminSettingsScimGet"></a>
 # **adminSettingsScimGet**
-> adminSettingsScimGet(orgId)
+> AdminSettingsScimGetResponse adminSettingsScimGet(orgId)
 
 Get SCIM settings
 
@@ -771,7 +785,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsScimGet(orgId);
+      AdminSettingsScimGetResponse result = apiInstance.adminSettingsScimGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsScimGet");
       System.err.println("Status code: " + e.getCode());
@@ -791,7 +806,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsScimGetResponse**](AdminSettingsScimGetResponse.md)
 
 ### Authorization
 
@@ -800,16 +815,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | SCIM settings |  -  |
 
 <a id="adminSettingsSecurityGet"></a>
 # **adminSettingsSecurityGet**
-> adminSettingsSecurityGet(orgId)
+> AdminSettingsSecurityGetResponse adminSettingsSecurityGet(orgId)
 
 Get security settings
 
@@ -841,7 +856,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminSettingsSecurityGet(orgId);
+      AdminSettingsSecurityGetResponse result = apiInstance.adminSettingsSecurityGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminSettingsSecurityGet");
       System.err.println("Status code: " + e.getCode());
@@ -861,7 +877,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminSettingsSecurityGetResponse**](AdminSettingsSecurityGetResponse.md)
 
 ### Authorization
 
@@ -870,18 +886,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Security settings |  -  |
 
 <a id="adminTenantGet"></a>
 # **adminTenantGet**
-> adminTenantGet(orgId)
+> AdminTenantGetResponse adminTenantGet(orgId)
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 ```java
@@ -911,7 +927,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminTenantGet(orgId);
+      AdminTenantGetResponse result = apiInstance.adminTenantGet(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#adminTenantGet");
       System.err.println("Status code: " + e.getCode());
@@ -931,7 +948,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -940,18 +957,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Organization profile |  -  |
 
 <a id="patchAdminOrganizationUpdate"></a>
 # **patchAdminOrganizationUpdate**
-> patchAdminOrganizationUpdate(orgId)
+> PutAdminTenantUpdateResponse patchAdminOrganizationUpdate(orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```java
@@ -981,7 +998,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminOrganizationUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.patchAdminOrganizationUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminOrganizationUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1001,7 +1019,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1010,16 +1028,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 <a id="patchAdminSettingsAuthUpdate"></a>
 # **patchAdminSettingsAuthUpdate**
-> patchAdminSettingsAuthUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthUpdate(orgId)
 
 Update authentication settings
 
@@ -1051,7 +1069,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsAuthUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.patchAdminSettingsAuthUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsAuthUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1071,7 +1090,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1080,16 +1099,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 <a id="patchAdminSettingsAuthenticationUpdate"></a>
 # **patchAdminSettingsAuthenticationUpdate**
-> patchAdminSettingsAuthenticationUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse patchAdminSettingsAuthenticationUpdate(orgId)
 
 Update authentication settings (alias for settings/auth)
 
@@ -1121,7 +1140,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsAuthenticationUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.patchAdminSettingsAuthenticationUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsAuthenticationUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1141,7 +1161,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1150,16 +1170,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 <a id="patchAdminSettingsBrandingUpdate"></a>
 # **patchAdminSettingsBrandingUpdate**
-> patchAdminSettingsBrandingUpdate(orgId)
+> PutAdminSettingsBrandingUpdateResponse patchAdminSettingsBrandingUpdate(orgId)
 
 Update branding/login page settings
 
@@ -1191,7 +1211,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsBrandingUpdate(orgId);
+      PutAdminSettingsBrandingUpdateResponse result = apiInstance.patchAdminSettingsBrandingUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsBrandingUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1211,7 +1232,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1220,16 +1241,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated branding settings |  -  |
 
 <a id="patchAdminSettingsEmailUpdate"></a>
 # **patchAdminSettingsEmailUpdate**
-> patchAdminSettingsEmailUpdate(orgId)
+> PutAdminSettingsEmailUpdateResponse patchAdminSettingsEmailUpdate(orgId)
 
 Update email settings
 
@@ -1261,7 +1282,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsEmailUpdate(orgId);
+      PutAdminSettingsEmailUpdateResponse result = apiInstance.patchAdminSettingsEmailUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsEmailUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1281,7 +1303,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1290,16 +1312,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated email settings |  -  |
 
 <a id="patchAdminSettingsGeneralUpdate"></a>
 # **patchAdminSettingsGeneralUpdate**
-> patchAdminSettingsGeneralUpdate(orgId)
+> PutAdminSettingsGeneralUpdateResponse patchAdminSettingsGeneralUpdate(orgId)
 
 Update general settings
 
@@ -1331,7 +1353,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsGeneralUpdate(orgId);
+      PutAdminSettingsGeneralUpdateResponse result = apiInstance.patchAdminSettingsGeneralUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsGeneralUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1351,7 +1374,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1360,16 +1383,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated general settings |  -  |
 
 <a id="patchAdminSettingsScimUpdate"></a>
 # **patchAdminSettingsScimUpdate**
-> patchAdminSettingsScimUpdate(orgId)
+> PutAdminSettingsScimUpdateResponse patchAdminSettingsScimUpdate(orgId)
 
 Update SCIM settings
 
@@ -1401,7 +1424,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsScimUpdate(orgId);
+      PutAdminSettingsScimUpdateResponse result = apiInstance.patchAdminSettingsScimUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsScimUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1421,7 +1445,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -1430,16 +1454,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated SCIM settings |  -  |
 
 <a id="patchAdminSettingsSecurityUpdate"></a>
 # **patchAdminSettingsSecurityUpdate**
-> patchAdminSettingsSecurityUpdate(orgId)
+> PutAdminSettingsSecurityUpdateResponse patchAdminSettingsSecurityUpdate(orgId)
 
 Update security settings
 
@@ -1471,7 +1495,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminSettingsSecurityUpdate(orgId);
+      PutAdminSettingsSecurityUpdateResponse result = apiInstance.patchAdminSettingsSecurityUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminSettingsSecurityUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1491,7 +1516,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -1500,18 +1525,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated security settings |  -  |
 
 <a id="patchAdminTenantUpdate"></a>
 # **patchAdminTenantUpdate**
-> patchAdminTenantUpdate(orgId)
+> PutAdminTenantUpdateResponse patchAdminTenantUpdate(orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```java
@@ -1541,7 +1566,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminTenantUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.patchAdminTenantUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#patchAdminTenantUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1561,7 +1587,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1570,18 +1596,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 <a id="putAdminOrganizationUpdate"></a>
 # **putAdminOrganizationUpdate**
-> putAdminOrganizationUpdate(orgId)
+> PutAdminTenantUpdateResponse putAdminOrganizationUpdate(orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```java
@@ -1611,7 +1637,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminOrganizationUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.putAdminOrganizationUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminOrganizationUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1631,7 +1658,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1640,16 +1667,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 
 <a id="putAdminSettingsAuthUpdate"></a>
 # **putAdminSettingsAuthUpdate**
-> putAdminSettingsAuthUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthUpdate(orgId)
 
 Update authentication settings
 
@@ -1681,7 +1708,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsAuthUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.putAdminSettingsAuthUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsAuthUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1701,7 +1729,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1710,16 +1738,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 <a id="putAdminSettingsAuthenticationUpdate"></a>
 # **putAdminSettingsAuthenticationUpdate**
-> putAdminSettingsAuthenticationUpdate(orgId)
+> PutAdminSettingsAuthenticationUpdateResponse putAdminSettingsAuthenticationUpdate(orgId)
 
 Update authentication settings (alias for settings/auth)
 
@@ -1751,7 +1779,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsAuthenticationUpdate(orgId);
+      PutAdminSettingsAuthenticationUpdateResponse result = apiInstance.putAdminSettingsAuthenticationUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsAuthenticationUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1771,7 +1800,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1780,16 +1809,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated authentication settings |  -  |
 
 <a id="putAdminSettingsBrandingUpdate"></a>
 # **putAdminSettingsBrandingUpdate**
-> putAdminSettingsBrandingUpdate(orgId)
+> PutAdminSettingsBrandingUpdateResponse putAdminSettingsBrandingUpdate(orgId)
 
 Update branding/login page settings
 
@@ -1821,7 +1850,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsBrandingUpdate(orgId);
+      PutAdminSettingsBrandingUpdateResponse result = apiInstance.putAdminSettingsBrandingUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsBrandingUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1841,7 +1871,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1850,16 +1880,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated branding settings |  -  |
 
 <a id="putAdminSettingsEmailUpdate"></a>
 # **putAdminSettingsEmailUpdate**
-> putAdminSettingsEmailUpdate(orgId)
+> PutAdminSettingsEmailUpdateResponse putAdminSettingsEmailUpdate(orgId)
 
 Update email settings
 
@@ -1891,7 +1921,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsEmailUpdate(orgId);
+      PutAdminSettingsEmailUpdateResponse result = apiInstance.putAdminSettingsEmailUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsEmailUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1911,7 +1942,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1920,16 +1951,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated email settings |  -  |
 
 <a id="putAdminSettingsGeneralUpdate"></a>
 # **putAdminSettingsGeneralUpdate**
-> putAdminSettingsGeneralUpdate(orgId)
+> PutAdminSettingsGeneralUpdateResponse putAdminSettingsGeneralUpdate(orgId)
 
 Update general settings
 
@@ -1961,7 +1992,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsGeneralUpdate(orgId);
+      PutAdminSettingsGeneralUpdateResponse result = apiInstance.putAdminSettingsGeneralUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsGeneralUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -1981,7 +2013,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1990,16 +2022,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated general settings |  -  |
 
 <a id="putAdminSettingsScimUpdate"></a>
 # **putAdminSettingsScimUpdate**
-> putAdminSettingsScimUpdate(orgId)
+> PutAdminSettingsScimUpdateResponse putAdminSettingsScimUpdate(orgId)
 
 Update SCIM settings
 
@@ -2031,7 +2063,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsScimUpdate(orgId);
+      PutAdminSettingsScimUpdateResponse result = apiInstance.putAdminSettingsScimUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsScimUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -2051,7 +2084,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -2060,16 +2093,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated SCIM settings |  -  |
 
 <a id="putAdminSettingsSecurityUpdate"></a>
 # **putAdminSettingsSecurityUpdate**
-> putAdminSettingsSecurityUpdate(orgId)
+> PutAdminSettingsSecurityUpdateResponse putAdminSettingsSecurityUpdate(orgId)
 
 Update security settings
 
@@ -2101,7 +2134,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminSettingsSecurityUpdate(orgId);
+      PutAdminSettingsSecurityUpdateResponse result = apiInstance.putAdminSettingsSecurityUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminSettingsSecurityUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -2121,7 +2155,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -2130,18 +2164,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated security settings |  -  |
 
 <a id="putAdminTenantUpdate"></a>
 # **putAdminTenantUpdate**
-> putAdminTenantUpdate(orgId)
+> PutAdminTenantUpdateResponse putAdminTenantUpdate(orgId)
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 ```java
@@ -2171,7 +2205,8 @@ public class Example {
     AdminSettingsApi apiInstance = new AdminSettingsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminTenantUpdate(orgId);
+      PutAdminTenantUpdateResponse result = apiInstance.putAdminTenantUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminSettingsApi#putAdminTenantUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -2191,7 +2226,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -2200,10 +2235,10 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated organization profile |  -  |
 

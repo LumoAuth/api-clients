@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**AdminAnalyticsDashboard**](AdminSettingsAPI.md#AdminAnalyticsDashboard) | **Get** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 [**AdminAnalyticsLogins**](AdminSettingsAPI.md#AdminAnalyticsLogins) | **Get** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 [**AdminAnalyticsUsers**](AdminSettingsAPI.md#AdminAnalyticsUsers) | **Get** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-[**AdminOrganizationGet**](AdminSettingsAPI.md#AdminOrganizationGet) | **Get** /orgs/{orgId}/api/v1/admin/organization | Get tenant information
+[**AdminOrganizationGet**](AdminSettingsAPI.md#AdminOrganizationGet) | **Get** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
 [**AdminSettingsAll**](AdminSettingsAPI.md#AdminSettingsAll) | **Get** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 [**AdminSettingsAuthGet**](AdminSettingsAPI.md#AdminSettingsAuthGet) | **Get** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 [**AdminSettingsAuthenticationGet**](AdminSettingsAPI.md#AdminSettingsAuthenticationGet) | **Get** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -16,8 +16,8 @@ Method | HTTP request | Description
 [**AdminSettingsGeneralGet**](AdminSettingsAPI.md#AdminSettingsGeneralGet) | **Get** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 [**AdminSettingsScimGet**](AdminSettingsAPI.md#AdminSettingsScimGet) | **Get** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 [**AdminSettingsSecurityGet**](AdminSettingsAPI.md#AdminSettingsSecurityGet) | **Get** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-[**AdminTenantGet**](AdminSettingsAPI.md#AdminTenantGet) | **Get** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information
-[**PatchAdminOrganizationUpdate**](AdminSettingsAPI.md#PatchAdminOrganizationUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**AdminTenantGet**](AdminSettingsAPI.md#AdminTenantGet) | **Get** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
+[**PatchAdminOrganizationUpdate**](AdminSettingsAPI.md#PatchAdminOrganizationUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**PatchAdminSettingsAuthUpdate**](AdminSettingsAPI.md#PatchAdminSettingsAuthUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**PatchAdminSettingsAuthenticationUpdate**](AdminSettingsAPI.md#PatchAdminSettingsAuthenticationUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**PatchAdminSettingsBrandingUpdate**](AdminSettingsAPI.md#PatchAdminSettingsBrandingUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -25,8 +25,8 @@ Method | HTTP request | Description
 [**PatchAdminSettingsGeneralUpdate**](AdminSettingsAPI.md#PatchAdminSettingsGeneralUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**PatchAdminSettingsScimUpdate**](AdminSettingsAPI.md#PatchAdminSettingsScimUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**PatchAdminSettingsSecurityUpdate**](AdminSettingsAPI.md#PatchAdminSettingsSecurityUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**PatchAdminTenantUpdate**](AdminSettingsAPI.md#PatchAdminTenantUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
-[**PutAdminOrganizationUpdate**](AdminSettingsAPI.md#PutAdminOrganizationUpdate) | **Put** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+[**PatchAdminTenantUpdate**](AdminSettingsAPI.md#PatchAdminTenantUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+[**PutAdminOrganizationUpdate**](AdminSettingsAPI.md#PutAdminOrganizationUpdate) | **Put** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 [**PutAdminSettingsAuthUpdate**](AdminSettingsAPI.md#PutAdminSettingsAuthUpdate) | **Put** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 [**PutAdminSettingsAuthenticationUpdate**](AdminSettingsAPI.md#PutAdminSettingsAuthenticationUpdate) | **Put** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 [**PutAdminSettingsBrandingUpdate**](AdminSettingsAPI.md#PutAdminSettingsBrandingUpdate) | **Put** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -34,13 +34,13 @@ Method | HTTP request | Description
 [**PutAdminSettingsGeneralUpdate**](AdminSettingsAPI.md#PutAdminSettingsGeneralUpdate) | **Put** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 [**PutAdminSettingsScimUpdate**](AdminSettingsAPI.md#PutAdminSettingsScimUpdate) | **Put** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 [**PutAdminSettingsSecurityUpdate**](AdminSettingsAPI.md#PutAdminSettingsSecurityUpdate) | **Put** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-[**PutAdminTenantUpdate**](AdminSettingsAPI.md#PutAdminTenantUpdate) | **Put** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
+[**PutAdminTenantUpdate**](AdminSettingsAPI.md#PutAdminTenantUpdate) | **Put** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
 
 
 
 ## AdminAnalyticsDashboard
 
-> AdminAnalyticsDashboard(ctx, orgId).Execute()
+> AdminAnalyticsDashboardResponse AdminAnalyticsDashboard(ctx, orgId).Execute()
 
 Get dashboard analytics
 
@@ -61,11 +61,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminAnalyticsDashboard(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminAnalyticsDashboard(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminAnalyticsDashboard``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAnalyticsDashboard`: AdminAnalyticsDashboardResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminAnalyticsDashboard`: %v\n", resp)
 }
 ```
 
@@ -88,7 +90,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAnalyticsDashboardResponse**](AdminAnalyticsDashboardResponse.md)
 
 ### Authorization
 
@@ -97,7 +99,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -106,7 +108,7 @@ Name | Type | Description  | Notes
 
 ## AdminAnalyticsLogins
 
-> AdminAnalyticsLogins(ctx, orgId).Execute()
+> AdminAnalyticsLoginsResponse AdminAnalyticsLogins(ctx, orgId).Days(days).Execute()
 
 Get login analytics
 
@@ -124,14 +126,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	days := int32(56) // int32 | Window in days (1-90, default 30). (optional) (default to 30)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminAnalyticsLogins(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminAnalyticsLogins(context.Background(), orgId).Days(days).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminAnalyticsLogins``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAnalyticsLogins`: AdminAnalyticsLoginsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminAnalyticsLogins`: %v\n", resp)
 }
 ```
 
@@ -151,10 +156,11 @@ Other parameters are passed through a pointer to a apiAdminAnalyticsLoginsReques
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **days** | **int32** | Window in days (1-90, default 30). | [default to 30]
 
 ### Return type
 
- (empty response body)
+[**AdminAnalyticsLoginsResponse**](AdminAnalyticsLoginsResponse.md)
 
 ### Authorization
 
@@ -163,7 +169,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -172,7 +178,7 @@ Name | Type | Description  | Notes
 
 ## AdminAnalyticsUsers
 
-> AdminAnalyticsUsers(ctx, orgId).Execute()
+> AdminAnalyticsUsersResponse AdminAnalyticsUsers(ctx, orgId).Days(days).Execute()
 
 Get user growth analytics
 
@@ -190,14 +196,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	days := int32(56) // int32 | Window in days (1-90, default 30). (optional) (default to 30)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminAnalyticsUsers(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminAnalyticsUsers(context.Background(), orgId).Days(days).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminAnalyticsUsers``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAnalyticsUsers`: AdminAnalyticsUsersResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminAnalyticsUsers`: %v\n", resp)
 }
 ```
 
@@ -217,10 +226,11 @@ Other parameters are passed through a pointer to a apiAdminAnalyticsUsersRequest
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **days** | **int32** | Window in days (1-90, default 30). | [default to 30]
 
 ### Return type
 
- (empty response body)
+[**AdminAnalyticsUsersResponse**](AdminAnalyticsUsersResponse.md)
 
 ### Authorization
 
@@ -229,7 +239,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -238,9 +248,9 @@ Name | Type | Description  | Notes
 
 ## AdminOrganizationGet
 
-> AdminOrganizationGet(ctx, orgId).Execute()
+> AdminTenantGetResponse AdminOrganizationGet(ctx, orgId).Execute()
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 
@@ -259,11 +269,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminOrganizationGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminOrganizationGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminOrganizationGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminOrganizationGet`: AdminTenantGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminOrganizationGet`: %v\n", resp)
 }
 ```
 
@@ -286,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -295,7 +307,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -304,7 +316,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsAll
 
-> AdminSettingsAll(ctx, orgId).Execute()
+> AdminSettingsAllResponse AdminSettingsAll(ctx, orgId).Execute()
 
 Get all settings (combined)
 
@@ -325,11 +337,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsAll(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsAll(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsAll``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsAll`: AdminSettingsAllResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsAll`: %v\n", resp)
 }
 ```
 
@@ -352,7 +366,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsAllResponse**](AdminSettingsAllResponse.md)
 
 ### Authorization
 
@@ -361,7 +375,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -370,7 +384,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsAuthGet
 
-> AdminSettingsAuthGet(ctx, orgId).Execute()
+> AdminSettingsAuthenticationGetResponse AdminSettingsAuthGet(ctx, orgId).Execute()
 
 Get authentication settings
 
@@ -391,11 +405,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsAuthGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsAuthGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsAuthGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsAuthGet`: AdminSettingsAuthenticationGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsAuthGet`: %v\n", resp)
 }
 ```
 
@@ -418,7 +434,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -427,7 +443,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -436,7 +452,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsAuthenticationGet
 
-> AdminSettingsAuthenticationGet(ctx, orgId).Execute()
+> AdminSettingsAuthenticationGetResponse AdminSettingsAuthenticationGet(ctx, orgId).Execute()
 
 Get authentication settings (alias for settings/auth)
 
@@ -457,11 +473,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsAuthenticationGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsAuthenticationGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsAuthenticationGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsAuthenticationGet`: AdminSettingsAuthenticationGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsAuthenticationGet`: %v\n", resp)
 }
 ```
 
@@ -484,7 +502,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsAuthenticationGetResponse**](AdminSettingsAuthenticationGetResponse.md)
 
 ### Authorization
 
@@ -493,7 +511,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -502,7 +520,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsBrandingGet
 
-> AdminSettingsBrandingGet(ctx, orgId).Execute()
+> AdminSettingsBrandingGetResponse AdminSettingsBrandingGet(ctx, orgId).Execute()
 
 Get branding/login page settings
 
@@ -523,11 +541,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsBrandingGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsBrandingGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsBrandingGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsBrandingGet`: AdminSettingsBrandingGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsBrandingGet`: %v\n", resp)
 }
 ```
 
@@ -550,7 +570,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsBrandingGetResponse**](AdminSettingsBrandingGetResponse.md)
 
 ### Authorization
 
@@ -559,7 +579,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -568,7 +588,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsEmailGet
 
-> AdminSettingsEmailGet(ctx, orgId).Execute()
+> AdminSettingsEmailGetResponse AdminSettingsEmailGet(ctx, orgId).Execute()
 
 Get email settings
 
@@ -589,11 +609,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsEmailGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsEmailGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsEmailGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsEmailGet`: AdminSettingsEmailGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsEmailGet`: %v\n", resp)
 }
 ```
 
@@ -616,7 +638,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsEmailGetResponse**](AdminSettingsEmailGetResponse.md)
 
 ### Authorization
 
@@ -625,7 +647,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -634,7 +656,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsGeneralGet
 
-> AdminSettingsGeneralGet(ctx, orgId).Execute()
+> AdminSettingsGeneralGetResponse AdminSettingsGeneralGet(ctx, orgId).Execute()
 
 Get general settings
 
@@ -655,11 +677,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsGeneralGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsGeneralGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsGeneralGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsGeneralGet`: AdminSettingsGeneralGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsGeneralGet`: %v\n", resp)
 }
 ```
 
@@ -682,7 +706,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsGeneralGetResponse**](AdminSettingsGeneralGetResponse.md)
 
 ### Authorization
 
@@ -691,7 +715,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -700,7 +724,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsScimGet
 
-> AdminSettingsScimGet(ctx, orgId).Execute()
+> AdminSettingsScimGetResponse AdminSettingsScimGet(ctx, orgId).Execute()
 
 Get SCIM settings
 
@@ -721,11 +745,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsScimGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsScimGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsScimGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsScimGet`: AdminSettingsScimGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsScimGet`: %v\n", resp)
 }
 ```
 
@@ -748,7 +774,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsScimGetResponse**](AdminSettingsScimGetResponse.md)
 
 ### Authorization
 
@@ -757,7 +783,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -766,7 +792,7 @@ Name | Type | Description  | Notes
 
 ## AdminSettingsSecurityGet
 
-> AdminSettingsSecurityGet(ctx, orgId).Execute()
+> AdminSettingsSecurityGetResponse AdminSettingsSecurityGet(ctx, orgId).Execute()
 
 Get security settings
 
@@ -787,11 +813,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminSettingsSecurityGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminSettingsSecurityGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminSettingsSecurityGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSettingsSecurityGet`: AdminSettingsSecurityGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminSettingsSecurityGet`: %v\n", resp)
 }
 ```
 
@@ -814,7 +842,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSettingsSecurityGetResponse**](AdminSettingsSecurityGetResponse.md)
 
 ### Authorization
 
@@ -823,7 +851,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -832,9 +860,9 @@ Name | Type | Description  | Notes
 
 ## AdminTenantGet
 
-> AdminTenantGet(ctx, orgId).Execute()
+> AdminTenantGetResponse AdminTenantGet(ctx, orgId).Execute()
 
-Get tenant information
+Get organization (tenant) profile
 
 ### Example
 
@@ -853,11 +881,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.AdminTenantGet(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.AdminTenantGet(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.AdminTenantGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminTenantGet`: AdminTenantGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.AdminTenantGet`: %v\n", resp)
 }
 ```
 
@@ -880,7 +910,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminTenantGetResponse**](AdminTenantGetResponse.md)
 
 ### Authorization
 
@@ -889,7 +919,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -898,9 +928,9 @@ Name | Type | Description  | Notes
 
 ## PatchAdminOrganizationUpdate
 
-> PatchAdminOrganizationUpdate(ctx, orgId).Execute()
+> PutAdminTenantUpdateResponse PatchAdminOrganizationUpdate(ctx, orgId).Execute()
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -919,11 +949,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminOrganizationUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminOrganizationUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminOrganizationUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminOrganizationUpdate`: PutAdminTenantUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminOrganizationUpdate`: %v\n", resp)
 }
 ```
 
@@ -946,7 +978,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -955,7 +987,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -964,7 +996,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsAuthUpdate
 
-> PatchAdminSettingsAuthUpdate(ctx, orgId).Execute()
+> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthUpdate(ctx, orgId).Execute()
 
 Update authentication settings
 
@@ -985,11 +1017,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsAuthUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsAuthUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsAuthUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsAuthUpdate`: PutAdminSettingsAuthenticationUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsAuthUpdate`: %v\n", resp)
 }
 ```
 
@@ -1012,7 +1046,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1021,7 +1055,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1030,7 +1064,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsAuthenticationUpdate
 
-> PatchAdminSettingsAuthenticationUpdate(ctx, orgId).Execute()
+> PutAdminSettingsAuthenticationUpdateResponse PatchAdminSettingsAuthenticationUpdate(ctx, orgId).Execute()
 
 Update authentication settings (alias for settings/auth)
 
@@ -1051,11 +1085,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsAuthenticationUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsAuthenticationUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsAuthenticationUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsAuthenticationUpdate`: PutAdminSettingsAuthenticationUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsAuthenticationUpdate`: %v\n", resp)
 }
 ```
 
@@ -1078,7 +1114,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1087,7 +1123,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1096,7 +1132,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsBrandingUpdate
 
-> PatchAdminSettingsBrandingUpdate(ctx, orgId).Execute()
+> PutAdminSettingsBrandingUpdateResponse PatchAdminSettingsBrandingUpdate(ctx, orgId).Execute()
 
 Update branding/login page settings
 
@@ -1117,11 +1153,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsBrandingUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsBrandingUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsBrandingUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsBrandingUpdate`: PutAdminSettingsBrandingUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsBrandingUpdate`: %v\n", resp)
 }
 ```
 
@@ -1144,7 +1182,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1153,7 +1191,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1162,7 +1200,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsEmailUpdate
 
-> PatchAdminSettingsEmailUpdate(ctx, orgId).Execute()
+> PutAdminSettingsEmailUpdateResponse PatchAdminSettingsEmailUpdate(ctx, orgId).Execute()
 
 Update email settings
 
@@ -1183,11 +1221,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsEmailUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsEmailUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsEmailUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsEmailUpdate`: PutAdminSettingsEmailUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsEmailUpdate`: %v\n", resp)
 }
 ```
 
@@ -1210,7 +1250,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1219,7 +1259,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1228,7 +1268,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsGeneralUpdate
 
-> PatchAdminSettingsGeneralUpdate(ctx, orgId).Execute()
+> PutAdminSettingsGeneralUpdateResponse PatchAdminSettingsGeneralUpdate(ctx, orgId).Execute()
 
 Update general settings
 
@@ -1249,11 +1289,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsGeneralUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsGeneralUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsGeneralUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsGeneralUpdate`: PutAdminSettingsGeneralUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsGeneralUpdate`: %v\n", resp)
 }
 ```
 
@@ -1276,7 +1318,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1285,7 +1327,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1294,7 +1336,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsScimUpdate
 
-> PatchAdminSettingsScimUpdate(ctx, orgId).Execute()
+> PutAdminSettingsScimUpdateResponse PatchAdminSettingsScimUpdate(ctx, orgId).Execute()
 
 Update SCIM settings
 
@@ -1315,11 +1357,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsScimUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsScimUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsScimUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsScimUpdate`: PutAdminSettingsScimUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsScimUpdate`: %v\n", resp)
 }
 ```
 
@@ -1342,7 +1386,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -1351,7 +1395,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1360,7 +1404,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminSettingsSecurityUpdate
 
-> PatchAdminSettingsSecurityUpdate(ctx, orgId).Execute()
+> PutAdminSettingsSecurityUpdateResponse PatchAdminSettingsSecurityUpdate(ctx, orgId).Execute()
 
 Update security settings
 
@@ -1381,11 +1425,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsSecurityUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminSettingsSecurityUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminSettingsSecurityUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminSettingsSecurityUpdate`: PutAdminSettingsSecurityUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminSettingsSecurityUpdate`: %v\n", resp)
 }
 ```
 
@@ -1408,7 +1454,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -1417,7 +1463,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1426,9 +1472,9 @@ Name | Type | Description  | Notes
 
 ## PatchAdminTenantUpdate
 
-> PatchAdminTenantUpdate(ctx, orgId).Execute()
+> PutAdminTenantUpdateResponse PatchAdminTenantUpdate(ctx, orgId).Execute()
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -1447,11 +1493,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PatchAdminTenantUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PatchAdminTenantUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PatchAdminTenantUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminTenantUpdate`: PutAdminTenantUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PatchAdminTenantUpdate`: %v\n", resp)
 }
 ```
 
@@ -1474,7 +1522,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1483,7 +1531,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1492,9 +1540,9 @@ Name | Type | Description  | Notes
 
 ## PutAdminOrganizationUpdate
 
-> PutAdminOrganizationUpdate(ctx, orgId).Execute()
+> PutAdminTenantUpdateResponse PutAdminOrganizationUpdate(ctx, orgId).Execute()
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -1513,11 +1561,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminOrganizationUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminOrganizationUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminOrganizationUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminOrganizationUpdate`: PutAdminTenantUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminOrganizationUpdate`: %v\n", resp)
 }
 ```
 
@@ -1540,7 +1590,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -1549,7 +1599,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1558,7 +1608,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsAuthUpdate
 
-> PutAdminSettingsAuthUpdate(ctx, orgId).Execute()
+> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthUpdate(ctx, orgId).Execute()
 
 Update authentication settings
 
@@ -1579,11 +1629,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsAuthUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsAuthUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsAuthUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsAuthUpdate`: PutAdminSettingsAuthenticationUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsAuthUpdate`: %v\n", resp)
 }
 ```
 
@@ -1606,7 +1658,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1615,7 +1667,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1624,7 +1676,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsAuthenticationUpdate
 
-> PutAdminSettingsAuthenticationUpdate(ctx, orgId).Execute()
+> PutAdminSettingsAuthenticationUpdateResponse PutAdminSettingsAuthenticationUpdate(ctx, orgId).Execute()
 
 Update authentication settings (alias for settings/auth)
 
@@ -1645,11 +1697,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsAuthenticationUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsAuthenticationUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsAuthenticationUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsAuthenticationUpdate`: PutAdminSettingsAuthenticationUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsAuthenticationUpdate`: %v\n", resp)
 }
 ```
 
@@ -1672,7 +1726,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsAuthenticationUpdateResponse**](PutAdminSettingsAuthenticationUpdateResponse.md)
 
 ### Authorization
 
@@ -1681,7 +1735,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1690,7 +1744,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsBrandingUpdate
 
-> PutAdminSettingsBrandingUpdate(ctx, orgId).Execute()
+> PutAdminSettingsBrandingUpdateResponse PutAdminSettingsBrandingUpdate(ctx, orgId).Execute()
 
 Update branding/login page settings
 
@@ -1711,11 +1765,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsBrandingUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsBrandingUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsBrandingUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsBrandingUpdate`: PutAdminSettingsBrandingUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsBrandingUpdate`: %v\n", resp)
 }
 ```
 
@@ -1738,7 +1794,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsBrandingUpdateResponse**](PutAdminSettingsBrandingUpdateResponse.md)
 
 ### Authorization
 
@@ -1747,7 +1803,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1756,7 +1812,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsEmailUpdate
 
-> PutAdminSettingsEmailUpdate(ctx, orgId).Execute()
+> PutAdminSettingsEmailUpdateResponse PutAdminSettingsEmailUpdate(ctx, orgId).Execute()
 
 Update email settings
 
@@ -1777,11 +1833,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsEmailUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsEmailUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsEmailUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsEmailUpdate`: PutAdminSettingsEmailUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsEmailUpdate`: %v\n", resp)
 }
 ```
 
@@ -1804,7 +1862,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsEmailUpdateResponse**](PutAdminSettingsEmailUpdateResponse.md)
 
 ### Authorization
 
@@ -1813,7 +1871,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1822,7 +1880,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsGeneralUpdate
 
-> PutAdminSettingsGeneralUpdate(ctx, orgId).Execute()
+> PutAdminSettingsGeneralUpdateResponse PutAdminSettingsGeneralUpdate(ctx, orgId).Execute()
 
 Update general settings
 
@@ -1843,11 +1901,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsGeneralUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsGeneralUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsGeneralUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsGeneralUpdate`: PutAdminSettingsGeneralUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsGeneralUpdate`: %v\n", resp)
 }
 ```
 
@@ -1870,7 +1930,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsGeneralUpdateResponse**](PutAdminSettingsGeneralUpdateResponse.md)
 
 ### Authorization
 
@@ -1879,7 +1939,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1888,7 +1948,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsScimUpdate
 
-> PutAdminSettingsScimUpdate(ctx, orgId).Execute()
+> PutAdminSettingsScimUpdateResponse PutAdminSettingsScimUpdate(ctx, orgId).Execute()
 
 Update SCIM settings
 
@@ -1909,11 +1969,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsScimUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsScimUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsScimUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsScimUpdate`: PutAdminSettingsScimUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsScimUpdate`: %v\n", resp)
 }
 ```
 
@@ -1936,7 +1998,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsScimUpdateResponse**](PutAdminSettingsScimUpdateResponse.md)
 
 ### Authorization
 
@@ -1945,7 +2007,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1954,7 +2016,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminSettingsSecurityUpdate
 
-> PutAdminSettingsSecurityUpdate(ctx, orgId).Execute()
+> PutAdminSettingsSecurityUpdateResponse PutAdminSettingsSecurityUpdate(ctx, orgId).Execute()
 
 Update security settings
 
@@ -1975,11 +2037,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminSettingsSecurityUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminSettingsSecurityUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminSettingsSecurityUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminSettingsSecurityUpdate`: PutAdminSettingsSecurityUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminSettingsSecurityUpdate`: %v\n", resp)
 }
 ```
 
@@ -2002,7 +2066,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminSettingsSecurityUpdateResponse**](PutAdminSettingsSecurityUpdateResponse.md)
 
 ### Authorization
 
@@ -2011,7 +2075,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -2020,9 +2084,9 @@ Name | Type | Description  | Notes
 
 ## PutAdminTenantUpdate
 
-> PutAdminTenantUpdate(ctx, orgId).Execute()
+> PutAdminTenantUpdateResponse PutAdminTenantUpdate(ctx, orgId).Execute()
 
-Update tenant settings
+Update organization (tenant) name and settings
 
 ### Example
 
@@ -2041,11 +2105,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSettingsAPI.PutAdminTenantUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSettingsAPI.PutAdminTenantUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSettingsAPI.PutAdminTenantUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminTenantUpdate`: PutAdminTenantUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSettingsAPI.PutAdminTenantUpdate`: %v\n", resp)
 }
 ```
 
@@ -2068,7 +2134,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminTenantUpdateResponse**](PutAdminTenantUpdateResponse.md)
 
 ### Authorization
 
@@ -2077,7 +2143,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

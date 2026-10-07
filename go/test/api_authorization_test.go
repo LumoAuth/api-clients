@@ -28,9 +28,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckAbac(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckAbac(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -41,9 +42,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckAbacBulk(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckAbacBulk(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -52,9 +54,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckAllPermissions(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckAllPermissions(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -63,9 +66,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckAnyPermission(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckAnyPermission(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -74,9 +78,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckPermission(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckPermission(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -85,9 +90,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckPermissionsBulk(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckPermissionsBulk(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -96,9 +102,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckRelation(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckRelation(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -109,9 +116,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AuthorizationAPI.CheckRelationScoped(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.CheckRelationScoped(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -120,9 +128,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.Evaluate(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.Evaluate(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -131,9 +140,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.EvaluateBatch(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.EvaluateBatch(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -170,9 +180,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AuthorizationAPI.GetMyAttributes(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.GetMyAttributes(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -185,9 +196,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 		var resourceType string
 		var resourceId string
 
-		httpRes, err := apiClient.AuthorizationAPI.GetResourceAttributes(context.Background(), orgId, resourceType, resourceId).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.GetResourceAttributes(context.Background(), orgId, resourceType, resourceId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -198,9 +210,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.AuthorizationAPI.ListAttributeDefinitions(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.ListAttributeDefinitions(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -209,9 +222,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
 
-		httpRes, err := apiClient.AuthorizationAPI.ListPermissions(context.Background()).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.ListPermissions(context.Background()).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -225,9 +239,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 		var resourceId string
 		var attributeSlug string
 
-		httpRes, err := apiClient.AuthorizationAPI.SetResourceAttribute(context.Background(), orgId, resourceType, resourceId, attributeSlug).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.SetResourceAttribute(context.Background(), orgId, resourceType, resourceId, attributeSlug).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -240,9 +255,10 @@ func Test_lumoauthclient_AuthorizationAPIService(t *testing.T) {
 		var userId string
 		var attributeSlug string
 
-		httpRes, err := apiClient.AuthorizationAPI.SetUserAttribute(context.Background(), orgId, userId, attributeSlug).Execute()
+		resp, httpRes, err := apiClient.AuthorizationAPI.SetUserAttribute(context.Background(), orgId, userId, attributeSlug).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

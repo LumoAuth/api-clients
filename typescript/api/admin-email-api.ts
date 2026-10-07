@@ -21,6 +21,16 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { AdminEmailTemplatesListResponse } from '../models';
+// @ts-ignore
+import type { AdminEmailTemplatesPreviewResponse } from '../models';
+// @ts-ignore
+import type { AdminEmailTemplatesVariablesResponse } from '../models';
+// @ts-ignore
+import type { EmailTemplate } from '../models';
+// @ts-ignore
+import type { MessageResponse } from '../models';
 /**
  * AdminEmailApi - axios parameter creator
  * @export
@@ -29,6 +39,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * 
+         * @summary Remove the custom email template so the built-in default is used
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -73,6 +84,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Get an email template (custom or built-in default)
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -117,6 +129,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List every email template type with its current (custom or built-in) template
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -157,6 +170,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Render an email template with sample data
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -201,6 +215,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary Create or replace the custom email template for a type
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -245,6 +260,7 @@ export const AdminEmailApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
+         * @summary List the placeholders available to an email template type
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
@@ -299,12 +315,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Remove the custom email template so the built-in default is used
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesDelete(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminEmailTemplatesDelete(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesDelete(orgId, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesDelete']?.[localVarOperationServerIndex]?.url;
@@ -312,12 +329,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Get an email template (custom or built-in default)
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesGet(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminEmailTemplatesGet(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailTemplate>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesGet(orgId, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesGet']?.[localVarOperationServerIndex]?.url;
@@ -325,11 +343,12 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List every email template type with its current (custom or built-in) template
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminEmailTemplatesList(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEmailTemplatesListResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesList(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesList']?.[localVarOperationServerIndex]?.url;
@@ -337,12 +356,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Render an email template with sample data
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesPreview(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminEmailTemplatesPreview(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEmailTemplatesPreviewResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesPreview(orgId, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesPreview']?.[localVarOperationServerIndex]?.url;
@@ -350,12 +370,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Create or replace the custom email template for a type
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesUpsert(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminEmailTemplatesUpsert(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EmailTemplate>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesUpsert(orgId, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesUpsert']?.[localVarOperationServerIndex]?.url;
@@ -363,12 +384,13 @@ export const AdminEmailApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary List the placeholders available to an email template type
          * @param {string} orgId 
          * @param {string} type 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminEmailTemplatesVariables(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async adminEmailTemplatesVariables(orgId: string, type: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminEmailTemplatesVariablesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminEmailTemplatesVariables(orgId, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminEmailApi.adminEmailTemplatesVariables']?.[localVarOperationServerIndex]?.url;
@@ -386,56 +408,62 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * 
+         * @summary Remove the custom email template so the built-in default is used
          * @param {AdminEmailApiAdminEmailTemplatesDeleteRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
             return localVarFp.adminEmailTemplatesDelete(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Get an email template (custom or built-in default)
          * @param {AdminEmailApiAdminEmailTemplatesGetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate> {
             return localVarFp.adminEmailTemplatesGet(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List every email template type with its current (custom or built-in) template
          * @param {AdminEmailApiAdminEmailTemplatesListRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesList(requestParameters: AdminEmailApiAdminEmailTemplatesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminEmailTemplatesList(requestParameters: AdminEmailApiAdminEmailTemplatesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesListResponse> {
             return localVarFp.adminEmailTemplatesList(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Render an email template with sample data
          * @param {AdminEmailApiAdminEmailTemplatesPreviewRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesPreviewResponse> {
             return localVarFp.adminEmailTemplatesPreview(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Create or replace the custom email template for a type
          * @param {AdminEmailApiAdminEmailTemplatesUpsertRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate> {
             return localVarFp.adminEmailTemplatesUpsert(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary List the placeholders available to an email template type
          * @param {AdminEmailApiAdminEmailTemplatesVariablesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminEmailTemplatesVariables(requestParameters: AdminEmailApiAdminEmailTemplatesVariablesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        adminEmailTemplatesVariables(requestParameters: AdminEmailApiAdminEmailTemplatesVariablesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesVariablesResponse> {
             return localVarFp.adminEmailTemplatesVariables(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
     };
@@ -449,57 +477,63 @@ export const AdminEmailApiFactory = function (configuration?: Configuration, bas
 export interface AdminEmailApiInterface {
     /**
      * 
+     * @summary Remove the custom email template so the built-in default is used
      * @param {AdminEmailApiAdminEmailTemplatesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminEmailApiInterface
      */
-    adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminEmailTemplatesDelete(requestParameters: AdminEmailApiAdminEmailTemplatesDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
 
     /**
      * 
+     * @summary Get an email template (custom or built-in default)
      * @param {AdminEmailApiAdminEmailTemplatesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminEmailApiInterface
      */
-    adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminEmailTemplatesGet(requestParameters: AdminEmailApiAdminEmailTemplatesGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate>;
 
     /**
      * 
+     * @summary List every email template type with its current (custom or built-in) template
      * @param {AdminEmailApiAdminEmailTemplatesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminEmailApiInterface
      */
-    adminEmailTemplatesList(requestParameters: AdminEmailApiAdminEmailTemplatesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminEmailTemplatesList(requestParameters: AdminEmailApiAdminEmailTemplatesListRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesListResponse>;
 
     /**
      * 
+     * @summary Render an email template with sample data
      * @param {AdminEmailApiAdminEmailTemplatesPreviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminEmailApiInterface
      */
-    adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminEmailTemplatesPreview(requestParameters: AdminEmailApiAdminEmailTemplatesPreviewRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesPreviewResponse>;
 
     /**
      * 
+     * @summary Create or replace the custom email template for a type
      * @param {AdminEmailApiAdminEmailTemplatesUpsertRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminEmailApiInterface
      */
-    adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminEmailTemplatesUpsert(requestParameters: AdminEmailApiAdminEmailTemplatesUpsertRequest, options?: RawAxiosRequestConfig): AxiosPromise<EmailTemplate>;
 
     /**
      * 
+     * @summary List the placeholders available to an email template type
      * @param {AdminEmailApiAdminEmailTemplatesVariablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AdminEmailApiInterface
      */
-    adminEmailTemplatesVariables(requestParameters: AdminEmailApiAdminEmailTemplatesVariablesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    adminEmailTemplatesVariables(requestParameters: AdminEmailApiAdminEmailTemplatesVariablesRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminEmailTemplatesVariablesResponse>;
 
 }
 
@@ -631,6 +665,7 @@ export interface AdminEmailApiAdminEmailTemplatesVariablesRequest {
 export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
     /**
      * 
+     * @summary Remove the custom email template so the built-in default is used
      * @param {AdminEmailApiAdminEmailTemplatesDeleteRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -642,6 +677,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
 
     /**
      * 
+     * @summary Get an email template (custom or built-in default)
      * @param {AdminEmailApiAdminEmailTemplatesGetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -653,6 +689,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
 
     /**
      * 
+     * @summary List every email template type with its current (custom or built-in) template
      * @param {AdminEmailApiAdminEmailTemplatesListRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -664,6 +701,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
 
     /**
      * 
+     * @summary Render an email template with sample data
      * @param {AdminEmailApiAdminEmailTemplatesPreviewRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -675,6 +713,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
 
     /**
      * 
+     * @summary Create or replace the custom email template for a type
      * @param {AdminEmailApiAdminEmailTemplatesUpsertRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -686,6 +725,7 @@ export class AdminEmailApi extends BaseAPI implements AdminEmailApiInterface {
 
     /**
      * 
+     * @summary List the placeholders available to an email template type
      * @param {AdminEmailApiAdminEmailTemplatesVariablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

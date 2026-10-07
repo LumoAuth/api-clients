@@ -10,7 +10,9 @@ Name | Type | Description | Notes
 **TaskId** | Pointer to **string** |  | [optional] 
 **TokenUrl** | Pointer to **string** | Present when approved. | [optional] 
 **GrantedTtl** | Pointer to **int32** | Present when approved. | [optional] 
-**ReviewNotes** | Pointer to **string** | Present when denied. | [optional] 
+**HasNotes** | Pointer to **bool** | Present when decided: whether the reviewer left notes (the notes themselves are never returned). | [optional] 
+**AgentMessage** | Pointer to **NullableString** | Present when decided: message the reviewer explicitly wrote for the agent. | [optional] 
+**DelegationConsentRequired** | Pointer to **bool** | Present when pending: the on_behalf_of user must consent. | [optional] 
 **ExpiresAt** | Pointer to **time.Time** | Present when pending. | [optional] 
 
 ## Methods
@@ -182,30 +184,90 @@ SetGrantedTtl sets GrantedTtl field to given value.
 
 HasGrantedTtl returns a boolean if a field has been set.
 
-### GetReviewNotes
+### GetHasNotes
 
-`func (o *GetRequestStatusResponse) GetReviewNotes() string`
+`func (o *GetRequestStatusResponse) GetHasNotes() bool`
 
-GetReviewNotes returns the ReviewNotes field if non-nil, zero value otherwise.
+GetHasNotes returns the HasNotes field if non-nil, zero value otherwise.
 
-### GetReviewNotesOk
+### GetHasNotesOk
 
-`func (o *GetRequestStatusResponse) GetReviewNotesOk() (*string, bool)`
+`func (o *GetRequestStatusResponse) GetHasNotesOk() (*bool, bool)`
 
-GetReviewNotesOk returns a tuple with the ReviewNotes field if it's non-nil, zero value otherwise
+GetHasNotesOk returns a tuple with the HasNotes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetReviewNotes
+### SetHasNotes
 
-`func (o *GetRequestStatusResponse) SetReviewNotes(v string)`
+`func (o *GetRequestStatusResponse) SetHasNotes(v bool)`
 
-SetReviewNotes sets ReviewNotes field to given value.
+SetHasNotes sets HasNotes field to given value.
 
-### HasReviewNotes
+### HasHasNotes
 
-`func (o *GetRequestStatusResponse) HasReviewNotes() bool`
+`func (o *GetRequestStatusResponse) HasHasNotes() bool`
 
-HasReviewNotes returns a boolean if a field has been set.
+HasHasNotes returns a boolean if a field has been set.
+
+### GetAgentMessage
+
+`func (o *GetRequestStatusResponse) GetAgentMessage() string`
+
+GetAgentMessage returns the AgentMessage field if non-nil, zero value otherwise.
+
+### GetAgentMessageOk
+
+`func (o *GetRequestStatusResponse) GetAgentMessageOk() (*string, bool)`
+
+GetAgentMessageOk returns a tuple with the AgentMessage field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAgentMessage
+
+`func (o *GetRequestStatusResponse) SetAgentMessage(v string)`
+
+SetAgentMessage sets AgentMessage field to given value.
+
+### HasAgentMessage
+
+`func (o *GetRequestStatusResponse) HasAgentMessage() bool`
+
+HasAgentMessage returns a boolean if a field has been set.
+
+### SetAgentMessageNil
+
+`func (o *GetRequestStatusResponse) SetAgentMessageNil(b bool)`
+
+ SetAgentMessageNil sets the value for AgentMessage to be an explicit nil
+
+### UnsetAgentMessage
+`func (o *GetRequestStatusResponse) UnsetAgentMessage()`
+
+UnsetAgentMessage ensures that no value is present for AgentMessage, not even an explicit nil
+### GetDelegationConsentRequired
+
+`func (o *GetRequestStatusResponse) GetDelegationConsentRequired() bool`
+
+GetDelegationConsentRequired returns the DelegationConsentRequired field if non-nil, zero value otherwise.
+
+### GetDelegationConsentRequiredOk
+
+`func (o *GetRequestStatusResponse) GetDelegationConsentRequiredOk() (*bool, bool)`
+
+GetDelegationConsentRequiredOk returns a tuple with the DelegationConsentRequired field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDelegationConsentRequired
+
+`func (o *GetRequestStatusResponse) SetDelegationConsentRequired(v bool)`
+
+SetDelegationConsentRequired sets DelegationConsentRequired field to given value.
+
+### HasDelegationConsentRequired
+
+`func (o *GetRequestStatusResponse) HasDelegationConsentRequired() bool`
+
+HasDelegationConsentRequired returns a boolean if a field has been set.
 
 ### GetExpiresAt
 

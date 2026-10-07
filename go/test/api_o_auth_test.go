@@ -28,9 +28,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.Authorize(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.Authorize(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -41,9 +42,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.BackchannelAuthorize(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.BackchannelAuthorize(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -54,9 +56,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.DeviceAuthorization(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.DeviceAuthorization(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -68,9 +71,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 		var orgId string
 		var clientId string
 
-		httpRes, err := apiClient.OAuthAPI.GetClientConfiguration(context.Background(), orgId, clientId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.GetClientConfiguration(context.Background(), orgId, clientId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -81,9 +85,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.GetDeviceVerification(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.GetDeviceVerification(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -94,9 +99,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.GetOrgSelection(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.GetOrgSelection(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -107,9 +113,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.Introspect(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.Introspect(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -120,9 +127,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.Par(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.Par(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -146,9 +154,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.RegisterClient(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.RegisterClient(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -159,9 +168,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.Revoke(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.Revoke(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -214,9 +224,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.SubmitAuthorization(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.SubmitAuthorization(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -227,9 +238,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.SubmitDeviceVerification(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.SubmitDeviceVerification(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -253,9 +265,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.SubmitLoginJson(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.SubmitLoginJson(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -266,9 +279,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.SubmitOrgSelection(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.SubmitOrgSelection(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})
@@ -279,9 +293,10 @@ func Test_lumoauthclient_OAuthAPIService(t *testing.T) {
 
 		var orgId string
 
-		httpRes, err := apiClient.OAuthAPI.Token(context.Background(), orgId).Execute()
+		resp, httpRes, err := apiClient.OAuthAPI.Token(context.Background(), orgId).Execute()
 
 		require.Nil(t, err)
+		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **status** | **str** |  | [optional] 
 **scopes_supported** | **List[str]** |  | [optional] 
 **require_pkce** | **bool** |  | [optional] 
+**require_dpop** | **bool** |  | [optional] 
 **token_lifetime** | **int** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 

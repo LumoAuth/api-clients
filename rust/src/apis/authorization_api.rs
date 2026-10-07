@@ -19,7 +19,6 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckAbacError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,7 +26,6 @@ pub enum CheckAbacError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckAbacBulkError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -35,7 +33,6 @@ pub enum CheckAbacBulkError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckAllPermissionsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -43,7 +40,6 @@ pub enum CheckAllPermissionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckAnyPermissionError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -51,7 +47,6 @@ pub enum CheckAnyPermissionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckPermissionError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -59,7 +54,6 @@ pub enum CheckPermissionError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckPermissionsBulkError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -67,7 +61,6 @@ pub enum CheckPermissionsBulkError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckRelationError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -75,7 +68,6 @@ pub enum CheckRelationError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum CheckRelationScopedError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -83,7 +75,6 @@ pub enum CheckRelationScopedError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluateError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -91,7 +82,6 @@ pub enum EvaluateError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum EvaluateBatchError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -117,7 +107,6 @@ pub enum ExpandRelationScopedError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetMyAttributesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -125,7 +114,6 @@ pub enum GetMyAttributesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetResourceAttributesError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -133,7 +121,6 @@ pub enum GetResourceAttributesError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListAttributeDefinitionsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -141,7 +128,6 @@ pub enum ListAttributeDefinitionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListPermissionsError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -149,7 +135,6 @@ pub enum ListPermissionsError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetResourceAttributeError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
@@ -157,13 +142,12 @@ pub enum SetResourceAttributeError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum SetUserAttributeError {
-    DefaultResponse(),
     UnknownValue(serde_json::Value),
 }
 
 
 /// POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-pub async fn check_abac(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CheckAbacError>> {
+pub async fn check_abac(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CheckAbacResponse, Error<CheckAbacError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -189,9 +173,20 @@ pub async fn check_abac(configuration: &configuration::Configuration, org_id: &s
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckAbacResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckAbacResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckAbacError> = serde_json::from_str(&content).ok();
@@ -200,7 +195,7 @@ pub async fn check_abac(configuration: &configuration::Configuration, org_id: &s
 }
 
 /// POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CheckAbacBulkError>> {
+pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CheckAbacBulkResponse, Error<CheckAbacBulkError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -226,9 +221,20 @@ pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_i
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckAbacBulkResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckAbacBulkResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckAbacBulkError> = serde_json::from_str(&content).ok();
@@ -237,7 +243,7 @@ pub async fn check_abac_bulk(configuration: &configuration::Configuration, org_i
 }
 
 /// POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-pub async fn check_all_permissions(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckAllPermissionsError>> {
+pub async fn check_all_permissions(configuration: &configuration::Configuration, ) -> Result<models::CheckAnyPermissionResponse, Error<CheckAllPermissionsError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-all", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -261,9 +267,20 @@ pub async fn check_all_permissions(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckAnyPermissionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckAnyPermissionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckAllPermissionsError> = serde_json::from_str(&content).ok();
@@ -272,7 +289,7 @@ pub async fn check_all_permissions(configuration: &configuration::Configuration,
 }
 
 /// POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-pub async fn check_any_permission(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckAnyPermissionError>> {
+pub async fn check_any_permission(configuration: &configuration::Configuration, ) -> Result<models::CheckAnyPermissionResponse, Error<CheckAnyPermissionError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-any", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -296,9 +313,20 @@ pub async fn check_any_permission(configuration: &configuration::Configuration, 
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckAnyPermissionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckAnyPermissionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckAnyPermissionError> = serde_json::from_str(&content).ok();
@@ -307,7 +335,7 @@ pub async fn check_any_permission(configuration: &configuration::Configuration, 
 }
 
 /// POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-pub async fn check_permission(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckPermissionError>> {
+pub async fn check_permission(configuration: &configuration::Configuration, ) -> Result<models::CheckPermissionResponse, Error<CheckPermissionError>> {
 
     let uri_str = format!("{}/api/v1/authz/check", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -331,9 +359,20 @@ pub async fn check_permission(configuration: &configuration::Configuration, ) ->
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckPermissionResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckPermissionResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckPermissionError> = serde_json::from_str(&content).ok();
@@ -342,7 +381,7 @@ pub async fn check_permission(configuration: &configuration::Configuration, ) ->
 }
 
 /// POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-pub async fn check_permissions_bulk(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckPermissionsBulkError>> {
+pub async fn check_permissions_bulk(configuration: &configuration::Configuration, ) -> Result<models::CheckPermissionsBulkResponse, Error<CheckPermissionsBulkError>> {
 
     let uri_str = format!("{}/api/v1/authz/check-bulk", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -366,9 +405,20 @@ pub async fn check_permissions_bulk(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckPermissionsBulkResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckPermissionsBulkResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckPermissionsBulkError> = serde_json::from_str(&content).ok();
@@ -377,7 +427,7 @@ pub async fn check_permissions_bulk(configuration: &configuration::Configuration
 }
 
 /// POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-pub async fn check_relation(configuration: &configuration::Configuration, ) -> Result<(), Error<CheckRelationError>> {
+pub async fn check_relation(configuration: &configuration::Configuration, ) -> Result<models::CheckRelationResponse, Error<CheckRelationError>> {
 
     let uri_str = format!("{}/api/v1/authz/zanzibar/check", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -401,9 +451,20 @@ pub async fn check_relation(configuration: &configuration::Configuration, ) -> R
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckRelationResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckRelationResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckRelationError> = serde_json::from_str(&content).ok();
@@ -411,7 +472,7 @@ pub async fn check_relation(configuration: &configuration::Configuration, ) -> R
     }
 }
 
-pub async fn check_relation_scoped(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<CheckRelationScopedError>> {
+pub async fn check_relation_scoped(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CheckRelationScopedResponse, Error<CheckRelationScopedError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -437,9 +498,20 @@ pub async fn check_relation_scoped(configuration: &configuration::Configuration,
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::CheckRelationScopedResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::CheckRelationScopedResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<CheckRelationScopedError> = serde_json::from_str(&content).ok();
@@ -448,7 +520,7 @@ pub async fn check_relation_scoped(configuration: &configuration::Configuration,
 }
 
 /// POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<(), Error<EvaluateError>> {
+pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<models::AuthZenDecision, Error<EvaluateError>> {
 
     let uri_str = format!("{}/api/v1/authz/v1/evaluation", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -472,9 +544,20 @@ pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AuthZenDecision`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AuthZenDecision`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<EvaluateError> = serde_json::from_str(&content).ok();
@@ -483,7 +566,7 @@ pub async fn evaluate(configuration: &configuration::Configuration, ) -> Result<
 }
 
 /// POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-pub async fn evaluate_batch(configuration: &configuration::Configuration, ) -> Result<(), Error<EvaluateBatchError>> {
+pub async fn evaluate_batch(configuration: &configuration::Configuration, ) -> Result<models::EvaluateBatchResponse, Error<EvaluateBatchError>> {
 
     let uri_str = format!("{}/api/v1/authz/v1/evaluations", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -507,9 +590,20 @@ pub async fn evaluate_batch(configuration: &configuration::Configuration, ) -> R
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::EvaluateBatchResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::EvaluateBatchResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<EvaluateBatchError> = serde_json::from_str(&content).ok();
@@ -617,7 +711,7 @@ pub async fn expand_relation_scoped(configuration: &configuration::Configuration
 }
 
 /// GET /api/v1/abac/my-attributes
-pub async fn get_my_attributes(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<GetMyAttributesError>> {
+pub async fn get_my_attributes(configuration: &configuration::Configuration, org_id: &str) -> Result<models::GetMyAttributesResponse, Error<GetMyAttributesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -643,9 +737,20 @@ pub async fn get_my_attributes(configuration: &configuration::Configuration, org
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetMyAttributesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetMyAttributesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetMyAttributesError> = serde_json::from_str(&content).ok();
@@ -654,7 +759,7 @@ pub async fn get_my_attributes(configuration: &configuration::Configuration, org
 }
 
 /// GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-pub async fn get_resource_attributes(configuration: &configuration::Configuration, org_id: &str, resource_type: &str, resource_id: &str) -> Result<(), Error<GetResourceAttributesError>> {
+pub async fn get_resource_attributes(configuration: &configuration::Configuration, org_id: &str, resource_type: &str, resource_id: &str) -> Result<models::GetResourceAttributesResponse, Error<GetResourceAttributesError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_resource_type = resource_type;
@@ -682,9 +787,20 @@ pub async fn get_resource_attributes(configuration: &configuration::Configuratio
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetResourceAttributesResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetResourceAttributesResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetResourceAttributesError> = serde_json::from_str(&content).ok();
@@ -693,13 +809,17 @@ pub async fn get_resource_attributes(configuration: &configuration::Configuratio
 }
 
 /// GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-pub async fn list_attribute_definitions(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<ListAttributeDefinitionsError>> {
+pub async fn list_attribute_definitions(configuration: &configuration::Configuration, org_id: &str, r#type: Option<&str>) -> Result<models::ListAttributeDefinitionsResponse, Error<ListAttributeDefinitionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
+    let p_type = r#type;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/abac/attribute-definitions", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
+    if let Some(ref param_value) = p_type {
+        req_builder = req_builder.query(&[("type", &param_value.to_string())]);
+    }
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
@@ -719,9 +839,20 @@ pub async fn list_attribute_definitions(configuration: &configuration::Configura
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListAttributeDefinitionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListAttributeDefinitionsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListAttributeDefinitionsError> = serde_json::from_str(&content).ok();
@@ -730,7 +861,7 @@ pub async fn list_attribute_definitions(configuration: &configuration::Configura
 }
 
 /// GET /api/v1/authz/permissions
-pub async fn list_permissions(configuration: &configuration::Configuration, ) -> Result<(), Error<ListPermissionsError>> {
+pub async fn list_permissions(configuration: &configuration::Configuration, ) -> Result<models::ListPermissionsResponse, Error<ListPermissionsError>> {
 
     let uri_str = format!("{}/api/v1/authz/permissions", configuration.base_path);
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
@@ -754,9 +885,20 @@ pub async fn list_permissions(configuration: &configuration::Configuration, ) ->
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListPermissionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListPermissionsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListPermissionsError> = serde_json::from_str(&content).ok();
@@ -765,7 +907,7 @@ pub async fn list_permissions(configuration: &configuration::Configuration, ) ->
 }
 
 /// PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-pub async fn set_resource_attribute(configuration: &configuration::Configuration, org_id: &str, resource_type: &str, resource_id: &str, attribute_slug: &str) -> Result<(), Error<SetResourceAttributeError>> {
+pub async fn set_resource_attribute(configuration: &configuration::Configuration, org_id: &str, resource_type: &str, resource_id: &str, attribute_slug: &str) -> Result<models::SetResourceAttributeResponse, Error<SetResourceAttributeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_resource_type = resource_type;
@@ -794,9 +936,20 @@ pub async fn set_resource_attribute(configuration: &configuration::Configuration
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SetResourceAttributeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SetResourceAttributeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SetResourceAttributeError> = serde_json::from_str(&content).ok();
@@ -805,7 +958,7 @@ pub async fn set_resource_attribute(configuration: &configuration::Configuration
 }
 
 /// PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-pub async fn set_user_attribute(configuration: &configuration::Configuration, org_id: &str, user_id: &str, attribute_slug: &str) -> Result<(), Error<SetUserAttributeError>> {
+pub async fn set_user_attribute(configuration: &configuration::Configuration, org_id: &str, user_id: &str, attribute_slug: &str) -> Result<models::SetUserAttributeResponse, Error<SetUserAttributeError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_user_id = user_id;
@@ -833,9 +986,20 @@ pub async fn set_user_attribute(configuration: &configuration::Configuration, or
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::SetUserAttributeResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::SetUserAttributeResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<SetUserAttributeError> = serde_json::from_str(&content).ok();

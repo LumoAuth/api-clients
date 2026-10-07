@@ -4,23 +4,23 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AdminSocialProvidersAvailable**](AdminIdentityProvidersApi.md#adminsocialprovidersavailable) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types |
-| [**AdminSocialProvidersCallbackUrls**](AdminIdentityProvidersApi.md#adminsocialproviderscallbackurls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers |
-| [**AdminSocialProvidersCreate**](AdminIdentityProvidersApi.md#adminsocialproviderscreate) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider |
+| [**AdminSocialProvidersAvailable**](AdminIdentityProvidersApi.md#adminsocialprovidersavailable) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types |
+| [**AdminSocialProvidersCallbackUrls**](AdminIdentityProvidersApi.md#adminsocialproviderscallbackurls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider |
+| [**AdminSocialProvidersCreate**](AdminIdentityProvidersApi.md#adminsocialproviderscreate) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider |
 | [**AdminSocialProvidersDelete**](AdminIdentityProvidersApi.md#adminsocialprovidersdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider |
 | [**AdminSocialProvidersDisable**](AdminIdentityProvidersApi.md#adminsocialprovidersdisable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider |
 | [**AdminSocialProvidersEnable**](AdminIdentityProvidersApi.md#adminsocialprovidersenable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider |
-| [**AdminSocialProvidersGet**](AdminIdentityProvidersApi.md#adminsocialprovidersget) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name) |
-| [**AdminSocialProvidersList**](AdminIdentityProvidersApi.md#adminsocialproviderslist) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers |
-| [**AdminSocialProvidersTypes**](AdminIdentityProvidersApi.md#adminsocialproviderstypes) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types |
-| [**PatchAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#patchadminsocialprovidersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH |
-| [**PutAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#putadminsocialprovidersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH |
+| [**AdminSocialProvidersGet**](AdminIdentityProvidersApi.md#adminsocialprovidersget) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider |
+| [**AdminSocialProvidersList**](AdminIdentityProvidersApi.md#adminsocialproviderslist) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers |
+| [**AdminSocialProvidersTypes**](AdminIdentityProvidersApi.md#adminsocialproviderstypes) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types |
+| [**PatchAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#patchadminsocialprovidersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider |
+| [**PutAdminSocialProvidersUpdate**](AdminIdentityProvidersApi.md#putadminsocialprovidersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider |
 
 <a id="adminsocialprovidersavailable"></a>
 # **AdminSocialProvidersAvailable**
-> void AdminSocialProvidersAvailable (string orgId)
+> AdminSocialProvidersAvailableResponse AdminSocialProvidersAvailable (string orgId)
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 ```csharp
@@ -54,8 +54,9 @@ namespace Example
 
             try
             {
-                // Get available social login provider types
-                apiInstance.AdminSocialProvidersAvailable(orgId);
+                // List the available social login provider types
+                AdminSocialProvidersAvailableResponse result = apiInstance.AdminSocialProvidersAvailable(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -74,8 +75,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get available social login provider types
-    apiInstance.AdminSocialProvidersAvailableWithHttpInfo(orgId);
+    // List the available social login provider types
+    ApiResponse<AdminSocialProvidersAvailableResponse> response = apiInstance.AdminSocialProvidersAvailableWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -93,7 +97,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -102,21 +106,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider types |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialproviderscallbackurls"></a>
 # **AdminSocialProvidersCallbackUrls**
-> void AdminSocialProvidersCallbackUrls (string orgId)
+> AdminSocialProvidersCallbackUrlsResponse AdminSocialProvidersCallbackUrls (string orgId)
 
-Get callback URLs for all configured providers
+Get the OAuth callback URL of every configured provider
 
 ### Example
 ```csharp
@@ -150,8 +154,9 @@ namespace Example
 
             try
             {
-                // Get callback URLs for all configured providers
-                apiInstance.AdminSocialProvidersCallbackUrls(orgId);
+                // Get the OAuth callback URL of every configured provider
+                AdminSocialProvidersCallbackUrlsResponse result = apiInstance.AdminSocialProvidersCallbackUrls(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -170,8 +175,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get callback URLs for all configured providers
-    apiInstance.AdminSocialProvidersCallbackUrlsWithHttpInfo(orgId);
+    // Get the OAuth callback URL of every configured provider
+    ApiResponse<AdminSocialProvidersCallbackUrlsResponse> response = apiInstance.AdminSocialProvidersCallbackUrlsWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -189,7 +197,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCallbackUrlsResponse**](AdminSocialProvidersCallbackUrlsResponse.md)
 
 ### Authorization
 
@@ -198,21 +206,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Map of provider name to callback URL |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialproviderscreate"></a>
 # **AdminSocialProvidersCreate**
-> void AdminSocialProvidersCreate (string orgId)
+> AdminSocialProvidersCreateResponse AdminSocialProvidersCreate (string orgId)
 
-Create a new social login provider
+Create a social login provider
 
 ### Example
 ```csharp
@@ -246,8 +254,9 @@ namespace Example
 
             try
             {
-                // Create a new social login provider
-                apiInstance.AdminSocialProvidersCreate(orgId);
+                // Create a social login provider
+                AdminSocialProvidersCreateResponse result = apiInstance.AdminSocialProvidersCreate(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -266,8 +275,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Create a new social login provider
-    apiInstance.AdminSocialProvidersCreateWithHttpInfo(orgId);
+    // Create a social login provider
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.AdminSocialProvidersCreateWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -285,7 +297,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -294,19 +306,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | Created provider (detailed; secrets redacted) |  -  |
+| **409** | Provider already configured |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialprovidersdelete"></a>
 # **AdminSocialProvidersDelete**
-> void AdminSocialProvidersDelete (string orgId, string providerId)
+> MessageResponse AdminSocialProvidersDelete (string orgId, string providerId)
 
 Delete a social login provider
 
@@ -344,7 +357,8 @@ namespace Example
             try
             {
                 // Delete a social login provider
-                apiInstance.AdminSocialProvidersDelete(orgId, providerId);
+                MessageResponse result = apiInstance.AdminSocialProvidersDelete(orgId, providerId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -364,7 +378,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Delete a social login provider
-    apiInstance.AdminSocialProvidersDeleteWithHttpInfo(orgId, providerId);
+    ApiResponse<MessageResponse> response = apiInstance.AdminSocialProvidersDeleteWithHttpInfo(orgId, providerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -383,7 +400,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -392,19 +409,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Deleted |  -  |
+| **404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialprovidersdisable"></a>
 # **AdminSocialProvidersDisable**
-> void AdminSocialProvidersDisable (string orgId, string providerId)
+> AdminSocialProvidersCreateResponse AdminSocialProvidersDisable (string orgId, string providerId)
 
 Disable a social login provider
 
@@ -442,7 +460,8 @@ namespace Example
             try
             {
                 // Disable a social login provider
-                apiInstance.AdminSocialProvidersDisable(orgId, providerId);
+                AdminSocialProvidersCreateResponse result = apiInstance.AdminSocialProvidersDisable(orgId, providerId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -462,7 +481,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Disable a social login provider
-    apiInstance.AdminSocialProvidersDisableWithHttpInfo(orgId, providerId);
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.AdminSocialProvidersDisableWithHttpInfo(orgId, providerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -481,7 +503,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -490,19 +512,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider disabled (summary fields only) |  -  |
+| **404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialprovidersenable"></a>
 # **AdminSocialProvidersEnable**
-> void AdminSocialProvidersEnable (string orgId, string providerId)
+> AdminSocialProvidersCreateResponse AdminSocialProvidersEnable (string orgId, string providerId)
 
 Enable a social login provider
 
@@ -540,7 +563,8 @@ namespace Example
             try
             {
                 // Enable a social login provider
-                apiInstance.AdminSocialProvidersEnable(orgId, providerId);
+                AdminSocialProvidersCreateResponse result = apiInstance.AdminSocialProvidersEnable(orgId, providerId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -560,7 +584,10 @@ This returns an ApiResponse object which contains the response data, status code
 try
 {
     // Enable a social login provider
-    apiInstance.AdminSocialProvidersEnableWithHttpInfo(orgId, providerId);
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.AdminSocialProvidersEnableWithHttpInfo(orgId, providerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -579,7 +606,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -588,21 +615,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider enabled (summary fields only) |  -  |
+| **404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialprovidersget"></a>
 # **AdminSocialProvidersGet**
-> void AdminSocialProvidersGet (string orgId, string providerId)
+> AdminSocialProvidersGetResponse AdminSocialProvidersGet (string orgId, string providerId)
 
-Get a single social login provider (by ID or by provider name)
+Get a social login provider
 
 ### Example
 ```csharp
@@ -637,8 +665,9 @@ namespace Example
 
             try
             {
-                // Get a single social login provider (by ID or by provider name)
-                apiInstance.AdminSocialProvidersGet(orgId, providerId);
+                // Get a social login provider
+                AdminSocialProvidersGetResponse result = apiInstance.AdminSocialProvidersGet(orgId, providerId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -657,8 +686,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get a single social login provider (by ID or by provider name)
-    apiInstance.AdminSocialProvidersGetWithHttpInfo(orgId, providerId);
+    // Get a social login provider
+    ApiResponse<AdminSocialProvidersGetResponse> response = apiInstance.AdminSocialProvidersGetWithHttpInfo(orgId, providerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -677,7 +709,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersGetResponse**](AdminSocialProvidersGetResponse.md)
 
 ### Authorization
 
@@ -686,21 +718,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider (detailed; secrets redacted) |  -  |
+| **404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialproviderslist"></a>
 # **AdminSocialProvidersList**
-> void AdminSocialProvidersList (string orgId)
+> AdminSocialProvidersListResponse AdminSocialProvidersList (string orgId)
 
-List all configured social login providers
+List social login providers
 
 ### Example
 ```csharp
@@ -734,8 +767,9 @@ namespace Example
 
             try
             {
-                // List all configured social login providers
-                apiInstance.AdminSocialProvidersList(orgId);
+                // List social login providers
+                AdminSocialProvidersListResponse result = apiInstance.AdminSocialProvidersList(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -754,8 +788,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all configured social login providers
-    apiInstance.AdminSocialProvidersListWithHttpInfo(orgId);
+    // List social login providers
+    ApiResponse<AdminSocialProvidersListResponse> response = apiInstance.AdminSocialProvidersListWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -773,7 +810,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersListResponse**](AdminSocialProvidersListResponse.md)
 
 ### Authorization
 
@@ -782,21 +819,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Providers (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adminsocialproviderstypes"></a>
 # **AdminSocialProvidersTypes**
-> void AdminSocialProvidersTypes (string orgId)
+> AdminSocialProvidersAvailableResponse AdminSocialProvidersTypes (string orgId)
 
-Get available social login provider types
+List the available social login provider types
 
 ### Example
 ```csharp
@@ -830,8 +867,9 @@ namespace Example
 
             try
             {
-                // Get available social login provider types
-                apiInstance.AdminSocialProvidersTypes(orgId);
+                // List the available social login provider types
+                AdminSocialProvidersAvailableResponse result = apiInstance.AdminSocialProvidersTypes(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -850,8 +888,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get available social login provider types
-    apiInstance.AdminSocialProvidersTypesWithHttpInfo(orgId);
+    // List the available social login provider types
+    ApiResponse<AdminSocialProvidersAvailableResponse> response = apiInstance.AdminSocialProvidersTypesWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -869,7 +910,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersAvailableResponse**](AdminSocialProvidersAvailableResponse.md)
 
 ### Authorization
 
@@ -878,21 +919,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Provider types |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchadminsocialprovidersupdate"></a>
 # **PatchAdminSocialProvidersUpdate**
-> void PatchAdminSocialProvidersUpdate (string orgId, string providerId)
+> AdminSocialProvidersCreateResponse PatchAdminSocialProvidersUpdate (string orgId, string providerId)
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Update a social login provider
 
 ### Example
 ```csharp
@@ -927,8 +968,9 @@ namespace Example
 
             try
             {
-                // Upsert (create or update) a social login provider via PUT; update via PATCH
-                apiInstance.PatchAdminSocialProvidersUpdate(orgId, providerId);
+                // Update a social login provider
+                AdminSocialProvidersCreateResponse result = apiInstance.PatchAdminSocialProvidersUpdate(orgId, providerId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -947,8 +989,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Upsert (create or update) a social login provider via PUT; update via PATCH
-    apiInstance.PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    // Update a social login provider
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.PatchAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -967,7 +1012,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -976,21 +1021,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated provider (detailed) |  -  |
+| **404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="putadminsocialprovidersupdate"></a>
 # **PutAdminSocialProvidersUpdate**
-> void PutAdminSocialProvidersUpdate (string orgId, string providerId)
+> AdminSocialProvidersCreateResponse PutAdminSocialProvidersUpdate (string orgId, string providerId)
 
-Upsert (create or update) a social login provider via PUT; update via PATCH
+Create or replace a social login provider
 
 ### Example
 ```csharp
@@ -1025,8 +1071,9 @@ namespace Example
 
             try
             {
-                // Upsert (create or update) a social login provider via PUT; update via PATCH
-                apiInstance.PutAdminSocialProvidersUpdate(orgId, providerId);
+                // Create or replace a social login provider
+                AdminSocialProvidersCreateResponse result = apiInstance.PutAdminSocialProvidersUpdate(orgId, providerId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1045,8 +1092,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Upsert (create or update) a social login provider via PUT; update via PATCH
-    apiInstance.PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    // Create or replace a social login provider
+    ApiResponse<AdminSocialProvidersCreateResponse> response = apiInstance.PutAdminSocialProvidersUpdateWithHttpInfo(orgId, providerId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1065,7 +1115,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminSocialProvidersCreateResponse**](AdminSocialProvidersCreateResponse.md)
 
 ### Authorization
 
@@ -1074,13 +1124,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated provider (detailed) |  -  |
+| **201** | Provider did not exist and was created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

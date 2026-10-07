@@ -4,27 +4,28 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminWebhooksCreate**](#adminwebhookscreate) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a new webhook|
+|[**adminWebhooksCreate**](#adminwebhookscreate) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a webhook|
 |[**adminWebhooksDelete**](#adminwebhooksdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Delete a webhook|
-|[**adminWebhooksDeliveriesList**](#adminwebhooksdeliverieslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent delivery attempts for a webhook.|
-|[**adminWebhooksDeliveryReplay**](#adminwebhooksdeliveryreplay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage|
-|[**adminWebhooksDeliveryShow**](#adminwebhooksdeliveryshow) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.|
-|[**adminWebhooksEvents**](#adminwebhooksevents) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | Get available webhook event types|
-|[**adminWebhooksGet**](#adminwebhooksget) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a single webhook by ID|
-|[**adminWebhooksList**](#adminwebhookslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List all webhooks in the tenant|
-|[**adminWebhooksRotateSecret**](#adminwebhooksrotatesecret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate webhook secret|
-|[**adminWebhooksTest**](#adminwebhookstest) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Test a webhook by sending a test payload|
-|[**adminWebhooksTunnelStart**](#adminwebhookstunnelstart) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | |
-|[**adminWebhooksTunnelStop**](#adminwebhookstunnelstop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | |
-|[**adminWebhooksTunnelStream**](#adminwebhookstunnelstream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | |
-|[**adminWebhooksWebhooksDisable**](#adminwebhookswebhooksdisable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable webhook|
-|[**adminWebhooksWebhooksEnable**](#adminwebhookswebhooksenable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable webhook|
-|[**patchAdminWebhooksUpdate**](#patchadminwebhooksupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook|
-|[**putAdminWebhooksUpdate**](#putadminwebhooksupdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook|
+|[**adminWebhooksDeliveriesList**](#adminwebhooksdeliverieslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent deliveries|
+|[**adminWebhooksDeliveryReplay**](#adminwebhooksdeliveryreplay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Replay a delivery|
+|[**adminWebhooksDeliveryShow**](#adminwebhooksdeliveryshow) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a delivery|
+|[**adminWebhooksEvents**](#adminwebhooksevents) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | List available webhook event types|
+|[**adminWebhooksGet**](#adminwebhooksget) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a webhook|
+|[**adminWebhooksList**](#adminwebhookslist) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List webhooks|
+|[**adminWebhooksRotateSecret**](#adminwebhooksrotatesecret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate the signing secret|
+|[**adminWebhooksTest**](#adminwebhookstest) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Send a test delivery|
+|[**adminWebhooksTunnelStart**](#adminwebhookstunnelstart) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | Start a webhook tunnel|
+|[**adminWebhooksTunnelStop**](#adminwebhookstunnelstop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | Stop a webhook tunnel|
+|[**adminWebhooksTunnelStream**](#adminwebhookstunnelstream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | Stream tunnel deliveries (SSE)|
+|[**adminWebhooksWebhooksDisable**](#adminwebhookswebhooksdisable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable a webhook|
+|[**adminWebhooksWebhooksEnable**](#adminwebhookswebhooksenable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook|
+|[**patchAdminWebhooksUpdate**](#patchadminwebhooksupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook|
+|[**putAdminWebhooksUpdate**](#putadminwebhooksupdate) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook|
 
 # **adminWebhooksCreate**
-> adminWebhooksCreate()
+> AdminWebhooksCreateResponse adminWebhooksCreate()
 
+The signing secret is generated server-side and returned once in this response only.
 
 ### Example
 
@@ -53,7 +54,7 @@ const { status, data } = await apiInstance.adminWebhooksCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksCreateResponse**
 
 ### Authorization
 
@@ -62,18 +63,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Webhook created; the secret is shown once |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksDelete**
-> adminWebhooksDelete()
+> MessageResponse adminWebhooksDelete()
 
 
 ### Example
@@ -106,7 +107,7 @@ const { status, data } = await apiInstance.adminWebhooksDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -115,20 +116,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Webhook deleted |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksDeliveriesList**
-> adminWebhooksDeliveriesList()
+> AdminWebhooksDeliveriesListResponse adminWebhooksDeliveriesList()
 
-Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
 ### Example
 
@@ -160,7 +162,7 @@ const { status, data } = await apiInstance.adminWebhooksDeliveriesList(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksDeliveriesListResponse**
 
 ### Authorization
 
@@ -169,20 +171,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deliveries |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksDeliveryReplay**
-> adminWebhooksDeliveryReplay()
+> AdminWebhooksDeliveryReplayResponse adminWebhooksDeliveryReplay()
 
-Resets the delivery\'s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+Resets the delivery\'s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
 ### Example
 
@@ -217,7 +220,7 @@ const { status, data } = await apiInstance.adminWebhooksDeliveryReplay(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksDeliveryReplayResponse**
 
 ### Authorization
 
@@ -226,19 +229,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Delivery re-enqueued |  -  |
+|**404** | Webhook or delivery not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksDeliveryShow**
-> adminWebhooksDeliveryShow()
+> AdminWebhooksDeliveryShowResponse adminWebhooksDeliveryShow()
 
+A single delivery including the event payload and the per-attempt history.
 
 ### Example
 
@@ -273,7 +278,7 @@ const { status, data } = await apiInstance.adminWebhooksDeliveryShow(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksDeliveryShowResponse**
 
 ### Authorization
 
@@ -282,18 +287,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Delivery with payload and attempts |  -  |
+|**404** | Webhook or delivery not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksEvents**
-> adminWebhooksEvents()
+> AdminWebhooksEventsResponse adminWebhooksEvents()
 
 
 ### Example
@@ -323,7 +329,7 @@ const { status, data } = await apiInstance.adminWebhooksEvents(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksEventsResponse**
 
 ### Authorization
 
@@ -332,18 +338,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Event types keyed by name, with a human-readable description |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksGet**
-> adminWebhooksGet()
+> AdminWebhooksGetResponse adminWebhooksGet()
 
 
 ### Example
@@ -376,7 +382,7 @@ const { status, data } = await apiInstance.adminWebhooksGet(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksGetResponse**
 
 ### Authorization
 
@@ -385,19 +391,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksList**
-> adminWebhooksList()
+> AdminWebhooksListResponse adminWebhooksList()
 
+Paginated list of the tenant\'s webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
 ### Example
 
@@ -426,7 +434,7 @@ const { status, data } = await apiInstance.adminWebhooksList(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksListResponse**
 
 ### Authorization
 
@@ -435,19 +443,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Webhooks |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksRotateSecret**
-> adminWebhooksRotateSecret()
+> AdminWebhooksRotateSecretResponse adminWebhooksRotateSecret()
 
+Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
 ### Example
 
@@ -479,7 +488,7 @@ const { status, data } = await apiInstance.adminWebhooksRotateSecret(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksRotateSecretResponse**
 
 ### Authorization
 
@@ -488,19 +497,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Secret rotated; the new secret is shown once |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksTest**
-> adminWebhooksTest()
+> AdminWebhooksTestResponse adminWebhooksTest()
 
+POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver\'s status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
 ### Example
 
@@ -532,7 +543,7 @@ const { status, data } = await apiInstance.adminWebhooksTest(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksTestResponse**
 
 ### Authorization
 
@@ -541,19 +552,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Test result |  -  |
+|**404** | Webhook not found |  -  |
+|**502** | Failed to deliver test webhook |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksTunnelStart**
-> adminWebhooksTunnelStart()
+> AdminWebhooksTunnelStartResponse adminWebhooksTunnelStart()
 
+Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
 ### Example
 
@@ -582,7 +596,7 @@ const { status, data } = await apiInstance.adminWebhooksTunnelStart(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksTunnelStartResponse**
 
 ### Authorization
 
@@ -591,19 +605,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tunnel started |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksTunnelStop**
-> adminWebhooksTunnelStop()
+> MessageResponse adminWebhooksTunnelStop()
 
+Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
 ### Example
 
@@ -635,7 +650,7 @@ const { status, data } = await apiInstance.adminWebhooksTunnelStop(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -644,19 +659,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Tunnel closed |  -  |
+|**400** | Not a tunnel webhook |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksTunnelStream**
-> adminWebhooksTunnelStream()
+> string adminWebhooksTunnelStream()
 
+Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
 ### Example
 
@@ -688,7 +706,7 @@ const { status, data } = await apiInstance.adminWebhooksTunnelStream(
 
 ### Return type
 
-void (empty response body)
+**string**
 
 ### Authorization
 
@@ -697,18 +715,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/event-stream
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Server-Sent Events stream. Opens with the comment line &#x60;: connected&#x60;, then emits one &#x60;event: webhook&#x60; message per delivery whose &#x60;data:&#x60; line is a JSON object &#x60;{delivery_id, event_name, payload, received_at}&#x60; (&#x60;received_at&#x60; is RFC 3339). A &#x60;: heartbeat&#x60; comment is sent roughly every 15 seconds while idle. |  -  |
+|**400** | Not a tunnel webhook |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksWebhooksDisable**
-> adminWebhooksWebhooksDisable()
+> AdminWebhooksWebhooksDisableResponse adminWebhooksWebhooksDisable()
 
 
 ### Example
@@ -741,7 +761,7 @@ const { status, data } = await apiInstance.adminWebhooksWebhooksDisable(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksWebhooksDisableResponse**
 
 ### Authorization
 
@@ -750,18 +770,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Webhook disabled |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminWebhooksWebhooksEnable**
-> adminWebhooksWebhooksEnable()
+> AdminWebhooksWebhooksEnableResponse adminWebhooksWebhooksEnable()
 
 
 ### Example
@@ -794,7 +815,7 @@ const { status, data } = await apiInstance.adminWebhooksWebhooksEnable(
 
 ### Return type
 
-void (empty response body)
+**AdminWebhooksWebhooksEnableResponse**
 
 ### Authorization
 
@@ -803,18 +824,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Webhook enabled |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminWebhooksUpdate**
-> patchAdminWebhooksUpdate()
+> PutAdminWebhooksUpdateResponse patchAdminWebhooksUpdate()
 
 
 ### Example
@@ -847,7 +869,7 @@ const { status, data } = await apiInstance.patchAdminWebhooksUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminWebhooksUpdateResponse**
 
 ### Authorization
 
@@ -856,18 +878,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminWebhooksUpdate**
-> putAdminWebhooksUpdate()
+> PutAdminWebhooksUpdateResponse putAdminWebhooksUpdate()
 
 
 ### Example
@@ -900,7 +923,7 @@ const { status, data } = await apiInstance.putAdminWebhooksUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminWebhooksUpdateResponse**
 
 ### Authorization
 
@@ -909,13 +932,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated webhook (detailed, includes &#x60;configuration&#x60;) |  -  |
+|**404** | Webhook not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

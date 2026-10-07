@@ -12,27 +12,27 @@ import AnyCodable
 
 public struct AdminAgentsGenerateTokenRequest: Codable, JSONEncodable, Hashable {
 
-    /** Optional scopes to embed in the token. */
+    /** Token lifetime in seconds. Default 3600, at most 2592000 (30 days). */
+    public var expiresIn: Int?
+    /** Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400. */
     public var scopes: [String]?
-    /** Optional token lifetime in seconds. */
-    public var ttl: Int?
 
-    public init(scopes: [String]? = nil, ttl: Int? = nil) {
+    public init(expiresIn: Int? = nil, scopes: [String]? = nil) {
+        self.expiresIn = expiresIn
         self.scopes = scopes
-        self.ttl = ttl
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
+        case expiresIn
         case scopes
-        case ttl
     }
 
     // Encodable protocol methods
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(expiresIn, forKey: .expiresIn)
         try container.encodeIfPresent(scopes, forKey: .scopes)
-        try container.encodeIfPresent(ttl, forKey: .ttl)
     }
 }
 

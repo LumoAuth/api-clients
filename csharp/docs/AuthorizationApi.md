@@ -4,30 +4,30 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**CheckAbac**](AuthorizationApi.md#checkabac) | **POST** /orgs/{orgId}/api/v1/abac/check | Check ABAC authorization |
-| [**CheckAbacBulk**](AuthorizationApi.md#checkabacbulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Bulk check multiple authorization requests |
-| [**CheckAllPermissions**](AuthorizationApi.md#checkallpermissions) | **POST** /api/v1/authz/check-all | Check if user has ALL of the specified permissions |
-| [**CheckAnyPermission**](AuthorizationApi.md#checkanypermission) | **POST** /api/v1/authz/check-any | Check if user has ANY of the specified permissions |
-| [**CheckPermission**](AuthorizationApi.md#checkpermission) | **POST** /api/v1/authz/check | Check if the authenticated user has a specific permission |
-| [**CheckPermissionsBulk**](AuthorizationApi.md#checkpermissionsbulk) | **POST** /api/v1/authz/check-bulk | Check multiple permissions at once |
-| [**CheckRelation**](AuthorizationApi.md#checkrelation) | **POST** /api/v1/authz/zanzibar/check | Zanzibar-style relationship check |
-| [**CheckRelationScoped**](AuthorizationApi.md#checkrelationscoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check |  |
-| [**Evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation. |
-| [**EvaluateBatch**](AuthorizationApi.md#evaluatebatch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations. |
+| [**CheckAbac**](AuthorizationApi.md#checkabac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller |
+| [**CheckAbacBulk**](AuthorizationApi.md#checkabacbulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call |
+| [**CheckAllPermissions**](AuthorizationApi.md#checkallpermissions) | **POST** /api/v1/authz/check-all | Check whether the subject holds all of the permissions |
+| [**CheckAnyPermission**](AuthorizationApi.md#checkanypermission) | **POST** /api/v1/authz/check-any | Check whether the subject holds any of the permissions |
+| [**CheckPermission**](AuthorizationApi.md#checkpermission) | **POST** /api/v1/authz/check | Check one permission |
+| [**CheckPermissionsBulk**](AuthorizationApi.md#checkpermissionsbulk) | **POST** /api/v1/authz/check-bulk | Check up to 100 permissions in one call |
+| [**CheckRelation**](AuthorizationApi.md#checkrelation) | **POST** /api/v1/authz/zanzibar/check | Zanzibar relationship check |
+| [**CheckRelationScoped**](AuthorizationApi.md#checkrelationscoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | Zanzibar relationship check |
+| [**Evaluate**](AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 access evaluation |
+| [**EvaluateBatch**](AuthorizationApi.md#evaluatebatch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations |
 | [**ExpandRelation**](AuthorizationApi.md#expandrelation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies &#x60;object#relation&#x60;, as a tree that mirrors the namespace rewrites. |
 | [**ExpandRelationScoped**](AuthorizationApi.md#expandrelationscoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying &#x60;object#relation&#x60;. Always reveals other subjects, so it requires the oracle privilege (&#x60;authz.check&#x60; permission or &#x60;authz:check&#x60; scope). |
-| [**GetMyAttributes**](AuthorizationApi.md#getmyattributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user&#39;s current attributes (for debugging/UI) |
-| [**GetResourceAttributes**](AuthorizationApi.md#getresourceattributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes |
-| [**ListAttributeDefinitions**](AuthorizationApi.md#listattributedefinitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions |
-| [**ListPermissions**](AuthorizationApi.md#listpermissions) | **GET** /api/v1/authz/permissions | List all permissions for the authenticated user |
-| [**SetResourceAttribute**](AuthorizationApi.md#setresourceattribute) | **PUT** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set resource attribute |
-| [**SetUserAttribute**](AuthorizationApi.md#setuserattribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set user attribute |
+| [**GetMyAttributes**](AuthorizationApi.md#getmyattributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | The caller&#39;s ABAC subject attributes |
+| [**GetResourceAttributes**](AuthorizationApi.md#getresourceattributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Attributes stored for a resource |
+| [**ListAttributeDefinitions**](AuthorizationApi.md#listattributedefinitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Attribute definitions available to the organization |
+| [**ListPermissions**](AuthorizationApi.md#listpermissions) | **GET** /api/v1/authz/permissions | List the caller&#39;s effective permissions |
+| [**SetResourceAttribute**](AuthorizationApi.md#setresourceattribute) | **PUT** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set a resource attribute |
+| [**SetUserAttribute**](AuthorizationApi.md#setuserattribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set a user attribute |
 
 <a id="checkabac"></a>
 # **CheckAbac**
-> void CheckAbac (string orgId)
+> CheckAbacResponse CheckAbac (string orgId)
 
-Check ABAC authorization
+Evaluate an ABAC policy decision for the caller
 
 POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
@@ -63,8 +63,9 @@ namespace Example
 
             try
             {
-                // Check ABAC authorization
-                apiInstance.CheckAbac(orgId);
+                // Evaluate an ABAC policy decision for the caller
+                CheckAbacResponse result = apiInstance.CheckAbac(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -83,8 +84,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Check ABAC authorization
-    apiInstance.CheckAbacWithHttpInfo(orgId);
+    // Evaluate an ABAC policy decision for the caller
+    ApiResponse<CheckAbacResponse> response = apiInstance.CheckAbacWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -102,7 +106,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**CheckAbacResponse**](CheckAbacResponse.md)
 
 ### Authorization
 
@@ -111,21 +115,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkabacbulk"></a>
 # **CheckAbacBulk**
-> void CheckAbacBulk (string orgId)
+> CheckAbacBulkResponse CheckAbacBulk (string orgId)
 
-Bulk check multiple authorization requests
+Evaluate up to 100 ABAC checks for the caller in one call
 
 POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
 
@@ -161,8 +165,9 @@ namespace Example
 
             try
             {
-                // Bulk check multiple authorization requests
-                apiInstance.CheckAbacBulk(orgId);
+                // Evaluate up to 100 ABAC checks for the caller in one call
+                CheckAbacBulkResponse result = apiInstance.CheckAbacBulk(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -181,8 +186,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Bulk check multiple authorization requests
-    apiInstance.CheckAbacBulkWithHttpInfo(orgId);
+    // Evaluate up to 100 ABAC checks for the caller in one call
+    ApiResponse<CheckAbacBulkResponse> response = apiInstance.CheckAbacBulkWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -200,7 +208,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**CheckAbacBulkResponse**](CheckAbacBulkResponse.md)
 
 ### Authorization
 
@@ -209,21 +217,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Per-check decisions in request order |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkallpermissions"></a>
 # **CheckAllPermissions**
-> void CheckAllPermissions ()
+> CheckAnyPermissionResponse CheckAllPermissions ()
 
-Check if user has ALL of the specified permissions
+Check whether the subject holds all of the permissions
 
 POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -258,8 +266,9 @@ namespace Example
 
             try
             {
-                // Check if user has ALL of the specified permissions
-                apiInstance.CheckAllPermissions();
+                // Check whether the subject holds all of the permissions
+                CheckAnyPermissionResponse result = apiInstance.CheckAllPermissions();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -278,8 +287,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Check if user has ALL of the specified permissions
-    apiInstance.CheckAllPermissionsWithHttpInfo();
+    // Check whether the subject holds all of the permissions
+    ApiResponse<CheckAnyPermissionResponse> response = apiInstance.CheckAllPermissionsWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -293,7 +305,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
 
 ### Authorization
 
@@ -302,21 +314,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkanypermission"></a>
 # **CheckAnyPermission**
-> void CheckAnyPermission ()
+> CheckAnyPermissionResponse CheckAnyPermission ()
 
-Check if user has ANY of the specified permissions
+Check whether the subject holds any of the permissions
 
 POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -351,8 +363,9 @@ namespace Example
 
             try
             {
-                // Check if user has ANY of the specified permissions
-                apiInstance.CheckAnyPermission();
+                // Check whether the subject holds any of the permissions
+                CheckAnyPermissionResponse result = apiInstance.CheckAnyPermission();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -371,8 +384,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Check if user has ANY of the specified permissions
-    apiInstance.CheckAnyPermissionWithHttpInfo();
+    // Check whether the subject holds any of the permissions
+    ApiResponse<CheckAnyPermissionResponse> response = apiInstance.CheckAnyPermissionWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -386,7 +402,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**CheckAnyPermissionResponse**](CheckAnyPermissionResponse.md)
 
 ### Authorization
 
@@ -395,21 +411,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkpermission"></a>
 # **CheckPermission**
-> void CheckPermission ()
+> CheckPermissionResponse CheckPermission ()
 
-Check if the authenticated user has a specific permission
+Check one permission
 
 POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
 
@@ -444,8 +460,9 @@ namespace Example
 
             try
             {
-                // Check if the authenticated user has a specific permission
-                apiInstance.CheckPermission();
+                // Check one permission
+                CheckPermissionResponse result = apiInstance.CheckPermission();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -464,8 +481,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Check if the authenticated user has a specific permission
-    apiInstance.CheckPermissionWithHttpInfo();
+    // Check one permission
+    ApiResponse<CheckPermissionResponse> response = apiInstance.CheckPermissionWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -479,7 +499,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**CheckPermissionResponse**](CheckPermissionResponse.md)
 
 ### Authorization
 
@@ -488,21 +508,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkpermissionsbulk"></a>
 # **CheckPermissionsBulk**
-> void CheckPermissionsBulk ()
+> CheckPermissionsBulkResponse CheckPermissionsBulk ()
 
-Check multiple permissions at once
+Check up to 100 permissions in one call
 
 POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
 
@@ -537,8 +557,9 @@ namespace Example
 
             try
             {
-                // Check multiple permissions at once
-                apiInstance.CheckPermissionsBulk();
+                // Check up to 100 permissions in one call
+                CheckPermissionsBulkResponse result = apiInstance.CheckPermissionsBulk();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -557,8 +578,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Check multiple permissions at once
-    apiInstance.CheckPermissionsBulkWithHttpInfo();
+    // Check up to 100 permissions in one call
+    ApiResponse<CheckPermissionsBulkResponse> response = apiInstance.CheckPermissionsBulkWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -572,7 +596,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**CheckPermissionsBulkResponse**](CheckPermissionsBulkResponse.md)
 
 ### Authorization
 
@@ -581,21 +605,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Per-permission decisions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkrelation"></a>
 # **CheckRelation**
-> void CheckRelation ()
+> CheckRelationResponse CheckRelation ()
 
-Zanzibar-style relationship check
+Zanzibar relationship check
 
 POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
 
@@ -630,8 +654,9 @@ namespace Example
 
             try
             {
-                // Zanzibar-style relationship check
-                apiInstance.CheckRelation();
+                // Zanzibar relationship check
+                CheckRelationResponse result = apiInstance.CheckRelation();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -650,8 +675,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Zanzibar-style relationship check
-    apiInstance.CheckRelationWithHttpInfo();
+    // Zanzibar relationship check
+    ApiResponse<CheckRelationResponse> response = apiInstance.CheckRelationWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -665,7 +693,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**CheckRelationResponse**](CheckRelationResponse.md)
 
 ### Authorization
 
@@ -674,21 +702,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="checkrelationscoped"></a>
 # **CheckRelationScoped**
-> void CheckRelationScoped (string orgId)
+> CheckRelationScopedResponse CheckRelationScoped (string orgId)
 
-
+Zanzibar relationship check
 
 ### Example
 ```csharp
@@ -722,7 +750,9 @@ namespace Example
 
             try
             {
-                apiInstance.CheckRelationScoped(orgId);
+                // Zanzibar relationship check
+                CheckRelationScopedResponse result = apiInstance.CheckRelationScoped(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -741,7 +771,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.CheckRelationScopedWithHttpInfo(orgId);
+    // Zanzibar relationship check
+    ApiResponse<CheckRelationScopedResponse> response = apiInstance.CheckRelationScopedWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -759,7 +793,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**CheckRelationScopedResponse**](CheckRelationScopedResponse.md)
 
 ### Authorization
 
@@ -768,21 +802,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="evaluate"></a>
 # **Evaluate**
-> void Evaluate ()
+> AuthZenDecision Evaluate ()
 
-AuthZEN 1.0 single access evaluation.
+AuthZEN 1.0 access evaluation
 
 POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
 
@@ -817,8 +851,9 @@ namespace Example
 
             try
             {
-                // AuthZEN 1.0 single access evaluation.
-                apiInstance.Evaluate();
+                // AuthZEN 1.0 access evaluation
+                AuthZenDecision result = apiInstance.Evaluate();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -837,8 +872,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // AuthZEN 1.0 single access evaluation.
-    apiInstance.EvaluateWithHttpInfo();
+    // AuthZEN 1.0 access evaluation
+    ApiResponse<AuthZenDecision> response = apiInstance.EvaluateWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -852,7 +890,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**AuthZenDecision**](AuthZenDecision.md)
 
 ### Authorization
 
@@ -861,21 +899,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | AuthZEN decision |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="evaluatebatch"></a>
 # **EvaluateBatch**
-> void EvaluateBatch ()
+> EvaluateBatchResponse EvaluateBatch ()
 
-AuthZEN 1.0 boxcarred access evaluations.
+AuthZEN 1.0 boxcarred access evaluations
 
 POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
 
@@ -910,8 +948,9 @@ namespace Example
 
             try
             {
-                // AuthZEN 1.0 boxcarred access evaluations.
-                apiInstance.EvaluateBatch();
+                // AuthZEN 1.0 boxcarred access evaluations
+                EvaluateBatchResponse result = apiInstance.EvaluateBatch();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -930,8 +969,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // AuthZEN 1.0 boxcarred access evaluations.
-    apiInstance.EvaluateBatchWithHttpInfo();
+    // AuthZEN 1.0 boxcarred access evaluations
+    ApiResponse<EvaluateBatchResponse> response = apiInstance.EvaluateBatchWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -945,7 +987,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**EvaluateBatchResponse**](EvaluateBatchResponse.md)
 
 ### Authorization
 
@@ -954,13 +996,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | One decision per evaluation, in request order |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1176,9 +1218,9 @@ catch (ApiException e)
 
 <a id="getmyattributes"></a>
 # **GetMyAttributes**
-> void GetMyAttributes (string orgId)
+> GetMyAttributesResponse GetMyAttributes (string orgId)
 
-Get user's current attributes (for debugging/UI)
+The caller's ABAC subject attributes
 
 GET /api/v1/abac/my-attributes
 
@@ -1214,8 +1256,9 @@ namespace Example
 
             try
             {
-                // Get user's current attributes (for debugging/UI)
-                apiInstance.GetMyAttributes(orgId);
+                // The caller's ABAC subject attributes
+                GetMyAttributesResponse result = apiInstance.GetMyAttributes(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1234,8 +1277,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get user's current attributes (for debugging/UI)
-    apiInstance.GetMyAttributesWithHttpInfo(orgId);
+    // The caller's ABAC subject attributes
+    ApiResponse<GetMyAttributesResponse> response = apiInstance.GetMyAttributesWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1253,7 +1299,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetMyAttributesResponse**](GetMyAttributesResponse.md)
 
 ### Authorization
 
@@ -1262,21 +1308,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Built-in identity attributes plus trait_&lt;key&gt; entries and tenant-defined custom attributes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getresourceattributes"></a>
 # **GetResourceAttributes**
-> void GetResourceAttributes (string orgId, string resourceType, string resourceId)
+> GetResourceAttributesResponse GetResourceAttributes (string orgId, string resourceType, string resourceId)
 
-Get resource attributes
+Attributes stored for a resource
 
 GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
@@ -1314,8 +1360,9 @@ namespace Example
 
             try
             {
-                // Get resource attributes
-                apiInstance.GetResourceAttributes(orgId, resourceType, resourceId);
+                // Attributes stored for a resource
+                GetResourceAttributesResponse result = apiInstance.GetResourceAttributes(orgId, resourceType, resourceId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1334,8 +1381,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get resource attributes
-    apiInstance.GetResourceAttributesWithHttpInfo(orgId, resourceType, resourceId);
+    // Attributes stored for a resource
+    ApiResponse<GetResourceAttributesResponse> response = apiInstance.GetResourceAttributesWithHttpInfo(orgId, resourceType, resourceId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1355,7 +1405,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetResourceAttributesResponse**](GetResourceAttributesResponse.md)
 
 ### Authorization
 
@@ -1364,21 +1414,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Resource attributes keyed by attribute slug |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listattributedefinitions"></a>
 # **ListAttributeDefinitions**
-> void ListAttributeDefinitions (string orgId)
+> ListAttributeDefinitionsResponse ListAttributeDefinitions (string orgId, string? type = null)
 
-Get available attribute definitions
+Attribute definitions available to the organization
 
 GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
 
@@ -1411,11 +1461,13 @@ namespace Example
             HttpClientHandler httpClientHandler = new HttpClientHandler();
             var apiInstance = new AuthorizationApi(httpClient, config, httpClientHandler);
             var orgId = "orgId_example";  // string | 
+            var type = "user";  // string? |  (optional) 
 
             try
             {
-                // Get available attribute definitions
-                apiInstance.ListAttributeDefinitions(orgId);
+                // Attribute definitions available to the organization
+                ListAttributeDefinitionsResponse result = apiInstance.ListAttributeDefinitions(orgId, type);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1434,8 +1486,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Get available attribute definitions
-    apiInstance.ListAttributeDefinitionsWithHttpInfo(orgId);
+    // Attribute definitions available to the organization
+    ApiResponse<ListAttributeDefinitionsResponse> response = apiInstance.ListAttributeDefinitionsWithHttpInfo(orgId, type);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1450,10 +1505,11 @@ catch (ApiException e)
 | Name | Type | Description | Notes |
 |------|------|-------------|-------|
 | **orgId** | **string** |  |  |
+| **type** | **string?** |  | [optional]  |
 
 ### Return type
 
-void (empty response body)
+[**ListAttributeDefinitionsResponse**](ListAttributeDefinitionsResponse.md)
 
 ### Authorization
 
@@ -1462,21 +1518,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Definitions (tenant-defined and global) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listpermissions"></a>
 # **ListPermissions**
-> void ListPermissions ()
+> ListPermissionsResponse ListPermissions ()
 
-List all permissions for the authenticated user
+List the caller's effective permissions
 
 GET /api/v1/authz/permissions
 
@@ -1511,8 +1567,9 @@ namespace Example
 
             try
             {
-                // List all permissions for the authenticated user
-                apiInstance.ListPermissions();
+                // List the caller's effective permissions
+                ListPermissionsResponse result = apiInstance.ListPermissions();
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1531,8 +1588,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // List all permissions for the authenticated user
-    apiInstance.ListPermissionsWithHttpInfo();
+    // List the caller's effective permissions
+    ApiResponse<ListPermissionsResponse> response = apiInstance.ListPermissionsWithHttpInfo();
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1546,7 +1606,7 @@ catch (ApiException e)
 This endpoint does not need any parameter.
 ### Return type
 
-void (empty response body)
+[**ListPermissionsResponse**](ListPermissionsResponse.md)
 
 ### Authorization
 
@@ -1555,21 +1615,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permissions from the user&#39;s roles (including group-inherited roles). &#x60;permissions&#x60; and &#x60;data&#x60; are identical. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="setresourceattribute"></a>
 # **SetResourceAttribute**
-> void SetResourceAttribute (string orgId, string resourceType, string resourceId, string attributeSlug)
+> SetResourceAttributeResponse SetResourceAttribute (string orgId, string resourceType, string resourceId, string attributeSlug)
 
-Set resource attribute
+Set a resource attribute
 
 PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -1608,8 +1668,9 @@ namespace Example
 
             try
             {
-                // Set resource attribute
-                apiInstance.SetResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+                // Set a resource attribute
+                SetResourceAttributeResponse result = apiInstance.SetResourceAttribute(orgId, resourceType, resourceId, attributeSlug);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1628,8 +1689,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Set resource attribute
-    apiInstance.SetResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug);
+    // Set a resource attribute
+    ApiResponse<SetResourceAttributeResponse> response = apiInstance.SetResourceAttributeWithHttpInfo(orgId, resourceType, resourceId, attributeSlug);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1650,7 +1714,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SetResourceAttributeResponse**](SetResourceAttributeResponse.md)
 
 ### Authorization
 
@@ -1659,21 +1723,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Stored attribute |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="setuserattribute"></a>
 # **SetUserAttribute**
-> void SetUserAttribute (string orgId, string userId, string attributeSlug)
+> SetUserAttributeResponse SetUserAttribute (string orgId, string userId, string attributeSlug)
 
-Set user attribute
+Set a user attribute
 
 PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 
@@ -1711,8 +1775,9 @@ namespace Example
 
             try
             {
-                // Set user attribute
-                apiInstance.SetUserAttribute(orgId, userId, attributeSlug);
+                // Set a user attribute
+                SetUserAttributeResponse result = apiInstance.SetUserAttribute(orgId, userId, attributeSlug);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1731,8 +1796,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    // Set user attribute
-    apiInstance.SetUserAttributeWithHttpInfo(orgId, userId, attributeSlug);
+    // Set a user attribute
+    ApiResponse<SetUserAttributeResponse> response = apiInstance.SetUserAttributeWithHttpInfo(orgId, userId, attributeSlug);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1752,7 +1820,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SetUserAttributeResponse**](SetUserAttributeResponse.md)
 
 ### Authorization
 
@@ -1761,13 +1829,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Stored attribute |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

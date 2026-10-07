@@ -4,20 +4,20 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminSocialProvidersAvailable**](#adminsocialprovidersavailable) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types|
-|[**adminSocialProvidersCallbackUrls**](#adminsocialproviderscallbackurls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers|
-|[**adminSocialProvidersCreate**](#adminsocialproviderscreate) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider|
+|[**adminSocialProvidersAvailable**](#adminsocialprovidersavailable) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types|
+|[**adminSocialProvidersCallbackUrls**](#adminsocialproviderscallbackurls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider|
+|[**adminSocialProvidersCreate**](#adminsocialproviderscreate) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider|
 |[**adminSocialProvidersDelete**](#adminsocialprovidersdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider|
 |[**adminSocialProvidersDisable**](#adminsocialprovidersdisable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider|
 |[**adminSocialProvidersEnable**](#adminsocialprovidersenable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider|
-|[**adminSocialProvidersGet**](#adminsocialprovidersget) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name)|
-|[**adminSocialProvidersList**](#adminsocialproviderslist) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers|
-|[**adminSocialProvidersTypes**](#adminsocialproviderstypes) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types|
-|[**patchAdminSocialProvidersUpdate**](#patchadminsocialprovidersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH|
-|[**putAdminSocialProvidersUpdate**](#putadminsocialprovidersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH|
+|[**adminSocialProvidersGet**](#adminsocialprovidersget) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider|
+|[**adminSocialProvidersList**](#adminsocialproviderslist) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers|
+|[**adminSocialProvidersTypes**](#adminsocialproviderstypes) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types|
+|[**patchAdminSocialProvidersUpdate**](#patchadminsocialprovidersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider|
+|[**putAdminSocialProvidersUpdate**](#putadminsocialprovidersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider|
 
 # **adminSocialProvidersAvailable**
-> adminSocialProvidersAvailable()
+> AdminSocialProvidersAvailableResponse adminSocialProvidersAvailable()
 
 
 ### Example
@@ -47,7 +47,7 @@ const { status, data } = await apiInstance.adminSocialProvidersAvailable(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersAvailableResponse**
 
 ### Authorization
 
@@ -56,18 +56,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Provider types |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersCallbackUrls**
-> adminSocialProvidersCallbackUrls()
+> AdminSocialProvidersCallbackUrlsResponse adminSocialProvidersCallbackUrls()
 
 
 ### Example
@@ -97,7 +97,7 @@ const { status, data } = await apiInstance.adminSocialProvidersCallbackUrls(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersCallbackUrlsResponse**
 
 ### Authorization
 
@@ -106,18 +106,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Map of provider name to callback URL |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersCreate**
-> adminSocialProvidersCreate()
+> AdminSocialProvidersCreateResponse adminSocialProvidersCreate()
 
 
 ### Example
@@ -147,7 +147,7 @@ const { status, data } = await apiInstance.adminSocialProvidersCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersCreateResponse**
 
 ### Authorization
 
@@ -156,18 +156,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created provider (detailed; secrets redacted) |  -  |
+|**409** | Provider already configured |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersDelete**
-> adminSocialProvidersDelete()
+> MessageResponse adminSocialProvidersDelete()
 
 
 ### Example
@@ -200,7 +201,7 @@ const { status, data } = await apiInstance.adminSocialProvidersDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -209,18 +210,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
+|**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersDisable**
-> adminSocialProvidersDisable()
+> AdminSocialProvidersCreateResponse adminSocialProvidersDisable()
 
 
 ### Example
@@ -253,7 +255,7 @@ const { status, data } = await apiInstance.adminSocialProvidersDisable(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersCreateResponse**
 
 ### Authorization
 
@@ -262,18 +264,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Provider disabled (summary fields only) |  -  |
+|**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersEnable**
-> adminSocialProvidersEnable()
+> AdminSocialProvidersCreateResponse adminSocialProvidersEnable()
 
 
 ### Example
@@ -306,7 +309,7 @@ const { status, data } = await apiInstance.adminSocialProvidersEnable(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersCreateResponse**
 
 ### Authorization
 
@@ -315,18 +318,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Provider enabled (summary fields only) |  -  |
+|**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersGet**
-> adminSocialProvidersGet()
+> AdminSocialProvidersGetResponse adminSocialProvidersGet()
 
 
 ### Example
@@ -359,7 +363,7 @@ const { status, data } = await apiInstance.adminSocialProvidersGet(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersGetResponse**
 
 ### Authorization
 
@@ -368,18 +372,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Provider (detailed; secrets redacted) |  -  |
+|**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersList**
-> adminSocialProvidersList()
+> AdminSocialProvidersListResponse adminSocialProvidersList()
 
 
 ### Example
@@ -409,7 +414,7 @@ const { status, data } = await apiInstance.adminSocialProvidersList(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersListResponse**
 
 ### Authorization
 
@@ -418,18 +423,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Providers (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminSocialProvidersTypes**
-> adminSocialProvidersTypes()
+> AdminSocialProvidersAvailableResponse adminSocialProvidersTypes()
 
 
 ### Example
@@ -459,7 +464,7 @@ const { status, data } = await apiInstance.adminSocialProvidersTypes(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersAvailableResponse**
 
 ### Authorization
 
@@ -468,18 +473,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Provider types |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminSocialProvidersUpdate**
-> patchAdminSocialProvidersUpdate()
+> AdminSocialProvidersCreateResponse patchAdminSocialProvidersUpdate()
 
 
 ### Example
@@ -512,7 +517,7 @@ const { status, data } = await apiInstance.patchAdminSocialProvidersUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersCreateResponse**
 
 ### Authorization
 
@@ -521,18 +526,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated provider (detailed) |  -  |
+|**404** | Social login provider not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminSocialProvidersUpdate**
-> putAdminSocialProvidersUpdate()
+> AdminSocialProvidersCreateResponse putAdminSocialProvidersUpdate()
 
 
 ### Example
@@ -565,7 +571,7 @@ const { status, data } = await apiInstance.putAdminSocialProvidersUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminSocialProvidersCreateResponse**
 
 ### Authorization
 
@@ -574,13 +580,14 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated provider (detailed) |  -  |
+|**201** | Provider did not exist and was created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

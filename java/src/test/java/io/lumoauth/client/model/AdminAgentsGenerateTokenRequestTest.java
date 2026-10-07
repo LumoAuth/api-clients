@@ -40,19 +40,19 @@ public class AdminAgentsGenerateTokenRequestTest {
     }
 
     /**
+     * Test the property 'expiresIn'
+     */
+    @Test
+    public void expiresInTest() {
+        // TODO: test expiresIn
+    }
+
+    /**
      * Test the property 'scopes'
      */
     @Test
     public void scopesTest() {
         // TODO: test scopes
-    }
-
-    /**
-     * Test the property 'ttl'
-     */
-    @Test
-    public void ttlTest() {
-        // TODO: test ttl
     }
 
 }

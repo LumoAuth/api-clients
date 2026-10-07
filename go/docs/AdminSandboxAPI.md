@@ -4,17 +4,17 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminSandboxDestroy**](AdminSandboxAPI.md#AdminSandboxDestroy) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
-[**AdminSandboxList**](AdminSandboxAPI.md#AdminSandboxList) | **Get** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller&#39;s active sandbox tenants (their own only).
-[**AdminSandboxSpawn**](AdminSandboxAPI.md#AdminSandboxSpawn) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\&quot;name\&quot;?: \&quot;feature-foo\&quot;, \&quot;ttl_hours\&quot;?: 24}
+[**AdminSandboxDestroy**](AdminSandboxAPI.md#AdminSandboxDestroy) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
+[**AdminSandboxList**](AdminSandboxAPI.md#AdminSandboxList) | **Get** /orgs/{orgId}/api/v1/admin/sandbox | List the caller&#39;s sandbox tenants
+[**AdminSandboxSpawn**](AdminSandboxAPI.md#AdminSandboxSpawn) | **Post** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
 
 
 
 ## AdminSandboxDestroy
 
-> AdminSandboxDestroy(ctx, orgId, sandboxSlug).Execute()
+> MessageResponse AdminSandboxDestroy(ctx, orgId, sandboxSlug).Execute()
 
-POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
+Destroy a sandbox tenant
 
 ### Example
 
@@ -34,11 +34,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSandboxAPI.AdminSandboxDestroy(context.Background(), orgId, sandboxSlug).Execute()
+	resp, r, err := apiClient.AdminSandboxAPI.AdminSandboxDestroy(context.Background(), orgId, sandboxSlug).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSandboxAPI.AdminSandboxDestroy``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSandboxDestroy`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSandboxAPI.AdminSandboxDestroy`: %v\n", resp)
 }
 ```
 
@@ -63,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -72,7 +74,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -81,9 +83,9 @@ Name | Type | Description  | Notes
 
 ## AdminSandboxList
 
-> AdminSandboxList(ctx, orgId).Execute()
+> AdminSandboxListResponse AdminSandboxList(ctx, orgId).Execute()
 
-GET / Lists the caller's active sandbox tenants (their own only).
+List the caller's sandbox tenants
 
 ### Example
 
@@ -102,11 +104,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSandboxAPI.AdminSandboxList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSandboxAPI.AdminSandboxList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSandboxAPI.AdminSandboxList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSandboxList`: AdminSandboxListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSandboxAPI.AdminSandboxList`: %v\n", resp)
 }
 ```
 
@@ -129,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminSandboxListResponse**](AdminSandboxListResponse.md)
 
 ### Authorization
 
@@ -138,7 +142,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -147,9 +151,9 @@ Name | Type | Description  | Notes
 
 ## AdminSandboxSpawn
 
-> AdminSandboxSpawn(ctx, orgId).Execute()
+> AdminSandboxSpawnResponse AdminSandboxSpawn(ctx, orgId).AdminSandboxSpawnRequest(adminSandboxSpawnRequest).Execute()
 
-POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
+Spawn a sandbox tenant
 
 ### Example
 
@@ -165,14 +169,17 @@ import (
 
 func main() {
 	orgId := "orgId_example" // string | 
+	adminSandboxSpawnRequest := *openapiclient.NewAdminSandboxSpawnRequest() // AdminSandboxSpawnRequest |  (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminSandboxAPI.AdminSandboxSpawn(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminSandboxAPI.AdminSandboxSpawn(context.Background(), orgId).AdminSandboxSpawnRequest(adminSandboxSpawnRequest).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminSandboxAPI.AdminSandboxSpawn``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminSandboxSpawn`: AdminSandboxSpawnResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminSandboxAPI.AdminSandboxSpawn`: %v\n", resp)
 }
 ```
 
@@ -192,10 +199,11 @@ Other parameters are passed through a pointer to a apiAdminSandboxSpawnRequest s
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
+ **adminSandboxSpawnRequest** | [**AdminSandboxSpawnRequest**](AdminSandboxSpawnRequest.md) |  | 
 
 ### Return type
 
- (empty response body)
+[**AdminSandboxSpawnResponse**](AdminSandboxSpawnResponse.md)
 
 ### Authorization
 
@@ -203,8 +211,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

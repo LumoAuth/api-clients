@@ -5,7 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**reason** | **string** | Optional denial reason. | [optional] [default to undefined]
+**reason** | **string** | Optional denial reason (internal; never shown to the agent). | [optional] [default to undefined]
+**agent_message** | **string** | Optional message the agent MAY read on the status endpoint / callback. | [optional] [default to undefined]
 
 ## Example
 
@@ -14,6 +15,7 @@ import { DenyRequestRequest } from '@lumoauth/api-client';
 
 const instance: DenyRequestRequest = {
     reason,
+    agent_message,
 };
 ```
 

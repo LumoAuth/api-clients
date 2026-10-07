@@ -14,6 +14,20 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminWebhooksCreateResponse;
+import io.lumoauth.client.model.AdminWebhooksDeliveriesListResponse;
+import io.lumoauth.client.model.AdminWebhooksDeliveryReplayResponse;
+import io.lumoauth.client.model.AdminWebhooksDeliveryShowResponse;
+import io.lumoauth.client.model.AdminWebhooksEventsResponse;
+import io.lumoauth.client.model.AdminWebhooksGetResponse;
+import io.lumoauth.client.model.AdminWebhooksListResponse;
+import io.lumoauth.client.model.AdminWebhooksRotateSecretResponse;
+import io.lumoauth.client.model.AdminWebhooksTestResponse;
+import io.lumoauth.client.model.AdminWebhooksTunnelStartResponse;
+import io.lumoauth.client.model.AdminWebhooksWebhooksDisableResponse;
+import io.lumoauth.client.model.AdminWebhooksWebhooksEnableResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.PutAdminWebhooksUpdateResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,14 +45,16 @@ public class AdminWebhooksApiTest {
     private final AdminWebhooksApi api = new AdminWebhooksApi();
 
     /**
-     * Create a new webhook
+     * Create a webhook
+     *
+     * The signing secret is generated server-side and returned once in this response only.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminWebhooksCreateTest() throws ApiException {
         String orgId = null;
-        api.adminWebhooksCreate(orgId);
+        AdminWebhooksCreateResponse response = api.adminWebhooksCreate(orgId);
         // TODO: test validations
     }
 
@@ -51,14 +67,14 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksDeleteTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksDelete(orgId, webhookId);
+        MessageResponse response = api.adminWebhooksDelete(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * List recent delivery attempts for a webhook.
+     * List recent deliveries
      *
-     * Optional query params: - status: filter by &#x60;pending|success|failed|dead_lettered&#x60; - limit: 1–200, default 50
+     * Most recent delivery attempts for the webhook (single page, newest first). Optional &#x60;status&#x60; filter (pending|success|failed|dead_lettered) and &#x60;limit&#x60; (1-200, default 50).
      *
      * @throws ApiException if the Api call fails
      */
@@ -66,14 +82,14 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksDeliveriesListTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksDeliveriesList(orgId, webhookId);
+        AdminWebhooksDeliveriesListResponse response = api.adminWebhooksDeliveriesList(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+     * Replay a delivery
      *
-     * Resets the delivery&#39;s failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+     * Resets the delivery&#39;s failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
      *
      * @throws ApiException if the Api call fails
      */
@@ -82,12 +98,14 @@ public class AdminWebhooksApiTest {
         String orgId = null;
         String webhookId = null;
         String deliveryId = null;
-        api.adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
+        AdminWebhooksDeliveryReplayResponse response = api.adminWebhooksDeliveryReplay(orgId, webhookId, deliveryId);
         // TODO: test validations
     }
 
     /**
-     * Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.
+     * Get a delivery
+     *
+     * A single delivery including the event payload and the per-attempt history.
      *
      * @throws ApiException if the Api call fails
      */
@@ -96,24 +114,24 @@ public class AdminWebhooksApiTest {
         String orgId = null;
         String webhookId = null;
         String deliveryId = null;
-        api.adminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
+        AdminWebhooksDeliveryShowResponse response = api.adminWebhooksDeliveryShow(orgId, webhookId, deliveryId);
         // TODO: test validations
     }
 
     /**
-     * Get available webhook event types
+     * List available webhook event types
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminWebhooksEventsTest() throws ApiException {
         String orgId = null;
-        api.adminWebhooksEvents(orgId);
+        AdminWebhooksEventsResponse response = api.adminWebhooksEvents(orgId);
         // TODO: test validations
     }
 
     /**
-     * Get a single webhook by ID
+     * Get a webhook
      *
      * @throws ApiException if the Api call fails
      */
@@ -121,24 +139,28 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksGetTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksGet(orgId, webhookId);
+        AdminWebhooksGetResponse response = api.adminWebhooksGet(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * List all webhooks in the tenant
+     * List webhooks
+     *
+     * Paginated list of the tenant&#39;s webhooks (summary shape, without &#x60;configuration&#x60;). Filter with &#x60;isActive&#x60;, &#x60;event&#x60;; sort with &#x60;sortBy&#x60; (createdAt|isActive) and &#x60;sortDir&#x60;.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminWebhooksListTest() throws ApiException {
         String orgId = null;
-        api.adminWebhooksList(orgId);
+        AdminWebhooksListResponse response = api.adminWebhooksList(orgId);
         // TODO: test validations
     }
 
     /**
-     * Rotate webhook secret
+     * Rotate the signing secret
+     *
+     * Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
      *
      * @throws ApiException if the Api call fails
      */
@@ -146,12 +168,14 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksRotateSecretTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksRotateSecret(orgId, webhookId);
+        AdminWebhooksRotateSecretResponse response = api.adminWebhooksRotateSecret(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * Test a webhook by sending a test payload
+     * Send a test delivery
+     *
+     * POSTs a signed &#x60;test.webhook&#x60; payload to the webhook URL and reports the receiver&#39;s status. A non-2xx receiver response still yields HTTP 200 with &#x60;success: false&#x60;; a transport failure yields 502.
      *
      * @throws ApiException if the Api call fails
      */
@@ -159,44 +183,56 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksTestTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksTest(orgId, webhookId);
+        AdminWebhooksTestResponse response = api.adminWebhooksTest(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
+     * Start a webhook tunnel
+     *
+     * Creates a transient &#x60;tunnel://&#x60; webhook subscribed to every event (&#x60;*&#x60;) for &#x60;lumo tunnel&#x60;. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminWebhooksTunnelStartTest() throws ApiException {
         String orgId = null;
-        api.adminWebhooksTunnelStart(orgId);
+        AdminWebhooksTunnelStartResponse response = api.adminWebhooksTunnelStart(orgId);
         // TODO: test validations
     }
 
     /**
+     * Stop a webhook tunnel
+     *
+     * Deletes the tunnel webhook and its pending deliveries. Only &#x60;tunnel://&#x60; webhooks can be stopped here.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminWebhooksTunnelStopTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksTunnelStop(orgId, webhookId);
+        MessageResponse response = api.adminWebhooksTunnelStop(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
+     * Stream tunnel deliveries (SSE)
+     *
+     * Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminWebhooksTunnelStreamTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksTunnelStream(orgId, webhookId);
+        String response = api.adminWebhooksTunnelStream(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * Disable webhook
+     * Disable a webhook
      *
      * @throws ApiException if the Api call fails
      */
@@ -204,12 +240,12 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksWebhooksDisableTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksWebhooksDisable(orgId, webhookId);
+        AdminWebhooksWebhooksDisableResponse response = api.adminWebhooksWebhooksDisable(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * Enable webhook
+     * Enable a webhook
      *
      * @throws ApiException if the Api call fails
      */
@@ -217,12 +253,12 @@ public class AdminWebhooksApiTest {
     public void adminWebhooksWebhooksEnableTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.adminWebhooksWebhooksEnable(orgId, webhookId);
+        AdminWebhooksWebhooksEnableResponse response = api.adminWebhooksWebhooksEnable(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * Update an existing webhook
+     * Partially update a webhook
      *
      * @throws ApiException if the Api call fails
      */
@@ -230,12 +266,12 @@ public class AdminWebhooksApiTest {
     public void patchAdminWebhooksUpdateTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.patchAdminWebhooksUpdate(orgId, webhookId);
+        PutAdminWebhooksUpdateResponse response = api.patchAdminWebhooksUpdate(orgId, webhookId);
         // TODO: test validations
     }
 
     /**
-     * Update an existing webhook
+     * Update a webhook
      *
      * @throws ApiException if the Api call fails
      */
@@ -243,7 +279,7 @@ public class AdminWebhooksApiTest {
     public void putAdminWebhooksUpdateTest() throws ApiException {
         String orgId = null;
         String webhookId = null;
-        api.putAdminWebhooksUpdate(orgId, webhookId);
+        PutAdminWebhooksUpdateResponse response = api.putAdminWebhooksUpdate(orgId, webhookId);
         // TODO: test validations
     }
 

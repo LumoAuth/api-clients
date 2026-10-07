@@ -36,6 +36,8 @@ import type { AdminAgentsCreateResponse } from '../models';
 // @ts-ignore
 import type { AdminAgentsDeactivateResponse } from '../models';
 // @ts-ignore
+import type { AdminAgentsDeleteResponse } from '../models';
+// @ts-ignore
 import type { AdminAgentsGenerateTokenRequest } from '../models';
 // @ts-ignore
 import type { AdminAgentsGenerateTokenResponse } from '../models';
@@ -53,8 +55,6 @@ import type { AdminAgentsRotateCredentialsResponse } from '../models';
 import type { AdminAgentsSetScopesRequest } from '../models';
 // @ts-ignore
 import type { AdminAgentsSetScopesResponse } from '../models';
-// @ts-ignore
-import type { MessageResponse } from '../models';
 // @ts-ignore
 import type { PutAdminAgentsUpdateRequest } from '../models';
 // @ts-ignore
@@ -907,7 +907,7 @@ export const AdminAgentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async adminAgentsDelete(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MessageResponse>> {
+        async adminAgentsDelete(orgId: string, agentId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminAgentsDeleteResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.adminAgentsDelete(orgId, agentId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AdminAgentsApi.adminAgentsDelete']?.[localVarOperationServerIndex]?.url;
@@ -1119,7 +1119,7 @@ export const AdminAgentsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        adminAgentsDelete(requestParameters: AdminAgentsApiAdminAgentsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse> {
+        adminAgentsDelete(requestParameters: AdminAgentsApiAdminAgentsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsDeleteResponse> {
             return localVarFp.adminAgentsDelete(requestParameters.orgId, requestParameters.agentId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1289,7 +1289,7 @@ export interface AdminAgentsApiInterface {
      * @throws {RequiredError}
      * @memberof AdminAgentsApiInterface
      */
-    adminAgentsDelete(requestParameters: AdminAgentsApiAdminAgentsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<MessageResponse>;
+    adminAgentsDelete(requestParameters: AdminAgentsApiAdminAgentsDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminAgentsDeleteResponse>;
 
     /**
      * 

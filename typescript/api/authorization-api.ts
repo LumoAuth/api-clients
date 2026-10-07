@@ -22,9 +22,39 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AuthZenDecision } from '../models';
+// @ts-ignore
+import type { CheckAbacBulkResponse } from '../models';
+// @ts-ignore
+import type { CheckAbacResponse } from '../models';
+// @ts-ignore
+import type { CheckAnyPermissionResponse } from '../models';
+// @ts-ignore
+import type { CheckPermissionResponse } from '../models';
+// @ts-ignore
+import type { CheckPermissionsBulkResponse } from '../models';
+// @ts-ignore
+import type { CheckRelationResponse } from '../models';
+// @ts-ignore
+import type { CheckRelationScopedResponse } from '../models';
+// @ts-ignore
+import type { EvaluateBatchResponse } from '../models';
+// @ts-ignore
 import type { ExpandRelationRequest } from '../models';
 // @ts-ignore
 import type { ExpandRelationResponse } from '../models';
+// @ts-ignore
+import type { GetMyAttributesResponse } from '../models';
+// @ts-ignore
+import type { GetResourceAttributesResponse } from '../models';
+// @ts-ignore
+import type { ListAttributeDefinitionsResponse } from '../models';
+// @ts-ignore
+import type { ListPermissionsResponse } from '../models';
+// @ts-ignore
+import type { SetResourceAttributeResponse } from '../models';
+// @ts-ignore
+import type { SetUserAttributeResponse } from '../models';
 /**
  * AuthorizationApi - axios parameter creator
  * @export
@@ -33,7 +63,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
     return {
         /**
          * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-         * @summary Check ABAC authorization
+         * @summary Evaluate an ABAC policy decision for the caller
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -74,7 +104,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-         * @summary Bulk check multiple authorization requests
+         * @summary Evaluate up to 100 ABAC checks for the caller in one call
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -115,7 +145,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check if user has ALL of the specified permissions
+         * @summary Check whether the subject holds all of the permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -152,7 +182,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check if user has ANY of the specified permissions
+         * @summary Check whether the subject holds any of the permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -189,7 +219,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-         * @summary Check if the authenticated user has a specific permission
+         * @summary Check one permission
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -226,7 +256,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check multiple permissions at once
+         * @summary Check up to 100 permissions in one call
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -263,7 +293,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-         * @summary Zanzibar-style relationship check
+         * @summary Zanzibar relationship check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -300,6 +330,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * 
+         * @summary Zanzibar relationship check
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -340,7 +371,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-         * @summary AuthZEN 1.0 single access evaluation.
+         * @summary AuthZEN 1.0 access evaluation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -377,7 +408,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-         * @summary AuthZEN 1.0 boxcarred access evaluations.
+         * @summary AuthZEN 1.0 boxcarred access evaluations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -504,7 +535,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * GET /api/v1/abac/my-attributes
-         * @summary Get user\'s current attributes (for debugging/UI)
+         * @summary The caller\'s ABAC subject attributes
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -545,7 +576,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-         * @summary Get resource attributes
+         * @summary Attributes stored for a resource
          * @param {string} orgId 
          * @param {string} resourceType 
          * @param {string} resourceId 
@@ -594,12 +625,13 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-         * @summary Get available attribute definitions
+         * @summary Attribute definitions available to the organization
          * @param {string} orgId 
+         * @param {ListAttributeDefinitionsType} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAttributeDefinitions: async (orgId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAttributeDefinitions: async (orgId: string, type?: ListAttributeDefinitionsType, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'orgId' is not null or undefined
             assertParamExists('listAttributeDefinitions', 'orgId', orgId)
             const localVarPath = `/orgs/{orgId}/api/v1/abac/attribute-definitions`
@@ -622,6 +654,10 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
+            if (type !== undefined) {
+                localVarQueryParameter['type'] = type;
+            }
+
 
     
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -635,7 +671,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * GET /api/v1/authz/permissions
-         * @summary List all permissions for the authenticated user
+         * @summary List the caller\'s effective permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -672,7 +708,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-         * @summary Set resource attribute
+         * @summary Set a resource attribute
          * @param {string} orgId 
          * @param {string} resourceType 
          * @param {string} resourceId 
@@ -725,7 +761,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
         },
         /**
          * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-         * @summary Set user attribute
+         * @summary Set a user attribute
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} attributeSlug 
@@ -784,12 +820,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
     return {
         /**
          * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-         * @summary Check ABAC authorization
+         * @summary Evaluate an ABAC policy decision for the caller
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAbac(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkAbac(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAbacResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkAbac(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAbac']?.[localVarOperationServerIndex]?.url;
@@ -797,12 +833,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-         * @summary Bulk check multiple authorization requests
+         * @summary Evaluate up to 100 ABAC checks for the caller in one call
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAbacBulk(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkAbacBulk(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAbacBulkResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkAbacBulk(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAbacBulk']?.[localVarOperationServerIndex]?.url;
@@ -810,11 +846,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check if user has ALL of the specified permissions
+         * @summary Check whether the subject holds all of the permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAllPermissions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkAllPermissions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAnyPermissionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkAllPermissions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAllPermissions']?.[localVarOperationServerIndex]?.url;
@@ -822,11 +858,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check if user has ANY of the specified permissions
+         * @summary Check whether the subject holds any of the permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkAnyPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkAnyPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckAnyPermissionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkAnyPermission(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkAnyPermission']?.[localVarOperationServerIndex]?.url;
@@ -834,11 +870,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-         * @summary Check if the authenticated user has a specific permission
+         * @summary Check one permission
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkPermission(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPermissionResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkPermission(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkPermission']?.[localVarOperationServerIndex]?.url;
@@ -846,11 +882,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check multiple permissions at once
+         * @summary Check up to 100 permissions in one call
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkPermissionsBulk(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkPermissionsBulk(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckPermissionsBulkResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkPermissionsBulk(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkPermissionsBulk']?.[localVarOperationServerIndex]?.url;
@@ -858,11 +894,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-         * @summary Zanzibar-style relationship check
+         * @summary Zanzibar relationship check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkRelation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkRelation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckRelationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkRelation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkRelation']?.[localVarOperationServerIndex]?.url;
@@ -870,11 +906,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Zanzibar relationship check
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async checkRelationScoped(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async checkRelationScoped(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CheckRelationScopedResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkRelationScoped(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.checkRelationScoped']?.[localVarOperationServerIndex]?.url;
@@ -882,11 +919,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-         * @summary AuthZEN 1.0 single access evaluation.
+         * @summary AuthZEN 1.0 access evaluation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async evaluate(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthZenDecision>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.evaluate(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.evaluate']?.[localVarOperationServerIndex]?.url;
@@ -894,11 +931,11 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-         * @summary AuthZEN 1.0 boxcarred access evaluations.
+         * @summary AuthZEN 1.0 boxcarred access evaluations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async evaluateBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async evaluateBatch(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EvaluateBatchResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.evaluateBatch(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.evaluateBatch']?.[localVarOperationServerIndex]?.url;
@@ -933,12 +970,12 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * GET /api/v1/abac/my-attributes
-         * @summary Get user\'s current attributes (for debugging/UI)
+         * @summary The caller\'s ABAC subject attributes
          * @param {string} orgId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMyAttributes(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getMyAttributes(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetMyAttributesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMyAttributes(orgId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.getMyAttributes']?.[localVarOperationServerIndex]?.url;
@@ -946,14 +983,14 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-         * @summary Get resource attributes
+         * @summary Attributes stored for a resource
          * @param {string} orgId 
          * @param {string} resourceType 
          * @param {string} resourceId 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getResourceAttributes(orgId: string, resourceType: string, resourceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getResourceAttributes(orgId: string, resourceType: string, resourceId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetResourceAttributesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getResourceAttributes(orgId, resourceType, resourceId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.getResourceAttributes']?.[localVarOperationServerIndex]?.url;
@@ -961,24 +998,25 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-         * @summary Get available attribute definitions
+         * @summary Attribute definitions available to the organization
          * @param {string} orgId 
+         * @param {ListAttributeDefinitionsType} [type] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAttributeDefinitions(orgId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAttributeDefinitions(orgId, options);
+        async listAttributeDefinitions(orgId: string, type?: ListAttributeDefinitionsType, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListAttributeDefinitionsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAttributeDefinitions(orgId, type, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.listAttributeDefinitions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * GET /api/v1/authz/permissions
-         * @summary List all permissions for the authenticated user
+         * @summary List the caller\'s effective permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listPermissions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async listPermissions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListPermissionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listPermissions(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.listPermissions']?.[localVarOperationServerIndex]?.url;
@@ -986,7 +1024,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-         * @summary Set resource attribute
+         * @summary Set a resource attribute
          * @param {string} orgId 
          * @param {string} resourceType 
          * @param {string} resourceId 
@@ -994,7 +1032,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setResourceAttribute(orgId: string, resourceType: string, resourceId: string, attributeSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async setResourceAttribute(orgId: string, resourceType: string, resourceId: string, attributeSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetResourceAttributeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.setResourceAttribute(orgId, resourceType, resourceId, attributeSlug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.setResourceAttribute']?.[localVarOperationServerIndex]?.url;
@@ -1002,14 +1040,14 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
         },
         /**
          * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-         * @summary Set user attribute
+         * @summary Set a user attribute
          * @param {string} orgId 
          * @param {string} userId 
          * @param {string} attributeSlug 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async setUserAttribute(orgId: string, userId: string, attributeSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async setUserAttribute(orgId: string, userId: string, attributeSlug: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SetUserAttributeResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.setUserAttribute(orgId, userId, attributeSlug, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['AuthorizationApi.setUserAttribute']?.[localVarOperationServerIndex]?.url;
@@ -1027,94 +1065,95 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
     return {
         /**
          * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-         * @summary Check ABAC authorization
+         * @summary Evaluate an ABAC policy decision for the caller
          * @param {AuthorizationApiCheckAbacRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAbac(requestParameters: AuthorizationApiCheckAbacRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkAbac(requestParameters: AuthorizationApiCheckAbacRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAbacResponse> {
             return localVarFp.checkAbac(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-         * @summary Bulk check multiple authorization requests
+         * @summary Evaluate up to 100 ABAC checks for the caller in one call
          * @param {AuthorizationApiCheckAbacBulkRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAbacBulkResponse> {
             return localVarFp.checkAbacBulk(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check if user has ALL of the specified permissions
+         * @summary Check whether the subject holds all of the permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse> {
             return localVarFp.checkAllPermissions(options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check if user has ANY of the specified permissions
+         * @summary Check whether the subject holds any of the permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse> {
             return localVarFp.checkAnyPermission(options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-         * @summary Check if the authenticated user has a specific permission
+         * @summary Check one permission
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionResponse> {
             return localVarFp.checkPermission(options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-         * @summary Check multiple permissions at once
+         * @summary Check up to 100 permissions in one call
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkPermissionsBulk(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkPermissionsBulk(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionsBulkResponse> {
             return localVarFp.checkPermissionsBulk(options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-         * @summary Zanzibar-style relationship check
+         * @summary Zanzibar relationship check
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkRelation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkRelation(options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationResponse> {
             return localVarFp.checkRelation(options).then((request) => request(axios, basePath));
         },
         /**
          * 
+         * @summary Zanzibar relationship check
          * @param {AuthorizationApiCheckRelationScopedRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        checkRelationScoped(requestParameters: AuthorizationApiCheckRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        checkRelationScoped(requestParameters: AuthorizationApiCheckRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationScopedResponse> {
             return localVarFp.checkRelationScoped(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-         * @summary AuthZEN 1.0 single access evaluation.
+         * @summary AuthZEN 1.0 access evaluation
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluate(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        evaluate(options?: RawAxiosRequestConfig): AxiosPromise<AuthZenDecision> {
             return localVarFp.evaluate(options).then((request) => request(axios, basePath));
         },
         /**
          * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-         * @summary AuthZEN 1.0 boxcarred access evaluations.
+         * @summary AuthZEN 1.0 boxcarred access evaluations
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<EvaluateBatchResponse> {
             return localVarFp.evaluateBatch(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1139,61 +1178,61 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
         },
         /**
          * GET /api/v1/abac/my-attributes
-         * @summary Get user\'s current attributes (for debugging/UI)
+         * @summary The caller\'s ABAC subject attributes
          * @param {AuthorizationApiGetMyAttributesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMyAttributes(requestParameters: AuthorizationApiGetMyAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getMyAttributes(requestParameters: AuthorizationApiGetMyAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetMyAttributesResponse> {
             return localVarFp.getMyAttributes(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
          * GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-         * @summary Get resource attributes
+         * @summary Attributes stored for a resource
          * @param {AuthorizationApiGetResourceAttributesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getResourceAttributes(requestParameters: AuthorizationApiGetResourceAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getResourceAttributes(requestParameters: AuthorizationApiGetResourceAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetResourceAttributesResponse> {
             return localVarFp.getResourceAttributes(requestParameters.orgId, requestParameters.resourceType, requestParameters.resourceId, options).then((request) => request(axios, basePath));
         },
         /**
          * GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-         * @summary Get available attribute definitions
+         * @summary Attribute definitions available to the organization
          * @param {AuthorizationApiListAttributeDefinitionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAttributeDefinitions(requestParameters: AuthorizationApiListAttributeDefinitionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.listAttributeDefinitions(requestParameters.orgId, options).then((request) => request(axios, basePath));
+        listAttributeDefinitions(requestParameters: AuthorizationApiListAttributeDefinitionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListAttributeDefinitionsResponse> {
+            return localVarFp.listAttributeDefinitions(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
          * GET /api/v1/authz/permissions
-         * @summary List all permissions for the authenticated user
+         * @summary List the caller\'s effective permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listPermissions(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        listPermissions(options?: RawAxiosRequestConfig): AxiosPromise<ListPermissionsResponse> {
             return localVarFp.listPermissions(options).then((request) => request(axios, basePath));
         },
         /**
          * PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-         * @summary Set resource attribute
+         * @summary Set a resource attribute
          * @param {AuthorizationApiSetResourceAttributeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setResourceAttribute(requestParameters: AuthorizationApiSetResourceAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        setResourceAttribute(requestParameters: AuthorizationApiSetResourceAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetResourceAttributeResponse> {
             return localVarFp.setResourceAttribute(requestParameters.orgId, requestParameters.resourceType, requestParameters.resourceId, requestParameters.attributeSlug, options).then((request) => request(axios, basePath));
         },
         /**
          * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-         * @summary Set user attribute
+         * @summary Set a user attribute
          * @param {AuthorizationApiSetUserAttributeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        setUserAttribute(requestParameters: AuthorizationApiSetUserAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        setUserAttribute(requestParameters: AuthorizationApiSetUserAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserAttributeResponse> {
             return localVarFp.setUserAttribute(requestParameters.orgId, requestParameters.userId, requestParameters.attributeSlug, options).then((request) => request(axios, basePath));
         },
     };
@@ -1207,95 +1246,96 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
 export interface AuthorizationApiInterface {
     /**
      * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-     * @summary Check ABAC authorization
+     * @summary Evaluate an ABAC policy decision for the caller
      * @param {AuthorizationApiCheckAbacRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkAbac(requestParameters: AuthorizationApiCheckAbacRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkAbac(requestParameters: AuthorizationApiCheckAbacRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAbacResponse>;
 
     /**
      * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-     * @summary Bulk check multiple authorization requests
+     * @summary Evaluate up to 100 ABAC checks for the caller in one call
      * @param {AuthorizationApiCheckAbacBulkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkAbacBulk(requestParameters: AuthorizationApiCheckAbacBulkRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckAbacBulkResponse>;
 
     /**
      * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-     * @summary Check if user has ALL of the specified permissions
+     * @summary Check whether the subject holds all of the permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkAllPermissions(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse>;
 
     /**
      * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-     * @summary Check if user has ANY of the specified permissions
+     * @summary Check whether the subject holds any of the permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkAnyPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckAnyPermissionResponse>;
 
     /**
      * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-     * @summary Check if the authenticated user has a specific permission
+     * @summary Check one permission
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkPermission(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionResponse>;
 
     /**
      * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-     * @summary Check multiple permissions at once
+     * @summary Check up to 100 permissions in one call
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkPermissionsBulk(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkPermissionsBulk(options?: RawAxiosRequestConfig): AxiosPromise<CheckPermissionsBulkResponse>;
 
     /**
      * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-     * @summary Zanzibar-style relationship check
+     * @summary Zanzibar relationship check
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkRelation(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkRelation(options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationResponse>;
 
     /**
      * 
+     * @summary Zanzibar relationship check
      * @param {AuthorizationApiCheckRelationScopedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    checkRelationScoped(requestParameters: AuthorizationApiCheckRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    checkRelationScoped(requestParameters: AuthorizationApiCheckRelationScopedRequest, options?: RawAxiosRequestConfig): AxiosPromise<CheckRelationScopedResponse>;
 
     /**
      * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-     * @summary AuthZEN 1.0 single access evaluation.
+     * @summary AuthZEN 1.0 access evaluation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    evaluate(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    evaluate(options?: RawAxiosRequestConfig): AxiosPromise<AuthZenDecision>;
 
     /**
      * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-     * @summary AuthZEN 1.0 boxcarred access evaluations.
+     * @summary AuthZEN 1.0 boxcarred access evaluations
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    evaluateBatch(options?: RawAxiosRequestConfig): AxiosPromise<EvaluateBatchResponse>;
 
     /**
      * POST /api/v1/authz/zanzibar/expand Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\" } Response: {   \"tree\": {     \"type\": \"union\" | \"intersection\" | \"leaf\",     \"object\": \"document:123\",     \"relation\": \"viewer\",     \"children\": [ ...nested nodes... ],     \"subjects\": [ \"user:1\", \"group:2#member\" ]   } }  Expansion always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope) — there is no \"self\" variant.
@@ -1319,62 +1359,62 @@ export interface AuthorizationApiInterface {
 
     /**
      * GET /api/v1/abac/my-attributes
-     * @summary Get user\'s current attributes (for debugging/UI)
+     * @summary The caller\'s ABAC subject attributes
      * @param {AuthorizationApiGetMyAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    getMyAttributes(requestParameters: AuthorizationApiGetMyAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getMyAttributes(requestParameters: AuthorizationApiGetMyAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetMyAttributesResponse>;
 
     /**
      * GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-     * @summary Get resource attributes
+     * @summary Attributes stored for a resource
      * @param {AuthorizationApiGetResourceAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    getResourceAttributes(requestParameters: AuthorizationApiGetResourceAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    getResourceAttributes(requestParameters: AuthorizationApiGetResourceAttributesRequest, options?: RawAxiosRequestConfig): AxiosPromise<GetResourceAttributesResponse>;
 
     /**
      * GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-     * @summary Get available attribute definitions
+     * @summary Attribute definitions available to the organization
      * @param {AuthorizationApiListAttributeDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    listAttributeDefinitions(requestParameters: AuthorizationApiListAttributeDefinitionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listAttributeDefinitions(requestParameters: AuthorizationApiListAttributeDefinitionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListAttributeDefinitionsResponse>;
 
     /**
      * GET /api/v1/authz/permissions
-     * @summary List all permissions for the authenticated user
+     * @summary List the caller\'s effective permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    listPermissions(options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    listPermissions(options?: RawAxiosRequestConfig): AxiosPromise<ListPermissionsResponse>;
 
     /**
      * PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-     * @summary Set resource attribute
+     * @summary Set a resource attribute
      * @param {AuthorizationApiSetResourceAttributeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    setResourceAttribute(requestParameters: AuthorizationApiSetResourceAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    setResourceAttribute(requestParameters: AuthorizationApiSetResourceAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetResourceAttributeResponse>;
 
     /**
      * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-     * @summary Set user attribute
+     * @summary Set a user attribute
      * @param {AuthorizationApiSetUserAttributeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApiInterface
      */
-    setUserAttribute(requestParameters: AuthorizationApiSetUserAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void>;
+    setUserAttribute(requestParameters: AuthorizationApiSetUserAttributeRequest, options?: RawAxiosRequestConfig): AxiosPromise<SetUserAttributeResponse>;
 
 }
 
@@ -1509,6 +1549,13 @@ export interface AuthorizationApiListAttributeDefinitionsRequest {
      * @memberof AuthorizationApiListAttributeDefinitions
      */
     readonly orgId: string
+
+    /**
+     * 
+     * @type {'user' | 'resource' | 'environment'}
+     * @memberof AuthorizationApiListAttributeDefinitions
+     */
+    readonly type?: ListAttributeDefinitionsType
 }
 
 /**
@@ -1583,7 +1630,7 @@ export interface AuthorizationApiSetUserAttributeRequest {
 export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterface {
     /**
      * POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-     * @summary Check ABAC authorization
+     * @summary Evaluate an ABAC policy decision for the caller
      * @param {AuthorizationApiCheckAbacRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1595,7 +1642,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-     * @summary Bulk check multiple authorization requests
+     * @summary Evaluate up to 100 ABAC checks for the caller in one call
      * @param {AuthorizationApiCheckAbacBulkRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1607,7 +1654,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/check-all Body: {   \"permissions\": [\"document.edit\", \"document.publish\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-     * @summary Check if user has ALL of the specified permissions
+     * @summary Check whether the subject holds all of the permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1618,7 +1665,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/check-any Body: {   \"permissions\": [\"document.edit\", \"document.view\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-     * @summary Check if user has ANY of the specified permissions
+     * @summary Check whether the subject holds any of the permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1629,7 +1676,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/check Body: {   \"permission\": \"document.edit\",   \"context\": {\"document_id\": 123, \"owner_id\": 456},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — defaults to the caller }  All four check endpoints accept the optional `subject`. Naming a subject other than the caller requires the `authz.check` permission or the `authz:check` scope (403 `insufficient_permissions` otherwise) — see ThirdPartySubjectGuard.
-     * @summary Check if the authenticated user has a specific permission
+     * @summary Check one permission
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1640,7 +1687,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/check-bulk Body: {   \"permissions\": [\"document.edit\", \"document.delete\"],   \"context\": {\"document_id\": 123},   \"subject\": {\"type\": \"user\", \"id\": \"<uuid>\"}   // optional — see /check }
-     * @summary Check multiple permissions at once
+     * @summary Check up to 100 permissions in one call
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1651,7 +1698,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/zanzibar/check Body: {   \"object\": \"document:123\",   \"relation\": \"viewer\",   \"subject\": \"user:456\" }
-     * @summary Zanzibar-style relationship check
+     * @summary Zanzibar relationship check
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1662,6 +1709,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * 
+     * @summary Zanzibar relationship check
      * @param {AuthorizationApiCheckRelationScopedRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1673,7 +1721,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/v1/evaluation Body: {   \"subject\":  {\"type\": \"user\"|\"agent\", \"id\": \"...\"},   \"action\":   {\"name\": \"...\"},   \"resource\": {\"type\": \"...\", \"id\": \"...\"},   \"context\":  {...} } Response: {\"decision\": true|false, \"context\": {...}?}
-     * @summary AuthZEN 1.0 single access evaluation.
+     * @summary AuthZEN 1.0 access evaluation
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1684,7 +1732,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * POST /api/v1/authz/v1/evaluations Body: {   \"subject\":  {...}?,   // optional defaults, overridden per item   \"action\":   {...}?,   \"resource\": {...}?,   \"context\":  {...}?,   \"evaluations\": [{...}, ...] } Response: {\"evaluations\": [{\"decision\": ...}, ...]} preserving order.
-     * @summary AuthZEN 1.0 boxcarred access evaluations.
+     * @summary AuthZEN 1.0 boxcarred access evaluations
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1719,7 +1767,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * GET /api/v1/abac/my-attributes
-     * @summary Get user\'s current attributes (for debugging/UI)
+     * @summary The caller\'s ABAC subject attributes
      * @param {AuthorizationApiGetMyAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1731,7 +1779,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-     * @summary Get resource attributes
+     * @summary Attributes stored for a resource
      * @param {AuthorizationApiGetResourceAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1743,19 +1791,19 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-     * @summary Get available attribute definitions
+     * @summary Attribute definitions available to the organization
      * @param {AuthorizationApiListAttributeDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
      */
     public listAttributeDefinitions(requestParameters: AuthorizationApiListAttributeDefinitionsRequest, options?: RawAxiosRequestConfig) {
-        return AuthorizationApiFp(this.configuration).listAttributeDefinitions(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+        return AuthorizationApiFp(this.configuration).listAttributeDefinitions(requestParameters.orgId, requestParameters.type, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * GET /api/v1/authz/permissions
-     * @summary List all permissions for the authenticated user
+     * @summary List the caller\'s effective permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AuthorizationApi
@@ -1766,7 +1814,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-     * @summary Set resource attribute
+     * @summary Set a resource attribute
      * @param {AuthorizationApiSetResourceAttributeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1778,7 +1826,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
 
     /**
      * PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-     * @summary Set user attribute
+     * @summary Set a user attribute
      * @param {AuthorizationApiSetUserAttributeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1789,3 +1837,12 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
     }
 }
 
+/**
+  * @export
+  * @enum {string}
+  */
+export enum ListAttributeDefinitionsType {
+    USER = 'user',
+    RESOURCE = 'resource',
+    ENVIRONMENT = 'environment'
+}

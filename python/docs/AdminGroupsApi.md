@@ -4,7 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_groups_add_members**](AdminGroupsApi.md#admin_groups_add_members) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+[**admin_groups_add_members**](AdminGroupsApi.md#admin_groups_add_members) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group
 [**admin_groups_add_role**](AdminGroupsApi.md#admin_groups_add_role) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group
 [**admin_groups_create**](AdminGroupsApi.md#admin_groups_create) | **POST** /orgs/{orgId}/api/v1/admin/groups | Create a new group
 [**admin_groups_delete**](AdminGroupsApi.md#admin_groups_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group
@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**admin_groups_get_members**](AdminGroupsApi.md#admin_groups_get_members) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 [**admin_groups_groups_get_roles**](AdminGroupsApi.md#admin_groups_groups_get_roles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
 [**admin_groups_list**](AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
-[**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email
+[**admin_groups_remove_member**](AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 [**admin_groups_remove_role**](AdminGroupsApi.md#admin_groups_remove_role) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 [**admin_groups_update_roles**](AdminGroupsApi.md#admin_groups_update_roles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
 [**patch_admin_groups_update**](AdminGroupsApi.md#patch_admin_groups_update) | **PATCH** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group
@@ -20,9 +20,9 @@ Method | HTTP request | Description
 
 
 # **admin_groups_add_members**
-> admin_groups_add_members(org_id, group_id)
+> AdminGroupsCreateResponse admin_groups_add_members(org_id, group_id)
 
-Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+Add member(s) to group
 
 ### Example
 
@@ -31,6 +31,7 @@ Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -64,8 +65,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     group_id = 'group_id_example' # str | 
 
     try:
-        # Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
-        api_instance.admin_groups_add_members(org_id, group_id)
+        # Add member(s) to group
+        api_response = api_instance.admin_groups_add_members(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_add_members:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_add_members: %s\n" % e)
 ```
@@ -82,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -91,18 +94,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated group; message reports how many members were added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_add_role**
-> admin_groups_add_role(org_id, group_id)
+> MessageResponse admin_groups_add_role(org_id, group_id)
 
 Add a single role to a group
 
@@ -113,6 +116,7 @@ Add a single role to a group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -147,7 +151,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Add a single role to a group
-        api_instance.admin_groups_add_role(org_id, group_id)
+        api_response = api_instance.admin_groups_add_role(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_add_role:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_add_role: %s\n" % e)
 ```
@@ -164,7 +170,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -173,18 +179,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Added |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_create**
-> admin_groups_create(org_id)
+> AdminGroupsCreateResponse admin_groups_create(org_id)
 
 Create a new group
 
@@ -195,6 +201,7 @@ Create a new group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -228,7 +235,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Create a new group
-        api_instance.admin_groups_create(org_id)
+        api_response = api_instance.admin_groups_create(org_id)
+        print("The response of AdminGroupsApi->admin_groups_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_create: %s\n" % e)
 ```
@@ -244,7 +253,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -253,18 +262,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Created group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_delete**
-> admin_groups_delete(org_id, group_id)
+> MessageResponse admin_groups_delete(org_id, group_id)
 
 Delete a group
 
@@ -275,6 +284,7 @@ Delete a group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -309,7 +319,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Delete a group
-        api_instance.admin_groups_delete(org_id, group_id)
+        api_response = api_instance.admin_groups_delete(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_delete: %s\n" % e)
 ```
@@ -326,7 +338,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -335,18 +347,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_get**
-> admin_groups_get(org_id, group_id)
+> AdminGroupsGetResponse admin_groups_get(org_id, group_id)
 
 Get a single group by ID or slug
 
@@ -357,6 +369,7 @@ Get a single group by ID or slug
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_get_response import AdminGroupsGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -391,7 +404,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get a single group by ID or slug
-        api_instance.admin_groups_get(org_id, group_id)
+        api_response = api_instance.admin_groups_get(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_get: %s\n" % e)
 ```
@@ -408,7 +423,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGetResponse**](AdminGroupsGetResponse.md)
 
 ### Authorization
 
@@ -417,18 +432,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_get_members**
-> admin_groups_get_members(org_id, group_id)
+> AdminGroupsGetMembersResponse admin_groups_get_members(org_id, group_id)
 
 Get group members
 
@@ -439,6 +454,7 @@ Get group members
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_get_members_response import AdminGroupsGetMembersResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -473,7 +489,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get group members
-        api_instance.admin_groups_get_members(org_id, group_id)
+        api_response = api_instance.admin_groups_get_members(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_get_members:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_get_members: %s\n" % e)
 ```
@@ -490,7 +508,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGetMembersResponse**](AdminGroupsGetMembersResponse.md)
 
 ### Authorization
 
@@ -499,18 +517,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Group members |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_groups_get_roles**
-> admin_groups_groups_get_roles(org_id, group_id)
+> AdminGroupsGroupsGetRolesResponse admin_groups_groups_get_roles(org_id, group_id)
 
 Get group roles
 
@@ -521,6 +539,7 @@ Get group roles
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_groups_get_roles_response import AdminGroupsGroupsGetRolesResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -555,7 +574,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get group roles
-        api_instance.admin_groups_groups_get_roles(org_id, group_id)
+        api_response = api_instance.admin_groups_groups_get_roles(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_groups_get_roles:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_groups_get_roles: %s\n" % e)
 ```
@@ -572,7 +593,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -581,18 +602,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Group roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_list**
-> admin_groups_list(org_id)
+> AdminGroupsListResponse admin_groups_list(org_id)
 
 List all groups in the tenant
 
@@ -603,6 +624,7 @@ List all groups in the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_list_response import AdminGroupsListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -636,7 +658,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # List all groups in the tenant
-        api_instance.admin_groups_list(org_id)
+        api_response = api_instance.admin_groups_list(org_id)
+        print("The response of AdminGroupsApi->admin_groups_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_list: %s\n" % e)
 ```
@@ -652,7 +676,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsListResponse**](AdminGroupsListResponse.md)
 
 ### Authorization
 
@@ -661,20 +685,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Groups |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_remove_member**
-> admin_groups_remove_member(org_id, group_id, user_id)
+> MessageResponse admin_groups_remove_member(org_id, group_id, user_id)
 
-Remove member from group — userId is a UUID or email
+Remove member from group
 
 ### Example
 
@@ -683,6 +707,7 @@ Remove member from group — userId is a UUID or email
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -717,8 +742,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     user_id = 'user_id_example' # str | 
 
     try:
-        # Remove member from group — userId is a UUID or email
-        api_instance.admin_groups_remove_member(org_id, group_id, user_id)
+        # Remove member from group
+        api_response = api_instance.admin_groups_remove_member(org_id, group_id, user_id)
+        print("The response of AdminGroupsApi->admin_groups_remove_member:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_remove_member: %s\n" % e)
 ```
@@ -736,7 +763,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -745,18 +772,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_remove_role**
-> admin_groups_remove_role(org_id, group_id, role_id)
+> MessageResponse admin_groups_remove_role(org_id, group_id, role_id)
 
 Remove a role from a group
 
@@ -767,6 +794,7 @@ Remove a role from a group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -802,7 +830,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Remove a role from a group
-        api_instance.admin_groups_remove_role(org_id, group_id, role_id)
+        api_response = api_instance.admin_groups_remove_role(org_id, group_id, role_id)
+        print("The response of AdminGroupsApi->admin_groups_remove_role:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_remove_role: %s\n" % e)
 ```
@@ -820,7 +850,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -829,18 +859,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_groups_update_roles**
-> admin_groups_update_roles(org_id, group_id)
+> AdminGroupsCreateResponse admin_groups_update_roles(org_id, group_id)
 
 Update group roles (replaces all existing roles)
 
@@ -851,6 +881,7 @@ Update group roles (replaces all existing roles)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -885,7 +916,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update group roles (replaces all existing roles)
-        api_instance.admin_groups_update_roles(org_id, group_id)
+        api_response = api_instance.admin_groups_update_roles(org_id, group_id)
+        print("The response of AdminGroupsApi->admin_groups_update_roles:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->admin_groups_update_roles: %s\n" % e)
 ```
@@ -902,7 +935,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -911,18 +944,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_groups_update**
-> patch_admin_groups_update(org_id, group_id)
+> AdminGroupsCreateResponse patch_admin_groups_update(org_id, group_id)
 
 Update an existing group
 
@@ -933,6 +966,7 @@ Update an existing group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -967,7 +1001,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update an existing group
-        api_instance.patch_admin_groups_update(org_id, group_id)
+        api_response = api_instance.patch_admin_groups_update(org_id, group_id)
+        print("The response of AdminGroupsApi->patch_admin_groups_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->patch_admin_groups_update: %s\n" % e)
 ```
@@ -984,7 +1020,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -993,18 +1029,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_groups_update**
-> put_admin_groups_update(org_id, group_id)
+> AdminGroupsCreateResponse put_admin_groups_update(org_id, group_id)
 
 Update an existing group
 
@@ -1015,6 +1051,7 @@ Update an existing group
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_groups_create_response import AdminGroupsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1049,7 +1086,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update an existing group
-        api_instance.put_admin_groups_update(org_id, group_id)
+        api_response = api_instance.put_admin_groups_update(org_id, group_id)
+        print("The response of AdminGroupsApi->put_admin_groups_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminGroupsApi->put_admin_groups_update: %s\n" % e)
 ```
@@ -1066,7 +1105,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsCreateResponse**](AdminGroupsCreateResponse.md)
 
 ### Authorization
 
@@ -1075,13 +1114,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated group |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

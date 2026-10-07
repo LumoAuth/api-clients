@@ -4,30 +4,32 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_org_invitations_create**](AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | 
-[**admin_org_invitations_list**](AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | 
-[**admin_org_invitations_resend**](AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | 
-[**admin_org_invitations_revoke**](AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | 
-[**admin_org_members_add**](AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | 
-[**admin_org_members_list**](AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | 
-[**admin_org_members_remove**](AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-[**admin_org_roles_create**](AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | 
-[**admin_org_roles_delete**](AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-[**admin_org_roles_list**](AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | 
-[**admin_organizations_create**](AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | 
-[**admin_organizations_delete**](AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-[**admin_organizations_get**](AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-[**admin_organizations_list**](AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | 
-[**patch_admin_org_members_update**](AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-[**patch_admin_org_roles_update**](AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-[**patch_admin_organizations_update**](AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-[**put_admin_org_members_update**](AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-[**put_admin_org_roles_update**](AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-[**put_admin_organizations_update**](AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
+[**admin_org_invitations_create**](AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
+[**admin_org_invitations_list**](AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
+[**admin_org_invitations_resend**](AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
+[**admin_org_invitations_revoke**](AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation
+[**admin_org_members_add**](AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization
+[**admin_org_members_list**](AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members
+[**admin_org_members_remove**](AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization
+[**admin_org_roles_create**](AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role
+[**admin_org_roles_delete**](AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role
+[**admin_org_roles_list**](AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles
+[**admin_organizations_create**](AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization
+[**admin_organizations_delete**](AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization
+[**admin_organizations_get**](AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization
+[**admin_organizations_list**](AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations
+[**patch_admin_org_members_update**](AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status
+[**patch_admin_org_roles_update**](AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
+[**patch_admin_organizations_update**](AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
+[**put_admin_org_members_update**](AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member&#39;s role or status
+[**put_admin_org_roles_update**](AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
+[**put_admin_organizations_update**](AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
 
 
 # **admin_org_invitations_create**
-> admin_org_invitations_create(org_id, organization_id)
+> AdminOrgInvitationsCreateResponse admin_org_invitations_create(org_id, organization_id)
+
+Invite a user to an organization
 
 ### Example
 
@@ -36,6 +38,7 @@ Method | HTTP request | Description
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_invitations_create_response import AdminOrgInvitationsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -69,7 +72,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_org_invitations_create(org_id, organization_id)
+        # Invite a user to an organization
+        api_response = api_instance.admin_org_invitations_create(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_org_invitations_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_invitations_create: %s\n" % e)
 ```
@@ -86,7 +92,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgInvitationsCreateResponse**](AdminOrgInvitationsCreateResponse.md)
 
 ### Authorization
 
@@ -95,18 +101,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Invitation sent |  -  |
+**400** | Invalid role for this organization |  -  |
+**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_invitations_list**
-> admin_org_invitations_list(org_id, organization_id)
+> AdminOrgInvitationsListResponse admin_org_invitations_list(org_id, organization_id)
+
+List organization invitations
 
 ### Example
 
@@ -115,6 +125,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_invitations_list_response import AdminOrgInvitationsListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -148,7 +159,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_org_invitations_list(org_id, organization_id)
+        # List organization invitations
+        api_response = api_instance.admin_org_invitations_list(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_org_invitations_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_invitations_list: %s\n" % e)
 ```
@@ -165,7 +179,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgInvitationsListResponse**](AdminOrgInvitationsListResponse.md)
 
 ### Authorization
 
@@ -174,18 +188,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Invitations |  -  |
+**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_invitations_resend**
-> admin_org_invitations_resend(org_id, organization_id, inv_id)
+> MessageResponse admin_org_invitations_resend(org_id, organization_id, inv_id)
+
+Resend an invitation
 
 ### Example
 
@@ -194,6 +211,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -228,7 +246,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     inv_id = 'inv_id_example' # str | 
 
     try:
-        api_instance.admin_org_invitations_resend(org_id, organization_id, inv_id)
+        # Resend an invitation
+        api_response = api_instance.admin_org_invitations_resend(org_id, organization_id, inv_id)
+        print("The response of AdminOrganizationsApi->admin_org_invitations_resend:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_invitations_resend: %s\n" % e)
 ```
@@ -246,7 +267,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -255,18 +276,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Invitation resent |  -  |
+**404** | Organization or invitation not found |  -  |
+**422** | Unable to resend invitation |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_invitations_revoke**
-> admin_org_invitations_revoke(org_id, organization_id, inv_id)
+> MessageResponse admin_org_invitations_revoke(org_id, organization_id, inv_id)
+
+Revoke an invitation
 
 ### Example
 
@@ -275,6 +300,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -309,7 +335,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     inv_id = 'inv_id_example' # str | 
 
     try:
-        api_instance.admin_org_invitations_revoke(org_id, organization_id, inv_id)
+        # Revoke an invitation
+        api_response = api_instance.admin_org_invitations_revoke(org_id, organization_id, inv_id)
+        print("The response of AdminOrganizationsApi->admin_org_invitations_revoke:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_invitations_revoke: %s\n" % e)
 ```
@@ -327,7 +356,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -336,18 +365,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Invitation revoked |  -  |
+**404** | Organization or invitation not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_members_add**
-> admin_org_members_add(org_id, organization_id)
+> AdminOrgMembersAddResponse admin_org_members_add(org_id, organization_id)
+
+Add a member to an organization
 
 ### Example
 
@@ -356,6 +388,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_members_add_response import AdminOrgMembersAddResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -389,7 +422,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_org_members_add(org_id, organization_id)
+        # Add a member to an organization
+        api_response = api_instance.admin_org_members_add(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_org_members_add:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_members_add: %s\n" % e)
 ```
@@ -406,7 +442,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgMembersAddResponse**](AdminOrgMembersAddResponse.md)
 
 ### Authorization
 
@@ -415,18 +451,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Member added |  -  |
+**404** | Organization, user or role not found |  -  |
+**409** | User is already a member |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_members_list**
-> admin_org_members_list(org_id, organization_id)
+> AdminOrgMembersListResponse admin_org_members_list(org_id, organization_id)
+
+List organization members
 
 ### Example
 
@@ -435,6 +475,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_members_list_response import AdminOrgMembersListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -468,7 +509,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_org_members_list(org_id, organization_id)
+        # List organization members
+        api_response = api_instance.admin_org_members_list(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_org_members_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_members_list: %s\n" % e)
 ```
@@ -485,7 +529,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgMembersListResponse**](AdminOrgMembersListResponse.md)
 
 ### Authorization
 
@@ -494,18 +538,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Members |  -  |
+**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_members_remove**
-> admin_org_members_remove(org_id, organization_id, user_id)
+> MessageResponse admin_org_members_remove(org_id, organization_id, user_id)
+
+Remove a member from an organization
 
 ### Example
 
@@ -514,6 +561,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -548,7 +596,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     user_id = 'user_id_example' # str | 
 
     try:
-        api_instance.admin_org_members_remove(org_id, organization_id, user_id)
+        # Remove a member from an organization
+        api_response = api_instance.admin_org_members_remove(org_id, organization_id, user_id)
+        print("The response of AdminOrganizationsApi->admin_org_members_remove:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_members_remove: %s\n" % e)
 ```
@@ -566,7 +617,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -575,18 +626,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Member removed |  -  |
+**404** | Organization or user not found |  -  |
+**422** | Unable to remove member |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_roles_create**
-> admin_org_roles_create(org_id, organization_id)
+> AdminOrgRolesCreateResponse admin_org_roles_create(org_id, organization_id)
+
+Create an organization role
 
 ### Example
 
@@ -595,6 +650,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_roles_create_response import AdminOrgRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -628,7 +684,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_org_roles_create(org_id, organization_id)
+        # Create an organization role
+        api_response = api_instance.admin_org_roles_create(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_org_roles_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_roles_create: %s\n" % e)
 ```
@@ -645,7 +704,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -654,18 +713,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Role created |  -  |
+**404** | Organization not found |  -  |
+**409** | A role with this name or slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_roles_delete**
-> admin_org_roles_delete(org_id, organization_id, role_id)
+> MessageResponse admin_org_roles_delete(org_id, organization_id, role_id)
+
+Delete an organization role
 
 ### Example
 
@@ -674,6 +737,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -708,7 +772,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     role_id = 'role_id_example' # str | 
 
     try:
-        api_instance.admin_org_roles_delete(org_id, organization_id, role_id)
+        # Delete an organization role
+        api_response = api_instance.admin_org_roles_delete(org_id, organization_id, role_id)
+        print("The response of AdminOrganizationsApi->admin_org_roles_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_roles_delete: %s\n" % e)
 ```
@@ -726,7 +793,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -735,18 +802,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Role deleted |  -  |
+**404** | Organization or role not found |  -  |
+**422** | Role still in use |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_org_roles_list**
-> admin_org_roles_list(org_id, organization_id)
+> AdminOrgRolesListResponse admin_org_roles_list(org_id, organization_id)
+
+List organization roles
 
 ### Example
 
@@ -755,6 +826,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_roles_list_response import AdminOrgRolesListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -788,7 +860,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_org_roles_list(org_id, organization_id)
+        # List organization roles
+        api_response = api_instance.admin_org_roles_list(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_org_roles_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_org_roles_list: %s\n" % e)
 ```
@@ -805,7 +880,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesListResponse**](AdminOrgRolesListResponse.md)
 
 ### Authorization
 
@@ -814,18 +889,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Roles |  -  |
+**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_organizations_create**
-> admin_organizations_create(org_id)
+> AdminOrganizationsCreateResponse admin_organizations_create(org_id)
+
+Create an organization
 
 ### Example
 
@@ -834,6 +912,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_organizations_create_response import AdminOrganizationsCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -866,7 +945,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.admin_organizations_create(org_id)
+        # Create an organization
+        api_response = api_instance.admin_organizations_create(org_id)
+        print("The response of AdminOrganizationsApi->admin_organizations_create:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_organizations_create: %s\n" % e)
 ```
@@ -882,7 +964,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsCreateResponse**](AdminOrganizationsCreateResponse.md)
 
 ### Authorization
 
@@ -891,18 +973,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**201** | Organization created |  -  |
+**409** | Organization already exists or data invalid |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_organizations_delete**
-> admin_organizations_delete(org_id, organization_id)
+> MessageResponse admin_organizations_delete(org_id, organization_id)
+
+Delete an organization
 
 ### Example
 
@@ -911,6 +996,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -944,7 +1030,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_organizations_delete(org_id, organization_id)
+        # Delete an organization
+        api_response = api_instance.admin_organizations_delete(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_organizations_delete:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_organizations_delete: %s\n" % e)
 ```
@@ -961,7 +1050,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -970,18 +1059,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Organization deleted |  -  |
+**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_organizations_get**
-> admin_organizations_get(org_id, organization_id)
+> AdminOrganizationsGetResponse admin_organizations_get(org_id, organization_id)
+
+Get an organization
 
 ### Example
 
@@ -990,6 +1082,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_organizations_get_response import AdminOrganizationsGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1023,7 +1116,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.admin_organizations_get(org_id, organization_id)
+        # Get an organization
+        api_response = api_instance.admin_organizations_get(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->admin_organizations_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_organizations_get: %s\n" % e)
 ```
@@ -1040,7 +1136,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1049,18 +1145,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Organization |  -  |
+**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_organizations_list**
-> admin_organizations_list(org_id)
+> AdminOrganizationsListResponse admin_organizations_list(org_id)
+
+List organizations
 
 ### Example
 
@@ -1069,6 +1168,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_organizations_list_response import AdminOrganizationsListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1101,7 +1201,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        api_instance.admin_organizations_list(org_id)
+        # List organizations
+        api_response = api_instance.admin_organizations_list(org_id)
+        print("The response of AdminOrganizationsApi->admin_organizations_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->admin_organizations_list: %s\n" % e)
 ```
@@ -1117,7 +1220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsListResponse**](AdminOrganizationsListResponse.md)
 
 ### Authorization
 
@@ -1126,18 +1229,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Organizations |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_org_members_update**
-> patch_admin_org_members_update(org_id, organization_id, user_id)
+> PutAdminOrgMembersUpdateResponse patch_admin_org_members_update(org_id, organization_id, user_id)
+
+Update a member's role or status
 
 ### Example
 
@@ -1146,6 +1251,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_org_members_update_response import PutAdminOrgMembersUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1180,7 +1286,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     user_id = 'user_id_example' # str | 
 
     try:
-        api_instance.patch_admin_org_members_update(org_id, organization_id, user_id)
+        # Update a member's role or status
+        api_response = api_instance.patch_admin_org_members_update(org_id, organization_id, user_id)
+        print("The response of AdminOrganizationsApi->patch_admin_org_members_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->patch_admin_org_members_update: %s\n" % e)
 ```
@@ -1198,7 +1307,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1207,18 +1316,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated member |  -  |
+**404** | Organization, member or role not found |  -  |
+**422** | Unable to update member role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_org_roles_update**
-> patch_admin_org_roles_update(org_id, organization_id, role_id)
+> AdminOrgRolesCreateResponse patch_admin_org_roles_update(org_id, organization_id, role_id)
+
+Update an organization role
 
 ### Example
 
@@ -1227,6 +1340,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_roles_create_response import AdminOrgRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1261,7 +1375,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     role_id = 'role_id_example' # str | 
 
     try:
-        api_instance.patch_admin_org_roles_update(org_id, organization_id, role_id)
+        # Update an organization role
+        api_response = api_instance.patch_admin_org_roles_update(org_id, organization_id, role_id)
+        print("The response of AdminOrganizationsApi->patch_admin_org_roles_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->patch_admin_org_roles_update: %s\n" % e)
 ```
@@ -1279,7 +1396,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1288,18 +1405,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated role |  -  |
+**404** | Organization or role not found |  -  |
+**422** | Unable to update role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_organizations_update**
-> patch_admin_organizations_update(org_id, organization_id)
+> AdminOrganizationsGetResponse patch_admin_organizations_update(org_id, organization_id)
+
+Update an organization
 
 ### Example
 
@@ -1308,6 +1429,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_organizations_get_response import AdminOrganizationsGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1341,7 +1463,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.patch_admin_organizations_update(org_id, organization_id)
+        # Update an organization
+        api_response = api_instance.patch_admin_organizations_update(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->patch_admin_organizations_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->patch_admin_organizations_update: %s\n" % e)
 ```
@@ -1358,7 +1483,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1367,18 +1492,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated organization |  -  |
+**404** | Organization not found |  -  |
+**409** | Data invalid or conflicts with an existing record |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_org_members_update**
-> put_admin_org_members_update(org_id, organization_id, user_id)
+> PutAdminOrgMembersUpdateResponse put_admin_org_members_update(org_id, organization_id, user_id)
+
+Update a member's role or status
 
 ### Example
 
@@ -1387,6 +1516,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.put_admin_org_members_update_response import PutAdminOrgMembersUpdateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1421,7 +1551,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     user_id = 'user_id_example' # str | 
 
     try:
-        api_instance.put_admin_org_members_update(org_id, organization_id, user_id)
+        # Update a member's role or status
+        api_response = api_instance.put_admin_org_members_update(org_id, organization_id, user_id)
+        print("The response of AdminOrganizationsApi->put_admin_org_members_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->put_admin_org_members_update: %s\n" % e)
 ```
@@ -1439,7 +1572,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**PutAdminOrgMembersUpdateResponse**](PutAdminOrgMembersUpdateResponse.md)
 
 ### Authorization
 
@@ -1448,18 +1581,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated member |  -  |
+**404** | Organization, member or role not found |  -  |
+**422** | Unable to update member role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_org_roles_update**
-> put_admin_org_roles_update(org_id, organization_id, role_id)
+> AdminOrgRolesCreateResponse put_admin_org_roles_update(org_id, organization_id, role_id)
+
+Update an organization role
 
 ### Example
 
@@ -1468,6 +1605,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_org_roles_create_response import AdminOrgRolesCreateResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1502,7 +1640,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     role_id = 'role_id_example' # str | 
 
     try:
-        api_instance.put_admin_org_roles_update(org_id, organization_id, role_id)
+        # Update an organization role
+        api_response = api_instance.put_admin_org_roles_update(org_id, organization_id, role_id)
+        print("The response of AdminOrganizationsApi->put_admin_org_roles_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->put_admin_org_roles_update: %s\n" % e)
 ```
@@ -1520,7 +1661,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrgRolesCreateResponse**](AdminOrgRolesCreateResponse.md)
 
 ### Authorization
 
@@ -1529,18 +1670,22 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated role |  -  |
+**404** | Organization or role not found |  -  |
+**422** | Unable to update role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_organizations_update**
-> put_admin_organizations_update(org_id, organization_id)
+> AdminOrganizationsGetResponse put_admin_organizations_update(org_id, organization_id)
+
+Update an organization
 
 ### Example
 
@@ -1549,6 +1694,7 @@ void (empty response body)
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_organizations_get_response import AdminOrganizationsGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -1582,7 +1728,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     organization_id = 'organization_id_example' # str | 
 
     try:
-        api_instance.put_admin_organizations_update(org_id, organization_id)
+        # Update an organization
+        api_response = api_instance.put_admin_organizations_update(org_id, organization_id)
+        print("The response of AdminOrganizationsApi->put_admin_organizations_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminOrganizationsApi->put_admin_organizations_update: %s\n" % e)
 ```
@@ -1599,7 +1748,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminOrganizationsGetResponse**](AdminOrganizationsGetResponse.md)
 
 ### Authorization
 
@@ -1608,13 +1757,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated organization |  -  |
+**404** | Organization not found |  -  |
+**409** | Data invalid or conflicts with an existing record |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

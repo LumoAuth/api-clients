@@ -14,6 +14,14 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.CreateClientResponse;
+import io.lumoauth.client.model.GetClientResponse;
+import io.lumoauth.client.model.ListClientScopesResponse;
+import io.lumoauth.client.model.ListClientsResponse;
+import io.lumoauth.client.model.MessageResponse;
+import io.lumoauth.client.model.RotateClientSecretResponse;
+import io.lumoauth.client.model.SetClientScopesResponse;
+import io.lumoauth.client.model.UpdateClientResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,14 +39,14 @@ public class AdminOAuthClientsApiTest {
     private final AdminOAuthClientsApi api = new AdminOAuthClientsApi();
 
     /**
-     * Create a new OAuth client
+     * Create an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void createClientTest() throws ApiException {
         String orgId = null;
-        api.createClient(orgId);
+        CreateClientResponse response = api.createClient(orgId);
         // TODO: test validations
     }
 
@@ -51,12 +59,12 @@ public class AdminOAuthClientsApiTest {
     public void deleteClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.deleteClient(orgId, clientId);
+        MessageResponse response = api.deleteClient(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Disable OAuth client
+     * Disable an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -64,12 +72,12 @@ public class AdminOAuthClientsApiTest {
     public void disableClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.disableClient(orgId, clientId);
+        UpdateClientResponse response = api.disableClient(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Enable OAuth client
+     * Enable an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -77,12 +85,12 @@ public class AdminOAuthClientsApiTest {
     public void enableClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.enableClient(orgId, clientId);
+        UpdateClientResponse response = api.enableClient(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Get a single OAuth client by ID or clientId
+     * Get an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -90,12 +98,12 @@ public class AdminOAuthClientsApiTest {
     public void getClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.getClient(orgId, clientId);
+        GetClientResponse response = api.getClient(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Get client scopes
+     * List the scopes granted to an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -103,24 +111,24 @@ public class AdminOAuthClientsApiTest {
     public void listClientScopesTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.listClientScopes(orgId, clientId);
+        ListClientScopesResponse response = api.listClientScopes(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * List all OAuth clients in the tenant
+     * List OAuth clients
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void listClientsTest() throws ApiException {
         String orgId = null;
-        api.listClients(orgId);
+        ListClientsResponse response = api.listClients(orgId);
         // TODO: test validations
     }
 
     /**
-     * Update an existing OAuth client
+     * Update an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -128,12 +136,12 @@ public class AdminOAuthClientsApiTest {
     public void patchClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.patchClient(orgId, clientId);
+        UpdateClientResponse response = api.patchClient(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Rotate client secret
+     * Rotate an OAuth client secret
      *
      * @throws ApiException if the Api call fails
      */
@@ -141,12 +149,12 @@ public class AdminOAuthClientsApiTest {
     public void rotateClientSecretTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.rotateClientSecret(orgId, clientId);
+        RotateClientSecretResponse response = api.rotateClientSecret(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Set client scopes
+     * Replace the scopes granted to an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -154,12 +162,12 @@ public class AdminOAuthClientsApiTest {
     public void setClientScopesTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.setClientScopes(orgId, clientId);
+        SetClientScopesResponse response = api.setClientScopes(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Update an existing OAuth client
+     * Replace an OAuth client
      *
      * @throws ApiException if the Api call fails
      */
@@ -167,7 +175,7 @@ public class AdminOAuthClientsApiTest {
     public void updateClientTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.updateClient(orgId, clientId);
+        UpdateClientResponse response = api.updateClient(orgId, clientId);
         // TODO: test validations
     }
 

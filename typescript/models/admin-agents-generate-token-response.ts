@@ -13,6 +13,9 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { AdminAgentsGenerateTokenResponseData } from './admin-agents-generate-token-response-data';
 
 /**
  * 
@@ -21,10 +24,10 @@
  */
 export interface AdminAgentsGenerateTokenResponse {
     /**
-     * The issued token and its metadata (access_token, expires_in, ...).
-     * @type {object}
+     * 
+     * @type {AdminAgentsGenerateTokenResponseData}
      * @memberof AdminAgentsGenerateTokenResponse
      */
-    'data'?: object;
+    'data'?: AdminAgentsGenerateTokenResponseData;
 }
 

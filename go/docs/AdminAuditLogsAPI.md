@@ -4,12 +4,12 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminAuditLogsActions**](AdminAuditLogsAPI.md#AdminAuditLogsActions) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant
-[**AdminAuditLogsExport**](AdminAuditLogsAPI.md#AdminAuditLogsExport) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON
-[**AdminAuditLogsGet**](AdminAuditLogsAPI.md#AdminAuditLogsGet) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry
-[**AdminAuditLogsList**](AdminAuditLogsAPI.md#AdminAuditLogsList) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant
+[**AdminAuditLogsActions**](AdminAuditLogsAPI.md#AdminAuditLogsActions) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+[**AdminAuditLogsExport**](AdminAuditLogsAPI.md#AdminAuditLogsExport) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
+[**AdminAuditLogsGet**](AdminAuditLogsAPI.md#AdminAuditLogsGet) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
+[**AdminAuditLogsList**](AdminAuditLogsAPI.md#AdminAuditLogsList) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
 [**AdminAuditLogsRetention**](AdminAuditLogsAPI.md#AdminAuditLogsRetention) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings
-[**AdminAuditLogsStats**](AdminAuditLogsAPI.md#AdminAuditLogsStats) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics
+[**AdminAuditLogsStats**](AdminAuditLogsAPI.md#AdminAuditLogsStats) | **Get** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days)
 [**PatchAdminAuditLogsRetentionUpdate**](AdminAuditLogsAPI.md#PatchAdminAuditLogsRetentionUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 [**PutAdminAuditLogsRetentionUpdate**](AdminAuditLogsAPI.md#PutAdminAuditLogsRetentionUpdate) | **Put** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 
@@ -17,9 +17,9 @@ Method | HTTP request | Description
 
 ## AdminAuditLogsActions
 
-> AdminAuditLogsActions(ctx, orgId).Execute()
+> AdminAuditLogsActionsResponse AdminAuditLogsActions(ctx, orgId).Execute()
 
-List available audit action types for this tenant
+List the distinct audit action types recorded for the tenant
 
 ### Example
 
@@ -38,11 +38,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsActions(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsActions(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.AdminAuditLogsActions``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAuditLogsActions`: AdminAuditLogsActionsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.AdminAuditLogsActions`: %v\n", resp)
 }
 ```
 
@@ -65,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsActionsResponse**](AdminAuditLogsActionsResponse.md)
 
 ### Authorization
 
@@ -74,7 +76,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -83,9 +85,9 @@ Name | Type | Description  | Notes
 
 ## AdminAuditLogsExport
 
-> AdminAuditLogsExport(ctx, orgId).Execute()
+> string AdminAuditLogsExport(ctx, orgId).Execute()
 
-Export audit logs as CSV or JSON
+Export audit logs as CSV (default) or JSON
 
 ### Example
 
@@ -104,11 +106,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsExport(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsExport(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.AdminAuditLogsExport``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAuditLogsExport`: string
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.AdminAuditLogsExport`: %v\n", resp)
 }
 ```
 
@@ -131,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -140,7 +144,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/csv, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -149,9 +153,9 @@ Name | Type | Description  | Notes
 
 ## AdminAuditLogsGet
 
-> AdminAuditLogsGet(ctx, orgId, logId).Execute()
+> AdminAuditLogsGetResponse AdminAuditLogsGet(ctx, orgId, logId).Execute()
 
-Get a single audit log entry
+Get an audit log entry
 
 ### Example
 
@@ -171,11 +175,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsGet(context.Background(), orgId, logId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsGet(context.Background(), orgId, logId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.AdminAuditLogsGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAuditLogsGet`: AdminAuditLogsGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.AdminAuditLogsGet`: %v\n", resp)
 }
 ```
 
@@ -200,7 +206,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsGetResponse**](AdminAuditLogsGetResponse.md)
 
 ### Authorization
 
@@ -209,7 +215,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -218,9 +224,9 @@ Name | Type | Description  | Notes
 
 ## AdminAuditLogsList
 
-> AdminAuditLogsList(ctx, orgId).Execute()
+> AdminAuditLogsListResponse AdminAuditLogsList(ctx, orgId).Execute()
 
-List audit logs for the tenant
+List audit log entries
 
 ### Example
 
@@ -239,11 +245,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.AdminAuditLogsList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAuditLogsList`: AdminAuditLogsListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.AdminAuditLogsList`: %v\n", resp)
 }
 ```
 
@@ -266,7 +274,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsListResponse**](AdminAuditLogsListResponse.md)
 
 ### Authorization
 
@@ -275,7 +283,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -284,7 +292,7 @@ Name | Type | Description  | Notes
 
 ## AdminAuditLogsRetention
 
-> AdminAuditLogsRetention(ctx, orgId).Execute()
+> AdminAuditLogsRetentionResponse AdminAuditLogsRetention(ctx, orgId).Execute()
 
 Get audit log retention settings
 
@@ -305,11 +313,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsRetention(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsRetention(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.AdminAuditLogsRetention``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAuditLogsRetention`: AdminAuditLogsRetentionResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.AdminAuditLogsRetention`: %v\n", resp)
 }
 ```
 
@@ -332,7 +342,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -341,7 +351,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -350,9 +360,9 @@ Name | Type | Description  | Notes
 
 ## AdminAuditLogsStats
 
-> AdminAuditLogsStats(ctx, orgId).Execute()
+> AdminAuditLogsStatsResponse AdminAuditLogsStats(ctx, orgId).Execute()
 
-Get audit log statistics
+Audit log statistics for a period (default: last 30 days)
 
 ### Example
 
@@ -371,11 +381,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsStats(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.AdminAuditLogsStats(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.AdminAuditLogsStats``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminAuditLogsStats`: AdminAuditLogsStatsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.AdminAuditLogsStats`: %v\n", resp)
 }
 ```
 
@@ -398,7 +410,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsStatsResponse**](AdminAuditLogsStatsResponse.md)
 
 ### Authorization
 
@@ -407,7 +419,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -416,7 +428,7 @@ Name | Type | Description  | Notes
 
 ## PatchAdminAuditLogsRetentionUpdate
 
-> PatchAdminAuditLogsRetentionUpdate(ctx, orgId).Execute()
+> AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(ctx, orgId).Execute()
 
 Update audit log retention settings
 
@@ -437,11 +449,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.PatchAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.PatchAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.PatchAdminAuditLogsRetentionUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminAuditLogsRetentionUpdate`: AdminAuditLogsRetentionResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.PatchAdminAuditLogsRetentionUpdate`: %v\n", resp)
 }
 ```
 
@@ -464,7 +478,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -473,7 +487,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -482,7 +496,7 @@ Name | Type | Description  | Notes
 
 ## PutAdminAuditLogsRetentionUpdate
 
-> PutAdminAuditLogsRetentionUpdate(ctx, orgId).Execute()
+> AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(ctx, orgId).Execute()
 
 Update audit log retention settings
 
@@ -503,11 +517,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminAuditLogsAPI.PutAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminAuditLogsAPI.PutAdminAuditLogsRetentionUpdate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminAuditLogsAPI.PutAdminAuditLogsRetentionUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminAuditLogsRetentionUpdate`: AdminAuditLogsRetentionResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminAuditLogsAPI.PutAdminAuditLogsRetentionUpdate`: %v\n", resp)
 }
 ```
 
@@ -530,7 +546,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -539,7 +555,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

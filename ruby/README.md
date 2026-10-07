@@ -114,17 +114,17 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AAuthApi* | [**revoke_agent_token**](docs/AAuthApi.md#revoke_agent_token) | **POST** /orgs/{orgId}/api/v1/aauth/token/revoke | Revoke an auth token or refresh token.
 *LumoAuthApiClient::AAuthApi* | [**verify_auth_token**](docs/AAuthApi.md#verify_auth_token) | **POST** /orgs/{orgId}/api/v1/aauth/auth/token/verify | Auth Token Verification endpoint.
 *LumoAuthApiClient::AAuthApi* | [**verify_resource_token**](docs/AAuthApi.md#verify_resource_token) | **POST** /orgs/{orgId}/api/v1/aauth/resource/token/verify | Resource Token Verification (for resources to validate their own tokens).
-*LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_create**](docs/AdminAbacApi.md#abac_attributes_create) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create a new attribute definition
+*LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_create**](docs/AdminAbacApi.md#abac_attributes_create) | **POST** /orgs/{orgId}/api/v1/abac/attributes | Create an attribute definition
 *LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_delete**](docs/AdminAbacApi.md#abac_attributes_delete) | **DELETE** /orgs/{orgId}/api/v1/abac/attributes/{id} | Delete an attribute definition
-*LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_get**](docs/AdminAbacApi.md#abac_attributes_get) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get a single attribute definition
-*LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_list**](docs/AdminAbacApi.md#abac_attributes_list) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List all attribute definitions
-*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_create**](docs/AdminAbacApi.md#abac_policies_create) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create a new ABAC policy
+*LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_get**](docs/AdminAbacApi.md#abac_attributes_get) | **GET** /orgs/{orgId}/api/v1/abac/attributes/{id} | Get an attribute definition
+*LumoAuthApiClient::AdminAbacApi* | [**abac_attributes_list**](docs/AdminAbacApi.md#abac_attributes_list) | **GET** /orgs/{orgId}/api/v1/abac/attributes | List attribute definitions
+*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_create**](docs/AdminAbacApi.md#abac_policies_create) | **POST** /orgs/{orgId}/api/v1/abac/policies | Create an ABAC policy
 *LumoAuthApiClient::AdminAbacApi* | [**abac_policies_delete**](docs/AdminAbacApi.md#abac_policies_delete) | **DELETE** /orgs/{orgId}/api/v1/abac/policies/{id} | Delete an ABAC policy
-*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_get**](docs/AdminAbacApi.md#abac_policies_get) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get a single ABAC policy
-*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_list**](docs/AdminAbacApi.md#abac_policies_list) | **GET** /orgs/{orgId}/api/v1/abac/policies | List all ABAC policies
-*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_toggle**](docs/AdminAbacApi.md#abac_policies_toggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle policy active status
-*LumoAuthApiClient::AdminAbacApi* | [**patch_abac_attributes_update**](docs/AdminAbacApi.md#patch_abac_attributes_update) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition
-*LumoAuthApiClient::AdminAbacApi* | [**patch_abac_policies_update**](docs/AdminAbacApi.md#patch_abac_policies_update) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy
+*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_get**](docs/AdminAbacApi.md#abac_policies_get) | **GET** /orgs/{orgId}/api/v1/abac/policies/{id} | Get an ABAC policy
+*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_list**](docs/AdminAbacApi.md#abac_policies_list) | **GET** /orgs/{orgId}/api/v1/abac/policies | List ABAC policies
+*LumoAuthApiClient::AdminAbacApi* | [**abac_policies_toggle**](docs/AdminAbacApi.md#abac_policies_toggle) | **POST** /orgs/{orgId}/api/v1/abac/policies/{id}/toggle | Toggle a policy between active and inactive
+*LumoAuthApiClient::AdminAbacApi* | [**patch_abac_attributes_update**](docs/AdminAbacApi.md#patch_abac_attributes_update) | **PATCH** /orgs/{orgId}/api/v1/abac/attributes/{id} | Partially update an attribute definition
+*LumoAuthApiClient::AdminAbacApi* | [**patch_abac_policies_update**](docs/AdminAbacApi.md#patch_abac_policies_update) | **PATCH** /orgs/{orgId}/api/v1/abac/policies/{id} | Partially update an ABAC policy
 *LumoAuthApiClient::AdminAbacApi* | [**put_abac_attributes_update**](docs/AdminAbacApi.md#put_abac_attributes_update) | **PUT** /orgs/{orgId}/api/v1/abac/attributes/{id} | Update an attribute definition
 *LumoAuthApiClient::AdminAbacApi* | [**put_abac_policies_update**](docs/AdminAbacApi.md#put_abac_policies_update) | **PUT** /orgs/{orgId}/api/v1/abac/policies/{id} | Update an ABAC policy
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_activate**](docs/AdminAgentsApi.md#admin_agents_activate) | **POST** /orgs/{orgId}/api/v1/admin/agents/{agentId}/activate | Activate an agent
@@ -143,21 +143,21 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminAgentsApi* | [**admin_agents_set_scopes**](docs/AdminAgentsApi.md#admin_agents_set_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes | Update agent scopes/capabilities
 *LumoAuthApiClient::AdminAgentsApi* | [**patch_admin_agents_update**](docs/AdminAgentsApi.md#patch_admin_agents_update) | **PATCH** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Update an existing agent
 *LumoAuthApiClient::AdminAgentsApi* | [**put_admin_agents_update**](docs/AdminAgentsApi.md#put_admin_agents_update) | **PUT** /orgs/{orgId}/api/v1/admin/agents/{agentId} | Update an existing agent
-*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_actions**](docs/AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant
-*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_export**](docs/AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON
-*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_get**](docs/AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry
-*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_list**](docs/AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant
+*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_actions**](docs/AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_export**](docs/AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
+*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_get**](docs/AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
+*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_list**](docs/AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
 *LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_retention**](docs/AdminAuditLogsApi.md#admin_audit_logs_retention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings
-*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_stats**](docs/AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics
+*LumoAuthApiClient::AdminAuditLogsApi* | [**admin_audit_logs_stats**](docs/AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days)
 *LumoAuthApiClient::AdminAuditLogsApi* | [**patch_admin_audit_logs_retention_update**](docs/AdminAuditLogsApi.md#patch_admin_audit_logs_retention_update) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 *LumoAuthApiClient::AdminAuditLogsApi* | [**put_admin_audit_logs_retention_update**](docs/AdminAuditLogsApi.md#put_admin_audit_logs_retention_update) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
-*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_delete**](docs/AdminEmailApi.md#admin_email_templates_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | 
-*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_get**](docs/AdminEmailApi.md#admin_email_templates_get) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | 
-*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_list**](docs/AdminEmailApi.md#admin_email_templates_list) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | 
-*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_preview**](docs/AdminEmailApi.md#admin_email_templates_preview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | 
-*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_upsert**](docs/AdminEmailApi.md#admin_email_templates_upsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | 
-*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_variables**](docs/AdminEmailApi.md#admin_email_templates_variables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | 
-*LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_add_members**](docs/AdminGroupsApi.md#admin_groups_add_members) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group — accepts {userId: UUID} or {userIds: [UUID, ...]}
+*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_delete**](docs/AdminEmailApi.md#admin_email_templates_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Remove the custom email template so the built-in default is used
+*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_get**](docs/AdminEmailApi.md#admin_email_templates_get) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Get an email template (custom or built-in default)
+*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_list**](docs/AdminEmailApi.md#admin_email_templates_list) | **GET** /orgs/{orgId}/api/v1/admin/email-templates | List every email template type with its current (custom or built-in) template
+*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_preview**](docs/AdminEmailApi.md#admin_email_templates_preview) | **POST** /orgs/{orgId}/api/v1/admin/email-templates/{type}/preview | Render an email template with sample data
+*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_upsert**](docs/AdminEmailApi.md#admin_email_templates_upsert) | **PUT** /orgs/{orgId}/api/v1/admin/email-templates/{type} | Create or replace the custom email template for a type
+*LumoAuthApiClient::AdminEmailApi* | [**admin_email_templates_variables**](docs/AdminEmailApi.md#admin_email_templates_variables) | **GET** /orgs/{orgId}/api/v1/admin/email-templates/{type}/variables | List the placeholders available to an email template type
+*LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_add_members**](docs/AdminGroupsApi.md#admin_groups_add_members) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Add member(s) to group
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_add_role**](docs/AdminGroupsApi.md#admin_groups_add_role) | **POST** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Add a single role to a group
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_create**](docs/AdminGroupsApi.md#admin_groups_create) | **POST** /orgs/{orgId}/api/v1/admin/groups | Create a new group
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_delete**](docs/AdminGroupsApi.md#admin_groups_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Delete a group
@@ -165,57 +165,63 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_get_members**](docs/AdminGroupsApi.md#admin_groups_get_members) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members | Get group members
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_groups_get_roles**](docs/AdminGroupsApi.md#admin_groups_groups_get_roles) | **GET** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Get group roles
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_list**](docs/AdminGroupsApi.md#admin_groups_list) | **GET** /orgs/{orgId}/api/v1/admin/groups | List all groups in the tenant
-*LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_remove_member**](docs/AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group — userId is a UUID or email
+*LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_remove_member**](docs/AdminGroupsApi.md#admin_groups_remove_member) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId} | Remove member from group
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_remove_role**](docs/AdminGroupsApi.md#admin_groups_remove_role) | **DELETE** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId} | Remove a role from a group
 *LumoAuthApiClient::AdminGroupsApi* | [**admin_groups_update_roles**](docs/AdminGroupsApi.md#admin_groups_update_roles) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId}/roles | Update group roles (replaces all existing roles)
 *LumoAuthApiClient::AdminGroupsApi* | [**patch_admin_groups_update**](docs/AdminGroupsApi.md#patch_admin_groups_update) | **PATCH** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group
 *LumoAuthApiClient::AdminGroupsApi* | [**put_admin_groups_update**](docs/AdminGroupsApi.md#put_admin_groups_update) | **PUT** /orgs/{orgId}/api/v1/admin/groups/{groupId} | Update an existing group
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_available**](docs/AdminIdentityProvidersApi.md#admin_social_providers_available) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | Get available social login provider types
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_callback_urls**](docs/AdminIdentityProvidersApi.md#admin_social_providers_callback_urls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get callback URLs for all configured providers
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_create**](docs/AdminIdentityProvidersApi.md#admin_social_providers_create) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a new social login provider
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_available**](docs/AdminIdentityProvidersApi.md#admin_social_providers_available) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/available | List the available social login provider types
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_callback_urls**](docs/AdminIdentityProvidersApi.md#admin_social_providers_callback_urls) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/callback-urls | Get the OAuth callback URL of every configured provider
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_create**](docs/AdminIdentityProvidersApi.md#admin_social_providers_create) | **POST** /orgs/{orgId}/api/v1/admin/social-providers | Create a social login provider
 *LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_delete**](docs/AdminIdentityProvidersApi.md#admin_social_providers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Delete a social login provider
 *LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_disable**](docs/AdminIdentityProvidersApi.md#admin_social_providers_disable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable | Disable a social login provider
 *LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_enable**](docs/AdminIdentityProvidersApi.md#admin_social_providers_enable) | **POST** /orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable | Enable a social login provider
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_get**](docs/AdminIdentityProvidersApi.md#admin_social_providers_get) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a single social login provider (by ID or by provider name)
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_list**](docs/AdminIdentityProvidersApi.md#admin_social_providers_list) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List all configured social login providers
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_types**](docs/AdminIdentityProvidersApi.md#admin_social_providers_types) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | Get available social login provider types
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**patch_admin_social_providers_update**](docs/AdminIdentityProvidersApi.md#patch_admin_social_providers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
-*LumoAuthApiClient::AdminIdentityProvidersApi* | [**put_admin_social_providers_update**](docs/AdminIdentityProvidersApi.md#put_admin_social_providers_update) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Upsert (create or update) a social login provider via PUT; update via PATCH
-*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_create**](docs/AdminMcpApi.md#admin_mcp_servers_create) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | POST /api/v1/admin/mcp/servers
-*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_delete**](docs/AdminMcpApi.md#admin_mcp_servers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | 
-*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_get**](docs/AdminMcpApi.md#admin_mcp_servers_get) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | 
-*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_list**](docs/AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | 
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**create_client**](docs/AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create a new OAuth client
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_get**](docs/AdminIdentityProvidersApi.md#admin_social_providers_get) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Get a social login provider
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_list**](docs/AdminIdentityProvidersApi.md#admin_social_providers_list) | **GET** /orgs/{orgId}/api/v1/admin/social-providers | List social login providers
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**admin_social_providers_types**](docs/AdminIdentityProvidersApi.md#admin_social_providers_types) | **GET** /orgs/{orgId}/api/v1/admin/social-providers/types | List the available social login provider types
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**patch_admin_social_providers_update**](docs/AdminIdentityProvidersApi.md#patch_admin_social_providers_update) | **PATCH** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Update a social login provider
+*LumoAuthApiClient::AdminIdentityProvidersApi* | [**put_admin_social_providers_update**](docs/AdminIdentityProvidersApi.md#put_admin_social_providers_update) | **PUT** /orgs/{orgId}/api/v1/admin/social-providers/{providerId} | Create or replace a social login provider
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_create**](docs/AdminMcpApi.md#admin_mcp_servers_create) | **POST** /orgs/{orgId}/api/v1/admin/mcp/servers | Register an MCP server
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_delete**](docs/AdminMcpApi.md#admin_mcp_servers_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Delete an MCP server
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_get**](docs/AdminMcpApi.md#admin_mcp_servers_get) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers/{serverId} | Get an MCP server
+*LumoAuthApiClient::AdminMcpApi* | [**admin_mcp_servers_list**](docs/AdminMcpApi.md#admin_mcp_servers_list) | **GET** /orgs/{orgId}/api/v1/admin/mcp/servers | List MCP servers
+*LumoAuthApiClient::AdminMfaApi* | [**delete_user_authenticator**](docs/AdminMfaApi.md#delete_user_authenticator) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators/{authenticatorId} | Remove one of a user's authenticators
+*LumoAuthApiClient::AdminMfaApi* | [**get_mfa_coverage_report**](docs/AdminMfaApi.md#get_mfa_coverage_report) | **GET** /orgs/{orgId}/api/v1/admin/reports/mfa-coverage | MFA enrollment coverage
+*LumoAuthApiClient::AdminMfaApi* | [**get_mfa_policy**](docs/AdminMfaApi.md#get_mfa_policy) | **GET** /orgs/{orgId}/api/v1/admin/policies/mfa | Get the MFA policy
+*LumoAuthApiClient::AdminMfaApi* | [**issue_temporary_access_code**](docs/AdminMfaApi.md#issue_temporary_access_code) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/temporary-access-code | Issue a temporary access code
+*LumoAuthApiClient::AdminMfaApi* | [**list_user_authenticators**](docs/AdminMfaApi.md#list_user_authenticators) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators | List a user's authenticators
+*LumoAuthApiClient::AdminMfaApi* | [**update_mfa_policy**](docs/AdminMfaApi.md#update_mfa_policy) | **PUT** /orgs/{orgId}/api/v1/admin/policies/mfa | Update the MFA policy
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**create_client**](docs/AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**delete_client**](docs/AdminOAuthClientsApi.md#delete_client) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**disable_client**](docs/AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable OAuth client
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**enable_client**](docs/AdminOAuthClientsApi.md#enable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable OAuth client
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**get_client**](docs/AdminOAuthClientsApi.md#get_client) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get a single OAuth client by ID or clientId
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**list_client_scopes**](docs/AdminOAuthClientsApi.md#list_client_scopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Get client scopes
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**list_clients**](docs/AdminOAuthClientsApi.md#list_clients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List all OAuth clients in the tenant
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**patch_client**](docs/AdminOAuthClientsApi.md#patch_client) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**rotate_client_secret**](docs/AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate client secret
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**set_client_scopes**](docs/AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Set client scopes
-*LumoAuthApiClient::AdminOAuthClientsApi* | [**update_client**](docs/AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an existing OAuth client
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_create**](docs/AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_list**](docs/AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_resend**](docs/AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_revoke**](docs/AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_members_add**](docs/AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_members_list**](docs/AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_members_remove**](docs/AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_roles_create**](docs/AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_roles_delete**](docs/AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_roles_list**](docs/AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_create**](docs/AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_delete**](docs/AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_get**](docs/AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_list**](docs/AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**patch_admin_org_members_update**](docs/AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**patch_admin_org_roles_update**](docs/AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**patch_admin_organizations_update**](docs/AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**put_admin_org_members_update**](docs/AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**put_admin_org_roles_update**](docs/AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | 
-*LumoAuthApiClient::AdminOrganizationsApi* | [**put_admin_organizations_update**](docs/AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | 
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**disable_client**](docs/AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**enable_client**](docs/AdminOAuthClientsApi.md#enable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/enable | Enable an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**get_client**](docs/AdminOAuthClientsApi.md#get_client) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Get an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**list_client_scopes**](docs/AdminOAuthClientsApi.md#list_client_scopes) | **GET** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | List the scopes granted to an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**list_clients**](docs/AdminOAuthClientsApi.md#list_clients) | **GET** /orgs/{orgId}/api/v1/admin/clients | List OAuth clients
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**patch_client**](docs/AdminOAuthClientsApi.md#patch_client) | **PATCH** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Update an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**rotate_client_secret**](docs/AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**set_client_scopes**](docs/AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**update_client**](docs/AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_create**](docs/AdminOrganizationsApi.md#admin_org_invitations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_list**](docs/AdminOrganizationsApi.md#admin_org_invitations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_resend**](docs/AdminOrganizationsApi.md#admin_org_invitations_resend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_invitations_revoke**](docs/AdminOrganizationsApi.md#admin_org_invitations_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_members_add**](docs/AdminOrganizationsApi.md#admin_org_members_add) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_members_list**](docs/AdminOrganizationsApi.md#admin_org_members_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_members_remove**](docs/AdminOrganizationsApi.md#admin_org_members_remove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_roles_create**](docs/AdminOrganizationsApi.md#admin_org_roles_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_roles_delete**](docs/AdminOrganizationsApi.md#admin_org_roles_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_org_roles_list**](docs/AdminOrganizationsApi.md#admin_org_roles_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_create**](docs/AdminOrganizationsApi.md#admin_organizations_create) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_delete**](docs/AdminOrganizationsApi.md#admin_organizations_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_get**](docs/AdminOrganizationsApi.md#admin_organizations_get) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**admin_organizations_list**](docs/AdminOrganizationsApi.md#admin_organizations_list) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations
+*LumoAuthApiClient::AdminOrganizationsApi* | [**patch_admin_org_members_update**](docs/AdminOrganizationsApi.md#patch_admin_org_members_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member's role or status
+*LumoAuthApiClient::AdminOrganizationsApi* | [**patch_admin_org_roles_update**](docs/AdminOrganizationsApi.md#patch_admin_org_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
+*LumoAuthApiClient::AdminOrganizationsApi* | [**patch_admin_organizations_update**](docs/AdminOrganizationsApi.md#patch_admin_organizations_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
+*LumoAuthApiClient::AdminOrganizationsApi* | [**put_admin_org_members_update**](docs/AdminOrganizationsApi.md#put_admin_org_members_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member's role or status
+*LumoAuthApiClient::AdminOrganizationsApi* | [**put_admin_org_roles_update**](docs/AdminOrganizationsApi.md#put_admin_org_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role
+*LumoAuthApiClient::AdminOrganizationsApi* | [**put_admin_organizations_update**](docs/AdminOrganizationsApi.md#put_admin_organizations_update) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization
 *LumoAuthApiClient::AdminPermissionsApi* | [**admin_permissions_create**](docs/AdminPermissionsApi.md#admin_permissions_create) | **POST** /orgs/{orgId}/api/v1/admin/permissions | Create a custom permission for the tenant
 *LumoAuthApiClient::AdminPermissionsApi* | [**admin_permissions_delete**](docs/AdminPermissionsApi.md#admin_permissions_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Delete a custom permission
 *LumoAuthApiClient::AdminPermissionsApi* | [**admin_permissions_get**](docs/AdminPermissionsApi.md#admin_permissions_get) | **GET** /orgs/{orgId}/api/v1/admin/permissions/{permissionId} | Get a single permission
@@ -238,27 +244,27 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminRolesApi* | [**admin_roles_update_permissions**](docs/AdminRolesApi.md#admin_roles_update_permissions) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions | Update role permissions (replaces all)
 *LumoAuthApiClient::AdminRolesApi* | [**patch_admin_roles_update**](docs/AdminRolesApi.md#patch_admin_roles_update) | **PATCH** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Update an existing role
 *LumoAuthApiClient::AdminRolesApi* | [**put_admin_roles_update**](docs/AdminRolesApi.md#put_admin_roles_update) | **PUT** /orgs/{orgId}/api/v1/admin/roles/{roleId} | Update an existing role
-*LumoAuthApiClient::AdminSandboxApi* | [**admin_sandbox_destroy**](docs/AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | POST /{sandboxSlug}/destroy Deletes the sandbox if owned by caller.
-*LumoAuthApiClient::AdminSandboxApi* | [**admin_sandbox_list**](docs/AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | GET / Lists the caller's active sandbox tenants (their own only).
-*LumoAuthApiClient::AdminSandboxApi* | [**admin_sandbox_spawn**](docs/AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | POST /spawn Body: {\"name\"?: \"feature-foo\", \"ttl_hours\"?: 24}
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_client_tokens_revoke_all**](docs/AdminSessionsApi.md#admin_client_tokens_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens for a client
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_client_tokens_revoke_post**](docs/AdminSessionsApi.md#admin_client_tokens_revoke_post) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens for a client via POST
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_count**](docs/AdminSessionsApi.md#admin_sessions_count) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Get active session count for the tenant
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_list**](docs/AdminSessionsApi.md#admin_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions for the tenant
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_revoke**](docs/AdminSessionsApi.md#admin_sessions_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a specific session
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_revoke_all**](docs/AdminSessionsApi.md#admin_sessions_revoke_all) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke all tenant sessions via POST
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_stats**](docs/AdminSessionsApi.md#admin_sessions_stats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Get session statistics for the tenant
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_tokens_list**](docs/AdminSessionsApi.md#admin_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens for the tenant
+*LumoAuthApiClient::AdminSandboxApi* | [**admin_sandbox_destroy**](docs/AdminSandboxApi.md#admin_sandbox_destroy) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy | Destroy a sandbox tenant
+*LumoAuthApiClient::AdminSandboxApi* | [**admin_sandbox_list**](docs/AdminSandboxApi.md#admin_sandbox_list) | **GET** /orgs/{orgId}/api/v1/admin/sandbox | List the caller's sandbox tenants
+*LumoAuthApiClient::AdminSandboxApi* | [**admin_sandbox_spawn**](docs/AdminSandboxApi.md#admin_sandbox_spawn) | **POST** /orgs/{orgId}/api/v1/admin/sandbox/spawn | Spawn a sandbox tenant
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_client_tokens_revoke_all**](docs/AdminSessionsApi.md#admin_client_tokens_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens | Revoke all tokens of a client
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_client_tokens_revoke_post**](docs/AdminSessionsApi.md#admin_client_tokens_revoke_post) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke | Revoke all tokens of a client (POST alias)
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_count**](docs/AdminSessionsApi.md#admin_sessions_count) | **GET** /orgs/{orgId}/api/v1/admin/sessions/count | Active session count
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_list**](docs/AdminSessionsApi.md#admin_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/sessions | List active sessions
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_revoke**](docs/AdminSessionsApi.md#admin_sessions_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/sessions/{sessionId} | Revoke a session
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_revoke_all**](docs/AdminSessionsApi.md#admin_sessions_revoke_all) | **POST** /orgs/{orgId}/api/v1/admin/sessions/revoke-all | Revoke every session in the tenant
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_sessions_stats**](docs/AdminSessionsApi.md#admin_sessions_stats) | **GET** /orgs/{orgId}/api/v1/admin/sessions/stats | Session statistics
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_tokens_list**](docs/AdminSessionsApi.md#admin_tokens_list) | **GET** /orgs/{orgId}/api/v1/admin/tokens | List access tokens
 *LumoAuthApiClient::AdminSessionsApi* | [**admin_tokens_revoke**](docs/AdminSessionsApi.md#admin_tokens_revoke) | **DELETE** /orgs/{orgId}/api/v1/admin/tokens/{tokenId} | Revoke a token
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_sessions_list**](docs/AdminSessionsApi.md#admin_user_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Get sessions for a specific user
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_sessions_revoke_all**](docs/AdminSessionsApi.md#admin_user_sessions_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions for a user
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_sessions_revoke_post**](docs/AdminSessionsApi.md#admin_user_sessions_revoke_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions for a user via POST
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_tokens_revoke_all**](docs/AdminSessionsApi.md#admin_user_tokens_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens for a user
-*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_tokens_revoke_post**](docs/AdminSessionsApi.md#admin_user_tokens_revoke_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens for a user via POST
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_sessions_list**](docs/AdminSessionsApi.md#admin_user_sessions_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | List a user's active sessions
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_sessions_revoke_all**](docs/AdminSessionsApi.md#admin_user_sessions_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions | Revoke all sessions of a user
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_sessions_revoke_post**](docs/AdminSessionsApi.md#admin_user_sessions_revoke_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke | Revoke all sessions of a user (POST alias)
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_tokens_revoke_all**](docs/AdminSessionsApi.md#admin_user_tokens_revoke_all) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens | Revoke all tokens of a user
+*LumoAuthApiClient::AdminSessionsApi* | [**admin_user_tokens_revoke_post**](docs/AdminSessionsApi.md#admin_user_tokens_revoke_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke | Revoke all tokens of a user (POST alias)
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_analytics_dashboard**](docs/AdminSettingsApi.md#admin_analytics_dashboard) | **GET** /orgs/{orgId}/api/v1/admin/analytics/dashboard | Get dashboard analytics
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_analytics_logins**](docs/AdminSettingsApi.md#admin_analytics_logins) | **GET** /orgs/{orgId}/api/v1/admin/analytics/logins | Get login analytics
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_analytics_users**](docs/AdminSettingsApi.md#admin_analytics_users) | **GET** /orgs/{orgId}/api/v1/admin/analytics/users | Get user growth analytics
-*LumoAuthApiClient::AdminSettingsApi* | [**admin_organization_get**](docs/AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get tenant information
+*LumoAuthApiClient::AdminSettingsApi* | [**admin_organization_get**](docs/AdminSettingsApi.md#admin_organization_get) | **GET** /orgs/{orgId}/api/v1/admin/organization | Get organization (tenant) profile
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_settings_all**](docs/AdminSettingsApi.md#admin_settings_all) | **GET** /orgs/{orgId}/api/v1/admin/settings | Get all settings (combined)
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_settings_auth_get**](docs/AdminSettingsApi.md#admin_settings_auth_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/auth | Get authentication settings
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_settings_authentication_get**](docs/AdminSettingsApi.md#admin_settings_authentication_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/authentication | Get authentication settings (alias for settings/auth)
@@ -267,8 +273,8 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_settings_general_get**](docs/AdminSettingsApi.md#admin_settings_general_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/general | Get general settings
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_settings_scim_get**](docs/AdminSettingsApi.md#admin_settings_scim_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/scim | Get SCIM settings
 *LumoAuthApiClient::AdminSettingsApi* | [**admin_settings_security_get**](docs/AdminSettingsApi.md#admin_settings_security_get) | **GET** /orgs/{orgId}/api/v1/admin/settings/security | Get security settings
-*LumoAuthApiClient::AdminSettingsApi* | [**admin_tenant_get**](docs/AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get tenant information
-*LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_organization_update**](docs/AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+*LumoAuthApiClient::AdminSettingsApi* | [**admin_tenant_get**](docs/AdminSettingsApi.md#admin_tenant_get) | **GET** /orgs/{orgId}/api/v1/admin/tenant | Get organization (tenant) profile
+*LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_organization_update**](docs/AdminSettingsApi.md#patch_admin_organization_update) | **PATCH** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 *LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_settings_auth_update**](docs/AdminSettingsApi.md#patch_admin_settings_auth_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 *LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_settings_authentication_update**](docs/AdminSettingsApi.md#patch_admin_settings_authentication_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 *LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_settings_branding_update**](docs/AdminSettingsApi.md#patch_admin_settings_branding_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -276,8 +282,8 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_settings_general_update**](docs/AdminSettingsApi.md#patch_admin_settings_general_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 *LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_settings_scim_update**](docs/AdminSettingsApi.md#patch_admin_settings_scim_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 *LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_settings_security_update**](docs/AdminSettingsApi.md#patch_admin_settings_security_update) | **PATCH** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-*LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_tenant_update**](docs/AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
-*LumoAuthApiClient::AdminSettingsApi* | [**put_admin_organization_update**](docs/AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update tenant settings
+*LumoAuthApiClient::AdminSettingsApi* | [**patch_admin_tenant_update**](docs/AdminSettingsApi.md#patch_admin_tenant_update) | **PATCH** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+*LumoAuthApiClient::AdminSettingsApi* | [**put_admin_organization_update**](docs/AdminSettingsApi.md#put_admin_organization_update) | **PUT** /orgs/{orgId}/api/v1/admin/organization | Update organization (tenant) name and settings
 *LumoAuthApiClient::AdminSettingsApi* | [**put_admin_settings_auth_update**](docs/AdminSettingsApi.md#put_admin_settings_auth_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/auth | Update authentication settings
 *LumoAuthApiClient::AdminSettingsApi* | [**put_admin_settings_authentication_update**](docs/AdminSettingsApi.md#put_admin_settings_authentication_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/authentication | Update authentication settings (alias for settings/auth)
 *LumoAuthApiClient::AdminSettingsApi* | [**put_admin_settings_branding_update**](docs/AdminSettingsApi.md#put_admin_settings_branding_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/branding | Update branding/login page settings
@@ -285,76 +291,81 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminSettingsApi* | [**put_admin_settings_general_update**](docs/AdminSettingsApi.md#put_admin_settings_general_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/general | Update general settings
 *LumoAuthApiClient::AdminSettingsApi* | [**put_admin_settings_scim_update**](docs/AdminSettingsApi.md#put_admin_settings_scim_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/scim | Update SCIM settings
 *LumoAuthApiClient::AdminSettingsApi* | [**put_admin_settings_security_update**](docs/AdminSettingsApi.md#put_admin_settings_security_update) | **PUT** /orgs/{orgId}/api/v1/admin/settings/security | Update security settings
-*LumoAuthApiClient::AdminSettingsApi* | [**put_admin_tenant_update**](docs/AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update tenant settings
-*LumoAuthApiClient::AdminUsersApi* | [**add_user_group**](docs/AdminUsersApi.md#add_user_group) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | 
-*LumoAuthApiClient::AdminUsersApi* | [**add_user_permission**](docs/AdminUsersApi.md#add_user_permission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | 
-*LumoAuthApiClient::AdminUsersApi* | [**add_user_role**](docs/AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | 
-*LumoAuthApiClient::AdminUsersApi* | [**block_user**](docs/AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | 
-*LumoAuthApiClient::AdminUsersApi* | [**create_user**](docs/AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | 
-*LumoAuthApiClient::AdminUsersApi* | [**delete_user**](docs/AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**get_user**](docs/AdminUsersApi.md#get_user) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**list_user_groups**](docs/AdminUsersApi.md#list_user_groups) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | 
-*LumoAuthApiClient::AdminUsersApi* | [**list_user_permissions**](docs/AdminUsersApi.md#list_user_permissions) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | 
-*LumoAuthApiClient::AdminUsersApi* | [**list_user_roles**](docs/AdminUsersApi.md#list_user_roles) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | 
-*LumoAuthApiClient::AdminUsersApi* | [**list_users**](docs/AdminUsersApi.md#list_users) | **GET** /orgs/{orgId}/api/v1/admin/users | 
-*LumoAuthApiClient::AdminUsersApi* | [**mark_user_verified**](docs/AdminUsersApi.md#mark_user_verified) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified | 
-*LumoAuthApiClient::AdminUsersApi* | [**patch_user**](docs/AdminUsersApi.md#patch_user) | **PATCH** /orgs/{orgId}/api/v1/admin/users/{userId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**remove_user_group**](docs/AdminUsersApi.md#remove_user_group) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**remove_user_permission**](docs/AdminUsersApi.md#remove_user_permission) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**remove_user_role**](docs/AdminUsersApi.md#remove_user_role) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**reset_user_mfa**](docs/AdminUsersApi.md#reset_user_mfa) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset | 
-*LumoAuthApiClient::AdminUsersApi* | [**send_user_verification_email**](docs/AdminUsersApi.md#send_user_verification_email) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/verify-email | 
-*LumoAuthApiClient::AdminUsersApi* | [**set_user_password**](docs/AdminUsersApi.md#set_user_password) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/password | 
-*LumoAuthApiClient::AdminUsersApi* | [**set_user_password_post**](docs/AdminUsersApi.md#set_user_password_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password | 
-*LumoAuthApiClient::AdminUsersApi* | [**trigger_user_password_reset**](docs/AdminUsersApi.md#trigger_user_password_reset) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password-reset | 
-*LumoAuthApiClient::AdminUsersApi* | [**unblock_user**](docs/AdminUsersApi.md#unblock_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/unblock | 
-*LumoAuthApiClient::AdminUsersApi* | [**update_user**](docs/AdminUsersApi.md#update_user) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId} | 
-*LumoAuthApiClient::AdminUsersApi* | [**update_user_groups**](docs/AdminUsersApi.md#update_user_groups) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | 
-*LumoAuthApiClient::AdminUsersApi* | [**update_user_roles**](docs/AdminUsersApi.md#update_user_roles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | 
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_create**](docs/AdminWebhooksApi.md#admin_webhooks_create) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a new webhook
+*LumoAuthApiClient::AdminSettingsApi* | [**put_admin_tenant_update**](docs/AdminSettingsApi.md#put_admin_tenant_update) | **PUT** /orgs/{orgId}/api/v1/admin/tenant | Update organization (tenant) name and settings
+*LumoAuthApiClient::AdminUsersApi* | [**add_user_group**](docs/AdminUsersApi.md#add_user_group) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Add a user to a group
+*LumoAuthApiClient::AdminUsersApi* | [**add_user_permission**](docs/AdminUsersApi.md#add_user_permission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | Assign a permission to a user
+*LumoAuthApiClient::AdminUsersApi* | [**add_user_role**](docs/AdminUsersApi.md#add_user_role) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_legacy_saml_relink**](docs/AdminUsersApi.md#admin_identities_legacy_saml_relink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_legacy_saml_report**](docs/AdminUsersApi.md#admin_identities_legacy_saml_report) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_link**](docs/AdminUsersApi.md#admin_identities_link) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_list**](docs/AdminUsersApi.md#admin_identities_list) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user's federated identity links
+*LumoAuthApiClient::AdminUsersApi* | [**admin_identities_unlink**](docs/AdminUsersApi.md#admin_identities_unlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user's SAML, LDAP or social identity
+*LumoAuthApiClient::AdminUsersApi* | [**block_user**](docs/AdminUsersApi.md#block_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user
+*LumoAuthApiClient::AdminUsersApi* | [**create_user**](docs/AdminUsersApi.md#create_user) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user
+*LumoAuthApiClient::AdminUsersApi* | [**delete_user**](docs/AdminUsersApi.md#delete_user) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user
+*LumoAuthApiClient::AdminUsersApi* | [**get_user**](docs/AdminUsersApi.md#get_user) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId} | Get a user
+*LumoAuthApiClient::AdminUsersApi* | [**list_user_groups**](docs/AdminUsersApi.md#list_user_groups) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | List a user's groups
+*LumoAuthApiClient::AdminUsersApi* | [**list_user_permissions**](docs/AdminUsersApi.md#list_user_permissions) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | List a user's direct permissions
+*LumoAuthApiClient::AdminUsersApi* | [**list_user_roles**](docs/AdminUsersApi.md#list_user_roles) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | List a user's roles
+*LumoAuthApiClient::AdminUsersApi* | [**list_users**](docs/AdminUsersApi.md#list_users) | **GET** /orgs/{orgId}/api/v1/admin/users | List users
+*LumoAuthApiClient::AdminUsersApi* | [**mark_user_verified**](docs/AdminUsersApi.md#mark_user_verified) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified | Mark a user's email as verified
+*LumoAuthApiClient::AdminUsersApi* | [**patch_user**](docs/AdminUsersApi.md#patch_user) | **PATCH** /orgs/{orgId}/api/v1/admin/users/{userId} | Update a user
+*LumoAuthApiClient::AdminUsersApi* | [**remove_user_group**](docs/AdminUsersApi.md#remove_user_group) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId} | Remove a user from a group
+*LumoAuthApiClient::AdminUsersApi* | [**remove_user_permission**](docs/AdminUsersApi.md#remove_user_permission) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId} | Remove a permission from a user
+*LumoAuthApiClient::AdminUsersApi* | [**remove_user_role**](docs/AdminUsersApi.md#remove_user_role) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId} | Remove a role from a user
+*LumoAuthApiClient::AdminUsersApi* | [**reset_user_mfa**](docs/AdminUsersApi.md#reset_user_mfa) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset | Reset MFA (removed)
+*LumoAuthApiClient::AdminUsersApi* | [**send_user_verification_email**](docs/AdminUsersApi.md#send_user_verification_email) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/verify-email | Send a verification email
+*LumoAuthApiClient::AdminUsersApi* | [**set_user_password**](docs/AdminUsersApi.md#set_user_password) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/password | Set a user's password
+*LumoAuthApiClient::AdminUsersApi* | [**set_user_password_post**](docs/AdminUsersApi.md#set_user_password_post) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password | Set a user's password
+*LumoAuthApiClient::AdminUsersApi* | [**trigger_user_password_reset**](docs/AdminUsersApi.md#trigger_user_password_reset) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password-reset | Send a password reset email
+*LumoAuthApiClient::AdminUsersApi* | [**unblock_user**](docs/AdminUsersApi.md#unblock_user) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/unblock | Unblock a user
+*LumoAuthApiClient::AdminUsersApi* | [**update_user**](docs/AdminUsersApi.md#update_user) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId} | Update a user
+*LumoAuthApiClient::AdminUsersApi* | [**update_user_groups**](docs/AdminUsersApi.md#update_user_groups) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Replace a user's groups
+*LumoAuthApiClient::AdminUsersApi* | [**update_user_roles**](docs/AdminUsersApi.md#update_user_roles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Replace a user's roles
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_create**](docs/AdminWebhooksApi.md#admin_webhooks_create) | **POST** /orgs/{orgId}/api/v1/admin/webhooks | Create a webhook
 *LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_delete**](docs/AdminWebhooksApi.md#admin_webhooks_delete) | **DELETE** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Delete a webhook
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_deliveries_list**](docs/AdminWebhooksApi.md#admin_webhooks_deliveries_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent delivery attempts for a webhook.
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_delivery_replay**](docs/AdminWebhooksApi.md#admin_webhooks_delivery_replay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_delivery_show**](docs/AdminWebhooksApi.md#admin_webhooks_delivery_show) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_events**](docs/AdminWebhooksApi.md#admin_webhooks_events) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | Get available webhook event types
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_get**](docs/AdminWebhooksApi.md#admin_webhooks_get) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a single webhook by ID
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_list**](docs/AdminWebhooksApi.md#admin_webhooks_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List all webhooks in the tenant
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_rotate_secret**](docs/AdminWebhooksApi.md#admin_webhooks_rotate_secret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate webhook secret
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_test**](docs/AdminWebhooksApi.md#admin_webhooks_test) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Test a webhook by sending a test payload
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_tunnel_start**](docs/AdminWebhooksApi.md#admin_webhooks_tunnel_start) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | 
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_tunnel_stop**](docs/AdminWebhooksApi.md#admin_webhooks_tunnel_stop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | 
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_tunnel_stream**](docs/AdminWebhooksApi.md#admin_webhooks_tunnel_stream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | 
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_webhooks_disable**](docs/AdminWebhooksApi.md#admin_webhooks_webhooks_disable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable webhook
-*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_webhooks_enable**](docs/AdminWebhooksApi.md#admin_webhooks_webhooks_enable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable webhook
-*LumoAuthApiClient::AdminWebhooksApi* | [**patch_admin_webhooks_update**](docs/AdminWebhooksApi.md#patch_admin_webhooks_update) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook
-*LumoAuthApiClient::AdminWebhooksApi* | [**put_admin_webhooks_update**](docs/AdminWebhooksApi.md#put_admin_webhooks_update) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_deliveries_list**](docs/AdminWebhooksApi.md#admin_webhooks_deliveries_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent deliveries
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_delivery_replay**](docs/AdminWebhooksApi.md#admin_webhooks_delivery_replay) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Replay a delivery
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_delivery_show**](docs/AdminWebhooksApi.md#admin_webhooks_delivery_show) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a delivery
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_events**](docs/AdminWebhooksApi.md#admin_webhooks_events) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/events | List available webhook event types
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_get**](docs/AdminWebhooksApi.md#admin_webhooks_get) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a webhook
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_list**](docs/AdminWebhooksApi.md#admin_webhooks_list) | **GET** /orgs/{orgId}/api/v1/admin/webhooks | List webhooks
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_rotate_secret**](docs/AdminWebhooksApi.md#admin_webhooks_rotate_secret) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate the signing secret
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_test**](docs/AdminWebhooksApi.md#admin_webhooks_test) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Send a test delivery
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_tunnel_start**](docs/AdminWebhooksApi.md#admin_webhooks_tunnel_start) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | Start a webhook tunnel
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_tunnel_stop**](docs/AdminWebhooksApi.md#admin_webhooks_tunnel_stop) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | Stop a webhook tunnel
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_tunnel_stream**](docs/AdminWebhooksApi.md#admin_webhooks_tunnel_stream) | **GET** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | Stream tunnel deliveries (SSE)
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_webhooks_disable**](docs/AdminWebhooksApi.md#admin_webhooks_webhooks_disable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable a webhook
+*LumoAuthApiClient::AdminWebhooksApi* | [**admin_webhooks_webhooks_enable**](docs/AdminWebhooksApi.md#admin_webhooks_webhooks_enable) | **POST** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook
+*LumoAuthApiClient::AdminWebhooksApi* | [**patch_admin_webhooks_update**](docs/AdminWebhooksApi.md#patch_admin_webhooks_update) | **PATCH** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook
+*LumoAuthApiClient::AdminWebhooksApi* | [**put_admin_webhooks_update**](docs/AdminWebhooksApi.md#put_admin_webhooks_update) | **PUT** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook
 *LumoAuthApiClient::AgentsApi* | [**ask**](docs/AgentsApi.md#ask) | **POST** /orgs/{orgId}/api/v1/agents/ask | Agent-friendly permission check (Natural Language style)
-*LumoAuthApiClient::AgentsApi* | [**attest**](docs/AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | 
+*LumoAuthApiClient::AgentsApi* | [**attest**](docs/AgentsApi.md#attest) | **POST** /orgs/{orgId}/api/v1/agents/{agentId}/attest | Workload attestation: exchange a cloud OIDC token for an agent access token
 *LumoAuthApiClient::AgentsApi* | [**authorize_mcp**](docs/AgentsApi.md#authorize_mcp) | **POST** /orgs/{orgId}/api/v1/agents/me/mcp/authorize | Per-MCP-tool authorization for the authenticated agent (dx B3).
 *LumoAuthApiClient::AgentsApi* | [**create_approval**](docs/AgentsApi.md#create_approval) | **POST** /orgs/{orgId}/api/v1/agents/me/approvals | 
-*LumoAuthApiClient::AgentsApi* | [**get_agent_card**](docs/AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | 
+*LumoAuthApiClient::AgentsApi* | [**get_agent_card**](docs/AgentsApi.md#get_agent_card) | **GET** /orgs/{orgId}/api/v1/agents/{agentId}/agent-card | Signed A2A agent card
 *LumoAuthApiClient::AgentsApi* | [**get_approval_status**](docs/AgentsApi.md#get_approval_status) | **GET** /orgs/{orgId}/api/v1/agents/me/approvals/{token}/status | 
 *LumoAuthApiClient::AgentsApi* | [**get_current_agent**](docs/AgentsApi.md#get_current_agent) | **GET** /orgs/{orgId}/api/v1/agents/me | Get details about the currently authenticated agent
-*LumoAuthApiClient::AgentsApi* | [**register_agent**](docs/AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | 
-*LumoAuthApiClient::AgentsApi* | [**verify_agent_card**](docs/AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | 
-*LumoAuthApiClient::AuthorizationApi* | [**check_abac**](docs/AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Check ABAC authorization
-*LumoAuthApiClient::AuthorizationApi* | [**check_abac_bulk**](docs/AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Bulk check multiple authorization requests
-*LumoAuthApiClient::AuthorizationApi* | [**check_all_permissions**](docs/AuthorizationApi.md#check_all_permissions) | **POST** /api/v1/authz/check-all | Check if user has ALL of the specified permissions
-*LumoAuthApiClient::AuthorizationApi* | [**check_any_permission**](docs/AuthorizationApi.md#check_any_permission) | **POST** /api/v1/authz/check-any | Check if user has ANY of the specified permissions
-*LumoAuthApiClient::AuthorizationApi* | [**check_permission**](docs/AuthorizationApi.md#check_permission) | **POST** /api/v1/authz/check | Check if the authenticated user has a specific permission
-*LumoAuthApiClient::AuthorizationApi* | [**check_permissions_bulk**](docs/AuthorizationApi.md#check_permissions_bulk) | **POST** /api/v1/authz/check-bulk | Check multiple permissions at once
-*LumoAuthApiClient::AuthorizationApi* | [**check_relation**](docs/AuthorizationApi.md#check_relation) | **POST** /api/v1/authz/zanzibar/check | Zanzibar-style relationship check
-*LumoAuthApiClient::AuthorizationApi* | [**check_relation_scoped**](docs/AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | 
-*LumoAuthApiClient::AuthorizationApi* | [**evaluate**](docs/AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 single access evaluation.
-*LumoAuthApiClient::AuthorizationApi* | [**evaluate_batch**](docs/AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations.
+*LumoAuthApiClient::AgentsApi* | [**register_agent**](docs/AgentsApi.md#register_agent) | **POST** /orgs/{orgId}/api/v1/agents/register | Register (or re-register) an agent
+*LumoAuthApiClient::AgentsApi* | [**verify_agent_card**](docs/AgentsApi.md#verify_agent_card) | **POST** /orgs/{orgId}/api/v1/agents/agent-card/verify | Verify a signed A2A agent card
+*LumoAuthApiClient::AuthorizationApi* | [**check_abac**](docs/AuthorizationApi.md#check_abac) | **POST** /orgs/{orgId}/api/v1/abac/check | Evaluate an ABAC policy decision for the caller
+*LumoAuthApiClient::AuthorizationApi* | [**check_abac_bulk**](docs/AuthorizationApi.md#check_abac_bulk) | **POST** /orgs/{orgId}/api/v1/abac/check-bulk | Evaluate up to 100 ABAC checks for the caller in one call
+*LumoAuthApiClient::AuthorizationApi* | [**check_all_permissions**](docs/AuthorizationApi.md#check_all_permissions) | **POST** /api/v1/authz/check-all | Check whether the subject holds all of the permissions
+*LumoAuthApiClient::AuthorizationApi* | [**check_any_permission**](docs/AuthorizationApi.md#check_any_permission) | **POST** /api/v1/authz/check-any | Check whether the subject holds any of the permissions
+*LumoAuthApiClient::AuthorizationApi* | [**check_permission**](docs/AuthorizationApi.md#check_permission) | **POST** /api/v1/authz/check | Check one permission
+*LumoAuthApiClient::AuthorizationApi* | [**check_permissions_bulk**](docs/AuthorizationApi.md#check_permissions_bulk) | **POST** /api/v1/authz/check-bulk | Check up to 100 permissions in one call
+*LumoAuthApiClient::AuthorizationApi* | [**check_relation**](docs/AuthorizationApi.md#check_relation) | **POST** /api/v1/authz/zanzibar/check | Zanzibar relationship check
+*LumoAuthApiClient::AuthorizationApi* | [**check_relation_scoped**](docs/AuthorizationApi.md#check_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/check | Zanzibar relationship check
+*LumoAuthApiClient::AuthorizationApi* | [**evaluate**](docs/AuthorizationApi.md#evaluate) | **POST** /api/v1/authz/v1/evaluation | AuthZEN 1.0 access evaluation
+*LumoAuthApiClient::AuthorizationApi* | [**evaluate_batch**](docs/AuthorizationApi.md#evaluate_batch) | **POST** /api/v1/authz/v1/evaluations | AuthZEN 1.0 boxcarred access evaluations
 *LumoAuthApiClient::AuthorizationApi* | [**expand_relation**](docs/AuthorizationApi.md#expand_relation) | **POST** /api/v1/authz/zanzibar/expand | Zanzibar-style userset expansion: every subject that satisfies `object#relation`, as a tree that mirrors the namespace rewrites.
 *LumoAuthApiClient::AuthorizationApi* | [**expand_relation_scoped**](docs/AuthorizationApi.md#expand_relation_scoped) | **POST** /orgs/{orgId}/api/v1/zanzibar/expand | Zanzibar Expand: the userset tree of every subject satisfying `object#relation`. Always reveals other subjects, so it requires the oracle privilege (`authz.check` permission or `authz:check` scope).
-*LumoAuthApiClient::AuthorizationApi* | [**get_my_attributes**](docs/AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | Get user's current attributes (for debugging/UI)
-*LumoAuthApiClient::AuthorizationApi* | [**get_resource_attributes**](docs/AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Get resource attributes
-*LumoAuthApiClient::AuthorizationApi* | [**list_attribute_definitions**](docs/AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Get available attribute definitions
-*LumoAuthApiClient::AuthorizationApi* | [**list_permissions**](docs/AuthorizationApi.md#list_permissions) | **GET** /api/v1/authz/permissions | List all permissions for the authenticated user
-*LumoAuthApiClient::AuthorizationApi* | [**set_resource_attribute**](docs/AuthorizationApi.md#set_resource_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set resource attribute
-*LumoAuthApiClient::AuthorizationApi* | [**set_user_attribute**](docs/AuthorizationApi.md#set_user_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set user attribute
+*LumoAuthApiClient::AuthorizationApi* | [**get_my_attributes**](docs/AuthorizationApi.md#get_my_attributes) | **GET** /orgs/{orgId}/api/v1/abac/my-attributes | The caller's ABAC subject attributes
+*LumoAuthApiClient::AuthorizationApi* | [**get_resource_attributes**](docs/AuthorizationApi.md#get_resource_attributes) | **GET** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes | Attributes stored for a resource
+*LumoAuthApiClient::AuthorizationApi* | [**list_attribute_definitions**](docs/AuthorizationApi.md#list_attribute_definitions) | **GET** /orgs/{orgId}/api/v1/abac/attribute-definitions | Attribute definitions available to the organization
+*LumoAuthApiClient::AuthorizationApi* | [**list_permissions**](docs/AuthorizationApi.md#list_permissions) | **GET** /api/v1/authz/permissions | List the caller's effective permissions
+*LumoAuthApiClient::AuthorizationApi* | [**set_resource_attribute**](docs/AuthorizationApi.md#set_resource_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} | Set a resource attribute
+*LumoAuthApiClient::AuthorizationApi* | [**set_user_attribute**](docs/AuthorizationApi.md#set_user_attribute) | **PUT** /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug} | Set a user attribute
 *LumoAuthApiClient::IdentityApi* | [**get_me**](docs/IdentityApi.md#get_me) | **GET** /orgs/{orgId}/api/v1/me | Who am I
 *LumoAuthApiClient::JitApi* | [**approve_request**](docs/JitApi.md#approve_request) | **POST** /orgs/{orgId}/api/v1/jit/approve/{requestId} | HITL: Approve a pending JIT request (requires user auth).
 *LumoAuthApiClient::JitApi* | [**complete_task**](docs/JitApi.md#complete_task) | **POST** /orgs/{orgId}/api/v1/jit/task/{taskId}/complete | Complete a task and cleanup resources.
@@ -365,51 +376,76 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::JitApi* | [**get_request_token**](docs/JitApi.md#get_request_token) | **POST** /orgs/{orgId}/api/v1/jit/request/{requestId}/token | Exchange an approved JIT request for a downscoped token.
 *LumoAuthApiClient::JitApi* | [**list_pending_requests**](docs/JitApi.md#list_pending_requests) | **GET** /orgs/{orgId}/api/v1/jit/pending | Get pending HITL requests for the tenant.
 *LumoAuthApiClient::JitApi* | [**request_permission**](docs/JitApi.md#request_permission) | **POST** /orgs/{orgId}/api/v1/jit/request | Request a JIT permission using RFC 9396 authorization_details.
-*LumoAuthApiClient::McpApi* | [**get_protected_resource_metadata**](docs/McpApi.md#get_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | OAuth 2.0 Protected Resource Metadata (RFC 9728)
-*LumoAuthApiClient::McpApi* | [**get_protected_resource_metadata_root**](docs/McpApi.md#get_protected_resource_metadata_root) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Root-level Protected Resource Metadata
+*LumoAuthApiClient::McpApi* | [**get_protected_resource_metadata**](docs/McpApi.md#get_protected_resource_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource/mcp/{serverId} | MCP server protected resource metadata (RFC 9728)
+*LumoAuthApiClient::McpApi* | [**get_protected_resource_metadata_root**](docs/McpApi.md#get_protected_resource_metadata_root) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-protected-resource | Organization-level protected resource metadata (RFC 9728)
 *LumoAuthApiClient::McpApi* | [**get_server**](docs/McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
-*LumoAuthApiClient::McpApi* | [**get_server_challenge**](docs/McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.
+*LumoAuthApiClient::McpApi* | [**get_server_challenge**](docs/McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 *LumoAuthApiClient::McpApi* | [**list_servers**](docs/McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
-*LumoAuthApiClient::McpApi* | [**post_server_challenge**](docs/McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP Server 401 challenge endpoint.
-*LumoAuthApiClient::OAuthApi* | [**authorize**](docs/OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | 
-*LumoAuthApiClient::OAuthApi* | [**backchannel_authorize**](docs/OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | 
-*LumoAuthApiClient::OAuthApi* | [**device_authorization**](docs/OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device Authorization Endpoint (RFC 8628 Section 3.1 & 3.2)
-*LumoAuthApiClient::OAuthApi* | [**get_client_configuration**](docs/OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Client Configuration Endpoint per OIDC spec Section 4
-*LumoAuthApiClient::OAuthApi* | [**get_device_verification**](docs/OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device Verification Page (RFC 8628 Section 3.3)
-*LumoAuthApiClient::OAuthApi* | [**get_org_selection**](docs/OAuthApi.md#get_org_selection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | 
-*LumoAuthApiClient::OAuthApi* | [**introspect**](docs/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | RFC 7662 - Token Introspection Endpoint
-*LumoAuthApiClient::OAuthApi* | [**par**](docs/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | 
-*LumoAuthApiClient::OAuthApi* | [**passkey_login**](docs/OAuthApi.md#passkey_login) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | 
-*LumoAuthApiClient::OAuthApi* | [**register_client**](docs/OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Client Registration Endpoint per OIDC spec Section 3
-*LumoAuthApiClient::OAuthApi* | [**revoke**](docs/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | RFC 7009 - Token Revocation Endpoint
-*LumoAuthApiClient::OAuthApi* | [**social_callback**](docs/OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Handle social login callback from provider.
-*LumoAuthApiClient::OAuthApi* | [**social_callback_post**](docs/OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Handle social login callback from provider.
-*LumoAuthApiClient::OAuthApi* | [**social_login**](docs/OAuthApi.md#social_login) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Initiate social login flow.
-*LumoAuthApiClient::OAuthApi* | [**submit_authorization**](docs/OAuthApi.md#submit_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | 
-*LumoAuthApiClient::OAuthApi* | [**submit_device_verification**](docs/OAuthApi.md#submit_device_verification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Device Verification Page (RFC 8628 Section 3.3)
-*LumoAuthApiClient::OAuthApi* | [**submit_login**](docs/OAuthApi.md#submit_login) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | 
-*LumoAuthApiClient::OAuthApi* | [**submit_login_json**](docs/OAuthApi.md#submit_login_json) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | JSON credential login, for applications that render their own sign-in form.
-*LumoAuthApiClient::OAuthApi* | [**submit_org_selection**](docs/OAuthApi.md#submit_org_selection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | 
-*LumoAuthApiClient::OAuthApi* | [**token**](docs/OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 Token Endpoint
-*LumoAuthApiClient::OIDCApi* | [**check_session**](docs/OIDCApi.md#check_session) | **GET** /orgs/{orgId}/api/v1/oauth/check_session | 
-*LumoAuthApiClient::OIDCApi* | [**logout**](docs/OIDCApi.md#logout) | **GET** /orgs/{orgId}/api/v1/oauth/logout | 
-*LumoAuthApiClient::OIDCApi* | [**logout_post**](docs/OIDCApi.md#logout_post) | **POST** /orgs/{orgId}/api/v1/oauth/logout | 
-*LumoAuthApiClient::OIDCApi* | [**userinfo**](docs/OIDCApi.md#userinfo) | **GET** /orgs/{orgId}/api/v1/oauth/userinfo | OIDC UserInfo Endpoint
-*LumoAuthApiClient::OIDCApi* | [**userinfo_post**](docs/OIDCApi.md#userinfo_post) | **POST** /orgs/{orgId}/api/v1/oauth/userinfo | OIDC UserInfo Endpoint
-*LumoAuthApiClient::SsfApi* | [**create_stream_config**](docs/SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create a stream. Accepts the SSF stream-configuration shape: {   \"delivery\": { \"method\": \"urn:ietf:rfc:8935\", \"endpoint_url\": \"...\",                 \"authorization_token\": \"...\" },   \"events_requested\": [\"...uri...\"],   \"audience\": \"https://receiver.example.com\" }
-*LumoAuthApiClient::SsfApi* | [**delete_stream_config**](docs/SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | 
-*LumoAuthApiClient::SsfApi* | [**get_stream_config**](docs/SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read stream configuration(s). `?stream_id=` returns a single config, otherwise all of the tenant's streams are returned.
-*LumoAuthApiClient::SsfApi* | [**verify_stream**](docs/SsfApi.md#verify_stream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | SSF Verification request: queue a Verification Event SET to the stream so the receiver can confirm end-to-end delivery. Body: { \"stream_id\": \"ssf_...\", \"state\": \"optional-opaque-echo\" }
-*LumoAuthApiClient::TokenVaultApi* | [**get_connection_token**](docs/TokenVaultApi.md#get_connection_token) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection.
-*LumoAuthApiClient::TokenVaultApi* | [**list_connections**](docs/TokenVaultApi.md#list_connections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the connections this agent may use, with grant status. No secrets.
-*LumoAuthApiClient::WellKnownApi* | [**get_authorization_server_metadata**](docs/WellKnownApi.md#get_authorization_server_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-authorization-server | 
-*LumoAuthApiClient::WellKnownApi* | [**get_jwks**](docs/WellKnownApi.md#get_jwks) | **GET** /orgs/{orgId}/api/v1/.well-known/jwks.json | 
-*LumoAuthApiClient::WellKnownApi* | [**get_openid_configuration**](docs/WellKnownApi.md#get_openid_configuration) | **GET** /orgs/{orgId}/api/v1/.well-known/openid-configuration | 
-*LumoAuthApiClient::WellKnownApi* | [**get_ssf_configuration**](docs/WellKnownApi.md#get_ssf_configuration) | **GET** /orgs/{orgId}/api/v1/.well-known/ssf-configuration | 
+*LumoAuthApiClient::McpApi* | [**post_server_challenge**](docs/McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
+*LumoAuthApiClient::MfaApi* | [**create_mfa_challenge**](docs/MfaApi.md#create_mfa_challenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges | Start an MFA challenge
+*LumoAuthApiClient::MfaApi* | [**delete_authenticator**](docs/MfaApi.md#delete_authenticator) | **DELETE** /orgs/{orgId}/api/v1/me/authenticators/{id} | Remove an authenticator
+*LumoAuthApiClient::MfaApi* | [**enroll_authenticator**](docs/MfaApi.md#enroll_authenticator) | **POST** /orgs/{orgId}/api/v1/me/authenticators/{type}/enroll | Start enrolling an authenticator
+*LumoAuthApiClient::MfaApi* | [**generate_recovery_codes**](docs/MfaApi.md#generate_recovery_codes) | **POST** /orgs/{orgId}/api/v1/me/recovery-codes | Generate recovery codes
+*LumoAuthApiClient::MfaApi* | [**get_mfa_challenge**](docs/MfaApi.md#get_mfa_challenge) | **GET** /orgs/{orgId}/api/v1/mfa/challenges/{id} | Get challenge status
+*LumoAuthApiClient::MfaApi* | [**get_recovery_code_status**](docs/MfaApi.md#get_recovery_code_status) | **GET** /orgs/{orgId}/api/v1/me/recovery-codes | Recovery-code status
+*LumoAuthApiClient::MfaApi* | [**list_my_authenticators**](docs/MfaApi.md#list_my_authenticators) | **GET** /orgs/{orgId}/api/v1/me/authenticators | List my authenticators
+*LumoAuthApiClient::MfaApi* | [**list_trusted_devices**](docs/MfaApi.md#list_trusted_devices) | **GET** /orgs/{orgId}/api/v1/me/trusted-devices | List trusted devices
+*LumoAuthApiClient::MfaApi* | [**revoke_trusted_device**](docs/MfaApi.md#revoke_trusted_device) | **DELETE** /orgs/{orgId}/api/v1/me/trusted-devices/{id} | Revoke a trusted device
+*LumoAuthApiClient::MfaApi* | [**update_authenticator**](docs/MfaApi.md#update_authenticator) | **PATCH** /orgs/{orgId}/api/v1/me/authenticators/{id} | Rename an authenticator or make it the default
+*LumoAuthApiClient::MfaApi* | [**verify_authenticator**](docs/MfaApi.md#verify_authenticator) | **POST** /orgs/{orgId}/api/v1/me/authenticators/{id}/verify | Verify a pending authenticator
+*LumoAuthApiClient::MfaApi* | [**verify_mfa_challenge**](docs/MfaApi.md#verify_mfa_challenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges/{id}/verify | Answer a challenge
+*LumoAuthApiClient::OAuthApi* | [**authorize**](docs/OAuthApi.md#authorize) | **GET** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint
+*LumoAuthApiClient::OAuthApi* | [**backchannel_authorize**](docs/OAuthApi.md#backchannel_authorize) | **POST** /orgs/{orgId}/api/v1/oauth/bc-authorize | CIBA backchannel authentication request
+*LumoAuthApiClient::OAuthApi* | [**device_authorization**](docs/OAuthApi.md#device_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/device_authorization | Device authorization request (RFC 8628)
+*LumoAuthApiClient::OAuthApi* | [**get_client_configuration**](docs/OAuthApi.md#get_client_configuration) | **GET** /orgs/{orgId}/api/v1/connect/register/{clientId} | Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+*LumoAuthApiClient::OAuthApi* | [**get_device_verification**](docs/OAuthApi.md#get_device_verification) | **GET** /orgs/{orgId}/api/v1/oauth/device | Device verification page (RFC 8628 §3.3)
+*LumoAuthApiClient::OAuthApi* | [**get_org_selection**](docs/OAuthApi.md#get_org_selection) | **GET** /orgs/{orgId}/api/v1/oauth/org-select | Organization selector page
+*LumoAuthApiClient::OAuthApi* | [**introspect**](docs/OAuthApi.md#introspect) | **POST** /orgs/{orgId}/api/v1/oauth/introspect | Token introspection (RFC 7662)
+*LumoAuthApiClient::OAuthApi* | [**par**](docs/OAuthApi.md#par) | **POST** /orgs/{orgId}/api/v1/oauth/par | Pushed authorization request (RFC 9126)
+*LumoAuthApiClient::OAuthApi* | [**passkey_login**](docs/OAuthApi.md#passkey_login) | **GET** /orgs/{orgId}/api/v1/oauth/passkey-login | Passkey login entry point
+*LumoAuthApiClient::OAuthApi* | [**register_client**](docs/OAuthApi.md#register_client) | **POST** /orgs/{orgId}/api/v1/connect/register | Dynamic client registration (RFC 7591 / OIDC DCR)
+*LumoAuthApiClient::OAuthApi* | [**revoke**](docs/OAuthApi.md#revoke) | **POST** /orgs/{orgId}/api/v1/oauth/revoke | Token revocation (RFC 7009)
+*LumoAuthApiClient::OAuthApi* | [**social_callback**](docs/OAuthApi.md#social_callback) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback
+*LumoAuthApiClient::OAuthApi* | [**social_callback_post**](docs/OAuthApi.md#social_callback_post) | **POST** /orgs/{orgId}/api/v1/oauth/social/{provider}/callback | Social / enterprise identity-provider callback (form_post)
+*LumoAuthApiClient::OAuthApi* | [**social_login**](docs/OAuthApi.md#social_login) | **GET** /orgs/{orgId}/api/v1/oauth/social/{provider} | Start social / enterprise identity-provider login
+*LumoAuthApiClient::OAuthApi* | [**submit_authorization**](docs/OAuthApi.md#submit_authorization) | **POST** /orgs/{orgId}/api/v1/oauth/authorize | OAuth 2.1 / OIDC authorization endpoint (form submission)
+*LumoAuthApiClient::OAuthApi* | [**submit_device_verification**](docs/OAuthApi.md#submit_device_verification) | **POST** /orgs/{orgId}/api/v1/oauth/device | Submit device verification
+*LumoAuthApiClient::OAuthApi* | [**submit_login**](docs/OAuthApi.md#submit_login) | **POST** /orgs/{orgId}/api/v1/oauth/login/submit | Hosted login form submission
+*LumoAuthApiClient::OAuthApi* | [**submit_login_json**](docs/OAuthApi.md#submit_login_json) | **POST** /orgs/{orgId}/api/v1/oauth/login/json | Programmatic (JSON) login for the authorization flow
+*LumoAuthApiClient::OAuthApi* | [**submit_org_selection**](docs/OAuthApi.md#submit_org_selection) | **POST** /orgs/{orgId}/api/v1/oauth/org-select | Submit organization selection
+*LumoAuthApiClient::OAuthApi* | [**token**](docs/OAuthApi.md#token) | **POST** /orgs/{orgId}/api/v1/oauth/token | OAuth 2.1 token endpoint
+*LumoAuthApiClient::OIDCApi* | [**check_session**](docs/OIDCApi.md#check_session) | **GET** /orgs/{orgId}/api/v1/oauth/check_session | OP session-check iframe (OIDC Session Management 1.0)
+*LumoAuthApiClient::OIDCApi* | [**logout**](docs/OIDCApi.md#logout) | **GET** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+*LumoAuthApiClient::OIDCApi* | [**logout_post**](docs/OIDCApi.md#logout_post) | **POST** /orgs/{orgId}/api/v1/oauth/logout | RP-initiated logout (confirmation submission)
+*LumoAuthApiClient::OIDCApi* | [**userinfo**](docs/OIDCApi.md#userinfo) | **GET** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint
+*LumoAuthApiClient::OIDCApi* | [**userinfo_post**](docs/OIDCApi.md#userinfo_post) | **POST** /orgs/{orgId}/api/v1/oauth/userinfo | OpenID Connect UserInfo endpoint (POST)
+*LumoAuthApiClient::SsfApi* | [**create_stream_config**](docs/SsfApi.md#create_stream_config) | **POST** /orgs/{orgId}/api/v1/ssf/stream | Create an SSF stream
+*LumoAuthApiClient::SsfApi* | [**delete_stream_config**](docs/SsfApi.md#delete_stream_config) | **DELETE** /orgs/{orgId}/api/v1/ssf/stream | Delete an SSF stream
+*LumoAuthApiClient::SsfApi* | [**get_stream_config**](docs/SsfApi.md#get_stream_config) | **GET** /orgs/{orgId}/api/v1/ssf/stream | Read SSF stream configuration(s)
+*LumoAuthApiClient::SsfApi* | [**verify_stream**](docs/SsfApi.md#verify_stream) | **POST** /orgs/{orgId}/api/v1/ssf/verify | Request a stream verification event
+*LumoAuthApiClient::TokenVaultApi* | [**get_connection_token**](docs/TokenVaultApi.md#get_connection_token) | **POST** /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token | Fetch a live third-party access token for a connection
+*LumoAuthApiClient::TokenVaultApi* | [**list_connections**](docs/TokenVaultApi.md#list_connections) | **GET** /orgs/{orgId}/api/v1/agents/me/connections | List the outbound connections this agent may use
+*LumoAuthApiClient::WellKnownApi* | [**get_authorization_server_metadata**](docs/WellKnownApi.md#get_authorization_server_metadata) | **GET** /orgs/{orgId}/api/v1/.well-known/oauth-authorization-server | OAuth 2.0 authorization server metadata (RFC 8414)
+*LumoAuthApiClient::WellKnownApi* | [**get_jwks**](docs/WellKnownApi.md#get_jwks) | **GET** /orgs/{orgId}/api/v1/.well-known/jwks.json | JSON Web Key Set (RFC 7517)
+*LumoAuthApiClient::WellKnownApi* | [**get_openid_configuration**](docs/WellKnownApi.md#get_openid_configuration) | **GET** /orgs/{orgId}/api/v1/.well-known/openid-configuration | OpenID Provider configuration (OIDC Discovery 1.0)
+*LumoAuthApiClient::WellKnownApi* | [**get_ssf_configuration**](docs/WellKnownApi.md#get_ssf_configuration) | **GET** /orgs/{orgId}/api/v1/.well-known/ssf-configuration | SSF transmitter configuration metadata
 
 
 ## Documentation for Models
 
+ - [LumoAuthApiClient::AbacAttributeDefinition](docs/AbacAttributeDefinition.md)
+ - [LumoAuthApiClient::AbacAttributesCreateResponse](docs/AbacAttributesCreateResponse.md)
+ - [LumoAuthApiClient::AbacAttributesGetResponse](docs/AbacAttributesGetResponse.md)
+ - [LumoAuthApiClient::AbacAttributesListResponse](docs/AbacAttributesListResponse.md)
+ - [LumoAuthApiClient::AbacPoliciesCreateResponse](docs/AbacPoliciesCreateResponse.md)
+ - [LumoAuthApiClient::AbacPoliciesGetResponse](docs/AbacPoliciesGetResponse.md)
+ - [LumoAuthApiClient::AbacPoliciesListResponse](docs/AbacPoliciesListResponse.md)
+ - [LumoAuthApiClient::AbacPoliciesToggleResponse](docs/AbacPoliciesToggleResponse.md)
+ - [LumoAuthApiClient::AbacPolicy](docs/AbacPolicy.md)
+ - [LumoAuthApiClient::AbacResourceAttribute](docs/AbacResourceAttribute.md)
+ - [LumoAuthApiClient::AddUserGroupResponse](docs/AddUserGroupResponse.md)
+ - [LumoAuthApiClient::AddUserPermissionResponse](docs/AddUserPermissionResponse.md)
+ - [LumoAuthApiClient::AddUserRoleResponse](docs/AddUserRoleResponse.md)
  - [LumoAuthApiClient::AdminAgentsActivateResponse](docs/AdminAgentsActivateResponse.md)
  - [LumoAuthApiClient::AdminAgentsAgentsDisableResponse](docs/AdminAgentsAgentsDisableResponse.md)
  - [LumoAuthApiClient::AdminAgentsAgentsEnableResponse](docs/AdminAgentsAgentsEnableResponse.md)
@@ -417,8 +453,10 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminAgentsCreateRequest](docs/AdminAgentsCreateRequest.md)
  - [LumoAuthApiClient::AdminAgentsCreateResponse](docs/AdminAgentsCreateResponse.md)
  - [LumoAuthApiClient::AdminAgentsDeactivateResponse](docs/AdminAgentsDeactivateResponse.md)
+ - [LumoAuthApiClient::AdminAgentsDeleteResponse](docs/AdminAgentsDeleteResponse.md)
  - [LumoAuthApiClient::AdminAgentsGenerateTokenRequest](docs/AdminAgentsGenerateTokenRequest.md)
  - [LumoAuthApiClient::AdminAgentsGenerateTokenResponse](docs/AdminAgentsGenerateTokenResponse.md)
+ - [LumoAuthApiClient::AdminAgentsGenerateTokenResponseData](docs/AdminAgentsGenerateTokenResponseData.md)
  - [LumoAuthApiClient::AdminAgentsGetResponse](docs/AdminAgentsGetResponse.md)
  - [LumoAuthApiClient::AdminAgentsGetScopesResponse](docs/AdminAgentsGetScopesResponse.md)
  - [LumoAuthApiClient::AdminAgentsListResponse](docs/AdminAgentsListResponse.md)
@@ -426,35 +464,226 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminAgentsRotateCredentialsResponse](docs/AdminAgentsRotateCredentialsResponse.md)
  - [LumoAuthApiClient::AdminAgentsSetScopesRequest](docs/AdminAgentsSetScopesRequest.md)
  - [LumoAuthApiClient::AdminAgentsSetScopesResponse](docs/AdminAgentsSetScopesResponse.md)
+ - [LumoAuthApiClient::AdminAnalyticsDashboardResponse](docs/AdminAnalyticsDashboardResponse.md)
+ - [LumoAuthApiClient::AdminAnalyticsDashboardResponseData](docs/AdminAnalyticsDashboardResponseData.md)
+ - [LumoAuthApiClient::AdminAnalyticsDashboardResponseDataAudit](docs/AdminAnalyticsDashboardResponseDataAudit.md)
+ - [LumoAuthApiClient::AdminAnalyticsDashboardResponseDataAuthentication](docs/AdminAnalyticsDashboardResponseDataAuthentication.md)
+ - [LumoAuthApiClient::AdminAnalyticsDashboardResponseDataUsers](docs/AdminAnalyticsDashboardResponseDataUsers.md)
+ - [LumoAuthApiClient::AdminAnalyticsLoginsResponse](docs/AdminAnalyticsLoginsResponse.md)
+ - [LumoAuthApiClient::AdminAnalyticsLoginsResponseData](docs/AdminAnalyticsLoginsResponseData.md)
+ - [LumoAuthApiClient::AdminAnalyticsLoginsResponseDataDailyItem](docs/AdminAnalyticsLoginsResponseDataDailyItem.md)
+ - [LumoAuthApiClient::AdminAnalyticsLoginsResponseDataPeriod](docs/AdminAnalyticsLoginsResponseDataPeriod.md)
+ - [LumoAuthApiClient::AdminAnalyticsUsersResponse](docs/AdminAnalyticsUsersResponse.md)
+ - [LumoAuthApiClient::AdminAnalyticsUsersResponseData](docs/AdminAnalyticsUsersResponseData.md)
+ - [LumoAuthApiClient::AdminAnalyticsUsersResponseDataByMfaStatusItem](docs/AdminAnalyticsUsersResponseDataByMfaStatusItem.md)
+ - [LumoAuthApiClient::AdminAnalyticsUsersResponseDataByVerificationStatusItem](docs/AdminAnalyticsUsersResponseDataByVerificationStatusItem.md)
+ - [LumoAuthApiClient::AdminAnalyticsUsersResponseDataDailyRegistrationsItem](docs/AdminAnalyticsUsersResponseDataDailyRegistrationsItem.md)
+ - [LumoAuthApiClient::AdminAuditLogsActionsResponse](docs/AdminAuditLogsActionsResponse.md)
+ - [LumoAuthApiClient::AdminAuditLogsExportResponse](docs/AdminAuditLogsExportResponse.md)
+ - [LumoAuthApiClient::AdminAuditLogsExportResponseMeta](docs/AdminAuditLogsExportResponseMeta.md)
+ - [LumoAuthApiClient::AdminAuditLogsGetResponse](docs/AdminAuditLogsGetResponse.md)
+ - [LumoAuthApiClient::AdminAuditLogsListResponse](docs/AdminAuditLogsListResponse.md)
+ - [LumoAuthApiClient::AdminAuditLogsRetentionResponse](docs/AdminAuditLogsRetentionResponse.md)
+ - [LumoAuthApiClient::AdminAuditLogsRetentionResponseData](docs/AdminAuditLogsRetentionResponseData.md)
+ - [LumoAuthApiClient::AdminAuditLogsStatsResponse](docs/AdminAuditLogsStatsResponse.md)
+ - [LumoAuthApiClient::AdminAuditLogsStatsResponseData](docs/AdminAuditLogsStatsResponseData.md)
+ - [LumoAuthApiClient::AdminAuditLogsStatsResponseDataPeriod](docs/AdminAuditLogsStatsResponseDataPeriod.md)
+ - [LumoAuthApiClient::AdminClientTokensRevokeAllResponse](docs/AdminClientTokensRevokeAllResponse.md)
+ - [LumoAuthApiClient::AdminEmailTemplatesListResponse](docs/AdminEmailTemplatesListResponse.md)
+ - [LumoAuthApiClient::AdminEmailTemplatesPreviewResponse](docs/AdminEmailTemplatesPreviewResponse.md)
+ - [LumoAuthApiClient::AdminEmailTemplatesVariablesResponse](docs/AdminEmailTemplatesVariablesResponse.md)
+ - [LumoAuthApiClient::AdminGroupsCreateResponse](docs/AdminGroupsCreateResponse.md)
+ - [LumoAuthApiClient::AdminGroupsGetMembersResponse](docs/AdminGroupsGetMembersResponse.md)
+ - [LumoAuthApiClient::AdminGroupsGetMembersResponseDataItem](docs/AdminGroupsGetMembersResponseDataItem.md)
+ - [LumoAuthApiClient::AdminGroupsGetResponse](docs/AdminGroupsGetResponse.md)
+ - [LumoAuthApiClient::AdminGroupsGroupsGetRolesResponse](docs/AdminGroupsGroupsGetRolesResponse.md)
+ - [LumoAuthApiClient::AdminGroupsGroupsGetRolesResponseDataItem](docs/AdminGroupsGroupsGetRolesResponseDataItem.md)
+ - [LumoAuthApiClient::AdminGroupsListResponse](docs/AdminGroupsListResponse.md)
+ - [LumoAuthApiClient::AdminIdentitiesLegacySamlRelinkRequest](docs/AdminIdentitiesLegacySamlRelinkRequest.md)
+ - [LumoAuthApiClient::AdminIdentitiesLegacySamlRelinkResponse](docs/AdminIdentitiesLegacySamlRelinkResponse.md)
+ - [LumoAuthApiClient::AdminIdentitiesLegacySamlRelinkResponseData](docs/AdminIdentitiesLegacySamlRelinkResponseData.md)
+ - [LumoAuthApiClient::AdminIdentitiesLegacySamlReportResponse](docs/AdminIdentitiesLegacySamlReportResponse.md)
+ - [LumoAuthApiClient::AdminIdentitiesLegacySamlReportResponseData](docs/AdminIdentitiesLegacySamlReportResponseData.md)
+ - [LumoAuthApiClient::AdminIdentitiesLegacySamlReportResponseDataUsersItem](docs/AdminIdentitiesLegacySamlReportResponseDataUsersItem.md)
+ - [LumoAuthApiClient::AdminIdentitiesLinkRequest](docs/AdminIdentitiesLinkRequest.md)
+ - [LumoAuthApiClient::AdminIdentitiesListResponse](docs/AdminIdentitiesListResponse.md)
+ - [LumoAuthApiClient::AdminIdentitiesListResponseData](docs/AdminIdentitiesListResponseData.md)
+ - [LumoAuthApiClient::AdminIdentitiesListResponseDataBindingsItem](docs/AdminIdentitiesListResponseDataBindingsItem.md)
+ - [LumoAuthApiClient::AdminMcpServersCreateResponse](docs/AdminMcpServersCreateResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersGetResponse](docs/AdminMcpServersGetResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersListResponse](docs/AdminMcpServersListResponse.md)
+ - [LumoAuthApiClient::AdminMcpServersListResponseMeta](docs/AdminMcpServersListResponseMeta.md)
+ - [LumoAuthApiClient::AdminOrgInvitationsCreateResponse](docs/AdminOrgInvitationsCreateResponse.md)
+ - [LumoAuthApiClient::AdminOrgInvitationsListResponse](docs/AdminOrgInvitationsListResponse.md)
+ - [LumoAuthApiClient::AdminOrgMembersAddResponse](docs/AdminOrgMembersAddResponse.md)
+ - [LumoAuthApiClient::AdminOrgMembersListResponse](docs/AdminOrgMembersListResponse.md)
+ - [LumoAuthApiClient::AdminOrgRolesCreateResponse](docs/AdminOrgRolesCreateResponse.md)
+ - [LumoAuthApiClient::AdminOrgRolesListResponse](docs/AdminOrgRolesListResponse.md)
+ - [LumoAuthApiClient::AdminOrganizationsCreateResponse](docs/AdminOrganizationsCreateResponse.md)
+ - [LumoAuthApiClient::AdminOrganizationsGetResponse](docs/AdminOrganizationsGetResponse.md)
+ - [LumoAuthApiClient::AdminOrganizationsListResponse](docs/AdminOrganizationsListResponse.md)
+ - [LumoAuthApiClient::AdminPermissionsCreateResponse](docs/AdminPermissionsCreateResponse.md)
+ - [LumoAuthApiClient::AdminPermissionsGetResponse](docs/AdminPermissionsGetResponse.md)
+ - [LumoAuthApiClient::AdminPermissionsListResponse](docs/AdminPermissionsListResponse.md)
+ - [LumoAuthApiClient::AdminPermissionsUsageResponse](docs/AdminPermissionsUsageResponse.md)
+ - [LumoAuthApiClient::AdminPermissionsUsageResponseData](docs/AdminPermissionsUsageResponseData.md)
+ - [LumoAuthApiClient::AdminRolesCreateResponse](docs/AdminRolesCreateResponse.md)
+ - [LumoAuthApiClient::AdminRolesGetPermissionsResponse](docs/AdminRolesGetPermissionsResponse.md)
+ - [LumoAuthApiClient::AdminRolesGetPermissionsResponseDataItem](docs/AdminRolesGetPermissionsResponseDataItem.md)
+ - [LumoAuthApiClient::AdminRolesGetResponse](docs/AdminRolesGetResponse.md)
+ - [LumoAuthApiClient::AdminRolesGetUsersResponse](docs/AdminRolesGetUsersResponse.md)
+ - [LumoAuthApiClient::AdminRolesListResponse](docs/AdminRolesListResponse.md)
+ - [LumoAuthApiClient::AdminSandboxListResponse](docs/AdminSandboxListResponse.md)
+ - [LumoAuthApiClient::AdminSandboxSpawnRequest](docs/AdminSandboxSpawnRequest.md)
+ - [LumoAuthApiClient::AdminSandboxSpawnResponse](docs/AdminSandboxSpawnResponse.md)
+ - [LumoAuthApiClient::AdminScopesCreateResponse](docs/AdminScopesCreateResponse.md)
+ - [LumoAuthApiClient::AdminScopesListResponse](docs/AdminScopesListResponse.md)
+ - [LumoAuthApiClient::AdminScopesListResponseMeta](docs/AdminScopesListResponseMeta.md)
+ - [LumoAuthApiClient::AdminSessionsCountResponse](docs/AdminSessionsCountResponse.md)
+ - [LumoAuthApiClient::AdminSessionsCountResponseData](docs/AdminSessionsCountResponseData.md)
+ - [LumoAuthApiClient::AdminSessionsListResponse](docs/AdminSessionsListResponse.md)
+ - [LumoAuthApiClient::AdminSessionsRevokeAllRequest](docs/AdminSessionsRevokeAllRequest.md)
+ - [LumoAuthApiClient::AdminSessionsRevokeAllResponse](docs/AdminSessionsRevokeAllResponse.md)
+ - [LumoAuthApiClient::AdminSessionsRevokeResponse](docs/AdminSessionsRevokeResponse.md)
+ - [LumoAuthApiClient::AdminSessionsStatsResponse](docs/AdminSessionsStatsResponse.md)
+ - [LumoAuthApiClient::AdminSessionsStatsResponseData](docs/AdminSessionsStatsResponseData.md)
+ - [LumoAuthApiClient::AdminSettingsAllResponse](docs/AdminSettingsAllResponse.md)
+ - [LumoAuthApiClient::AdminSettingsAllResponseData](docs/AdminSettingsAllResponseData.md)
+ - [LumoAuthApiClient::AdminSettingsAllResponseDataGeneral](docs/AdminSettingsAllResponseDataGeneral.md)
+ - [LumoAuthApiClient::AdminSettingsAllResponseDataSecurity](docs/AdminSettingsAllResponseDataSecurity.md)
+ - [LumoAuthApiClient::AdminSettingsAuthenticationGetResponse](docs/AdminSettingsAuthenticationGetResponse.md)
+ - [LumoAuthApiClient::AdminSettingsBrandingGetResponse](docs/AdminSettingsBrandingGetResponse.md)
+ - [LumoAuthApiClient::AdminSettingsEmailGetResponse](docs/AdminSettingsEmailGetResponse.md)
+ - [LumoAuthApiClient::AdminSettingsGeneralGetResponse](docs/AdminSettingsGeneralGetResponse.md)
+ - [LumoAuthApiClient::AdminSettingsGeneralGetResponseData](docs/AdminSettingsGeneralGetResponseData.md)
+ - [LumoAuthApiClient::AdminSettingsScimGetResponse](docs/AdminSettingsScimGetResponse.md)
+ - [LumoAuthApiClient::AdminSettingsSecurityGetResponse](docs/AdminSettingsSecurityGetResponse.md)
+ - [LumoAuthApiClient::AdminSocialProvidersAvailableResponse](docs/AdminSocialProvidersAvailableResponse.md)
+ - [LumoAuthApiClient::AdminSocialProvidersAvailableResponseDataItem](docs/AdminSocialProvidersAvailableResponseDataItem.md)
+ - [LumoAuthApiClient::AdminSocialProvidersCallbackUrlsResponse](docs/AdminSocialProvidersCallbackUrlsResponse.md)
+ - [LumoAuthApiClient::AdminSocialProvidersCreateResponse](docs/AdminSocialProvidersCreateResponse.md)
+ - [LumoAuthApiClient::AdminSocialProvidersGetResponse](docs/AdminSocialProvidersGetResponse.md)
+ - [LumoAuthApiClient::AdminSocialProvidersListResponse](docs/AdminSocialProvidersListResponse.md)
+ - [LumoAuthApiClient::AdminTenantGetResponse](docs/AdminTenantGetResponse.md)
+ - [LumoAuthApiClient::AdminTokensListResponse](docs/AdminTokensListResponse.md)
+ - [LumoAuthApiClient::AdminTokensRevokeResponse](docs/AdminTokensRevokeResponse.md)
+ - [LumoAuthApiClient::AdminUserSessionsListResponse](docs/AdminUserSessionsListResponse.md)
+ - [LumoAuthApiClient::AdminUserSessionsRevokeAllResponse](docs/AdminUserSessionsRevokeAllResponse.md)
+ - [LumoAuthApiClient::AdminUserSessionsRevokePostResponse](docs/AdminUserSessionsRevokePostResponse.md)
+ - [LumoAuthApiClient::AdminUserTokensRevokeAllResponse](docs/AdminUserTokensRevokeAllResponse.md)
+ - [LumoAuthApiClient::AdminUserTokensRevokePostResponse](docs/AdminUserTokensRevokePostResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksCreateResponse](docs/AdminWebhooksCreateResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksCreateResponseData](docs/AdminWebhooksCreateResponseData.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveriesListResponse](docs/AdminWebhooksDeliveriesListResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveriesListResponseMeta](docs/AdminWebhooksDeliveriesListResponseMeta.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveryReplayResponse](docs/AdminWebhooksDeliveryReplayResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveryShowResponse](docs/AdminWebhooksDeliveryShowResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveryShowResponseData](docs/AdminWebhooksDeliveryShowResponseData.md)
+ - [LumoAuthApiClient::AdminWebhooksDeliveryShowResponseData1AttemptsItem](docs/AdminWebhooksDeliveryShowResponseData1AttemptsItem.md)
+ - [LumoAuthApiClient::AdminWebhooksEventsResponse](docs/AdminWebhooksEventsResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksGetResponse](docs/AdminWebhooksGetResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksListResponse](docs/AdminWebhooksListResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksRotateSecretResponse](docs/AdminWebhooksRotateSecretResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksRotateSecretResponseData](docs/AdminWebhooksRotateSecretResponseData.md)
+ - [LumoAuthApiClient::AdminWebhooksTestResponse](docs/AdminWebhooksTestResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksTunnelStartResponse](docs/AdminWebhooksTunnelStartResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksTunnelStartResponseData](docs/AdminWebhooksTunnelStartResponseData.md)
+ - [LumoAuthApiClient::AdminWebhooksWebhooksDisableResponse](docs/AdminWebhooksWebhooksDisableResponse.md)
+ - [LumoAuthApiClient::AdminWebhooksWebhooksEnableResponse](docs/AdminWebhooksWebhooksEnableResponse.md)
+ - [LumoAuthApiClient::AgentOutboundConnection](docs/AgentOutboundConnection.md)
  - [LumoAuthApiClient::ApproveRequestRequest](docs/ApproveRequestRequest.md)
  - [LumoAuthApiClient::ApproveRequestResponse](docs/ApproveRequestResponse.md)
  - [LumoAuthApiClient::AskRequest](docs/AskRequest.md)
  - [LumoAuthApiClient::AskResponse](docs/AskResponse.md)
+ - [LumoAuthApiClient::AttestRequest](docs/AttestRequest.md)
+ - [LumoAuthApiClient::AttestResponse](docs/AttestResponse.md)
+ - [LumoAuthApiClient::AttestResponseIdentity](docs/AttestResponseIdentity.md)
+ - [LumoAuthApiClient::AuditLogEntry](docs/AuditLogEntry.md)
+ - [LumoAuthApiClient::AuthZenDecision](docs/AuthZenDecision.md)
+ - [LumoAuthApiClient::AuthenticationSettings](docs/AuthenticationSettings.md)
+ - [LumoAuthApiClient::AuthenticationSettingsMfaPolicy](docs/AuthenticationSettingsMfaPolicy.md)
+ - [LumoAuthApiClient::AuthenticationSettingsPasskeys](docs/AuthenticationSettingsPasskeys.md)
+ - [LumoAuthApiClient::AuthenticationSettingsPasswordPolicy](docs/AuthenticationSettingsPasswordPolicy.md)
+ - [LumoAuthApiClient::AuthenticationSettingsPasswordRotationPolicy](docs/AuthenticationSettingsPasswordRotationPolicy.md)
+ - [LumoAuthApiClient::AuthenticationSettingsProgressiveProfiling](docs/AuthenticationSettingsProgressiveProfiling.md)
+ - [LumoAuthApiClient::AuthorizationServerMetadata](docs/AuthorizationServerMetadata.md)
  - [LumoAuthApiClient::AuthorizeMcpRequest](docs/AuthorizeMcpRequest.md)
  - [LumoAuthApiClient::AuthorizeMcpResponse](docs/AuthorizeMcpResponse.md)
+ - [LumoAuthApiClient::BackchannelAuthorizeResponse](docs/BackchannelAuthorizeResponse.md)
+ - [LumoAuthApiClient::BlockUserResponse](docs/BlockUserResponse.md)
+ - [LumoAuthApiClient::BrandingSettings](docs/BrandingSettings.md)
+ - [LumoAuthApiClient::CheckAbacBulkResponse](docs/CheckAbacBulkResponse.md)
+ - [LumoAuthApiClient::CheckAbacBulkResponseResultsItem](docs/CheckAbacBulkResponseResultsItem.md)
+ - [LumoAuthApiClient::CheckAbacResponse](docs/CheckAbacResponse.md)
+ - [LumoAuthApiClient::CheckAbacResponseMatchedPoliciesItem](docs/CheckAbacResponseMatchedPoliciesItem.md)
+ - [LumoAuthApiClient::CheckAnyPermissionResponse](docs/CheckAnyPermissionResponse.md)
+ - [LumoAuthApiClient::CheckPermissionResponse](docs/CheckPermissionResponse.md)
+ - [LumoAuthApiClient::CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
+ - [LumoAuthApiClient::CheckRelationResponse](docs/CheckRelationResponse.md)
+ - [LumoAuthApiClient::CheckRelationScopedResponse](docs/CheckRelationScopedResponse.md)
  - [LumoAuthApiClient::CompleteTaskResponse](docs/CompleteTaskResponse.md)
  - [LumoAuthApiClient::CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [LumoAuthApiClient::CreateApprovalResponse](docs/CreateApprovalResponse.md)
  - [LumoAuthApiClient::CreateApprovalResponse202](docs/CreateApprovalResponse202.md)
+ - [LumoAuthApiClient::CreateClientResponse](docs/CreateClientResponse.md)
+ - [LumoAuthApiClient::CreateClientResponseData](docs/CreateClientResponseData.md)
+ - [LumoAuthApiClient::CreateMfaChallengeRequest](docs/CreateMfaChallengeRequest.md)
  - [LumoAuthApiClient::CreateTaskRequest](docs/CreateTaskRequest.md)
  - [LumoAuthApiClient::CreateTaskResponse](docs/CreateTaskResponse.md)
+ - [LumoAuthApiClient::CreateUserResponse](docs/CreateUserResponse.md)
+ - [LumoAuthApiClient::DeleteUserAuthenticatorResponse](docs/DeleteUserAuthenticatorResponse.md)
+ - [LumoAuthApiClient::DeleteUserResponse](docs/DeleteUserResponse.md)
  - [LumoAuthApiClient::DenyRequestRequest](docs/DenyRequestRequest.md)
  - [LumoAuthApiClient::DenyRequestResponse](docs/DenyRequestResponse.md)
+ - [LumoAuthApiClient::DeviceAuthorizationResponse](docs/DeviceAuthorizationResponse.md)
+ - [LumoAuthApiClient::EmailEnrollmentStarted](docs/EmailEnrollmentStarted.md)
+ - [LumoAuthApiClient::EmailTemplate](docs/EmailTemplate.md)
+ - [LumoAuthApiClient::EnrollAuthenticator201Response](docs/EnrollAuthenticator201Response.md)
+ - [LumoAuthApiClient::EnrollAuthenticatorRequest](docs/EnrollAuthenticatorRequest.md)
+ - [LumoAuthApiClient::EvaluateBatchResponse](docs/EvaluateBatchResponse.md)
+ - [LumoAuthApiClient::EvaluateResponseContext](docs/EvaluateResponseContext.md)
+ - [LumoAuthApiClient::EvaluateResponseContextReasonAdmin](docs/EvaluateResponseContextReasonAdmin.md)
  - [LumoAuthApiClient::ExpandRelationRequest](docs/ExpandRelationRequest.md)
  - [LumoAuthApiClient::ExpandRelationResponse](docs/ExpandRelationResponse.md)
  - [LumoAuthApiClient::ExpandRelationResponseTree](docs/ExpandRelationResponseTree.md)
+ - [LumoAuthApiClient::GenerateRecoveryCodesResponse](docs/GenerateRecoveryCodesResponse.md)
+ - [LumoAuthApiClient::GetAgentCardResponseCapabilities](docs/GetAgentCardResponseCapabilities.md)
+ - [LumoAuthApiClient::GetAgentCardResponseProvider](docs/GetAgentCardResponseProvider.md)
+ - [LumoAuthApiClient::GetAgentCardResponseSignaturesItem](docs/GetAgentCardResponseSignaturesItem.md)
+ - [LumoAuthApiClient::GetAgentCardResponseSkillsItem](docs/GetAgentCardResponseSkillsItem.md)
  - [LumoAuthApiClient::GetApprovalStatusResponse](docs/GetApprovalStatusResponse.md)
  - [LumoAuthApiClient::GetApprovalStatusResponseApprovedBy](docs/GetApprovalStatusResponseApprovedBy.md)
+ - [LumoAuthApiClient::GetClientResponse](docs/GetClientResponse.md)
+ - [LumoAuthApiClient::GetConnectionTokenRequest](docs/GetConnectionTokenRequest.md)
+ - [LumoAuthApiClient::GetConnectionTokenResponse](docs/GetConnectionTokenResponse.md)
  - [LumoAuthApiClient::GetCurrentAgentResponse](docs/GetCurrentAgentResponse.md)
  - [LumoAuthApiClient::GetCurrentAgentResponseIdentity](docs/GetCurrentAgentResponseIdentity.md)
  - [LumoAuthApiClient::GetCurrentAgentResponseWorkspace](docs/GetCurrentAgentResponseWorkspace.md)
  - [LumoAuthApiClient::GetIssuerMetadataResponse](docs/GetIssuerMetadataResponse.md)
+ - [LumoAuthApiClient::GetJwksResponseKeysItem](docs/GetJwksResponseKeysItem.md)
  - [LumoAuthApiClient::GetMeResponse](docs/GetMeResponse.md)
- - [LumoAuthApiClient::GetMeResponseTenant](docs/GetMeResponseTenant.md)
+ - [LumoAuthApiClient::GetMfaCoverageReportResponse](docs/GetMfaCoverageReportResponse.md)
+ - [LumoAuthApiClient::GetMfaPolicyResponse](docs/GetMfaPolicyResponse.md)
+ - [LumoAuthApiClient::GetMyAttributesResponse](docs/GetMyAttributesResponse.md)
+ - [LumoAuthApiClient::GetMyAttributesResponseAttributes](docs/GetMyAttributesResponseAttributes.md)
+ - [LumoAuthApiClient::GetProtectedResourceMetadataRoot200Response](docs/GetProtectedResourceMetadataRoot200Response.md)
+ - [LumoAuthApiClient::GetProtectedResourceMetadataRootResponse1ResourcesItem](docs/GetProtectedResourceMetadataRootResponse1ResourcesItem.md)
+ - [LumoAuthApiClient::GetRecoveryCodeStatusResponse](docs/GetRecoveryCodeStatusResponse.md)
  - [LumoAuthApiClient::GetRequestStatusResponse](docs/GetRequestStatusResponse.md)
  - [LumoAuthApiClient::GetRequestTokenResponse](docs/GetRequestTokenResponse.md)
+ - [LumoAuthApiClient::GetResourceAttributesResponse](docs/GetResourceAttributesResponse.md)
+ - [LumoAuthApiClient::GetResourceAttributesResponseAttributes](docs/GetResourceAttributesResponseAttributes.md)
+ - [LumoAuthApiClient::GetServerChallengeResponse](docs/GetServerChallengeResponse.md)
  - [LumoAuthApiClient::GetServerResponse](docs/GetServerResponse.md)
  - [LumoAuthApiClient::GetServerResponseDiscovery](docs/GetServerResponseDiscovery.md)
+ - [LumoAuthApiClient::GetSsfConfigurationResponse](docs/GetSsfConfigurationResponse.md)
+ - [LumoAuthApiClient::GetSsfConfigurationResponseAuthorizationSchemesItem](docs/GetSsfConfigurationResponseAuthorizationSchemesItem.md)
+ - [LumoAuthApiClient::GetStreamConfig200Response](docs/GetStreamConfig200Response.md)
+ - [LumoAuthApiClient::GetUserResponse](docs/GetUserResponse.md)
+ - [LumoAuthApiClient::Group](docs/Group.md)
+ - [LumoAuthApiClient::GroupRef](docs/GroupRef.md)
+ - [LumoAuthApiClient::IntrospectResponse](docs/IntrospectResponse.md)
+ - [LumoAuthApiClient::IntrospectResponseAud](docs/IntrospectResponseAud.md)
  - [LumoAuthApiClient::IssueAgentTokenRequest](docs/IssueAgentTokenRequest.md)
  - [LumoAuthApiClient::IssueAgentTokenResponse](docs/IssueAgentTokenResponse.md)
  - [LumoAuthApiClient::IssueDelegateTokenRequest](docs/IssueDelegateTokenRequest.md)
@@ -463,21 +692,134 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::IssuePlatformTokenResponse](docs/IssuePlatformTokenResponse.md)
  - [LumoAuthApiClient::IssueResourceTokenRequest](docs/IssueResourceTokenRequest.md)
  - [LumoAuthApiClient::IssueResourceTokenResponse](docs/IssueResourceTokenResponse.md)
+ - [LumoAuthApiClient::IssueTemporaryAccessCodeRequest](docs/IssueTemporaryAccessCodeRequest.md)
+ - [LumoAuthApiClient::IssueTemporaryAccessCodeResponse](docs/IssueTemporaryAccessCodeResponse.md)
+ - [LumoAuthApiClient::IssueTemporaryAccessCodeResponseData](docs/IssueTemporaryAccessCodeResponseData.md)
+ - [LumoAuthApiClient::JsonWebKeySet](docs/JsonWebKeySet.md)
  - [LumoAuthApiClient::JwksResponse](docs/JwksResponse.md)
+ - [LumoAuthApiClient::ListAttributeDefinitionsResponse](docs/ListAttributeDefinitionsResponse.md)
+ - [LumoAuthApiClient::ListClientScopesResponse](docs/ListClientScopesResponse.md)
+ - [LumoAuthApiClient::ListClientsResponse](docs/ListClientsResponse.md)
+ - [LumoAuthApiClient::ListConnectionsResponse](docs/ListConnectionsResponse.md)
+ - [LumoAuthApiClient::ListConnectionsResponseAgent](docs/ListConnectionsResponseAgent.md)
+ - [LumoAuthApiClient::ListMyAuthenticatorsResponse](docs/ListMyAuthenticatorsResponse.md)
+ - [LumoAuthApiClient::ListMyAuthenticatorsResponseRecoveryCodes](docs/ListMyAuthenticatorsResponseRecoveryCodes.md)
  - [LumoAuthApiClient::ListPendingRequestsResponse](docs/ListPendingRequestsResponse.md)
+ - [LumoAuthApiClient::ListPermissionsResponse](docs/ListPermissionsResponse.md)
+ - [LumoAuthApiClient::ListPermissionsResponseDataItem](docs/ListPermissionsResponseDataItem.md)
+ - [LumoAuthApiClient::ListPermissionsResponsePermissionsItem](docs/ListPermissionsResponsePermissionsItem.md)
  - [LumoAuthApiClient::ListServersResponse](docs/ListServersResponse.md)
  - [LumoAuthApiClient::ListServersResponseDataItem](docs/ListServersResponseDataItem.md)
+ - [LumoAuthApiClient::ListTrustedDevicesResponse](docs/ListTrustedDevicesResponse.md)
+ - [LumoAuthApiClient::ListTrustedDevicesResponseDataItem](docs/ListTrustedDevicesResponseDataItem.md)
+ - [LumoAuthApiClient::ListUserAuthenticatorsResponse](docs/ListUserAuthenticatorsResponse.md)
+ - [LumoAuthApiClient::ListUsersResponse](docs/ListUsersResponse.md)
+ - [LumoAuthApiClient::MarkUserVerifiedResponse](docs/MarkUserVerifiedResponse.md)
+ - [LumoAuthApiClient::McpServer](docs/McpServer.md)
+ - [LumoAuthApiClient::McpServerPosture](docs/McpServerPosture.md)
+ - [LumoAuthApiClient::McpServerPostureChecksInner](docs/McpServerPostureChecksInner.md)
  - [LumoAuthApiClient::MessageResponse](docs/MessageResponse.md)
+ - [LumoAuthApiClient::MfaAuthenticator](docs/MfaAuthenticator.md)
+ - [LumoAuthApiClient::MfaAuthenticatorLastUsedContext](docs/MfaAuthenticatorLastUsedContext.md)
+ - [LumoAuthApiClient::MfaChallenge](docs/MfaChallenge.md)
+ - [LumoAuthApiClient::MfaChallengeAlternativesInner](docs/MfaChallengeAlternativesInner.md)
+ - [LumoAuthApiClient::MfaChallengeAuthenticator](docs/MfaChallengeAuthenticator.md)
+ - [LumoAuthApiClient::MfaCoverageReport](docs/MfaCoverageReport.md)
+ - [LumoAuthApiClient::MfaPolicy](docs/MfaPolicy.md)
+ - [LumoAuthApiClient::OAuthAccessToken](docs/OAuthAccessToken.md)
+ - [LumoAuthApiClient::OAuthClient](docs/OAuthClient.md)
+ - [LumoAuthApiClient::OAuthClientSecretIssued](docs/OAuthClientSecretIssued.md)
+ - [LumoAuthApiClient::OAuthScope](docs/OAuthScope.md)
+ - [LumoAuthApiClient::OpenIdConfiguration](docs/OpenIdConfiguration.md)
+ - [LumoAuthApiClient::Organization](docs/Organization.md)
+ - [LumoAuthApiClient::OrganizationInvitation](docs/OrganizationInvitation.md)
+ - [LumoAuthApiClient::OrganizationInvitationRole](docs/OrganizationInvitationRole.md)
+ - [LumoAuthApiClient::OrganizationMember](docs/OrganizationMember.md)
+ - [LumoAuthApiClient::OrganizationMemberRole](docs/OrganizationMemberRole.md)
+ - [LumoAuthApiClient::OrganizationRole](docs/OrganizationRole.md)
+ - [LumoAuthApiClient::PaginationMeta](docs/PaginationMeta.md)
+ - [LumoAuthApiClient::ParResponse](docs/ParResponse.md)
+ - [LumoAuthApiClient::PasskeyEnrollmentStarted](docs/PasskeyEnrollmentStarted.md)
+ - [LumoAuthApiClient::Permission](docs/Permission.md)
+ - [LumoAuthApiClient::ProtectedResourceList](docs/ProtectedResourceList.md)
+ - [LumoAuthApiClient::ProtectedResourceMetadata](docs/ProtectedResourceMetadata.md)
+ - [LumoAuthApiClient::PushEnrollmentStarted](docs/PushEnrollmentStarted.md)
+ - [LumoAuthApiClient::PutAbacAttributesUpdateResponse](docs/PutAbacAttributesUpdateResponse.md)
+ - [LumoAuthApiClient::PutAbacPoliciesUpdateResponse](docs/PutAbacPoliciesUpdateResponse.md)
  - [LumoAuthApiClient::PutAdminAgentsUpdateRequest](docs/PutAdminAgentsUpdateRequest.md)
  - [LumoAuthApiClient::PutAdminAgentsUpdateResponse](docs/PutAdminAgentsUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminOrgMembersUpdateResponse](docs/PutAdminOrgMembersUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsAuthenticationUpdateResponse](docs/PutAdminSettingsAuthenticationUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsBrandingUpdateResponse](docs/PutAdminSettingsBrandingUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsEmailUpdateResponse](docs/PutAdminSettingsEmailUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsGeneralUpdateResponse](docs/PutAdminSettingsGeneralUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsGeneralUpdateResponseData](docs/PutAdminSettingsGeneralUpdateResponseData.md)
+ - [LumoAuthApiClient::PutAdminSettingsScimUpdateResponse](docs/PutAdminSettingsScimUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminSettingsSecurityUpdateResponse](docs/PutAdminSettingsSecurityUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminTenantUpdateResponse](docs/PutAdminTenantUpdateResponse.md)
+ - [LumoAuthApiClient::PutAdminWebhooksUpdateResponse](docs/PutAdminWebhooksUpdateResponse.md)
+ - [LumoAuthApiClient::RedactedSecret](docs/RedactedSecret.md)
+ - [LumoAuthApiClient::RegisterAgentResponse](docs/RegisterAgentResponse.md)
+ - [LumoAuthApiClient::RegisterClientResponse](docs/RegisterClientResponse.md)
+ - [LumoAuthApiClient::RegisteredClientMetadata](docs/RegisteredClientMetadata.md)
+ - [LumoAuthApiClient::RemoveUserGroupResponse](docs/RemoveUserGroupResponse.md)
+ - [LumoAuthApiClient::RemoveUserPermissionResponse](docs/RemoveUserPermissionResponse.md)
+ - [LumoAuthApiClient::RemoveUserRoleResponse](docs/RemoveUserRoleResponse.md)
  - [LumoAuthApiClient::RequestPermissionRequest](docs/RequestPermissionRequest.md)
  - [LumoAuthApiClient::RequestPermissionResponse](docs/RequestPermissionResponse.md)
  - [LumoAuthApiClient::RevokeAgentTokenRequest](docs/RevokeAgentTokenRequest.md)
  - [LumoAuthApiClient::RevokeAgentTokenResponse](docs/RevokeAgentTokenResponse.md)
+ - [LumoAuthApiClient::Role](docs/Role.md)
+ - [LumoAuthApiClient::RolePermissionsInner](docs/RolePermissionsInner.md)
+ - [LumoAuthApiClient::RoleRef](docs/RoleRef.md)
+ - [LumoAuthApiClient::RotateClientSecretResponse](docs/RotateClientSecretResponse.md)
+ - [LumoAuthApiClient::RotateClientSecretResponseData](docs/RotateClientSecretResponseData.md)
+ - [LumoAuthApiClient::SandboxTenant](docs/SandboxTenant.md)
+ - [LumoAuthApiClient::ScimSettings](docs/ScimSettings.md)
+ - [LumoAuthApiClient::ScimSettingsInbound](docs/ScimSettingsInbound.md)
+ - [LumoAuthApiClient::ScimSettingsInboundProtectedAttributes](docs/ScimSettingsInboundProtectedAttributes.md)
+ - [LumoAuthApiClient::ScimSettingsOutbound](docs/ScimSettingsOutbound.md)
+ - [LumoAuthApiClient::SendUserVerificationEmailResponse](docs/SendUserVerificationEmailResponse.md)
+ - [LumoAuthApiClient::SetClientScopesResponse](docs/SetClientScopesResponse.md)
+ - [LumoAuthApiClient::SetResourceAttributeResponse](docs/SetResourceAttributeResponse.md)
+ - [LumoAuthApiClient::SetUserAttributeResponse](docs/SetUserAttributeResponse.md)
+ - [LumoAuthApiClient::SetUserAttributeResponseData](docs/SetUserAttributeResponseData.md)
+ - [LumoAuthApiClient::SetUserPasswordPostResponse](docs/SetUserPasswordPostResponse.md)
+ - [LumoAuthApiClient::SignedAgentCard](docs/SignedAgentCard.md)
+ - [LumoAuthApiClient::SingleServerMetadata](docs/SingleServerMetadata.md)
+ - [LumoAuthApiClient::SmsEnrollmentStarted](docs/SmsEnrollmentStarted.md)
+ - [LumoAuthApiClient::SocialLoginProvider](docs/SocialLoginProvider.md)
+ - [LumoAuthApiClient::SsfStream](docs/SsfStream.md)
+ - [LumoAuthApiClient::SsfStreamDelivery](docs/SsfStreamDelivery.md)
+ - [LumoAuthApiClient::SsfStreamList](docs/SsfStreamList.md)
+ - [LumoAuthApiClient::SubmitLoginJsonResponse](docs/SubmitLoginJsonResponse.md)
+ - [LumoAuthApiClient::TenantProfile](docs/TenantProfile.md)
+ - [LumoAuthApiClient::TokenResponse](docs/TokenResponse.md)
+ - [LumoAuthApiClient::TotpEnrollmentStarted](docs/TotpEnrollmentStarted.md)
+ - [LumoAuthApiClient::TriggerUserPasswordResetResponse](docs/TriggerUserPasswordResetResponse.md)
+ - [LumoAuthApiClient::UnblockUserResponse](docs/UnblockUserResponse.md)
+ - [LumoAuthApiClient::UpdateAuthenticatorRequest](docs/UpdateAuthenticatorRequest.md)
+ - [LumoAuthApiClient::UpdateClientResponse](docs/UpdateClientResponse.md)
+ - [LumoAuthApiClient::UpdateMfaPolicyResponse](docs/UpdateMfaPolicyResponse.md)
+ - [LumoAuthApiClient::UpdateUserGroupsResponse](docs/UpdateUserGroupsResponse.md)
+ - [LumoAuthApiClient::UpdateUserResponse](docs/UpdateUserResponse.md)
+ - [LumoAuthApiClient::UpdateUserRolesResponse](docs/UpdateUserRolesResponse.md)
+ - [LumoAuthApiClient::User](docs/User.md)
+ - [LumoAuthApiClient::UserRef](docs/UserRef.md)
+ - [LumoAuthApiClient::UserSession](docs/UserSession.md)
+ - [LumoAuthApiClient::UserinfoResponse](docs/UserinfoResponse.md)
+ - [LumoAuthApiClient::VerifyAgentCardResponse](docs/VerifyAgentCardResponse.md)
+ - [LumoAuthApiClient::VerifyAgentCardResponseCardSummary](docs/VerifyAgentCardResponseCardSummary.md)
+ - [LumoAuthApiClient::VerifyAgentCardResponseSigner](docs/VerifyAgentCardResponseSigner.md)
  - [LumoAuthApiClient::VerifyAuthTokenRequest](docs/VerifyAuthTokenRequest.md)
  - [LumoAuthApiClient::VerifyAuthTokenResponse](docs/VerifyAuthTokenResponse.md)
+ - [LumoAuthApiClient::VerifyMfaChallengeRequest](docs/VerifyMfaChallengeRequest.md)
  - [LumoAuthApiClient::VerifyResourceTokenRequest](docs/VerifyResourceTokenRequest.md)
  - [LumoAuthApiClient::VerifyResourceTokenResponse](docs/VerifyResourceTokenResponse.md)
+ - [LumoAuthApiClient::Webhook](docs/Webhook.md)
+ - [LumoAuthApiClient::WebhookDelivery](docs/WebhookDelivery.md)
+ - [LumoAuthApiClient::WebhookDeliveryDetail](docs/WebhookDeliveryDetail.md)
+ - [LumoAuthApiClient::WebhookSecretIssued](docs/WebhookSecretIssued.md)
 
 
 ## Documentation for Authorization

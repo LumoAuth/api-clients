@@ -15,7 +15,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**adminScopesList**](#adminscopeslist) | **GET** /orgs/{orgId}/api/v1/admin/scopes | List OAuth scopes|
 
 # **adminPermissionsCreate**
-> adminPermissionsCreate()
+> AdminPermissionsCreateResponse adminPermissionsCreate()
 
 
 ### Example
@@ -45,7 +45,7 @@ const { status, data } = await apiInstance.adminPermissionsCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminPermissionsCreateResponse**
 
 ### Authorization
 
@@ -54,18 +54,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsDelete**
-> adminPermissionsDelete()
+> MessageResponse adminPermissionsDelete()
 
 
 ### Example
@@ -98,7 +98,7 @@ const { status, data } = await apiInstance.adminPermissionsDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -107,18 +107,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsGet**
-> adminPermissionsGet()
+> AdminPermissionsGetResponse adminPermissionsGet()
 
 
 ### Example
@@ -151,7 +151,7 @@ const { status, data } = await apiInstance.adminPermissionsGet(
 
 ### Return type
 
-void (empty response body)
+**AdminPermissionsGetResponse**
 
 ### Authorization
 
@@ -160,18 +160,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsList**
-> adminPermissionsList()
+> AdminPermissionsListResponse adminPermissionsList()
 
 
 ### Example
@@ -201,7 +201,7 @@ const { status, data } = await apiInstance.adminPermissionsList(
 
 ### Return type
 
-void (empty response body)
+**AdminPermissionsListResponse**
 
 ### Authorization
 
@@ -210,18 +210,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Permissions |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsUpdate**
-> adminPermissionsUpdate()
+> AdminPermissionsCreateResponse adminPermissionsUpdate()
 
 
 ### Example
@@ -254,7 +254,7 @@ const { status, data } = await apiInstance.adminPermissionsUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminPermissionsCreateResponse**
 
 ### Authorization
 
@@ -263,18 +263,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated permission |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminPermissionsUsage**
-> adminPermissionsUsage()
+> AdminPermissionsUsageResponse adminPermissionsUsage()
 
 
 ### Example
@@ -307,7 +307,7 @@ const { status, data } = await apiInstance.adminPermissionsUsage(
 
 ### Return type
 
-void (empty response body)
+**AdminPermissionsUsageResponse**
 
 ### Authorization
 
@@ -316,18 +316,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Usage |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesCreate**
-> adminScopesCreate()
+> AdminScopesCreateResponse adminScopesCreate()
 
 
 ### Example
@@ -357,7 +357,7 @@ const { status, data } = await apiInstance.adminScopesCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminScopesCreateResponse**
 
 ### Authorization
 
@@ -366,18 +366,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Created scope |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesDelete**
-> adminScopesDelete()
+> MessageResponse adminScopesDelete()
 
 
 ### Example
@@ -410,7 +410,7 @@ const { status, data } = await apiInstance.adminScopesDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -419,18 +419,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminScopesList**
-> adminScopesList()
+> AdminScopesListResponse adminScopesList()
 
 
 ### Example
@@ -460,7 +460,7 @@ const { status, data } = await apiInstance.adminScopesList(
 
 ### Return type
 
-void (empty response body)
+**AdminScopesListResponse**
 
 ### Authorization
 
@@ -469,13 +469,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Scopes |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

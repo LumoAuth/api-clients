@@ -4,20 +4,20 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant
-[**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON
-[**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry
-[**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant
+[**admin_audit_logs_actions**](AdminAuditLogsApi.md#admin_audit_logs_actions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant
+[**admin_audit_logs_export**](AdminAuditLogsApi.md#admin_audit_logs_export) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON
+[**admin_audit_logs_get**](AdminAuditLogsApi.md#admin_audit_logs_get) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry
+[**admin_audit_logs_list**](AdminAuditLogsApi.md#admin_audit_logs_list) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries
 [**admin_audit_logs_retention**](AdminAuditLogsApi.md#admin_audit_logs_retention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings
-[**admin_audit_logs_stats**](AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics
+[**admin_audit_logs_stats**](AdminAuditLogsApi.md#admin_audit_logs_stats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days)
 [**patch_admin_audit_logs_retention_update**](AdminAuditLogsApi.md#patch_admin_audit_logs_retention_update) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 [**put_admin_audit_logs_retention_update**](AdminAuditLogsApi.md#put_admin_audit_logs_retention_update) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings
 
 
 # **admin_audit_logs_actions**
-> admin_audit_logs_actions(org_id)
+> AdminAuditLogsActionsResponse admin_audit_logs_actions(org_id)
 
-List available audit action types for this tenant
+List the distinct audit action types recorded for the tenant
 
 ### Example
 
@@ -26,6 +26,7 @@ List available audit action types for this tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_actions_response import AdminAuditLogsActionsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -58,8 +59,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List available audit action types for this tenant
-        api_instance.admin_audit_logs_actions(org_id)
+        # List the distinct audit action types recorded for the tenant
+        api_response = api_instance.admin_audit_logs_actions(org_id)
+        print("The response of AdminAuditLogsApi->admin_audit_logs_actions:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->admin_audit_logs_actions: %s\n" % e)
 ```
@@ -75,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsActionsResponse**](AdminAuditLogsActionsResponse.md)
 
 ### Authorization
 
@@ -84,20 +87,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Action names |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_audit_logs_export**
-> admin_audit_logs_export(org_id)
+> str admin_audit_logs_export(org_id)
 
-Export audit logs as CSV or JSON
+Export audit logs as CSV (default) or JSON
 
 ### Example
 
@@ -138,8 +141,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Export audit logs as CSV or JSON
-        api_instance.admin_audit_logs_export(org_id)
+        # Export audit logs as CSV (default) or JSON
+        api_response = api_instance.admin_audit_logs_export(org_id)
+        print("The response of AdminAuditLogsApi->admin_audit_logs_export:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->admin_audit_logs_export: %s\n" % e)
 ```
@@ -155,7 +160,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**str**
 
 ### Authorization
 
@@ -164,20 +169,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/csv, application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_audit_logs_get**
-> admin_audit_logs_get(org_id, log_id)
+> AdminAuditLogsGetResponse admin_audit_logs_get(org_id, log_id)
 
-Get a single audit log entry
+Get an audit log entry
 
 ### Example
 
@@ -186,6 +191,7 @@ Get a single audit log entry
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_get_response import AdminAuditLogsGetResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -219,8 +225,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     log_id = 'log_id_example' # str | 
 
     try:
-        # Get a single audit log entry
-        api_instance.admin_audit_logs_get(org_id, log_id)
+        # Get an audit log entry
+        api_response = api_instance.admin_audit_logs_get(org_id, log_id)
+        print("The response of AdminAuditLogsApi->admin_audit_logs_get:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->admin_audit_logs_get: %s\n" % e)
 ```
@@ -237,7 +245,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsGetResponse**](AdminAuditLogsGetResponse.md)
 
 ### Authorization
 
@@ -246,20 +254,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Audit log entry (detailed) |  -  |
+**404** | Audit log not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_audit_logs_list**
-> admin_audit_logs_list(org_id)
+> AdminAuditLogsListResponse admin_audit_logs_list(org_id)
 
-List audit logs for the tenant
+List audit log entries
 
 ### Example
 
@@ -268,6 +277,7 @@ List audit logs for the tenant
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_list_response import AdminAuditLogsListResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -300,8 +310,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # List audit logs for the tenant
-        api_instance.admin_audit_logs_list(org_id)
+        # List audit log entries
+        api_response = api_instance.admin_audit_logs_list(org_id)
+        print("The response of AdminAuditLogsApi->admin_audit_logs_list:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->admin_audit_logs_list: %s\n" % e)
 ```
@@ -317,7 +329,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsListResponse**](AdminAuditLogsListResponse.md)
 
 ### Authorization
 
@@ -326,18 +338,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Audit log entries (summary fields only) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_audit_logs_retention**
-> admin_audit_logs_retention(org_id)
+> AdminAuditLogsRetentionResponse admin_audit_logs_retention(org_id)
 
 Get audit log retention settings
 
@@ -348,6 +360,7 @@ Get audit log retention settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_retention_response import AdminAuditLogsRetentionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -381,7 +394,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Get audit log retention settings
-        api_instance.admin_audit_logs_retention(org_id)
+        api_response = api_instance.admin_audit_logs_retention(org_id)
+        print("The response of AdminAuditLogsApi->admin_audit_logs_retention:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->admin_audit_logs_retention: %s\n" % e)
 ```
@@ -397,7 +412,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -406,20 +421,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **admin_audit_logs_stats**
-> admin_audit_logs_stats(org_id)
+> AdminAuditLogsStatsResponse admin_audit_logs_stats(org_id)
 
-Get audit log statistics
+Audit log statistics for a period (default: last 30 days)
 
 ### Example
 
@@ -428,6 +443,7 @@ Get audit log statistics
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_stats_response import AdminAuditLogsStatsResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -460,8 +476,10 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
     org_id = 'org_id_example' # str | 
 
     try:
-        # Get audit log statistics
-        api_instance.admin_audit_logs_stats(org_id)
+        # Audit log statistics for a period (default: last 30 days)
+        api_response = api_instance.admin_audit_logs_stats(org_id)
+        print("The response of AdminAuditLogsApi->admin_audit_logs_stats:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->admin_audit_logs_stats: %s\n" % e)
 ```
@@ -477,7 +495,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsStatsResponse**](AdminAuditLogsStatsResponse.md)
 
 ### Authorization
 
@@ -486,18 +504,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Statistics |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_admin_audit_logs_retention_update**
-> patch_admin_audit_logs_retention_update(org_id)
+> AdminAuditLogsRetentionResponse patch_admin_audit_logs_retention_update(org_id)
 
 Update audit log retention settings
 
@@ -508,6 +526,7 @@ Update audit log retention settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_retention_response import AdminAuditLogsRetentionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -541,7 +560,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update audit log retention settings
-        api_instance.patch_admin_audit_logs_retention_update(org_id)
+        api_response = api_instance.patch_admin_audit_logs_retention_update(org_id)
+        print("The response of AdminAuditLogsApi->patch_admin_audit_logs_retention_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->patch_admin_audit_logs_retention_update: %s\n" % e)
 ```
@@ -557,7 +578,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -566,18 +587,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_admin_audit_logs_retention_update**
-> put_admin_audit_logs_retention_update(org_id)
+> AdminAuditLogsRetentionResponse put_admin_audit_logs_retention_update(org_id)
 
 Update audit log retention settings
 
@@ -588,6 +609,7 @@ Update audit log retention settings
 
 ```python
 import lumoauth_api_client
+from lumoauth_api_client.models.admin_audit_logs_retention_response import AdminAuditLogsRetentionResponse
 from lumoauth_api_client.rest import ApiException
 from pprint import pprint
 
@@ -621,7 +643,9 @@ with lumoauth_api_client.ApiClient(configuration) as api_client:
 
     try:
         # Update audit log retention settings
-        api_instance.put_admin_audit_logs_retention_update(org_id)
+        api_response = api_instance.put_admin_audit_logs_retention_update(org_id)
+        print("The response of AdminAuditLogsApi->put_admin_audit_logs_retention_update:\n")
+        pprint(api_response)
     except Exception as e:
         print("Exception when calling AdminAuditLogsApi->put_admin_audit_logs_retention_update: %s\n" % e)
 ```
@@ -637,7 +661,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -646,13 +670,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** |  |  -  |
+**200** | Updated retention settings |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

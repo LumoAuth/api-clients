@@ -18,6 +18,20 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_webhooks_create_response import AdminWebhooksCreateResponse
+from lumoauth_api_client.models.admin_webhooks_deliveries_list_response import AdminWebhooksDeliveriesListResponse
+from lumoauth_api_client.models.admin_webhooks_delivery_replay_response import AdminWebhooksDeliveryReplayResponse
+from lumoauth_api_client.models.admin_webhooks_delivery_show_response import AdminWebhooksDeliveryShowResponse
+from lumoauth_api_client.models.admin_webhooks_events_response import AdminWebhooksEventsResponse
+from lumoauth_api_client.models.admin_webhooks_get_response import AdminWebhooksGetResponse
+from lumoauth_api_client.models.admin_webhooks_list_response import AdminWebhooksListResponse
+from lumoauth_api_client.models.admin_webhooks_rotate_secret_response import AdminWebhooksRotateSecretResponse
+from lumoauth_api_client.models.admin_webhooks_test_response import AdminWebhooksTestResponse
+from lumoauth_api_client.models.admin_webhooks_tunnel_start_response import AdminWebhooksTunnelStartResponse
+from lumoauth_api_client.models.admin_webhooks_webhooks_disable_response import AdminWebhooksWebhooksDisableResponse
+from lumoauth_api_client.models.admin_webhooks_webhooks_enable_response import AdminWebhooksWebhooksEnableResponse
+from lumoauth_api_client.models.message_response import MessageResponse
+from lumoauth_api_client.models.put_admin_webhooks_update_response import PutAdminWebhooksUpdateResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -53,9 +67,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Create a new webhook
+    ) -> AdminWebhooksCreateResponse:
+        """Create a webhook
 
+        The signing secret is generated server-side and returned once in this response only.
 
         :param org_id: (required)
         :type org_id: str
@@ -90,6 +105,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminWebhooksCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -118,9 +134,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Create a new webhook
+    ) -> ApiResponse[AdminWebhooksCreateResponse]:
+        """Create a webhook
 
+        The signing secret is generated server-side and returned once in this response only.
 
         :param org_id: (required)
         :type org_id: str
@@ -155,6 +172,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminWebhooksCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -184,8 +202,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Create a new webhook
+        """Create a webhook
 
+        The signing secret is generated server-side and returned once in this response only.
 
         :param org_id: (required)
         :type org_id: str
@@ -220,6 +239,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminWebhooksCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -260,6 +280,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -303,7 +330,7 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete a webhook
 
 
@@ -343,6 +370,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -372,7 +401,7 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete a webhook
 
 
@@ -412,6 +441,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -481,6 +512,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -524,6 +557,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -567,10 +607,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List recent delivery attempts for a webhook.
+    ) -> AdminWebhooksDeliveriesListResponse:
+        """List recent deliveries
 
-        Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+        Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
         :param org_id: (required)
         :type org_id: str
@@ -608,6 +648,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveriesListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -637,10 +679,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List recent delivery attempts for a webhook.
+    ) -> ApiResponse[AdminWebhooksDeliveriesListResponse]:
+        """List recent deliveries
 
-        Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+        Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
         :param org_id: (required)
         :type org_id: str
@@ -678,6 +720,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveriesListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -708,9 +752,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List recent delivery attempts for a webhook.
+        """List recent deliveries
 
-        Optional query params: - status: filter by `pending|success|failed|dead_lettered` - limit: 1–200, default 50
+        Most recent delivery attempts for the webhook (single page, newest first). Optional `status` filter (pending|success|failed|dead_lettered) and `limit` (1-200, default 50).
 
         :param org_id: (required)
         :type org_id: str
@@ -748,6 +792,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveriesListResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -791,6 +837,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -835,10 +888,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+    ) -> AdminWebhooksDeliveryReplayResponse:
+        """Replay a delivery
 
-        Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+        Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
         :param org_id: (required)
         :type org_id: str
@@ -879,6 +932,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveryReplayResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -909,10 +964,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+    ) -> ApiResponse[AdminWebhooksDeliveryReplayResponse]:
+        """Replay a delivery
 
-        Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+        Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
         :param org_id: (required)
         :type org_id: str
@@ -953,6 +1008,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveryReplayResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -984,9 +1041,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+        """Replay a delivery
 
-        Resets the delivery's failure state but preserves the attempt history, then dispatches a fresh DispatchWebhookMessage that the handler will pick up. Idempotent on already-pending rows.
+        Resets the delivery's failure state (attempt history is preserved) and re-enqueues it. Idempotent on already-pending rows.
 
         :param org_id: (required)
         :type org_id: str
@@ -1027,6 +1084,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveryReplayResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1073,6 +1132,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1117,9 +1183,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+    ) -> AdminWebhooksDeliveryShowResponse:
+        """Get a delivery
 
+        A single delivery including the event payload and the per-attempt history.
 
         :param org_id: (required)
         :type org_id: str
@@ -1160,6 +1227,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveryShowResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1190,9 +1259,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+    ) -> ApiResponse[AdminWebhooksDeliveryShowResponse]:
+        """Get a delivery
 
+        A single delivery including the event payload and the per-attempt history.
 
         :param org_id: (required)
         :type org_id: str
@@ -1233,6 +1303,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveryShowResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1264,8 +1336,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+        """Get a delivery
 
+        A single delivery including the event payload and the per-attempt history.
 
         :param org_id: (required)
         :type org_id: str
@@ -1306,6 +1379,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksDeliveryShowResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1352,6 +1427,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1394,8 +1476,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get available webhook event types
+    ) -> AdminWebhooksEventsResponse:
+        """List available webhook event types
 
 
         :param org_id: (required)
@@ -1431,6 +1513,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksEventsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1459,8 +1542,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get available webhook event types
+    ) -> ApiResponse[AdminWebhooksEventsResponse]:
+        """List available webhook event types
 
 
         :param org_id: (required)
@@ -1496,6 +1579,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksEventsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1525,7 +1609,7 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get available webhook event types
+        """List available webhook event types
 
 
         :param org_id: (required)
@@ -1561,6 +1645,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksEventsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1601,6 +1686,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1644,8 +1736,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Get a single webhook by ID
+    ) -> AdminWebhooksGetResponse:
+        """Get a webhook
 
 
         :param org_id: (required)
@@ -1684,6 +1776,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1713,8 +1807,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Get a single webhook by ID
+    ) -> ApiResponse[AdminWebhooksGetResponse]:
+        """Get a webhook
 
 
         :param org_id: (required)
@@ -1753,6 +1847,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1783,7 +1879,7 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Get a single webhook by ID
+        """Get a webhook
 
 
         :param org_id: (required)
@@ -1822,6 +1918,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksGetResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1865,6 +1963,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1907,9 +2012,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """List all webhooks in the tenant
+    ) -> AdminWebhooksListResponse:
+        """List webhooks
 
+        Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
         :param org_id: (required)
         :type org_id: str
@@ -1944,6 +2050,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1972,9 +2079,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """List all webhooks in the tenant
+    ) -> ApiResponse[AdminWebhooksListResponse]:
+        """List webhooks
 
+        Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2009,6 +2117,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2038,8 +2147,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """List all webhooks in the tenant
+        """List webhooks
 
+        Paginated list of the tenant's webhooks (summary shape, without `configuration`). Filter with `isActive`, `event`; sort with `sortBy` (createdAt|isActive) and `sortDir`.
 
         :param org_id: (required)
         :type org_id: str
@@ -2074,6 +2184,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2114,6 +2225,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2157,9 +2275,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Rotate webhook secret
+    ) -> AdminWebhooksRotateSecretResponse:
+        """Rotate the signing secret
 
+        Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
         :param org_id: (required)
         :type org_id: str
@@ -2197,6 +2316,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksRotateSecretResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2226,9 +2347,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Rotate webhook secret
+    ) -> ApiResponse[AdminWebhooksRotateSecretResponse]:
+        """Rotate the signing secret
 
+        Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
         :param org_id: (required)
         :type org_id: str
@@ -2266,6 +2388,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksRotateSecretResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2296,8 +2420,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Rotate webhook secret
+        """Rotate the signing secret
 
+        Generates a new HMAC secret and keeps the previous one for a grace window. The new secret is returned once.
 
         :param org_id: (required)
         :type org_id: str
@@ -2335,6 +2460,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksRotateSecretResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2378,6 +2505,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2421,9 +2555,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Test a webhook by sending a test payload
+    ) -> AdminWebhooksTestResponse:
+        """Send a test delivery
 
+        POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
         :param org_id: (required)
         :type org_id: str
@@ -2461,6 +2596,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksTestResponse",
+            '404': None,
+            '502': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2490,9 +2628,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Test a webhook by sending a test payload
+    ) -> ApiResponse[AdminWebhooksTestResponse]:
+        """Send a test delivery
 
+        POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
         :param org_id: (required)
         :type org_id: str
@@ -2530,6 +2669,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksTestResponse",
+            '404': None,
+            '502': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2560,8 +2702,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Test a webhook by sending a test payload
+        """Send a test delivery
 
+        POSTs a signed `test.webhook` payload to the webhook URL and reports the receiver's status. A non-2xx receiver response still yields HTTP 200 with `success: false`; a transport failure yields 502.
 
         :param org_id: (required)
         :type org_id: str
@@ -2599,6 +2742,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksTestResponse",
+            '404': None,
+            '502': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2642,6 +2788,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2684,9 +2837,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_webhooks_tunnel_start
+    ) -> AdminWebhooksTunnelStartResponse:
+        """Start a webhook tunnel
 
+        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
         :param org_id: (required)
         :type org_id: str
@@ -2721,6 +2875,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksTunnelStartResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2749,9 +2904,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_webhooks_tunnel_start
+    ) -> ApiResponse[AdminWebhooksTunnelStartResponse]:
+        """Start a webhook tunnel
 
+        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
         :param org_id: (required)
         :type org_id: str
@@ -2786,6 +2942,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksTunnelStartResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2815,8 +2972,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_webhooks_tunnel_start
+        """Start a webhook tunnel
 
+        Creates a transient `tunnel://` webhook subscribed to every event (`*`) for `lumo tunnel`. Deliveries are stored instead of sent, and can be consumed from the stream endpoint.
 
         :param org_id: (required)
         :type org_id: str
@@ -2851,6 +3009,7 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksTunnelStartResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2891,6 +3050,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2934,9 +3100,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_webhooks_tunnel_stop
+    ) -> MessageResponse:
+        """Stop a webhook tunnel
 
+        Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
         :param org_id: (required)
         :type org_id: str
@@ -2974,6 +3141,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3003,9 +3173,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_webhooks_tunnel_stop
+    ) -> ApiResponse[MessageResponse]:
+        """Stop a webhook tunnel
 
+        Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
         :param org_id: (required)
         :type org_id: str
@@ -3043,6 +3214,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3073,8 +3247,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_webhooks_tunnel_stop
+        """Stop a webhook tunnel
 
+        Deletes the tunnel webhook and its pending deliveries. Only `tunnel://` webhooks can be stopped here.
 
         :param org_id: (required)
         :type org_id: str
@@ -3112,6 +3287,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3155,6 +3333,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3198,9 +3383,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """admin_webhooks_tunnel_stream
+    ) -> str:
+        """Stream tunnel deliveries (SSE)
 
+        Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
         :param org_id: (required)
         :type org_id: str
@@ -3238,6 +3424,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3267,9 +3456,10 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """admin_webhooks_tunnel_stream
+    ) -> ApiResponse[str]:
+        """Stream tunnel deliveries (SSE)
 
+        Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
         :param org_id: (required)
         :type org_id: str
@@ -3307,6 +3497,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3337,8 +3530,9 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """admin_webhooks_tunnel_stream
+        """Stream tunnel deliveries (SSE)
 
+        Long-lived Server-Sent Events stream of deliveries recorded for a tunnel webhook. The stream polls every 2 seconds and closes after 10 minutes; clients should reconnect.
 
         :param org_id: (required)
         :type org_id: str
@@ -3376,6 +3570,9 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "str",
+            '400': None,
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3419,6 +3616,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'text/event-stream'
+                ]
+            )
 
 
         # authentication setting
@@ -3462,8 +3666,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Disable webhook
+    ) -> AdminWebhooksWebhooksDisableResponse:
+        """Disable a webhook
 
 
         :param org_id: (required)
@@ -3502,6 +3706,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksWebhooksDisableResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3531,8 +3737,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Disable webhook
+    ) -> ApiResponse[AdminWebhooksWebhooksDisableResponse]:
+        """Disable a webhook
 
 
         :param org_id: (required)
@@ -3571,6 +3777,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksWebhooksDisableResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3601,7 +3809,7 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Disable webhook
+        """Disable a webhook
 
 
         :param org_id: (required)
@@ -3640,6 +3848,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksWebhooksDisableResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3683,6 +3893,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3726,8 +3943,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Enable webhook
+    ) -> AdminWebhooksWebhooksEnableResponse:
+        """Enable a webhook
 
 
         :param org_id: (required)
@@ -3766,6 +3983,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksWebhooksEnableResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3795,8 +4014,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Enable webhook
+    ) -> ApiResponse[AdminWebhooksWebhooksEnableResponse]:
+        """Enable a webhook
 
 
         :param org_id: (required)
@@ -3835,6 +4054,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksWebhooksEnableResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3865,7 +4086,7 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Enable webhook
+        """Enable a webhook
 
 
         :param org_id: (required)
@@ -3904,6 +4125,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminWebhooksWebhooksEnableResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3947,6 +4170,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3990,8 +4220,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update an existing webhook
+    ) -> PutAdminWebhooksUpdateResponse:
+        """Partially update a webhook
 
 
         :param org_id: (required)
@@ -4030,6 +4260,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminWebhooksUpdateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4059,8 +4291,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update an existing webhook
+    ) -> ApiResponse[PutAdminWebhooksUpdateResponse]:
+        """Partially update a webhook
 
 
         :param org_id: (required)
@@ -4099,6 +4331,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminWebhooksUpdateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4129,7 +4363,7 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update an existing webhook
+        """Partially update a webhook
 
 
         :param org_id: (required)
@@ -4168,6 +4402,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminWebhooksUpdateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4211,6 +4447,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -4254,8 +4497,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
-        """Update an existing webhook
+    ) -> PutAdminWebhooksUpdateResponse:
+        """Update a webhook
 
 
         :param org_id: (required)
@@ -4294,6 +4537,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminWebhooksUpdateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4323,8 +4568,8 @@ class AdminWebhooksApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
-        """Update an existing webhook
+    ) -> ApiResponse[PutAdminWebhooksUpdateResponse]:
+        """Update a webhook
 
 
         :param org_id: (required)
@@ -4363,6 +4608,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminWebhooksUpdateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4393,7 +4640,7 @@ class AdminWebhooksApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Update an existing webhook
+        """Update a webhook
 
 
         :param org_id: (required)
@@ -4432,6 +4679,8 @@ class AdminWebhooksApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PutAdminWebhooksUpdateResponse",
+            '404': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4475,6 +4724,13 @@ class AdminWebhooksApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

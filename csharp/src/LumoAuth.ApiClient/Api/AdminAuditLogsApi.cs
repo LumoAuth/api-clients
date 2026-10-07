@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,52 +29,52 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// List available audit action types for this tenant
+        /// List the distinct audit action types recorded for the tenant
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminAuditLogsActions(string orgId);
+        /// <returns>AdminAuditLogsActionsResponse</returns>
+        AdminAuditLogsActionsResponse AdminAuditLogsActions(string orgId);
 
         /// <summary>
-        /// List available audit action types for this tenant
+        /// List the distinct audit action types recorded for the tenant
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminAuditLogsActionsWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminAuditLogsActionsResponse</returns>
+        ApiResponse<AdminAuditLogsActionsResponse> AdminAuditLogsActionsWithHttpInfo(string orgId);
         /// <summary>
-        /// Export audit logs as CSV or JSON
+        /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminAuditLogsExport(string orgId);
+        /// <returns>string</returns>
+        string AdminAuditLogsExport(string orgId);
 
         /// <summary>
-        /// Export audit logs as CSV or JSON
+        /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminAuditLogsExportWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> AdminAuditLogsExportWithHttpInfo(string orgId);
         /// <summary>
-        /// Get a single audit log entry
+        /// Get an audit log entry
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
-        /// <returns></returns>
-        void AdminAuditLogsGet(string orgId, string logId);
+        /// <returns>AdminAuditLogsGetResponse</returns>
+        AdminAuditLogsGetResponse AdminAuditLogsGet(string orgId, string logId);
 
         /// <summary>
-        /// Get a single audit log entry
+        /// Get an audit log entry
         /// </summary>
         /// <remarks>
         /// 
@@ -81,33 +82,33 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminAuditLogsGetWithHttpInfo(string orgId, string logId);
+        /// <returns>ApiResponse of AdminAuditLogsGetResponse</returns>
+        ApiResponse<AdminAuditLogsGetResponse> AdminAuditLogsGetWithHttpInfo(string orgId, string logId);
         /// <summary>
-        /// List audit logs for the tenant
+        /// List audit log entries
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminAuditLogsList(string orgId);
+        /// <returns>AdminAuditLogsListResponse</returns>
+        AdminAuditLogsListResponse AdminAuditLogsList(string orgId);
 
         /// <summary>
-        /// List audit logs for the tenant
+        /// List audit log entries
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminAuditLogsListWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminAuditLogsListResponse</returns>
+        ApiResponse<AdminAuditLogsListResponse> AdminAuditLogsListWithHttpInfo(string orgId);
         /// <summary>
         /// Get audit log retention settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminAuditLogsRetention(string orgId);
+        /// <returns>AdminAuditLogsRetentionResponse</returns>
+        AdminAuditLogsRetentionResponse AdminAuditLogsRetention(string orgId);
 
         /// <summary>
         /// Get audit log retention settings
@@ -117,51 +118,33 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminAuditLogsRetentionWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
+        ApiResponse<AdminAuditLogsRetentionResponse> AdminAuditLogsRetentionWithHttpInfo(string orgId);
         /// <summary>
-        /// Get audit log statistics
+        /// Audit log statistics for a period (default: last 30 days)
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void AdminAuditLogsStats(string orgId);
+        /// <returns>AdminAuditLogsStatsResponse</returns>
+        AdminAuditLogsStatsResponse AdminAuditLogsStats(string orgId);
 
         /// <summary>
-        /// Get audit log statistics
+        /// Audit log statistics for a period (default: last 30 days)
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> AdminAuditLogsStatsWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminAuditLogsStatsResponse</returns>
+        ApiResponse<AdminAuditLogsStatsResponse> AdminAuditLogsStatsWithHttpInfo(string orgId);
         /// <summary>
         /// Update audit log retention settings
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void PatchAdminAuditLogsRetentionUpdate(string orgId);
-
-        /// <summary>
-        /// Update audit log retention settings
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId);
-        /// <summary>
-        /// Update audit log retention settings
-        /// </summary>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <returns></returns>
-        void PutAdminAuditLogsRetentionUpdate(string orgId);
+        /// <returns>AdminAuditLogsRetentionResponse</returns>
+        AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(string orgId);
 
         /// <summary>
         /// Update audit log retention settings
@@ -171,8 +154,26 @@ namespace LumoAuth.ApiClient.Api
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
+        ApiResponse<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId);
+        /// <summary>
+        /// Update audit log retention settings
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>AdminAuditLogsRetentionResponse</returns>
+        AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(string orgId);
+
+        /// <summary>
+        /// Update audit log retention settings
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
+        ApiResponse<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId);
         #endregion Synchronous Operations
     }
 
@@ -183,7 +184,7 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// List available audit action types for this tenant
+        /// List the distinct audit action types recorded for the tenant
         /// </summary>
         /// <remarks>
         /// 
@@ -191,11 +192,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminAuditLogsActionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAuditLogsActionsResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsActionsResponse> AdminAuditLogsActionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List available audit action types for this tenant
+        /// List the distinct audit action types recorded for the tenant
         /// </summary>
         /// <remarks>
         /// 
@@ -203,10 +204,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminAuditLogsActionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAuditLogsActionsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsActionsResponse>> AdminAuditLogsActionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Export audit logs as CSV or JSON
+        /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <remarks>
         /// 
@@ -214,11 +215,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminAuditLogsExportAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> AdminAuditLogsExportAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Export audit logs as CSV or JSON
+        /// Export audit logs as CSV (default) or JSON
         /// </summary>
         /// <remarks>
         /// 
@@ -226,10 +227,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get a single audit log entry
+        /// Get an audit log entry
         /// </summary>
         /// <remarks>
         /// 
@@ -238,11 +239,11 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminAuditLogsGetAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAuditLogsGetResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsGetResponse> AdminAuditLogsGetAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a single audit log entry
+        /// Get an audit log entry
         /// </summary>
         /// <remarks>
         /// 
@@ -251,10 +252,10 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminAuditLogsGetWithHttpInfoAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAuditLogsGetResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsGetResponse>> AdminAuditLogsGetWithHttpInfoAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// List audit logs for the tenant
+        /// List audit log entries
         /// </summary>
         /// <remarks>
         /// 
@@ -262,11 +263,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminAuditLogsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAuditLogsListResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsListResponse> AdminAuditLogsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List audit logs for the tenant
+        /// List audit log entries
         /// </summary>
         /// <remarks>
         /// 
@@ -274,8 +275,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminAuditLogsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAuditLogsListResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsListResponse>> AdminAuditLogsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Get audit log retention settings
         /// </summary>
@@ -285,8 +286,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminAuditLogsRetentionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> AdminAuditLogsRetentionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Get audit log retention settings
@@ -297,10 +298,10 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminAuditLogsRetentionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> AdminAuditLogsRetentionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// Get audit log statistics
+        /// Audit log statistics for a period (default: last 30 days)
         /// </summary>
         /// <remarks>
         /// 
@@ -308,11 +309,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task AdminAuditLogsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAuditLogsStatsResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsStatsResponse> AdminAuditLogsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get audit log statistics
+        /// Audit log statistics for a period (default: last 30 days)
         /// </summary>
         /// <remarks>
         /// 
@@ -320,8 +321,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> AdminAuditLogsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAuditLogsStatsResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsStatsResponse>> AdminAuditLogsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Update audit log retention settings
         /// </summary>
@@ -331,31 +332,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PatchAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Update audit log retention settings
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
-        /// <summary>
-        /// Update audit log retention settings
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="orgId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task PutAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Update audit log retention settings
@@ -366,8 +344,31 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Update audit log retention settings
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
+        System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Update audit log retention settings
+        /// </summary>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminAuditLogsRetentionResponse>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -582,23 +583,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List available audit action types for this tenant 
+        /// List the distinct audit action types recorded for the tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminAuditLogsActions(string orgId)
+        /// <returns>AdminAuditLogsActionsResponse</returns>
+        public AdminAuditLogsActionsResponse AdminAuditLogsActions(string orgId)
         {
-            AdminAuditLogsActionsWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsActionsResponse> localVarResponse = AdminAuditLogsActionsWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List available audit action types for this tenant 
+        /// List the distinct audit action types recorded for the tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminAuditLogsActionsWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminAuditLogsActionsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsActionsResponse> AdminAuditLogsActionsWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -611,6 +613,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -634,7 +637,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/actions", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminAuditLogsActionsResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/actions", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -646,25 +649,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List available audit action types for this tenant 
+        /// List the distinct audit action types recorded for the tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminAuditLogsActionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsActionsResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsActionsResponse> AdminAuditLogsActionsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminAuditLogsActionsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsActionsResponse> localVarResponse = await AdminAuditLogsActionsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List available audit action types for this tenant 
+        /// List the distinct audit action types recorded for the tenant 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminAuditLogsActionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsActionsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsActionsResponse>> AdminAuditLogsActionsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -678,6 +682,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -703,7 +708,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/actions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminAuditLogsActionsResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/actions", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -715,23 +720,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Export audit logs as CSV or JSON 
+        /// Export audit logs as CSV (default) or JSON 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminAuditLogsExport(string orgId)
+        /// <returns>string</returns>
+        public string AdminAuditLogsExport(string orgId)
         {
-            AdminAuditLogsExportWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = AdminAuditLogsExportWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Export audit logs as CSV or JSON 
+        /// Export audit logs as CSV (default) or JSON 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminAuditLogsExportWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> AdminAuditLogsExportWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -744,6 +750,8 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/csv",
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -767,7 +775,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/export", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<string>("/orgs/{orgId}/api/v1/admin/audit-logs/export", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -779,25 +787,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Export audit logs as CSV or JSON 
+        /// Export audit logs as CSV (default) or JSON 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminAuditLogsExportAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> AdminAuditLogsExportAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminAuditLogsExportWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await AdminAuditLogsExportWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Export audit logs as CSV or JSON 
+        /// Export audit logs as CSV (default) or JSON 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> AdminAuditLogsExportWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -811,6 +820,8 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/csv",
+                "application/json"
             };
 
 
@@ -836,7 +847,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/export", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<string>("/orgs/{orgId}/api/v1/admin/audit-logs/export", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -848,25 +859,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single audit log entry 
+        /// Get an audit log entry 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
-        /// <returns></returns>
-        public void AdminAuditLogsGet(string orgId, string logId)
+        /// <returns>AdminAuditLogsGetResponse</returns>
+        public AdminAuditLogsGetResponse AdminAuditLogsGet(string orgId, string logId)
         {
-            AdminAuditLogsGetWithHttpInfo(orgId, logId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsGetResponse> localVarResponse = AdminAuditLogsGetWithHttpInfo(orgId, logId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single audit log entry 
+        /// Get an audit log entry 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminAuditLogsGetWithHttpInfo(string orgId, string logId)
+        /// <returns>ApiResponse of AdminAuditLogsGetResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsGetResponse> AdminAuditLogsGetWithHttpInfo(string orgId, string logId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -883,6 +895,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -907,7 +920,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/{logId}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminAuditLogsGetResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/{logId}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -919,27 +932,28 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get a single audit log entry 
+        /// Get an audit log entry 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminAuditLogsGetAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsGetResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsGetResponse> AdminAuditLogsGetAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminAuditLogsGetWithHttpInfoAsync(orgId, logId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsGetResponse> localVarResponse = await AdminAuditLogsGetWithHttpInfoAsync(orgId, logId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get a single audit log entry 
+        /// Get an audit log entry 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="logId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminAuditLogsGetWithHttpInfoAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsGetResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsGetResponse>> AdminAuditLogsGetWithHttpInfoAsync(string orgId, string logId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -957,6 +971,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -983,7 +998,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/{logId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminAuditLogsGetResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/{logId}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -995,23 +1010,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List audit logs for the tenant 
+        /// List audit log entries 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminAuditLogsList(string orgId)
+        /// <returns>AdminAuditLogsListResponse</returns>
+        public AdminAuditLogsListResponse AdminAuditLogsList(string orgId)
         {
-            AdminAuditLogsListWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> localVarResponse = AdminAuditLogsListWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List audit logs for the tenant 
+        /// List audit log entries 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminAuditLogsListWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminAuditLogsListResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> AdminAuditLogsListWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1024,6 +1040,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1047,7 +1064,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/audit-logs", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminAuditLogsListResponse>("/orgs/{orgId}/api/v1/admin/audit-logs", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1059,25 +1076,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List audit logs for the tenant 
+        /// List audit log entries 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminAuditLogsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsListResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsListResponse> AdminAuditLogsListAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminAuditLogsListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse> localVarResponse = await AdminAuditLogsListWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List audit logs for the tenant 
+        /// List audit log entries 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminAuditLogsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsListResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsListResponse>> AdminAuditLogsListWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1091,6 +1109,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1116,7 +1135,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminAuditLogsListResponse>("/orgs/{orgId}/api/v1/admin/audit-logs", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1132,10 +1151,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminAuditLogsRetention(string orgId)
+        /// <returns>AdminAuditLogsRetentionResponse</returns>
+        public AdminAuditLogsRetentionResponse AdminAuditLogsRetention(string orgId)
         {
-            AdminAuditLogsRetentionWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = AdminAuditLogsRetentionWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1143,8 +1163,8 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminAuditLogsRetentionWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> AdminAuditLogsRetentionWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1157,6 +1177,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1180,7 +1201,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminAuditLogsRetentionResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1197,10 +1218,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminAuditLogsRetentionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> AdminAuditLogsRetentionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminAuditLogsRetentionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await AdminAuditLogsRetentionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1209,8 +1231,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminAuditLogsRetentionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> AdminAuditLogsRetentionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1224,6 +1246,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1249,7 +1272,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminAuditLogsRetentionResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1261,23 +1284,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get audit log statistics 
+        /// Audit log statistics for a period (default: last 30 days) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void AdminAuditLogsStats(string orgId)
+        /// <returns>AdminAuditLogsStatsResponse</returns>
+        public AdminAuditLogsStatsResponse AdminAuditLogsStats(string orgId)
         {
-            AdminAuditLogsStatsWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsStatsResponse> localVarResponse = AdminAuditLogsStatsWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get audit log statistics 
+        /// Audit log statistics for a period (default: last 30 days) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> AdminAuditLogsStatsWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminAuditLogsStatsResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsStatsResponse> AdminAuditLogsStatsWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1290,6 +1314,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1313,7 +1338,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/stats", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<AdminAuditLogsStatsResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/stats", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1325,25 +1350,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// Get audit log statistics 
+        /// Audit log statistics for a period (default: last 30 days) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task AdminAuditLogsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsStatsResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsStatsResponse> AdminAuditLogsStatsAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await AdminAuditLogsStatsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsStatsResponse> localVarResponse = await AdminAuditLogsStatsWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get audit log statistics 
+        /// Audit log statistics for a period (default: last 30 days) 
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> AdminAuditLogsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsStatsResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsStatsResponse>> AdminAuditLogsStatsWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1357,6 +1383,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1382,7 +1409,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/stats", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<AdminAuditLogsStatsResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/stats", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1398,10 +1425,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void PatchAdminAuditLogsRetentionUpdate(string orgId)
+        /// <returns>AdminAuditLogsRetentionResponse</returns>
+        public AdminAuditLogsRetentionResponse PatchAdminAuditLogsRetentionUpdate(string orgId)
         {
-            PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = PatchAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1409,8 +1437,8 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1423,6 +1451,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1446,7 +1475,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Patch<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Patch<AdminAuditLogsRetentionResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1463,10 +1492,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PatchAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PatchAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1475,8 +1505,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> PatchAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1490,6 +1520,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1515,7 +1546,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PatchAsync<AdminAuditLogsRetentionResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -1531,10 +1562,11 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void PutAdminAuditLogsRetentionUpdate(string orgId)
+        /// <returns>AdminAuditLogsRetentionResponse</returns>
+        public AdminAuditLogsRetentionResponse PutAdminAuditLogsRetentionUpdate(string orgId)
         {
-            PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = PutAdminAuditLogsRetentionUpdateWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1542,8 +1574,8 @@ namespace LumoAuth.ApiClient.Api
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of AdminAuditLogsRetentionResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1556,6 +1588,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -1579,7 +1612,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Put<AdminAuditLogsRetentionResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -1596,10 +1629,11 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task PutAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of AdminAuditLogsRetentionResponse</returns>
+        public async System.Threading.Tasks.Task<AdminAuditLogsRetentionResponse> PutAdminAuditLogsRetentionUpdateAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse> localVarResponse = await PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
@@ -1608,8 +1642,8 @@ namespace LumoAuth.ApiClient.Api
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (AdminAuditLogsRetentionResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminAuditLogsRetentionResponse>> PutAdminAuditLogsRetentionUpdateWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1623,6 +1657,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1648,7 +1683,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<Object>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PutAsync<AdminAuditLogsRetentionResponse>("/orgs/{orgId}/api/v1/admin/audit-logs/retention", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

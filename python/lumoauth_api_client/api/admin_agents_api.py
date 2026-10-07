@@ -26,6 +26,7 @@ from lumoauth_api_client.models.admin_agents_agents_rotate_key_response import A
 from lumoauth_api_client.models.admin_agents_create_request import AdminAgentsCreateRequest
 from lumoauth_api_client.models.admin_agents_create_response import AdminAgentsCreateResponse
 from lumoauth_api_client.models.admin_agents_deactivate_response import AdminAgentsDeactivateResponse
+from lumoauth_api_client.models.admin_agents_delete_response import AdminAgentsDeleteResponse
 from lumoauth_api_client.models.admin_agents_generate_token_request import AdminAgentsGenerateTokenRequest
 from lumoauth_api_client.models.admin_agents_generate_token_response import AdminAgentsGenerateTokenResponse
 from lumoauth_api_client.models.admin_agents_get_response import AdminAgentsGetResponse
@@ -35,7 +36,6 @@ from lumoauth_api_client.models.admin_agents_revoke_key_response import AdminAge
 from lumoauth_api_client.models.admin_agents_rotate_credentials_response import AdminAgentsRotateCredentialsResponse
 from lumoauth_api_client.models.admin_agents_set_scopes_request import AdminAgentsSetScopesRequest
 from lumoauth_api_client.models.admin_agents_set_scopes_response import AdminAgentsSetScopesResponse
-from lumoauth_api_client.models.message_response import MessageResponse
 from lumoauth_api_client.models.put_admin_agents_update_request import PutAdminAgentsUpdateRequest
 from lumoauth_api_client.models.put_admin_agents_update_response import PutAdminAgentsUpdateResponse
 
@@ -1788,7 +1788,7 @@ class AdminAgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> MessageResponse:
+    ) -> AdminAgentsDeleteResponse:
         """Delete an agent
 
 
@@ -1828,7 +1828,7 @@ class AdminAgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MessageResponse",
+            '200': "AdminAgentsDeleteResponse",
             '401': None,
             '403': None,
             '404': None,
@@ -1861,7 +1861,7 @@ class AdminAgentsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[MessageResponse]:
+    ) -> ApiResponse[AdminAgentsDeleteResponse]:
         """Delete an agent
 
 
@@ -1901,7 +1901,7 @@ class AdminAgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MessageResponse",
+            '200': "AdminAgentsDeleteResponse",
             '401': None,
             '403': None,
             '404': None,
@@ -1974,7 +1974,7 @@ class AdminAgentsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "MessageResponse",
+            '200': "AdminAgentsDeleteResponse",
             '401': None,
             '403': None,
             '404': None,

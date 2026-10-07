@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -34,9 +34,11 @@ class GetRequestStatusResponse(BaseModel):
     task_id: Optional[StrictStr] = None
     token_url: Optional[StrictStr] = Field(default=None, description="Present when approved.")
     granted_ttl: Optional[StrictInt] = Field(default=None, description="Present when approved.")
-    review_notes: Optional[StrictStr] = Field(default=None, description="Present when denied.")
+    has_notes: Optional[StrictBool] = Field(default=None, description="Present when decided: whether the reviewer left notes (the notes themselves are never returned).")
+    agent_message: Optional[StrictStr] = Field(default=None, description="Present when decided: message the reviewer explicitly wrote for the agent.")
+    delegation_consent_required: Optional[StrictBool] = Field(default=None, description="Present when pending: the on_behalf_of user must consent.")
     expires_at: Optional[datetime] = Field(default=None, description="Present when pending.")
-    __properties: ClassVar[List[str]] = ["request_id", "status", "risk_level", "task_id", "token_url", "granted_ttl", "review_notes", "expires_at"]
+    __properties: ClassVar[List[str]] = ["request_id", "status", "risk_level", "task_id", "token_url", "granted_ttl", "has_notes", "agent_message", "delegation_consent_required", "expires_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -77,6 +79,11 @@ class GetRequestStatusResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if agent_message (nullable) is None
+        # and model_fields_set contains the field
+        if self.agent_message is None and "agent_message" in self.model_fields_set:
+            _dict['agent_message'] = None
+
         return _dict
 
     @classmethod
@@ -95,7 +102,9 @@ class GetRequestStatusResponse(BaseModel):
             "task_id": obj.get("task_id"),
             "token_url": obj.get("token_url"),
             "granted_ttl": obj.get("granted_ttl"),
-            "review_notes": obj.get("review_notes"),
+            "has_notes": obj.get("has_notes"),
+            "agent_message": obj.get("agent_message"),
+            "delegation_consent_required": obj.get("delegation_consent_required"),
             "expires_at": obj.get("expires_at")
         })
         return _obj

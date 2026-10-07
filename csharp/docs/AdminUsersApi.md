@@ -4,37 +4,42 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |--------|--------------|-------------|
-| [**AddUserGroup**](AdminUsersApi.md#addusergroup) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups |  |
-| [**AddUserPermission**](AdminUsersApi.md#adduserpermission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions |  |
-| [**AddUserRole**](AdminUsersApi.md#adduserrole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles |  |
-| [**BlockUser**](AdminUsersApi.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block |  |
-| [**CreateUser**](AdminUsersApi.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users |  |
-| [**DeleteUser**](AdminUsersApi.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**GetUser**](AdminUsersApi.md#getuser) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**ListUserGroups**](AdminUsersApi.md#listusergroups) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/groups |  |
-| [**ListUserPermissions**](AdminUsersApi.md#listuserpermissions) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions |  |
-| [**ListUserRoles**](AdminUsersApi.md#listuserroles) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/roles |  |
-| [**ListUsers**](AdminUsersApi.md#listusers) | **GET** /orgs/{orgId}/api/v1/admin/users |  |
-| [**MarkUserVerified**](AdminUsersApi.md#markuserverified) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified |  |
-| [**PatchUser**](AdminUsersApi.md#patchuser) | **PATCH** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**RemoveUserGroup**](AdminUsersApi.md#removeusergroup) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId} |  |
-| [**RemoveUserPermission**](AdminUsersApi.md#removeuserpermission) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId} |  |
-| [**RemoveUserRole**](AdminUsersApi.md#removeuserrole) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId} |  |
-| [**ResetUserMfa**](AdminUsersApi.md#resetusermfa) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset |  |
-| [**SendUserVerificationEmail**](AdminUsersApi.md#senduserverificationemail) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/verify-email |  |
-| [**SetUserPassword**](AdminUsersApi.md#setuserpassword) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/password |  |
-| [**SetUserPasswordPost**](AdminUsersApi.md#setuserpasswordpost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password |  |
-| [**TriggerUserPasswordReset**](AdminUsersApi.md#triggeruserpasswordreset) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password-reset |  |
-| [**UnblockUser**](AdminUsersApi.md#unblockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/unblock |  |
-| [**UpdateUser**](AdminUsersApi.md#updateuser) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId} |  |
-| [**UpdateUserGroups**](AdminUsersApi.md#updateusergroups) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/groups |  |
-| [**UpdateUserRoles**](AdminUsersApi.md#updateuserroles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles |  |
+| [**AddUserGroup**](AdminUsersApi.md#addusergroup) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Add a user to a group |
+| [**AddUserPermission**](AdminUsersApi.md#adduserpermission) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | Assign a permission to a user |
+| [**AddUserRole**](AdminUsersApi.md#adduserrole) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Assign a role to a user |
+| [**AdminIdentitiesLegacySamlRelink**](AdminUsersApi.md#adminidentitieslegacysamlrelink) | **POST** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Relink legacy SAML users to an IdP |
+| [**AdminIdentitiesLegacySamlReport**](AdminUsersApi.md#adminidentitieslegacysamlreport) | **GET** /orgs/{orgId}/api/v1/admin/identities/legacy-saml | Legacy SAML bindings report |
+| [**AdminIdentitiesLink**](AdminUsersApi.md#adminidentitieslink) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | Link a SAML or LDAP identity to a user |
+| [**AdminIdentitiesList**](AdminUsersApi.md#adminidentitieslist) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/identities | List a user&#39;s federated identity links |
+| [**AdminIdentitiesUnlink**](AdminUsersApi.md#adminidentitiesunlink) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type} | Unlink a user&#39;s SAML, LDAP or social identity |
+| [**BlockUser**](AdminUsersApi.md#blockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/block | Block a user |
+| [**CreateUser**](AdminUsersApi.md#createuser) | **POST** /orgs/{orgId}/api/v1/admin/users | Create a user |
+| [**DeleteUser**](AdminUsersApi.md#deleteuser) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId} | Delete a user |
+| [**GetUser**](AdminUsersApi.md#getuser) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId} | Get a user |
+| [**ListUserGroups**](AdminUsersApi.md#listusergroups) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | List a user&#39;s groups |
+| [**ListUserPermissions**](AdminUsersApi.md#listuserpermissions) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions | List a user&#39;s direct permissions |
+| [**ListUserRoles**](AdminUsersApi.md#listuserroles) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | List a user&#39;s roles |
+| [**ListUsers**](AdminUsersApi.md#listusers) | **GET** /orgs/{orgId}/api/v1/admin/users | List users |
+| [**MarkUserVerified**](AdminUsersApi.md#markuserverified) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified | Mark a user&#39;s email as verified |
+| [**PatchUser**](AdminUsersApi.md#patchuser) | **PATCH** /orgs/{orgId}/api/v1/admin/users/{userId} | Update a user |
+| [**RemoveUserGroup**](AdminUsersApi.md#removeusergroup) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId} | Remove a user from a group |
+| [**RemoveUserPermission**](AdminUsersApi.md#removeuserpermission) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId} | Remove a permission from a user |
+| [**RemoveUserRole**](AdminUsersApi.md#removeuserrole) | **DELETE** /orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId} | Remove a role from a user |
+| [**ResetUserMfa**](AdminUsersApi.md#resetusermfa) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset | Reset MFA (removed) |
+| [**SendUserVerificationEmail**](AdminUsersApi.md#senduserverificationemail) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/verify-email | Send a verification email |
+| [**SetUserPassword**](AdminUsersApi.md#setuserpassword) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/password | Set a user&#39;s password |
+| [**SetUserPasswordPost**](AdminUsersApi.md#setuserpasswordpost) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password | Set a user&#39;s password |
+| [**TriggerUserPasswordReset**](AdminUsersApi.md#triggeruserpasswordreset) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/password-reset | Send a password reset email |
+| [**UnblockUser**](AdminUsersApi.md#unblockuser) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/unblock | Unblock a user |
+| [**UpdateUser**](AdminUsersApi.md#updateuser) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId} | Update a user |
+| [**UpdateUserGroups**](AdminUsersApi.md#updateusergroups) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/groups | Replace a user&#39;s groups |
+| [**UpdateUserRoles**](AdminUsersApi.md#updateuserroles) | **PUT** /orgs/{orgId}/api/v1/admin/users/{userId}/roles | Replace a user&#39;s roles |
 
 <a id="addusergroup"></a>
 # **AddUserGroup**
-> void AddUserGroup (string orgId, string userId)
+> AddUserGroupResponse AddUserGroup (string orgId, string userId)
 
-
+Add a user to a group
 
 ### Example
 ```csharp
@@ -69,7 +74,9 @@ namespace Example
 
             try
             {
-                apiInstance.AddUserGroup(orgId, userId);
+                // Add a user to a group
+                AddUserGroupResponse result = apiInstance.AddUserGroup(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -88,7 +95,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AddUserGroupWithHttpInfo(orgId, userId);
+    // Add a user to a group
+    ApiResponse<AddUserGroupResponse> response = apiInstance.AddUserGroupWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -107,7 +118,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AddUserGroupResponse**](AddUserGroupResponse.md)
 
 ### Authorization
 
@@ -116,21 +127,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User with the group assigned |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adduserpermission"></a>
 # **AddUserPermission**
-> void AddUserPermission (string orgId, string userId)
+> AddUserPermissionResponse AddUserPermission (string orgId, string userId)
 
-
+Assign a permission to a user
 
 ### Example
 ```csharp
@@ -165,7 +176,9 @@ namespace Example
 
             try
             {
-                apiInstance.AddUserPermission(orgId, userId);
+                // Assign a permission to a user
+                AddUserPermissionResponse result = apiInstance.AddUserPermission(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -184,7 +197,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AddUserPermissionWithHttpInfo(orgId, userId);
+    // Assign a permission to a user
+    ApiResponse<AddUserPermissionResponse> response = apiInstance.AddUserPermissionWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -203,7 +220,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AddUserPermissionResponse**](AddUserPermissionResponse.md)
 
 ### Authorization
 
@@ -212,21 +229,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permission assigned |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="adduserrole"></a>
 # **AddUserRole**
-> void AddUserRole (string orgId, string userId)
+> AddUserRoleResponse AddUserRole (string orgId, string userId)
 
-
+Assign a role to a user
 
 ### Example
 ```csharp
@@ -261,7 +278,9 @@ namespace Example
 
             try
             {
-                apiInstance.AddUserRole(orgId, userId);
+                // Assign a role to a user
+                AddUserRoleResponse result = apiInstance.AddUserRole(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -280,7 +299,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.AddUserRoleWithHttpInfo(orgId, userId);
+    // Assign a role to a user
+    ApiResponse<AddUserRoleResponse> response = apiInstance.AddUserRoleWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -299,7 +322,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AddUserRoleResponse**](AddUserRoleResponse.md)
 
 ### Authorization
 
@@ -308,21 +331,557 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User with the role assigned |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="adminidentitieslegacysamlrelink"></a>
+# **AdminIdentitiesLegacySamlRelink**
+> AdminIdentitiesLegacySamlRelinkResponse AdminIdentitiesLegacySamlRelink (string orgId, AdminIdentitiesLegacySamlRelinkRequest adminIdentitiesLegacySamlRelinkRequest)
+
+Relink legacy SAML users to an IdP
+
+Rebinds legacy bare-NameID users to `idp_id`, keeping their NameID: either `user_ids`, or every legacy user whose email domain the IdP's allowed email domains claim (`all_matching_domains: true`). Users the caller does not outrank, or whose NameID is already linked at that IdP, are skipped. `dry_run` (default true) only reports what would change. A real run revokes each relinked user's sessions, notifies them and is audited (identity.link.created per user, identity.link.bulk_relinked once); signed-in admins need fresh MFA.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminIdentitiesLegacySamlRelinkExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var adminIdentitiesLegacySamlRelinkRequest = new AdminIdentitiesLegacySamlRelinkRequest(); // AdminIdentitiesLegacySamlRelinkRequest | 
+
+            try
+            {
+                // Relink legacy SAML users to an IdP
+                AdminIdentitiesLegacySamlRelinkResponse result = apiInstance.AdminIdentitiesLegacySamlRelink(orgId, adminIdentitiesLegacySamlRelinkRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesLegacySamlRelink: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminIdentitiesLegacySamlRelinkWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Relink legacy SAML users to an IdP
+    ApiResponse<AdminIdentitiesLegacySamlRelinkResponse> response = apiInstance.AdminIdentitiesLegacySamlRelinkWithHttpInfo(orgId, adminIdentitiesLegacySamlRelinkRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesLegacySamlRelinkWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **adminIdentitiesLegacySamlRelinkRequest** | [**AdminIdentitiesLegacySamlRelinkRequest**](AdminIdentitiesLegacySamlRelinkRequest.md) |  |  |
+
+### Return type
+
+[**AdminIdentitiesLegacySamlRelinkResponse**](AdminIdentitiesLegacySamlRelinkResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Plan (dry run) or result |  -  |
+| **403** | step_up_required |  -  |
+| **404** | IdP not found |  -  |
+| **422** | Neither user_ids nor all_matching_domains given, or the IdP has no allowed email domains |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="adminidentitieslegacysamlreport"></a>
+# **AdminIdentitiesLegacySamlReport**
+> AdminIdentitiesLegacySamlReportResponse AdminIdentitiesLegacySamlReport (string orgId, int? idpId = null)
+
+Legacy SAML bindings report
+
+Users still bound by a bare NameID (from before SAML links were scoped to their IdP). While the organization has more than one SAML IdP (`ambiguous: true`) these users are refused at SAML sign-in until relinked. Each user lists the IdPs whose allowed email domains claim their address; `suggested_idp_id` is set when exactly one does. Filter with `idp_id`.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminIdentitiesLegacySamlReportExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var idpId = 56;  // int? |  (optional) 
+
+            try
+            {
+                // Legacy SAML bindings report
+                AdminIdentitiesLegacySamlReportResponse result = apiInstance.AdminIdentitiesLegacySamlReport(orgId, idpId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesLegacySamlReport: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminIdentitiesLegacySamlReportWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Legacy SAML bindings report
+    ApiResponse<AdminIdentitiesLegacySamlReportResponse> response = apiInstance.AdminIdentitiesLegacySamlReportWithHttpInfo(orgId, idpId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesLegacySamlReportWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **idpId** | **int?** |  | [optional]  |
+
+### Return type
+
+[**AdminIdentitiesLegacySamlReportResponse**](AdminIdentitiesLegacySamlReportResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Report |  -  |
+| **404** | IdP not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="adminidentitieslink"></a>
+# **AdminIdentitiesLink**
+> AdminAgentsGetResponse AdminIdentitiesLink (string orgId, string userId, AdminIdentitiesLinkRequest adminIdentitiesLinkRequest)
+
+Link a SAML or LDAP identity to a user
+
+Sets (or replaces) the user's SAML binding (`idp_id` + `name_id`) or LDAP binding (`ldap_config_id` + `dn`; omit `dn` to look the entry up in the directory by the user's email / username). Refused with 409 when another user already holds that identity, or when the user is linked to a different federated source (unlink it first). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.created. Signed-in admins must have passed MFA in the last 10 minutes (send X-MFA-Challenge with an approved step-up challenge when calling with a user token).
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminIdentitiesLinkExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var userId = "userId_example";  // string | 
+            var adminIdentitiesLinkRequest = new AdminIdentitiesLinkRequest(); // AdminIdentitiesLinkRequest | 
+
+            try
+            {
+                // Link a SAML or LDAP identity to a user
+                AdminAgentsGetResponse result = apiInstance.AdminIdentitiesLink(orgId, userId, adminIdentitiesLinkRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesLink: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminIdentitiesLinkWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Link a SAML or LDAP identity to a user
+    ApiResponse<AdminAgentsGetResponse> response = apiInstance.AdminIdentitiesLinkWithHttpInfo(orgId, userId, adminIdentitiesLinkRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesLinkWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **userId** | **string** |  |  |
+| **adminIdentitiesLinkRequest** | [**AdminIdentitiesLinkRequest**](AdminIdentitiesLinkRequest.md) |  |  |
+
+### Return type
+
+[**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **201** | Linked |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
+| **404** | User, IdP or directory not found |  -  |
+| **409** | identity_conflict |  -  |
+| **422** | invalid_identity / directory_lookup_failed |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="adminidentitieslist"></a>
+# **AdminIdentitiesList**
+> AdminIdentitiesListResponse AdminIdentitiesList (string orgId, string userId)
+
+List a user's federated identity links
+
+SAML (IdP + NameID), LDAP (directory + DN), and social / OIDC provider links. A SAML link with `legacy: true` stores a bare NameID and is refused at sign-in while the organization has more than one SAML IdP.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminIdentitiesListExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var userId = "userId_example";  // string | 
+
+            try
+            {
+                // List a user's federated identity links
+                AdminIdentitiesListResponse result = apiInstance.AdminIdentitiesList(orgId, userId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesList: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminIdentitiesListWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // List a user's federated identity links
+    ApiResponse<AdminIdentitiesListResponse> response = apiInstance.AdminIdentitiesListWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesListWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **userId** | **string** |  |  |
+
+### Return type
+
+[**AdminIdentitiesListResponse**](AdminIdentitiesListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Links |  -  |
+| **404** | User not found |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="adminidentitiesunlink"></a>
+# **AdminIdentitiesUnlink**
+> AdminAgentsGetResponse AdminIdentitiesUnlink (string type, string orgId, string userId)
+
+Unlink a user's SAML, LDAP or social identity
+
+Removes the binding of the given type (`saml`, `ldap` or `social`). Revokes the user's sessions and tokens, notifies the user and is audited as identity.link.removed. Unlinking LDAP also clears LDAP-only. Same step-up rule as linking.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class AdminIdentitiesUnlinkExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new AdminUsersApi(httpClient, config, httpClientHandler);
+            var type = "saml";  // string | 
+            var orgId = "orgId_example";  // string | 
+            var userId = "userId_example";  // string | 
+
+            try
+            {
+                // Unlink a user's SAML, LDAP or social identity
+                AdminAgentsGetResponse result = apiInstance.AdminIdentitiesUnlink(type, orgId, userId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesUnlink: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the AdminIdentitiesUnlinkWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Unlink a user's SAML, LDAP or social identity
+    ApiResponse<AdminAgentsGetResponse> response = apiInstance.AdminIdentitiesUnlinkWithHttpInfo(type, orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling AdminUsersApi.AdminIdentitiesUnlinkWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **type** | **string** |  |  |
+| **orgId** | **string** |  |  |
+| **userId** | **string** |  |  |
+
+### Return type
+
+[**AdminAgentsGetResponse**](AdminAgentsGetResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Unlinked; returns the removed binding |  -  |
+| **403** | Actor does not outrank the user, or step_up_required |  -  |
+| **404** | User not found, or no link of that type |  -  |
+| **422** | Unknown type |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="blockuser"></a>
 # **BlockUser**
-> void BlockUser (string orgId, string userId)
+> BlockUserResponse BlockUser (string orgId, string userId)
 
-
+Block a user
 
 ### Example
 ```csharp
@@ -357,7 +916,9 @@ namespace Example
 
             try
             {
-                apiInstance.BlockUser(orgId, userId);
+                // Block a user
+                BlockUserResponse result = apiInstance.BlockUser(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -376,7 +937,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.BlockUserWithHttpInfo(orgId, userId);
+    // Block a user
+    ApiResponse<BlockUserResponse> response = apiInstance.BlockUserWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -395,7 +960,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**BlockUserResponse**](BlockUserResponse.md)
 
 ### Authorization
 
@@ -404,21 +969,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User blocked |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="createuser"></a>
 # **CreateUser**
-> void CreateUser (string orgId)
+> CreateUserResponse CreateUser (string orgId)
 
-
+Create a user
 
 ### Example
 ```csharp
@@ -452,7 +1017,9 @@ namespace Example
 
             try
             {
-                apiInstance.CreateUser(orgId);
+                // Create a user
+                CreateUserResponse result = apiInstance.CreateUser(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -471,7 +1038,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.CreateUserWithHttpInfo(orgId);
+    // Create a user
+    ApiResponse<CreateUserResponse> response = apiInstance.CreateUserWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -489,7 +1060,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**CreateUserResponse**](CreateUserResponse.md)
 
 ### Authorization
 
@@ -498,21 +1069,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **201** | User created |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="deleteuser"></a>
 # **DeleteUser**
-> void DeleteUser (string orgId, string userId)
+> DeleteUserResponse DeleteUser (string orgId, string userId)
 
-
+Delete a user
 
 ### Example
 ```csharp
@@ -547,7 +1118,9 @@ namespace Example
 
             try
             {
-                apiInstance.DeleteUser(orgId, userId);
+                // Delete a user
+                DeleteUserResponse result = apiInstance.DeleteUser(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -566,7 +1139,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.DeleteUserWithHttpInfo(orgId, userId);
+    // Delete a user
+    ApiResponse<DeleteUserResponse> response = apiInstance.DeleteUserWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -585,7 +1162,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**DeleteUserResponse**](DeleteUserResponse.md)
 
 ### Authorization
 
@@ -594,21 +1171,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User deleted |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="getuser"></a>
 # **GetUser**
-> void GetUser (string orgId, string userId)
+> GetUserResponse GetUser (string orgId, string userId)
 
-
+Get a user
 
 ### Example
 ```csharp
@@ -643,7 +1220,9 @@ namespace Example
 
             try
             {
-                apiInstance.GetUser(orgId, userId);
+                // Get a user
+                GetUserResponse result = apiInstance.GetUser(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -662,7 +1241,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.GetUserWithHttpInfo(orgId, userId);
+    // Get a user
+    ApiResponse<GetUserResponse> response = apiInstance.GetUserWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -681,7 +1264,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**GetUserResponse**](GetUserResponse.md)
 
 ### Authorization
 
@@ -690,21 +1273,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listusergroups"></a>
 # **ListUserGroups**
-> void ListUserGroups (string orgId, string userId)
+> AdminGroupsGroupsGetRolesResponse ListUserGroups (string orgId, string userId)
 
-
+List a user's groups
 
 ### Example
 ```csharp
@@ -739,7 +1322,9 @@ namespace Example
 
             try
             {
-                apiInstance.ListUserGroups(orgId, userId);
+                // List a user's groups
+                AdminGroupsGroupsGetRolesResponse result = apiInstance.ListUserGroups(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -758,7 +1343,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.ListUserGroupsWithHttpInfo(orgId, userId);
+    // List a user's groups
+    ApiResponse<AdminGroupsGroupsGetRolesResponse> response = apiInstance.ListUserGroupsWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -777,7 +1366,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -786,21 +1375,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Groups the user belongs to |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listuserpermissions"></a>
 # **ListUserPermissions**
-> void ListUserPermissions (string orgId, string userId)
+> AdminRolesGetPermissionsResponse ListUserPermissions (string orgId, string userId)
 
-
+List a user's direct permissions
 
 ### Example
 ```csharp
@@ -835,7 +1424,9 @@ namespace Example
 
             try
             {
-                apiInstance.ListUserPermissions(orgId, userId);
+                // List a user's direct permissions
+                AdminRolesGetPermissionsResponse result = apiInstance.ListUserPermissions(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -854,7 +1445,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.ListUserPermissionsWithHttpInfo(orgId, userId);
+    // List a user's direct permissions
+    ApiResponse<AdminRolesGetPermissionsResponse> response = apiInstance.ListUserPermissionsWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -873,7 +1468,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminRolesGetPermissionsResponse**](AdminRolesGetPermissionsResponse.md)
 
 ### Authorization
 
@@ -882,21 +1477,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permissions assigned directly to the user |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listuserroles"></a>
 # **ListUserRoles**
-> void ListUserRoles (string orgId, string userId)
+> AdminGroupsGroupsGetRolesResponse ListUserRoles (string orgId, string userId)
 
-
+List a user's roles
 
 ### Example
 ```csharp
@@ -931,7 +1526,9 @@ namespace Example
 
             try
             {
-                apiInstance.ListUserRoles(orgId, userId);
+                // List a user's roles
+                AdminGroupsGroupsGetRolesResponse result = apiInstance.ListUserRoles(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -950,7 +1547,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.ListUserRolesWithHttpInfo(orgId, userId);
+    // List a user's roles
+    ApiResponse<AdminGroupsGroupsGetRolesResponse> response = apiInstance.ListUserRolesWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -969,7 +1570,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**AdminGroupsGroupsGetRolesResponse**](AdminGroupsGroupsGetRolesResponse.md)
 
 ### Authorization
 
@@ -978,21 +1579,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Roles assigned to the user |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="listusers"></a>
 # **ListUsers**
-> void ListUsers (string orgId)
+> ListUsersResponse ListUsers (string orgId)
 
-
+List users
 
 ### Example
 ```csharp
@@ -1026,7 +1627,9 @@ namespace Example
 
             try
             {
-                apiInstance.ListUsers(orgId);
+                // List users
+                ListUsersResponse result = apiInstance.ListUsers(orgId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1045,7 +1648,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.ListUsersWithHttpInfo(orgId);
+    // List users
+    ApiResponse<ListUsersResponse> response = apiInstance.ListUsersWithHttpInfo(orgId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1063,7 +1670,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**ListUsersResponse**](ListUsersResponse.md)
 
 ### Authorization
 
@@ -1072,21 +1679,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Users |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="markuserverified"></a>
 # **MarkUserVerified**
-> void MarkUserVerified (string orgId, string userId)
+> MarkUserVerifiedResponse MarkUserVerified (string orgId, string userId)
 
-
+Mark a user's email as verified
 
 ### Example
 ```csharp
@@ -1121,7 +1728,9 @@ namespace Example
 
             try
             {
-                apiInstance.MarkUserVerified(orgId, userId);
+                // Mark a user's email as verified
+                MarkUserVerifiedResponse result = apiInstance.MarkUserVerified(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1140,7 +1749,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.MarkUserVerifiedWithHttpInfo(orgId, userId);
+    // Mark a user's email as verified
+    ApiResponse<MarkUserVerifiedResponse> response = apiInstance.MarkUserVerifiedWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1159,7 +1772,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**MarkUserVerifiedResponse**](MarkUserVerifiedResponse.md)
 
 ### Authorization
 
@@ -1168,21 +1781,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User marked verified |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="patchuser"></a>
 # **PatchUser**
-> void PatchUser (string orgId, string userId)
+> UpdateUserResponse PatchUser (string orgId, string userId)
 
-
+Update a user
 
 ### Example
 ```csharp
@@ -1217,7 +1830,9 @@ namespace Example
 
             try
             {
-                apiInstance.PatchUser(orgId, userId);
+                // Update a user
+                UpdateUserResponse result = apiInstance.PatchUser(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1236,7 +1851,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.PatchUserWithHttpInfo(orgId, userId);
+    // Update a user
+    ApiResponse<UpdateUserResponse> response = apiInstance.PatchUserWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1255,7 +1874,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateUserResponse**](UpdateUserResponse.md)
 
 ### Authorization
 
@@ -1264,21 +1883,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User updated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="removeusergroup"></a>
 # **RemoveUserGroup**
-> void RemoveUserGroup (string orgId, string userId, string groupId)
+> RemoveUserGroupResponse RemoveUserGroup (string orgId, string userId, string groupId)
 
-
+Remove a user from a group
 
 ### Example
 ```csharp
@@ -1314,7 +1933,9 @@ namespace Example
 
             try
             {
-                apiInstance.RemoveUserGroup(orgId, userId, groupId);
+                // Remove a user from a group
+                RemoveUserGroupResponse result = apiInstance.RemoveUserGroup(orgId, userId, groupId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1333,7 +1954,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.RemoveUserGroupWithHttpInfo(orgId, userId, groupId);
+    // Remove a user from a group
+    ApiResponse<RemoveUserGroupResponse> response = apiInstance.RemoveUserGroupWithHttpInfo(orgId, userId, groupId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1353,7 +1978,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**RemoveUserGroupResponse**](RemoveUserGroupResponse.md)
 
 ### Authorization
 
@@ -1362,21 +1987,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User with the group removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="removeuserpermission"></a>
 # **RemoveUserPermission**
-> void RemoveUserPermission (string orgId, string userId, string permissionId)
+> RemoveUserPermissionResponse RemoveUserPermission (string orgId, string userId, string permissionId)
 
-
+Remove a permission from a user
 
 ### Example
 ```csharp
@@ -1412,7 +2037,9 @@ namespace Example
 
             try
             {
-                apiInstance.RemoveUserPermission(orgId, userId, permissionId);
+                // Remove a permission from a user
+                RemoveUserPermissionResponse result = apiInstance.RemoveUserPermission(orgId, userId, permissionId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1431,7 +2058,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.RemoveUserPermissionWithHttpInfo(orgId, userId, permissionId);
+    // Remove a permission from a user
+    ApiResponse<RemoveUserPermissionResponse> response = apiInstance.RemoveUserPermissionWithHttpInfo(orgId, userId, permissionId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1451,7 +2082,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**RemoveUserPermissionResponse**](RemoveUserPermissionResponse.md)
 
 ### Authorization
 
@@ -1460,21 +2091,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Permission removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="removeuserrole"></a>
 # **RemoveUserRole**
-> void RemoveUserRole (string orgId, string userId, string roleId)
+> RemoveUserRoleResponse RemoveUserRole (string orgId, string userId, string roleId)
 
-
+Remove a role from a user
 
 ### Example
 ```csharp
@@ -1510,7 +2141,9 @@ namespace Example
 
             try
             {
-                apiInstance.RemoveUserRole(orgId, userId, roleId);
+                // Remove a role from a user
+                RemoveUserRoleResponse result = apiInstance.RemoveUserRole(orgId, userId, roleId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1529,7 +2162,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.RemoveUserRoleWithHttpInfo(orgId, userId, roleId);
+    // Remove a role from a user
+    ApiResponse<RemoveUserRoleResponse> response = apiInstance.RemoveUserRoleWithHttpInfo(orgId, userId, roleId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1549,7 +2186,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**RemoveUserRoleResponse**](RemoveUserRoleResponse.md)
 
 ### Authorization
 
@@ -1558,13 +2195,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User with the role removed |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1572,7 +2209,9 @@ void (empty response body)
 # **ResetUserMfa**
 > void ResetUserMfa (string orgId, string userId)
 
+Reset MFA (removed)
 
+Removed: admins cannot disable a user's MFA. Issue a temporary access code with POST /users/{userId}/temporary-access-code instead, or remove a single lost authenticator with DELETE /users/{userId}/authenticators/{authenticatorId}.
 
 ### Example
 ```csharp
@@ -1607,6 +2246,7 @@ namespace Example
 
             try
             {
+                // Reset MFA (removed)
                 apiInstance.ResetUserMfa(orgId, userId);
             }
             catch (ApiException  e)
@@ -1626,6 +2266,7 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
+    // Reset MFA (removed)
     apiInstance.ResetUserMfaWithHttpInfo(orgId, userId);
 }
 catch (ApiException e)
@@ -1660,15 +2301,15 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **410** | Gone — use temporary-access-code |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="senduserverificationemail"></a>
 # **SendUserVerificationEmail**
-> void SendUserVerificationEmail (string orgId, string userId)
+> SendUserVerificationEmailResponse SendUserVerificationEmail (string orgId, string userId)
 
-
+Send a verification email
 
 ### Example
 ```csharp
@@ -1703,7 +2344,9 @@ namespace Example
 
             try
             {
-                apiInstance.SendUserVerificationEmail(orgId, userId);
+                // Send a verification email
+                SendUserVerificationEmailResponse result = apiInstance.SendUserVerificationEmail(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1722,7 +2365,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.SendUserVerificationEmailWithHttpInfo(orgId, userId);
+    // Send a verification email
+    ApiResponse<SendUserVerificationEmailResponse> response = apiInstance.SendUserVerificationEmailWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1741,7 +2388,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SendUserVerificationEmailResponse**](SendUserVerificationEmailResponse.md)
 
 ### Authorization
 
@@ -1750,21 +2397,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Verification email sent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="setuserpassword"></a>
 # **SetUserPassword**
-> void SetUserPassword (string orgId, string userId)
+> SetUserPasswordPostResponse SetUserPassword (string orgId, string userId)
 
-
+Set a user's password
 
 ### Example
 ```csharp
@@ -1799,7 +2446,9 @@ namespace Example
 
             try
             {
-                apiInstance.SetUserPassword(orgId, userId);
+                // Set a user's password
+                SetUserPasswordPostResponse result = apiInstance.SetUserPassword(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1818,7 +2467,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.SetUserPasswordWithHttpInfo(orgId, userId);
+    // Set a user's password
+    ApiResponse<SetUserPasswordPostResponse> response = apiInstance.SetUserPasswordWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1837,7 +2490,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SetUserPasswordPostResponse**](SetUserPasswordPostResponse.md)
 
 ### Authorization
 
@@ -1846,21 +2499,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Password updated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="setuserpasswordpost"></a>
 # **SetUserPasswordPost**
-> void SetUserPasswordPost (string orgId, string userId)
+> SetUserPasswordPostResponse SetUserPasswordPost (string orgId, string userId)
 
-
+Set a user's password
 
 ### Example
 ```csharp
@@ -1895,7 +2548,9 @@ namespace Example
 
             try
             {
-                apiInstance.SetUserPasswordPost(orgId, userId);
+                // Set a user's password
+                SetUserPasswordPostResponse result = apiInstance.SetUserPasswordPost(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -1914,7 +2569,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.SetUserPasswordPostWithHttpInfo(orgId, userId);
+    // Set a user's password
+    ApiResponse<SetUserPasswordPostResponse> response = apiInstance.SetUserPasswordPostWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -1933,7 +2592,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**SetUserPasswordPostResponse**](SetUserPasswordPostResponse.md)
 
 ### Authorization
 
@@ -1942,21 +2601,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Password updated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="triggeruserpasswordreset"></a>
 # **TriggerUserPasswordReset**
-> void TriggerUserPasswordReset (string orgId, string userId)
+> TriggerUserPasswordResetResponse TriggerUserPasswordReset (string orgId, string userId)
 
-
+Send a password reset email
 
 ### Example
 ```csharp
@@ -1991,7 +2650,9 @@ namespace Example
 
             try
             {
-                apiInstance.TriggerUserPasswordReset(orgId, userId);
+                // Send a password reset email
+                TriggerUserPasswordResetResponse result = apiInstance.TriggerUserPasswordReset(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2010,7 +2671,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.TriggerUserPasswordResetWithHttpInfo(orgId, userId);
+    // Send a password reset email
+    ApiResponse<TriggerUserPasswordResetResponse> response = apiInstance.TriggerUserPasswordResetWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2029,7 +2694,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**TriggerUserPasswordResetResponse**](TriggerUserPasswordResetResponse.md)
 
 ### Authorization
 
@@ -2038,21 +2703,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Password reset email sent |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="unblockuser"></a>
 # **UnblockUser**
-> void UnblockUser (string orgId, string userId)
+> UnblockUserResponse UnblockUser (string orgId, string userId)
 
-
+Unblock a user
 
 ### Example
 ```csharp
@@ -2087,7 +2752,9 @@ namespace Example
 
             try
             {
-                apiInstance.UnblockUser(orgId, userId);
+                // Unblock a user
+                UnblockUserResponse result = apiInstance.UnblockUser(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2106,7 +2773,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.UnblockUserWithHttpInfo(orgId, userId);
+    // Unblock a user
+    ApiResponse<UnblockUserResponse> response = apiInstance.UnblockUserWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2125,7 +2796,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UnblockUserResponse**](UnblockUserResponse.md)
 
 ### Authorization
 
@@ -2134,21 +2805,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User unblocked |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="updateuser"></a>
 # **UpdateUser**
-> void UpdateUser (string orgId, string userId)
+> UpdateUserResponse UpdateUser (string orgId, string userId)
 
-
+Update a user
 
 ### Example
 ```csharp
@@ -2183,7 +2854,9 @@ namespace Example
 
             try
             {
-                apiInstance.UpdateUser(orgId, userId);
+                // Update a user
+                UpdateUserResponse result = apiInstance.UpdateUser(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2202,7 +2875,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.UpdateUserWithHttpInfo(orgId, userId);
+    // Update a user
+    ApiResponse<UpdateUserResponse> response = apiInstance.UpdateUserWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2221,7 +2898,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateUserResponse**](UpdateUserResponse.md)
 
 ### Authorization
 
@@ -2230,21 +2907,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User updated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="updateusergroups"></a>
 # **UpdateUserGroups**
-> void UpdateUserGroups (string orgId, string userId)
+> UpdateUserGroupsResponse UpdateUserGroups (string orgId, string userId)
 
-
+Replace a user's groups
 
 ### Example
 ```csharp
@@ -2279,7 +2956,9 @@ namespace Example
 
             try
             {
-                apiInstance.UpdateUserGroups(orgId, userId);
+                // Replace a user's groups
+                UpdateUserGroupsResponse result = apiInstance.UpdateUserGroups(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2298,7 +2977,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.UpdateUserGroupsWithHttpInfo(orgId, userId);
+    // Replace a user's groups
+    ApiResponse<UpdateUserGroupsResponse> response = apiInstance.UpdateUserGroupsWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2317,7 +3000,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateUserGroupsResponse**](UpdateUserGroupsResponse.md)
 
 ### Authorization
 
@@ -2326,21 +3009,21 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User with updated groups |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 <a id="updateuserroles"></a>
 # **UpdateUserRoles**
-> void UpdateUserRoles (string orgId, string userId)
+> UpdateUserRolesResponse UpdateUserRoles (string orgId, string userId)
 
-
+Replace a user's roles
 
 ### Example
 ```csharp
@@ -2375,7 +3058,9 @@ namespace Example
 
             try
             {
-                apiInstance.UpdateUserRoles(orgId, userId);
+                // Replace a user's roles
+                UpdateUserRolesResponse result = apiInstance.UpdateUserRoles(orgId, userId);
+                Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
@@ -2394,7 +3079,11 @@ This returns an ApiResponse object which contains the response data, status code
 ```csharp
 try
 {
-    apiInstance.UpdateUserRolesWithHttpInfo(orgId, userId);
+    // Replace a user's roles
+    ApiResponse<UpdateUserRolesResponse> response = apiInstance.UpdateUserRolesWithHttpInfo(orgId, userId);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
 }
 catch (ApiException e)
 {
@@ -2413,7 +3102,7 @@ catch (ApiException e)
 
 ### Return type
 
-void (empty response body)
+[**UpdateUserRolesResponse**](UpdateUserRolesResponse.md)
 
 ### Authorization
 
@@ -2422,13 +3111,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | User with updated roles |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

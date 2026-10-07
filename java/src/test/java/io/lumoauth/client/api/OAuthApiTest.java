@@ -14,6 +14,14 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.BackchannelAuthorizeResponse;
+import io.lumoauth.client.model.DeviceAuthorizationResponse;
+import io.lumoauth.client.model.IntrospectResponse;
+import io.lumoauth.client.model.ParResponse;
+import io.lumoauth.client.model.RegisterClientResponse;
+import io.lumoauth.client.model.RegisteredClientMetadata;
+import io.lumoauth.client.model.SubmitLoginJsonResponse;
+import io.lumoauth.client.model.TokenResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,41 +39,51 @@ public class OAuthApiTest {
     private final OAuthApi api = new OAuthApi();
 
     /**
+     * OAuth 2.1 / OIDC authorization endpoint
+     *
+     * Browser-facing: validates the authorization request (query parameters, request object or PAR request_uri), renders the hosted login / consent pages and finally delivers the authorization response (code, state, iss, session_state — or a JARM JWT) to the client&#39;s redirect_uri in the requested response_mode. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void authorizeTest() throws ApiException {
         String orgId = null;
-        api.authorize(orgId);
+        String response = api.authorize(orgId);
         // TODO: test validations
     }
 
     /**
+     * CIBA backchannel authentication request
+     *
+     * OpenID Connect Client-Initiated Backchannel Authentication (CIBA Core §7). Classic CIBA: an authenticated client identifies the end user with login_hint / id_token_hint / login_hint_token. Agent-initiated CIBA: an agent (Authorization: Bearer with its agent credential, optionally on behalf of a CIBA-enabled client via agent_id) asks a user to approve RFC 9396 authorization_details. Poll the token endpoint with grant_type&#x3D;urn:openid:params:grant-type:ciba and the returned auth_req_id.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void backchannelAuthorizeTest() throws ApiException {
         String orgId = null;
-        api.backchannelAuthorize(orgId);
+        BackchannelAuthorizeResponse response = api.backchannelAuthorize(orgId);
         // TODO: test validations
     }
 
     /**
-     * Device Authorization Endpoint (RFC 8628 Section 3.1 &amp; 3.2)
+     * Device authorization request (RFC 8628)
      *
-     * The device makes a request to the authorization server&#39;s device authorization endpoint, including the client identifier, and MAY also include a scope parameter.  Request: - POST /oauth/device_authorization - Content-Type: application/x-www-form-urlencoded - client_id (REQUIRED) - scope (OPTIONAL)  Response (Section 3.2): - device_code: High-entropy code for device polling - user_code: Short code for user to enter - verification_uri: URL where user should enter the code - verification_uri_complete: URL with user_code embedded (optional) - expires_in: Lifetime of device_code and user_code - interval: Minimum polling interval in seconds
+     * Starts the device authorization grant for a client registered for urn:ietf:params:oauth:grant-type:device_code. Public clients send client_id only; confidential clients must authenticate. The device then polls the token endpoint with the device_code.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void deviceAuthorizationTest() throws ApiException {
         String orgId = null;
-        api.deviceAuthorization(orgId);
+        DeviceAuthorizationResponse response = api.deviceAuthorization(orgId);
         // TODO: test validations
     }
 
     /**
-     * Client Configuration Endpoint per OIDC spec Section 4
+     * Read a dynamically registered client (RFC 7592 / OIDC DCR §4)
+     *
+     * Client configuration endpoint. Authenticated with the registration_access_token issued at registration (Authorization: Bearer), presented at the same issuer the client was registered under.
      *
      * @throws ApiException if the Api call fails
      */
@@ -73,59 +91,71 @@ public class OAuthApiTest {
     public void getClientConfigurationTest() throws ApiException {
         String orgId = null;
         String clientId = null;
-        api.getClientConfiguration(orgId, clientId);
+        RegisteredClientMetadata response = api.getClientConfiguration(orgId, clientId);
         // TODO: test validations
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3)
+     * Device verification page (RFC 8628 §3.3)
      *
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Browser page where the end user enters the user_code (or arrives via verification_uri_complete) and approves or denies the device. Not a JSON API.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getDeviceVerificationTest() throws ApiException {
         String orgId = null;
-        api.getDeviceVerification(orgId);
+        String response = api.getDeviceVerification(orgId);
         // TODO: test validations
     }
 
     /**
+     * Organization selector page
+     *
+     * Browser page shown during authorization when the signed-in user belongs to several organizations. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getOrgSelectionTest() throws ApiException {
         String orgId = null;
-        api.getOrgSelection(orgId);
+        String response = api.getOrgSelection(orgId);
         // TODO: test validations
     }
 
     /**
-     * RFC 7662 - Token Introspection Endpoint
+     * Token introspection (RFC 7662)
      *
-     * Allows resource servers to query the authorization server to determine the active state and meta-information about a token.
+     * Resource servers query the active state and meta-information of an access or refresh token. Requires client (or agent) authentication. Always sent with Cache-Control: no-store.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void introspectTest() throws ApiException {
         String orgId = null;
-        api.introspect(orgId);
+        IntrospectResponse response = api.introspect(orgId);
         // TODO: test validations
     }
 
     /**
+     * Pushed authorization request (RFC 9126)
+     *
+     * Stores the authorization request parameters server-side and returns a request_uri for the authorization endpoint. Requires client authentication; a DPoP proof binds the resulting code to the key.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void parTest() throws ApiException {
         String orgId = null;
-        api.par(orgId);
+        ParResponse response = api.par(orgId);
         // TODO: test validations
     }
 
     /**
+     * Passkey login entry point
+     *
+     * Placeholder: flashes an informational message and redirects to the hosted login page. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -136,33 +166,37 @@ public class OAuthApiTest {
     }
 
     /**
-     * Client Registration Endpoint per OIDC spec Section 3
+     * Dynamic client registration (RFC 7591 / OIDC DCR)
+     *
+     * Registers an OAuth client from a JSON metadata document. Authenticated with an initial access token (Authorization: Bearer) or an API key holding admin:clients:register; open registration applies when the organization allows it.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void registerClientTest() throws ApiException {
         String orgId = null;
-        api.registerClient(orgId);
+        RegisterClientResponse response = api.registerClient(orgId);
         // TODO: test validations
     }
 
     /**
-     * RFC 7009 - Token Revocation Endpoint
+     * Token revocation (RFC 7009)
      *
-     * Allows clients to notify the authorization server that a previously obtained token is no longer needed.
+     * Revokes an access or refresh token (revoking a refresh token also revokes the access tokens issued with it). Requires client authentication. Always sent with Cache-Control: no-store.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void revokeTest() throws ApiException {
         String orgId = null;
-        api.revoke(orgId);
+        Object response = api.revoke(orgId);
         // TODO: test validations
     }
 
     /**
-     * Handle social login callback from provider.
+     * Social / enterprise identity-provider callback
+     *
+     * Receives the provider&#39;s authorization response (code + state), exchanges the code, verifies the ID token / fetches the profile, finds or provisions the user and signs them in. Not a JSON API.
      *
      * @throws ApiException if the Api call fails
      */
@@ -175,7 +209,9 @@ public class OAuthApiTest {
     }
 
     /**
-     * Handle social login callback from provider.
+     * Social / enterprise identity-provider callback (form_post)
+     *
+     * Same as GET for providers that deliver the authorization response with response_mode&#x3D;form_post. Not a JSON API.
      *
      * @throws ApiException if the Api call fails
      */
@@ -188,9 +224,9 @@ public class OAuthApiTest {
     }
 
     /**
-     * Initiate social login flow.
+     * Start social / enterprise identity-provider login
      *
-     * Redirects to the external provider&#39;s authorization endpoint.
+     * Browser entry point used by the hosted login page. Generates a signed state (carrying the optional redirect_uri and client_id) and redirects to the provider&#39;s authorization endpoint. Not a JSON API.
      *
      * @throws ApiException if the Api call fails
      */
@@ -203,30 +239,38 @@ public class OAuthApiTest {
     }
 
     /**
+     * OAuth 2.1 / OIDC authorization endpoint (form submission)
+     *
+     * Same as GET; also receives the consent form submission. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void submitAuthorizationTest() throws ApiException {
         String orgId = null;
-        api.submitAuthorization(orgId);
+        String response = api.submitAuthorization(orgId);
         // TODO: test validations
     }
 
     /**
-     * Device Verification Page (RFC 8628 Section 3.3)
+     * Submit device verification
      *
-     * This endpoint displays the user verification page where users enter their user_code to authorize the device.
+     * Browser form submission: code entry, or the approve / deny decision for a device. Not a JSON API.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void submitDeviceVerificationTest() throws ApiException {
         String orgId = null;
-        api.submitDeviceVerification(orgId);
+        String response = api.submitDeviceVerification(orgId);
         // TODO: test validations
     }
 
     /**
+     * Hosted login form submission
+     *
+     * Receives the hosted OAuth login page&#39;s form (email, password, csrf token and the authorization request parameters). Every outcome — success, invalid credentials, locked account, captcha or CSRF failure — answers with the same redirect back to /oauth/authorize, which re-renders the login page or continues the flow. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
@@ -237,38 +281,44 @@ public class OAuthApiTest {
     }
 
     /**
-     * JSON credential login, for applications that render their own sign-in form.
+     * Programmatic (JSON) login for the authorization flow
      *
-     * The form-post sibling below (&#x60;/login/submit&#x60;) does the same authentication but answers with a 302, which a fetch()-driven UI cannot act on. This returns the outcome as data so an embedded form can decide what to show — an MFA prompt, a field error, or continue the OAuth flow.  It deliberately does NOT mint tokens. On success it establishes the end-user session, exactly as the hosted login page does; the caller then continues to /oauth/authorize, which now issues a code without presenting a login screen. Keeping code issuance in one place means this endpoint cannot become a second, weaker way to obtain tokens.  Responses:   200 {\&quot;status\&quot;:\&quot;complete\&quot;}          — signed in, continue to /authorize   200 {\&quot;status\&quot;:\&quot;mfa_required\&quot;}      — challenge the second factor   401 {\&quot;status\&quot;:\&quot;invalid_credentials\&quot;}   403 {\&quot;status\&quot;:\&quot;blocked\&quot;|\&quot;inactive\&quot;}   429 {\&quot;status\&quot;:\&quot;rate_limited\&quot;}
+     * Establishes the end-user browser session from JSON credentials so a following /oauth/authorize request issues a code without showing the hosted login page. Deliberately mints no tokens. Only accepted from trusted origins.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void submitLoginJsonTest() throws ApiException {
         String orgId = null;
-        api.submitLoginJson(orgId);
+        SubmitLoginJsonResponse response = api.submitLoginJson(orgId);
         // TODO: test validations
     }
 
     /**
+     * Submit organization selection
+     *
+     * Stores the chosen organization in the session and resumes the pending authorization request. Not a JSON API.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void submitOrgSelectionTest() throws ApiException {
         String orgId = null;
-        api.submitOrgSelection(orgId);
+        String response = api.submitOrgSelection(orgId);
         // TODO: test validations
     }
 
     /**
-     * OAuth 2.1 Token Endpoint
+     * OAuth 2.1 token endpoint
+     *
+     * Issues tokens for authorization_code, refresh_token, client_credentials, urn:ietf:params:oauth:grant-type:token-exchange (RFC 8693, ID-JAG and Txn-Token profiles), urn:ietf:params:oauth:grant-type:jwt-bearer (RFC 7523), urn:openid:params:grant-type:ciba and urn:ietf:params:oauth:grant-type:device_code. Accepts application/x-www-form-urlencoded or JSON bodies.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void tokenTest() throws ApiException {
         String orgId = null;
-        api.token(orgId);
+        TokenResponse response = api.token(orgId);
         // TODO: test validations
     }
 

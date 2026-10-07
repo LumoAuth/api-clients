@@ -4,21 +4,21 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**adminAuditLogsActions**](AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List available audit action types for this tenant |
-| [**adminAuditLogsExport**](AdminAuditLogsApi.md#adminAuditLogsExport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV or JSON |
-| [**adminAuditLogsGet**](AdminAuditLogsApi.md#adminAuditLogsGet) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get a single audit log entry |
-| [**adminAuditLogsList**](AdminAuditLogsApi.md#adminAuditLogsList) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit logs for the tenant |
+| [**adminAuditLogsActions**](AdminAuditLogsApi.md#adminAuditLogsActions) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/actions | List the distinct audit action types recorded for the tenant |
+| [**adminAuditLogsExport**](AdminAuditLogsApi.md#adminAuditLogsExport) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/export | Export audit logs as CSV (default) or JSON |
+| [**adminAuditLogsGet**](AdminAuditLogsApi.md#adminAuditLogsGet) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/{logId} | Get an audit log entry |
+| [**adminAuditLogsList**](AdminAuditLogsApi.md#adminAuditLogsList) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs | List audit log entries |
 | [**adminAuditLogsRetention**](AdminAuditLogsApi.md#adminAuditLogsRetention) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Get audit log retention settings |
-| [**adminAuditLogsStats**](AdminAuditLogsApi.md#adminAuditLogsStats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Get audit log statistics |
+| [**adminAuditLogsStats**](AdminAuditLogsApi.md#adminAuditLogsStats) | **GET** /orgs/{orgId}/api/v1/admin/audit-logs/stats | Audit log statistics for a period (default: last 30 days) |
 | [**patchAdminAuditLogsRetentionUpdate**](AdminAuditLogsApi.md#patchAdminAuditLogsRetentionUpdate) | **PATCH** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings |
 | [**putAdminAuditLogsRetentionUpdate**](AdminAuditLogsApi.md#putAdminAuditLogsRetentionUpdate) | **PUT** /orgs/{orgId}/api/v1/admin/audit-logs/retention | Update audit log retention settings |
 
 
 <a id="adminAuditLogsActions"></a>
 # **adminAuditLogsActions**
-> adminAuditLogsActions(orgId)
+> AdminAuditLogsActionsResponse adminAuditLogsActions(orgId)
 
-List available audit action types for this tenant
+List the distinct audit action types recorded for the tenant
 
 ### Example
 ```java
@@ -48,7 +48,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminAuditLogsActions(orgId);
+      AdminAuditLogsActionsResponse result = apiInstance.adminAuditLogsActions(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsActions");
       System.err.println("Status code: " + e.getCode());
@@ -68,7 +69,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsActionsResponse**](AdminAuditLogsActionsResponse.md)
 
 ### Authorization
 
@@ -77,18 +78,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Action names |  -  |
 
 <a id="adminAuditLogsExport"></a>
 # **adminAuditLogsExport**
-> adminAuditLogsExport(orgId)
+> String adminAuditLogsExport(orgId)
 
-Export audit logs as CSV or JSON
+Export audit logs as CSV (default) or JSON
 
 ### Example
 ```java
@@ -118,7 +119,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminAuditLogsExport(orgId);
+      String result = apiInstance.adminAuditLogsExport(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsExport");
       System.err.println("Status code: " + e.getCode());
@@ -138,7 +140,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+**String**
 
 ### Authorization
 
@@ -147,18 +149,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/csv, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Download (Content-Disposition: attachment). JSON when ?format&#x3D;json, otherwise CSV; at most 10000 rows. |  -  |
 
 <a id="adminAuditLogsGet"></a>
 # **adminAuditLogsGet**
-> adminAuditLogsGet(orgId, logId)
+> AdminAuditLogsGetResponse adminAuditLogsGet(orgId, logId)
 
-Get a single audit log entry
+Get an audit log entry
 
 ### Example
 ```java
@@ -189,7 +191,8 @@ public class Example {
     String orgId = "orgId_example"; // String | 
     String logId = "logId_example"; // String | 
     try {
-      apiInstance.adminAuditLogsGet(orgId, logId);
+      AdminAuditLogsGetResponse result = apiInstance.adminAuditLogsGet(orgId, logId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsGet");
       System.err.println("Status code: " + e.getCode());
@@ -210,7 +213,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsGetResponse**](AdminAuditLogsGetResponse.md)
 
 ### Authorization
 
@@ -219,18 +222,19 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Audit log entry (detailed) |  -  |
+| **404** | Audit log not found |  -  |
 
 <a id="adminAuditLogsList"></a>
 # **adminAuditLogsList**
-> adminAuditLogsList(orgId)
+> AdminAuditLogsListResponse adminAuditLogsList(orgId)
 
-List audit logs for the tenant
+List audit log entries
 
 ### Example
 ```java
@@ -260,7 +264,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminAuditLogsList(orgId);
+      AdminAuditLogsListResponse result = apiInstance.adminAuditLogsList(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsList");
       System.err.println("Status code: " + e.getCode());
@@ -280,7 +285,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsListResponse**](AdminAuditLogsListResponse.md)
 
 ### Authorization
 
@@ -289,16 +294,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Audit log entries (summary fields only) |  -  |
 
 <a id="adminAuditLogsRetention"></a>
 # **adminAuditLogsRetention**
-> adminAuditLogsRetention(orgId)
+> AdminAuditLogsRetentionResponse adminAuditLogsRetention(orgId)
 
 Get audit log retention settings
 
@@ -330,7 +335,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminAuditLogsRetention(orgId);
+      AdminAuditLogsRetentionResponse result = apiInstance.adminAuditLogsRetention(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsRetention");
       System.err.println("Status code: " + e.getCode());
@@ -350,7 +356,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -359,18 +365,18 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Retention settings |  -  |
 
 <a id="adminAuditLogsStats"></a>
 # **adminAuditLogsStats**
-> adminAuditLogsStats(orgId)
+> AdminAuditLogsStatsResponse adminAuditLogsStats(orgId)
 
-Get audit log statistics
+Audit log statistics for a period (default: last 30 days)
 
 ### Example
 ```java
@@ -400,7 +406,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.adminAuditLogsStats(orgId);
+      AdminAuditLogsStatsResponse result = apiInstance.adminAuditLogsStats(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#adminAuditLogsStats");
       System.err.println("Status code: " + e.getCode());
@@ -420,7 +427,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsStatsResponse**](AdminAuditLogsStatsResponse.md)
 
 ### Authorization
 
@@ -429,16 +436,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Statistics |  -  |
 
 <a id="patchAdminAuditLogsRetentionUpdate"></a>
 # **patchAdminAuditLogsRetentionUpdate**
-> patchAdminAuditLogsRetentionUpdate(orgId)
+> AdminAuditLogsRetentionResponse patchAdminAuditLogsRetentionUpdate(orgId)
 
 Update audit log retention settings
 
@@ -470,7 +477,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.patchAdminAuditLogsRetentionUpdate(orgId);
+      AdminAuditLogsRetentionResponse result = apiInstance.patchAdminAuditLogsRetentionUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#patchAdminAuditLogsRetentionUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -490,7 +498,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -499,16 +507,16 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated retention settings |  -  |
 
 <a id="putAdminAuditLogsRetentionUpdate"></a>
 # **putAdminAuditLogsRetentionUpdate**
-> putAdminAuditLogsRetentionUpdate(orgId)
+> AdminAuditLogsRetentionResponse putAdminAuditLogsRetentionUpdate(orgId)
 
 Update audit log retention settings
 
@@ -540,7 +548,8 @@ public class Example {
     AdminAuditLogsApi apiInstance = new AdminAuditLogsApi(defaultClient);
     String orgId = "orgId_example"; // String | 
     try {
-      apiInstance.putAdminAuditLogsRetentionUpdate(orgId);
+      AdminAuditLogsRetentionResponse result = apiInstance.putAdminAuditLogsRetentionUpdate(orgId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AdminAuditLogsApi#putAdminAuditLogsRetentionUpdate");
       System.err.println("Status code: " + e.getCode());
@@ -560,7 +569,7 @@ public class Example {
 
 ### Return type
 
-null (empty response body)
+[**AdminAuditLogsRetentionResponse**](AdminAuditLogsRetentionResponse.md)
 
 ### Authorization
 
@@ -569,10 +578,10 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** |  |  -  |
+| **200** | Updated retention settings |  -  |
 

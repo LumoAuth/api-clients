@@ -18,14 +18,18 @@ module LumoAuthApiClient
     # Optional TTL override in seconds.
     attr_accessor :ttl
 
-    # Optional reviewer notes.
+    # Optional reviewer notes (internal; never shown to the agent).
     attr_accessor :notes
+
+    # Optional message the agent MAY read on the status endpoint / callback.
+    attr_accessor :agent_message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'ttl' => :'ttl',
-        :'notes' => :'notes'
+        :'notes' => :'notes',
+        :'agent_message' => :'agent_message'
       }
     end
 
@@ -43,7 +47,8 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'ttl' => :'Integer',
-        :'notes' => :'String'
+        :'notes' => :'String',
+        :'agent_message' => :'String'
       }
     end
 
@@ -76,6 +81,10 @@ module LumoAuthApiClient
       if attributes.key?(:'notes')
         self.notes = attributes[:'notes']
       end
+
+      if attributes.key?(:'agent_message')
+        self.agent_message = attributes[:'agent_message']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -99,7 +108,8 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           ttl == o.ttl &&
-          notes == o.notes
+          notes == o.notes &&
+          agent_message == o.agent_message
     end
 
     # @see the `==` method
@@ -111,7 +121,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [ttl, notes].hash
+      [ttl, notes, agent_message].hash
     end
 
     # Builds the object from hash

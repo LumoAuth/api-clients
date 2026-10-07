@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +27,7 @@ class MessageResponse(BaseModel):
     """
     MessageResponse
     """ # noqa: E501
-    message: Optional[StrictStr] = None
+    message: StrictStr
     __properties: ClassVar[List[str]] = ["message"]
 
     model_config = ConfigDict(

@@ -17,6 +17,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mime;
 using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
 
 namespace LumoAuth.ApiClient.Api
 {
@@ -28,101 +29,110 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// 
+        /// OP session-check iframe (OIDC Session Management 1.0)
         /// </summary>
+        /// <remarks>
+        /// The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void CheckSession(string orgId);
+        /// <returns>string</returns>
+        string CheckSession(string orgId);
 
         /// <summary>
-        /// 
+        /// OP session-check iframe (OIDC Session Management 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> CheckSessionWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> CheckSessionWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0)
         /// </summary>
+        /// <remarks>
+        /// end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Logout(string orgId);
+        /// <returns>string</returns>
+        string Logout(string orgId);
 
         /// <summary>
-        /// 
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> LogoutWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> LogoutWithHttpInfo(string orgId);
         /// <summary>
-        /// 
+        /// RP-initiated logout (confirmation submission)
         /// </summary>
+        /// <remarks>
+        /// Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
+        /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void LogoutPost(string orgId);
+        /// <returns>string</returns>
+        string LogoutPost(string orgId);
 
         /// <summary>
-        /// 
+        /// RP-initiated logout (confirmation submission)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> LogoutPostWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of string</returns>
+        ApiResponse<string> LogoutPostWithHttpInfo(string orgId);
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void Userinfo(string orgId);
+        /// <returns>UserinfoResponse</returns>
+        UserinfoResponse Userinfo(string orgId);
 
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UserinfoWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of UserinfoResponse</returns>
+        ApiResponse<UserinfoResponse> UserinfoWithHttpInfo(string orgId);
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint (POST)
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Identical to GET.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        void UserinfoPost(string orgId);
+        /// <returns>UserinfoResponse</returns>
+        UserinfoResponse UserinfoPost(string orgId);
 
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint (POST)
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Identical to GET.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        ApiResponse<Object> UserinfoPostWithHttpInfo(string orgId);
+        /// <returns>ApiResponse of UserinfoResponse</returns>
+        ApiResponse<UserinfoResponse> UserinfoPostWithHttpInfo(string orgId);
         #endregion Synchronous Operations
     }
 
@@ -133,120 +143,120 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// 
+        /// OP session-check iframe (OIDC Session Management 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task CheckSessionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> CheckSessionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// OP session-check iframe (OIDC Session Management 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CheckSessionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> CheckSessionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task LogoutAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> LogoutAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0)
         /// </summary>
         /// <remarks>
-        /// 
+        /// end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> LogoutWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// 
+        /// RP-initiated logout (confirmation submission)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task LogoutPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of string</returns>
+        System.Threading.Tasks.Task<string> LogoutPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 
+        /// RP-initiated logout (confirmation submission)
         /// </summary>
         /// <remarks>
-        /// 
+        /// Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> LogoutPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (string)</returns>
+        System.Threading.Tasks.Task<ApiResponse<string>> LogoutPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UserinfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of UserinfoResponse</returns>
+        System.Threading.Tasks.Task<UserinfoResponse> UserinfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UserinfoWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (UserinfoResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UserinfoResponse>> UserinfoWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint (POST)
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Identical to GET.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        System.Threading.Tasks.Task UserinfoPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of UserinfoResponse</returns>
+        System.Threading.Tasks.Task<UserinfoResponse> UserinfoPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// OIDC UserInfo Endpoint
+        /// OpenID Connect UserInfo endpoint (POST)
         /// </summary>
         /// <remarks>
-        /// Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// Identical to GET.
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> UserinfoPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns>Task of ApiResponse (UserinfoResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UserinfoResponse>> UserinfoPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
         #endregion Asynchronous Operations
     }
 
@@ -461,23 +471,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OP session-check iframe (OIDC Session Management 1.0) The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void CheckSession(string orgId)
+        /// <returns>string</returns>
+        public string CheckSession(string orgId)
         {
-            CheckSessionWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = CheckSessionWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OP session-check iframe (OIDC Session Management 1.0) The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> CheckSessionWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> CheckSessionWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -490,6 +501,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -502,7 +514,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/check_session", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<string>("/orgs/{orgId}/api/v1/oauth/check_session", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -514,25 +526,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// OP session-check iframe (OIDC Session Management 1.0) The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task CheckSessionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> CheckSessionAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await CheckSessionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await CheckSessionWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// OP session-check iframe (OIDC Session Management 1.0) The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> CheckSessionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> CheckSessionWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -546,6 +559,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -560,7 +574,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/check_session", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<string>("/orgs/{orgId}/api/v1/oauth/check_session", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -572,23 +586,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0) end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Logout(string orgId)
+        /// <returns>string</returns>
+        public string Logout(string orgId)
         {
-            LogoutWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = LogoutWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0) end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> LogoutWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> LogoutWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -601,6 +616,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -613,7 +629,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<string>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -625,25 +641,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0) end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task LogoutAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> LogoutAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await LogoutWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await LogoutWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (OIDC RP-Initiated Logout 1.0) end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> LogoutWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> LogoutWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -657,6 +674,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -671,7 +689,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<string>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -683,23 +701,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (confirmation submission) Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void LogoutPost(string orgId)
+        /// <returns>string</returns>
+        public string LogoutPost(string orgId)
         {
-            LogoutPostWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = LogoutPostWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (confirmation submission) Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> LogoutPostWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of string</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<string> LogoutPostWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -712,6 +731,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -724,7 +744,7 @@ namespace LumoAuth.ApiClient.Api
 
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<string>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -736,25 +756,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (confirmation submission) Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task LogoutPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of string</returns>
+        public async System.Threading.Tasks.Task<string> LogoutPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await LogoutPostWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<string> localVarResponse = await LogoutPostWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// RP-initiated logout (confirmation submission) Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> LogoutPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (string)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<string>> LogoutPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -768,6 +789,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "text/html"
             };
 
 
@@ -782,7 +804,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<string>("/orgs/{orgId}/api/v1/oauth/logout", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -794,23 +816,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void Userinfo(string orgId)
+        /// <returns>UserinfoResponse</returns>
+        public UserinfoResponse Userinfo(string orgId)
         {
-            UserinfoWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse> localVarResponse = UserinfoWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> UserinfoWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of UserinfoResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse> UserinfoWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -823,6 +846,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -841,7 +865,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Get<Object>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Get<UserinfoResponse>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -853,25 +877,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UserinfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of UserinfoResponse</returns>
+        public async System.Threading.Tasks.Task<UserinfoResponse> UserinfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await UserinfoWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse> localVarResponse = await UserinfoWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> UserinfoWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (UserinfoResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse>> UserinfoWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -885,6 +910,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -905,7 +931,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.GetAsync<Object>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.GetAsync<UserinfoResponse>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -917,23 +943,24 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint (POST) Identical to GET.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns></returns>
-        public void UserinfoPost(string orgId)
+        /// <returns>UserinfoResponse</returns>
+        public UserinfoResponse UserinfoPost(string orgId)
         {
-            UserinfoPostWithHttpInfo(orgId);
+            LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse> localVarResponse = UserinfoPostWithHttpInfo(orgId);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint (POST) Identical to GET.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
-        /// <returns>ApiResponse of Object(void)</returns>
-        public LumoAuth.ApiClient.Client.ApiResponse<Object> UserinfoPostWithHttpInfo(string orgId)
+        /// <returns>ApiResponse of UserinfoResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse> UserinfoPostWithHttpInfo(string orgId)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -946,6 +973,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
             var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -964,7 +992,7 @@ namespace LumoAuth.ApiClient.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Post<Object>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<UserinfoResponse>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -976,25 +1004,26 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint (POST) Identical to GET.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of void</returns>
-        public async System.Threading.Tasks.Task UserinfoPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of UserinfoResponse</returns>
+        public async System.Threading.Tasks.Task<UserinfoResponse> UserinfoPostAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
-            await UserinfoPostWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse> localVarResponse = await UserinfoPostWithHttpInfoAsync(orgId, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
         }
 
         /// <summary>
-        /// OIDC UserInfo Endpoint Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+        /// OpenID Connect UserInfo endpoint (POST) Identical to GET.
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgId"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse</returns>
-        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<Object>> UserinfoPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns>Task of ApiResponse (UserinfoResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<UserinfoResponse>> UserinfoPostWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default)
         {
             // verify the required parameter 'orgId' is set
             if (orgId == null)
@@ -1008,6 +1037,7 @@ namespace LumoAuth.ApiClient.Api
 
             // to determine the Accept header
             string[] _accepts = new string[] {
+                "application/json"
             };
 
 
@@ -1028,7 +1058,7 @@ namespace LumoAuth.ApiClient.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PostAsync<Object>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<UserinfoResponse>("/orgs/{orgId}/api/v1/oauth/userinfo", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {

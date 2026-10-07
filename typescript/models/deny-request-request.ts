@@ -21,10 +21,16 @@
  */
 export interface DenyRequestRequest {
     /**
-     * Optional denial reason.
+     * Optional denial reason (internal; never shown to the agent).
      * @type {string}
      * @memberof DenyRequestRequest
      */
     'reason'?: string;
+    /**
+     * Optional message the agent MAY read on the status endpoint / callback.
+     * @type {string}
+     * @memberof DenyRequestRequest
+     */
+    'agent_message'?: string;
 }
 

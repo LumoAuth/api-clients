@@ -18,6 +18,12 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictStr
+from lumoauth_api_client.models.admin_roles_create_response import AdminRolesCreateResponse
+from lumoauth_api_client.models.admin_roles_get_permissions_response import AdminRolesGetPermissionsResponse
+from lumoauth_api_client.models.admin_roles_get_response import AdminRolesGetResponse
+from lumoauth_api_client.models.admin_roles_get_users_response import AdminRolesGetUsersResponse
+from lumoauth_api_client.models.admin_roles_list_response import AdminRolesListResponse
+from lumoauth_api_client.models.message_response import MessageResponse
 
 from lumoauth_api_client.api_client import ApiClient, RequestSerialized
 from lumoauth_api_client.api_response import ApiResponse
@@ -54,7 +60,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Add permission(s) to a role
 
 
@@ -94,6 +100,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -123,7 +130,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Add permission(s) to a role
 
 
@@ -163,6 +170,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -232,6 +240,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -275,6 +284,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -318,7 +334,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Assign a user to a role
 
 
@@ -358,6 +374,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -387,7 +404,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Assign a user to a role
 
 
@@ -427,6 +444,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -496,6 +514,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -539,6 +558,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -581,7 +607,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesCreateResponse:
         """Create a new role
 
 
@@ -618,6 +644,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -646,7 +673,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesCreateResponse]:
         """Create a new role
 
 
@@ -683,6 +710,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -748,6 +776,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '201': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -788,6 +817,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -831,7 +867,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Delete a role
 
 
@@ -871,6 +907,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -900,7 +937,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Delete a role
 
 
@@ -940,6 +977,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1009,6 +1047,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1052,6 +1091,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1095,7 +1141,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesGetResponse:
         """Get a single role by ID or slug
 
 
@@ -1135,6 +1181,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1164,7 +1211,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesGetResponse]:
         """Get a single role by ID or slug
 
 
@@ -1204,6 +1251,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1273,6 +1321,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1316,6 +1365,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1359,7 +1415,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesGetPermissionsResponse:
         """Get role permissions
 
 
@@ -1399,6 +1455,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1428,7 +1485,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesGetPermissionsResponse]:
         """Get role permissions
 
 
@@ -1468,6 +1525,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1537,6 +1595,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetPermissionsResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1580,6 +1639,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1623,7 +1689,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesGetUsersResponse:
         """Get users assigned to a role
 
 
@@ -1663,6 +1729,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1692,7 +1759,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesGetUsersResponse]:
         """Get users assigned to a role
 
 
@@ -1732,6 +1799,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1801,6 +1869,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesGetUsersResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1844,6 +1913,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -1886,7 +1962,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesListResponse:
         """List all roles in the tenant
 
 
@@ -1923,6 +1999,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1951,7 +2028,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesListResponse]:
         """List all roles in the tenant
 
 
@@ -1988,6 +2065,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2053,6 +2131,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesListResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2093,6 +2172,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2137,7 +2223,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Remove a permission from a role
 
 
@@ -2180,6 +2266,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2210,7 +2297,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Remove a permission from a role
 
 
@@ -2253,6 +2340,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2326,6 +2414,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2372,6 +2461,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2416,7 +2512,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> MessageResponse:
         """Remove a user from a role
 
 
@@ -2459,6 +2555,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2489,7 +2586,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[MessageResponse]:
         """Remove a user from a role
 
 
@@ -2532,6 +2629,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2605,6 +2703,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "MessageResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2651,6 +2750,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2694,7 +2800,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesCreateResponse:
         """Update role permissions (replaces all)
 
 
@@ -2734,6 +2840,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2763,7 +2870,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesCreateResponse]:
         """Update role permissions (replaces all)
 
 
@@ -2803,6 +2910,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2872,6 +2980,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2915,6 +3024,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -2958,7 +3074,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesCreateResponse:
         """Update an existing role
 
 
@@ -2998,6 +3114,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3027,7 +3144,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesCreateResponse]:
         """Update an existing role
 
 
@@ -3067,6 +3184,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3136,6 +3254,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3179,6 +3298,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting
@@ -3222,7 +3348,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> None:
+    ) -> AdminRolesCreateResponse:
         """Update an existing role
 
 
@@ -3262,6 +3388,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3291,7 +3418,7 @@ class AdminRolesApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[None]:
+    ) -> ApiResponse[AdminRolesCreateResponse]:
         """Update an existing role
 
 
@@ -3331,6 +3458,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3400,6 +3528,7 @@ class AdminRolesApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
+            '200': "AdminRolesCreateResponse",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3443,6 +3572,13 @@ class AdminRolesApi:
         # process the body parameter
 
 
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
 
 
         # authentication setting

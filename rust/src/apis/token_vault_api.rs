@@ -19,7 +19,12 @@ use super::{Error, configuration, ContentType};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GetConnectionTokenError {
-    DefaultResponse(),
+    Status400(),
+    Status403(),
+    Status404(),
+    Status409(),
+    Status429(),
+    Status503(),
     UnknownValue(serde_json::Value),
 }
 
@@ -27,16 +32,18 @@ pub enum GetConnectionTokenError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ListConnectionsError {
-    DefaultResponse(),
+    Status403(),
+    Status404(),
     UnknownValue(serde_json::Value),
 }
 
 
-/// POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\"user_id\": \"<uuid or email>\"} for user-delegated grants.
-pub async fn get_connection_token(configuration: &configuration::Configuration, org_id: &str, connection_id: &str) -> Result<(), Error<GetConnectionTokenError>> {
+/// Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\"user_id\": \"<uuid or email>\"} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
+pub async fn get_connection_token(configuration: &configuration::Configuration, org_id: &str, connection_id: &str, get_connection_token_request: Option<models::GetConnectionTokenRequest>) -> Result<models::GetConnectionTokenResponse, Error<GetConnectionTokenError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
     let p_connection_id = connection_id;
+    let p_get_connection_token_request = get_connection_token_request;
 
     let uri_str = format!("{}/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token", configuration.base_path, orgId=crate::apis::urlencode(p_org_id), connectionId=crate::apis::urlencode(p_connection_id));
     let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
@@ -55,14 +62,26 @@ pub async fn get_connection_token(configuration: &configuration::Configuration, 
     if let Some(ref token) = configuration.bearer_access_token {
         req_builder = req_builder.bearer_auth(token.to_owned());
     };
+    req_builder = req_builder.json(&p_get_connection_token_request);
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::GetConnectionTokenResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::GetConnectionTokenResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<GetConnectionTokenError> = serde_json::from_str(&content).ok();
@@ -70,8 +89,8 @@ pub async fn get_connection_token(configuration: &configuration::Configuration, 
     }
 }
 
-/// GET /orgs/{orgId}/api/v1/agents/me/connections
-pub async fn list_connections(configuration: &configuration::Configuration, org_id: &str) -> Result<(), Error<ListConnectionsError>> {
+/// Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
+pub async fn list_connections(configuration: &configuration::Configuration, org_id: &str) -> Result<models::ListConnectionsResponse, Error<ListConnectionsError>> {
     // add a prefix to parameters to efficiently prevent name collisions
     let p_org_id = org_id;
 
@@ -97,9 +116,20 @@ pub async fn list_connections(configuration: &configuration::Configuration, org_
     let resp = configuration.client.execute(req).await?;
 
     let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
     if !status.is_client_error() && !status.is_server_error() {
-        Ok(())
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::ListConnectionsResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::ListConnectionsResponse`")))),
+        }
     } else {
         let content = resp.text().await?;
         let entity: Option<ListConnectionsError> = serde_json::from_str(&content).ok();

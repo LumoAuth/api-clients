@@ -24,7 +24,9 @@ import (
 type OIDCAPI interface {
 
 	/*
-	CheckSession Method for CheckSession
+	CheckSession OP session-check iframe (OIDC Session Management 1.0)
+
+	The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage "<client_id> <session_state>" to learn whether the OP session changed. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -33,10 +35,13 @@ type OIDCAPI interface {
 	CheckSession(ctx context.Context, orgId string) ApiCheckSessionRequest
 
 	// CheckSessionExecute executes the request
-	CheckSessionExecute(r ApiCheckSessionRequest) (*http.Response, error)
+	//  @return string
+	CheckSessionExecute(r ApiCheckSessionRequest) (string, *http.Response, error)
 
 	/*
-	Logout Method for Logout
+	Logout RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+
+	end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -45,10 +50,13 @@ type OIDCAPI interface {
 	Logout(ctx context.Context, orgId string) ApiLogoutRequest
 
 	// LogoutExecute executes the request
-	LogoutExecute(r ApiLogoutRequest) (*http.Response, error)
+	//  @return string
+	LogoutExecute(r ApiLogoutRequest) (string, *http.Response, error)
 
 	/*
-	LogoutPost Method for LogoutPost
+	LogoutPost RP-initiated logout (confirmation submission)
+
+	Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -57,20 +65,13 @@ type OIDCAPI interface {
 	LogoutPost(ctx context.Context, orgId string) ApiLogoutPostRequest
 
 	// LogoutPostExecute executes the request
-	LogoutPostExecute(r ApiLogoutPostRequest) (*http.Response, error)
+	//  @return string
+	LogoutPostExecute(r ApiLogoutPostRequest) (string, *http.Response, error)
 
 	/*
-	Userinfo OIDC UserInfo Endpoint
+	Userinfo OpenID Connect UserInfo endpoint
 
-	Returns claims about the authenticated End-User.
-Requires a valid access token with appropriate scopes.
-
-Supported scopes and claims:
-- openid: sub
-- profile: name, given_name, family_name, nickname, picture, etc.
-- email: email, email_verified
-- phone: phone_number, phone_number_verified
-- address: address
+	Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -79,20 +80,13 @@ Supported scopes and claims:
 	Userinfo(ctx context.Context, orgId string) ApiUserinfoRequest
 
 	// UserinfoExecute executes the request
-	UserinfoExecute(r ApiUserinfoRequest) (*http.Response, error)
+	//  @return UserinfoResponse
+	UserinfoExecute(r ApiUserinfoRequest) (*UserinfoResponse, *http.Response, error)
 
 	/*
-	UserinfoPost OIDC UserInfo Endpoint
+	UserinfoPost OpenID Connect UserInfo endpoint (POST)
 
-	Returns claims about the authenticated End-User.
-Requires a valid access token with appropriate scopes.
-
-Supported scopes and claims:
-- openid: sub
-- profile: name, given_name, family_name, nickname, picture, etc.
-- email: email, email_verified
-- phone: phone_number, phone_number_verified
-- address: address
+	Identical to GET.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param orgId
@@ -101,7 +95,8 @@ Supported scopes and claims:
 	UserinfoPost(ctx context.Context, orgId string) ApiUserinfoPostRequest
 
 	// UserinfoPostExecute executes the request
-	UserinfoPostExecute(r ApiUserinfoPostRequest) (*http.Response, error)
+	//  @return UserinfoResponse
+	UserinfoPostExecute(r ApiUserinfoPostRequest) (*UserinfoResponse, *http.Response, error)
 }
 
 // OIDCAPIService OIDCAPI service
@@ -113,12 +108,14 @@ type ApiCheckSessionRequest struct {
 	orgId string
 }
 
-func (r ApiCheckSessionRequest) Execute() (*http.Response, error) {
+func (r ApiCheckSessionRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.CheckSessionExecute(r)
 }
 
 /*
-CheckSession Method for CheckSession
+CheckSession OP session-check iframe (OIDC Session Management 1.0)
+
+The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage "<client_id> <session_state>" to learn whether the OP session changed. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -133,16 +130,18 @@ func (a *OIDCAPIService) CheckSession(ctx context.Context, orgId string) ApiChec
 }
 
 // Execute executes the request
-func (a *OIDCAPIService) CheckSessionExecute(r ApiCheckSessionRequest) (*http.Response, error) {
+//  @return string
+func (a *OIDCAPIService) CheckSessionExecute(r ApiCheckSessionRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.CheckSession")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/check_session"
@@ -162,7 +161,7 @@ func (a *OIDCAPIService) CheckSessionExecute(r ApiCheckSessionRequest) (*http.Re
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -171,19 +170,19 @@ func (a *OIDCAPIService) CheckSessionExecute(r ApiCheckSessionRequest) (*http.Re
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -191,10 +190,19 @@ func (a *OIDCAPIService) CheckSessionExecute(r ApiCheckSessionRequest) (*http.Re
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiLogoutRequest struct {
@@ -203,12 +211,14 @@ type ApiLogoutRequest struct {
 	orgId string
 }
 
-func (r ApiLogoutRequest) Execute() (*http.Response, error) {
+func (r ApiLogoutRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.LogoutExecute(r)
 }
 
 /*
-Logout Method for Logout
+Logout RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+
+end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -223,16 +233,18 @@ func (a *OIDCAPIService) Logout(ctx context.Context, orgId string) ApiLogoutRequ
 }
 
 // Execute executes the request
-func (a *OIDCAPIService) LogoutExecute(r ApiLogoutRequest) (*http.Response, error) {
+//  @return string
+func (a *OIDCAPIService) LogoutExecute(r ApiLogoutRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.Logout")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/logout"
@@ -252,7 +264,7 @@ func (a *OIDCAPIService) LogoutExecute(r ApiLogoutRequest) (*http.Response, erro
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -261,19 +273,19 @@ func (a *OIDCAPIService) LogoutExecute(r ApiLogoutRequest) (*http.Response, erro
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -281,10 +293,19 @@ func (a *OIDCAPIService) LogoutExecute(r ApiLogoutRequest) (*http.Response, erro
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiLogoutPostRequest struct {
@@ -293,12 +314,14 @@ type ApiLogoutPostRequest struct {
 	orgId string
 }
 
-func (r ApiLogoutPostRequest) Execute() (*http.Response, error) {
+func (r ApiLogoutPostRequest) Execute() (string, *http.Response, error) {
 	return r.ApiService.LogoutPostExecute(r)
 }
 
 /*
-LogoutPost Method for LogoutPost
+LogoutPost RP-initiated logout (confirmation submission)
+
+Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -313,16 +336,18 @@ func (a *OIDCAPIService) LogoutPost(ctx context.Context, orgId string) ApiLogout
 }
 
 // Execute executes the request
-func (a *OIDCAPIService) LogoutPostExecute(r ApiLogoutPostRequest) (*http.Response, error) {
+//  @return string
+func (a *OIDCAPIService) LogoutPostExecute(r ApiLogoutPostRequest) (string, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  string
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.LogoutPost")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/logout"
@@ -342,7 +367,7 @@ func (a *OIDCAPIService) LogoutPostExecute(r ApiLogoutPostRequest) (*http.Respon
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"text/html"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -351,19 +376,19 @@ func (a *OIDCAPIService) LogoutPostExecute(r ApiLogoutPostRequest) (*http.Respon
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -371,10 +396,19 @@ func (a *OIDCAPIService) LogoutPostExecute(r ApiLogoutPostRequest) (*http.Respon
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiUserinfoRequest struct {
@@ -383,22 +417,14 @@ type ApiUserinfoRequest struct {
 	orgId string
 }
 
-func (r ApiUserinfoRequest) Execute() (*http.Response, error) {
+func (r ApiUserinfoRequest) Execute() (*UserinfoResponse, *http.Response, error) {
 	return r.ApiService.UserinfoExecute(r)
 }
 
 /*
-Userinfo OIDC UserInfo Endpoint
+Userinfo OpenID Connect UserInfo endpoint
 
-Returns claims about the authenticated End-User.
-Requires a valid access token with appropriate scopes.
-
-Supported scopes and claims:
-- openid: sub
-- profile: name, given_name, family_name, nickname, picture, etc.
-- email: email, email_verified
-- phone: phone_number, phone_number_verified
-- address: address
+Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -413,16 +439,18 @@ func (a *OIDCAPIService) Userinfo(ctx context.Context, orgId string) ApiUserinfo
 }
 
 // Execute executes the request
-func (a *OIDCAPIService) UserinfoExecute(r ApiUserinfoRequest) (*http.Response, error) {
+//  @return UserinfoResponse
+func (a *OIDCAPIService) UserinfoExecute(r ApiUserinfoRequest) (*UserinfoResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UserinfoResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.Userinfo")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/userinfo"
@@ -442,7 +470,7 @@ func (a *OIDCAPIService) UserinfoExecute(r ApiUserinfoRequest) (*http.Response, 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -451,19 +479,19 @@ func (a *OIDCAPIService) UserinfoExecute(r ApiUserinfoRequest) (*http.Response, 
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -471,10 +499,19 @@ func (a *OIDCAPIService) UserinfoExecute(r ApiUserinfoRequest) (*http.Response, 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiUserinfoPostRequest struct {
@@ -483,22 +520,14 @@ type ApiUserinfoPostRequest struct {
 	orgId string
 }
 
-func (r ApiUserinfoPostRequest) Execute() (*http.Response, error) {
+func (r ApiUserinfoPostRequest) Execute() (*UserinfoResponse, *http.Response, error) {
 	return r.ApiService.UserinfoPostExecute(r)
 }
 
 /*
-UserinfoPost OIDC UserInfo Endpoint
+UserinfoPost OpenID Connect UserInfo endpoint (POST)
 
-Returns claims about the authenticated End-User.
-Requires a valid access token with appropriate scopes.
-
-Supported scopes and claims:
-- openid: sub
-- profile: name, given_name, family_name, nickname, picture, etc.
-- email: email, email_verified
-- phone: phone_number, phone_number_verified
-- address: address
+Identical to GET.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param orgId
@@ -513,16 +542,18 @@ func (a *OIDCAPIService) UserinfoPost(ctx context.Context, orgId string) ApiUser
 }
 
 // Execute executes the request
-func (a *OIDCAPIService) UserinfoPostExecute(r ApiUserinfoPostRequest) (*http.Response, error) {
+//  @return UserinfoResponse
+func (a *OIDCAPIService) UserinfoPostExecute(r ApiUserinfoPostRequest) (*UserinfoResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
+		localVarReturnValue  *UserinfoResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OIDCAPIService.UserinfoPost")
 	if err != nil {
-		return nil, &GenericOpenAPIError{error: err.Error()}
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
 	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/oauth/userinfo"
@@ -542,7 +573,7 @@ func (a *OIDCAPIService) UserinfoPostExecute(r ApiUserinfoPostRequest) (*http.Re
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -551,19 +582,19 @@ func (a *OIDCAPIService) UserinfoPostExecute(r ApiUserinfoPostRequest) (*http.Re
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
-		return nil, err
+		return localVarReturnValue, nil, err
 	}
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
 	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
-		return localVarHTTPResponse, err
+		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
 	if localVarHTTPResponse.StatusCode >= 300 {
@@ -571,8 +602,17 @@ func (a *OIDCAPIService) UserinfoPostExecute(r ApiUserinfoPostRequest) (*http.Re
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		return localVarHTTPResponse, newErr
+		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
-	return localVarHTTPResponse, nil
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }

@@ -19,17 +19,21 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # OP session-check iframe (OIDC Session Management 1.0)
+    # The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \"<client_id> <session_state>\" to learn whether the OP session changed. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def check_session(org_id, opts = {})
-      check_session_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = check_session_with_http_info(org_id, opts)
+      data
     end
 
+    # OP session-check iframe (OIDC Session Management 1.0)
+    # The check_session_iframe page advertised in discovery. Relying parties embed it and postMessage \&quot;&lt;client_id&gt; &lt;session_state&gt;\&quot; to learn whether the OP session changed. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def check_session_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OIDCApi.check_session ...'
@@ -46,6 +50,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -54,7 +60,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -76,17 +82,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+    # end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session's clients. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def logout(org_id, opts = {})
-      logout_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = logout_with_http_info(org_id, opts)
+      data
     end
 
+    # RP-initiated logout (OIDC RP-Initiated Logout 1.0)
+    # end_session_endpoint. Accepts id_token_hint, post_logout_redirect_uri and state. Logs out immediately only when id_token_hint proves the request is about the signed-in user; otherwise the user confirms through a CSRF-protected POST. Triggers front-channel and back-channel logout for the session&#39;s clients. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def logout_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OIDCApi.logout ...'
@@ -103,6 +113,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -111,7 +123,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -133,17 +145,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # RP-initiated logout (confirmation submission)
+    # Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [String]
     def logout_post(org_id, opts = {})
-      logout_post_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = logout_post_with_http_info(org_id, opts)
+      data
     end
 
+    # RP-initiated logout (confirmation submission)
+    # Same parameters as GET plus the _csrf_token of the confirmation page. Not a JSON API.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(String, Integer, Hash)>] String data, response status code and response headers
     def logout_post_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OIDCApi.logout_post ...'
@@ -160,6 +176,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['text/html']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -168,7 +186,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'String'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -190,21 +208,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # OIDC UserInfo Endpoint
-    # Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+    # OpenID Connect UserInfo endpoint
+    # Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [UserinfoResponse]
     def userinfo(org_id, opts = {})
-      userinfo_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = userinfo_with_http_info(org_id, opts)
+      data
     end
 
-    # OIDC UserInfo Endpoint
-    # Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+    # OpenID Connect UserInfo endpoint
+    # Returns claims about the authenticated principal for an access token presented as Authorization: Bearer or Authorization: DPoP (with a DPoP proof when the token is sender-constrained). The openid scope is required.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(UserinfoResponse, Integer, Hash)>] UserinfoResponse data, response status code and response headers
     def userinfo_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OIDCApi.userinfo ...'
@@ -221,6 +239,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -229,7 +249,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'UserinfoResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerAuth']
@@ -251,21 +271,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # OIDC UserInfo Endpoint
-    # Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+    # OpenID Connect UserInfo endpoint (POST)
+    # Identical to GET.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [UserinfoResponse]
     def userinfo_post(org_id, opts = {})
-      userinfo_post_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = userinfo_post_with_http_info(org_id, opts)
+      data
     end
 
-    # OIDC UserInfo Endpoint
-    # Returns claims about the authenticated End-User. Requires a valid access token with appropriate scopes.  Supported scopes and claims: - openid: sub - profile: name, given_name, family_name, nickname, picture, etc. - email: email, email_verified - phone: phone_number, phone_number_verified - address: address
+    # OpenID Connect UserInfo endpoint (POST)
+    # Identical to GET.
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(UserinfoResponse, Integer, Hash)>] UserinfoResponse data, response status code and response headers
     def userinfo_post_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: OIDCApi.userinfo_post ...'
@@ -282,6 +302,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -290,7 +312,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'UserinfoResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerAuth']

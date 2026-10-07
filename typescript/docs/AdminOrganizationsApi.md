@@ -4,29 +4,29 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**adminOrgInvitationsCreate**](#adminorginvitationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | |
-|[**adminOrgInvitationsList**](#adminorginvitationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | |
-|[**adminOrgInvitationsResend**](#adminorginvitationsresend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | |
-|[**adminOrgInvitationsRevoke**](#adminorginvitationsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | |
-|[**adminOrgMembersAdd**](#adminorgmembersadd) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | |
-|[**adminOrgMembersList**](#adminorgmemberslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | |
-|[**adminOrgMembersRemove**](#adminorgmembersremove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | |
-|[**adminOrgRolesCreate**](#adminorgrolescreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | |
-|[**adminOrgRolesDelete**](#adminorgrolesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | |
-|[**adminOrgRolesList**](#adminorgroleslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | |
-|[**adminOrganizationsCreate**](#adminorganizationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations | |
-|[**adminOrganizationsDelete**](#adminorganizationsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | |
-|[**adminOrganizationsGet**](#adminorganizationsget) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | |
-|[**adminOrganizationsList**](#adminorganizationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations | |
-|[**patchAdminOrgMembersUpdate**](#patchadminorgmembersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | |
-|[**patchAdminOrgRolesUpdate**](#patchadminorgrolesupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | |
-|[**patchAdminOrganizationsUpdate**](#patchadminorganizationsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | |
-|[**putAdminOrgMembersUpdate**](#putadminorgmembersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | |
-|[**putAdminOrgRolesUpdate**](#putadminorgrolesupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | |
-|[**putAdminOrganizationsUpdate**](#putadminorganizationsupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | |
+|[**adminOrgInvitationsCreate**](#adminorginvitationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | Invite a user to an organization|
+|[**adminOrgInvitationsList**](#adminorginvitationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations | List organization invitations|
+|[**adminOrgInvitationsResend**](#adminorginvitationsresend) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend | Resend an invitation|
+|[**adminOrgInvitationsRevoke**](#adminorginvitationsrevoke) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId} | Revoke an invitation|
+|[**adminOrgMembersAdd**](#adminorgmembersadd) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | Add a member to an organization|
+|[**adminOrgMembersList**](#adminorgmemberslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members | List organization members|
+|[**adminOrgMembersRemove**](#adminorgmembersremove) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Remove a member from an organization|
+|[**adminOrgRolesCreate**](#adminorgrolescreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | Create an organization role|
+|[**adminOrgRolesDelete**](#adminorgrolesdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Delete an organization role|
+|[**adminOrgRolesList**](#adminorgroleslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles | List organization roles|
+|[**adminOrganizationsCreate**](#adminorganizationscreate) | **POST** /orgs/{orgId}/api/v1/admin/organizations | Create an organization|
+|[**adminOrganizationsDelete**](#adminorganizationsdelete) | **DELETE** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Delete an organization|
+|[**adminOrganizationsGet**](#adminorganizationsget) | **GET** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Get an organization|
+|[**adminOrganizationsList**](#adminorganizationslist) | **GET** /orgs/{orgId}/api/v1/admin/organizations | List organizations|
+|[**patchAdminOrgMembersUpdate**](#patchadminorgmembersupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member\&#39;s role or status|
+|[**patchAdminOrgRolesUpdate**](#patchadminorgrolesupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role|
+|[**patchAdminOrganizationsUpdate**](#patchadminorganizationsupdate) | **PATCH** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization|
+|[**putAdminOrgMembersUpdate**](#putadminorgmembersupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId} | Update a member\&#39;s role or status|
+|[**putAdminOrgRolesUpdate**](#putadminorgrolesupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId} | Update an organization role|
+|[**putAdminOrganizationsUpdate**](#putadminorganizationsupdate) | **PUT** /orgs/{orgId}/api/v1/admin/organizations/{organizationId} | Update an organization|
 
 # **adminOrgInvitationsCreate**
-> adminOrgInvitationsCreate()
+> AdminOrgInvitationsCreateResponse adminOrgInvitationsCreate()
 
 
 ### Example
@@ -59,7 +59,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgInvitationsCreateResponse**
 
 ### Authorization
 
@@ -68,18 +68,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Invitation sent |  -  |
+|**400** | Invalid role for this organization |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgInvitationsList**
-> adminOrgInvitationsList()
+> AdminOrgInvitationsListResponse adminOrgInvitationsList()
 
 
 ### Example
@@ -112,7 +114,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsList(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgInvitationsListResponse**
 
 ### Authorization
 
@@ -121,18 +123,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Invitations |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgInvitationsResend**
-> adminOrgInvitationsResend()
+> MessageResponse adminOrgInvitationsResend()
 
 
 ### Example
@@ -168,7 +171,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsResend(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -177,18 +180,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Invitation resent |  -  |
+|**404** | Organization or invitation not found |  -  |
+|**422** | Unable to resend invitation |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgInvitationsRevoke**
-> adminOrgInvitationsRevoke()
+> MessageResponse adminOrgInvitationsRevoke()
 
 
 ### Example
@@ -224,7 +229,7 @@ const { status, data } = await apiInstance.adminOrgInvitationsRevoke(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -233,18 +238,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Invitation revoked |  -  |
+|**404** | Organization or invitation not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgMembersAdd**
-> adminOrgMembersAdd()
+> AdminOrgMembersAddResponse adminOrgMembersAdd()
 
 
 ### Example
@@ -277,7 +283,7 @@ const { status, data } = await apiInstance.adminOrgMembersAdd(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgMembersAddResponse**
 
 ### Authorization
 
@@ -286,18 +292,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Member added |  -  |
+|**404** | Organization, user or role not found |  -  |
+|**409** | User is already a member |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgMembersList**
-> adminOrgMembersList()
+> AdminOrgMembersListResponse adminOrgMembersList()
 
 
 ### Example
@@ -330,7 +338,7 @@ const { status, data } = await apiInstance.adminOrgMembersList(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgMembersListResponse**
 
 ### Authorization
 
@@ -339,18 +347,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Members |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgMembersRemove**
-> adminOrgMembersRemove()
+> MessageResponse adminOrgMembersRemove()
 
 
 ### Example
@@ -386,7 +395,7 @@ const { status, data } = await apiInstance.adminOrgMembersRemove(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -395,18 +404,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Member removed |  -  |
+|**404** | Organization or user not found |  -  |
+|**422** | Unable to remove member |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgRolesCreate**
-> adminOrgRolesCreate()
+> AdminOrgRolesCreateResponse adminOrgRolesCreate()
 
 
 ### Example
@@ -439,7 +450,7 @@ const { status, data } = await apiInstance.adminOrgRolesCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgRolesCreateResponse**
 
 ### Authorization
 
@@ -448,18 +459,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Role created |  -  |
+|**404** | Organization not found |  -  |
+|**409** | A role with this name or slug already exists |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgRolesDelete**
-> adminOrgRolesDelete()
+> MessageResponse adminOrgRolesDelete()
 
 
 ### Example
@@ -495,7 +508,7 @@ const { status, data } = await apiInstance.adminOrgRolesDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -504,18 +517,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Role deleted |  -  |
+|**404** | Organization or role not found |  -  |
+|**422** | Role still in use |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrgRolesList**
-> adminOrgRolesList()
+> AdminOrgRolesListResponse adminOrgRolesList()
 
 
 ### Example
@@ -548,7 +563,7 @@ const { status, data } = await apiInstance.adminOrgRolesList(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgRolesListResponse**
 
 ### Authorization
 
@@ -557,18 +572,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Roles |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationsCreate**
-> adminOrganizationsCreate()
+> AdminOrganizationsCreateResponse adminOrganizationsCreate()
 
 
 ### Example
@@ -598,7 +614,7 @@ const { status, data } = await apiInstance.adminOrganizationsCreate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrganizationsCreateResponse**
 
 ### Authorization
 
@@ -607,18 +623,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**201** | Organization created |  -  |
+|**409** | Organization already exists or data invalid |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationsDelete**
-> adminOrganizationsDelete()
+> MessageResponse adminOrganizationsDelete()
 
 
 ### Example
@@ -651,7 +668,7 @@ const { status, data } = await apiInstance.adminOrganizationsDelete(
 
 ### Return type
 
-void (empty response body)
+**MessageResponse**
 
 ### Authorization
 
@@ -660,18 +677,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Organization deleted |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationsGet**
-> adminOrganizationsGet()
+> AdminOrganizationsGetResponse adminOrganizationsGet()
 
 
 ### Example
@@ -704,7 +722,7 @@ const { status, data } = await apiInstance.adminOrganizationsGet(
 
 ### Return type
 
-void (empty response body)
+**AdminOrganizationsGetResponse**
 
 ### Authorization
 
@@ -713,18 +731,19 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Organization |  -  |
+|**404** | Organization not found |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminOrganizationsList**
-> adminOrganizationsList()
+> AdminOrganizationsListResponse adminOrganizationsList()
 
 
 ### Example
@@ -754,7 +773,7 @@ const { status, data } = await apiInstance.adminOrganizationsList(
 
 ### Return type
 
-void (empty response body)
+**AdminOrganizationsListResponse**
 
 ### Authorization
 
@@ -763,18 +782,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Organizations |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrgMembersUpdate**
-> patchAdminOrgMembersUpdate()
+> PutAdminOrgMembersUpdateResponse patchAdminOrgMembersUpdate()
 
 
 ### Example
@@ -810,7 +829,7 @@ const { status, data } = await apiInstance.patchAdminOrgMembersUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminOrgMembersUpdateResponse**
 
 ### Authorization
 
@@ -819,18 +838,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated member |  -  |
+|**404** | Organization, member or role not found |  -  |
+|**422** | Unable to update member role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrgRolesUpdate**
-> patchAdminOrgRolesUpdate()
+> AdminOrgRolesCreateResponse patchAdminOrgRolesUpdate()
 
 
 ### Example
@@ -866,7 +887,7 @@ const { status, data } = await apiInstance.patchAdminOrgRolesUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgRolesCreateResponse**
 
 ### Authorization
 
@@ -875,18 +896,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated role |  -  |
+|**404** | Organization or role not found |  -  |
+|**422** | Unable to update role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patchAdminOrganizationsUpdate**
-> patchAdminOrganizationsUpdate()
+> AdminOrganizationsGetResponse patchAdminOrganizationsUpdate()
 
 
 ### Example
@@ -919,7 +942,7 @@ const { status, data } = await apiInstance.patchAdminOrganizationsUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrganizationsGetResponse**
 
 ### Authorization
 
@@ -928,18 +951,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated organization |  -  |
+|**404** | Organization not found |  -  |
+|**409** | Data invalid or conflicts with an existing record |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrgMembersUpdate**
-> putAdminOrgMembersUpdate()
+> PutAdminOrgMembersUpdateResponse putAdminOrgMembersUpdate()
 
 
 ### Example
@@ -975,7 +1000,7 @@ const { status, data } = await apiInstance.putAdminOrgMembersUpdate(
 
 ### Return type
 
-void (empty response body)
+**PutAdminOrgMembersUpdateResponse**
 
 ### Authorization
 
@@ -984,18 +1009,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated member |  -  |
+|**404** | Organization, member or role not found |  -  |
+|**422** | Unable to update member role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrgRolesUpdate**
-> putAdminOrgRolesUpdate()
+> AdminOrgRolesCreateResponse putAdminOrgRolesUpdate()
 
 
 ### Example
@@ -1031,7 +1058,7 @@ const { status, data } = await apiInstance.putAdminOrgRolesUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrgRolesCreateResponse**
 
 ### Authorization
 
@@ -1040,18 +1067,20 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated role |  -  |
+|**404** | Organization or role not found |  -  |
+|**422** | Unable to update role |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **putAdminOrganizationsUpdate**
-> putAdminOrganizationsUpdate()
+> AdminOrganizationsGetResponse putAdminOrganizationsUpdate()
 
 
 ### Example
@@ -1084,7 +1113,7 @@ const { status, data } = await apiInstance.putAdminOrganizationsUpdate(
 
 ### Return type
 
-void (empty response body)
+**AdminOrganizationsGetResponse**
 
 ### Authorization
 
@@ -1093,13 +1122,15 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**0** |  |  -  |
+|**200** | Updated organization |  -  |
+|**404** | Organization not found |  -  |
+|**409** | Data invalid or conflicts with an existing record |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

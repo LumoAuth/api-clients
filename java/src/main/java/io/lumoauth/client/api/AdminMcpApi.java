@@ -27,6 +27,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminMcpServersCreateResponse;
+import io.lumoauth.client.model.AdminMcpServersGetResponse;
+import io.lumoauth.client.model.AdminMcpServersListResponse;
+import io.lumoauth.client.model.MessageResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -81,7 +85,9 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> MCP server created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An MCP server with this resource_uri already exists </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminMcpServersCreateCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -111,6 +117,7 @@ public class AdminMcpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -140,42 +147,49 @@ public class AdminMcpApi {
     }
 
     /**
-     * POST /api/v1/admin/mcp/servers
-     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+     * Register an MCP server
+     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
      * @param orgId  (required)
+     * @return AdminMcpServersCreateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> MCP server created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An MCP server with this resource_uri already exists </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public void adminMcpServersCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminMcpServersCreateWithHttpInfo(orgId);
+    public AdminMcpServersCreateResponse adminMcpServersCreate(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminMcpServersCreateResponse> localVarResp = adminMcpServersCreateWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * POST /api/v1/admin/mcp/servers
-     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+     * Register an MCP server
+     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminMcpServersCreateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> MCP server created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An MCP server with this resource_uri already exists </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminMcpServersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminMcpServersCreateResponse> adminMcpServersCreateWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminMcpServersCreateValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * POST /api/v1/admin/mcp/servers (asynchronously)
-     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400]
+     * Register an MCP server (asynchronously)
+     * Body: name (required) — display name resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment endpoint_url (optional) — actual MCP endpoint description (optional) scopes_supported (optional) — array OR space/comma-separated string transport (optional) — defaults to \&quot;http_streamable\&quot; auth_mode (optional) — defaults to \&quot;oauth\&quot; token_lifetime (optional, default 3600) — clamped to [60, 86400] allowed_client_ids (optional) — array of this organization&#39;s OAuth client ids;     unknown ids are a 422 (never persisted as policy) require_pkce (optional, default true) require_resource_param (optional, default true) require_dpop (optional, default false) — RFC 9449 sender-constrained tokens only
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -184,13 +198,16 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> MCP server created </td><td>  -  </td></tr>
+        <tr><td> 409 </td><td> An MCP server with this resource_uri already exists </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminMcpServersCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminMcpServersCreateAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminMcpServersCreateResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminMcpServersCreateValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersCreateResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -204,7 +221,8 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminMcpServersDeleteCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -235,6 +253,7 @@ public class AdminMcpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -269,43 +288,48 @@ public class AdminMcpApi {
     }
 
     /**
-     * 
+     * Delete an MCP server
      * 
      * @param orgId  (required)
      * @param serverId  (required)
+     * @return MessageResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminMcpServersDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
-        adminMcpServersDeleteWithHttpInfo(orgId, serverId);
+    public MessageResponse adminMcpServersDelete(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+        ApiResponse<MessageResponse> localVarResp = adminMcpServersDeleteWithHttpInfo(orgId, serverId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Delete an MCP server
      * 
      * @param orgId  (required)
      * @param serverId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;MessageResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminMcpServersDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+    public ApiResponse<MessageResponse> adminMcpServersDeleteWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
         okhttp3.Call localVarCall = adminMcpServersDeleteValidateBeforeCall(orgId, serverId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Delete an MCP server (asynchronously)
      * 
      * @param orgId  (required)
      * @param serverId  (required)
@@ -316,13 +340,15 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server deleted </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminMcpServersDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminMcpServersDeleteAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<MessageResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminMcpServersDeleteValidateBeforeCall(orgId, serverId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<MessageResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -336,7 +362,8 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminMcpServersGetCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback _callback) throws ApiException {
@@ -367,6 +394,7 @@ public class AdminMcpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -401,43 +429,48 @@ public class AdminMcpApi {
     }
 
     /**
-     * 
+     * Get an MCP server
      * 
      * @param orgId  (required)
      * @param serverId  (required)
+     * @return AdminMcpServersGetResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
-    public void adminMcpServersGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
-        adminMcpServersGetWithHttpInfo(orgId, serverId);
+    public AdminMcpServersGetResponse adminMcpServersGet(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+        ApiResponse<AdminMcpServersGetResponse> localVarResp = adminMcpServersGetWithHttpInfo(orgId, serverId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * Get an MCP server
      * 
      * @param orgId  (required)
      * @param serverId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminMcpServersGetResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminMcpServersGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
+    public ApiResponse<AdminMcpServersGetResponse> adminMcpServersGetWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId) throws ApiException {
         okhttp3.Call localVarCall = adminMcpServersGetValidateBeforeCall(orgId, serverId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGetResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * Get an MCP server (asynchronously)
      * 
      * @param orgId  (required)
      * @param serverId  (required)
@@ -448,13 +481,15 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP server </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> MCP server not found </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminMcpServersGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminMcpServersGetAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, final ApiCallback<AdminMcpServersGetResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminMcpServersGetValidateBeforeCall(orgId, serverId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersGetResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
@@ -467,7 +502,7 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP servers </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call adminMcpServersListCall(@javax.annotation.Nonnull String orgId, final ApiCallback _callback) throws ApiException {
@@ -497,6 +532,7 @@ public class AdminMcpApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
+            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -526,41 +562,44 @@ public class AdminMcpApi {
     }
 
     /**
-     * 
+     * List MCP servers
      * 
      * @param orgId  (required)
+     * @return AdminMcpServersListResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP servers </td><td>  -  </td></tr>
      </table>
      */
-    public void adminMcpServersList(@javax.annotation.Nonnull String orgId) throws ApiException {
-        adminMcpServersListWithHttpInfo(orgId);
+    public AdminMcpServersListResponse adminMcpServersList(@javax.annotation.Nonnull String orgId) throws ApiException {
+        ApiResponse<AdminMcpServersListResponse> localVarResp = adminMcpServersListWithHttpInfo(orgId);
+        return localVarResp.getData();
     }
 
     /**
-     * 
+     * List MCP servers
      * 
      * @param orgId  (required)
-     * @return ApiResponse&lt;Void&gt;
+     * @return ApiResponse&lt;AdminMcpServersListResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP servers </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> adminMcpServersListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
+    public ApiResponse<AdminMcpServersListResponse> adminMcpServersListWithHttpInfo(@javax.annotation.Nonnull String orgId) throws ApiException {
         okhttp3.Call localVarCall = adminMcpServersListValidateBeforeCall(orgId, null);
-        return localVarApiClient.execute(localVarCall);
+        Type localVarReturnType = new TypeToken<AdminMcpServersListResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     *  (asynchronously)
+     * List MCP servers (asynchronously)
      * 
      * @param orgId  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -570,13 +609,14 @@ public class AdminMcpApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 0 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> MCP servers </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call adminMcpServersListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call adminMcpServersListAsync(@javax.annotation.Nonnull String orgId, final ApiCallback<AdminMcpServersListResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = adminMcpServersListValidateBeforeCall(orgId, _callback);
-        localVarApiClient.executeAsync(localVarCall, _callback);
+        Type localVarReturnType = new TypeToken<AdminMcpServersListResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
 }

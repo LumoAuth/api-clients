@@ -14,6 +14,11 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminEmailTemplatesListResponse;
+import io.lumoauth.client.model.AdminEmailTemplatesPreviewResponse;
+import io.lumoauth.client.model.AdminEmailTemplatesVariablesResponse;
+import io.lumoauth.client.model.EmailTemplate;
+import io.lumoauth.client.model.MessageResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,67 +36,79 @@ public class AdminEmailApiTest {
     private final AdminEmailApi api = new AdminEmailApi();
 
     /**
+     * Remove the custom email template so the built-in default is used
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminEmailTemplatesDeleteTest() throws ApiException {
         String orgId = null;
         String type = null;
-        api.adminEmailTemplatesDelete(orgId, type);
+        MessageResponse response = api.adminEmailTemplatesDelete(orgId, type);
         // TODO: test validations
     }
 
     /**
+     * Get an email template (custom or built-in default)
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminEmailTemplatesGetTest() throws ApiException {
         String orgId = null;
         String type = null;
-        api.adminEmailTemplatesGet(orgId, type);
+        EmailTemplate response = api.adminEmailTemplatesGet(orgId, type);
         // TODO: test validations
     }
 
     /**
+     * List every email template type with its current (custom or built-in) template
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminEmailTemplatesListTest() throws ApiException {
         String orgId = null;
-        api.adminEmailTemplatesList(orgId);
+        AdminEmailTemplatesListResponse response = api.adminEmailTemplatesList(orgId);
         // TODO: test validations
     }
 
     /**
+     * Render an email template with sample data
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminEmailTemplatesPreviewTest() throws ApiException {
         String orgId = null;
         String type = null;
-        api.adminEmailTemplatesPreview(orgId, type);
+        AdminEmailTemplatesPreviewResponse response = api.adminEmailTemplatesPreview(orgId, type);
         // TODO: test validations
     }
 
     /**
+     * Create or replace the custom email template for a type
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminEmailTemplatesUpsertTest() throws ApiException {
         String orgId = null;
         String type = null;
-        api.adminEmailTemplatesUpsert(orgId, type);
+        EmailTemplate response = api.adminEmailTemplatesUpsert(orgId, type);
         // TODO: test validations
     }
 
     /**
+     * List the placeholders available to an email template type
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void adminEmailTemplatesVariablesTest() throws ApiException {
         String orgId = null;
         String type = null;
-        api.adminEmailTemplatesVariables(orgId, type);
+        AdminEmailTemplatesVariablesResponse response = api.adminEmailTemplatesVariables(orgId, type);
         // TODO: test validations
     }
 

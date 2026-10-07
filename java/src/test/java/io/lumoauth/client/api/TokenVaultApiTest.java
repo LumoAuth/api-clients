@@ -14,6 +14,9 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.GetConnectionTokenRequest;
+import io.lumoauth.client.model.GetConnectionTokenResponse;
+import io.lumoauth.client.model.ListConnectionsResponse;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,9 +34,9 @@ public class TokenVaultApiTest {
     private final TokenVaultApi api = new TokenVaultApi();
 
     /**
-     * Fetch a live third-party access token for a connection.
+     * Fetch a live third-party access token for a connection
      *
-     * POST /orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token Body (optional): {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for user-delegated grants.
+     * Agent bearer token required. Returns the vaulted provider access token (refreshing it when needed). Pass {\&quot;user_id\&quot;: \&quot;&lt;uuid or email&gt;\&quot;} for a user-delegated grant — issued only when that user allowed this agent on their grant. Refresh tokens never cross this boundary. Rate limited per agent.
      *
      * @throws ApiException if the Api call fails
      */
@@ -41,21 +44,22 @@ public class TokenVaultApiTest {
     public void getConnectionTokenTest() throws ApiException {
         String orgId = null;
         String connectionId = null;
-        api.getConnectionToken(orgId, connectionId);
+        GetConnectionTokenRequest getConnectionTokenRequest = null;
+        GetConnectionTokenResponse response = api.getConnectionToken(orgId, connectionId, getConnectionTokenRequest);
         // TODO: test validations
     }
 
     /**
-     * List the connections this agent may use, with grant status. No secrets.
+     * List the outbound connections this agent may use
      *
-     * GET /orgs/{orgId}/api/v1/agents/me/connections
+     * Agent bearer token required. Returns every active Token Vault connection that allows the calling agent, with grant status. No secrets are returned.
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void listConnectionsTest() throws ApiException {
         String orgId = null;
-        api.listConnections(orgId);
+        ListConnectionsResponse response = api.listConnections(orgId);
         // TODO: test validations
     }
 

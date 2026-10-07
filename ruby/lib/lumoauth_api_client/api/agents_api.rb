@@ -93,20 +93,26 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Workload attestation: exchange a cloud OIDC token for an agent access token
+    # Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent's registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
     # @param org_id [String] 
     # @param agent_id [String] 
+    # @param attest_request [AttestRequest] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
-    def attest(org_id, agent_id, opts = {})
-      attest_with_http_info(org_id, agent_id, opts)
-      nil
+    # @return [AttestResponse]
+    def attest(org_id, agent_id, attest_request, opts = {})
+      data, _status_code, _headers = attest_with_http_info(org_id, agent_id, attest_request, opts)
+      data
     end
 
+    # Workload attestation: exchange a cloud OIDC token for an agent access token
+    # Public (the attestation token is the credential). The agent runtime presents a cloud-issued OIDC token (GitHub Actions, GCP, AWS IRSA, Kubernetes, Azure, SPIFFE, …); its signature is verified against the issuer JWKS and its subject against the agent&#39;s registered workload identity binding. Rate limited per IP and per agent; every rejection is the same generic 401.
     # @param org_id [String] 
     # @param agent_id [String] 
+    # @param attest_request [AttestRequest] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def attest_with_http_info(org_id, agent_id, opts = {})
+    # @return [Array<(AttestResponse, Integer, Hash)>] AttestResponse data, response status code and response headers
+    def attest_with_http_info(org_id, agent_id, attest_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AgentsApi.attest ...'
       end
@@ -118,6 +124,10 @@ module LumoAuthApiClient
       if @api_client.config.client_side_validation && agent_id.nil?
         fail ArgumentError, "Missing the required parameter 'agent_id' when calling AgentsApi.attest"
       end
+      # verify the required parameter 'attest_request' is set
+      if @api_client.config.client_side_validation && attest_request.nil?
+        fail ArgumentError, "Missing the required parameter 'attest_request' when calling AgentsApi.attest"
+      end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/agents/{agentId}/attest'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s)).sub('{' + 'agentId' + '}', CGI.escape(agent_id.to_s))
 
@@ -126,15 +136,22 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(attest_request)
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AttestResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -300,19 +317,23 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Signed A2A agent card
+    # Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age=300).
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [SignedAgentCard]
     def get_agent_card(org_id, agent_id, opts = {})
-      get_agent_card_with_http_info(org_id, agent_id, opts)
-      nil
+      data, _status_code, _headers = get_agent_card_with_http_info(org_id, agent_id, opts)
+      data
     end
 
+    # Signed A2A agent card
+    # Public. Returns the JWS-signed A2A AgentCard of an active agent that has published an A2A endpoint. Cacheable (Cache-Control: public, max-age&#x3D;300).
     # @param org_id [String] 
     # @param agent_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(SignedAgentCard, Integer, Hash)>] SignedAgentCard data, response status code and response headers
     def get_agent_card_with_http_info(org_id, agent_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AgentsApi.get_agent_card ...'
@@ -333,6 +354,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -341,7 +364,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'SignedAgentCard'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || []
@@ -491,17 +514,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Register (or re-register) an agent
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [RegisterAgentResponse]
     def register_agent(org_id, opts = {})
-      register_agent_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = register_agent_with_http_info(org_id, opts)
+      data
     end
 
+    # Register (or re-register) an agent
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(RegisterAgentResponse, Integer, Hash)>] RegisterAgentResponse data, response status code and response headers
     def register_agent_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AgentsApi.register_agent ...'
@@ -518,6 +543,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -526,7 +553,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'RegisterAgentResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -548,24 +575,34 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
+    # Verify a signed A2A agent card
+    # Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\"card\": {...}, \"jwks_uri\": \"https://...\"} to verify against an external issuer's key set (SSRF-guarded); by default the organization's own JWKS is used.
     # @param org_id [String] 
+    # @param request_body [Hash<String, Object>] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
-    def verify_agent_card(org_id, opts = {})
-      verify_agent_card_with_http_info(org_id, opts)
-      nil
+    # @return [VerifyAgentCardResponse]
+    def verify_agent_card(org_id, request_body, opts = {})
+      data, _status_code, _headers = verify_agent_card_with_http_info(org_id, request_body, opts)
+      data
     end
 
+    # Verify a signed A2A agent card
+    # Authenticated (user, agent or API key of this organization). The body is the signed card itself, or {\&quot;card\&quot;: {...}, \&quot;jwks_uri\&quot;: \&quot;https://...\&quot;} to verify against an external issuer&#39;s key set (SSRF-guarded); by default the organization&#39;s own JWKS is used.
     # @param org_id [String] 
+    # @param request_body [Hash<String, Object>] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
-    def verify_agent_card_with_http_info(org_id, opts = {})
+    # @return [Array<(VerifyAgentCardResponse, Integer, Hash)>] VerifyAgentCardResponse data, response status code and response headers
+    def verify_agent_card_with_http_info(org_id, request_body, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AgentsApi.verify_agent_card ...'
       end
       # verify the required parameter 'org_id' is set
       if @api_client.config.client_side_validation && org_id.nil?
         fail ArgumentError, "Missing the required parameter 'org_id' when calling AgentsApi.verify_agent_card"
+      end
+      # verify the required parameter 'request_body' is set
+      if @api_client.config.client_side_validation && request_body.nil?
+        fail ArgumentError, "Missing the required parameter 'request_body' when calling AgentsApi.verify_agent_card"
       end
       # resource path
       local_var_path = '/orgs/{orgId}/api/v1/agents/agent-card/verify'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
@@ -575,15 +612,22 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(request_body)
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'VerifyAgentCardResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

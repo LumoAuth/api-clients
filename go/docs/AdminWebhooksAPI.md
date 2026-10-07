@@ -4,31 +4,33 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AdminWebhooksCreate**](AdminWebhooksAPI.md#AdminWebhooksCreate) | **Post** /orgs/{orgId}/api/v1/admin/webhooks | Create a new webhook
+[**AdminWebhooksCreate**](AdminWebhooksAPI.md#AdminWebhooksCreate) | **Post** /orgs/{orgId}/api/v1/admin/webhooks | Create a webhook
 [**AdminWebhooksDelete**](AdminWebhooksAPI.md#AdminWebhooksDelete) | **Delete** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Delete a webhook
-[**AdminWebhooksDeliveriesList**](AdminWebhooksAPI.md#AdminWebhooksDeliveriesList) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent delivery attempts for a webhook.
-[**AdminWebhooksDeliveryReplay**](AdminWebhooksAPI.md#AdminWebhooksDeliveryReplay) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
-[**AdminWebhooksDeliveryShow**](AdminWebhooksAPI.md#AdminWebhooksDeliveryShow) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a single delivery, including the per-attempt history (the &#x60;attempts&#x60; JSON column) for diagnosis.
-[**AdminWebhooksEvents**](AdminWebhooksAPI.md#AdminWebhooksEvents) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/events | Get available webhook event types
-[**AdminWebhooksGet**](AdminWebhooksAPI.md#AdminWebhooksGet) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a single webhook by ID
-[**AdminWebhooksList**](AdminWebhooksAPI.md#AdminWebhooksList) | **Get** /orgs/{orgId}/api/v1/admin/webhooks | List all webhooks in the tenant
-[**AdminWebhooksRotateSecret**](AdminWebhooksAPI.md#AdminWebhooksRotateSecret) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate webhook secret
-[**AdminWebhooksTest**](AdminWebhooksAPI.md#AdminWebhooksTest) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Test a webhook by sending a test payload
-[**AdminWebhooksTunnelStart**](AdminWebhooksAPI.md#AdminWebhooksTunnelStart) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | 
-[**AdminWebhooksTunnelStop**](AdminWebhooksAPI.md#AdminWebhooksTunnelStop) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | 
-[**AdminWebhooksTunnelStream**](AdminWebhooksAPI.md#AdminWebhooksTunnelStream) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | 
-[**AdminWebhooksWebhooksDisable**](AdminWebhooksAPI.md#AdminWebhooksWebhooksDisable) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable webhook
-[**AdminWebhooksWebhooksEnable**](AdminWebhooksAPI.md#AdminWebhooksWebhooksEnable) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable webhook
-[**PatchAdminWebhooksUpdate**](AdminWebhooksAPI.md#PatchAdminWebhooksUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook
-[**PutAdminWebhooksUpdate**](AdminWebhooksAPI.md#PutAdminWebhooksUpdate) | **Put** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update an existing webhook
+[**AdminWebhooksDeliveriesList**](AdminWebhooksAPI.md#AdminWebhooksDeliveriesList) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries | List recent deliveries
+[**AdminWebhooksDeliveryReplay**](AdminWebhooksAPI.md#AdminWebhooksDeliveryReplay) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay | Replay a delivery
+[**AdminWebhooksDeliveryShow**](AdminWebhooksAPI.md#AdminWebhooksDeliveryShow) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId} | Get a delivery
+[**AdminWebhooksEvents**](AdminWebhooksAPI.md#AdminWebhooksEvents) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/events | List available webhook event types
+[**AdminWebhooksGet**](AdminWebhooksAPI.md#AdminWebhooksGet) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Get a webhook
+[**AdminWebhooksList**](AdminWebhooksAPI.md#AdminWebhooksList) | **Get** /orgs/{orgId}/api/v1/admin/webhooks | List webhooks
+[**AdminWebhooksRotateSecret**](AdminWebhooksAPI.md#AdminWebhooksRotateSecret) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret | Rotate the signing secret
+[**AdminWebhooksTest**](AdminWebhooksAPI.md#AdminWebhooksTest) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test | Send a test delivery
+[**AdminWebhooksTunnelStart**](AdminWebhooksAPI.md#AdminWebhooksTunnelStart) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/start | Start a webhook tunnel
+[**AdminWebhooksTunnelStop**](AdminWebhooksAPI.md#AdminWebhooksTunnelStop) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop | Stop a webhook tunnel
+[**AdminWebhooksTunnelStream**](AdminWebhooksAPI.md#AdminWebhooksTunnelStream) | **Get** /orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream | Stream tunnel deliveries (SSE)
+[**AdminWebhooksWebhooksDisable**](AdminWebhooksAPI.md#AdminWebhooksWebhooksDisable) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable | Disable a webhook
+[**AdminWebhooksWebhooksEnable**](AdminWebhooksAPI.md#AdminWebhooksWebhooksEnable) | **Post** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable | Enable a webhook
+[**PatchAdminWebhooksUpdate**](AdminWebhooksAPI.md#PatchAdminWebhooksUpdate) | **Patch** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Partially update a webhook
+[**PutAdminWebhooksUpdate**](AdminWebhooksAPI.md#PutAdminWebhooksUpdate) | **Put** /orgs/{orgId}/api/v1/admin/webhooks/{webhookId} | Update a webhook
 
 
 
 ## AdminWebhooksCreate
 
-> AdminWebhooksCreate(ctx, orgId).Execute()
+> AdminWebhooksCreateResponse AdminWebhooksCreate(ctx, orgId).Execute()
 
-Create a new webhook
+Create a webhook
+
+
 
 ### Example
 
@@ -47,11 +49,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksCreate(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksCreate(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksCreate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksCreate`: AdminWebhooksCreateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksCreate`: %v\n", resp)
 }
 ```
 
@@ -74,7 +78,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksCreateResponse**](AdminWebhooksCreateResponse.md)
 
 ### Authorization
 
@@ -83,7 +87,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -92,7 +96,7 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksDelete
 
-> AdminWebhooksDelete(ctx, orgId, webhookId).Execute()
+> MessageResponse AdminWebhooksDelete(ctx, orgId, webhookId).Execute()
 
 Delete a webhook
 
@@ -114,11 +118,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDelete(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDelete(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksDelete``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksDelete`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksDelete`: %v\n", resp)
 }
 ```
 
@@ -143,7 +149,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -152,7 +158,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -161,9 +167,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksDeliveriesList
 
-> AdminWebhooksDeliveriesList(ctx, orgId, webhookId).Execute()
+> AdminWebhooksDeliveriesListResponse AdminWebhooksDeliveriesList(ctx, orgId, webhookId).Execute()
 
-List recent delivery attempts for a webhook.
+List recent deliveries
 
 
 
@@ -185,11 +191,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveriesList(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveriesList(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksDeliveriesList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksDeliveriesList`: AdminWebhooksDeliveriesListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksDeliveriesList`: %v\n", resp)
 }
 ```
 
@@ -214,7 +222,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksDeliveriesListResponse**](AdminWebhooksDeliveriesListResponse.md)
 
 ### Authorization
 
@@ -223,7 +231,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -232,9 +240,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksDeliveryReplay
 
-> AdminWebhooksDeliveryReplay(ctx, orgId, webhookId, deliveryId).Execute()
+> AdminWebhooksDeliveryReplayResponse AdminWebhooksDeliveryReplay(ctx, orgId, webhookId, deliveryId).Execute()
 
-Manually re-enqueue a delivery. Useful when:   - a receiver was misconfigured and is now ready to accept   - a dead-lettered event needs a one-off replay after triage
+Replay a delivery
 
 
 
@@ -257,11 +265,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryReplay(context.Background(), orgId, webhookId, deliveryId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryReplay(context.Background(), orgId, webhookId, deliveryId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksDeliveryReplay``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksDeliveryReplay`: AdminWebhooksDeliveryReplayResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksDeliveryReplay`: %v\n", resp)
 }
 ```
 
@@ -288,7 +298,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksDeliveryReplayResponse**](AdminWebhooksDeliveryReplayResponse.md)
 
 ### Authorization
 
@@ -297,7 +307,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -306,9 +316,11 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksDeliveryShow
 
-> AdminWebhooksDeliveryShow(ctx, orgId, webhookId, deliveryId).Execute()
+> AdminWebhooksDeliveryShowResponse AdminWebhooksDeliveryShow(ctx, orgId, webhookId, deliveryId).Execute()
 
-Get a single delivery, including the per-attempt history (the `attempts` JSON column) for diagnosis.
+Get a delivery
+
+
 
 ### Example
 
@@ -329,11 +341,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryShow(context.Background(), orgId, webhookId, deliveryId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksDeliveryShow(context.Background(), orgId, webhookId, deliveryId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksDeliveryShow``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksDeliveryShow`: AdminWebhooksDeliveryShowResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksDeliveryShow`: %v\n", resp)
 }
 ```
 
@@ -360,7 +374,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksDeliveryShowResponse**](AdminWebhooksDeliveryShowResponse.md)
 
 ### Authorization
 
@@ -369,7 +383,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -378,9 +392,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksEvents
 
-> AdminWebhooksEvents(ctx, orgId).Execute()
+> AdminWebhooksEventsResponse AdminWebhooksEvents(ctx, orgId).Execute()
 
-Get available webhook event types
+List available webhook event types
 
 ### Example
 
@@ -399,11 +413,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksEvents(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksEvents(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksEvents``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksEvents`: AdminWebhooksEventsResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksEvents`: %v\n", resp)
 }
 ```
 
@@ -426,7 +442,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksEventsResponse**](AdminWebhooksEventsResponse.md)
 
 ### Authorization
 
@@ -435,7 +451,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -444,9 +460,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksGet
 
-> AdminWebhooksGet(ctx, orgId, webhookId).Execute()
+> AdminWebhooksGetResponse AdminWebhooksGet(ctx, orgId, webhookId).Execute()
 
-Get a single webhook by ID
+Get a webhook
 
 ### Example
 
@@ -466,11 +482,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksGet(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksGet(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksGet``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksGet`: AdminWebhooksGetResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksGet`: %v\n", resp)
 }
 ```
 
@@ -495,7 +513,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksGetResponse**](AdminWebhooksGetResponse.md)
 
 ### Authorization
 
@@ -504,7 +522,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -513,9 +531,11 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksList
 
-> AdminWebhooksList(ctx, orgId).Execute()
+> AdminWebhooksListResponse AdminWebhooksList(ctx, orgId).Execute()
 
-List all webhooks in the tenant
+List webhooks
+
+
 
 ### Example
 
@@ -534,11 +554,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksList(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksList(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksList``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksList`: AdminWebhooksListResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksList`: %v\n", resp)
 }
 ```
 
@@ -561,7 +583,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksListResponse**](AdminWebhooksListResponse.md)
 
 ### Authorization
 
@@ -570,7 +592,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -579,9 +601,11 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksRotateSecret
 
-> AdminWebhooksRotateSecret(ctx, orgId, webhookId).Execute()
+> AdminWebhooksRotateSecretResponse AdminWebhooksRotateSecret(ctx, orgId, webhookId).Execute()
 
-Rotate webhook secret
+Rotate the signing secret
+
+
 
 ### Example
 
@@ -601,11 +625,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksRotateSecret(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksRotateSecret(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksRotateSecret``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksRotateSecret`: AdminWebhooksRotateSecretResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksRotateSecret`: %v\n", resp)
 }
 ```
 
@@ -630,7 +656,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksRotateSecretResponse**](AdminWebhooksRotateSecretResponse.md)
 
 ### Authorization
 
@@ -639,7 +665,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -648,9 +674,11 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksTest
 
-> AdminWebhooksTest(ctx, orgId, webhookId).Execute()
+> AdminWebhooksTestResponse AdminWebhooksTest(ctx, orgId, webhookId).Execute()
 
-Test a webhook by sending a test payload
+Send a test delivery
+
+
 
 ### Example
 
@@ -670,11 +698,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTest(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTest(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksTest``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksTest`: AdminWebhooksTestResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksTest`: %v\n", resp)
 }
 ```
 
@@ -699,7 +729,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksTestResponse**](AdminWebhooksTestResponse.md)
 
 ### Authorization
 
@@ -708,7 +738,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -717,7 +747,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksTunnelStart
 
-> AdminWebhooksTunnelStart(ctx, orgId).Execute()
+> AdminWebhooksTunnelStartResponse AdminWebhooksTunnelStart(ctx, orgId).Execute()
+
+Start a webhook tunnel
 
 
 
@@ -738,11 +770,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStart(context.Background(), orgId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStart(context.Background(), orgId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksTunnelStart``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksTunnelStart`: AdminWebhooksTunnelStartResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksTunnelStart`: %v\n", resp)
 }
 ```
 
@@ -765,7 +799,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksTunnelStartResponse**](AdminWebhooksTunnelStartResponse.md)
 
 ### Authorization
 
@@ -774,7 +808,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -783,7 +817,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksTunnelStop
 
-> AdminWebhooksTunnelStop(ctx, orgId, webhookId).Execute()
+> MessageResponse AdminWebhooksTunnelStop(ctx, orgId, webhookId).Execute()
+
+Stop a webhook tunnel
 
 
 
@@ -805,11 +841,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStop(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStop(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksTunnelStop``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksTunnelStop`: MessageResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksTunnelStop`: %v\n", resp)
 }
 ```
 
@@ -834,7 +872,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**MessageResponse**](MessageResponse.md)
 
 ### Authorization
 
@@ -843,7 +881,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -852,7 +890,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksTunnelStream
 
-> AdminWebhooksTunnelStream(ctx, orgId, webhookId).Execute()
+> string AdminWebhooksTunnelStream(ctx, orgId, webhookId).Execute()
+
+Stream tunnel deliveries (SSE)
 
 
 
@@ -874,11 +914,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStream(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksTunnelStream(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksTunnelStream``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksTunnelStream`: string
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksTunnelStream`: %v\n", resp)
 }
 ```
 
@@ -903,7 +945,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+**string**
 
 ### Authorization
 
@@ -912,7 +954,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: text/event-stream
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -921,9 +963,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksWebhooksDisable
 
-> AdminWebhooksWebhooksDisable(ctx, orgId, webhookId).Execute()
+> AdminWebhooksWebhooksDisableResponse AdminWebhooksWebhooksDisable(ctx, orgId, webhookId).Execute()
 
-Disable webhook
+Disable a webhook
 
 ### Example
 
@@ -943,11 +985,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksDisable(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksDisable(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksWebhooksDisable``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksWebhooksDisable`: AdminWebhooksWebhooksDisableResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksWebhooksDisable`: %v\n", resp)
 }
 ```
 
@@ -972,7 +1016,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksWebhooksDisableResponse**](AdminWebhooksWebhooksDisableResponse.md)
 
 ### Authorization
 
@@ -981,7 +1025,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -990,9 +1034,9 @@ Name | Type | Description  | Notes
 
 ## AdminWebhooksWebhooksEnable
 
-> AdminWebhooksWebhooksEnable(ctx, orgId, webhookId).Execute()
+> AdminWebhooksWebhooksEnableResponse AdminWebhooksWebhooksEnable(ctx, orgId, webhookId).Execute()
 
-Enable webhook
+Enable a webhook
 
 ### Example
 
@@ -1012,11 +1056,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksEnable(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.AdminWebhooksWebhooksEnable(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.AdminWebhooksWebhooksEnable``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `AdminWebhooksWebhooksEnable`: AdminWebhooksWebhooksEnableResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.AdminWebhooksWebhooksEnable`: %v\n", resp)
 }
 ```
 
@@ -1041,7 +1087,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**AdminWebhooksWebhooksEnableResponse**](AdminWebhooksWebhooksEnableResponse.md)
 
 ### Authorization
 
@@ -1050,7 +1096,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1059,9 +1105,9 @@ Name | Type | Description  | Notes
 
 ## PatchAdminWebhooksUpdate
 
-> PatchAdminWebhooksUpdate(ctx, orgId, webhookId).Execute()
+> PutAdminWebhooksUpdateResponse PatchAdminWebhooksUpdate(ctx, orgId, webhookId).Execute()
 
-Update an existing webhook
+Partially update a webhook
 
 ### Example
 
@@ -1081,11 +1127,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.PatchAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.PatchAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.PatchAdminWebhooksUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PatchAdminWebhooksUpdate`: PutAdminWebhooksUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.PatchAdminWebhooksUpdate`: %v\n", resp)
 }
 ```
 
@@ -1110,7 +1158,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1119,7 +1167,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)
@@ -1128,9 +1176,9 @@ Name | Type | Description  | Notes
 
 ## PutAdminWebhooksUpdate
 
-> PutAdminWebhooksUpdate(ctx, orgId, webhookId).Execute()
+> PutAdminWebhooksUpdateResponse PutAdminWebhooksUpdate(ctx, orgId, webhookId).Execute()
 
-Update an existing webhook
+Update a webhook
 
 ### Example
 
@@ -1150,11 +1198,13 @@ func main() {
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.AdminWebhooksAPI.PutAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
+	resp, r, err := apiClient.AdminWebhooksAPI.PutAdminWebhooksUpdate(context.Background(), orgId, webhookId).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `AdminWebhooksAPI.PutAdminWebhooksUpdate``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
+	// response from `PutAdminWebhooksUpdate`: PutAdminWebhooksUpdateResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminWebhooksAPI.PutAdminWebhooksUpdate`: %v\n", resp)
 }
 ```
 
@@ -1179,7 +1229,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
- (empty response body)
+[**PutAdminWebhooksUpdateResponse**](PutAdminWebhooksUpdateResponse.md)
 
 ### Authorization
 
@@ -1188,7 +1238,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

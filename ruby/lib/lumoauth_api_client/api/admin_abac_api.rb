@@ -19,19 +19,19 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
-    # Create a new attribute definition
+    # Create an attribute definition
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacAttributesCreateResponse]
     def abac_attributes_create(org_id, opts = {})
-      abac_attributes_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = abac_attributes_create_with_http_info(org_id, opts)
+      data
     end
 
-    # Create a new attribute definition
+    # Create an attribute definition
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacAttributesCreateResponse, Integer, Hash)>] AbacAttributesCreateResponse data, response status code and response headers
     def abac_attributes_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_attributes_create ...'
@@ -48,6 +48,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -56,7 +58,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacAttributesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -82,17 +84,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def abac_attributes_delete(org_id, id, opts = {})
-      abac_attributes_delete_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = abac_attributes_delete_with_http_info(org_id, id, opts)
+      data
     end
 
     # Delete an attribute definition
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def abac_attributes_delete_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_attributes_delete ...'
@@ -113,6 +115,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -121,7 +125,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -143,21 +147,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single attribute definition
+    # Get an attribute definition
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacAttributesGetResponse]
     def abac_attributes_get(org_id, id, opts = {})
-      abac_attributes_get_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = abac_attributes_get_with_http_info(org_id, id, opts)
+      data
     end
 
-    # Get a single attribute definition
+    # Get an attribute definition
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacAttributesGetResponse, Integer, Hash)>] AbacAttributesGetResponse data, response status code and response headers
     def abac_attributes_get_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_attributes_get ...'
@@ -178,6 +182,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -186,7 +192,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacAttributesGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -208,19 +214,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all attribute definitions
+    # List attribute definitions
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacAttributesListResponse]
     def abac_attributes_list(org_id, opts = {})
-      abac_attributes_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = abac_attributes_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List all attribute definitions
+    # List attribute definitions
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacAttributesListResponse, Integer, Hash)>] AbacAttributesListResponse data, response status code and response headers
     def abac_attributes_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_attributes_list ...'
@@ -237,6 +243,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -245,7 +253,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacAttributesListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -267,19 +275,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Create a new ABAC policy
+    # Create an ABAC policy
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacPoliciesCreateResponse]
     def abac_policies_create(org_id, opts = {})
-      abac_policies_create_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = abac_policies_create_with_http_info(org_id, opts)
+      data
     end
 
-    # Create a new ABAC policy
+    # Create an ABAC policy
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacPoliciesCreateResponse, Integer, Hash)>] AbacPoliciesCreateResponse data, response status code and response headers
     def abac_policies_create_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_policies_create ...'
@@ -296,6 +304,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -304,7 +314,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacPoliciesCreateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -330,17 +340,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [MessageResponse]
     def abac_policies_delete(org_id, id, opts = {})
-      abac_policies_delete_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = abac_policies_delete_with_http_info(org_id, id, opts)
+      data
     end
 
     # Delete an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(MessageResponse, Integer, Hash)>] MessageResponse data, response status code and response headers
     def abac_policies_delete_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_policies_delete ...'
@@ -361,6 +371,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -369,7 +381,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'MessageResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -391,21 +403,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Get a single ABAC policy
+    # Get an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacPoliciesGetResponse]
     def abac_policies_get(org_id, id, opts = {})
-      abac_policies_get_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = abac_policies_get_with_http_info(org_id, id, opts)
+      data
     end
 
-    # Get a single ABAC policy
+    # Get an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacPoliciesGetResponse, Integer, Hash)>] AbacPoliciesGetResponse data, response status code and response headers
     def abac_policies_get_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_policies_get ...'
@@ -426,6 +438,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -434,7 +448,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacPoliciesGetResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -456,19 +470,19 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # List all ABAC policies
+    # List ABAC policies
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacPoliciesListResponse]
     def abac_policies_list(org_id, opts = {})
-      abac_policies_list_with_http_info(org_id, opts)
-      nil
+      data, _status_code, _headers = abac_policies_list_with_http_info(org_id, opts)
+      data
     end
 
-    # List all ABAC policies
+    # List ABAC policies
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacPoliciesListResponse, Integer, Hash)>] AbacPoliciesListResponse data, response status code and response headers
     def abac_policies_list_with_http_info(org_id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_policies_list ...'
@@ -485,6 +499,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -493,7 +509,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacPoliciesListResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -515,21 +531,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Toggle policy active status
+    # Toggle a policy between active and inactive
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [AbacPoliciesToggleResponse]
     def abac_policies_toggle(org_id, id, opts = {})
-      abac_policies_toggle_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = abac_policies_toggle_with_http_info(org_id, id, opts)
+      data
     end
 
-    # Toggle policy active status
+    # Toggle a policy between active and inactive
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(AbacPoliciesToggleResponse, Integer, Hash)>] AbacPoliciesToggleResponse data, response status code and response headers
     def abac_policies_toggle_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.abac_policies_toggle ...'
@@ -550,6 +566,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -558,7 +576,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'AbacPoliciesToggleResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -580,21 +598,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update an attribute definition
+    # Partially update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [PutAbacAttributesUpdateResponse]
     def patch_abac_attributes_update(org_id, id, opts = {})
-      patch_abac_attributes_update_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = patch_abac_attributes_update_with_http_info(org_id, id, opts)
+      data
     end
 
-    # Update an attribute definition
+    # Partially update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(PutAbacAttributesUpdateResponse, Integer, Hash)>] PutAbacAttributesUpdateResponse data, response status code and response headers
     def patch_abac_attributes_update_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.patch_abac_attributes_update ...'
@@ -615,6 +633,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -623,7 +643,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'PutAbacAttributesUpdateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -645,21 +665,21 @@ module LumoAuthApiClient
       return data, status_code, headers
     end
 
-    # Update an ABAC policy
+    # Partially update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [PutAbacPoliciesUpdateResponse]
     def patch_abac_policies_update(org_id, id, opts = {})
-      patch_abac_policies_update_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = patch_abac_policies_update_with_http_info(org_id, id, opts)
+      data
     end
 
-    # Update an ABAC policy
+    # Partially update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(PutAbacPoliciesUpdateResponse, Integer, Hash)>] PutAbacPoliciesUpdateResponse data, response status code and response headers
     def patch_abac_policies_update_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.patch_abac_policies_update ...'
@@ -680,6 +700,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -688,7 +710,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'PutAbacPoliciesUpdateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -714,17 +736,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [PutAbacAttributesUpdateResponse]
     def put_abac_attributes_update(org_id, id, opts = {})
-      put_abac_attributes_update_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = put_abac_attributes_update_with_http_info(org_id, id, opts)
+      data
     end
 
     # Update an attribute definition
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(PutAbacAttributesUpdateResponse, Integer, Hash)>] PutAbacAttributesUpdateResponse data, response status code and response headers
     def put_abac_attributes_update_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.put_abac_attributes_update ...'
@@ -745,6 +767,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -753,7 +777,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'PutAbacAttributesUpdateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
@@ -779,17 +803,17 @@ module LumoAuthApiClient
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [nil]
+    # @return [PutAbacPoliciesUpdateResponse]
     def put_abac_policies_update(org_id, id, opts = {})
-      put_abac_policies_update_with_http_info(org_id, id, opts)
-      nil
+      data, _status_code, _headers = put_abac_policies_update_with_http_info(org_id, id, opts)
+      data
     end
 
     # Update an ABAC policy
     # @param org_id [String] 
     # @param id [String] 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    # @return [Array<(PutAbacPoliciesUpdateResponse, Integer, Hash)>] PutAbacPoliciesUpdateResponse data, response status code and response headers
     def put_abac_policies_update_with_http_info(org_id, id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: AdminAbacApi.put_abac_policies_update ...'
@@ -810,6 +834,8 @@ module LumoAuthApiClient
 
       # header parameters
       header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
 
       # form parameters
       form_params = opts[:form_params] || {}
@@ -818,7 +844,7 @@ module LumoAuthApiClient
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type]
+      return_type = opts[:debug_return_type] || 'PutAbacPoliciesUpdateResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']

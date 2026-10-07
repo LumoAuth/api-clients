@@ -5,7 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**reason** | **str** | Optional denial reason. | [optional] 
+**reason** | **str** | Optional denial reason (internal; never shown to the agent). | [optional] 
+**agent_message** | **str** | Optional message the agent MAY read on the status endpoint / callback. | [optional] 
 
 ## Example
 

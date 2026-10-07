@@ -14,6 +14,10 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AuthorizationServerMetadata;
+import io.lumoauth.client.model.GetSsfConfigurationResponse;
+import io.lumoauth.client.model.JsonWebKeySet;
+import io.lumoauth.client.model.OpenIdConfiguration;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -31,42 +35,56 @@ public class WellKnownApiTest {
     private final WellKnownApi api = new WellKnownApi();
 
     /**
+     * OAuth 2.0 authorization server metadata (RFC 8414)
+     *
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getAuthorizationServerMetadataTest() throws ApiException {
         String orgId = null;
-        api.getAuthorizationServerMetadata(orgId);
+        AuthorizationServerMetadata response = api.getAuthorizationServerMetadata(orgId);
         // TODO: test validations
     }
 
     /**
+     * JSON Web Key Set (RFC 7517)
+     *
+     * Public signing keys of the organization (its tenant signing keys plus any platform keys kept for backward compatibility). Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600).
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getJwksTest() throws ApiException {
         String orgId = null;
-        api.getJwks(orgId);
+        JsonWebKeySet response = api.getJwks(orgId);
         // TODO: test validations
     }
 
     /**
+     * OpenID Provider configuration (OIDC Discovery 1.0)
+     *
+     * Public, CORS-enabled and cacheable (Cache-Control: public, max-age&#x3D;3600). Endpoint URLs are rewritten to the organization&#39;s custom domain when one is active.
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getOpenidConfigurationTest() throws ApiException {
         String orgId = null;
-        api.getOpenidConfiguration(orgId);
+        OpenIdConfiguration response = api.getOpenidConfiguration(orgId);
         // TODO: test validations
     }
 
     /**
+     * SSF transmitter configuration metadata
+     *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getSsfConfigurationTest() throws ApiException {
         String orgId = null;
-        api.getSsfConfiguration(orgId);
+        GetSsfConfigurationResponse response = api.getSsfConfiguration(orgId);
         // TODO: test validations
     }
 
