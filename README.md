@@ -2,14 +2,14 @@
 
 This tree holds the **generated** LumoAuth API clients: nine languages,
 produced from the server's OpenAPI 3 spec by
-[`server/scripts/sdk-codegen/`](../server/scripts/sdk-codegen/). The spec
+[`sdk-codegen/`](../sdk-codegen/). The spec
 they were generated from is committed here as [`openapi.json`](./openapi.json)
 (204 paths / ~300 operations, including the AAuth agent, MCP authorization,
 JIT permission, and AuthZEN `/api/v1/authz` surfaces).
 
 **Do not edit anything under a language directory by hand** — the pipeline
 regenerates with `rm -rf` and your change is gone. Fixes belong in the
-server's OpenAPI annotations or in `server/scripts/sdk-codegen/configs/*.json`.
+server's OpenAPI annotations or in `sdk-codegen/configs/*.json`.
 
 ## Generated vs hand-maintained: which do I use?
 
@@ -50,15 +50,15 @@ and that's the roadmap: ergonomic wrappers will be layered **on top of**
 | PHP | `php/` | `lumoauth/api-client` | 0.1.0 | packagist.org (via the `LumoAuth/api-client-php` split mirror) |
 
 All versions move in lockstep and are set in
-`server/scripts/sdk-codegen/configs/<language>.json` (one `*Version` key per
+`sdk-codegen/configs/<language>.json` (one `*Version` key per
 config). The SDK version is independent of the server version.
 
 ## Regenerating
 
 ```bash
 cd server
-./scripts/sdk-codegen/generate.sh            # all languages
-./scripts/sdk-codegen/generate.sh java ruby  # a subset
+../sdk-codegen/generate.sh            # all languages
+../sdk-codegen/generate.sh java ruby  # a subset
 ```
 
 The script resolves the spec in this order: `LUMO_SPEC_FILE` → a fresh
