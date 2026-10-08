@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * Only when valid&#x3D;true.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T18:09:30.559010725-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-08T10:39:00.868661198-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class VerifyAgentCardResponseCardSummary {
   public static final String SERIALIZED_NAME_PROTOCOL_VERSION = "protocolVersion";
   @SerializedName(SERIALIZED_NAME_PROTOCOL_VERSION)

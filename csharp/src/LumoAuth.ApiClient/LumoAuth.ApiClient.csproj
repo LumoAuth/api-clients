@@ -12,7 +12,7 @@
     <Description>Generated LumoAuth API client (raw HTTP client + typed models)</Description>
     <Copyright>Copyright (c) 2026 LumoAuth LLC</Copyright>
     <RootNamespace>LumoAuth.ApiClient</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>1.0.0</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\LumoAuth.ApiClient.xml</DocumentationFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/lumoauth/api-clients.git</RepositoryUrl>

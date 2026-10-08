@@ -11,7 +11,7 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-10-07T18:09:30.559010725-07:00[America/Los_Angeles]
+  - Build date: 2026-10-08T10:39:00.868661198-07:00[America/Los_Angeles]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>io.lumoauth</groupId>
   <artifactId>lumoauth-api-client</artifactId>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "io.lumoauth:lumoauth-api-client:0.1.0"
+     implementation "io.lumoauth:lumoauth-api-client:1.0.0"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lumoauth-api-client-0.1.0.jar`
+* `target/lumoauth-api-client-1.0.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started

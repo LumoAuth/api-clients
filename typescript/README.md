@@ -7,7 +7,7 @@
 > `github.com/lumoauth/lumo-auth-go`), prefer it.
 > Do not edit by hand: changes are overwritten on the next regeneration.
 
-## @lumoauth/api-client@0.1.0
+## @lumoauth/api-client@1.0.0
 
 This generator creates TypeScript/JavaScript client that utilizes [axios](https://github.com/axios/axios). The generated Node module can be used in the following environments:
 
@@ -45,7 +45,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @lumoauth/api-client@0.1.0 --save
+npm install @lumoauth/api-client@1.0.0 --save
 ```
 
 _unPublished (not recommended):_

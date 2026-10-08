@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.13'
   s.tvos.deployment_target = '11.0'
   s.watchos.deployment_target = '4.0'
-  s.version = '0.1.0'
+  s.version = '1.0.0'
   s.source = { :git => 'https://github.com/lumoauth/api-clients.git', :tag => "v#{s.version}" }
   s.authors = 'LumoAuth'
   s.license = 'MIT'

@@ -5,7 +5,7 @@
     <artifactId>lumoauth-api-client</artifactId>
     <packaging>jar</packaging>
     <name>lumoauth-api-client</name>
-    <version>0.1.0</version>
+    <version>1.0.0</version>
     <url>https://github.com/lumoauth/api-clients</url>
     <description>Generated LumoAuth API client (raw HTTP client + typed models)</description>
     <scm>

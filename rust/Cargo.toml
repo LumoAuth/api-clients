@@ -1,6 +1,6 @@
 [package]
 name = "lumoauth-api-client"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["sdk@lumoauth.dev"]
 description = "LumoAuth REST API — authentication, authorization, agent registry, MCP server authorization, and tenant administration. Multi-tenant: most paths are scoped under `/orgs/{orgId}/api/v1/...`. "
 license = "MIT"
