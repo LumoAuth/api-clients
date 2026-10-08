@@ -50,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * Userset tree node. Leaves carry subjects; union/intersection nodes carry children of the same shape.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T08:41:20.679341879-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T18:09:30.559010725-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class ExpandRelationResponseTree {
   /**
    * Gets or Sets type

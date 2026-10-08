@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetResourceAttributesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T08:41:20.679341879-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T18:09:30.559010725-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class GetResourceAttributesResponse {
   public static final String SERIALIZED_NAME_RESOURCE_TYPE = "resourceType";
   @SerializedName(SERIALIZED_NAME_RESOURCE_TYPE)

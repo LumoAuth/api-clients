@@ -63,7 +63,7 @@ import com.google.gson.JsonParseException;
 
 import io.lumoauth.client.JSON;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T08:41:20.679341879-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-07T18:09:30.559010725-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class GetStreamConfig200Response extends AbstractOpenApiSchema {
     private static final Logger log = Logger.getLogger(GetStreamConfig200Response.class.getName());
 
