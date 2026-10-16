@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * Attribute name &#x3D;&gt; true when SCIM may not change it.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T15:29:45.017092378Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T19:43:25.176015498Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class ScimSettingsInboundProtectedAttributes {
   public static final String SERIALIZED_NAME_EMAIL = "email";
   @SerializedName(SERIALIZED_NAME_EMAIL)

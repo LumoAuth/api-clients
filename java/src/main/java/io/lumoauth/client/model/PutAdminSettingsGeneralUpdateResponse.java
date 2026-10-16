@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * PutAdminSettingsGeneralUpdateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T15:29:45.017092378Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T19:43:25.176015498Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PutAdminSettingsGeneralUpdateResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)

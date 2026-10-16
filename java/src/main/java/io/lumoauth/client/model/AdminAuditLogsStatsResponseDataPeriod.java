@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAuditLogsStatsResponseDataPeriod
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T15:29:45.017092378Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T19:43:25.176015498Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAuditLogsStatsResponseDataPeriod {
   public static final String SERIALIZED_NAME_FROM = "from";
   @SerializedName(SERIALIZED_NAME_FROM)
