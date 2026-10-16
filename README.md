@@ -1,15 +1,15 @@
 # LumoAuth API clients — generated
 
 This tree holds the **generated** LumoAuth API clients: nine languages,
-produced from the server's OpenAPI 3 spec by
-[`sdk-codegen/`](../sdk-codegen/). The spec
+produced from the server's OpenAPI 3 spec by the codegen pipeline that lives
+in the server repository (`server/sdk-codegen/`). The spec
 they were generated from is committed here as [`openapi.json`](./openapi.json)
 (204 paths / ~300 operations, including the AAuth agent, MCP authorization,
 JIT permission, and AuthZEN `/api/v1/authz` surfaces).
 
 **Do not edit anything under a language directory by hand** — the pipeline
 regenerates with `rm -rf` and your change is gone. Fixes belong in the
-server's OpenAPI annotations or in `sdk-codegen/configs/*.json`.
+server's OpenAPI annotations or in `server/sdk-codegen/configs/*.json`.
 
 ## Generated vs hand-maintained: which do I use?
 
@@ -50,15 +50,15 @@ and that's the roadmap: ergonomic wrappers will be layered **on top of**
 | PHP | `php/` | `lumoauth/api-client` | 0.1.0 | packagist.org (via the `LumoAuth/api-client-php` split mirror) |
 
 All versions move in lockstep and are set in
-`sdk-codegen/configs/<language>.json` (one `*Version` key per
-config). The SDK version is independent of the server version.
+`server/sdk-codegen/VERSION` (one file for all nine; the generator configs
+carry no version). The SDK version is independent of the server version.
 
 ## Regenerating
 
 ```bash
 cd server
-../sdk-codegen/generate.sh            # all languages
-../sdk-codegen/generate.sh java ruby  # a subset
+sdk-codegen/generate.sh            # all languages
+sdk-codegen/generate.sh java ruby  # a subset
 ```
 
 The script resolves the spec in this order: `LUMO_SPEC_FILE` → a fresh
@@ -66,7 +66,9 @@ The script resolves the spec in this order: `LUMO_SPEC_FILE` → a fresh
 `/api/doc.json` → `server/openapi.json` (the **canonical** committed spec,
 guarded by the server repo's `openapi-freshness.yml`) → the copy committed here
 (**derived**, unguarded, last resort). A fresh dump or fetch rewrites both
-committed copies, so they only drift when codegen has not been run.
+committed copies, so they only drift when codegen has not been run. The copy
+committed here is the public form: internal `x-symfony-*` extensions are
+stripped (`server/sdk-codegen/public-spec.php`).
 
 Set `REQUIRE_FRESH_SPEC=1` to make either fallback a hard error instead of a
 warning — do this for every release.
