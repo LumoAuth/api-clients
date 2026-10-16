@@ -41,14 +41,15 @@ public struct AuthenticationSettings: Codable, JSONEncodable, Hashable {
     public var sessionTimeout: Int?
     public var encryptClientSecrets: Bool?
     public var dynamicClientRegistrationEnabled: Bool?
-    public var cimdEnabled: Bool?
+    /** Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. */
+    public var cimdEnabled: Bool? = true
     public var cimdAllowedDomains: [String]?
     public var cimdLocalhostRedirectPolicy: CimdLocalhostRedirectPolicy?
     public var xaaIdpEnabled: Bool?
     public var xaaResourceEnabled: Bool?
     public var progressiveProfiling: AuthenticationSettingsProgressiveProfiling?
 
-    public init(passkeyEnabled: Bool? = nil, biometricEnabled: Bool? = nil, passkeys: AuthenticationSettingsPasskeys? = nil, mfaRequired: Bool? = nil, mfaMethods: [String]? = nil, mfaSmsEnabled: Bool? = nil, mfaPolicy: AuthenticationSettingsMfaPolicy? = nil, pushAuthRequired: Bool? = nil, pushAppName: String? = nil, socialLoginEnabled: Bool? = nil, socialProviders: [String]? = nil, socialConfigs: [String: [String: AnyCodable]]? = nil, passwordMinLength: Int? = nil, passwordRequireSpecial: Bool? = nil, passwordPolicy: AuthenticationSettingsPasswordPolicy? = nil, passwordRotationPolicy: AuthenticationSettingsPasswordRotationPolicy? = nil, noMfaAction: String? = nil, sessionTimeout: Int? = nil, encryptClientSecrets: Bool? = nil, dynamicClientRegistrationEnabled: Bool? = nil, cimdEnabled: Bool? = nil, cimdAllowedDomains: [String]? = nil, cimdLocalhostRedirectPolicy: CimdLocalhostRedirectPolicy? = nil, xaaIdpEnabled: Bool? = nil, xaaResourceEnabled: Bool? = nil, progressiveProfiling: AuthenticationSettingsProgressiveProfiling? = nil) {
+    public init(passkeyEnabled: Bool? = nil, biometricEnabled: Bool? = nil, passkeys: AuthenticationSettingsPasskeys? = nil, mfaRequired: Bool? = nil, mfaMethods: [String]? = nil, mfaSmsEnabled: Bool? = nil, mfaPolicy: AuthenticationSettingsMfaPolicy? = nil, pushAuthRequired: Bool? = nil, pushAppName: String? = nil, socialLoginEnabled: Bool? = nil, socialProviders: [String]? = nil, socialConfigs: [String: [String: AnyCodable]]? = nil, passwordMinLength: Int? = nil, passwordRequireSpecial: Bool? = nil, passwordPolicy: AuthenticationSettingsPasswordPolicy? = nil, passwordRotationPolicy: AuthenticationSettingsPasswordRotationPolicy? = nil, noMfaAction: String? = nil, sessionTimeout: Int? = nil, encryptClientSecrets: Bool? = nil, dynamicClientRegistrationEnabled: Bool? = nil, cimdEnabled: Bool? = true, cimdAllowedDomains: [String]? = nil, cimdLocalhostRedirectPolicy: CimdLocalhostRedirectPolicy? = nil, xaaIdpEnabled: Bool? = nil, xaaResourceEnabled: Bool? = nil, progressiveProfiling: AuthenticationSettingsProgressiveProfiling? = nil) {
         self.passkeyEnabled = passkeyEnabled
         self.biometricEnabled = biometricEnabled
         self.passkeys = passkeys

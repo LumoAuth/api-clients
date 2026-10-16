@@ -113,6 +113,8 @@ __all__ = [
     "AdminAuditLogsStatsResponseData",
     "AdminAuditLogsStatsResponseDataPeriod",
     "AdminClientTokensRevokeAllResponse",
+    "AdminClientsCimdCheckRequest",
+    "AdminClientsCimdCheckResponse",
     "AdminEmailTemplatesListResponse",
     "AdminEmailTemplatesPreviewResponse",
     "AdminEmailTemplatesVariablesResponse",
@@ -245,6 +247,9 @@ __all__ = [
     "CheckPermissionsBulkResponse",
     "CheckRelationResponse",
     "CheckRelationScopedResponse",
+    "CimdCheckResult",
+    "CimdCheckResultEffective",
+    "CimdCheckResultShadowClient",
     "CompleteTaskResponse",
     "CreateApprovalRequest",
     "CreateApprovalResponse",
@@ -545,6 +550,8 @@ from lumoauth_api_client.models.admin_audit_logs_stats_response import AdminAudi
 from lumoauth_api_client.models.admin_audit_logs_stats_response_data import AdminAuditLogsStatsResponseData as AdminAuditLogsStatsResponseData
 from lumoauth_api_client.models.admin_audit_logs_stats_response_data_period import AdminAuditLogsStatsResponseDataPeriod as AdminAuditLogsStatsResponseDataPeriod
 from lumoauth_api_client.models.admin_client_tokens_revoke_all_response import AdminClientTokensRevokeAllResponse as AdminClientTokensRevokeAllResponse
+from lumoauth_api_client.models.admin_clients_cimd_check_request import AdminClientsCimdCheckRequest as AdminClientsCimdCheckRequest
+from lumoauth_api_client.models.admin_clients_cimd_check_response import AdminClientsCimdCheckResponse as AdminClientsCimdCheckResponse
 from lumoauth_api_client.models.admin_email_templates_list_response import AdminEmailTemplatesListResponse as AdminEmailTemplatesListResponse
 from lumoauth_api_client.models.admin_email_templates_preview_response import AdminEmailTemplatesPreviewResponse as AdminEmailTemplatesPreviewResponse
 from lumoauth_api_client.models.admin_email_templates_variables_response import AdminEmailTemplatesVariablesResponse as AdminEmailTemplatesVariablesResponse
@@ -677,6 +684,9 @@ from lumoauth_api_client.models.check_permission_response import CheckPermission
 from lumoauth_api_client.models.check_permissions_bulk_response import CheckPermissionsBulkResponse as CheckPermissionsBulkResponse
 from lumoauth_api_client.models.check_relation_response import CheckRelationResponse as CheckRelationResponse
 from lumoauth_api_client.models.check_relation_scoped_response import CheckRelationScopedResponse as CheckRelationScopedResponse
+from lumoauth_api_client.models.cimd_check_result import CimdCheckResult as CimdCheckResult
+from lumoauth_api_client.models.cimd_check_result_effective import CimdCheckResultEffective as CimdCheckResultEffective
+from lumoauth_api_client.models.cimd_check_result_shadow_client import CimdCheckResultShadowClient as CimdCheckResultShadowClient
 from lumoauth_api_client.models.complete_task_response import CompleteTaskResponse as CompleteTaskResponse
 from lumoauth_api_client.models.create_approval_request import CreateApprovalRequest as CreateApprovalRequest
 from lumoauth_api_client.models.create_approval_response import CreateApprovalResponse as CreateApprovalResponse

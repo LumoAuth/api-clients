@@ -51,7 +51,7 @@ Name | Type | Description | Notes
 **backchannelUserCodeParameterSupported** | **Bool** |  | [optional] 
 **serviceDocumentation** | **String** |  | [optional] 
 **entityProfilesSupported** | **[String]** |  | [optional] 
-**clientIdMetadataDocumentSupported** | **Bool** | Only when CIMD is enabled for the organization. | [optional] 
+**clientIdMetadataDocumentSupported** | **Bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **authorizationGrantProfilesSupported** | **[String]** | Only when the organization accepts ID-JAGs. | [optional] 
 **opPolicyUri** | **String** | Only when configured. | [optional] 
 **opTosUri** | **String** | Only when configured. | [optional] 

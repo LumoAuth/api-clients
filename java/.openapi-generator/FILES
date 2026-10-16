@@ -63,6 +63,8 @@ docs/AdminAuditLogsStatsResponse.md
 docs/AdminAuditLogsStatsResponseData.md
 docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
+docs/AdminClientsCimdCheckRequest.md
+docs/AdminClientsCimdCheckResponse.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -211,6 +213,9 @@ docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
 docs/CheckRelationScopedResponse.md
+docs/CimdCheckResult.md
+docs/CimdCheckResultEffective.md
+docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
 docs/CreateApprovalResponse.md
@@ -530,6 +535,8 @@ src/main/java/io/lumoauth/client/model/AdminAuditLogsStatsResponse.java
 src/main/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseData.java
 src/main/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseDataPeriod.java
 src/main/java/io/lumoauth/client/model/AdminClientTokensRevokeAllResponse.java
+src/main/java/io/lumoauth/client/model/AdminClientsCimdCheckRequest.java
+src/main/java/io/lumoauth/client/model/AdminClientsCimdCheckResponse.java
 src/main/java/io/lumoauth/client/model/AdminEmailTemplatesListResponse.java
 src/main/java/io/lumoauth/client/model/AdminEmailTemplatesPreviewResponse.java
 src/main/java/io/lumoauth/client/model/AdminEmailTemplatesVariablesResponse.java
@@ -662,6 +669,9 @@ src/main/java/io/lumoauth/client/model/CheckPermissionResponse.java
 src/main/java/io/lumoauth/client/model/CheckPermissionsBulkResponse.java
 src/main/java/io/lumoauth/client/model/CheckRelationResponse.java
 src/main/java/io/lumoauth/client/model/CheckRelationScopedResponse.java
+src/main/java/io/lumoauth/client/model/CimdCheckResult.java
+src/main/java/io/lumoauth/client/model/CimdCheckResultEffective.java
+src/main/java/io/lumoauth/client/model/CimdCheckResultShadowClient.java
 src/main/java/io/lumoauth/client/model/CompleteTaskResponse.java
 src/main/java/io/lumoauth/client/model/CreateApprovalRequest.java
 src/main/java/io/lumoauth/client/model/CreateApprovalResponse.java
@@ -946,6 +956,8 @@ src/test/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseDataPeriodTest
 src/test/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseDataTest.java
 src/test/java/io/lumoauth/client/model/AdminAuditLogsStatsResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminClientTokensRevokeAllResponseTest.java
+src/test/java/io/lumoauth/client/model/AdminClientsCimdCheckRequestTest.java
+src/test/java/io/lumoauth/client/model/AdminClientsCimdCheckResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminEmailTemplatesListResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminEmailTemplatesPreviewResponseTest.java
 src/test/java/io/lumoauth/client/model/AdminEmailTemplatesVariablesResponseTest.java
@@ -1078,6 +1090,9 @@ src/test/java/io/lumoauth/client/model/CheckPermissionResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckPermissionsBulkResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckRelationResponseTest.java
 src/test/java/io/lumoauth/client/model/CheckRelationScopedResponseTest.java
+src/test/java/io/lumoauth/client/model/CimdCheckResultEffectiveTest.java
+src/test/java/io/lumoauth/client/model/CimdCheckResultShadowClientTest.java
+src/test/java/io/lumoauth/client/model/CimdCheckResultTest.java
 src/test/java/io/lumoauth/client/model/CompleteTaskResponseTest.java
 src/test/java/io/lumoauth/client/model/CreateApprovalRequestTest.java
 src/test/java/io/lumoauth/client/model/CreateApprovalResponse202Test.java

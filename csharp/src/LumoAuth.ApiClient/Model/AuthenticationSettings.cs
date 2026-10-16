@@ -81,13 +81,13 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="sessionTimeout">Seconds..</param>
         /// <param name="encryptClientSecrets">encryptClientSecrets.</param>
         /// <param name="dynamicClientRegistrationEnabled">dynamicClientRegistrationEnabled.</param>
-        /// <param name="cimdEnabled">cimdEnabled.</param>
+        /// <param name="cimdEnabled">Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. (default to true).</param>
         /// <param name="cimdAllowedDomains">cimdAllowedDomains.</param>
         /// <param name="cimdLocalhostRedirectPolicy">cimdLocalhostRedirectPolicy.</param>
         /// <param name="xaaIdpEnabled">xaaIdpEnabled.</param>
         /// <param name="xaaResourceEnabled">xaaResourceEnabled.</param>
         /// <param name="progressiveProfiling">progressiveProfiling.</param>
-        public AuthenticationSettings(bool passkeyEnabled = default, bool biometricEnabled = default, AuthenticationSettingsPasskeys passkeys = default, bool mfaRequired = default, List<string> mfaMethods = default, bool mfaSmsEnabled = default, AuthenticationSettingsMfaPolicy mfaPolicy = default, bool pushAuthRequired = default, string pushAppName = default, bool socialLoginEnabled = default, List<string> socialProviders = default, Dictionary<string, Dictionary<string, Object>> socialConfigs = default, int passwordMinLength = default, bool passwordRequireSpecial = default, AuthenticationSettingsPasswordPolicy passwordPolicy = default, AuthenticationSettingsPasswordRotationPolicy passwordRotationPolicy = default, string noMfaAction = default, int sessionTimeout = default, bool encryptClientSecrets = default, bool dynamicClientRegistrationEnabled = default, bool cimdEnabled = default, List<string> cimdAllowedDomains = default, CimdLocalhostRedirectPolicyEnum? cimdLocalhostRedirectPolicy = default, bool xaaIdpEnabled = default, bool xaaResourceEnabled = default, AuthenticationSettingsProgressiveProfiling progressiveProfiling = default)
+        public AuthenticationSettings(bool passkeyEnabled = default, bool biometricEnabled = default, AuthenticationSettingsPasskeys passkeys = default, bool mfaRequired = default, List<string> mfaMethods = default, bool mfaSmsEnabled = default, AuthenticationSettingsMfaPolicy mfaPolicy = default, bool pushAuthRequired = default, string pushAppName = default, bool socialLoginEnabled = default, List<string> socialProviders = default, Dictionary<string, Dictionary<string, Object>> socialConfigs = default, int passwordMinLength = default, bool passwordRequireSpecial = default, AuthenticationSettingsPasswordPolicy passwordPolicy = default, AuthenticationSettingsPasswordRotationPolicy passwordRotationPolicy = default, string noMfaAction = default, int sessionTimeout = default, bool encryptClientSecrets = default, bool dynamicClientRegistrationEnabled = default, bool cimdEnabled = true, List<string> cimdAllowedDomains = default, CimdLocalhostRedirectPolicyEnum? cimdLocalhostRedirectPolicy = default, bool xaaIdpEnabled = default, bool xaaResourceEnabled = default, AuthenticationSettingsProgressiveProfiling progressiveProfiling = default)
         {
             this.PasskeyEnabled = passkeyEnabled;
             this.BiometricEnabled = biometricEnabled;
@@ -243,8 +243,9 @@ namespace LumoAuth.ApiClient.Model
         public bool DynamicClientRegistrationEnabled { get; set; }
 
         /// <summary>
-        /// Gets or Sets CimdEnabled
+        /// Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
         /// </summary>
+        /// <value>Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.</value>
         [DataMember(Name = "cimd_enabled", EmitDefaultValue = true)]
         public bool CimdEnabled { get; set; }
 

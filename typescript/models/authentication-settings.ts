@@ -158,7 +158,7 @@ export interface AuthenticationSettings {
      */
     'dynamic_client_registration_enabled'?: boolean;
     /**
-     * 
+     * Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
      * @type {boolean}
      * @memberof AuthenticationSettings
      */

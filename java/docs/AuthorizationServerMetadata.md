@@ -41,7 +41,7 @@
 |**backchannelTokenDeliveryModesSupported** | **List&lt;String&gt;** |  |  [optional] |
 |**backchannelUserCodeParameterSupported** | **Boolean** |  |  [optional] |
 |**entityProfilesSupported** | **List&lt;String&gt;** |  |  [optional] |
-|**clientIdMetadataDocumentSupported** | **Boolean** | Only when CIMD is enabled for the organization. |  [optional] |
+|**clientIdMetadataDocumentSupported** | **Boolean** | Present (true) unless the organization switched Client ID Metadata Documents off. |  [optional] |
 |**authorizationGrantProfilesSupported** | **List&lt;String&gt;** | Only when the organization accepts ID-JAGs. |  [optional] |
 |**opPolicyUri** | **URI** | Only when configured. |  [optional] |
 |**opTosUri** | **URI** | Only when configured. |  [optional] |

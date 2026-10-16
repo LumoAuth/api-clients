@@ -247,6 +247,7 @@ Class | Method | HTTP request | Description
 *AdminMfaApi* | [**IssueTemporaryAccessCode**](docs/AdminMfaApi.md#issuetemporaryaccesscode) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/temporary-access-code | Issue a temporary access code
 *AdminMfaApi* | [**ListUserAuthenticators**](docs/AdminMfaApi.md#listuserauthenticators) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators | List a user's authenticators
 *AdminMfaApi* | [**UpdateMfaPolicy**](docs/AdminMfaApi.md#updatemfapolicy) | **PUT** /orgs/{orgId}/api/v1/admin/policies/mfa | Update the MFA policy
+*AdminOAuthClientsApi* | [**AdminClientsCimdCheck**](docs/AdminOAuthClientsApi.md#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
 *AdminOAuthClientsApi* | [**CreateClient**](docs/AdminOAuthClientsApi.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 *AdminOAuthClientsApi* | [**DeleteClient**](docs/AdminOAuthClientsApi.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 *AdminOAuthClientsApi* | [**DisableClient**](docs/AdminOAuthClientsApi.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -546,6 +547,8 @@ Class | Method | HTTP request | Description
  - [Model.AdminAuditLogsStatsResponseData](docs/AdminAuditLogsStatsResponseData.md)
  - [Model.AdminAuditLogsStatsResponseDataPeriod](docs/AdminAuditLogsStatsResponseDataPeriod.md)
  - [Model.AdminClientTokensRevokeAllResponse](docs/AdminClientTokensRevokeAllResponse.md)
+ - [Model.AdminClientsCimdCheckRequest](docs/AdminClientsCimdCheckRequest.md)
+ - [Model.AdminClientsCimdCheckResponse](docs/AdminClientsCimdCheckResponse.md)
  - [Model.AdminEmailTemplatesListResponse](docs/AdminEmailTemplatesListResponse.md)
  - [Model.AdminEmailTemplatesPreviewResponse](docs/AdminEmailTemplatesPreviewResponse.md)
  - [Model.AdminEmailTemplatesVariablesResponse](docs/AdminEmailTemplatesVariablesResponse.md)
@@ -678,6 +681,9 @@ Class | Method | HTTP request | Description
  - [Model.CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
  - [Model.CheckRelationResponse](docs/CheckRelationResponse.md)
  - [Model.CheckRelationScopedResponse](docs/CheckRelationScopedResponse.md)
+ - [Model.CimdCheckResult](docs/CimdCheckResult.md)
+ - [Model.CimdCheckResultEffective](docs/CimdCheckResultEffective.md)
+ - [Model.CimdCheckResultShadowClient](docs/CimdCheckResultShadowClient.md)
  - [Model.CompleteTaskResponse](docs/CompleteTaskResponse.md)
  - [Model.CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [Model.CreateApprovalResponse](docs/CreateApprovalResponse.md)

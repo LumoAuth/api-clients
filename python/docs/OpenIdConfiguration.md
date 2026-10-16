@@ -53,7 +53,7 @@ Name | Type | Description | Notes
 **backchannel_user_code_parameter_supported** | **bool** |  | [optional] 
 **service_documentation** | **str** |  | [optional] 
 **entity_profiles_supported** | **List[str]** |  | [optional] 
-**client_id_metadata_document_supported** | **bool** | Only when CIMD is enabled for the organization. | [optional] 
+**client_id_metadata_document_supported** | **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **authorization_grant_profiles_supported** | **List[str]** | Only when the organization accepts ID-JAGs. | [optional] 
 **op_policy_uri** | **str** | Only when configured. | [optional] 
 **op_tos_uri** | **str** | Only when configured. | [optional] 

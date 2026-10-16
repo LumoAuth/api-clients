@@ -1,4 +1,4 @@
-# Managed by server/scripts/sdk-codegen (pre-seeded as .openapi-generator-ignore).
+# Managed by server/sdk-codegen (pre-seeded into the output dir by generate.sh).
 # Suppresses generator-emitted repo junk that does not belong in api-clients.
 .travis.yml
 .gitlab-ci.yml

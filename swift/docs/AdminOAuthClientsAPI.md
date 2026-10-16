@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**adminClientsCimdCheck**](AdminOAuthClientsAPI.md#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
 [**createClient**](AdminOAuthClientsAPI.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**deleteClient**](AdminOAuthClientsAPI.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 [**disableClient**](AdminOAuthClientsAPI.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -16,6 +17,58 @@ Method | HTTP request | Description
 [**setClientScopes**](AdminOAuthClientsAPI.md#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
 [**updateClient**](AdminOAuthClientsAPI.md#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
 
+
+# **adminClientsCimdCheck**
+```swift
+    open class func adminClientsCimdCheck(orgId: String, adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest, completion: @escaping (_ data: AdminClientsCimdCheckResponse?, _ error: Error?) -> Void)
+```
+
+Check a Client ID Metadata Document
+
+Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let adminClientsCimdCheckRequest = AdminClientsCimdCheckRequest(clientId: "clientId_example", refresh: false) // AdminClientsCimdCheckRequest | 
+
+// Check a Client ID Metadata Document
+AdminOAuthClientsAPI.adminClientsCimdCheck(orgId: orgId, adminClientsCimdCheckRequest: adminClientsCimdCheckRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **adminClientsCimdCheckRequest** | [**AdminClientsCimdCheckRequest**](AdminClientsCimdCheckRequest.md) |  | 
+
+### Return type
+
+[**AdminClientsCimdCheckResponse**](AdminClientsCimdCheckResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createClient**
 ```swift

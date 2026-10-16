@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**AdminClientsCimdCheck**](AdminOAuthClientsAPI.md#AdminClientsCimdCheck) | **Post** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
 [**CreateClient**](AdminOAuthClientsAPI.md#CreateClient) | **Post** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 [**DeleteClient**](AdminOAuthClientsAPI.md#DeleteClient) | **Delete** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 [**DisableClient**](AdminOAuthClientsAPI.md#DisableClient) | **Post** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -16,6 +17,78 @@ Method | HTTP request | Description
 [**SetClientScopes**](AdminOAuthClientsAPI.md#SetClientScopes) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client
 [**UpdateClient**](AdminOAuthClientsAPI.md#UpdateClient) | **Put** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client
 
+
+
+## AdminClientsCimdCheck
+
+> AdminClientsCimdCheckResponse AdminClientsCimdCheck(ctx, orgId).AdminClientsCimdCheckRequest(adminClientsCimdCheckRequest).Execute()
+
+Check a Client ID Metadata Document
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	adminClientsCimdCheckRequest := *openapiclient.NewAdminClientsCimdCheckRequest("https://client.example.com/oauth/metadata.json") // AdminClientsCimdCheckRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.AdminOAuthClientsAPI.AdminClientsCimdCheck(context.Background(), orgId).AdminClientsCimdCheckRequest(adminClientsCimdCheckRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `AdminOAuthClientsAPI.AdminClientsCimdCheck``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `AdminClientsCimdCheck`: AdminClientsCimdCheckResponse
+	fmt.Fprintf(os.Stdout, "Response from `AdminOAuthClientsAPI.AdminClientsCimdCheck`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAdminClientsCimdCheckRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **adminClientsCimdCheckRequest** | [**AdminClientsCimdCheckRequest**](AdminClientsCimdCheckRequest.md) |  | 
+
+### Return type
+
+[**AdminClientsCimdCheckResponse**](AdminClientsCimdCheckResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateClient

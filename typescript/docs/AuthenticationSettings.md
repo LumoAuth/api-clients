@@ -26,7 +26,7 @@ Name | Type | Description | Notes
 **session_timeout** | **number** | Seconds. | [optional] [default to undefined]
 **encrypt_client_secrets** | **boolean** |  | [optional] [default to undefined]
 **dynamic_client_registration_enabled** | **boolean** |  | [optional] [default to undefined]
-**cimd_enabled** | **boolean** |  | [optional] [default to undefined]
+**cimd_enabled** | **boolean** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to true]
 **cimd_allowed_domains** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **cimd_localhost_redirect_policy** | **string** |  | [optional] [default to undefined]
 **xaa_idp_enabled** | **boolean** |  | [optional] [default to undefined]

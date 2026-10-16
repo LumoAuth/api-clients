@@ -73,7 +73,7 @@ type OpenIdConfiguration struct {
 	BackchannelUserCodeParameterSupported *bool `json:"backchannel_user_code_parameter_supported,omitempty"`
 	ServiceDocumentation *string `json:"service_documentation,omitempty"`
 	EntityProfilesSupported []string `json:"entity_profiles_supported,omitempty"`
-	// Only when CIMD is enabled for the organization.
+	// Present (true) unless the organization switched Client ID Metadata Documents off.
 	ClientIdMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
 	// Only when the organization accepts ID-JAGs.
 	AuthorizationGrantProfilesSupported []string `json:"authorization_grant_profiles_supported,omitempty"`

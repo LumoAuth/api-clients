@@ -24,7 +24,7 @@ Name | Type | Description | Notes
 **SessionTimeout** | Pointer to **int32** | Seconds. | [optional] 
 **EncryptClientSecrets** | Pointer to **bool** |  | [optional] 
 **DynamicClientRegistrationEnabled** | Pointer to **bool** |  | [optional] 
-**CimdEnabled** | Pointer to **bool** |  | [optional] 
+**CimdEnabled** | Pointer to **bool** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to true]
 **CimdAllowedDomains** | Pointer to **[]string** |  | [optional] 
 **CimdLocalhostRedirectPolicy** | Pointer to **string** |  | [optional] 
 **XaaIdpEnabled** | Pointer to **bool** |  | [optional] 

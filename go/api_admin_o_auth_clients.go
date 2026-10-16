@@ -24,6 +24,21 @@ import (
 type AdminOAuthClientsAPI interface {
 
 	/*
+	AdminClientsCimdCheck Check a Client ID Metadata Document
+
+	Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param orgId
+	@return ApiAdminClientsCimdCheckRequest
+	*/
+	AdminClientsCimdCheck(ctx context.Context, orgId string) ApiAdminClientsCimdCheckRequest
+
+	// AdminClientsCimdCheckExecute executes the request
+	//  @return AdminClientsCimdCheckResponse
+	AdminClientsCimdCheckExecute(r ApiAdminClientsCimdCheckRequest) (*AdminClientsCimdCheckResponse, *http.Response, error)
+
+	/*
 	CreateClient Create an OAuth client
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
@@ -178,6 +193,134 @@ type AdminOAuthClientsAPI interface {
 
 // AdminOAuthClientsAPIService AdminOAuthClientsAPI service
 type AdminOAuthClientsAPIService service
+
+type ApiAdminClientsCimdCheckRequest struct {
+	ctx context.Context
+	ApiService AdminOAuthClientsAPI
+	orgId string
+	adminClientsCimdCheckRequest *AdminClientsCimdCheckRequest
+}
+
+func (r ApiAdminClientsCimdCheckRequest) AdminClientsCimdCheckRequest(adminClientsCimdCheckRequest AdminClientsCimdCheckRequest) ApiAdminClientsCimdCheckRequest {
+	r.adminClientsCimdCheckRequest = &adminClientsCimdCheckRequest
+	return r
+}
+
+func (r ApiAdminClientsCimdCheckRequest) Execute() (*AdminClientsCimdCheckResponse, *http.Response, error) {
+	return r.ApiService.AdminClientsCimdCheckExecute(r)
+}
+
+/*
+AdminClientsCimdCheck Check a Client ID Metadata Document
+
+Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param orgId
+ @return ApiAdminClientsCimdCheckRequest
+*/
+func (a *AdminOAuthClientsAPIService) AdminClientsCimdCheck(ctx context.Context, orgId string) ApiAdminClientsCimdCheckRequest {
+	return ApiAdminClientsCimdCheckRequest{
+		ApiService: a,
+		ctx: ctx,
+		orgId: orgId,
+	}
+}
+
+// Execute executes the request
+//  @return AdminClientsCimdCheckResponse
+func (a *AdminOAuthClientsAPIService) AdminClientsCimdCheckExecute(r ApiAdminClientsCimdCheckRequest) (*AdminClientsCimdCheckResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *AdminClientsCimdCheckResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "AdminOAuthClientsAPIService.AdminClientsCimdCheck")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/orgs/{orgId}/api/v1/admin/clients/cimd/check"
+	localVarPath = strings.Replace(localVarPath, "{"+"orgId"+"}", url.PathEscape(parameterValueToString(r.orgId, "orgId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.adminClientsCimdCheckRequest == nil {
+		return localVarReturnValue, nil, reportError("adminClientsCimdCheckRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.adminClientsCimdCheckRequest
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["ApiKeyAuth"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["X-API-Key"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
 
 type ApiCreateClientRequest struct {
 	ctx context.Context

@@ -2056,6 +2056,45 @@ paths:
       tags:
       - "Admin: Audit Logs"
       x-symfony-route: api_admin_audit_logs_export
+  /orgs/{orgId}/api/v1/admin/clients/cimd/check:
+    post:
+      description: "Fetches and validates the metadata document at `client_id` exactly\
+        \ as the authorization server does (SSRF guard, domain allow-list, size and\
+        \ content-type limits, schema rules) and returns the effective client: redirect\
+        \ URIs, grant types and scopes after the organization policy is applied, plus\
+        \ what the document asked for that was dropped. Works even while CIMD is switched\
+        \ off for the organization (`enabled: false`), so a document can be validated\
+        \ before the switch is flipped. Nothing is registered or stored. `refresh:\
+        \ true` discards the cached copy first."
+      operationId: adminClientsCimdCheck
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminClientsCimdCheckRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminClientsCimdCheckResponse"
+          description: "Check result (ok=false is still 200: the document was reachable\
+            \ for inspection but rejected)"
+        "422":
+          description: "validation_error: client_id missing"
+      summary: Check a Client ID Metadata Document
+      tags:
+      - "Admin: OAuth Clients"
+      x-symfony-route: api_admin_clients_cimd_check
   /orgs/{orgId}/api/v1/admin/clients:
     get:
       operationId: listClients
@@ -10213,9 +10252,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/OpenIdConfiguration"
           description: "OpenID Provider metadata. Conditional members: client_id_metadata_document_supported\
-            \ (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer\
-            \ grant (Cross App Access resource role), op_policy_uri / op_tos_uri and\
-            \ a tenant acr_values_supported override (organization settings)."
+            \ (CIMD on, the default), authorization_grant_profiles_supported and the\
+            \ jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri\
+            \ and a tenant acr_values_supported override (organization settings)."
         "404":
           description: invalid_tenant — unknown or inactive organization.
       security: []
@@ -10244,9 +10283,9 @@ paths:
               schema:
                 $ref: "#/components/schemas/AuthorizationServerMetadata"
           description: "Authorization server metadata. Conditional members: client_id_metadata_document_supported\
-            \ (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer\
-            \ grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization\
-            \ settings)."
+            \ (CIMD on, the default), authorization_grant_profiles_supported and the\
+            \ jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri\
+            \ (organization settings)."
         "404":
           description: invalid_tenant — unknown or inactive organization.
       security: []
@@ -10784,6 +10823,81 @@ components:
       - configured
       - redacted
       type: object
+    CimdCheckResult:
+      description: Result of POST /admin/clients/cimd/check — how the authorization
+        server sees a Client ID Metadata Document.
+      example:
+        reason: reason
+        effective:
+          client_uri: client_uri
+          grant_types:
+          - grant_types
+          - grant_types
+          application_type: web
+          dropped_scopes:
+          - dropped_scopes
+          - dropped_scopes
+          logo_uri: logo_uri
+          redirect_uris:
+          - redirect_uris
+          - redirect_uris
+          dropped_redirect_uris:
+          - dropped_redirect_uris
+          - dropped_redirect_uris
+          token_endpoint_auth_method: none
+          public_client: true
+          pkce_required: true
+          scopes:
+          - scopes
+          - scopes
+          client_name: client_name
+          has_loopback_redirect: true
+        shadow_client:
+          id: 0
+          last_fetched_at: 2000-01-23T04:56:07.000+00:00
+        warnings:
+        - warnings
+        - warnings
+        document:
+          key: ""
+        ok: true
+        message: message
+        client_id: client_id
+        enabled: true
+      properties:
+        ok:
+          description: true when the document is valid and would be accepted (subject
+            to `enabled`).
+          type: boolean
+        client_id:
+          type: string
+        enabled:
+          description: Whether CIMD is currently on for this organization (switch
+            + plan).
+          type: boolean
+        reason:
+          description: "Stable failure code when ok is false (client_id_mismatch,\
+            \ invalid_redirect_uri, domain_not_allowed, http_status_404, …)."
+          nullable: true
+          type: string
+        message:
+          description: Developer-facing explanation of `reason`.
+          nullable: true
+          type: string
+        warnings:
+          items:
+            type: string
+          type: array
+        document:
+          additionalProperties: true
+          description: The metadata document as fetched.
+          nullable: true
+          type: object
+        effective:
+          $ref: "#/components/schemas/CimdCheckResult_effective"
+        shadow_client:
+          $ref: "#/components/schemas/CimdCheckResult_shadow_client"
+      type: object
     AuthenticationSettings:
       additionalProperties: true
       description: Authentication settings (entity defaults merged with the stored
@@ -10919,6 +11033,9 @@ components:
         dynamic_client_registration_enabled:
           type: boolean
         cimd_enabled:
+          default: true
+          description: Accept Client ID Metadata Documents (an https URL as client_id).
+            On by default on every plan; set false to opt the organization out.
           type: boolean
         cimd_allowed_domains:
           items:
@@ -14099,6 +14216,67 @@ components:
           type: array
         meta:
           $ref: "#/components/schemas/AdminAuditLogsExportResponseMeta"
+      type: object
+    AdminClientsCimdCheckRequest:
+      example:
+        refresh: false
+        client_id: https://client.example.com/oauth/metadata.json
+      properties:
+        client_id:
+          description: "The Client Identifier URL (https, with a path)."
+          example: https://client.example.com/oauth/metadata.json
+          format: uri
+          type: string
+        refresh:
+          default: false
+          description: Ignore the cached document and fetch it again.
+          type: boolean
+      required:
+      - client_id
+      type: object
+    AdminClientsCimdCheckResponse:
+      example:
+        data:
+          reason: reason
+          effective:
+            client_uri: client_uri
+            grant_types:
+            - grant_types
+            - grant_types
+            application_type: web
+            dropped_scopes:
+            - dropped_scopes
+            - dropped_scopes
+            logo_uri: logo_uri
+            redirect_uris:
+            - redirect_uris
+            - redirect_uris
+            dropped_redirect_uris:
+            - dropped_redirect_uris
+            - dropped_redirect_uris
+            token_endpoint_auth_method: none
+            public_client: true
+            pkce_required: true
+            scopes:
+            - scopes
+            - scopes
+            client_name: client_name
+            has_loopback_redirect: true
+          shadow_client:
+            id: 0
+            last_fetched_at: 2000-01-23T04:56:07.000+00:00
+          warnings:
+          - warnings
+          - warnings
+          document:
+            key: ""
+          ok: true
+          message: message
+          client_id: client_id
+          enabled: true
+      properties:
+        data:
+          $ref: "#/components/schemas/CimdCheckResult"
       type: object
     ListClientsResponse:
       example:
@@ -21734,7 +21912,8 @@ components:
             type: string
           type: array
         client_id_metadata_document_supported:
-          description: Only when CIMD is enabled for the organization.
+          description: Present (true) unless the organization switched Client ID Metadata
+            Documents off.
           type: boolean
         authorization_grant_profiles_supported:
           description: Only when the organization accepts ID-JAGs.
@@ -21962,7 +22141,8 @@ components:
             type: string
           type: array
         client_id_metadata_document_supported:
-          description: Only when CIMD is enabled for the organization.
+          description: Present (true) unless the organization switched Client ID Metadata
+            Documents off.
           type: boolean
         authorization_grant_profiles_supported:
           description: Only when the organization accepts ID-JAGs.
@@ -22158,6 +22338,99 @@ components:
           type: string
         tier:
           type: integer
+      type: object
+    CimdCheckResult_effective:
+      description: The client LumoAuth derives from the document after organization
+        policy.
+      example:
+        client_uri: client_uri
+        grant_types:
+        - grant_types
+        - grant_types
+        application_type: web
+        dropped_scopes:
+        - dropped_scopes
+        - dropped_scopes
+        logo_uri: logo_uri
+        redirect_uris:
+        - redirect_uris
+        - redirect_uris
+        dropped_redirect_uris:
+        - dropped_redirect_uris
+        - dropped_redirect_uris
+        token_endpoint_auth_method: none
+        public_client: true
+        pkce_required: true
+        scopes:
+        - scopes
+        - scopes
+        client_name: client_name
+        has_loopback_redirect: true
+      nullable: true
+      properties:
+        client_name:
+          type: string
+        application_type:
+          enum:
+          - web
+          - native
+          type: string
+        token_endpoint_auth_method:
+          enum:
+          - none
+          - private_key_jwt
+          type: string
+        public_client:
+          type: boolean
+        pkce_required:
+          type: boolean
+        redirect_uris:
+          items:
+            type: string
+          type: array
+        dropped_redirect_uris:
+          description: Loopback URIs removed by the organization's localhost policy.
+          items:
+            type: string
+          type: array
+        grant_types:
+          items:
+            type: string
+          type: array
+        scopes:
+          items:
+            type: string
+          type: array
+        dropped_scopes:
+          description: Scopes the document asked for that are neither identity scopes
+            nor on the organization's cimd_allowed_scopes list.
+          items:
+            type: string
+          type: array
+        logo_uri:
+          nullable: true
+          type: string
+        client_uri:
+          nullable: true
+          type: string
+        has_loopback_redirect:
+          type: boolean
+      type: object
+    CimdCheckResult_shadow_client:
+      description: Present when this organization has already resolved the client
+        at least once.
+      example:
+        id: 0
+        last_fetched_at: 2000-01-23T04:56:07.000+00:00
+      nullable: true
+      properties:
+        id:
+          nullable: true
+          type: integer
+        last_fetched_at:
+          format: date-time
+          nullable: true
+          type: string
       type: object
     AuthenticationSettings_passkeys:
       example:

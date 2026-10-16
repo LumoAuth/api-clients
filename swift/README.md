@@ -132,6 +132,7 @@ Class | Method | HTTP request | Description
 *AdminMfaAPI* | [**issueTemporaryAccessCode**](docs/AdminMfaAPI.md#issuetemporaryaccesscode) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/temporary-access-code | Issue a temporary access code
 *AdminMfaAPI* | [**listUserAuthenticators**](docs/AdminMfaAPI.md#listuserauthenticators) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators | List a user&#39;s authenticators
 *AdminMfaAPI* | [**updateMfaPolicy**](docs/AdminMfaAPI.md#updatemfapolicy) | **PUT** /orgs/{orgId}/api/v1/admin/policies/mfa | Update the MFA policy
+*AdminOAuthClientsAPI* | [**adminClientsCimdCheck**](docs/AdminOAuthClientsAPI.md#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
 *AdminOAuthClientsAPI* | [**createClient**](docs/AdminOAuthClientsAPI.md#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 *AdminOAuthClientsAPI* | [**deleteClient**](docs/AdminOAuthClientsAPI.md#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 *AdminOAuthClientsAPI* | [**disableClient**](docs/AdminOAuthClientsAPI.md#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -430,6 +431,8 @@ Class | Method | HTTP request | Description
  - [AdminAuditLogsStatsResponseData](docs/AdminAuditLogsStatsResponseData.md)
  - [AdminAuditLogsStatsResponseDataPeriod](docs/AdminAuditLogsStatsResponseDataPeriod.md)
  - [AdminClientTokensRevokeAllResponse](docs/AdminClientTokensRevokeAllResponse.md)
+ - [AdminClientsCimdCheckRequest](docs/AdminClientsCimdCheckRequest.md)
+ - [AdminClientsCimdCheckResponse](docs/AdminClientsCimdCheckResponse.md)
  - [AdminEmailTemplatesListResponse](docs/AdminEmailTemplatesListResponse.md)
  - [AdminEmailTemplatesPreviewResponse](docs/AdminEmailTemplatesPreviewResponse.md)
  - [AdminEmailTemplatesVariablesResponse](docs/AdminEmailTemplatesVariablesResponse.md)
@@ -562,6 +565,9 @@ Class | Method | HTTP request | Description
  - [CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
  - [CheckRelationResponse](docs/CheckRelationResponse.md)
  - [CheckRelationScopedResponse](docs/CheckRelationScopedResponse.md)
+ - [CimdCheckResult](docs/CimdCheckResult.md)
+ - [CimdCheckResultEffective](docs/CimdCheckResultEffective.md)
+ - [CimdCheckResultShadowClient](docs/CimdCheckResultShadowClient.md)
  - [CompleteTaskResponse](docs/CompleteTaskResponse.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateApprovalResponse](docs/CreateApprovalResponse.md)

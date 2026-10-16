@@ -58,6 +58,7 @@ pub struct AuthenticationSettings {
     pub encrypt_client_secrets: Option<bool>,
     #[serde(rename = "dynamic_client_registration_enabled", skip_serializing_if = "Option::is_none")]
     pub dynamic_client_registration_enabled: Option<bool>,
+    /// Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
     #[serde(rename = "cimd_enabled", skip_serializing_if = "Option::is_none")]
     pub cimd_enabled: Option<bool>,
     #[serde(rename = "cimd_allowed_domains", skip_serializing_if = "Option::is_none")]

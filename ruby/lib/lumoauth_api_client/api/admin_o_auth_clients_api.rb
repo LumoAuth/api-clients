@@ -19,6 +19,80 @@ module LumoAuthApiClient
     def initialize(api_client = ApiClient.default)
       @api_client = api_client
     end
+    # Check a Client ID Metadata Document
+    # Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+    # @param org_id [String] 
+    # @param admin_clients_cimd_check_request [AdminClientsCimdCheckRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [AdminClientsCimdCheckResponse]
+    def admin_clients_cimd_check(org_id, admin_clients_cimd_check_request, opts = {})
+      data, _status_code, _headers = admin_clients_cimd_check_with_http_info(org_id, admin_clients_cimd_check_request, opts)
+      data
+    end
+
+    # Check a Client ID Metadata Document
+    # Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+    # @param org_id [String] 
+    # @param admin_clients_cimd_check_request [AdminClientsCimdCheckRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(AdminClientsCimdCheckResponse, Integer, Hash)>] AdminClientsCimdCheckResponse data, response status code and response headers
+    def admin_clients_cimd_check_with_http_info(org_id, admin_clients_cimd_check_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: AdminOAuthClientsApi.admin_clients_cimd_check ...'
+      end
+      # verify the required parameter 'org_id' is set
+      if @api_client.config.client_side_validation && org_id.nil?
+        fail ArgumentError, "Missing the required parameter 'org_id' when calling AdminOAuthClientsApi.admin_clients_cimd_check"
+      end
+      # verify the required parameter 'admin_clients_cimd_check_request' is set
+      if @api_client.config.client_side_validation && admin_clients_cimd_check_request.nil?
+        fail ArgumentError, "Missing the required parameter 'admin_clients_cimd_check_request' when calling AdminOAuthClientsApi.admin_clients_cimd_check"
+      end
+      # resource path
+      local_var_path = '/orgs/{orgId}/api/v1/admin/clients/cimd/check'.sub('{' + 'orgId' + '}', CGI.escape(org_id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(admin_clients_cimd_check_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'AdminClientsCimdCheckResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+
+      new_options = opts.merge(
+        :operation => :"AdminOAuthClientsApi.admin_clients_cimd_check",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AdminOAuthClientsApi#admin_clients_cimd_check\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create an OAuth client
     # @param org_id [String] 
     # @param [Hash] opts the optional parameters

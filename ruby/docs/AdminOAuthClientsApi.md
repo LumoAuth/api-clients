@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 | ------ | ------------ | ----------- |
+| [**admin_clients_cimd_check**](AdminOAuthClientsApi.md#admin_clients_cimd_check) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document |
 | [**create_client**](AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**delete_client**](AdminOAuthClientsApi.md#delete_client) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
 | [**disable_client**](AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
@@ -15,6 +16,82 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**rotate_client_secret**](AdminOAuthClientsApi.md#rotate_client_secret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret |
 | [**set_client_scopes**](AdminOAuthClientsApi.md#set_client_scopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
 | [**update_client**](AdminOAuthClientsApi.md#update_client) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
+
+
+## admin_clients_cimd_check
+
+> <AdminClientsCimdCheckResponse> admin_clients_cimd_check(org_id, admin_clients_cimd_check_request)
+
+Check a Client ID Metadata Document
+
+Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::AdminOAuthClientsApi.new
+org_id = 'org_id_example' # String | 
+admin_clients_cimd_check_request = LumoAuthApiClient::AdminClientsCimdCheckRequest.new({client_id: 'https://client.example.com/oauth/metadata.json'}) # AdminClientsCimdCheckRequest | 
+
+begin
+  # Check a Client ID Metadata Document
+  result = api_instance.admin_clients_cimd_check(org_id, admin_clients_cimd_check_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->admin_clients_cimd_check: #{e}"
+end
+```
+
+#### Using the admin_clients_cimd_check_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<AdminClientsCimdCheckResponse>, Integer, Hash)> admin_clients_cimd_check_with_http_info(org_id, admin_clients_cimd_check_request)
+
+```ruby
+begin
+  # Check a Client ID Metadata Document
+  data, status_code, headers = api_instance.admin_clients_cimd_check_with_http_info(org_id, admin_clients_cimd_check_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <AdminClientsCimdCheckResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling AdminOAuthClientsApi->admin_clients_cimd_check_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **admin_clients_cimd_check_request** | [**AdminClientsCimdCheckRequest**](AdminClientsCimdCheckRequest.md) |  |  |
+
+### Return type
+
+[**AdminClientsCimdCheckResponse**](AdminClientsCimdCheckResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
 
 
 ## create_client
