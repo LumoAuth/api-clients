@@ -75,7 +75,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="backchannelTokenDeliveryModesSupported">backchannelTokenDeliveryModesSupported.</param>
         /// <param name="backchannelUserCodeParameterSupported">backchannelUserCodeParameterSupported.</param>
         /// <param name="entityProfilesSupported">entityProfilesSupported.</param>
-        /// <param name="clientIdMetadataDocumentSupported">Only when CIMD is enabled for the organization..</param>
+        /// <param name="clientIdMetadataDocumentSupported">Present (true) unless the organization switched Client ID Metadata Documents off..</param>
         /// <param name="authorizationGrantProfilesSupported">Only when the organization accepts ID-JAGs..</param>
         /// <param name="opPolicyUri">Only when configured..</param>
         /// <param name="opTosUri">Only when configured..</param>
@@ -395,9 +395,9 @@ namespace LumoAuth.ApiClient.Model
         public List<string> EntityProfilesSupported { get; set; }
 
         /// <summary>
-        /// Only when CIMD is enabled for the organization.
+        /// Present (true) unless the organization switched Client ID Metadata Documents off.
         /// </summary>
-        /// <value>Only when CIMD is enabled for the organization.</value>
+        /// <value>Present (true) unless the organization switched Client ID Metadata Documents off.</value>
         [DataMember(Name = "client_id_metadata_document_supported", EmitDefaultValue = true)]
         public bool ClientIdMetadataDocumentSupported { get; set; }
 

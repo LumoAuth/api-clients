@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
+| [**adminClientsCimdCheck**](AdminOAuthClientsApi.md#adminClientsCimdCheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document |
 | [**createClient**](AdminOAuthClientsApi.md#createClient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**deleteClient**](AdminOAuthClientsApi.md#deleteClient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
 | [**disableClient**](AdminOAuthClientsApi.md#disableClient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
@@ -16,6 +17,82 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**setClientScopes**](AdminOAuthClientsApi.md#setClientScopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
 | [**updateClient**](AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
 
+
+<a id="adminClientsCimdCheck"></a>
+# **adminClientsCimdCheck**
+> AdminClientsCimdCheckResponse adminClientsCimdCheck(orgId, adminClientsCimdCheckRequest)
+
+Check a Client ID Metadata Document
+
+Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.AdminOAuthClientsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    AdminOAuthClientsApi apiInstance = new AdminOAuthClientsApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    AdminClientsCimdCheckRequest adminClientsCimdCheckRequest = new AdminClientsCimdCheckRequest(); // AdminClientsCimdCheckRequest | 
+    try {
+      AdminClientsCimdCheckResponse result = apiInstance.adminClientsCimdCheck(orgId, adminClientsCimdCheckRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AdminOAuthClientsApi#adminClientsCimdCheck");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **adminClientsCimdCheckRequest** | [**AdminClientsCimdCheckRequest**](AdminClientsCimdCheckRequest.md)|  | |
+
+### Return type
+
+[**AdminClientsCimdCheckResponse**](AdminClientsCimdCheckResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) |  -  |
+| **422** | validation_error: client_id missing |  -  |
 
 <a id="createClient"></a>
 # **createClient**

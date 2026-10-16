@@ -64,6 +64,8 @@ docs/AdminAuditLogsStatsResponse.md
 docs/AdminAuditLogsStatsResponseData.md
 docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
+docs/AdminClientsCimdCheckRequest.md
+docs/AdminClientsCimdCheckResponse.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -212,6 +214,9 @@ docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
 docs/CheckRelationScopedResponse.md
+docs/CimdCheckResult.md
+docs/CimdCheckResultEffective.md
+docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
 docs/CreateApprovalResponse.md
@@ -509,6 +514,8 @@ lib/lumoauth_api_client/models/admin_audit_logs_stats_response.rb
 lib/lumoauth_api_client/models/admin_audit_logs_stats_response_data.rb
 lib/lumoauth_api_client/models/admin_audit_logs_stats_response_data_period.rb
 lib/lumoauth_api_client/models/admin_client_tokens_revoke_all_response.rb
+lib/lumoauth_api_client/models/admin_clients_cimd_check_request.rb
+lib/lumoauth_api_client/models/admin_clients_cimd_check_response.rb
 lib/lumoauth_api_client/models/admin_email_templates_list_response.rb
 lib/lumoauth_api_client/models/admin_email_templates_preview_response.rb
 lib/lumoauth_api_client/models/admin_email_templates_variables_response.rb
@@ -641,6 +648,9 @@ lib/lumoauth_api_client/models/check_permission_response.rb
 lib/lumoauth_api_client/models/check_permissions_bulk_response.rb
 lib/lumoauth_api_client/models/check_relation_response.rb
 lib/lumoauth_api_client/models/check_relation_scoped_response.rb
+lib/lumoauth_api_client/models/cimd_check_result.rb
+lib/lumoauth_api_client/models/cimd_check_result_effective.rb
+lib/lumoauth_api_client/models/cimd_check_result_shadow_client.rb
 lib/lumoauth_api_client/models/complete_task_response.rb
 lib/lumoauth_api_client/models/create_approval_request.rb
 lib/lumoauth_api_client/models/create_approval_response.rb

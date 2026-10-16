@@ -4,6 +4,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**adminClientsCimdCheck**](#adminclientscimdcheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document|
 |[**createClient**](#createclient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client|
 |[**deleteClient**](#deleteclient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client|
 |[**disableClient**](#disableclient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client|
@@ -15,6 +16,62 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**rotateClientSecret**](#rotateclientsecret) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret | Rotate an OAuth client secret|
 |[**setClientScopes**](#setclientscopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client|
 |[**updateClient**](#updateclient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client|
+
+# **adminClientsCimdCheck**
+> AdminClientsCimdCheckResponse adminClientsCimdCheck(adminClientsCimdCheckRequest)
+
+Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+
+### Example
+
+```typescript
+import {
+    AdminOAuthClientsApi,
+    Configuration,
+    AdminClientsCimdCheckRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new AdminOAuthClientsApi(configuration);
+
+let orgId: string; // (default to undefined)
+let adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest; //
+
+const { status, data } = await apiInstance.adminClientsCimdCheck(
+    orgId,
+    adminClientsCimdCheckRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **adminClientsCimdCheckRequest** | **AdminClientsCimdCheckRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**AdminClientsCimdCheckResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) |  -  |
+|**422** | validation_error: client_id missing |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createClient**
 > CreateClientResponse createClient()

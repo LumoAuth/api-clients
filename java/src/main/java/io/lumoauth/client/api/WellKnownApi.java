@@ -85,7 +85,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -155,7 +155,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -174,7 +174,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -195,7 +195,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -347,7 +347,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -417,7 +417,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -436,7 +436,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */
@@ -457,7 +457,7 @@ public class WellKnownApi {
      <table border="1">
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings). </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> invalid_tenant — unknown or inactive organization. </td><td>  -  </td></tr>
      </table>
      */

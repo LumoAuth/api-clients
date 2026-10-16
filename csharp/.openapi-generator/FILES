@@ -62,6 +62,8 @@ docs/AdminAuditLogsStatsResponse.md
 docs/AdminAuditLogsStatsResponseData.md
 docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
+docs/AdminClientsCimdCheckRequest.md
+docs/AdminClientsCimdCheckResponse.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -210,6 +212,9 @@ docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
 docs/CheckRelationScopedResponse.md
+docs/CimdCheckResult.md
+docs/CimdCheckResultEffective.md
+docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
 docs/CreateApprovalResponse.md
@@ -504,6 +509,8 @@ src/LumoAuth.ApiClient.Test/Model/AdminAuditLogsStatsResponseDataPeriodTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAuditLogsStatsResponseDataTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminAuditLogsStatsResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminClientTokensRevokeAllResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminClientsCimdCheckRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/AdminClientsCimdCheckResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminEmailTemplatesListResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminEmailTemplatesPreviewResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/AdminEmailTemplatesVariablesResponseTests.cs
@@ -636,6 +643,9 @@ src/LumoAuth.ApiClient.Test/Model/CheckPermissionResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckPermissionsBulkResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckRelationResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CheckRelationScopedResponseTests.cs
+src/LumoAuth.ApiClient.Test/Model/CimdCheckResultEffectiveTests.cs
+src/LumoAuth.ApiClient.Test/Model/CimdCheckResultShadowClientTests.cs
+src/LumoAuth.ApiClient.Test/Model/CimdCheckResultTests.cs
 src/LumoAuth.ApiClient.Test/Model/CompleteTaskResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/CreateApprovalRequestTests.cs
 src/LumoAuth.ApiClient.Test/Model/CreateApprovalResponse202Tests.cs
@@ -939,6 +949,8 @@ src/LumoAuth.ApiClient/Model/AdminAuditLogsStatsResponse.cs
 src/LumoAuth.ApiClient/Model/AdminAuditLogsStatsResponseData.cs
 src/LumoAuth.ApiClient/Model/AdminAuditLogsStatsResponseDataPeriod.cs
 src/LumoAuth.ApiClient/Model/AdminClientTokensRevokeAllResponse.cs
+src/LumoAuth.ApiClient/Model/AdminClientsCimdCheckRequest.cs
+src/LumoAuth.ApiClient/Model/AdminClientsCimdCheckResponse.cs
 src/LumoAuth.ApiClient/Model/AdminEmailTemplatesListResponse.cs
 src/LumoAuth.ApiClient/Model/AdminEmailTemplatesPreviewResponse.cs
 src/LumoAuth.ApiClient/Model/AdminEmailTemplatesVariablesResponse.cs
@@ -1071,6 +1083,9 @@ src/LumoAuth.ApiClient/Model/CheckPermissionResponse.cs
 src/LumoAuth.ApiClient/Model/CheckPermissionsBulkResponse.cs
 src/LumoAuth.ApiClient/Model/CheckRelationResponse.cs
 src/LumoAuth.ApiClient/Model/CheckRelationScopedResponse.cs
+src/LumoAuth.ApiClient/Model/CimdCheckResult.cs
+src/LumoAuth.ApiClient/Model/CimdCheckResultEffective.cs
+src/LumoAuth.ApiClient/Model/CimdCheckResultShadowClient.cs
 src/LumoAuth.ApiClient/Model/CompleteTaskResponse.cs
 src/LumoAuth.ApiClient/Model/CreateApprovalRequest.cs
 src/LumoAuth.ApiClient/Model/CreateApprovalResponse.cs

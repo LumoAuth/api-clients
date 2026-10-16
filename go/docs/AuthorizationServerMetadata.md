@@ -38,7 +38,7 @@ Name | Type | Description | Notes
 **BackchannelTokenDeliveryModesSupported** | Pointer to **[]string** |  | [optional] 
 **BackchannelUserCodeParameterSupported** | Pointer to **bool** |  | [optional] 
 **EntityProfilesSupported** | Pointer to **[]string** |  | [optional] 
-**ClientIdMetadataDocumentSupported** | Pointer to **bool** | Only when CIMD is enabled for the organization. | [optional] 
+**ClientIdMetadataDocumentSupported** | Pointer to **bool** | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional] 
 **AuthorizationGrantProfilesSupported** | Pointer to **[]string** | Only when the organization accepts ID-JAGs. | [optional] 
 **OpPolicyUri** | Pointer to **string** | Only when configured. | [optional] 
 **OpTosUri** | Pointer to **string** | Only when configured. | [optional] 

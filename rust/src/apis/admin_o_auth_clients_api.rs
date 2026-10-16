@@ -15,6 +15,14 @@ use crate::{apis::ResponseContent, models};
 use super::{Error, configuration, ContentType};
 
 
+/// struct for typed errors of method [`admin_clients_cimd_check`]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum AdminClientsCimdCheckError {
+    Status422(),
+    UnknownValue(serde_json::Value),
+}
+
 /// struct for typed errors of method [`create_client`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
@@ -101,6 +109,56 @@ pub enum UpdateClientError {
     UnknownValue(serde_json::Value),
 }
 
+
+/// Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+pub async fn admin_clients_cimd_check(configuration: &configuration::Configuration, org_id: &str, admin_clients_cimd_check_request: models::AdminClientsCimdCheckRequest) -> Result<models::AdminClientsCimdCheckResponse, Error<AdminClientsCimdCheckError>> {
+    // add a prefix to parameters to efficiently prevent name collisions
+    let p_org_id = org_id;
+    let p_admin_clients_cimd_check_request = admin_clients_cimd_check_request;
+
+    let uri_str = format!("{}/orgs/{orgId}/api/v1/admin/clients/cimd/check", configuration.base_path, orgId=crate::apis::urlencode(p_org_id));
+    let mut req_builder = configuration.client.request(reqwest::Method::POST, &uri_str);
+
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("X-API-Key", value);
+    };
+    if let Some(ref token) = configuration.bearer_access_token {
+        req_builder = req_builder.bearer_auth(token.to_owned());
+    };
+    req_builder = req_builder.json(&p_admin_clients_cimd_check_request);
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::AdminClientsCimdCheckResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::AdminClientsCimdCheckResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<AdminClientsCimdCheckError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent { status, content, entity }))
+    }
+}
 
 pub async fn create_client(configuration: &configuration::Configuration, org_id: &str) -> Result<models::CreateClientResponse, Error<CreateClientError>> {
     // add a prefix to parameters to efficiently prevent name collisions

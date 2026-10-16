@@ -55,6 +55,19 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test AdminClientsCimdCheck
+        /// </summary>
+        [Fact]
+        public void AdminClientsCimdCheckTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //AdminClientsCimdCheckRequest adminClientsCimdCheckRequest = null;
+            //var response = instance.AdminClientsCimdCheck(orgId, adminClientsCimdCheckRequest);
+            //Assert.IsType<AdminClientsCimdCheckResponse>(response);
+        }
+
+        /// <summary>
         /// Test CreateClient
         /// </summary>
         [Fact]

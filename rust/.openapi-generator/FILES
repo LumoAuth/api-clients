@@ -61,6 +61,8 @@ docs/AdminAuditLogsStatsResponse.md
 docs/AdminAuditLogsStatsResponseData.md
 docs/AdminAuditLogsStatsResponseDataPeriod.md
 docs/AdminClientTokensRevokeAllResponse.md
+docs/AdminClientsCimdCheckRequest.md
+docs/AdminClientsCimdCheckResponse.md
 docs/AdminEmailApi.md
 docs/AdminEmailTemplatesListResponse.md
 docs/AdminEmailTemplatesPreviewResponse.md
@@ -209,6 +211,9 @@ docs/CheckPermissionResponse.md
 docs/CheckPermissionsBulkResponse.md
 docs/CheckRelationResponse.md
 docs/CheckRelationScopedResponse.md
+docs/CimdCheckResult.md
+docs/CimdCheckResultEffective.md
+docs/CimdCheckResultShadowClient.md
 docs/CompleteTaskResponse.md
 docs/CreateApprovalRequest.md
 docs/CreateApprovalResponse.md
@@ -505,6 +510,8 @@ src/models/admin_audit_logs_stats_response.rs
 src/models/admin_audit_logs_stats_response_data.rs
 src/models/admin_audit_logs_stats_response_data_period.rs
 src/models/admin_client_tokens_revoke_all_response.rs
+src/models/admin_clients_cimd_check_request.rs
+src/models/admin_clients_cimd_check_response.rs
 src/models/admin_email_templates_list_response.rs
 src/models/admin_email_templates_preview_response.rs
 src/models/admin_email_templates_variables_response.rs
@@ -637,6 +644,9 @@ src/models/check_permission_response.rs
 src/models/check_permissions_bulk_response.rs
 src/models/check_relation_response.rs
 src/models/check_relation_scoped_response.rs
+src/models/cimd_check_result.rs
+src/models/cimd_check_result_effective.rs
+src/models/cimd_check_result_shadow_client.rs
 src/models/complete_task_response.rs
 src/models/create_approval_request.rs
 src/models/create_approval_response.rs

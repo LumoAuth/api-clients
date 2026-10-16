@@ -13,6 +13,53 @@ import AnyCodable
 open class AdminOAuthClientsAPI {
 
     /**
+     Check a Client ID Metadata Document
+     
+     - parameter orgId: (path)  
+     - parameter adminClientsCimdCheckRequest: (body)  
+     - returns: AdminClientsCimdCheckResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func adminClientsCimdCheck(orgId: String, adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest) async throws -> AdminClientsCimdCheckResponse {
+        return try await adminClientsCimdCheckWithRequestBuilder(orgId: orgId, adminClientsCimdCheckRequest: adminClientsCimdCheckRequest).execute().body
+    }
+
+    /**
+     Check a Client ID Metadata Document
+     - POST /orgs/{orgId}/api/v1/admin/clients/cimd/check
+     - Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter adminClientsCimdCheckRequest: (body)  
+     - returns: RequestBuilder<AdminClientsCimdCheckResponse> 
+     */
+    open class func adminClientsCimdCheckWithRequestBuilder(orgId: String, adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest) -> RequestBuilder<AdminClientsCimdCheckResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/admin/clients/cimd/check"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: adminClientsCimdCheckRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<AdminClientsCimdCheckResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Create an OAuth client
      
      - parameter orgId: (path)  

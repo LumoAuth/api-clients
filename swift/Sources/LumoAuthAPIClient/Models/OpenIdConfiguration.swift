@@ -63,7 +63,7 @@ public struct OpenIdConfiguration: Codable, JSONEncodable, Hashable {
     public var backchannelUserCodeParameterSupported: Bool?
     public var serviceDocumentation: String?
     public var entityProfilesSupported: [String]?
-    /** Only when CIMD is enabled for the organization. */
+    /** Present (true) unless the organization switched Client ID Metadata Documents off. */
     public var clientIdMetadataDocumentSupported: Bool?
     /** Only when the organization accepts ID-JAGs. */
     public var authorizationGrantProfilesSupported: [String]?

@@ -114,7 +114,7 @@ module LumoAuthApiClient
 
     attr_accessor :entity_profiles_supported
 
-    # Only when CIMD is enabled for the organization.
+    # Present (true) unless the organization switched Client ID Metadata Documents off.
     attr_accessor :client_id_metadata_document_supported
 
     # Only when the organization accepts ID-JAGs.

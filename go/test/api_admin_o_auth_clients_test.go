@@ -22,6 +22,20 @@ func Test_lumoauthclient_AdminOAuthClientsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test AdminOAuthClientsAPIService AdminClientsCimdCheck", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+
+		resp, httpRes, err := apiClient.AdminOAuthClientsAPI.AdminClientsCimdCheck(context.Background(), orgId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test AdminOAuthClientsAPIService CreateClient", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

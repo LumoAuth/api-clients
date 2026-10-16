@@ -48,7 +48,7 @@ public struct AuthorizationServerMetadata: Codable, JSONEncodable, Hashable {
     public var backchannelTokenDeliveryModesSupported: [String]?
     public var backchannelUserCodeParameterSupported: Bool?
     public var entityProfilesSupported: [String]?
-    /** Only when CIMD is enabled for the organization. */
+    /** Present (true) unless the organization switched Client ID Metadata Documents off. */
     public var clientIdMetadataDocumentSupported: Bool?
     /** Only when the organization accepts ID-JAGs. */
     public var authorizationGrantProfilesSupported: [String]?

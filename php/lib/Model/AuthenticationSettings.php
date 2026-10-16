@@ -431,7 +431,7 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
         $this->setIfExists('sessionTimeout', $data ?? [], null);
         $this->setIfExists('encryptClientSecrets', $data ?? [], null);
         $this->setIfExists('dynamicClientRegistrationEnabled', $data ?? [], null);
-        $this->setIfExists('cimdEnabled', $data ?? [], null);
+        $this->setIfExists('cimdEnabled', $data ?? [], true);
         $this->setIfExists('cimdAllowedDomains', $data ?? [], null);
         $this->setIfExists('cimdLocalhostRedirectPolicy', $data ?? [], null);
         $this->setIfExists('xaaIdpEnabled', $data ?? [], null);
@@ -1050,7 +1050,7 @@ class AuthenticationSettings implements ModelInterface, ArrayAccess, \JsonSerial
     /**
      * Sets cimdEnabled
      *
-     * @param bool|null $cimdEnabled cimdEnabled
+     * @param bool|null $cimdEnabled Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
      *
      * @return self
      */

@@ -27,6 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import io.lumoauth.client.model.AdminClientsCimdCheckRequest;
+import io.lumoauth.client.model.AdminClientsCimdCheckResponse;
 import io.lumoauth.client.model.CreateClientResponse;
 import io.lumoauth.client.model.GetClientResponse;
 import io.lumoauth.client.model.ListClientScopesResponse;
@@ -79,6 +81,147 @@ public class AdminOAuthClientsApi {
         this.localCustomBaseUrl = customBaseUrl;
     }
 
+    /**
+     * Build call for adminClientsCimdCheck
+     * @param orgId  (required)
+     * @param adminClientsCimdCheckRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error: client_id missing </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminClientsCimdCheckCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = adminClientsCimdCheckRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/admin/clients/cimd/check"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call adminClientsCimdCheckValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling adminClientsCimdCheck(Async)");
+        }
+
+        // verify the required parameter 'adminClientsCimdCheckRequest' is set
+        if (adminClientsCimdCheckRequest == null) {
+            throw new ApiException("Missing the required parameter 'adminClientsCimdCheckRequest' when calling adminClientsCimdCheck(Async)");
+        }
+
+        return adminClientsCimdCheckCall(orgId, adminClientsCimdCheckRequest, _callback);
+
+    }
+
+    /**
+     * Check a Client ID Metadata Document
+     * Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+     * @param orgId  (required)
+     * @param adminClientsCimdCheckRequest  (required)
+     * @return AdminClientsCimdCheckResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error: client_id missing </td><td>  -  </td></tr>
+     </table>
+     */
+    public AdminClientsCimdCheckResponse adminClientsCimdCheck(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminClientsCimdCheckRequest adminClientsCimdCheckRequest) throws ApiException {
+        ApiResponse<AdminClientsCimdCheckResponse> localVarResp = adminClientsCimdCheckWithHttpInfo(orgId, adminClientsCimdCheckRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Check a Client ID Metadata Document
+     * Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+     * @param orgId  (required)
+     * @param adminClientsCimdCheckRequest  (required)
+     * @return ApiResponse&lt;AdminClientsCimdCheckResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error: client_id missing </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<AdminClientsCimdCheckResponse> adminClientsCimdCheckWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminClientsCimdCheckRequest adminClientsCimdCheckRequest) throws ApiException {
+        okhttp3.Call localVarCall = adminClientsCimdCheckValidateBeforeCall(orgId, adminClientsCimdCheckRequest, null);
+        Type localVarReturnType = new TypeToken<AdminClientsCimdCheckResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Check a Client ID Metadata Document (asynchronously)
+     * Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+     * @param orgId  (required)
+     * @param adminClientsCimdCheckRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Check result (ok&#x3D;false is still 200: the document was reachable for inspection but rejected) </td><td>  -  </td></tr>
+        <tr><td> 422 </td><td> validation_error: client_id missing </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call adminClientsCimdCheckAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, final ApiCallback<AdminClientsCimdCheckResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = adminClientsCimdCheckValidateBeforeCall(orgId, adminClientsCimdCheckRequest, _callback);
+        Type localVarReturnType = new TypeToken<AdminClientsCimdCheckResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
     /**
      * Build call for createClient
      * @param orgId  (required)

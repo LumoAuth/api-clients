@@ -52,7 +52,7 @@ class AuthenticationSettings(BaseModel):
     session_timeout: Optional[StrictInt] = Field(default=None, description="Seconds.")
     encrypt_client_secrets: Optional[StrictBool] = None
     dynamic_client_registration_enabled: Optional[StrictBool] = None
-    cimd_enabled: Optional[StrictBool] = None
+    cimd_enabled: Optional[StrictBool] = Field(default=True, description="Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.")
     cimd_allowed_domains: Optional[List[StrictStr]] = None
     cimd_localhost_redirect_policy: Optional[StrictStr] = None
     xaa_idp_enabled: Optional[StrictBool] = None
@@ -169,7 +169,7 @@ class AuthenticationSettings(BaseModel):
             "session_timeout": obj.get("session_timeout"),
             "encrypt_client_secrets": obj.get("encrypt_client_secrets"),
             "dynamic_client_registration_enabled": obj.get("dynamic_client_registration_enabled"),
-            "cimd_enabled": obj.get("cimd_enabled"),
+            "cimd_enabled": obj.get("cimd_enabled") if obj.get("cimd_enabled") is not None else True,
             "cimd_allowed_domains": obj.get("cimd_allowed_domains"),
             "cimd_localhost_redirect_policy": obj.get("cimd_localhost_redirect_policy"),
             "xaa_idp_enabled": obj.get("xaa_idp_enabled"),

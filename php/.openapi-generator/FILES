@@ -86,6 +86,8 @@ docs/Model/AdminAuditLogsStatsResponse.md
 docs/Model/AdminAuditLogsStatsResponseData.md
 docs/Model/AdminAuditLogsStatsResponseDataPeriod.md
 docs/Model/AdminClientTokensRevokeAllResponse.md
+docs/Model/AdminClientsCimdCheckRequest.md
+docs/Model/AdminClientsCimdCheckResponse.md
 docs/Model/AdminEmailTemplatesListResponse.md
 docs/Model/AdminEmailTemplatesPreviewResponse.md
 docs/Model/AdminEmailTemplatesVariablesResponse.md
@@ -218,6 +220,9 @@ docs/Model/CheckPermissionResponse.md
 docs/Model/CheckPermissionsBulkResponse.md
 docs/Model/CheckRelationResponse.md
 docs/Model/CheckRelationScopedResponse.md
+docs/Model/CimdCheckResult.md
+docs/Model/CimdCheckResultEffective.md
+docs/Model/CimdCheckResultShadowClient.md
 docs/Model/CompleteTaskResponse.md
 docs/Model/CreateApprovalRequest.md
 docs/Model/CreateApprovalResponse.md
@@ -506,6 +511,8 @@ lib/Model/AdminAuditLogsStatsResponse.php
 lib/Model/AdminAuditLogsStatsResponseData.php
 lib/Model/AdminAuditLogsStatsResponseDataPeriod.php
 lib/Model/AdminClientTokensRevokeAllResponse.php
+lib/Model/AdminClientsCimdCheckRequest.php
+lib/Model/AdminClientsCimdCheckResponse.php
 lib/Model/AdminEmailTemplatesListResponse.php
 lib/Model/AdminEmailTemplatesPreviewResponse.php
 lib/Model/AdminEmailTemplatesVariablesResponse.php
@@ -638,6 +645,9 @@ lib/Model/CheckPermissionResponse.php
 lib/Model/CheckPermissionsBulkResponse.php
 lib/Model/CheckRelationResponse.php
 lib/Model/CheckRelationScopedResponse.php
+lib/Model/CimdCheckResult.php
+lib/Model/CimdCheckResultEffective.php
+lib/Model/CimdCheckResultShadowClient.php
 lib/Model/CompleteTaskResponse.php
 lib/Model/CreateApprovalRequest.php
 lib/Model/CreateApprovalResponse.php

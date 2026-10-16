@@ -44,6 +44,7 @@ type AuthenticationSettings struct {
 	SessionTimeout *int32 `json:"session_timeout,omitempty"`
 	EncryptClientSecrets *bool `json:"encrypt_client_secrets,omitempty"`
 	DynamicClientRegistrationEnabled *bool `json:"dynamic_client_registration_enabled,omitempty"`
+	// Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
 	CimdEnabled *bool `json:"cimd_enabled,omitempty"`
 	CimdAllowedDomains []string `json:"cimd_allowed_domains,omitempty"`
 	CimdLocalhostRedirectPolicy *string `json:"cimd_localhost_redirect_policy,omitempty"`
@@ -61,6 +62,8 @@ type _AuthenticationSettings AuthenticationSettings
 // will change when the set of required properties is changed
 func NewAuthenticationSettings() *AuthenticationSettings {
 	this := AuthenticationSettings{}
+	var cimdEnabled bool = true
+	this.CimdEnabled = &cimdEnabled
 	return &this
 }
 
@@ -69,6 +72,8 @@ func NewAuthenticationSettings() *AuthenticationSettings {
 // but it doesn't guarantee that properties required by API are set
 func NewAuthenticationSettingsWithDefaults() *AuthenticationSettings {
 	this := AuthenticationSettings{}
+	var cimdEnabled bool = true
+	this.CimdEnabled = &cimdEnabled
 	return &this
 }
 

@@ -191,6 +191,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::AdminMfaApi* | [**issue_temporary_access_code**](docs/AdminMfaApi.md#issue_temporary_access_code) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/temporary-access-code | Issue a temporary access code
 *LumoAuthApiClient::AdminMfaApi* | [**list_user_authenticators**](docs/AdminMfaApi.md#list_user_authenticators) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators | List a user's authenticators
 *LumoAuthApiClient::AdminMfaApi* | [**update_mfa_policy**](docs/AdminMfaApi.md#update_mfa_policy) | **PUT** /orgs/{orgId}/api/v1/admin/policies/mfa | Update the MFA policy
+*LumoAuthApiClient::AdminOAuthClientsApi* | [**admin_clients_cimd_check**](docs/AdminOAuthClientsApi.md#admin_clients_cimd_check) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**create_client**](docs/AdminOAuthClientsApi.md#create_client) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**delete_client**](docs/AdminOAuthClientsApi.md#delete_client) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 *LumoAuthApiClient::AdminOAuthClientsApi* | [**disable_client**](docs/AdminOAuthClientsApi.md#disable_client) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -489,6 +490,8 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::AdminAuditLogsStatsResponseData](docs/AdminAuditLogsStatsResponseData.md)
  - [LumoAuthApiClient::AdminAuditLogsStatsResponseDataPeriod](docs/AdminAuditLogsStatsResponseDataPeriod.md)
  - [LumoAuthApiClient::AdminClientTokensRevokeAllResponse](docs/AdminClientTokensRevokeAllResponse.md)
+ - [LumoAuthApiClient::AdminClientsCimdCheckRequest](docs/AdminClientsCimdCheckRequest.md)
+ - [LumoAuthApiClient::AdminClientsCimdCheckResponse](docs/AdminClientsCimdCheckResponse.md)
  - [LumoAuthApiClient::AdminEmailTemplatesListResponse](docs/AdminEmailTemplatesListResponse.md)
  - [LumoAuthApiClient::AdminEmailTemplatesPreviewResponse](docs/AdminEmailTemplatesPreviewResponse.md)
  - [LumoAuthApiClient::AdminEmailTemplatesVariablesResponse](docs/AdminEmailTemplatesVariablesResponse.md)
@@ -621,6 +624,9 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
  - [LumoAuthApiClient::CheckRelationResponse](docs/CheckRelationResponse.md)
  - [LumoAuthApiClient::CheckRelationScopedResponse](docs/CheckRelationScopedResponse.md)
+ - [LumoAuthApiClient::CimdCheckResult](docs/CimdCheckResult.md)
+ - [LumoAuthApiClient::CimdCheckResultEffective](docs/CimdCheckResultEffective.md)
+ - [LumoAuthApiClient::CimdCheckResultShadowClient](docs/CimdCheckResultShadowClient.md)
  - [LumoAuthApiClient::CompleteTaskResponse](docs/CompleteTaskResponse.md)
  - [LumoAuthApiClient::CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [LumoAuthApiClient::CreateApprovalResponse](docs/CreateApprovalResponse.md)

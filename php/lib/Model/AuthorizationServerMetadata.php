@@ -1495,7 +1495,7 @@ class AuthorizationServerMetadata implements ModelInterface, ArrayAccess, \JsonS
     /**
      * Sets clientIdMetadataDocumentSupported
      *
-     * @param bool|null $clientIdMetadataDocumentSupported Only when CIMD is enabled for the organization.
+     * @param bool|null $clientIdMetadataDocumentSupported Present (true) unless the organization switched Client ID Metadata Documents off.
      *
      * @return self
      */

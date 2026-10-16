@@ -83,7 +83,7 @@ pub struct AuthorizationServerMetadata {
     pub backchannel_user_code_parameter_supported: Option<bool>,
     #[serde(rename = "entity_profiles_supported", skip_serializing_if = "Option::is_none")]
     pub entity_profiles_supported: Option<Vec<String>>,
-    /// Only when CIMD is enabled for the organization.
+    /// Present (true) unless the organization switched Client ID Metadata Documents off.
     #[serde(rename = "client_id_metadata_document_supported", skip_serializing_if = "Option::is_none")]
     pub client_id_metadata_document_supported: Option<bool>,
     /// Only when the organization accepts ID-JAGs.
