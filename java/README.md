@@ -11,7 +11,7 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-10-16T15:29:45.017092378Z[Etc/UTC]
+  - Build date: 2026-10-16T19:43:25.176015498Z[Etc/UTC]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
