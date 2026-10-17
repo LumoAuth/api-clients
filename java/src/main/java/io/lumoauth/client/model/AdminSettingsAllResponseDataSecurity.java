@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * Free-form security settings dictionary, stored as sent (keys merge on update). dpop_require_nonce is the only key the server reads; secret-looking keys are redacted.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T15:29:45.017092378Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-17T22:51:11.534456180Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminSettingsAllResponseDataSecurity {
   public static final String SERIALIZED_NAME_DPOP_REQUIRE_NONCE = "dpop_require_nonce";
   @SerializedName(SERIALIZED_NAME_DPOP_REQUIRE_NONCE)
