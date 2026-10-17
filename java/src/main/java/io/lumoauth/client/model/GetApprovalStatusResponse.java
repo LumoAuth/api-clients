@@ -50,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetApprovalStatusResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-16T15:29:45.017092378Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-17T23:32:23.266660407Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetApprovalStatusResponse {
   public static final String SERIALIZED_NAME_APPROVAL_TOKEN = "approval_token";
   @SerializedName(SERIALIZED_NAME_APPROVAL_TOKEN)
