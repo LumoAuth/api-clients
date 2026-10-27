@@ -78,7 +78,7 @@ public class AgentsApiTest {
     /**
      * Per-MCP-tool authorization for the authenticated agent (dx B3).
      *
-     * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \&quot;may THIS agent invoke &lt;server&gt;/&lt;tool&gt;?\&quot; and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;invoices\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
+     * An AGENT asks about itself: \&quot;may I invoke &lt;server&gt;/&lt;tool&gt;?\&quot; — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent&#39;s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;mcp_0123…\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
      *
      * @throws ApiException if the Api call fails
      */

@@ -19,6 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +54,14 @@ public class AdminAgentsGenerateTokenRequestTest {
     @Test
     public void scopesTest() {
         // TODO: test scopes
+    }
+
+    /**
+     * Test the property 'resource'
+     */
+    @Test
+    public void resourceTest() {
+        // TODO: test resource
     }
 
 }

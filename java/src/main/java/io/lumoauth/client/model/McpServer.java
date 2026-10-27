@@ -56,7 +56,7 @@ import io.lumoauth.client.JSON;
 /**
  * McpServer
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-26T22:02:21.062318292-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T18:39:38.311678905Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class McpServer {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -93,6 +93,11 @@ public class McpServer {
   @javax.annotation.Nullable
   private String transport;
 
+  public static final String SERIALIZED_NAME_TRANSPORT_DEPRECATED = "transport_deprecated";
+  @SerializedName(SERIALIZED_NAME_TRANSPORT_DEPRECATED)
+  @javax.annotation.Nullable
+  private Boolean transportDeprecated;
+
   public static final String SERIALIZED_NAME_AUTH_MODE = "auth_mode";
   @SerializedName(SERIALIZED_NAME_AUTH_MODE)
   @javax.annotation.Nullable
@@ -113,10 +118,20 @@ public class McpServer {
   @javax.annotation.Nullable
   private Map<String, String> scopeDescriptions = new HashMap<>();
 
+  public static final String SERIALIZED_NAME_BASIC_SCOPES = "basic_scopes";
+  @SerializedName(SERIALIZED_NAME_BASIC_SCOPES)
+  @javax.annotation.Nullable
+  private List<String> basicScopes = new ArrayList<>();
+
   public static final String SERIALIZED_NAME_ALLOWED_CLIENT_IDS = "allowed_client_ids";
   @SerializedName(SERIALIZED_NAME_ALLOWED_CLIENT_IDS)
   @javax.annotation.Nullable
   private List<String> allowedClientIds = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_TOOL_AUTHORIZER_CLIENT_IDS = "tool_authorizer_client_ids";
+  @SerializedName(SERIALIZED_NAME_TOOL_AUTHORIZER_CLIENT_IDS)
+  @javax.annotation.Nullable
+  private List<String> toolAuthorizerClientIds = new ArrayList<>();
 
   public static final String SERIALIZED_NAME_REQUIRE_PKCE = "require_pkce";
   @SerializedName(SERIALIZED_NAME_REQUIRE_PKCE)
@@ -289,6 +304,25 @@ public class McpServer {
   }
 
 
+  public McpServer transportDeprecated(@javax.annotation.Nullable Boolean transportDeprecated) {
+    this.transportDeprecated = transportDeprecated;
+    return this;
+  }
+
+  /**
+   * True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+   * @return transportDeprecated
+   */
+  @javax.annotation.Nullable
+  public Boolean getTransportDeprecated() {
+    return transportDeprecated;
+  }
+
+  public void setTransportDeprecated(@javax.annotation.Nullable Boolean transportDeprecated) {
+    this.transportDeprecated = transportDeprecated;
+  }
+
+
   public McpServer authMode(@javax.annotation.Nullable String authMode) {
     this.authMode = authMode;
     return this;
@@ -381,6 +415,33 @@ public class McpServer {
   }
 
 
+  public McpServer basicScopes(@javax.annotation.Nullable List<String> basicScopes) {
+    this.basicScopes = basicScopes;
+    return this;
+  }
+
+  public McpServer addBasicScopesItem(String basicScopesItem) {
+    if (this.basicScopes == null) {
+      this.basicScopes = new ArrayList<>();
+    }
+    this.basicScopes.add(basicScopesItem);
+    return this;
+  }
+
+  /**
+   * Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty &#x3D; the whole vocabulary.
+   * @return basicScopes
+   */
+  @javax.annotation.Nullable
+  public List<String> getBasicScopes() {
+    return basicScopes;
+  }
+
+  public void setBasicScopes(@javax.annotation.Nullable List<String> basicScopes) {
+    this.basicScopes = basicScopes;
+  }
+
+
   public McpServer allowedClientIds(@javax.annotation.Nullable List<String> allowedClientIds) {
     this.allowedClientIds = allowedClientIds;
     return this;
@@ -405,6 +466,33 @@ public class McpServer {
 
   public void setAllowedClientIds(@javax.annotation.Nullable List<String> allowedClientIds) {
     this.allowedClientIds = allowedClientIds;
+  }
+
+
+  public McpServer toolAuthorizerClientIds(@javax.annotation.Nullable List<String> toolAuthorizerClientIds) {
+    this.toolAuthorizerClientIds = toolAuthorizerClientIds;
+    return this;
+  }
+
+  public McpServer addToolAuthorizerClientIdsItem(String toolAuthorizerClientIdsItem) {
+    if (this.toolAuthorizerClientIds == null) {
+      this.toolAuthorizerClientIds = new ArrayList<>();
+    }
+    this.toolAuthorizerClientIds.add(toolAuthorizerClientIdsItem);
+    return this;
+  }
+
+  /**
+   * The MCP server&#39;s own OAuth clients allowed to call the per-tool authorization endpoint.
+   * @return toolAuthorizerClientIds
+   */
+  @javax.annotation.Nullable
+  public List<String> getToolAuthorizerClientIds() {
+    return toolAuthorizerClientIds;
+  }
+
+  public void setToolAuthorizerClientIds(@javax.annotation.Nullable List<String> toolAuthorizerClientIds) {
+    this.toolAuthorizerClientIds = toolAuthorizerClientIds;
   }
 
 
@@ -566,11 +654,14 @@ public class McpServer {
         Objects.equals(this.resourceUri, mcpServer.resourceUri) &&
         Objects.equals(this.endpointUrl, mcpServer.endpointUrl) &&
         Objects.equals(this.transport, mcpServer.transport) &&
+        Objects.equals(this.transportDeprecated, mcpServer.transportDeprecated) &&
         Objects.equals(this.authMode, mcpServer.authMode) &&
         Objects.equals(this.status, mcpServer.status) &&
         Objects.equals(this.scopesSupported, mcpServer.scopesSupported) &&
         Objects.equals(this.scopeDescriptions, mcpServer.scopeDescriptions) &&
+        Objects.equals(this.basicScopes, mcpServer.basicScopes) &&
         Objects.equals(this.allowedClientIds, mcpServer.allowedClientIds) &&
+        Objects.equals(this.toolAuthorizerClientIds, mcpServer.toolAuthorizerClientIds) &&
         Objects.equals(this.requirePkce, mcpServer.requirePkce) &&
         Objects.equals(this.requireResourceParam, mcpServer.requireResourceParam) &&
         Objects.equals(this.requireDpop, mcpServer.requireDpop) &&
@@ -586,7 +677,7 @@ public class McpServer {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, serverId, name, description, resourceUri, endpointUrl, transport, authMode, status, scopesSupported, scopeDescriptions, allowedClientIds, requirePkce, requireResourceParam, requireDpop, tokenLifetime, posture, capabilities, createdAt);
+    return Objects.hash(id, serverId, name, description, resourceUri, endpointUrl, transport, transportDeprecated, authMode, status, scopesSupported, scopeDescriptions, basicScopes, allowedClientIds, toolAuthorizerClientIds, requirePkce, requireResourceParam, requireDpop, tokenLifetime, posture, capabilities, createdAt);
   }
 
   private static <T> int hashCodeNullable(JsonNullable<T> a) {
@@ -607,11 +698,14 @@ public class McpServer {
     sb.append("    resourceUri: ").append(toIndentedString(resourceUri)).append("\n");
     sb.append("    endpointUrl: ").append(toIndentedString(endpointUrl)).append("\n");
     sb.append("    transport: ").append(toIndentedString(transport)).append("\n");
+    sb.append("    transportDeprecated: ").append(toIndentedString(transportDeprecated)).append("\n");
     sb.append("    authMode: ").append(toIndentedString(authMode)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    scopesSupported: ").append(toIndentedString(scopesSupported)).append("\n");
     sb.append("    scopeDescriptions: ").append(toIndentedString(scopeDescriptions)).append("\n");
+    sb.append("    basicScopes: ").append(toIndentedString(basicScopes)).append("\n");
     sb.append("    allowedClientIds: ").append(toIndentedString(allowedClientIds)).append("\n");
+    sb.append("    toolAuthorizerClientIds: ").append(toIndentedString(toolAuthorizerClientIds)).append("\n");
     sb.append("    requirePkce: ").append(toIndentedString(requirePkce)).append("\n");
     sb.append("    requireResourceParam: ").append(toIndentedString(requireResourceParam)).append("\n");
     sb.append("    requireDpop: ").append(toIndentedString(requireDpop)).append("\n");
@@ -640,7 +734,7 @@ public class McpServer {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "auth_mode", "status", "scopes_supported", "scope_descriptions", "allowed_client_ids", "require_pkce", "require_resource_param", "require_dpop", "token_lifetime", "posture", "capabilities", "created_at"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "transport_deprecated", "auth_mode", "status", "scopes_supported", "scope_descriptions", "basic_scopes", "allowed_client_ids", "tool_authorizer_client_ids", "require_pkce", "require_resource_param", "require_dpop", "token_lifetime", "posture", "capabilities", "created_at"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -696,8 +790,16 @@ public class McpServer {
         throw new IllegalArgumentException(String.format("Expected the field `scopes_supported` to be an array in the JSON string but got `%s`", jsonObj.get("scopes_supported").toString()));
       }
       // ensure the optional json data is an array if present
+      if (jsonObj.get("basic_scopes") != null && !jsonObj.get("basic_scopes").isJsonNull() && !jsonObj.get("basic_scopes").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `basic_scopes` to be an array in the JSON string but got `%s`", jsonObj.get("basic_scopes").toString()));
+      }
+      // ensure the optional json data is an array if present
       if (jsonObj.get("allowed_client_ids") != null && !jsonObj.get("allowed_client_ids").isJsonNull() && !jsonObj.get("allowed_client_ids").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `allowed_client_ids` to be an array in the JSON string but got `%s`", jsonObj.get("allowed_client_ids").toString()));
+      }
+      // ensure the optional json data is an array if present
+      if (jsonObj.get("tool_authorizer_client_ids") != null && !jsonObj.get("tool_authorizer_client_ids").isJsonNull() && !jsonObj.get("tool_authorizer_client_ids").isJsonArray()) {
+        throw new IllegalArgumentException(String.format("Expected the field `tool_authorizer_client_ids` to be an array in the JSON string but got `%s`", jsonObj.get("tool_authorizer_client_ids").toString()));
       }
       // validate the optional field `posture`
       if (jsonObj.get("posture") != null && !jsonObj.get("posture").isJsonNull()) {

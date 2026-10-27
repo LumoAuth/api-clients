@@ -61,7 +61,8 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'string',
         'tokenType' => 'string',
         'expiresIn' => 'int',
-        'scopes' => 'string[]'
+        'scopes' => 'string[]',
+        'resource' => 'string'
     ];
 
     /**
@@ -75,7 +76,8 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => null,
         'tokenType' => null,
         'expiresIn' => null,
-        'scopes' => null
+        'scopes' => null,
+        'resource' => null
     ];
 
     /**
@@ -87,7 +89,8 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => false,
         'tokenType' => false,
         'expiresIn' => false,
-        'scopes' => false
+        'scopes' => false,
+        'resource' => true
     ];
 
     /**
@@ -179,7 +182,8 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'accessToken',
         'tokenType' => 'tokenType',
         'expiresIn' => 'expiresIn',
-        'scopes' => 'scopes'
+        'scopes' => 'scopes',
+        'resource' => 'resource'
     ];
 
     /**
@@ -191,7 +195,8 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'setAccessToken',
         'tokenType' => 'setTokenType',
         'expiresIn' => 'setExpiresIn',
-        'scopes' => 'setScopes'
+        'scopes' => 'setScopes',
+        'resource' => 'setResource'
     ];
 
     /**
@@ -203,7 +208,8 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         'accessToken' => 'getAccessToken',
         'tokenType' => 'getTokenType',
         'expiresIn' => 'getExpiresIn',
-        'scopes' => 'getScopes'
+        'scopes' => 'getScopes',
+        'resource' => 'getResource'
     ];
 
     /**
@@ -267,6 +273,7 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
         $this->setIfExists('tokenType', $data ?? [], null);
         $this->setIfExists('expiresIn', $data ?? [], null);
         $this->setIfExists('scopes', $data ?? [], null);
+        $this->setIfExists('resource', $data ?? [], null);
     }
 
     /**
@@ -415,6 +422,40 @@ class AdminAgentsGenerateTokenResponseData implements ModelInterface, ArrayAcces
             throw new \InvalidArgumentException('non-nullable scopes cannot be null');
         }
         $this->container['scopes'] = $scopes;
+
+        return $this;
+    }
+
+    /**
+     * Gets resource
+     *
+     * @return string|null
+     */
+    public function getResource()
+    {
+        return $this->container['resource'];
+    }
+
+    /**
+     * Sets resource
+     *
+     * @param string|null $resource The MCP server the token is bound to, when `resource` was sent.
+     *
+     * @return self
+     */
+    public function setResource($resource)
+    {
+        if (is_null($resource)) {
+            array_push($this->openAPINullablesSetToNull, 'resource');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('resource', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['resource'] = $resource;
 
         return $this;
     }

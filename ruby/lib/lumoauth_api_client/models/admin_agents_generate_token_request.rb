@@ -21,11 +21,15 @@ module LumoAuthApiClient
     # Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
     attr_accessor :scopes
 
+    # Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server's token lifetime. Servers that require DPoP are refused with 400.
+    attr_accessor :resource
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'expires_in' => :'expiresIn',
-        :'scopes' => :'scopes'
+        :'scopes' => :'scopes',
+        :'resource' => :'resource'
       }
     end
 
@@ -43,7 +47,8 @@ module LumoAuthApiClient
     def self.openapi_types
       {
         :'expires_in' => :'Integer',
-        :'scopes' => :'Array<String>'
+        :'scopes' => :'Array<String>',
+        :'resource' => :'String'
       }
     end
 
@@ -78,6 +83,10 @@ module LumoAuthApiClient
           self.scopes = value
         end
       end
+
+      if attributes.key?(:'resource')
+        self.resource = attributes[:'resource']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -101,7 +110,8 @@ module LumoAuthApiClient
       return true if self.equal?(o)
       self.class == o.class &&
           expires_in == o.expires_in &&
-          scopes == o.scopes
+          scopes == o.scopes &&
+          resource == o.resource
     end
 
     # @see the `==` method
@@ -113,7 +123,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [expires_in, scopes].hash
+      [expires_in, scopes, resource].hash
     end
 
     # Builds the object from hash

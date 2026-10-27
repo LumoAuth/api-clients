@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsGenerateTokenResponseData
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-26T22:02:21.062318292-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T18:39:38.311678905Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAgentsGenerateTokenResponseData {
   public static final String SERIALIZED_NAME_ACCESS_TOKEN = "accessToken";
   @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
@@ -71,6 +72,11 @@ public class AdminAgentsGenerateTokenResponseData {
   @SerializedName(SERIALIZED_NAME_SCOPES)
   @javax.annotation.Nullable
   private List<String> scopes = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_RESOURCE = "resource";
+  @SerializedName(SERIALIZED_NAME_RESOURCE)
+  @javax.annotation.Nullable
+  private String resource;
 
   public AdminAgentsGenerateTokenResponseData() {
   }
@@ -159,6 +165,25 @@ public class AdminAgentsGenerateTokenResponseData {
   }
 
 
+  public AdminAgentsGenerateTokenResponseData resource(@javax.annotation.Nullable String resource) {
+    this.resource = resource;
+    return this;
+  }
+
+  /**
+   * The MCP server the token is bound to, when &#x60;resource&#x60; was sent.
+   * @return resource
+   */
+  @javax.annotation.Nullable
+  public String getResource() {
+    return resource;
+  }
+
+  public void setResource(@javax.annotation.Nullable String resource) {
+    this.resource = resource;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -172,12 +197,24 @@ public class AdminAgentsGenerateTokenResponseData {
     return Objects.equals(this.accessToken, adminAgentsGenerateTokenResponseData.accessToken) &&
         Objects.equals(this.tokenType, adminAgentsGenerateTokenResponseData.tokenType) &&
         Objects.equals(this.expiresIn, adminAgentsGenerateTokenResponseData.expiresIn) &&
-        Objects.equals(this.scopes, adminAgentsGenerateTokenResponseData.scopes);
+        Objects.equals(this.scopes, adminAgentsGenerateTokenResponseData.scopes) &&
+        Objects.equals(this.resource, adminAgentsGenerateTokenResponseData.resource);
+  }
+
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessToken, tokenType, expiresIn, scopes);
+    return Objects.hash(accessToken, tokenType, expiresIn, scopes, resource);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -188,6 +225,7 @@ public class AdminAgentsGenerateTokenResponseData {
     sb.append("    tokenType: ").append(toIndentedString(tokenType)).append("\n");
     sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
+    sb.append("    resource: ").append(toIndentedString(resource)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -209,7 +247,7 @@ public class AdminAgentsGenerateTokenResponseData {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("accessToken", "tokenType", "expiresIn", "scopes"));
+    openapiFields = new HashSet<String>(Arrays.asList("accessToken", "tokenType", "expiresIn", "scopes", "resource"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -245,6 +283,9 @@ public class AdminAgentsGenerateTokenResponseData {
       // ensure the optional json data is an array if present
       if (jsonObj.get("scopes") != null && !jsonObj.get("scopes").isJsonNull() && !jsonObj.get("scopes").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `scopes` to be an array in the JSON string but got `%s`", jsonObj.get("scopes").toString()));
+      }
+      if ((jsonObj.get("resource") != null && !jsonObj.get("resource").isJsonNull()) && !jsonObj.get("resource").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resource` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resource").toString()));
       }
   }
 

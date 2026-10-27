@@ -11,11 +11,14 @@ Name | Type | Description | Notes
 **ResourceUri** | Pointer to **string** |  | [optional] 
 **EndpointUrl** | Pointer to **NullableString** |  | [optional] 
 **Transport** | Pointer to **string** |  | [optional] 
+**TransportDeprecated** | Pointer to **bool** | True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable. | [optional] 
 **AuthMode** | Pointer to **string** |  | [optional] 
 **Status** | Pointer to **string** |  | [optional] 
 **ScopesSupported** | Pointer to **[]string** |  | [optional] 
 **ScopeDescriptions** | Pointer to **map[string]string** |  | [optional] 
+**BasicScopes** | Pointer to **[]string** | Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty &#x3D; the whole vocabulary. | [optional] 
 **AllowedClientIds** | Pointer to **[]string** |  | [optional] 
+**ToolAuthorizerClientIds** | Pointer to **[]string** | The MCP server&#39;s own OAuth clients allowed to call the per-tool authorization endpoint. | [optional] 
 **RequirePkce** | Pointer to **bool** |  | [optional] 
 **RequireResourceParam** | Pointer to **bool** |  | [optional] 
 **RequireDpop** | Pointer to **bool** |  | [optional] 
@@ -238,6 +241,31 @@ SetTransport sets Transport field to given value.
 
 HasTransport returns a boolean if a field has been set.
 
+### GetTransportDeprecated
+
+`func (o *McpServer) GetTransportDeprecated() bool`
+
+GetTransportDeprecated returns the TransportDeprecated field if non-nil, zero value otherwise.
+
+### GetTransportDeprecatedOk
+
+`func (o *McpServer) GetTransportDeprecatedOk() (*bool, bool)`
+
+GetTransportDeprecatedOk returns a tuple with the TransportDeprecated field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTransportDeprecated
+
+`func (o *McpServer) SetTransportDeprecated(v bool)`
+
+SetTransportDeprecated sets TransportDeprecated field to given value.
+
+### HasTransportDeprecated
+
+`func (o *McpServer) HasTransportDeprecated() bool`
+
+HasTransportDeprecated returns a boolean if a field has been set.
+
 ### GetAuthMode
 
 `func (o *McpServer) GetAuthMode() string`
@@ -338,6 +366,31 @@ SetScopeDescriptions sets ScopeDescriptions field to given value.
 
 HasScopeDescriptions returns a boolean if a field has been set.
 
+### GetBasicScopes
+
+`func (o *McpServer) GetBasicScopes() []string`
+
+GetBasicScopes returns the BasicScopes field if non-nil, zero value otherwise.
+
+### GetBasicScopesOk
+
+`func (o *McpServer) GetBasicScopesOk() (*[]string, bool)`
+
+GetBasicScopesOk returns a tuple with the BasicScopes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetBasicScopes
+
+`func (o *McpServer) SetBasicScopes(v []string)`
+
+SetBasicScopes sets BasicScopes field to given value.
+
+### HasBasicScopes
+
+`func (o *McpServer) HasBasicScopes() bool`
+
+HasBasicScopes returns a boolean if a field has been set.
+
 ### GetAllowedClientIds
 
 `func (o *McpServer) GetAllowedClientIds() []string`
@@ -362,6 +415,31 @@ SetAllowedClientIds sets AllowedClientIds field to given value.
 `func (o *McpServer) HasAllowedClientIds() bool`
 
 HasAllowedClientIds returns a boolean if a field has been set.
+
+### GetToolAuthorizerClientIds
+
+`func (o *McpServer) GetToolAuthorizerClientIds() []string`
+
+GetToolAuthorizerClientIds returns the ToolAuthorizerClientIds field if non-nil, zero value otherwise.
+
+### GetToolAuthorizerClientIdsOk
+
+`func (o *McpServer) GetToolAuthorizerClientIdsOk() (*[]string, bool)`
+
+GetToolAuthorizerClientIdsOk returns a tuple with the ToolAuthorizerClientIds field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetToolAuthorizerClientIds
+
+`func (o *McpServer) SetToolAuthorizerClientIds(v []string)`
+
+SetToolAuthorizerClientIds sets ToolAuthorizerClientIds field to given value.
+
+### HasToolAuthorizerClientIds
+
+`func (o *McpServer) HasToolAuthorizerClientIds() bool`
+
+HasToolAuthorizerClientIds returns a boolean if a field has been set.
 
 ### GetRequirePkce
 

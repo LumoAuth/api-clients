@@ -36,7 +36,7 @@ namespace LumoAuth.ApiClient.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthorizeMcpRequest" /> class.
         /// </summary>
-        /// <param name="serverId">serverId.</param>
+        /// <param name="serverId">Id of an active MCP server registered in this organization..</param>
         /// <param name="tool">tool.</param>
         public AuthorizeMcpRequest(string serverId = default, string tool = default)
         {
@@ -45,10 +45,11 @@ namespace LumoAuth.ApiClient.Model
         }
 
         /// <summary>
-        /// Gets or Sets ServerId
+        /// Id of an active MCP server registered in this organization.
         /// </summary>
+        /// <value>Id of an active MCP server registered in this organization.</value>
         /*
-        <example>invoices</example>
+        <example>mcp_0123456789abcdef01234567</example>
         */
         [DataMember(Name = "server_id", EmitDefaultValue = false)]
         public string ServerId { get; set; }

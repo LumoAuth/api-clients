@@ -29,6 +29,9 @@ module LumoAuthApiClient
 
     attr_accessor :transport
 
+    # True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+    attr_accessor :transport_deprecated
+
     attr_accessor :auth_mode
 
     attr_accessor :status
@@ -37,7 +40,13 @@ module LumoAuthApiClient
 
     attr_accessor :scope_descriptions
 
+    # Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.
+    attr_accessor :basic_scopes
+
     attr_accessor :allowed_client_ids
+
+    # The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint.
+    attr_accessor :tool_authorizer_client_ids
 
     attr_accessor :require_pkce
 
@@ -63,11 +72,14 @@ module LumoAuthApiClient
         :'resource_uri' => :'resource_uri',
         :'endpoint_url' => :'endpoint_url',
         :'transport' => :'transport',
+        :'transport_deprecated' => :'transport_deprecated',
         :'auth_mode' => :'auth_mode',
         :'status' => :'status',
         :'scopes_supported' => :'scopes_supported',
         :'scope_descriptions' => :'scope_descriptions',
+        :'basic_scopes' => :'basic_scopes',
         :'allowed_client_ids' => :'allowed_client_ids',
+        :'tool_authorizer_client_ids' => :'tool_authorizer_client_ids',
         :'require_pkce' => :'require_pkce',
         :'require_resource_param' => :'require_resource_param',
         :'require_dpop' => :'require_dpop',
@@ -98,11 +110,14 @@ module LumoAuthApiClient
         :'resource_uri' => :'String',
         :'endpoint_url' => :'String',
         :'transport' => :'String',
+        :'transport_deprecated' => :'Boolean',
         :'auth_mode' => :'String',
         :'status' => :'String',
         :'scopes_supported' => :'Array<String>',
         :'scope_descriptions' => :'Hash<String, String>',
+        :'basic_scopes' => :'Array<String>',
         :'allowed_client_ids' => :'Array<String>',
+        :'tool_authorizer_client_ids' => :'Array<String>',
         :'require_pkce' => :'Boolean',
         :'require_resource_param' => :'Boolean',
         :'require_dpop' => :'Boolean',
@@ -165,6 +180,10 @@ module LumoAuthApiClient
         self.transport = attributes[:'transport']
       end
 
+      if attributes.key?(:'transport_deprecated')
+        self.transport_deprecated = attributes[:'transport_deprecated']
+      end
+
       if attributes.key?(:'auth_mode')
         self.auth_mode = attributes[:'auth_mode']
       end
@@ -185,9 +204,21 @@ module LumoAuthApiClient
         end
       end
 
+      if attributes.key?(:'basic_scopes')
+        if (value = attributes[:'basic_scopes']).is_a?(Array)
+          self.basic_scopes = value
+        end
+      end
+
       if attributes.key?(:'allowed_client_ids')
         if (value = attributes[:'allowed_client_ids']).is_a?(Array)
           self.allowed_client_ids = value
+        end
+      end
+
+      if attributes.key?(:'tool_authorizer_client_ids')
+        if (value = attributes[:'tool_authorizer_client_ids']).is_a?(Array)
+          self.tool_authorizer_client_ids = value
         end
       end
 
@@ -249,11 +280,14 @@ module LumoAuthApiClient
           resource_uri == o.resource_uri &&
           endpoint_url == o.endpoint_url &&
           transport == o.transport &&
+          transport_deprecated == o.transport_deprecated &&
           auth_mode == o.auth_mode &&
           status == o.status &&
           scopes_supported == o.scopes_supported &&
           scope_descriptions == o.scope_descriptions &&
+          basic_scopes == o.basic_scopes &&
           allowed_client_ids == o.allowed_client_ids &&
+          tool_authorizer_client_ids == o.tool_authorizer_client_ids &&
           require_pkce == o.require_pkce &&
           require_resource_param == o.require_resource_param &&
           require_dpop == o.require_dpop &&
@@ -272,7 +306,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, server_id, name, description, resource_uri, endpoint_url, transport, auth_mode, status, scopes_supported, scope_descriptions, allowed_client_ids, require_pkce, require_resource_param, require_dpop, token_lifetime, posture, capabilities, created_at].hash
+      [id, server_id, name, description, resource_uri, endpoint_url, transport, transport_deprecated, auth_mode, status, scopes_supported, scope_descriptions, basic_scopes, allowed_client_ids, tool_authorizer_client_ids, require_pkce, require_resource_param, require_dpop, token_lifetime, posture, capabilities, created_at].hash
     end
 
     # Builds the object from hash

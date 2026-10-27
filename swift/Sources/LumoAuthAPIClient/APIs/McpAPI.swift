@@ -238,6 +238,58 @@ open class McpAPI {
     }
 
     /**
+     Per-tool authorization for an MCP server (server credential)
+     
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter mcpServerToolAuthorizeRequest: (body)  
+     - returns: McpServerToolAuthorizeResponse
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func mcpServerToolAuthorize(orgId: String, serverId: String, mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest) async throws -> McpServerToolAuthorizeResponse {
+        return try await mcpServerToolAuthorizeWithRequestBuilder(orgId: orgId, serverId: serverId, mcpServerToolAuthorizeRequest: mcpServerToolAuthorizeRequest).execute().body
+    }
+
+    /**
+     Per-tool authorization for an MCP server (server credential)
+     - POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize
+     - Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.
+     - API Key:
+       - type: apiKey X-API-Key (HEADER)
+       - name: ApiKeyAuth
+     - Bearer Token:
+       - type: http
+       - name: BearerAuth
+     - parameter orgId: (path)  
+     - parameter serverId: (path)  
+     - parameter mcpServerToolAuthorizeRequest: (body)  
+     - returns: RequestBuilder<McpServerToolAuthorizeResponse> 
+     */
+    open class func mcpServerToolAuthorizeWithRequestBuilder(orgId: String, serverId: String, mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest) -> RequestBuilder<McpServerToolAuthorizeResponse> {
+        var localVariablePath = "/orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize"
+        let orgIdPreEscape = "\(APIHelper.mapValueToPathItem(orgId))"
+        let orgIdPostEscape = orgIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{orgId}", with: orgIdPostEscape, options: .literal, range: nil)
+        let serverIdPreEscape = "\(APIHelper.mapValueToPathItem(serverId))"
+        let serverIdPostEscape = serverIdPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{serverId}", with: serverIdPostEscape, options: .literal, range: nil)
+        let localVariableURLString = LumoAuthAPIClientAPI.basePath + localVariablePath
+        let localVariableParameters = JSONEncodingHelper.encodingParameters(forEncodableObject: mcpServerToolAuthorizeRequest)
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            "Content-Type": "application/json",
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<McpServerToolAuthorizeResponse>.Type = LumoAuthAPIClientAPI.requestBuilderFactory.getBuilder()
+
+        return localVariableRequestBuilder.init(method: "POST", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      Simulated MCP server authorization challenge (POST)
      
      - parameter orgId: (path)  

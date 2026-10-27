@@ -38,10 +38,12 @@ namespace LumoAuth.ApiClient.Model
         /// </summary>
         /// <param name="expiresIn">Token lifetime in seconds. Default 3600, at most 2592000 (30 days)..</param>
         /// <param name="scopes">Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400..</param>
-        public AdminAgentsGenerateTokenRequest(int expiresIn = default, List<string> scopes = default)
+        /// <param name="resource">Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server&#39;s token lifetime. Servers that require DPoP are refused with 400..</param>
+        public AdminAgentsGenerateTokenRequest(int expiresIn = default, List<string> scopes = default, string resource = default)
         {
             this.ExpiresIn = expiresIn;
             this.Scopes = scopes;
+            this.Resource = resource;
         }
 
         /// <summary>
@@ -65,6 +67,16 @@ namespace LumoAuth.ApiClient.Model
         public List<string> Scopes { get; set; }
 
         /// <summary>
+        /// Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server&#39;s token lifetime. Servers that require DPoP are refused with 400.
+        /// </summary>
+        /// <value>Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server&#39;s token lifetime. Servers that require DPoP are refused with 400.</value>
+        /*
+        <example>https://invoices.example.com/mcp</example>
+        */
+        [DataMember(Name = "resource", EmitDefaultValue = false)]
+        public string Resource { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -74,6 +86,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("class AdminAgentsGenerateTokenRequest {\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
+            sb.Append("  Resource: ").Append(Resource).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

@@ -24,6 +24,8 @@ type AdminAgentsGenerateTokenRequest struct {
 	ExpiresIn *int32 `json:"expiresIn,omitempty"`
 	// Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400.
 	Scopes []string `json:"scopes,omitempty"`
+	// Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server's token lifetime. Servers that require DPoP are refused with 400.
+	Resource *string `json:"resource,omitempty"`
 }
 
 // NewAdminAgentsGenerateTokenRequest instantiates a new AdminAgentsGenerateTokenRequest object
@@ -107,6 +109,38 @@ func (o *AdminAgentsGenerateTokenRequest) SetScopes(v []string) {
 	o.Scopes = v
 }
 
+// GetResource returns the Resource field value if set, zero value otherwise.
+func (o *AdminAgentsGenerateTokenRequest) GetResource() string {
+	if o == nil || IsNil(o.Resource) {
+		var ret string
+		return ret
+	}
+	return *o.Resource
+}
+
+// GetResourceOk returns a tuple with the Resource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AdminAgentsGenerateTokenRequest) GetResourceOk() (*string, bool) {
+	if o == nil || IsNil(o.Resource) {
+		return nil, false
+	}
+	return o.Resource, true
+}
+
+// HasResource returns a boolean if a field has been set.
+func (o *AdminAgentsGenerateTokenRequest) HasResource() bool {
+	if o != nil && !IsNil(o.Resource) {
+		return true
+	}
+
+	return false
+}
+
+// SetResource gets a reference to the given string and assigns it to the Resource field.
+func (o *AdminAgentsGenerateTokenRequest) SetResource(v string) {
+	o.Resource = &v
+}
+
 func (o AdminAgentsGenerateTokenRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -122,6 +156,9 @@ func (o AdminAgentsGenerateTokenRequest) ToMap() (map[string]interface{}, error)
 	}
 	if !IsNil(o.Scopes) {
 		toSerialize["scopes"] = o.Scopes
+	}
+	if !IsNil(o.Resource) {
+		toSerialize["resource"] = o.Resource
 	}
 	return toSerialize, nil
 }

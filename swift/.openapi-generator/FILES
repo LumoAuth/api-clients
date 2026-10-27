@@ -331,6 +331,9 @@ Sources/LumoAuthAPIClient/Models/MarkUserVerifiedResponse.swift
 Sources/LumoAuthAPIClient/Models/McpServer.swift
 Sources/LumoAuthAPIClient/Models/McpServerPosture.swift
 Sources/LumoAuthAPIClient/Models/McpServerPostureChecksInner.swift
+Sources/LumoAuthAPIClient/Models/McpServerToolAuthorizeRequest.swift
+Sources/LumoAuthAPIClient/Models/McpServerToolAuthorizeRequestSubject.swift
+Sources/LumoAuthAPIClient/Models/McpServerToolAuthorizeResponse.swift
 Sources/LumoAuthAPIClient/Models/MessageResponse.swift
 Sources/LumoAuthAPIClient/Models/MfaAuthenticator.swift
 Sources/LumoAuthAPIClient/Models/MfaAuthenticatorLastUsedContext.swift
@@ -750,6 +753,9 @@ docs/McpAPI.md
 docs/McpServer.md
 docs/McpServerPosture.md
 docs/McpServerPostureChecksInner.md
+docs/McpServerToolAuthorizeRequest.md
+docs/McpServerToolAuthorizeRequestSubject.md
+docs/McpServerToolAuthorizeResponse.md
 docs/MessageResponse.md
 docs/MfaAPI.md
 docs/MfaAuthenticator.md

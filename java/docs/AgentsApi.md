@@ -180,7 +180,7 @@ public class Example {
 
 Per-MCP-tool authorization for the authenticated agent (dx B3).
 
-The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \&quot;may THIS agent invoke &lt;server&gt;/&lt;tool&gt;?\&quot; and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;invoices\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
+An AGENT asks about itself: \&quot;may I invoke &lt;server&gt;/&lt;tool&gt;?\&quot; — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent&#39;s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;mcp_0123…\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
 
 ### Example
 ```java
@@ -249,7 +249,8 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | Allowed — the agent may invoke the tool. |  -  |
 | **403** | Denied — no matching per-tool or server-wide grant. |  -  |
-| **400** | server_id and tool are required, or contain forbidden characters. |  -  |
+| **400** | server_id and tool are required, or contain forbidden characters, or are too long together. |  -  |
+| **404** | unknown_server — server_id is not an active MCP server of this organization. |  -  |
 
 <a id="createApproval"></a>
 # **createApproval**

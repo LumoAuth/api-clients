@@ -31,7 +31,8 @@ class AdminAgentsGenerateTokenResponseData(BaseModel):
     token_type: Optional[StrictStr] = Field(default=None, alias="tokenType")
     expires_in: Optional[StrictInt] = Field(default=None, alias="expiresIn")
     scopes: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["accessToken", "tokenType", "expiresIn", "scopes"]
+    resource: Optional[StrictStr] = Field(default=None, description="The MCP server the token is bound to, when `resource` was sent.")
+    __properties: ClassVar[List[str]] = ["accessToken", "tokenType", "expiresIn", "scopes", "resource"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -72,6 +73,11 @@ class AdminAgentsGenerateTokenResponseData(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if resource (nullable) is None
+        # and model_fields_set contains the field
+        if self.resource is None and "resource" in self.model_fields_set:
+            _dict['resource'] = None
+
         return _dict
 
     @classmethod
@@ -87,7 +93,8 @@ class AdminAgentsGenerateTokenResponseData(BaseModel):
             "accessToken": obj.get("accessToken"),
             "tokenType": obj.get("tokenType"),
             "expiresIn": obj.get("expiresIn"),
-            "scopes": obj.get("scopes")
+            "scopes": obj.get("scopes"),
+            "resource": obj.get("resource")
         })
         return _obj
 

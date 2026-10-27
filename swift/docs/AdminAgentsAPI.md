@@ -386,7 +386,7 @@ import LumoAuthAPIClient
 
 let orgId = "orgId_example" // String | 
 let agentId = "agentId_example" // String | 
-let adminAgentsGenerateTokenRequest = AdminAgentsGenerateTokenRequest(expiresIn: 123, scopes: ["scopes_example"]) // AdminAgentsGenerateTokenRequest |  (optional)
+let adminAgentsGenerateTokenRequest = AdminAgentsGenerateTokenRequest(expiresIn: 123, scopes: ["scopes_example"], resource: "resource_example") // AdminAgentsGenerateTokenRequest |  (optional)
 
 // Generate a token for the agent
 AdminAgentsAPI.adminAgentsGenerateToken(orgId: orgId, agentId: agentId, adminAgentsGenerateTokenRequest: adminAgentsGenerateTokenRequest) { (response, error) in

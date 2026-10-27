@@ -9,6 +9,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**getServer**](McpApi.md#getServer) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server. |
 | [**getServerChallenge**](McpApi.md#getServerChallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge |
 | [**listServers**](McpApi.md#listServers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant. |
+| [**mcpServerToolAuthorize**](McpApi.md#mcpServerToolAuthorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential) |
 | [**postServerChallenge**](McpApi.md#postServerChallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST) |
 
 
@@ -365,6 +366,88 @@ public class Example {
 | **200** | List of active MCP servers for the tenant. |  -  |
 | **403** | Caller lacks the settings.manage permission. |  -  |
 | **404** | Tenant not found. |  -  |
+
+<a id="mcpServerToolAuthorize"></a>
+# **mcpServerToolAuthorize**
+> McpServerToolAuthorizeResponse mcpServerToolAuthorize(orgId, serverId, mcpServerToolAuthorizeRequest)
+
+Per-tool authorization for an MCP server (server credential)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+
+### Example
+```java
+// Import classes:
+import io.lumoauth.client.ApiClient;
+import io.lumoauth.client.ApiException;
+import io.lumoauth.client.Configuration;
+import io.lumoauth.client.auth.*;
+import io.lumoauth.client.models.*;
+import io.lumoauth.client.api.McpApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://app.lumoauth.dev");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP bearer authorization: BearerAuth
+    HttpBearerAuth BearerAuth = (HttpBearerAuth) defaultClient.getAuthentication("BearerAuth");
+    BearerAuth.setBearerToken("BEARER TOKEN");
+
+    McpApi apiInstance = new McpApi(defaultClient);
+    String orgId = "orgId_example"; // String | 
+    String serverId = "serverId_example"; // String | 
+    McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest = new McpServerToolAuthorizeRequest(); // McpServerToolAuthorizeRequest | 
+    try {
+      McpServerToolAuthorizeResponse result = apiInstance.mcpServerToolAuthorize(orgId, serverId, mcpServerToolAuthorizeRequest);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling McpApi#mcpServerToolAuthorize");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **orgId** | **String**|  | |
+| **serverId** | **String**|  | |
+| **mcpServerToolAuthorizeRequest** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md)|  | |
+
+### Return type
+
+[**McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Allowed. |  -  |
+| **400** | invalid_request — malformed subject or tool. |  -  |
+| **401** | invalid_token — no valid client-credentials token of this organization. |  -  |
+| **403** | Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. |  -  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **429** | too_many_requests (Retry-After header). |  -  |
 
 <a id="postServerChallenge"></a>
 # **postServerChallenge**

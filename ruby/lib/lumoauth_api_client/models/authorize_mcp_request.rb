@@ -15,6 +15,7 @@ require 'time'
 
 module LumoAuthApiClient
   class AuthorizeMcpRequest
+    # Id of an active MCP server registered in this organization.
     attr_accessor :server_id
 
     attr_accessor :tool

@@ -314,6 +314,9 @@ docs/McpApi.md
 docs/McpServer.md
 docs/McpServerPosture.md
 docs/McpServerPostureChecksInner.md
+docs/McpServerToolAuthorizeRequest.md
+docs/McpServerToolAuthorizeRequestSubject.md
+docs/McpServerToolAuthorizeResponse.md
 docs/MessageResponse.md
 docs/MfaApi.md
 docs/MfaAuthenticator.md
@@ -744,6 +747,9 @@ src/models/mark_user_verified_response.rs
 src/models/mcp_server.rs
 src/models/mcp_server_posture.rs
 src/models/mcp_server_posture_checks_inner.rs
+src/models/mcp_server_tool_authorize_request.rs
+src/models/mcp_server_tool_authorize_request_subject.rs
+src/models/mcp_server_tool_authorize_response.rs
 src/models/message_response.rs
 src/models/mfa_authenticator.rs
 src/models/mfa_authenticator_last_used_context.rs

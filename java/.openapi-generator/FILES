@@ -316,6 +316,9 @@ docs/McpApi.md
 docs/McpServer.md
 docs/McpServerPosture.md
 docs/McpServerPostureChecksInner.md
+docs/McpServerToolAuthorizeRequest.md
+docs/McpServerToolAuthorizeRequestSubject.md
+docs/McpServerToolAuthorizeResponse.md
 docs/MessageResponse.md
 docs/MfaApi.md
 docs/MfaAuthenticator.md
@@ -769,6 +772,9 @@ src/main/java/io/lumoauth/client/model/MarkUserVerifiedResponse.java
 src/main/java/io/lumoauth/client/model/McpServer.java
 src/main/java/io/lumoauth/client/model/McpServerPosture.java
 src/main/java/io/lumoauth/client/model/McpServerPostureChecksInner.java
+src/main/java/io/lumoauth/client/model/McpServerToolAuthorizeRequest.java
+src/main/java/io/lumoauth/client/model/McpServerToolAuthorizeRequestSubject.java
+src/main/java/io/lumoauth/client/model/McpServerToolAuthorizeResponse.java
 src/main/java/io/lumoauth/client/model/MessageResponse.java
 src/main/java/io/lumoauth/client/model/MfaAuthenticator.java
 src/main/java/io/lumoauth/client/model/MfaAuthenticatorLastUsedContext.java
@@ -1190,6 +1196,9 @@ src/test/java/io/lumoauth/client/model/MarkUserVerifiedResponseTest.java
 src/test/java/io/lumoauth/client/model/McpServerPostureChecksInnerTest.java
 src/test/java/io/lumoauth/client/model/McpServerPostureTest.java
 src/test/java/io/lumoauth/client/model/McpServerTest.java
+src/test/java/io/lumoauth/client/model/McpServerToolAuthorizeRequestSubjectTest.java
+src/test/java/io/lumoauth/client/model/McpServerToolAuthorizeRequestTest.java
+src/test/java/io/lumoauth/client/model/McpServerToolAuthorizeResponseTest.java
 src/test/java/io/lumoauth/client/model/MessageResponseTest.java
 src/test/java/io/lumoauth/client/model/MfaAuthenticatorLastUsedContextTest.java
 src/test/java/io/lumoauth/client/model/MfaAuthenticatorTest.java

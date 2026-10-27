@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from lumoauth_api_client.models.mcp_server_posture import McpServerPosture
 from typing import Optional, Set
@@ -36,11 +36,14 @@ class McpServer(BaseModel):
     resource_uri: Optional[StrictStr] = None
     endpoint_url: Optional[StrictStr] = None
     transport: Optional[StrictStr] = None
+    transport_deprecated: Optional[StrictBool] = Field(default=None, description="True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.")
     auth_mode: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
     scopes_supported: Optional[List[StrictStr]] = None
     scope_descriptions: Optional[Dict[str, StrictStr]] = None
+    basic_scopes: Optional[List[StrictStr]] = Field(default=None, description="Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.")
     allowed_client_ids: Optional[List[StrictStr]] = None
+    tool_authorizer_client_ids: Optional[List[StrictStr]] = Field(default=None, description="The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint.")
     require_pkce: Optional[StrictBool] = None
     require_resource_param: Optional[StrictBool] = None
     require_dpop: Optional[StrictBool] = None
@@ -48,7 +51,7 @@ class McpServer(BaseModel):
     posture: Optional[McpServerPosture] = None
     capabilities: Optional[List[StrictStr]] = None
     created_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "auth_mode", "status", "scopes_supported", "scope_descriptions", "allowed_client_ids", "require_pkce", "require_resource_param", "require_dpop", "token_lifetime", "posture", "capabilities", "created_at"]
+    __properties: ClassVar[List[str]] = ["id", "server_id", "name", "description", "resource_uri", "endpoint_url", "transport", "transport_deprecated", "auth_mode", "status", "scopes_supported", "scope_descriptions", "basic_scopes", "allowed_client_ids", "tool_authorizer_client_ids", "require_pkce", "require_resource_param", "require_dpop", "token_lifetime", "posture", "capabilities", "created_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -121,11 +124,14 @@ class McpServer(BaseModel):
             "resource_uri": obj.get("resource_uri"),
             "endpoint_url": obj.get("endpoint_url"),
             "transport": obj.get("transport"),
+            "transport_deprecated": obj.get("transport_deprecated"),
             "auth_mode": obj.get("auth_mode"),
             "status": obj.get("status"),
             "scopes_supported": obj.get("scopes_supported"),
             "scope_descriptions": obj.get("scope_descriptions"),
+            "basic_scopes": obj.get("basic_scopes"),
             "allowed_client_ids": obj.get("allowed_client_ids"),
+            "tool_authorizer_client_ids": obj.get("tool_authorizer_client_ids"),
             "require_pkce": obj.get("require_pkce"),
             "require_resource_param": obj.get("require_resource_param"),
             "require_dpop": obj.get("require_dpop"),

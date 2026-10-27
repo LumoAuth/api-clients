@@ -20,6 +20,7 @@ var _ MappedNullable = &AuthorizeMcpRequest{}
 
 // AuthorizeMcpRequest struct for AuthorizeMcpRequest
 type AuthorizeMcpRequest struct {
+	// Id of an active MCP server registered in this organization.
 	ServerId *string `json:"server_id,omitempty"`
 	Tool *string `json:"tool,omitempty"`
 }

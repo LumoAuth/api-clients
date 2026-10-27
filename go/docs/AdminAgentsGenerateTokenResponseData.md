@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **TokenType** | Pointer to **string** |  | [optional] 
 **ExpiresIn** | Pointer to **int32** |  | [optional] 
 **Scopes** | Pointer to **[]string** |  | [optional] 
+**Resource** | Pointer to **NullableString** | The MCP server the token is bound to, when &#x60;resource&#x60; was sent. | [optional] 
 
 ## Methods
 
@@ -128,6 +129,41 @@ SetScopes sets Scopes field to given value.
 
 HasScopes returns a boolean if a field has been set.
 
+### GetResource
+
+`func (o *AdminAgentsGenerateTokenResponseData) GetResource() string`
+
+GetResource returns the Resource field if non-nil, zero value otherwise.
+
+### GetResourceOk
+
+`func (o *AdminAgentsGenerateTokenResponseData) GetResourceOk() (*string, bool)`
+
+GetResourceOk returns a tuple with the Resource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResource
+
+`func (o *AdminAgentsGenerateTokenResponseData) SetResource(v string)`
+
+SetResource sets Resource field to given value.
+
+### HasResource
+
+`func (o *AdminAgentsGenerateTokenResponseData) HasResource() bool`
+
+HasResource returns a boolean if a field has been set.
+
+### SetResourceNil
+
+`func (o *AdminAgentsGenerateTokenResponseData) SetResourceNil(b bool)`
+
+ SetResourceNil sets the value for Resource to be an explicit nil
+
+### UnsetResource
+`func (o *AdminAgentsGenerateTokenResponseData) UnsetResource()`
+
+UnsetResource ensures that no value is present for Resource, not even an explicit nil
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

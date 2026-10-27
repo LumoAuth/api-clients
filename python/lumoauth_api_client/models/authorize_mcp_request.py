@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,7 +27,7 @@ class AuthorizeMcpRequest(BaseModel):
     """
     AuthorizeMcpRequest
     """ # noqa: E501
-    server_id: Optional[StrictStr] = None
+    server_id: Optional[StrictStr] = Field(default=None, description="Id of an active MCP server registered in this organization.")
     tool: Optional[StrictStr] = None
     __properties: ClassVar[List[str]] = ["server_id", "tool"]
 

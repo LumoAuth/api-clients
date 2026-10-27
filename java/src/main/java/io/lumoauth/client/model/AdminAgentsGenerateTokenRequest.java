@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * AdminAgentsGenerateTokenRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-26T22:02:21.062318292-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T18:39:38.311678905Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AdminAgentsGenerateTokenRequest {
   public static final String SERIALIZED_NAME_EXPIRES_IN = "expiresIn";
   @SerializedName(SERIALIZED_NAME_EXPIRES_IN)
@@ -61,6 +62,11 @@ public class AdminAgentsGenerateTokenRequest {
   @SerializedName(SERIALIZED_NAME_SCOPES)
   @javax.annotation.Nullable
   private List<String> scopes = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_RESOURCE = "resource";
+  @SerializedName(SERIALIZED_NAME_RESOURCE)
+  @javax.annotation.Nullable
+  private URI resource;
 
   public AdminAgentsGenerateTokenRequest() {
   }
@@ -111,6 +117,25 @@ public class AdminAgentsGenerateTokenRequest {
   }
 
 
+  public AdminAgentsGenerateTokenRequest resource(@javax.annotation.Nullable URI resource) {
+    this.resource = resource;
+    return this;
+  }
+
+  /**
+   * Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server&#39;s token lifetime. Servers that require DPoP are refused with 400.
+   * @return resource
+   */
+  @javax.annotation.Nullable
+  public URI getResource() {
+    return resource;
+  }
+
+  public void setResource(@javax.annotation.Nullable URI resource) {
+    this.resource = resource;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -122,12 +147,13 @@ public class AdminAgentsGenerateTokenRequest {
     }
     AdminAgentsGenerateTokenRequest adminAgentsGenerateTokenRequest = (AdminAgentsGenerateTokenRequest) o;
     return Objects.equals(this.expiresIn, adminAgentsGenerateTokenRequest.expiresIn) &&
-        Objects.equals(this.scopes, adminAgentsGenerateTokenRequest.scopes);
+        Objects.equals(this.scopes, adminAgentsGenerateTokenRequest.scopes) &&
+        Objects.equals(this.resource, adminAgentsGenerateTokenRequest.resource);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(expiresIn, scopes);
+    return Objects.hash(expiresIn, scopes, resource);
   }
 
   @Override
@@ -136,6 +162,7 @@ public class AdminAgentsGenerateTokenRequest {
     sb.append("class AdminAgentsGenerateTokenRequest {\n");
     sb.append("    expiresIn: ").append(toIndentedString(expiresIn)).append("\n");
     sb.append("    scopes: ").append(toIndentedString(scopes)).append("\n");
+    sb.append("    resource: ").append(toIndentedString(resource)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -157,7 +184,7 @@ public class AdminAgentsGenerateTokenRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("expiresIn", "scopes"));
+    openapiFields = new HashSet<String>(Arrays.asList("expiresIn", "scopes", "resource"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -187,6 +214,9 @@ public class AdminAgentsGenerateTokenRequest {
       // ensure the optional json data is an array if present
       if (jsonObj.get("scopes") != null && !jsonObj.get("scopes").isJsonNull() && !jsonObj.get("scopes").isJsonArray()) {
         throw new IllegalArgumentException(String.format("Expected the field `scopes` to be an array in the JSON string but got `%s`", jsonObj.get("scopes").toString()));
+      }
+      if ((jsonObj.get("resource") != null && !jsonObj.get("resource").isJsonNull()) && !jsonObj.get("resource").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `resource` to be a primitive type in the JSON string but got `%s`", jsonObj.get("resource").toString()));
       }
   }
 

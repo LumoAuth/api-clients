@@ -32,5 +32,11 @@ export interface AdminAgentsGenerateTokenRequest {
      * @memberof AdminAgentsGenerateTokenRequest
      */
     'scopes'?: Array<string>;
+    /**
+     * Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server\'s token lifetime. Servers that require DPoP are refused with 400.
+     * @type {string}
+     * @memberof AdminAgentsGenerateTokenRequest
+     */
+    'resource'?: string;
 }
 

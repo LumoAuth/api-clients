@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ServerId** | Pointer to **string** |  | [optional] 
+**ServerId** | Pointer to **string** | Id of an active MCP server registered in this organization. | [optional] 
 **Tool** | Pointer to **string** |  | [optional] 
 
 ## Methods

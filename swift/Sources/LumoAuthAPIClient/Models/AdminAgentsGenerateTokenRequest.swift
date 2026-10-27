@@ -16,15 +16,19 @@ public struct AdminAgentsGenerateTokenRequest: Codable, JSONEncodable, Hashable 
     public var expiresIn: Int?
     /** Optional subset of the agent's capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400. */
     public var scopes: [String]?
+    /** Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server's token lifetime. Servers that require DPoP are refused with 400. */
+    public var resource: String?
 
-    public init(expiresIn: Int? = nil, scopes: [String]? = nil) {
+    public init(expiresIn: Int? = nil, scopes: [String]? = nil, resource: String? = nil) {
         self.expiresIn = expiresIn
         self.scopes = scopes
+        self.resource = resource
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
         case expiresIn
         case scopes
+        case resource
     }
 
     // Encodable protocol methods
@@ -33,6 +37,7 @@ public struct AdminAgentsGenerateTokenRequest: Codable, JSONEncodable, Hashable 
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encodeIfPresent(expiresIn, forKey: .expiresIn)
         try container.encodeIfPresent(scopes, forKey: .scopes)
+        try container.encodeIfPresent(resource, forKey: .resource)
     }
 }
 

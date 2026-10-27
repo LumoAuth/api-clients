@@ -154,7 +154,7 @@ export const AgentsApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
+         * An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent\'s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }
          * @summary Per-MCP-tool authorization for the authenticated agent (dx B3).
          * @param {string} orgId 
          * @param {AuthorizeMcpRequest} authorizeMcpRequest 
@@ -497,7 +497,7 @@ export const AgentsApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
+         * An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent\'s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }
          * @summary Per-MCP-tool authorization for the authenticated agent (dx B3).
          * @param {string} orgId 
          * @param {AuthorizeMcpRequest} authorizeMcpRequest 
@@ -621,7 +621,7 @@ export const AgentsApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.attest(requestParameters.orgId, requestParameters.agentId, requestParameters.attestRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
+         * An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent\'s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }
          * @summary Per-MCP-tool authorization for the authenticated agent (dx B3).
          * @param {AgentsApiAuthorizeMcpRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -718,7 +718,7 @@ export interface AgentsApiInterface {
     attest(requestParameters: AgentsApiAttestRequest, options?: RawAxiosRequestConfig): AxiosPromise<AttestResponse>;
 
     /**
-     * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
+     * An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent\'s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }
      * @summary Per-MCP-tool authorization for the authenticated agent (dx B3).
      * @param {AgentsApiAuthorizeMcpRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1001,7 +1001,7 @@ export class AgentsApi extends BaseAPI implements AgentsApiInterface {
     }
 
     /**
-     * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
+     * An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent\'s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }
      * @summary Per-MCP-tool authorization for the authenticated agent (dx B3).
      * @param {AgentsApiAuthorizeMcpRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

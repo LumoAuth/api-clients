@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ExpiresIn** | Pointer to **int32** | Token lifetime in seconds. Default 3600, at most 2592000 (30 days). | [optional] 
 **Scopes** | Pointer to **[]string** | Optional subset of the agent&#39;s capabilities to carry in the token. Omit for all of them; a scope the agent does not have is rejected with 400. | [optional] 
+**Resource** | Pointer to **string** | Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server&#39;s token lifetime. Servers that require DPoP are refused with 400. | [optional] 
 
 ## Methods
 
@@ -75,6 +76,31 @@ SetScopes sets Scopes field to given value.
 `func (o *AdminAgentsGenerateTokenRequest) HasScopes() bool`
 
 HasScopes returns a boolean if a field has been set.
+
+### GetResource
+
+`func (o *AdminAgentsGenerateTokenRequest) GetResource() string`
+
+GetResource returns the Resource field if non-nil, zero value otherwise.
+
+### GetResourceOk
+
+`func (o *AdminAgentsGenerateTokenRequest) GetResourceOk() (*string, bool)`
+
+GetResourceOk returns a tuple with the Resource field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResource
+
+`func (o *AdminAgentsGenerateTokenRequest) SetResource(v string)`
+
+SetResource sets Resource field to given value.
+
+### HasResource
+
+`func (o *AdminAgentsGenerateTokenRequest) HasResource() bool`
+
+HasResource returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

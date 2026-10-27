@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**get_server**](McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 [**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 [**list_servers**](McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+[**mcp_server_tool_authorize**](McpApi.md#mcp_server_tool_authorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 [**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 
 
@@ -161,6 +162,38 @@ Name | Type | Description  | Required | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## mcp_server_tool_authorize
+
+> models::McpServerToolAuthorizeResponse mcp_server_tool_authorize(org_id, server_id, mcp_server_tool_authorize_request)
+Per-tool authorization for an MCP server (server credential)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**org_id** | **String** |  | [required] |
+**server_id** | **String** |  | [required] |
+**mcp_server_tool_authorize_request** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md) |  | [required] |
+
+### Return type
+
+[**models::McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

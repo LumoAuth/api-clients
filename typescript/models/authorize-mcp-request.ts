@@ -21,7 +21,7 @@
  */
 export interface AuthorizeMcpRequest {
     /**
-     * 
+     * Id of an active MCP server registered in this organization.
      * @type {string}
      * @memberof AuthorizeMcpRequest
      */

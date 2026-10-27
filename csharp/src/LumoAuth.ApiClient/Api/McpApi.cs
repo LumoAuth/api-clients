@@ -140,6 +140,31 @@ namespace LumoAuth.ApiClient.Api
         /// <returns>ApiResponse of ListServersResponse</returns>
         ApiResponse<ListServersResponse> ListServersWithHttpInfo(string orgId);
         /// <summary>
+        /// Per-tool authorization for an MCP server (server credential)
+        /// </summary>
+        /// <remarks>
+        /// Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <returns>McpServerToolAuthorizeResponse</returns>
+        McpServerToolAuthorizeResponse McpServerToolAuthorize(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest);
+
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential)
+        /// </summary>
+        /// <remarks>
+        /// Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <returns>ApiResponse of McpServerToolAuthorizeResponse</returns>
+        ApiResponse<McpServerToolAuthorizeResponse> McpServerToolAuthorizeWithHttpInfo(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest);
+        /// <summary>
         /// Simulated MCP server authorization challenge (POST)
         /// </summary>
         /// <remarks>
@@ -292,6 +317,33 @@ namespace LumoAuth.ApiClient.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (ListServersResponse)</returns>
         System.Threading.Tasks.Task<ApiResponse<ListServersResponse>> ListServersWithHttpInfoAsync(string orgId, System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential)
+        /// </summary>
+        /// <remarks>
+        /// Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of McpServerToolAuthorizeResponse</returns>
+        System.Threading.Tasks.Task<McpServerToolAuthorizeResponse> McpServerToolAuthorizeAsync(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential)
+        /// </summary>
+        /// <remarks>
+        /// Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (McpServerToolAuthorizeResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<McpServerToolAuthorizeResponse>> McpServerToolAuthorizeWithHttpInfoAsync(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Simulated MCP server authorization challenge (POST)
         /// </summary>
@@ -1197,6 +1249,173 @@ namespace LumoAuth.ApiClient.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ListServers", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential) Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <returns>McpServerToolAuthorizeResponse</returns>
+        public McpServerToolAuthorizeResponse McpServerToolAuthorize(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<McpServerToolAuthorizeResponse> localVarResponse = McpServerToolAuthorizeWithHttpInfo(orgId, serverId, mcpServerToolAuthorizeRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential) Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <returns>ApiResponse of McpServerToolAuthorizeResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<McpServerToolAuthorizeResponse> McpServerToolAuthorizeWithHttpInfo(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling McpApi->McpServerToolAuthorize");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling McpApi->McpServerToolAuthorize");
+
+            // verify the required parameter 'mcpServerToolAuthorizeRequest' is set
+            if (mcpServerToolAuthorizeRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerToolAuthorizeRequest' when calling McpApi->McpServerToolAuthorize");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.Data = mcpServerToolAuthorizeRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<McpServerToolAuthorizeResponse>("/orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("McpServerToolAuthorize", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential) Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of McpServerToolAuthorizeResponse</returns>
+        public async System.Threading.Tasks.Task<McpServerToolAuthorizeResponse> McpServerToolAuthorizeAsync(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<McpServerToolAuthorizeResponse> localVarResponse = await McpServerToolAuthorizeWithHttpInfoAsync(orgId, serverId, mcpServerToolAuthorizeRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Per-tool authorization for an MCP server (server credential) Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="serverId"></param>
+        /// <param name="mcpServerToolAuthorizeRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (McpServerToolAuthorizeResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<McpServerToolAuthorizeResponse>> McpServerToolAuthorizeWithHttpInfoAsync(string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling McpApi->McpServerToolAuthorize");
+
+            // verify the required parameter 'serverId' is set
+            if (serverId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'serverId' when calling McpApi->McpServerToolAuthorize");
+
+            // verify the required parameter 'mcpServerToolAuthorizeRequest' is set
+            if (mcpServerToolAuthorizeRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'mcpServerToolAuthorizeRequest' when calling McpApi->McpServerToolAuthorize");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.PathParameters.Add("serverId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(serverId)); // path parameter
+            localVarRequestOptions.Data = mcpServerToolAuthorizeRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<McpServerToolAuthorizeResponse>("/orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("McpServerToolAuthorize", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

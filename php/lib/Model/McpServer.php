@@ -65,11 +65,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         'resourceUri' => 'string',
         'endpointUrl' => 'string',
         'transport' => 'string',
+        'transportDeprecated' => 'bool',
         'authMode' => 'string',
         'status' => 'string',
         'scopesSupported' => 'string[]',
         'scopeDescriptions' => 'array<string,string>',
+        'basicScopes' => 'string[]',
         'allowedClientIds' => 'string[]',
+        'toolAuthorizerClientIds' => 'string[]',
         'requirePkce' => 'bool',
         'requireResourceParam' => 'bool',
         'requireDpop' => 'bool',
@@ -94,11 +97,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         'resourceUri' => 'uri',
         'endpointUrl' => 'uri',
         'transport' => null,
+        'transportDeprecated' => null,
         'authMode' => null,
         'status' => null,
         'scopesSupported' => null,
         'scopeDescriptions' => null,
+        'basicScopes' => null,
         'allowedClientIds' => null,
+        'toolAuthorizerClientIds' => null,
         'requirePkce' => null,
         'requireResourceParam' => null,
         'requireDpop' => null,
@@ -121,11 +127,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         'resourceUri' => false,
         'endpointUrl' => true,
         'transport' => false,
+        'transportDeprecated' => false,
         'authMode' => false,
         'status' => false,
         'scopesSupported' => false,
         'scopeDescriptions' => false,
+        'basicScopes' => false,
         'allowedClientIds' => false,
+        'toolAuthorizerClientIds' => false,
         'requirePkce' => false,
         'requireResourceParam' => false,
         'requireDpop' => false,
@@ -228,11 +237,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         'resourceUri' => 'resource_uri',
         'endpointUrl' => 'endpoint_url',
         'transport' => 'transport',
+        'transportDeprecated' => 'transport_deprecated',
         'authMode' => 'auth_mode',
         'status' => 'status',
         'scopesSupported' => 'scopes_supported',
         'scopeDescriptions' => 'scope_descriptions',
+        'basicScopes' => 'basic_scopes',
         'allowedClientIds' => 'allowed_client_ids',
+        'toolAuthorizerClientIds' => 'tool_authorizer_client_ids',
         'requirePkce' => 'require_pkce',
         'requireResourceParam' => 'require_resource_param',
         'requireDpop' => 'require_dpop',
@@ -255,11 +267,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         'resourceUri' => 'setResourceUri',
         'endpointUrl' => 'setEndpointUrl',
         'transport' => 'setTransport',
+        'transportDeprecated' => 'setTransportDeprecated',
         'authMode' => 'setAuthMode',
         'status' => 'setStatus',
         'scopesSupported' => 'setScopesSupported',
         'scopeDescriptions' => 'setScopeDescriptions',
+        'basicScopes' => 'setBasicScopes',
         'allowedClientIds' => 'setAllowedClientIds',
+        'toolAuthorizerClientIds' => 'setToolAuthorizerClientIds',
         'requirePkce' => 'setRequirePkce',
         'requireResourceParam' => 'setRequireResourceParam',
         'requireDpop' => 'setRequireDpop',
@@ -282,11 +297,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         'resourceUri' => 'getResourceUri',
         'endpointUrl' => 'getEndpointUrl',
         'transport' => 'getTransport',
+        'transportDeprecated' => 'getTransportDeprecated',
         'authMode' => 'getAuthMode',
         'status' => 'getStatus',
         'scopesSupported' => 'getScopesSupported',
         'scopeDescriptions' => 'getScopeDescriptions',
+        'basicScopes' => 'getBasicScopes',
         'allowedClientIds' => 'getAllowedClientIds',
+        'toolAuthorizerClientIds' => 'getToolAuthorizerClientIds',
         'requirePkce' => 'getRequirePkce',
         'requireResourceParam' => 'getRequireResourceParam',
         'requireDpop' => 'getRequireDpop',
@@ -360,11 +378,14 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
         $this->setIfExists('resourceUri', $data ?? [], null);
         $this->setIfExists('endpointUrl', $data ?? [], null);
         $this->setIfExists('transport', $data ?? [], null);
+        $this->setIfExists('transportDeprecated', $data ?? [], null);
         $this->setIfExists('authMode', $data ?? [], null);
         $this->setIfExists('status', $data ?? [], null);
         $this->setIfExists('scopesSupported', $data ?? [], null);
         $this->setIfExists('scopeDescriptions', $data ?? [], null);
+        $this->setIfExists('basicScopes', $data ?? [], null);
         $this->setIfExists('allowedClientIds', $data ?? [], null);
+        $this->setIfExists('toolAuthorizerClientIds', $data ?? [], null);
         $this->setIfExists('requirePkce', $data ?? [], null);
         $this->setIfExists('requireResourceParam', $data ?? [], null);
         $this->setIfExists('requireDpop', $data ?? [], null);
@@ -620,6 +641,33 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
+     * Gets transportDeprecated
+     *
+     * @return bool|null
+     */
+    public function getTransportDeprecated()
+    {
+        return $this->container['transportDeprecated'];
+    }
+
+    /**
+     * Sets transportDeprecated
+     *
+     * @param bool|null $transportDeprecated True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+     *
+     * @return self
+     */
+    public function setTransportDeprecated($transportDeprecated)
+    {
+        if (is_null($transportDeprecated)) {
+            throw new \InvalidArgumentException('non-nullable transportDeprecated cannot be null');
+        }
+        $this->container['transportDeprecated'] = $transportDeprecated;
+
+        return $this;
+    }
+
+    /**
      * Gets authMode
      *
      * @return string|null
@@ -728,6 +776,33 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
     }
 
     /**
+     * Gets basicScopes
+     *
+     * @return string[]|null
+     */
+    public function getBasicScopes()
+    {
+        return $this->container['basicScopes'];
+    }
+
+    /**
+     * Sets basicScopes
+     *
+     * @param string[]|null $basicScopes Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.
+     *
+     * @return self
+     */
+    public function setBasicScopes($basicScopes)
+    {
+        if (is_null($basicScopes)) {
+            throw new \InvalidArgumentException('non-nullable basicScopes cannot be null');
+        }
+        $this->container['basicScopes'] = $basicScopes;
+
+        return $this;
+    }
+
+    /**
      * Gets allowedClientIds
      *
      * @return string[]|null
@@ -750,6 +825,33 @@ class McpServer implements ModelInterface, ArrayAccess, \JsonSerializable
             throw new \InvalidArgumentException('non-nullable allowedClientIds cannot be null');
         }
         $this->container['allowedClientIds'] = $allowedClientIds;
+
+        return $this;
+    }
+
+    /**
+     * Gets toolAuthorizerClientIds
+     *
+     * @return string[]|null
+     */
+    public function getToolAuthorizerClientIds()
+    {
+        return $this->container['toolAuthorizerClientIds'];
+    }
+
+    /**
+     * Sets toolAuthorizerClientIds
+     *
+     * @param string[]|null $toolAuthorizerClientIds The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint.
+     *
+     * @return self
+     */
+    public function setToolAuthorizerClientIds($toolAuthorizerClientIds)
+    {
+        if (is_null($toolAuthorizerClientIds)) {
+            throw new \InvalidArgumentException('non-nullable toolAuthorizerClientIds cannot be null');
+        }
+        $this->container['toolAuthorizerClientIds'] = $toolAuthorizerClientIds;
 
         return $this;
     }

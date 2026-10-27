@@ -315,6 +315,9 @@ docs/McpApi.md
 docs/McpServer.md
 docs/McpServerPosture.md
 docs/McpServerPostureChecksInner.md
+docs/McpServerToolAuthorizeRequest.md
+docs/McpServerToolAuthorizeRequestSubject.md
+docs/McpServerToolAuthorizeResponse.md
 docs/MessageResponse.md
 docs/MfaApi.md
 docs/MfaAuthenticator.md
@@ -743,6 +746,9 @@ src/LumoAuth.ApiClient.Test/Model/MarkUserVerifiedResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/McpServerPostureChecksInnerTests.cs
 src/LumoAuth.ApiClient.Test/Model/McpServerPostureTests.cs
 src/LumoAuth.ApiClient.Test/Model/McpServerTests.cs
+src/LumoAuth.ApiClient.Test/Model/McpServerToolAuthorizeRequestSubjectTests.cs
+src/LumoAuth.ApiClient.Test/Model/McpServerToolAuthorizeRequestTests.cs
+src/LumoAuth.ApiClient.Test/Model/McpServerToolAuthorizeResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/MessageResponseTests.cs
 src/LumoAuth.ApiClient.Test/Model/MfaAuthenticatorLastUsedContextTests.cs
 src/LumoAuth.ApiClient.Test/Model/MfaAuthenticatorTests.cs
@@ -1183,6 +1189,9 @@ src/LumoAuth.ApiClient/Model/MarkUserVerifiedResponse.cs
 src/LumoAuth.ApiClient/Model/McpServer.cs
 src/LumoAuth.ApiClient/Model/McpServerPosture.cs
 src/LumoAuth.ApiClient/Model/McpServerPostureChecksInner.cs
+src/LumoAuth.ApiClient/Model/McpServerToolAuthorizeRequest.cs
+src/LumoAuth.ApiClient/Model/McpServerToolAuthorizeRequestSubject.cs
+src/LumoAuth.ApiClient/Model/McpServerToolAuthorizeResponse.cs
 src/LumoAuth.ApiClient/Model/MessageResponse.cs
 src/LumoAuth.ApiClient/Model/MfaAuthenticator.cs
 src/LumoAuth.ApiClient/Model/MfaAuthenticatorLastUsedContext.cs

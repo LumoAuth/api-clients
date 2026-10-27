@@ -1871,7 +1871,8 @@ paths:
                 $ref: "#/components/schemas/AdminAgentsGenerateTokenResponse"
           description: A generated agent token. The token value is returned ONCE.
         "400":
-          description: "Inactive agent, or requested scopes outside the agent's capabilities."
+          description: "Inactive agent, requested scopes outside the agent's capabilities,\
+            \ or a resource that is not an active MCP server of this organization."
         "401":
           description: Authentication required.
         "403":
@@ -3215,13 +3216,21 @@ paths:
       description: |-
         Body:
         name (required) — display name
-        resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment
+        resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
+            loopback), no fragment, no user info, not a LumoAuth host, unique
+            per organization after normalisation (same rules as the portal)
         endpoint_url (optional) — actual MCP endpoint
         description (optional)
-        scopes_supported (optional) — array OR space/comma-separated string
-        transport (optional) — defaults to "http_streamable"
+        scopes_supported (optional) — array OR space/comma-separated string; omnibus
+            scopes, offline_access and admin/scim scopes are refused (422)
+        basic_scopes (optional) — subset of scopes_supported advertised in the
+            401 challenge and Protected Resource Metadata; no wildcards
+        transport (optional) — defaults to "http_streamable" ("http_sse" is
+            deprecated in MCP 2026-07-28)
         auth_mode (optional) — defaults to "oauth"
-        token_lifetime (optional, default 3600) — clamped to [60, 86400]
+        token_lifetime (optional, default 3600) — 60..86400, else 422
+        tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
+            that may call the per-tool authorization endpoint
         allowed_client_ids (optional) — array of this organization's OAuth client ids;
             unknown ids are a 422 (never persisted as policy)
         require_pkce (optional, default true)
@@ -7660,14 +7669,18 @@ paths:
   /orgs/{orgId}/api/v1/agents/me/mcp/authorize:
     post:
       description: |-
-        The real request-path caller of {@see \McpToolAuthorizationService::canInvoke()}
-        — the piece that connects MCP authorization to agent identity. An MCP
-        gateway/server asks "may THIS agent invoke <server>/<tool>?" and gets a
-        Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and
-        grants are both audited, closing the MCP-authorization audit blind spot.
+        An AGENT asks about itself: "may I invoke <server>/<tool>?" — with its
+        own credential, before it calls the tool. Zanzibar-backed allow/deny
+        (tool-level or server-wide grant), audited either way.
+
+        An MCP SERVER must not use this endpoint: it would have to forward the
+        agent's token (MCP 2026-07-28 forbids token passthrough). Servers call
+        POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with
+        their own client-credentials token instead
+        ({@see \McpAuthorizationController::authorizeTool()}).
 
         POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize
-        Body: { "server_id": "invoices", "tool": "send_payment_reminder" }
+        Body: { "server_id": "mcp_0123…", "tool": "send_payment_reminder" }
       operationId: authorizeMcp
       parameters:
       - explode: false
@@ -7693,7 +7706,11 @@ paths:
         "403":
           description: Denied — no matching per-tool or server-wide grant.
         "400":
-          description: "server_id and tool are required, or contain forbidden characters."
+          description: "server_id and tool are required, or contain forbidden characters,\
+            \ or are too long together."
+        "404":
+          description: unknown_server — server_id is not an active MCP server of this
+            organization.
       summary: Per-MCP-tool authorization for the authenticated agent (dx B3).
       tags:
       - Agents
@@ -8834,6 +8851,57 @@ paths:
       tags:
       - Mcp
       x-symfony-route: mcp_server_challenge
+  /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize:
+    post:
+      description: Called by the MCP server with its own client-credentials access
+        token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids).
+        The body names the caller the server already verified. The server never forwards
+        the caller's token.
+      operationId: mcpServerToolAuthorize
+      parameters:
+      - explode: false
+        in: path
+        name: orgId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/McpServerToolAuthorizeRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/McpServerToolAuthorizeResponse"
+          description: Allowed.
+        "400":
+          description: invalid_request — malformed subject or tool.
+        "401":
+          description: invalid_token — no valid client-credentials token of this organization.
+        "403":
+          description: "Denied (allowed=false), or insufficient_scope / not an authorizer\
+            \ client of this server."
+        "404":
+          description: "not_found — unknown organization, or unknown / inactive MCP\
+            \ server."
+        "429":
+          description: too_many_requests (Retry-After header).
+      summary: Per-tool authorization for an MCP server (server credential)
+      tags:
+      - Mcp
+      x-symfony-route: api_mcp_server_tool_authorize
   /orgs/{orgId}/api/v1/mcp/servers:
     get:
       description: Management endpoint — requires tenant admin authentication.
@@ -12380,12 +12448,19 @@ components:
         scopes_supported:
         - scopes_supported
         - scopes_supported
+        tool_authorizer_client_ids:
+        - tool_authorizer_client_ids
+        - tool_authorizer_client_ids
         scope_descriptions:
           key: scope_descriptions
+        basic_scopes:
+        - basic_scopes
+        - basic_scopes
         token_lifetime: 6
         endpoint_url: https://openapi-generator.tech
         name: name
         id: 0
+        transport_deprecated: true
         allowed_client_ids:
         - allowed_client_ids
         - allowed_client_ids
@@ -12409,6 +12484,10 @@ components:
           type: string
         transport:
           type: string
+        transport_deprecated:
+          description: "True for http_sse, deprecated in MCP 2026-07-28; migrate to\
+            \ http_streamable."
+          type: boolean
         auth_mode:
           type: string
         status:
@@ -12421,7 +12500,19 @@ components:
           additionalProperties:
             type: string
           type: object
+        basic_scopes:
+          description: Subset of scopes_supported advertised in the 401 challenge
+            and in protected resource metadata. Empty = the whole vocabulary.
+          items:
+            type: string
+          type: array
         allowed_client_ids:
+          items:
+            type: string
+          type: array
+        tool_authorizer_client_ids:
+          description: The MCP server's own OAuth clients allowed to call the per-tool
+            authorization endpoint.
           items:
             type: string
           type: array
@@ -13919,6 +14010,7 @@ components:
     AdminAgentsGenerateTokenRequest:
       example:
         expiresIn: 600
+        resource: https://invoices.example.com/mcp
         scopes:
         - invoices.read
       properties:
@@ -13936,10 +14028,19 @@ components:
           items:
             type: string
           type: array
+        resource:
+          description: Optional resource URI of an active MCP server of this organization.
+            The token is then audience-bound to that server (and no longer works on
+            the LumoAuth API) and lives at most the server's token lifetime. Servers
+            that require DPoP are refused with 400.
+          example: https://invoices.example.com/mcp
+          format: uri
+          type: string
       type: object
     AdminAgentsGenerateTokenResponseData:
       example:
         expiresIn: 600
+        resource: resource
         scopes:
         - invoices.read
         accessToken: eyJ...
@@ -13960,11 +14061,17 @@ components:
           items:
             type: string
           type: array
+        resource:
+          description: "The MCP server the token is bound to, when `resource` was\
+            \ sent."
+          nullable: true
+          type: string
       type: object
     AdminAgentsGenerateTokenResponse:
       example:
         data:
           expiresIn: 600
+          resource: resource
           scopes:
           - invoices.read
           accessToken: eyJ...
@@ -15181,12 +15288,19 @@ components:
           scopes_supported:
           - scopes_supported
           - scopes_supported
+          tool_authorizer_client_ids:
+          - tool_authorizer_client_ids
+          - tool_authorizer_client_ids
           scope_descriptions:
             key: scope_descriptions
+          basic_scopes:
+          - basic_scopes
+          - basic_scopes
           token_lifetime: 6
           endpoint_url: https://openapi-generator.tech
           name: name
           id: 0
+          transport_deprecated: true
           allowed_client_ids:
           - allowed_client_ids
           - allowed_client_ids
@@ -15222,12 +15336,19 @@ components:
           scopes_supported:
           - scopes_supported
           - scopes_supported
+          tool_authorizer_client_ids:
+          - tool_authorizer_client_ids
+          - tool_authorizer_client_ids
           scope_descriptions:
             key: scope_descriptions
+          basic_scopes:
+          - basic_scopes
+          - basic_scopes
           token_lifetime: 6
           endpoint_url: https://openapi-generator.tech
           name: name
           id: 0
+          transport_deprecated: true
           allowed_client_ids:
           - allowed_client_ids
           - allowed_client_ids
@@ -15280,12 +15401,19 @@ components:
           scopes_supported:
           - scopes_supported
           - scopes_supported
+          tool_authorizer_client_ids:
+          - tool_authorizer_client_ids
+          - tool_authorizer_client_ids
           scope_descriptions:
             key: scope_descriptions
+          basic_scopes:
+          - basic_scopes
+          - basic_scopes
           token_lifetime: 6
           endpoint_url: https://openapi-generator.tech
           name: name
           id: 0
+          transport_deprecated: true
           allowed_client_ids:
           - allowed_client_ids
           - allowed_client_ids
@@ -15331,12 +15459,19 @@ components:
           scopes_supported:
           - scopes_supported
           - scopes_supported
+          tool_authorizer_client_ids:
+          - tool_authorizer_client_ids
+          - tool_authorizer_client_ids
           scope_descriptions:
             key: scope_descriptions
+          basic_scopes:
+          - basic_scopes
+          - basic_scopes
           token_lifetime: 6
           endpoint_url: https://openapi-generator.tech
           name: name
           id: 0
+          transport_deprecated: true
           allowed_client_ids:
           - allowed_client_ids
           - allowed_client_ids
@@ -19038,11 +19173,12 @@ components:
       type: object
     AuthorizeMcpRequest:
       example:
-        server_id: invoices
+        server_id: mcp_0123456789abcdef01234567
         tool: send_payment_reminder
       properties:
         server_id:
-          example: invoices
+          description: Id of an active MCP server registered in this organization.
+          example: mcp_0123456789abcdef01234567
           type: string
         tool:
           example: send_payment_reminder
@@ -20410,6 +20546,54 @@ components:
       - server
       - server_id
       - status
+      type: object
+    McpServerToolAuthorizeRequestSubject:
+      example:
+        id: id
+        type: user
+      properties:
+        type:
+          enum:
+          - user
+          - agent
+          type: string
+        id:
+          description: "User UUID, or agent id (agt_…). For an MCP token, the user\
+            \ id is `sub`; for an agent token `sub` is `agent_<id>`."
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    McpServerToolAuthorizeRequest:
+      example:
+        subject:
+          id: id
+          type: user
+        tool: send_payment_reminder
+      properties:
+        subject:
+          $ref: "#/components/schemas/McpServerToolAuthorizeRequestSubject"
+        tool:
+          example: send_payment_reminder
+          type: string
+      required:
+      - subject
+      - tool
+      type: object
+    McpServerToolAuthorizeResponse:
+      example:
+        resource: "{}"
+        allowed: true
+        subject: "{}"
+      properties:
+        allowed:
+          example: true
+          type: boolean
+        subject:
+          type: object
+        resource:
+          type: object
       type: object
     ListServersResponseDataItem:
       example:

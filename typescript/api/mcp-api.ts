@@ -30,6 +30,10 @@ import type { GetServerResponse } from '../models';
 // @ts-ignore
 import type { ListServersResponse } from '../models';
 // @ts-ignore
+import type { McpServerToolAuthorizeRequest } from '../models';
+// @ts-ignore
+import type { McpServerToolAuthorizeResponse } from '../models';
+// @ts-ignore
 import type { ProtectedResourceMetadata } from '../models';
 /**
  * McpApi - axios parameter creator
@@ -238,6 +242,57 @@ export const McpApiAxiosParamCreator = function (configuration?: Configuration) 
             };
         },
         /**
+         * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server\'s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller\'s token.
+         * @summary Per-tool authorization for an MCP server (server credential)
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {McpServerToolAuthorizeRequest} mcpServerToolAuthorizeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mcpServerToolAuthorize: async (orgId: string, serverId: string, mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('mcpServerToolAuthorize', 'orgId', orgId)
+            // verify required parameter 'serverId' is not null or undefined
+            assertParamExists('mcpServerToolAuthorize', 'serverId', serverId)
+            // verify required parameter 'mcpServerToolAuthorizeRequest' is not null or undefined
+            assertParamExists('mcpServerToolAuthorize', 'mcpServerToolAuthorizeRequest', mcpServerToolAuthorizeRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)))
+                .replace(`{${"serverId"}}`, encodeURIComponent(String(serverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(mcpServerToolAuthorizeRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Identical to GET; the HTTP method is only recorded in the audit trail.
          * @summary Simulated MCP server authorization challenge (POST)
          * @param {string} orgId 
@@ -358,6 +413,21 @@ export const McpApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
+         * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server\'s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller\'s token.
+         * @summary Per-tool authorization for an MCP server (server credential)
+         * @param {string} orgId 
+         * @param {string} serverId 
+         * @param {McpServerToolAuthorizeRequest} mcpServerToolAuthorizeRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async mcpServerToolAuthorize(orgId: string, serverId: string, mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<McpServerToolAuthorizeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.mcpServerToolAuthorize(orgId, serverId, mcpServerToolAuthorizeRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['McpApi.mcpServerToolAuthorize']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * Identical to GET; the HTTP method is only recorded in the audit trail.
          * @summary Simulated MCP server authorization challenge (POST)
          * @param {string} orgId 
@@ -432,6 +502,16 @@ export const McpApiFactory = function (configuration?: Configuration, basePath?:
             return localVarFp.listServers(requestParameters.orgId, options).then((request) => request(axios, basePath));
         },
         /**
+         * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server\'s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller\'s token.
+         * @summary Per-tool authorization for an MCP server (server credential)
+         * @param {McpApiMcpServerToolAuthorizeRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        mcpServerToolAuthorize(requestParameters: McpApiMcpServerToolAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<McpServerToolAuthorizeResponse> {
+            return localVarFp.mcpServerToolAuthorize(requestParameters.orgId, requestParameters.serverId, requestParameters.mcpServerToolAuthorizeRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Identical to GET; the HTTP method is only recorded in the audit trail.
          * @summary Simulated MCP server authorization challenge (POST)
          * @param {McpApiPostServerChallengeRequest} requestParameters Request parameters.
@@ -499,6 +579,16 @@ export interface McpApiInterface {
      * @memberof McpApiInterface
      */
     listServers(requestParameters: McpApiListServersRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListServersResponse>;
+
+    /**
+     * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server\'s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller\'s token.
+     * @summary Per-tool authorization for an MCP server (server credential)
+     * @param {McpApiMcpServerToolAuthorizeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof McpApiInterface
+     */
+    mcpServerToolAuthorize(requestParameters: McpApiMcpServerToolAuthorizeRequest, options?: RawAxiosRequestConfig): AxiosPromise<McpServerToolAuthorizeResponse>;
 
     /**
      * Identical to GET; the HTTP method is only recorded in the audit trail.
@@ -604,6 +694,34 @@ export interface McpApiListServersRequest {
 }
 
 /**
+ * Request parameters for mcpServerToolAuthorize operation in McpApi.
+ * @export
+ * @interface McpApiMcpServerToolAuthorizeRequest
+ */
+export interface McpApiMcpServerToolAuthorizeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof McpApiMcpServerToolAuthorize
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof McpApiMcpServerToolAuthorize
+     */
+    readonly serverId: string
+
+    /**
+     * 
+     * @type {McpServerToolAuthorizeRequest}
+     * @memberof McpApiMcpServerToolAuthorize
+     */
+    readonly mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest
+}
+
+/**
  * Request parameters for postServerChallenge operation in McpApi.
  * @export
  * @interface McpApiPostServerChallengeRequest
@@ -689,6 +807,18 @@ export class McpApi extends BaseAPI implements McpApiInterface {
      */
     public listServers(requestParameters: McpApiListServersRequest, options?: RawAxiosRequestConfig) {
         return McpApiFp(this.configuration).listServers(requestParameters.orgId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server\'s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller\'s token.
+     * @summary Per-tool authorization for an MCP server (server credential)
+     * @param {McpApiMcpServerToolAuthorizeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof McpApi
+     */
+    public mcpServerToolAuthorize(requestParameters: McpApiMcpServerToolAuthorizeRequest, options?: RawAxiosRequestConfig) {
+        return McpApiFp(this.configuration).mcpServerToolAuthorize(requestParameters.orgId, requestParameters.serverId, requestParameters.mcpServerToolAuthorizeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

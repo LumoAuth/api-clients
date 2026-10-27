@@ -9,6 +9,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**GetServer**](McpApi.md#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server. |
 | [**GetServerChallenge**](McpApi.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge |
 | [**ListServers**](McpApi.md#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant. |
+| [**McpServerToolAuthorize**](McpApi.md#mcpservertoolauthorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential) |
 | [**PostServerChallenge**](McpApi.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST) |
 
 <a id="getprotectedresourcemetadata"></a>
@@ -517,6 +518,117 @@ catch (ApiException e)
 | **200** | List of active MCP servers for the tenant. |  -  |
 | **403** | Caller lacks the settings.manage permission. |  -  |
 | **404** | Tenant not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+<a id="mcpservertoolauthorize"></a>
+# **McpServerToolAuthorize**
+> McpServerToolAuthorizeResponse McpServerToolAuthorize (string orgId, string serverId, McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest)
+
+Per-tool authorization for an MCP server (server credential)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.
+
+### Example
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Http;
+using LumoAuth.ApiClient.Api;
+using LumoAuth.ApiClient.Client;
+using LumoAuth.ApiClient.Model;
+
+namespace Example
+{
+    public class McpServerToolAuthorizeExample
+    {
+        public static void Main()
+        {
+            Configuration config = new Configuration();
+            config.BasePath = "https://app.lumoauth.dev";
+            // Configure API key authorization: ApiKeyAuth
+            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
+            // Configure Bearer token for authorization: BearerAuth
+            config.AccessToken = "YOUR_BEARER_TOKEN";
+
+            // create instances of HttpClient, HttpClientHandler to be reused later with different Api classes
+            HttpClient httpClient = new HttpClient();
+            HttpClientHandler httpClientHandler = new HttpClientHandler();
+            var apiInstance = new McpApi(httpClient, config, httpClientHandler);
+            var orgId = "orgId_example";  // string | 
+            var serverId = "serverId_example";  // string | 
+            var mcpServerToolAuthorizeRequest = new McpServerToolAuthorizeRequest(); // McpServerToolAuthorizeRequest | 
+
+            try
+            {
+                // Per-tool authorization for an MCP server (server credential)
+                McpServerToolAuthorizeResponse result = apiInstance.McpServerToolAuthorize(orgId, serverId, mcpServerToolAuthorizeRequest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException  e)
+            {
+                Debug.Print("Exception when calling McpApi.McpServerToolAuthorize: " + e.Message);
+                Debug.Print("Status Code: " + e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+#### Using the McpServerToolAuthorizeWithHttpInfo variant
+This returns an ApiResponse object which contains the response data, status code and headers.
+
+```csharp
+try
+{
+    // Per-tool authorization for an MCP server (server credential)
+    ApiResponse<McpServerToolAuthorizeResponse> response = apiInstance.McpServerToolAuthorizeWithHttpInfo(orgId, serverId, mcpServerToolAuthorizeRequest);
+    Debug.Write("Status Code: " + response.StatusCode);
+    Debug.Write("Response Headers: " + response.Headers);
+    Debug.Write("Response Body: " + response.Data);
+}
+catch (ApiException e)
+{
+    Debug.Print("Exception when calling McpApi.McpServerToolAuthorizeWithHttpInfo: " + e.Message);
+    Debug.Print("Status Code: " + e.ErrorCode);
+    Debug.Print(e.StackTrace);
+}
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+|------|------|-------------|-------|
+| **orgId** | **string** |  |  |
+| **serverId** | **string** |  |  |
+| **mcpServerToolAuthorizeRequest** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md) |  |  |
+
+### Return type
+
+[**McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Allowed. |  -  |
+| **400** | invalid_request — malformed subject or tool. |  -  |
+| **401** | invalid_token — no valid client-credentials token of this organization. |  -  |
+| **403** | Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. |  -  |
+| **404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+| **429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

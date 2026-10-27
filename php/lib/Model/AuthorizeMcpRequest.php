@@ -310,7 +310,7 @@ class AuthorizeMcpRequest implements ModelInterface, ArrayAccess, \JsonSerializa
     /**
      * Sets serverId
      *
-     * @param string|null $serverId serverId
+     * @param string|null $serverId Id of an active MCP server registered in this organization.
      *
      * @return self
      */

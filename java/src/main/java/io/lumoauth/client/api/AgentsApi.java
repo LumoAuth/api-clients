@@ -410,7 +410,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Allowed — the agent may invoke the tool. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeMcpCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest, final ApiCallback _callback) throws ApiException {
@@ -477,7 +478,7 @@ public class AgentsApi {
 
     /**
      * Per-MCP-tool authorization for the authenticated agent (dx B3).
-     * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \&quot;may THIS agent invoke &lt;server&gt;/&lt;tool&gt;?\&quot; and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;invoices\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
+     * An AGENT asks about itself: \&quot;may I invoke &lt;server&gt;/&lt;tool&gt;?\&quot; — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent&#39;s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;mcp_0123…\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
      * @param orgId  (required)
      * @param authorizeMcpRequest  (required)
      * @return AuthorizeMcpResponse
@@ -488,7 +489,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Allowed — the agent may invoke the tool. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
      </table>
      */
     public AuthorizeMcpResponse authorizeMcp(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest) throws ApiException {
@@ -498,7 +500,7 @@ public class AgentsApi {
 
     /**
      * Per-MCP-tool authorization for the authenticated agent (dx B3).
-     * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \&quot;may THIS agent invoke &lt;server&gt;/&lt;tool&gt;?\&quot; and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;invoices\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
+     * An AGENT asks about itself: \&quot;may I invoke &lt;server&gt;/&lt;tool&gt;?\&quot; — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent&#39;s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;mcp_0123…\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
      * @param orgId  (required)
      * @param authorizeMcpRequest  (required)
      * @return ApiResponse&lt;AuthorizeMcpResponse&gt;
@@ -509,7 +511,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Allowed — the agent may invoke the tool. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<AuthorizeMcpResponse> authorizeMcpWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest) throws ApiException {
@@ -520,7 +523,7 @@ public class AgentsApi {
 
     /**
      * Per-MCP-tool authorization for the authenticated agent (dx B3). (asynchronously)
-     * The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \&quot;may THIS agent invoke &lt;server&gt;/&lt;tool&gt;?\&quot; and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;invoices\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
+     * An AGENT asks about itself: \&quot;may I invoke &lt;server&gt;/&lt;tool&gt;?\&quot; — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent&#39;s token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \&quot;server_id\&quot;: \&quot;mcp_0123…\&quot;, \&quot;tool\&quot;: \&quot;send_payment_reminder\&quot; }
      * @param orgId  (required)
      * @param authorizeMcpRequest  (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -532,7 +535,8 @@ public class AgentsApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> Allowed — the agent may invoke the tool. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Denied — no matching per-tool or server-wide grant. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> server_id and tool are required, or contain forbidden characters, or are too long together. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> unknown_server — server_id is not an active MCP server of this organization. </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call authorizeMcpAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull AuthorizeMcpRequest authorizeMcpRequest, final ApiCallback<AuthorizeMcpResponse> _callback) throws ApiException {

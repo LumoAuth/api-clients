@@ -44,5 +44,11 @@ export interface AdminAgentsGenerateTokenResponseData {
      * @memberof AdminAgentsGenerateTokenResponseData
      */
     'scopes'?: Array<string>;
+    /**
+     * The MCP server the token is bound to, when `resource` was sent.
+     * @type {string}
+     * @memberof AdminAgentsGenerateTokenResponseData
+     */
+    'resource'?: string | null;
 }
 

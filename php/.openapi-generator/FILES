@@ -320,6 +320,9 @@ docs/Model/MarkUserVerifiedResponse.md
 docs/Model/McpServer.md
 docs/Model/McpServerPosture.md
 docs/Model/McpServerPostureChecksInner.md
+docs/Model/McpServerToolAuthorizeRequest.md
+docs/Model/McpServerToolAuthorizeRequestSubject.md
+docs/Model/McpServerToolAuthorizeResponse.md
 docs/Model/MessageResponse.md
 docs/Model/MfaAuthenticator.md
 docs/Model/MfaAuthenticatorLastUsedContext.md
@@ -745,6 +748,9 @@ lib/Model/MarkUserVerifiedResponse.php
 lib/Model/McpServer.php
 lib/Model/McpServerPosture.php
 lib/Model/McpServerPostureChecksInner.php
+lib/Model/McpServerToolAuthorizeRequest.php
+lib/Model/McpServerToolAuthorizeRequestSubject.php
+lib/Model/McpServerToolAuthorizeResponse.php
 lib/Model/MessageResponse.php
 lib/Model/MfaAuthenticator.php
 lib/Model/MfaAuthenticatorLastUsedContext.php

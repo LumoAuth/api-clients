@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**getServer**](McpAPI.md#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 [**getServerChallenge**](McpAPI.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 [**listServers**](McpAPI.md#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+[**mcpServerToolAuthorize**](McpAPI.md#mcpservertoolauthorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 [**postServerChallenge**](McpAPI.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 
 
@@ -264,6 +265,60 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **mcpServerToolAuthorize**
+```swift
+    open class func mcpServerToolAuthorize(orgId: String, serverId: String, mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest, completion: @escaping (_ data: McpServerToolAuthorizeResponse?, _ error: Error?) -> Void)
+```
+
+Per-tool authorization for an MCP server (server credential)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.
+
+### Example
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import LumoAuthAPIClient
+
+let orgId = "orgId_example" // String | 
+let serverId = "serverId_example" // String | 
+let mcpServerToolAuthorizeRequest = McpServerToolAuthorizeRequest(subject: McpServerToolAuthorizeRequestSubject(type: "type_example", id: "id_example"), tool: "tool_example") // McpServerToolAuthorizeRequest | 
+
+// Per-tool authorization for an MCP server (server credential)
+McpAPI.mcpServerToolAuthorize(orgId: orgId, serverId: serverId, mcpServerToolAuthorizeRequest: mcpServerToolAuthorizeRequest) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **orgId** | **String** |  | 
+ **serverId** | **String** |  | 
+ **mcpServerToolAuthorizeRequest** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md) |  | 
+
+### Return type
+
+[**McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

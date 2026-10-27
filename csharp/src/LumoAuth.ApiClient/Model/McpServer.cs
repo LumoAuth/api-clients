@@ -43,11 +43,14 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="resourceUri">resourceUri.</param>
         /// <param name="endpointUrl">endpointUrl.</param>
         /// <param name="transport">transport.</param>
+        /// <param name="transportDeprecated">True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable..</param>
         /// <param name="authMode">authMode.</param>
         /// <param name="status">status.</param>
         /// <param name="scopesSupported">scopesSupported.</param>
         /// <param name="scopeDescriptions">scopeDescriptions.</param>
+        /// <param name="basicScopes">Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty &#x3D; the whole vocabulary..</param>
         /// <param name="allowedClientIds">allowedClientIds.</param>
+        /// <param name="toolAuthorizerClientIds">The MCP server&#39;s own OAuth clients allowed to call the per-tool authorization endpoint..</param>
         /// <param name="requirePkce">requirePkce.</param>
         /// <param name="requireResourceParam">requireResourceParam.</param>
         /// <param name="requireDpop">requireDpop.</param>
@@ -55,7 +58,7 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="posture">posture.</param>
         /// <param name="capabilities">capabilities.</param>
         /// <param name="createdAt">createdAt.</param>
-        public McpServer(int id = default, string serverId = default, string name = default, string description = default, string resourceUri = default, string endpointUrl = default, string transport = default, string authMode = default, string status = default, List<string> scopesSupported = default, Dictionary<string, string> scopeDescriptions = default, List<string> allowedClientIds = default, bool requirePkce = default, bool requireResourceParam = default, bool requireDpop = default, int tokenLifetime = default, McpServerPosture posture = default, List<string> capabilities = default, DateTime createdAt = default)
+        public McpServer(int id = default, string serverId = default, string name = default, string description = default, string resourceUri = default, string endpointUrl = default, string transport = default, bool transportDeprecated = default, string authMode = default, string status = default, List<string> scopesSupported = default, Dictionary<string, string> scopeDescriptions = default, List<string> basicScopes = default, List<string> allowedClientIds = default, List<string> toolAuthorizerClientIds = default, bool requirePkce = default, bool requireResourceParam = default, bool requireDpop = default, int tokenLifetime = default, McpServerPosture posture = default, List<string> capabilities = default, DateTime createdAt = default)
         {
             this.Id = id;
             this.ServerId = serverId;
@@ -64,11 +67,14 @@ namespace LumoAuth.ApiClient.Model
             this.ResourceUri = resourceUri;
             this.EndpointUrl = endpointUrl;
             this.Transport = transport;
+            this.TransportDeprecated = transportDeprecated;
             this.AuthMode = authMode;
             this.Status = status;
             this.ScopesSupported = scopesSupported;
             this.ScopeDescriptions = scopeDescriptions;
+            this.BasicScopes = basicScopes;
             this.AllowedClientIds = allowedClientIds;
+            this.ToolAuthorizerClientIds = toolAuthorizerClientIds;
             this.RequirePkce = requirePkce;
             this.RequireResourceParam = requireResourceParam;
             this.RequireDpop = requireDpop;
@@ -121,6 +127,13 @@ namespace LumoAuth.ApiClient.Model
         public string Transport { get; set; }
 
         /// <summary>
+        /// True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+        /// </summary>
+        /// <value>True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.</value>
+        [DataMember(Name = "transport_deprecated", EmitDefaultValue = true)]
+        public bool TransportDeprecated { get; set; }
+
+        /// <summary>
         /// Gets or Sets AuthMode
         /// </summary>
         [DataMember(Name = "auth_mode", EmitDefaultValue = false)]
@@ -145,10 +158,24 @@ namespace LumoAuth.ApiClient.Model
         public Dictionary<string, string> ScopeDescriptions { get; set; }
 
         /// <summary>
+        /// Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty &#x3D; the whole vocabulary.
+        /// </summary>
+        /// <value>Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty &#x3D; the whole vocabulary.</value>
+        [DataMember(Name = "basic_scopes", EmitDefaultValue = false)]
+        public List<string> BasicScopes { get; set; }
+
+        /// <summary>
         /// Gets or Sets AllowedClientIds
         /// </summary>
         [DataMember(Name = "allowed_client_ids", EmitDefaultValue = false)]
         public List<string> AllowedClientIds { get; set; }
+
+        /// <summary>
+        /// The MCP server&#39;s own OAuth clients allowed to call the per-tool authorization endpoint.
+        /// </summary>
+        /// <value>The MCP server&#39;s own OAuth clients allowed to call the per-tool authorization endpoint.</value>
+        [DataMember(Name = "tool_authorizer_client_ids", EmitDefaultValue = false)]
+        public List<string> ToolAuthorizerClientIds { get; set; }
 
         /// <summary>
         /// Gets or Sets RequirePkce
@@ -207,11 +234,14 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  ResourceUri: ").Append(ResourceUri).Append("\n");
             sb.Append("  EndpointUrl: ").Append(EndpointUrl).Append("\n");
             sb.Append("  Transport: ").Append(Transport).Append("\n");
+            sb.Append("  TransportDeprecated: ").Append(TransportDeprecated).Append("\n");
             sb.Append("  AuthMode: ").Append(AuthMode).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  ScopesSupported: ").Append(ScopesSupported).Append("\n");
             sb.Append("  ScopeDescriptions: ").Append(ScopeDescriptions).Append("\n");
+            sb.Append("  BasicScopes: ").Append(BasicScopes).Append("\n");
             sb.Append("  AllowedClientIds: ").Append(AllowedClientIds).Append("\n");
+            sb.Append("  ToolAuthorizerClientIds: ").Append(ToolAuthorizerClientIds).Append("\n");
             sb.Append("  RequirePkce: ").Append(RequirePkce).Append("\n");
             sb.Append("  RequireResourceParam: ").Append(RequireResourceParam).Append("\n");
             sb.Append("  RequireDpop: ").Append(RequireDpop).Append("\n");

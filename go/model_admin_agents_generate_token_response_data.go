@@ -24,6 +24,8 @@ type AdminAgentsGenerateTokenResponseData struct {
 	TokenType *string `json:"tokenType,omitempty"`
 	ExpiresIn *int32 `json:"expiresIn,omitempty"`
 	Scopes []string `json:"scopes,omitempty"`
+	// The MCP server the token is bound to, when `resource` was sent.
+	Resource NullableString `json:"resource,omitempty"`
 }
 
 // NewAdminAgentsGenerateTokenResponseData instantiates a new AdminAgentsGenerateTokenResponseData object
@@ -171,6 +173,48 @@ func (o *AdminAgentsGenerateTokenResponseData) SetScopes(v []string) {
 	o.Scopes = v
 }
 
+// GetResource returns the Resource field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AdminAgentsGenerateTokenResponseData) GetResource() string {
+	if o == nil || IsNil(o.Resource.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.Resource.Get()
+}
+
+// GetResourceOk returns a tuple with the Resource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AdminAgentsGenerateTokenResponseData) GetResourceOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Resource.Get(), o.Resource.IsSet()
+}
+
+// HasResource returns a boolean if a field has been set.
+func (o *AdminAgentsGenerateTokenResponseData) HasResource() bool {
+	if o != nil && o.Resource.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetResource gets a reference to the given NullableString and assigns it to the Resource field.
+func (o *AdminAgentsGenerateTokenResponseData) SetResource(v string) {
+	o.Resource.Set(&v)
+}
+// SetResourceNil sets the value for Resource to be an explicit nil
+func (o *AdminAgentsGenerateTokenResponseData) SetResourceNil() {
+	o.Resource.Set(nil)
+}
+
+// UnsetResource ensures that no value is present for Resource, not even an explicit nil
+func (o *AdminAgentsGenerateTokenResponseData) UnsetResource() {
+	o.Resource.Unset()
+}
+
 func (o AdminAgentsGenerateTokenResponseData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -192,6 +236,9 @@ func (o AdminAgentsGenerateTokenResponseData) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.Scopes) {
 		toSerialize["scopes"] = o.Scopes
+	}
+	if o.Resource.IsSet() {
+		toSerialize["resource"] = o.Resource.Get()
 	}
 	return toSerialize, nil
 }

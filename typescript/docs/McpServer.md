@@ -12,11 +12,14 @@ Name | Type | Description | Notes
 **resource_uri** | **string** |  | [optional] [default to undefined]
 **endpoint_url** | **string** |  | [optional] [default to undefined]
 **transport** | **string** |  | [optional] [default to undefined]
+**transport_deprecated** | **boolean** | True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable. | [optional] [default to undefined]
 **auth_mode** | **string** |  | [optional] [default to undefined]
 **status** | **string** |  | [optional] [default to undefined]
 **scopes_supported** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
 **scope_descriptions** | **{ [key: string]: string; }** |  | [optional] [default to undefined]
+**basic_scopes** | **Array&lt;string&gt;** | Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty &#x3D; the whole vocabulary. | [optional] [default to undefined]
 **allowed_client_ids** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**tool_authorizer_client_ids** | **Array&lt;string&gt;** | The MCP server\&#39;s own OAuth clients allowed to call the per-tool authorization endpoint. | [optional] [default to undefined]
 **require_pkce** | **boolean** |  | [optional] [default to undefined]
 **require_resource_param** | **boolean** |  | [optional] [default to undefined]
 **require_dpop** | **boolean** |  | [optional] [default to undefined]
@@ -38,11 +41,14 @@ const instance: McpServer = {
     resource_uri,
     endpoint_url,
     transport,
+    transport_deprecated,
     auth_mode,
     status,
     scopes_supported,
     scope_descriptions,
+    basic_scopes,
     allowed_client_ids,
+    tool_authorizer_client_ids,
     require_pkce,
     require_resource_param,
     require_dpop,

@@ -18,6 +18,8 @@ import io.lumoauth.client.model.GetProtectedResourceMetadataRoot200Response;
 import io.lumoauth.client.model.GetServerChallengeResponse;
 import io.lumoauth.client.model.GetServerResponse;
 import io.lumoauth.client.model.ListServersResponse;
+import io.lumoauth.client.model.McpServerToolAuthorizeRequest;
+import io.lumoauth.client.model.McpServerToolAuthorizeResponse;
 import io.lumoauth.client.model.ProtectedResourceMetadata;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -105,6 +107,22 @@ public class McpApiTest {
     public void listServersTest() throws ApiException {
         String orgId = null;
         ListServersResponse response = api.listServers(orgId);
+        // TODO: test validations
+    }
+
+    /**
+     * Per-tool authorization for an MCP server (server credential)
+     *
+     * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void mcpServerToolAuthorizeTest() throws ApiException {
+        String orgId = null;
+        String serverId = null;
+        McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest = null;
+        McpServerToolAuthorizeResponse response = api.mcpServerToolAuthorize(orgId, serverId, mcpServerToolAuthorizeRequest);
         // TODO: test validations
     }
 

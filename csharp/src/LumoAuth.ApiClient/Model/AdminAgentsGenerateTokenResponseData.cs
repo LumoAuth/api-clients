@@ -40,12 +40,14 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="tokenType">tokenType.</param>
         /// <param name="expiresIn">expiresIn.</param>
         /// <param name="scopes">scopes.</param>
-        public AdminAgentsGenerateTokenResponseData(string accessToken = default, string tokenType = default, int expiresIn = default, List<string> scopes = default)
+        /// <param name="resource">The MCP server the token is bound to, when &#x60;resource&#x60; was sent..</param>
+        public AdminAgentsGenerateTokenResponseData(string accessToken = default, string tokenType = default, int expiresIn = default, List<string> scopes = default, string resource = default)
         {
             this.AccessToken = accessToken;
             this.TokenType = tokenType;
             this.ExpiresIn = expiresIn;
             this.Scopes = scopes;
+            this.Resource = resource;
         }
 
         /// <summary>
@@ -85,6 +87,13 @@ namespace LumoAuth.ApiClient.Model
         public List<string> Scopes { get; set; }
 
         /// <summary>
+        /// The MCP server the token is bound to, when &#x60;resource&#x60; was sent.
+        /// </summary>
+        /// <value>The MCP server the token is bound to, when &#x60;resource&#x60; was sent.</value>
+        [DataMember(Name = "resource", EmitDefaultValue = true)]
+        public string Resource { get; set; }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -96,6 +105,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  TokenType: ").Append(TokenType).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
             sb.Append("  Scopes: ").Append(Scopes).Append("\n");
+            sb.Append("  Resource: ").Append(Resource).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }

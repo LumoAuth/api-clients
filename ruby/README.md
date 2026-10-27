@@ -382,6 +382,7 @@ Class | Method | HTTP request | Description
 *LumoAuthApiClient::McpApi* | [**get_server**](docs/McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 *LumoAuthApiClient::McpApi* | [**get_server_challenge**](docs/McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 *LumoAuthApiClient::McpApi* | [**list_servers**](docs/McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+*LumoAuthApiClient::McpApi* | [**mcp_server_tool_authorize**](docs/McpApi.md#mcp_server_tool_authorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 *LumoAuthApiClient::McpApi* | [**post_server_challenge**](docs/McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 *LumoAuthApiClient::MfaApi* | [**create_mfa_challenge**](docs/MfaApi.md#create_mfa_challenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges | Start an MFA challenge
 *LumoAuthApiClient::MfaApi* | [**delete_authenticator**](docs/MfaApi.md#delete_authenticator) | **DELETE** /orgs/{orgId}/api/v1/me/authenticators/{id} | Remove an authenticator
@@ -724,6 +725,9 @@ Class | Method | HTTP request | Description
  - [LumoAuthApiClient::McpServer](docs/McpServer.md)
  - [LumoAuthApiClient::McpServerPosture](docs/McpServerPosture.md)
  - [LumoAuthApiClient::McpServerPostureChecksInner](docs/McpServerPostureChecksInner.md)
+ - [LumoAuthApiClient::McpServerToolAuthorizeRequest](docs/McpServerToolAuthorizeRequest.md)
+ - [LumoAuthApiClient::McpServerToolAuthorizeRequestSubject](docs/McpServerToolAuthorizeRequestSubject.md)
+ - [LumoAuthApiClient::McpServerToolAuthorizeResponse](docs/McpServerToolAuthorizeResponse.md)
  - [LumoAuthApiClient::MessageResponse](docs/MessageResponse.md)
  - [LumoAuthApiClient::MfaAuthenticator](docs/MfaAuthenticator.md)
  - [LumoAuthApiClient::MfaAuthenticatorLastUsedContext](docs/MfaAuthenticatorLastUsedContext.md)

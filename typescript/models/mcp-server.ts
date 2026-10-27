@@ -66,6 +66,12 @@ export interface McpServer {
      */
     'transport'?: string;
     /**
+     * True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+     * @type {boolean}
+     * @memberof McpServer
+     */
+    'transport_deprecated'?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof McpServer
@@ -90,11 +96,23 @@ export interface McpServer {
      */
     'scope_descriptions'?: { [key: string]: string; };
     /**
+     * Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.
+     * @type {Array<string>}
+     * @memberof McpServer
+     */
+    'basic_scopes'?: Array<string>;
+    /**
      * 
      * @type {Array<string>}
      * @memberof McpServer
      */
     'allowed_client_ids'?: Array<string>;
+    /**
+     * The MCP server\'s own OAuth clients allowed to call the per-tool authorization endpoint.
+     * @type {Array<string>}
+     * @memberof McpServer
+     */
+    'tool_authorizer_client_ids'?: Array<string>;
     /**
      * 
      * @type {boolean}

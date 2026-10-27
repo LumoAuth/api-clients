@@ -1150,7 +1150,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, or a resource that is not an active MCP server of this organization. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -1232,7 +1232,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, or a resource that is not an active MCP server of this organization. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -1256,7 +1256,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, or a resource that is not an active MCP server of this organization. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>
@@ -1282,7 +1282,7 @@ public class AdminAgentsApi {
        <caption>Response Details</caption>
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A generated agent token. The token value is returned ONCE. </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> Inactive agent, or requested scopes outside the agent&#39;s capabilities. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Inactive agent, requested scopes outside the agent&#39;s capabilities, or a resource that is not an active MCP server of this organization. </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> Authentication required. </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> Admin privileges required. </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> Tenant or agent not found. </td><td>  -  </td></tr>

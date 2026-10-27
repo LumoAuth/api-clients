@@ -28,11 +28,17 @@ type McpServer struct {
 	ResourceUri *string `json:"resource_uri,omitempty"`
 	EndpointUrl NullableString `json:"endpoint_url,omitempty"`
 	Transport *string `json:"transport,omitempty"`
+	// True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+	TransportDeprecated *bool `json:"transport_deprecated,omitempty"`
 	AuthMode *string `json:"auth_mode,omitempty"`
 	Status *string `json:"status,omitempty"`
 	ScopesSupported []string `json:"scopes_supported,omitempty"`
 	ScopeDescriptions *map[string]string `json:"scope_descriptions,omitempty"`
+	// Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.
+	BasicScopes []string `json:"basic_scopes,omitempty"`
 	AllowedClientIds []string `json:"allowed_client_ids,omitempty"`
+	// The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint.
+	ToolAuthorizerClientIds []string `json:"tool_authorizer_client_ids,omitempty"`
 	RequirePkce *bool `json:"require_pkce,omitempty"`
 	RequireResourceParam *bool `json:"require_resource_param,omitempty"`
 	RequireDpop *bool `json:"require_dpop,omitempty"`
@@ -303,6 +309,38 @@ func (o *McpServer) SetTransport(v string) {
 	o.Transport = &v
 }
 
+// GetTransportDeprecated returns the TransportDeprecated field value if set, zero value otherwise.
+func (o *McpServer) GetTransportDeprecated() bool {
+	if o == nil || IsNil(o.TransportDeprecated) {
+		var ret bool
+		return ret
+	}
+	return *o.TransportDeprecated
+}
+
+// GetTransportDeprecatedOk returns a tuple with the TransportDeprecated field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *McpServer) GetTransportDeprecatedOk() (*bool, bool) {
+	if o == nil || IsNil(o.TransportDeprecated) {
+		return nil, false
+	}
+	return o.TransportDeprecated, true
+}
+
+// HasTransportDeprecated returns a boolean if a field has been set.
+func (o *McpServer) HasTransportDeprecated() bool {
+	if o != nil && !IsNil(o.TransportDeprecated) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransportDeprecated gets a reference to the given bool and assigns it to the TransportDeprecated field.
+func (o *McpServer) SetTransportDeprecated(v bool) {
+	o.TransportDeprecated = &v
+}
+
 // GetAuthMode returns the AuthMode field value if set, zero value otherwise.
 func (o *McpServer) GetAuthMode() string {
 	if o == nil || IsNil(o.AuthMode) {
@@ -431,6 +469,38 @@ func (o *McpServer) SetScopeDescriptions(v map[string]string) {
 	o.ScopeDescriptions = &v
 }
 
+// GetBasicScopes returns the BasicScopes field value if set, zero value otherwise.
+func (o *McpServer) GetBasicScopes() []string {
+	if o == nil || IsNil(o.BasicScopes) {
+		var ret []string
+		return ret
+	}
+	return o.BasicScopes
+}
+
+// GetBasicScopesOk returns a tuple with the BasicScopes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *McpServer) GetBasicScopesOk() ([]string, bool) {
+	if o == nil || IsNil(o.BasicScopes) {
+		return nil, false
+	}
+	return o.BasicScopes, true
+}
+
+// HasBasicScopes returns a boolean if a field has been set.
+func (o *McpServer) HasBasicScopes() bool {
+	if o != nil && !IsNil(o.BasicScopes) {
+		return true
+	}
+
+	return false
+}
+
+// SetBasicScopes gets a reference to the given []string and assigns it to the BasicScopes field.
+func (o *McpServer) SetBasicScopes(v []string) {
+	o.BasicScopes = v
+}
+
 // GetAllowedClientIds returns the AllowedClientIds field value if set, zero value otherwise.
 func (o *McpServer) GetAllowedClientIds() []string {
 	if o == nil || IsNil(o.AllowedClientIds) {
@@ -461,6 +531,38 @@ func (o *McpServer) HasAllowedClientIds() bool {
 // SetAllowedClientIds gets a reference to the given []string and assigns it to the AllowedClientIds field.
 func (o *McpServer) SetAllowedClientIds(v []string) {
 	o.AllowedClientIds = v
+}
+
+// GetToolAuthorizerClientIds returns the ToolAuthorizerClientIds field value if set, zero value otherwise.
+func (o *McpServer) GetToolAuthorizerClientIds() []string {
+	if o == nil || IsNil(o.ToolAuthorizerClientIds) {
+		var ret []string
+		return ret
+	}
+	return o.ToolAuthorizerClientIds
+}
+
+// GetToolAuthorizerClientIdsOk returns a tuple with the ToolAuthorizerClientIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *McpServer) GetToolAuthorizerClientIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.ToolAuthorizerClientIds) {
+		return nil, false
+	}
+	return o.ToolAuthorizerClientIds, true
+}
+
+// HasToolAuthorizerClientIds returns a boolean if a field has been set.
+func (o *McpServer) HasToolAuthorizerClientIds() bool {
+	if o != nil && !IsNil(o.ToolAuthorizerClientIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetToolAuthorizerClientIds gets a reference to the given []string and assigns it to the ToolAuthorizerClientIds field.
+func (o *McpServer) SetToolAuthorizerClientIds(v []string) {
+	o.ToolAuthorizerClientIds = v
 }
 
 // GetRequirePkce returns the RequirePkce field value if set, zero value otherwise.
@@ -718,6 +820,9 @@ func (o McpServer) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Transport) {
 		toSerialize["transport"] = o.Transport
 	}
+	if !IsNil(o.TransportDeprecated) {
+		toSerialize["transport_deprecated"] = o.TransportDeprecated
+	}
 	if !IsNil(o.AuthMode) {
 		toSerialize["auth_mode"] = o.AuthMode
 	}
@@ -730,8 +835,14 @@ func (o McpServer) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ScopeDescriptions) {
 		toSerialize["scope_descriptions"] = o.ScopeDescriptions
 	}
+	if !IsNil(o.BasicScopes) {
+		toSerialize["basic_scopes"] = o.BasicScopes
+	}
 	if !IsNil(o.AllowedClientIds) {
 		toSerialize["allowed_client_ids"] = o.AllowedClientIds
+	}
+	if !IsNil(o.ToolAuthorizerClientIds) {
+		toSerialize["tool_authorizer_client_ids"] = o.ToolAuthorizerClientIds
 	}
 	if !IsNil(o.RequirePkce) {
 		toSerialize["require_pkce"] = o.RequirePkce

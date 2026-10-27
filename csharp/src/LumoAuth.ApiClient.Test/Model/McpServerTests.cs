@@ -119,6 +119,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'TransportDeprecated'
+        /// </summary>
+        [Fact]
+        public void TransportDeprecatedTest()
+        {
+            // TODO unit test for the property 'TransportDeprecated'
+        }
+
+        /// <summary>
         /// Test the property 'AuthMode'
         /// </summary>
         [Fact]
@@ -155,12 +164,30 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'BasicScopes'
+        /// </summary>
+        [Fact]
+        public void BasicScopesTest()
+        {
+            // TODO unit test for the property 'BasicScopes'
+        }
+
+        /// <summary>
         /// Test the property 'AllowedClientIds'
         /// </summary>
         [Fact]
         public void AllowedClientIdsTest()
         {
             // TODO unit test for the property 'AllowedClientIds'
+        }
+
+        /// <summary>
+        /// Test the property 'ToolAuthorizerClientIds'
+        /// </summary>
+        [Fact]
+        public void ToolAuthorizerClientIdsTest()
+        {
+            // TODO unit test for the property 'ToolAuthorizerClientIds'
         }
 
         /// <summary>

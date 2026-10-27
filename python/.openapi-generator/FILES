@@ -313,6 +313,9 @@ docs/McpApi.md
 docs/McpServer.md
 docs/McpServerPosture.md
 docs/McpServerPostureChecksInner.md
+docs/McpServerToolAuthorizeRequest.md
+docs/McpServerToolAuthorizeRequestSubject.md
+docs/McpServerToolAuthorizeResponse.md
 docs/MessageResponse.md
 docs/MfaApi.md
 docs/MfaAuthenticator.md
@@ -747,6 +750,9 @@ lumoauth_api_client/models/mark_user_verified_response.py
 lumoauth_api_client/models/mcp_server.py
 lumoauth_api_client/models/mcp_server_posture.py
 lumoauth_api_client/models/mcp_server_posture_checks_inner.py
+lumoauth_api_client/models/mcp_server_tool_authorize_request.py
+lumoauth_api_client/models/mcp_server_tool_authorize_request_subject.py
+lumoauth_api_client/models/mcp_server_tool_authorize_response.py
 lumoauth_api_client/models/message_response.py
 lumoauth_api_client/models/mfa_authenticator.py
 lumoauth_api_client/models/mfa_authenticator_last_used_context.py

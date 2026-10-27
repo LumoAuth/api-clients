@@ -317,6 +317,9 @@ docs/McpApi.md
 docs/McpServer.md
 docs/McpServerPosture.md
 docs/McpServerPostureChecksInner.md
+docs/McpServerToolAuthorizeRequest.md
+docs/McpServerToolAuthorizeRequestSubject.md
+docs/McpServerToolAuthorizeResponse.md
 docs/MessageResponse.md
 docs/MfaApi.md
 docs/MfaAuthenticator.md
@@ -748,6 +751,9 @@ lib/lumoauth_api_client/models/mark_user_verified_response.rb
 lib/lumoauth_api_client/models/mcp_server.rb
 lib/lumoauth_api_client/models/mcp_server_posture.rb
 lib/lumoauth_api_client/models/mcp_server_posture_checks_inner.rb
+lib/lumoauth_api_client/models/mcp_server_tool_authorize_request.rb
+lib/lumoauth_api_client/models/mcp_server_tool_authorize_request_subject.rb
+lib/lumoauth_api_client/models/mcp_server_tool_authorize_response.rb
 lib/lumoauth_api_client/models/message_response.rb
 lib/lumoauth_api_client/models/mfa_authenticator.rb
 lib/lumoauth_api_client/models/mfa_authenticator_last_used_context.rb

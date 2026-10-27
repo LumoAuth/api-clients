@@ -102,6 +102,14 @@ public class McpServerTest {
     }
 
     /**
+     * Test the property 'transportDeprecated'
+     */
+    @Test
+    public void transportDeprecatedTest() {
+        // TODO: test transportDeprecated
+    }
+
+    /**
      * Test the property 'authMode'
      */
     @Test
@@ -134,11 +142,27 @@ public class McpServerTest {
     }
 
     /**
+     * Test the property 'basicScopes'
+     */
+    @Test
+    public void basicScopesTest() {
+        // TODO: test basicScopes
+    }
+
+    /**
      * Test the property 'allowedClientIds'
      */
     @Test
     public void allowedClientIdsTest() {
         // TODO: test allowedClientIds
+    }
+
+    /**
+     * Test the property 'toolAuthorizerClientIds'
+     */
+    @Test
+    public void toolAuthorizerClientIdsTest() {
+        // TODO: test toolAuthorizerClientIds
     }
 
     /**

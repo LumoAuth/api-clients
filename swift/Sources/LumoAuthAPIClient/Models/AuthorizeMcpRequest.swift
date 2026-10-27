@@ -12,6 +12,7 @@ import AnyCodable
 
 public struct AuthorizeMcpRequest: Codable, JSONEncodable, Hashable {
 
+    /** Id of an active MCP server registered in this organization. */
     public var serverId: String?
     public var tool: String?
 

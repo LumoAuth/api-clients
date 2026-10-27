@@ -16,12 +16,15 @@ public struct AdminAgentsGenerateTokenResponseData: Codable, JSONEncodable, Hash
     public var tokenType: String?
     public var expiresIn: Int?
     public var scopes: [String]?
+    /** The MCP server the token is bound to, when `resource` was sent. */
+    public var resource: String?
 
-    public init(accessToken: String? = nil, tokenType: String? = nil, expiresIn: Int? = nil, scopes: [String]? = nil) {
+    public init(accessToken: String? = nil, tokenType: String? = nil, expiresIn: Int? = nil, scopes: [String]? = nil, resource: String? = nil) {
         self.accessToken = accessToken
         self.tokenType = tokenType
         self.expiresIn = expiresIn
         self.scopes = scopes
+        self.resource = resource
     }
 
     public enum CodingKeys: String, CodingKey, CaseIterable {
@@ -29,6 +32,7 @@ public struct AdminAgentsGenerateTokenResponseData: Codable, JSONEncodable, Hash
         case tokenType
         case expiresIn
         case scopes
+        case resource
     }
 
     // Encodable protocol methods
@@ -39,6 +43,7 @@ public struct AdminAgentsGenerateTokenResponseData: Codable, JSONEncodable, Hash
         try container.encodeIfPresent(tokenType, forKey: .tokenType)
         try container.encodeIfPresent(expiresIn, forKey: .expiresIn)
         try container.encodeIfPresent(scopes, forKey: .scopes)
+        try container.encodeIfPresent(resource, forKey: .resource)
     }
 }
 

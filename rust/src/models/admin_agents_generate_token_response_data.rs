@@ -21,6 +21,9 @@ pub struct AdminAgentsGenerateTokenResponseData {
     pub expires_in: Option<i32>,
     #[serde(rename = "scopes", skip_serializing_if = "Option::is_none")]
     pub scopes: Option<Vec<String>>,
+    /// The MCP server the token is bound to, when `resource` was sent.
+    #[serde(rename = "resource", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub resource: Option<Option<String>>,
 }
 
 impl AdminAgentsGenerateTokenResponseData {
@@ -30,6 +33,7 @@ impl AdminAgentsGenerateTokenResponseData {
             token_type: None,
             expires_in: None,
             scopes: None,
+            resource: None,
         }
     }
 }

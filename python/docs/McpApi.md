@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**get_server**](McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 [**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 [**list_servers**](McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+[**mcp_server_tool_authorize**](McpApi.md#mcp_server_tool_authorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 [**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 
 
@@ -410,6 +411,101 @@ Name | Type | Description  | Notes
 **200** | List of active MCP servers for the tenant. |  -  |
 **403** | Caller lacks the settings.manage permission. |  -  |
 **404** | Tenant not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **mcp_server_tool_authorize**
+> McpServerToolAuthorizeResponse mcp_server_tool_authorize(org_id, server_id, mcp_server_tool_authorize_request)
+
+Per-tool authorization for an MCP server (server credential)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+* Bearer (JWT) Authentication (BearerAuth):
+
+```python
+import lumoauth_api_client
+from lumoauth_api_client.models.mcp_server_tool_authorize_request import McpServerToolAuthorizeRequest
+from lumoauth_api_client.models.mcp_server_tool_authorize_response import McpServerToolAuthorizeResponse
+from lumoauth_api_client.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://app.lumoauth.dev
+# See configuration.py for a list of all supported configuration parameters.
+configuration = lumoauth_api_client.Configuration(
+    host = "https://app.lumoauth.dev"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+
+# Configure Bearer authorization (JWT): BearerAuth
+configuration = lumoauth_api_client.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with lumoauth_api_client.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = lumoauth_api_client.McpApi(api_client)
+    org_id = 'org_id_example' # str | 
+    server_id = 'server_id_example' # str | 
+    mcp_server_tool_authorize_request = lumoauth_api_client.McpServerToolAuthorizeRequest() # McpServerToolAuthorizeRequest | 
+
+    try:
+        # Per-tool authorization for an MCP server (server credential)
+        api_response = api_instance.mcp_server_tool_authorize(org_id, server_id, mcp_server_tool_authorize_request)
+        print("The response of McpApi->mcp_server_tool_authorize:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling McpApi->mcp_server_tool_authorize: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **org_id** | **str**|  | 
+ **server_id** | **str**|  | 
+ **mcp_server_tool_authorize_request** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md)|  | 
+
+### Return type
+
+[**McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Allowed. |  -  |
+**400** | invalid_request — malformed subject or tool. |  -  |
+**401** | invalid_token — no valid client-credentials token of this organization. |  -  |
+**403** | Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. |  -  |
+**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+**429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

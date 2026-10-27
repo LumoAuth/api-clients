@@ -13,6 +13,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct AuthorizeMcpRequest {
+    /// Id of an active MCP server registered in this organization.
     #[serde(rename = "server_id", skip_serializing_if = "Option::is_none")]
     pub server_id: Option<String>,
     #[serde(rename = "tool", skip_serializing_if = "Option::is_none")]

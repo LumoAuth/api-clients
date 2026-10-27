@@ -9,6 +9,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 | [**get_server**](McpApi.md#get_server) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server. |
 | [**get_server_challenge**](McpApi.md#get_server_challenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge |
 | [**list_servers**](McpApi.md#list_servers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant. |
+| [**mcp_server_tool_authorize**](McpApi.md#mcp_server_tool_authorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential) |
 | [**post_server_challenge**](McpApi.md#post_server_challenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST) |
 
 
@@ -360,6 +361,84 @@ end
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## mcp_server_tool_authorize
+
+> <McpServerToolAuthorizeResponse> mcp_server_tool_authorize(org_id, server_id, mcp_server_tool_authorize_request)
+
+Per-tool authorization for an MCP server (server credential)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server's tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller's token.
+
+### Examples
+
+```ruby
+require 'time'
+require 'lumoauth_api_client'
+# setup authorization
+LumoAuthApiClient.configure do |config|
+  # Configure API key authorization: ApiKeyAuth
+  config.api_key['X-API-Key'] = 'YOUR API KEY'
+  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
+  # config.api_key_prefix['X-API-Key'] = 'Bearer'
+
+  # Configure Bearer authorization (JWT): BearerAuth
+  config.access_token = 'YOUR_BEARER_TOKEN'
+end
+
+api_instance = LumoAuthApiClient::McpApi.new
+org_id = 'org_id_example' # String | 
+server_id = 'server_id_example' # String | 
+mcp_server_tool_authorize_request = LumoAuthApiClient::McpServerToolAuthorizeRequest.new({subject: LumoAuthApiClient::McpServerToolAuthorizeRequestSubject.new({type: 'user', id: 'id_example'}), tool: 'send_payment_reminder'}) # McpServerToolAuthorizeRequest | 
+
+begin
+  # Per-tool authorization for an MCP server (server credential)
+  result = api_instance.mcp_server_tool_authorize(org_id, server_id, mcp_server_tool_authorize_request)
+  p result
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling McpApi->mcp_server_tool_authorize: #{e}"
+end
+```
+
+#### Using the mcp_server_tool_authorize_with_http_info variant
+
+This returns an Array which contains the response data, status code and headers.
+
+> <Array(<McpServerToolAuthorizeResponse>, Integer, Hash)> mcp_server_tool_authorize_with_http_info(org_id, server_id, mcp_server_tool_authorize_request)
+
+```ruby
+begin
+  # Per-tool authorization for an MCP server (server credential)
+  data, status_code, headers = api_instance.mcp_server_tool_authorize_with_http_info(org_id, server_id, mcp_server_tool_authorize_request)
+  p status_code # => 2xx
+  p headers # => { ... }
+  p data # => <McpServerToolAuthorizeResponse>
+rescue LumoAuthApiClient::ApiError => e
+  puts "Error when calling McpApi->mcp_server_tool_authorize_with_http_info: #{e}"
+end
+```
+
+### Parameters
+
+| Name | Type | Description | Notes |
+| ---- | ---- | ----------- | ----- |
+| **org_id** | **String** |  |  |
+| **server_id** | **String** |  |  |
+| **mcp_server_tool_authorize_request** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md) |  |  |
+
+### Return type
+
+[**McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 

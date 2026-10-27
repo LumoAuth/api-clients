@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * AuthorizeMcpRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-26T22:02:21.062318292-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T18:39:38.311678905Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AuthorizeMcpRequest {
   public static final String SERIALIZED_NAME_SERVER_ID = "server_id";
   @SerializedName(SERIALIZED_NAME_SERVER_ID)
@@ -69,7 +69,7 @@ public class AuthorizeMcpRequest {
   }
 
   /**
-   * Get serverId
+   * Id of an active MCP server registered in this organization.
    * @return serverId
    */
   @javax.annotation.Nullable

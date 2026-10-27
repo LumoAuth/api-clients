@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **token_type** | Option<**String**> |  | [optional]
 **expires_in** | Option<**i32**> |  | [optional]
 **scopes** | Option<**Vec<String>**> |  | [optional]
+**resource** | Option<**String**> | The MCP server the token is bound to, when `resource` was sent. | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

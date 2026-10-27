@@ -118,6 +118,20 @@ namespace LumoAuth.ApiClient.Test.Api
         }
 
         /// <summary>
+        /// Test McpServerToolAuthorize
+        /// </summary>
+        [Fact]
+        public void McpServerToolAuthorizeTest()
+        {
+            // TODO uncomment below to test the method and replace null with proper value
+            //string orgId = null;
+            //string serverId = null;
+            //McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest = null;
+            //var response = instance.McpServerToolAuthorize(orgId, serverId, mcpServerToolAuthorizeRequest);
+            //Assert.IsType<McpServerToolAuthorizeResponse>(response);
+        }
+
+        /// <summary>
         /// Test PostServerChallenge
         /// </summary>
         [Fact]

@@ -59,7 +59,8 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
       */
     protected static $openAPITypes = [
         'expiresIn' => 'int',
-        'scopes' => 'string[]'
+        'scopes' => 'string[]',
+        'resource' => 'string'
     ];
 
     /**
@@ -71,7 +72,8 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
       */
     protected static $openAPIFormats = [
         'expiresIn' => null,
-        'scopes' => null
+        'scopes' => null,
+        'resource' => 'uri'
     ];
 
     /**
@@ -81,7 +83,8 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
       */
     protected static array $openAPINullables = [
         'expiresIn' => false,
-        'scopes' => false
+        'scopes' => false,
+        'resource' => false
     ];
 
     /**
@@ -171,7 +174,8 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
      */
     protected static $attributeMap = [
         'expiresIn' => 'expiresIn',
-        'scopes' => 'scopes'
+        'scopes' => 'scopes',
+        'resource' => 'resource'
     ];
 
     /**
@@ -181,7 +185,8 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
      */
     protected static $setters = [
         'expiresIn' => 'setExpiresIn',
-        'scopes' => 'setScopes'
+        'scopes' => 'setScopes',
+        'resource' => 'setResource'
     ];
 
     /**
@@ -191,7 +196,8 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
      */
     protected static $getters = [
         'expiresIn' => 'getExpiresIn',
-        'scopes' => 'getScopes'
+        'scopes' => 'getScopes',
+        'resource' => 'getResource'
     ];
 
     /**
@@ -253,6 +259,7 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
     {
         $this->setIfExists('expiresIn', $data ?? [], null);
         $this->setIfExists('scopes', $data ?? [], null);
+        $this->setIfExists('resource', $data ?? [], null);
     }
 
     /**
@@ -347,6 +354,33 @@ class AdminAgentsGenerateTokenRequest implements ModelInterface, ArrayAccess, \J
             throw new \InvalidArgumentException('non-nullable scopes cannot be null');
         }
         $this->container['scopes'] = $scopes;
+
+        return $this;
+    }
+
+    /**
+     * Gets resource
+     *
+     * @return string|null
+     */
+    public function getResource()
+    {
+        return $this->container['resource'];
+    }
+
+    /**
+     * Sets resource
+     *
+     * @param string|null $resource Optional resource URI of an active MCP server of this organization. The token is then audience-bound to that server (and no longer works on the LumoAuth API) and lives at most the server's token lifetime. Servers that require DPoP are refused with 400.
+     *
+     * @return self
+     */
+    public function setResource($resource)
+    {
+        if (is_null($resource)) {
+            throw new \InvalidArgumentException('non-nullable resource cannot be null');
+        }
+        $this->container['resource'] = $resource;
 
         return $this;
     }

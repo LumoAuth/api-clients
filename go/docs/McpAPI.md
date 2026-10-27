@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**GetServer**](McpAPI.md#GetServer) | **Get** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 [**GetServerChallenge**](McpAPI.md#GetServerChallenge) | **Get** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 [**ListServers**](McpAPI.md#ListServers) | **Get** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+[**McpServerToolAuthorize**](McpAPI.md#McpServerToolAuthorize) | **Post** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 [**PostServerChallenge**](McpAPI.md#PostServerChallenge) | **Post** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 
 
@@ -365,6 +366,81 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## McpServerToolAuthorize
+
+> McpServerToolAuthorizeResponse McpServerToolAuthorize(ctx, orgId, serverId).McpServerToolAuthorizeRequest(mcpServerToolAuthorizeRequest).Execute()
+
+Per-tool authorization for an MCP server (server credential)
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lumoauth/api-clients/go"
+)
+
+func main() {
+	orgId := "orgId_example" // string | 
+	serverId := "serverId_example" // string | 
+	mcpServerToolAuthorizeRequest := *openapiclient.NewMcpServerToolAuthorizeRequest(*openapiclient.NewMcpServerToolAuthorizeRequestSubject("Type_example", "Id_example"), "send_payment_reminder") // McpServerToolAuthorizeRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.McpAPI.McpServerToolAuthorize(context.Background(), orgId, serverId).McpServerToolAuthorizeRequest(mcpServerToolAuthorizeRequest).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `McpAPI.McpServerToolAuthorize``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `McpServerToolAuthorize`: McpServerToolAuthorizeResponse
+	fmt.Fprintf(os.Stdout, "Response from `McpAPI.McpServerToolAuthorize`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**orgId** | **string** |  | 
+**serverId** | **string** |  | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiMcpServerToolAuthorizeRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+ **mcpServerToolAuthorizeRequest** | [**McpServerToolAuthorizeRequest**](McpServerToolAuthorizeRequest.md) |  | 
+
+### Return type
+
+[**McpServerToolAuthorizeResponse**](McpServerToolAuthorizeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)

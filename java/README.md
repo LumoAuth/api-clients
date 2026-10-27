@@ -11,7 +11,7 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-10-26T22:02:21.062318292-07:00[America/Los_Angeles]
+  - Build date: 2026-10-27T18:39:38.311678905Z[Etc/UTC]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
@@ -416,6 +416,7 @@ Class | Method | HTTP request | Description
 *McpApi* | [**getServer**](docs/McpApi.md#getServer) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 *McpApi* | [**getServerChallenge**](docs/McpApi.md#getServerChallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 *McpApi* | [**listServers**](docs/McpApi.md#listServers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+*McpApi* | [**mcpServerToolAuthorize**](docs/McpApi.md#mcpServerToolAuthorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 *McpApi* | [**postServerChallenge**](docs/McpApi.md#postServerChallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 *MfaApi* | [**createMfaChallenge**](docs/MfaApi.md#createMfaChallenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges | Start an MFA challenge
 *MfaApi* | [**deleteAuthenticator**](docs/MfaApi.md#deleteAuthenticator) | **DELETE** /orgs/{orgId}/api/v1/me/authenticators/{id} | Remove an authenticator
@@ -758,6 +759,9 @@ Class | Method | HTTP request | Description
  - [McpServer](docs/McpServer.md)
  - [McpServerPosture](docs/McpServerPosture.md)
  - [McpServerPostureChecksInner](docs/McpServerPostureChecksInner.md)
+ - [McpServerToolAuthorizeRequest](docs/McpServerToolAuthorizeRequest.md)
+ - [McpServerToolAuthorizeRequestSubject](docs/McpServerToolAuthorizeRequestSubject.md)
+ - [McpServerToolAuthorizeResponse](docs/McpServerToolAuthorizeResponse.md)
  - [MessageResponse](docs/MessageResponse.md)
  - [MfaAuthenticator](docs/MfaAuthenticator.md)
  - [MfaAuthenticatorLastUsedContext](docs/MfaAuthenticatorLastUsedContext.md)

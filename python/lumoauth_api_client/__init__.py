@@ -347,6 +347,9 @@ __all__ = [
     "McpServer",
     "McpServerPosture",
     "McpServerPostureChecksInner",
+    "McpServerToolAuthorizeRequest",
+    "McpServerToolAuthorizeRequestSubject",
+    "McpServerToolAuthorizeResponse",
     "MessageResponse",
     "MfaAuthenticator",
     "MfaAuthenticatorLastUsedContext",
@@ -784,6 +787,9 @@ from lumoauth_api_client.models.mark_user_verified_response import MarkUserVerif
 from lumoauth_api_client.models.mcp_server import McpServer as McpServer
 from lumoauth_api_client.models.mcp_server_posture import McpServerPosture as McpServerPosture
 from lumoauth_api_client.models.mcp_server_posture_checks_inner import McpServerPostureChecksInner as McpServerPostureChecksInner
+from lumoauth_api_client.models.mcp_server_tool_authorize_request import McpServerToolAuthorizeRequest as McpServerToolAuthorizeRequest
+from lumoauth_api_client.models.mcp_server_tool_authorize_request_subject import McpServerToolAuthorizeRequestSubject as McpServerToolAuthorizeRequestSubject
+from lumoauth_api_client.models.mcp_server_tool_authorize_response import McpServerToolAuthorizeResponse as McpServerToolAuthorizeResponse
 from lumoauth_api_client.models.message_response import MessageResponse as MessageResponse
 from lumoauth_api_client.models.mfa_authenticator import MfaAuthenticator as MfaAuthenticator
 from lumoauth_api_client.models.mfa_authenticator_last_used_context import MfaAuthenticatorLastUsedContext as MfaAuthenticatorLastUsedContext

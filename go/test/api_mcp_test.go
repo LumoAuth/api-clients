@@ -95,6 +95,21 @@ func Test_lumoauthclient_McpAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test McpAPIService McpServerToolAuthorize", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var orgId string
+		var serverId string
+
+		resp, httpRes, err := apiClient.McpAPI.McpServerToolAuthorize(context.Background(), orgId, serverId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test McpAPIService PostServerChallenge", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test

@@ -23,13 +23,17 @@ module LumoAuthApiClient
 
     attr_accessor :scopes
 
+    # The MCP server the token is bound to, when `resource` was sent.
+    attr_accessor :resource
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'access_token' => :'accessToken',
         :'token_type' => :'tokenType',
         :'expires_in' => :'expiresIn',
-        :'scopes' => :'scopes'
+        :'scopes' => :'scopes',
+        :'resource' => :'resource'
       }
     end
 
@@ -49,13 +53,15 @@ module LumoAuthApiClient
         :'access_token' => :'String',
         :'token_type' => :'String',
         :'expires_in' => :'Integer',
-        :'scopes' => :'Array<String>'
+        :'scopes' => :'Array<String>',
+        :'resource' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'resource'
       ])
     end
 
@@ -92,6 +98,10 @@ module LumoAuthApiClient
           self.scopes = value
         end
       end
+
+      if attributes.key?(:'resource')
+        self.resource = attributes[:'resource']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -117,7 +127,8 @@ module LumoAuthApiClient
           access_token == o.access_token &&
           token_type == o.token_type &&
           expires_in == o.expires_in &&
-          scopes == o.scopes
+          scopes == o.scopes &&
+          resource == o.resource
     end
 
     # @see the `==` method
@@ -129,7 +140,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [access_token, token_type, expires_in, scopes].hash
+      [access_token, token_type, expires_in, scopes, resource].hash
     end
 
     # Builds the object from hash

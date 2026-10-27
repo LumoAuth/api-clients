@@ -19,11 +19,17 @@ public struct McpServer: Codable, JSONEncodable, Hashable {
     public var resourceUri: String?
     public var endpointUrl: String?
     public var transport: String?
+    /** True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable. */
+    public var transportDeprecated: Bool?
     public var authMode: String?
     public var status: String?
     public var scopesSupported: [String]?
     public var scopeDescriptions: [String: String]?
+    /** Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary. */
+    public var basicScopes: [String]?
     public var allowedClientIds: [String]?
+    /** The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint. */
+    public var toolAuthorizerClientIds: [String]?
     public var requirePkce: Bool?
     public var requireResourceParam: Bool?
     public var requireDpop: Bool?
@@ -32,7 +38,7 @@ public struct McpServer: Codable, JSONEncodable, Hashable {
     public var capabilities: [String]?
     public var createdAt: Date?
 
-    public init(id: Int? = nil, serverId: String? = nil, name: String? = nil, description: String? = nil, resourceUri: String? = nil, endpointUrl: String? = nil, transport: String? = nil, authMode: String? = nil, status: String? = nil, scopesSupported: [String]? = nil, scopeDescriptions: [String: String]? = nil, allowedClientIds: [String]? = nil, requirePkce: Bool? = nil, requireResourceParam: Bool? = nil, requireDpop: Bool? = nil, tokenLifetime: Int? = nil, posture: McpServerPosture? = nil, capabilities: [String]? = nil, createdAt: Date? = nil) {
+    public init(id: Int? = nil, serverId: String? = nil, name: String? = nil, description: String? = nil, resourceUri: String? = nil, endpointUrl: String? = nil, transport: String? = nil, transportDeprecated: Bool? = nil, authMode: String? = nil, status: String? = nil, scopesSupported: [String]? = nil, scopeDescriptions: [String: String]? = nil, basicScopes: [String]? = nil, allowedClientIds: [String]? = nil, toolAuthorizerClientIds: [String]? = nil, requirePkce: Bool? = nil, requireResourceParam: Bool? = nil, requireDpop: Bool? = nil, tokenLifetime: Int? = nil, posture: McpServerPosture? = nil, capabilities: [String]? = nil, createdAt: Date? = nil) {
         self.id = id
         self.serverId = serverId
         self.name = name
@@ -40,11 +46,14 @@ public struct McpServer: Codable, JSONEncodable, Hashable {
         self.resourceUri = resourceUri
         self.endpointUrl = endpointUrl
         self.transport = transport
+        self.transportDeprecated = transportDeprecated
         self.authMode = authMode
         self.status = status
         self.scopesSupported = scopesSupported
         self.scopeDescriptions = scopeDescriptions
+        self.basicScopes = basicScopes
         self.allowedClientIds = allowedClientIds
+        self.toolAuthorizerClientIds = toolAuthorizerClientIds
         self.requirePkce = requirePkce
         self.requireResourceParam = requireResourceParam
         self.requireDpop = requireDpop
@@ -62,11 +71,14 @@ public struct McpServer: Codable, JSONEncodable, Hashable {
         case resourceUri = "resource_uri"
         case endpointUrl = "endpoint_url"
         case transport
+        case transportDeprecated = "transport_deprecated"
         case authMode = "auth_mode"
         case status
         case scopesSupported = "scopes_supported"
         case scopeDescriptions = "scope_descriptions"
+        case basicScopes = "basic_scopes"
         case allowedClientIds = "allowed_client_ids"
+        case toolAuthorizerClientIds = "tool_authorizer_client_ids"
         case requirePkce = "require_pkce"
         case requireResourceParam = "require_resource_param"
         case requireDpop = "require_dpop"
@@ -87,11 +99,14 @@ public struct McpServer: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(resourceUri, forKey: .resourceUri)
         try container.encodeIfPresent(endpointUrl, forKey: .endpointUrl)
         try container.encodeIfPresent(transport, forKey: .transport)
+        try container.encodeIfPresent(transportDeprecated, forKey: .transportDeprecated)
         try container.encodeIfPresent(authMode, forKey: .authMode)
         try container.encodeIfPresent(status, forKey: .status)
         try container.encodeIfPresent(scopesSupported, forKey: .scopesSupported)
         try container.encodeIfPresent(scopeDescriptions, forKey: .scopeDescriptions)
+        try container.encodeIfPresent(basicScopes, forKey: .basicScopes)
         try container.encodeIfPresent(allowedClientIds, forKey: .allowedClientIds)
+        try container.encodeIfPresent(toolAuthorizerClientIds, forKey: .toolAuthorizerClientIds)
         try container.encodeIfPresent(requirePkce, forKey: .requirePkce)
         try container.encodeIfPresent(requireResourceParam, forKey: .requireResourceParam)
         try container.encodeIfPresent(requireDpop, forKey: .requireDpop)

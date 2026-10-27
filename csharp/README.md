@@ -438,6 +438,7 @@ Class | Method | HTTP request | Description
 *McpApi* | [**GetServer**](docs/McpApi.md#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.
 *McpApi* | [**GetServerChallenge**](docs/McpApi.md#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge
 *McpApi* | [**ListServers**](docs/McpApi.md#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.
+*McpApi* | [**McpServerToolAuthorize**](docs/McpApi.md#mcpservertoolauthorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)
 *McpApi* | [**PostServerChallenge**](docs/McpApi.md#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)
 *MfaApi* | [**CreateMfaChallenge**](docs/MfaApi.md#createmfachallenge) | **POST** /orgs/{orgId}/api/v1/mfa/challenges | Start an MFA challenge
 *MfaApi* | [**DeleteAuthenticator**](docs/MfaApi.md#deleteauthenticator) | **DELETE** /orgs/{orgId}/api/v1/me/authenticators/{id} | Remove an authenticator
@@ -781,6 +782,9 @@ Class | Method | HTTP request | Description
  - [Model.McpServer](docs/McpServer.md)
  - [Model.McpServerPosture](docs/McpServerPosture.md)
  - [Model.McpServerPostureChecksInner](docs/McpServerPostureChecksInner.md)
+ - [Model.McpServerToolAuthorizeRequest](docs/McpServerToolAuthorizeRequest.md)
+ - [Model.McpServerToolAuthorizeRequestSubject](docs/McpServerToolAuthorizeRequestSubject.md)
+ - [Model.McpServerToolAuthorizeResponse](docs/McpServerToolAuthorizeResponse.md)
  - [Model.MessageResponse](docs/MessageResponse.md)
  - [Model.MfaAuthenticator](docs/MfaAuthenticator.md)
  - [Model.MfaAuthenticatorLastUsedContext](docs/MfaAuthenticatorLastUsedContext.md)

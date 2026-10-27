@@ -28,13 +28,21 @@ type AdminMcpAPI interface {
 
 	Body:
 name (required) — display name
-resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment
+resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
+    loopback), no fragment, no user info, not a LumoAuth host, unique
+    per organization after normalisation (same rules as the portal)
 endpoint_url (optional) — actual MCP endpoint
 description (optional)
-scopes_supported (optional) — array OR space/comma-separated string
-transport (optional) — defaults to "http_streamable"
+scopes_supported (optional) — array OR space/comma-separated string; omnibus
+    scopes, offline_access and admin/scim scopes are refused (422)
+basic_scopes (optional) — subset of scopes_supported advertised in the
+    401 challenge and Protected Resource Metadata; no wildcards
+transport (optional) — defaults to "http_streamable" ("http_sse" is
+    deprecated in MCP 2026-07-28)
 auth_mode (optional) — defaults to "oauth"
-token_lifetime (optional, default 3600) — clamped to [60, 86400]
+token_lifetime (optional, default 3600) — 60..86400, else 422
+tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
+    that may call the per-tool authorization endpoint
 allowed_client_ids (optional) — array of this organization's OAuth client ids;
     unknown ids are a 422 (never persisted as policy)
 require_pkce (optional, default true)
@@ -111,13 +119,21 @@ AdminMcpServersCreate Register an MCP server
 
 Body:
 name (required) — display name
-resource_uri (required) — RFC 8707 canonical URI; must be http(s)://, no fragment
+resource_uri (required) — RFC 8707 canonical URI: https:// (http:// only for
+    loopback), no fragment, no user info, not a LumoAuth host, unique
+    per organization after normalisation (same rules as the portal)
 endpoint_url (optional) — actual MCP endpoint
 description (optional)
-scopes_supported (optional) — array OR space/comma-separated string
-transport (optional) — defaults to "http_streamable"
+scopes_supported (optional) — array OR space/comma-separated string; omnibus
+    scopes, offline_access and admin/scim scopes are refused (422)
+basic_scopes (optional) — subset of scopes_supported advertised in the
+    401 challenge and Protected Resource Metadata; no wildcards
+transport (optional) — defaults to "http_streamable" ("http_sse" is
+    deprecated in MCP 2026-07-28)
 auth_mode (optional) — defaults to "oauth"
-token_lifetime (optional, default 3600) — clamped to [60, 86400]
+token_lifetime (optional, default 3600) — 60..86400, else 422
+tool_authorizer_client_ids (optional) — the MCP server's own OAuth clients
+    that may call the per-tool authorization endpoint
 allowed_client_ids (optional) — array of this organization's OAuth client ids;
     unknown ids are a 422 (never persisted as policy)
 require_pkce (optional, default true)

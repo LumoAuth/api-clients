@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **tokenType** | **string** |  | [optional] [default to undefined]
 **expiresIn** | **number** |  | [optional] [default to undefined]
 **scopes** | **Array&lt;string&gt;** |  | [optional] [default to undefined]
+**resource** | **string** | The MCP server the token is bound to, when &#x60;resource&#x60; was sent. | [optional] [default to undefined]
 
 ## Example
 
@@ -20,6 +21,7 @@ const instance: AdminAgentsGenerateTokenResponseData = {
     tokenType,
     expiresIn,
     scopes,
+    resource,
 };
 ```
 

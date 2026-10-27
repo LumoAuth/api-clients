@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **token_type** | **str** |  | [optional] 
 **expires_in** | **int** |  | [optional] 
 **scopes** | **List[str]** |  | [optional] 
+**resource** | **str** | The MCP server the token is bound to, when &#x60;resource&#x60; was sent. | [optional] 
 
 ## Example
 

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**server_id** | **string** |  | [optional] [default to undefined]
+**server_id** | **string** | Id of an active MCP server registered in this organization. | [optional] [default to undefined]
 **tool** | **string** |  | [optional] [default to undefined]
 
 ## Example

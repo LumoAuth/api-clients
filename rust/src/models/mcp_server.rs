@@ -27,6 +27,9 @@ pub struct McpServer {
     pub endpoint_url: Option<Option<String>>,
     #[serde(rename = "transport", skip_serializing_if = "Option::is_none")]
     pub transport: Option<String>,
+    /// True for http_sse, deprecated in MCP 2026-07-28; migrate to http_streamable.
+    #[serde(rename = "transport_deprecated", skip_serializing_if = "Option::is_none")]
+    pub transport_deprecated: Option<bool>,
     #[serde(rename = "auth_mode", skip_serializing_if = "Option::is_none")]
     pub auth_mode: Option<String>,
     #[serde(rename = "status", skip_serializing_if = "Option::is_none")]
@@ -35,8 +38,14 @@ pub struct McpServer {
     pub scopes_supported: Option<Vec<String>>,
     #[serde(rename = "scope_descriptions", skip_serializing_if = "Option::is_none")]
     pub scope_descriptions: Option<std::collections::HashMap<String, String>>,
+    /// Subset of scopes_supported advertised in the 401 challenge and in protected resource metadata. Empty = the whole vocabulary.
+    #[serde(rename = "basic_scopes", skip_serializing_if = "Option::is_none")]
+    pub basic_scopes: Option<Vec<String>>,
     #[serde(rename = "allowed_client_ids", skip_serializing_if = "Option::is_none")]
     pub allowed_client_ids: Option<Vec<String>>,
+    /// The MCP server's own OAuth clients allowed to call the per-tool authorization endpoint.
+    #[serde(rename = "tool_authorizer_client_ids", skip_serializing_if = "Option::is_none")]
+    pub tool_authorizer_client_ids: Option<Vec<String>>,
     #[serde(rename = "require_pkce", skip_serializing_if = "Option::is_none")]
     pub require_pkce: Option<bool>,
     #[serde(rename = "require_resource_param", skip_serializing_if = "Option::is_none")]
@@ -63,11 +72,14 @@ impl McpServer {
             resource_uri: None,
             endpoint_url: None,
             transport: None,
+            transport_deprecated: None,
             auth_mode: None,
             status: None,
             scopes_supported: None,
             scope_descriptions: None,
+            basic_scopes: None,
             allowed_client_ids: None,
+            tool_authorizer_client_ids: None,
             require_pkce: None,
             require_resource_param: None,
             require_dpop: None,

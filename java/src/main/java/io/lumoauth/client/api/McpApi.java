@@ -31,6 +31,8 @@ import io.lumoauth.client.model.GetProtectedResourceMetadataRoot200Response;
 import io.lumoauth.client.model.GetServerChallengeResponse;
 import io.lumoauth.client.model.GetServerResponse;
 import io.lumoauth.client.model.ListServersResponse;
+import io.lumoauth.client.model.McpServerToolAuthorizeRequest;
+import io.lumoauth.client.model.McpServerToolAuthorizeResponse;
 import io.lumoauth.client.model.ProtectedResourceMetadata;
 
 import java.lang.reflect.Type;
@@ -782,6 +784,173 @@ public class McpApi {
 
         okhttp3.Call localVarCall = listServersValidateBeforeCall(orgId, _callback);
         Type localVarReturnType = new TypeToken<ListServersResponse>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for mcpServerToolAuthorize
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerToolAuthorizeRequest  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Allowed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — malformed subject or tool. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — no valid client-credentials token of this organization. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call mcpServerToolAuthorizeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = mcpServerToolAuthorizeRequest;
+
+        // create path and map variables
+        String localVarPath = "/orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize"
+            .replace("{" + "orgId" + "}", localVarApiClient.escapeString(orgId.toString()))
+            .replace("{" + "serverId" + "}", localVarApiClient.escapeString(serverId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call mcpServerToolAuthorizeValidateBeforeCall(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'orgId' is set
+        if (orgId == null) {
+            throw new ApiException("Missing the required parameter 'orgId' when calling mcpServerToolAuthorize(Async)");
+        }
+
+        // verify the required parameter 'serverId' is set
+        if (serverId == null) {
+            throw new ApiException("Missing the required parameter 'serverId' when calling mcpServerToolAuthorize(Async)");
+        }
+
+        // verify the required parameter 'mcpServerToolAuthorizeRequest' is set
+        if (mcpServerToolAuthorizeRequest == null) {
+            throw new ApiException("Missing the required parameter 'mcpServerToolAuthorizeRequest' when calling mcpServerToolAuthorize(Async)");
+        }
+
+        return mcpServerToolAuthorizeCall(orgId, serverId, mcpServerToolAuthorizeRequest, _callback);
+
+    }
+
+    /**
+     * Per-tool authorization for an MCP server (server credential)
+     * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerToolAuthorizeRequest  (required)
+     * @return McpServerToolAuthorizeResponse
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Allowed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — malformed subject or tool. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — no valid client-credentials token of this organization. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
+     </table>
+     */
+    public McpServerToolAuthorizeResponse mcpServerToolAuthorize(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest) throws ApiException {
+        ApiResponse<McpServerToolAuthorizeResponse> localVarResp = mcpServerToolAuthorizeWithHttpInfo(orgId, serverId, mcpServerToolAuthorizeRequest);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Per-tool authorization for an MCP server (server credential)
+     * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerToolAuthorizeRequest  (required)
+     * @return ApiResponse&lt;McpServerToolAuthorizeResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Allowed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — malformed subject or tool. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — no valid client-credentials token of this organization. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<McpServerToolAuthorizeResponse> mcpServerToolAuthorizeWithHttpInfo(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest) throws ApiException {
+        okhttp3.Call localVarCall = mcpServerToolAuthorizeValidateBeforeCall(orgId, serverId, mcpServerToolAuthorizeRequest, null);
+        Type localVarReturnType = new TypeToken<McpServerToolAuthorizeResponse>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Per-tool authorization for an MCP server (server credential) (asynchronously)
+     * Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server&#39;s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller&#39;s token.
+     * @param orgId  (required)
+     * @param serverId  (required)
+     * @param mcpServerToolAuthorizeRequest  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table border="1">
+       <caption>Response Details</caption>
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Allowed. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> invalid_request — malformed subject or tool. </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> invalid_token — no valid client-credentials token of this organization. </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> not_found — unknown organization, or unknown / inactive MCP server. </td><td>  -  </td></tr>
+        <tr><td> 429 </td><td> too_many_requests (Retry-After header). </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call mcpServerToolAuthorizeAsync(@javax.annotation.Nonnull String orgId, @javax.annotation.Nonnull String serverId, @javax.annotation.Nonnull McpServerToolAuthorizeRequest mcpServerToolAuthorizeRequest, final ApiCallback<McpServerToolAuthorizeResponse> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = mcpServerToolAuthorizeValidateBeforeCall(orgId, serverId, mcpServerToolAuthorizeRequest, _callback);
+        Type localVarReturnType = new TypeToken<McpServerToolAuthorizeResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

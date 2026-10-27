@@ -9,6 +9,7 @@ All URIs are relative to *https://app.lumoauth.dev*
 |[**getServer**](#getserver) | **GET** /orgs/{orgId}/api/v1/mcp/servers/{serverId} | REST API: Get a specific MCP server.|
 |[**getServerChallenge**](#getserverchallenge) | **GET** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge|
 |[**listServers**](#listservers) | **GET** /orgs/{orgId}/api/v1/mcp/servers | REST API: List MCP servers for a tenant.|
+|[**mcpServerToolAuthorize**](#mcpservertoolauthorize) | **POST** /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize | Per-tool authorization for an MCP server (server credential)|
 |[**postServerChallenge**](#postserverchallenge) | **POST** /orgs/{orgId}/api/v1/mcp/{serverId}/challenge | Simulated MCP server authorization challenge (POST)|
 
 # **getProtectedResourceMetadata**
@@ -283,6 +284,69 @@ const { status, data } = await apiInstance.listServers(
 |**200** | List of active MCP servers for the tenant. |  -  |
 |**403** | Caller lacks the settings.manage permission. |  -  |
 |**404** | Tenant not found. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **mcpServerToolAuthorize**
+> McpServerToolAuthorizeResponse mcpServerToolAuthorize(mcpServerToolAuthorizeRequest)
+
+Called by the MCP server with its own client-credentials access token (scope mcp:authorize; the client must be listed in the server\'s tool_authorizer_client_ids). The body names the caller the server already verified. The server never forwards the caller\'s token.
+
+### Example
+
+```typescript
+import {
+    McpApi,
+    Configuration,
+    McpServerToolAuthorizeRequest
+} from '@lumoauth/api-client';
+
+const configuration = new Configuration();
+const apiInstance = new McpApi(configuration);
+
+let orgId: string; // (default to undefined)
+let serverId: string; // (default to undefined)
+let mcpServerToolAuthorizeRequest: McpServerToolAuthorizeRequest; //
+
+const { status, data } = await apiInstance.mcpServerToolAuthorize(
+    orgId,
+    serverId,
+    mcpServerToolAuthorizeRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **mcpServerToolAuthorizeRequest** | **McpServerToolAuthorizeRequest**|  | |
+| **orgId** | [**string**] |  | defaults to undefined|
+| **serverId** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**McpServerToolAuthorizeResponse**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | Allowed. |  -  |
+|**400** | invalid_request — malformed subject or tool. |  -  |
+|**401** | invalid_token — no valid client-credentials token of this organization. |  -  |
+|**403** | Denied (allowed&#x3D;false), or insufficient_scope / not an authorizer client of this server. |  -  |
+|**404** | not_found — unknown organization, or unknown / inactive MCP server. |  -  |
+|**429** | too_many_requests (Retry-After header). |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -237,7 +237,7 @@ catch (ApiException e)
 
 Per-MCP-tool authorization for the authenticated agent (dx B3).
 
-The real request-path caller of {@see \\McpToolAuthorizationService::canInvoke()} — the piece that connects MCP authorization to agent identity. An MCP gateway/server asks \"may THIS agent invoke <server>/<tool>?\" and gets a Zanzibar-backed allow/deny (tool-level or server-wide grant). Denials and grants are both audited, closing the MCP-authorization audit blind spot.  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"invoices\", \"tool\": \"send_payment_reminder\" }
+An AGENT asks about itself: \"may I invoke <server>/<tool>?\" — with its own credential, before it calls the tool. Zanzibar-backed allow/deny (tool-level or server-wide grant), audited either way.  An MCP SERVER must not use this endpoint: it would have to forward the agent's token (MCP 2026-07-28 forbids token passthrough). Servers call POST /orgs/{orgId}/api/v1/mcp/servers/{serverId}/tools/authorize with their own client-credentials token instead ({@see \\McpAuthorizationController::authorizeTool()}).  POST /orgs/{orgId}/api/v1/agents/me/mcp/authorize Body: { \"server_id\": \"mcp_0123…\", \"tool\": \"send_payment_reminder\" }
 
 ### Example
 ```csharp
@@ -333,7 +333,8 @@ catch (ApiException e)
 |-------------|-------------|------------------|
 | **200** | Allowed — the agent may invoke the tool. |  -  |
 | **403** | Denied — no matching per-tool or server-wide grant. |  -  |
-| **400** | server_id and tool are required, or contain forbidden characters. |  -  |
+| **400** | server_id and tool are required, or contain forbidden characters, or are too long together. |  -  |
+| **404** | unknown_server — server_id is not an active MCP server of this organization. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
