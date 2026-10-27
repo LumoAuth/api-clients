@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * ListTrustedDevicesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:43:32.464871046Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class ListTrustedDevicesResponse {
   public static final String SERIALIZED_NAME_DATA = "data";
   @SerializedName(SERIALIZED_NAME_DATA)
