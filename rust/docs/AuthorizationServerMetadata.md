@@ -38,7 +38,7 @@ Name | Type | Description | Notes
 **backchannel_token_delivery_modes_supported** | Option<**Vec<String>**> |  | [optional]
 **backchannel_user_code_parameter_supported** | Option<**bool**> |  | [optional]
 **entity_profiles_supported** | Option<**Vec<String>**> |  | [optional]
-**client_id_metadata_document_supported** | Option<**bool**> | Only when CIMD is enabled for the organization. | [optional]
+**client_id_metadata_document_supported** | Option<**bool**> | Present (true) unless the organization switched Client ID Metadata Documents off. | [optional]
 **authorization_grant_profiles_supported** | Option<**Vec<String>**> | Only when the organization accepts ID-JAGs. | [optional]
 **op_policy_uri** | Option<**String**> | Only when configured. | [optional]
 **op_tos_uri** | Option<**String**> | Only when configured. | [optional]

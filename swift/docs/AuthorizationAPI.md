@@ -65,7 +65,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -115,7 +115,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -637,7 +637,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -691,7 +691,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -743,7 +743,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -759,7 +759,7 @@ Name | Type | Description  | Notes
 
 List the caller's effective permissions
 
-GET /api/v1/authz/permissions
+GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
 ### Example
 ```swift
@@ -845,7 +845,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -899,7 +899,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 

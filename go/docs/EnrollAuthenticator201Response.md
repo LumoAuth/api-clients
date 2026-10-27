@@ -14,7 +14,8 @@ Name | Type | Description | Notes
 **MaskedPhone** | Pointer to **string** |  | [optional] 
 **ResendAfter** | Pointer to **int32** | Seconds until a new code may be requested | [optional] 
 **MaskedEmail** | Pointer to **string** |  | [optional] 
-**DeepLink** | Pointer to **string** |  | [optional] 
+**DeepLink** | Pointer to **string** | https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). | [optional] 
+**DeepLinkAndroid** | Pointer to **NullableString** | Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package. | [optional] 
 **ActivationCode** | Pointer to **string** |  | [optional] 
 **PublicKey** | Pointer to **map[string]interface{}** | WebAuthn PublicKeyCredentialCreationOptions | [optional] 
 
@@ -312,6 +313,41 @@ SetDeepLink sets DeepLink field to given value.
 
 HasDeepLink returns a boolean if a field has been set.
 
+### GetDeepLinkAndroid
+
+`func (o *EnrollAuthenticator201Response) GetDeepLinkAndroid() string`
+
+GetDeepLinkAndroid returns the DeepLinkAndroid field if non-nil, zero value otherwise.
+
+### GetDeepLinkAndroidOk
+
+`func (o *EnrollAuthenticator201Response) GetDeepLinkAndroidOk() (*string, bool)`
+
+GetDeepLinkAndroidOk returns a tuple with the DeepLinkAndroid field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDeepLinkAndroid
+
+`func (o *EnrollAuthenticator201Response) SetDeepLinkAndroid(v string)`
+
+SetDeepLinkAndroid sets DeepLinkAndroid field to given value.
+
+### HasDeepLinkAndroid
+
+`func (o *EnrollAuthenticator201Response) HasDeepLinkAndroid() bool`
+
+HasDeepLinkAndroid returns a boolean if a field has been set.
+
+### SetDeepLinkAndroidNil
+
+`func (o *EnrollAuthenticator201Response) SetDeepLinkAndroidNil(b bool)`
+
+ SetDeepLinkAndroidNil sets the value for DeepLinkAndroid to be an explicit nil
+
+### UnsetDeepLinkAndroid
+`func (o *EnrollAuthenticator201Response) UnsetDeepLinkAndroid()`
+
+UnsetDeepLinkAndroid ensures that no value is present for DeepLinkAndroid, not even an explicit nil
 ### GetActivationCode
 
 `func (o *EnrollAuthenticator201Response) GetActivationCode() string`

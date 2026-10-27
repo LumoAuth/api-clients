@@ -13,14 +13,14 @@ import AnyCodable
 /** Audience: a single resource URI / client_id as a string, or an array when the token was issued for several resources (RFC 8707). */
 public enum IntrospectResponseAud: Codable, JSONEncodable, Hashable {
     case typeString(String)
-    case type[String]([String])
+    case typeArrayOfString([String])
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
         case .typeString(let value):
             try container.encode(value)
-        case .type[String](let value):
+        case .typeArrayOfString(let value):
             try container.encode(value)
         }
     }
@@ -30,7 +30,7 @@ public enum IntrospectResponseAud: Codable, JSONEncodable, Hashable {
         if let value = try? container.decode(String.self) {
             self = .typeString(value)
         } else if let value = try? container.decode([String].self) {
-            self = .type[String](value)
+            self = .typeArrayOfString(value)
         } else {
             throw DecodingError.typeMismatch(Self.Type.self, .init(codingPath: decoder.codingPath, debugDescription: "Unable to decode instance of IntrospectResponseAud"))
         }

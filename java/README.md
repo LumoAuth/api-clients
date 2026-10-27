@@ -11,7 +11,7 @@
 
 LumoAuth API
 - API version: 1.0.0
-  - Build date: 2026-10-08T10:39:00.868661198-07:00[America/Los_Angeles]
+  - Build date: 2026-10-27T00:14:50.752332309Z[Etc/UTC]
   - Generator version: 7.14.0
 
 LumoAuth REST API — authentication, authorization, agent registry,
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>io.lumoauth</groupId>
   <artifactId>lumoauth-api-client</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "io.lumoauth:lumoauth-api-client:1.0.0"
+     implementation "io.lumoauth:lumoauth-api-client:1.1.0"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lumoauth-api-client-1.0.0.jar`
+* `target/lumoauth-api-client-1.1.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -225,6 +225,7 @@ Class | Method | HTTP request | Description
 *AdminMfaApi* | [**issueTemporaryAccessCode**](docs/AdminMfaApi.md#issueTemporaryAccessCode) | **POST** /orgs/{orgId}/api/v1/admin/users/{userId}/temporary-access-code | Issue a temporary access code
 *AdminMfaApi* | [**listUserAuthenticators**](docs/AdminMfaApi.md#listUserAuthenticators) | **GET** /orgs/{orgId}/api/v1/admin/users/{userId}/authenticators | List a user&#39;s authenticators
 *AdminMfaApi* | [**updateMfaPolicy**](docs/AdminMfaApi.md#updateMfaPolicy) | **PUT** /orgs/{orgId}/api/v1/admin/policies/mfa | Update the MFA policy
+*AdminOAuthClientsApi* | [**adminClientsCimdCheck**](docs/AdminOAuthClientsApi.md#adminClientsCimdCheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document
 *AdminOAuthClientsApi* | [**createClient**](docs/AdminOAuthClientsApi.md#createClient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client
 *AdminOAuthClientsApi* | [**deleteClient**](docs/AdminOAuthClientsApi.md#deleteClient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client
 *AdminOAuthClientsApi* | [**disableClient**](docs/AdminOAuthClientsApi.md#disableClient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client
@@ -523,6 +524,8 @@ Class | Method | HTTP request | Description
  - [AdminAuditLogsStatsResponseData](docs/AdminAuditLogsStatsResponseData.md)
  - [AdminAuditLogsStatsResponseDataPeriod](docs/AdminAuditLogsStatsResponseDataPeriod.md)
  - [AdminClientTokensRevokeAllResponse](docs/AdminClientTokensRevokeAllResponse.md)
+ - [AdminClientsCimdCheckRequest](docs/AdminClientsCimdCheckRequest.md)
+ - [AdminClientsCimdCheckResponse](docs/AdminClientsCimdCheckResponse.md)
  - [AdminEmailTemplatesListResponse](docs/AdminEmailTemplatesListResponse.md)
  - [AdminEmailTemplatesPreviewResponse](docs/AdminEmailTemplatesPreviewResponse.md)
  - [AdminEmailTemplatesVariablesResponse](docs/AdminEmailTemplatesVariablesResponse.md)
@@ -655,6 +658,9 @@ Class | Method | HTTP request | Description
  - [CheckPermissionsBulkResponse](docs/CheckPermissionsBulkResponse.md)
  - [CheckRelationResponse](docs/CheckRelationResponse.md)
  - [CheckRelationScopedResponse](docs/CheckRelationScopedResponse.md)
+ - [CimdCheckResult](docs/CimdCheckResult.md)
+ - [CimdCheckResultEffective](docs/CimdCheckResultEffective.md)
+ - [CimdCheckResultShadowClient](docs/CimdCheckResultShadowClient.md)
  - [CompleteTaskResponse](docs/CompleteTaskResponse.md)
  - [CreateApprovalRequest](docs/CreateApprovalRequest.md)
  - [CreateApprovalResponse](docs/CreateApprovalResponse.md)

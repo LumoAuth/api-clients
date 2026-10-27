@@ -61,7 +61,7 @@ class AuthorizationServerMetadata(BaseModel):
     backchannel_token_delivery_modes_supported: Optional[List[StrictStr]] = None
     backchannel_user_code_parameter_supported: Optional[StrictBool] = None
     entity_profiles_supported: Optional[List[StrictStr]] = None
-    client_id_metadata_document_supported: Optional[StrictBool] = Field(default=None, description="Only when CIMD is enabled for the organization.")
+    client_id_metadata_document_supported: Optional[StrictBool] = Field(default=None, description="Present (true) unless the organization switched Client ID Metadata Documents off.")
     authorization_grant_profiles_supported: Optional[List[StrictStr]] = Field(default=None, description="Only when the organization accepts ID-JAGs.")
     op_policy_uri: Optional[StrictStr] = Field(default=None, description="Only when configured.")
     op_tos_uri: Optional[StrictStr] = Field(default=None, description="Only when configured.")

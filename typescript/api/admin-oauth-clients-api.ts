@@ -22,6 +22,10 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { AdminClientsCimdCheckRequest } from '../models';
+// @ts-ignore
+import type { AdminClientsCimdCheckResponse } from '../models';
+// @ts-ignore
 import type { CreateClientResponse } from '../models';
 // @ts-ignore
 import type { GetClientResponse } from '../models';
@@ -43,6 +47,53 @@ import type { UpdateClientResponse } from '../models';
  */
 export const AdminOAuthClientsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+         * @summary Check a Client ID Metadata Document
+         * @param {string} orgId 
+         * @param {AdminClientsCimdCheckRequest} adminClientsCimdCheckRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminClientsCimdCheck: async (orgId: string, adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'orgId' is not null or undefined
+            assertParamExists('adminClientsCimdCheck', 'orgId', orgId)
+            // verify required parameter 'adminClientsCimdCheckRequest' is not null or undefined
+            assertParamExists('adminClientsCimdCheck', 'adminClientsCimdCheckRequest', adminClientsCimdCheckRequest)
+            const localVarPath = `/orgs/{orgId}/api/v1/admin/clients/cimd/check`
+                .replace(`{${"orgId"}}`, encodeURIComponent(String(orgId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adminClientsCimdCheckRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Create an OAuth client
@@ -541,6 +592,20 @@ export const AdminOAuthClientsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdminOAuthClientsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+         * @summary Check a Client ID Metadata Document
+         * @param {string} orgId 
+         * @param {AdminClientsCimdCheckRequest} adminClientsCimdCheckRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async adminClientsCimdCheck(orgId: string, adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AdminClientsCimdCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.adminClientsCimdCheck(orgId, adminClientsCimdCheckRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AdminOAuthClientsApi.adminClientsCimdCheck']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
          * 
          * @summary Create an OAuth client
          * @param {string} orgId 
@@ -703,6 +768,16 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
     const localVarFp = AdminOAuthClientsApiFp(configuration)
     return {
         /**
+         * Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+         * @summary Check a Client ID Metadata Document
+         * @param {AdminOAuthClientsApiAdminClientsCimdCheckRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsCimdCheckResponse> {
+            return localVarFp.adminClientsCimdCheck(requestParameters.orgId, requestParameters.adminClientsCimdCheckRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Create an OAuth client
          * @param {AdminOAuthClientsApiCreateClientRequest} requestParameters Request parameters.
@@ -822,6 +897,16 @@ export const AdminOAuthClientsApiFactory = function (configuration?: Configurati
  */
 export interface AdminOAuthClientsApiInterface {
     /**
+     * Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+     * @summary Check a Client ID Metadata Document
+     * @param {AdminOAuthClientsApiAdminClientsCimdCheckRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApiInterface
+     */
+    adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig): AxiosPromise<AdminClientsCimdCheckResponse>;
+
+    /**
      * 
      * @summary Create an OAuth client
      * @param {AdminOAuthClientsApiCreateClientRequest} requestParameters Request parameters.
@@ -931,6 +1016,27 @@ export interface AdminOAuthClientsApiInterface {
      */
     updateClient(requestParameters: AdminOAuthClientsApiUpdateClientRequest, options?: RawAxiosRequestConfig): AxiosPromise<UpdateClientResponse>;
 
+}
+
+/**
+ * Request parameters for adminClientsCimdCheck operation in AdminOAuthClientsApi.
+ * @export
+ * @interface AdminOAuthClientsApiAdminClientsCimdCheckRequest
+ */
+export interface AdminOAuthClientsApiAdminClientsCimdCheckRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AdminOAuthClientsApiAdminClientsCimdCheck
+     */
+    readonly orgId: string
+
+    /**
+     * 
+     * @type {AdminClientsCimdCheckRequest}
+     * @memberof AdminOAuthClientsApiAdminClientsCimdCheck
+     */
+    readonly adminClientsCimdCheckRequest: AdminClientsCimdCheckRequest
 }
 
 /**
@@ -1157,6 +1263,18 @@ export interface AdminOAuthClientsApiUpdateClientRequest {
  * @extends {BaseAPI}
  */
 export class AdminOAuthClientsApi extends BaseAPI implements AdminOAuthClientsApiInterface {
+    /**
+     * Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+     * @summary Check a Client ID Metadata Document
+     * @param {AdminOAuthClientsApiAdminClientsCimdCheckRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdminOAuthClientsApi
+     */
+    public adminClientsCimdCheck(requestParameters: AdminOAuthClientsApiAdminClientsCimdCheckRequest, options?: RawAxiosRequestConfig) {
+        return AdminOAuthClientsApiFp(this.configuration).adminClientsCimdCheck(requestParameters.orgId, requestParameters.adminClientsCimdCheckRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create an OAuth client

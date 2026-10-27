@@ -295,7 +295,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 
@@ -557,7 +556,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 
@@ -3384,7 +3382,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 
@@ -3676,7 +3673,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 
@@ -3955,7 +3951,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 
@@ -3995,7 +3990,7 @@ class AuthorizationApi:
     ) -> ListPermissionsResponse:
         """List the caller's effective permissions
 
-        GET /api/v1/authz/permissions
+        GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4058,7 +4053,7 @@ class AuthorizationApi:
     ) -> ApiResponse[ListPermissionsResponse]:
         """List the caller's effective permissions
 
-        GET /api/v1/authz/permissions
+        GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4121,7 +4116,7 @@ class AuthorizationApi:
     ) -> RESTResponseType:
         """List the caller's effective permissions
 
-        GET /api/v1/authz/permissions
+        GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4509,7 +4504,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 
@@ -4801,7 +4795,6 @@ class AuthorizationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'ApiKeyAuth', 
             'BearerAuth'
         ]
 

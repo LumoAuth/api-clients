@@ -39,11 +39,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -90,7 +85,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -113,11 +108,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -164,7 +154,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -906,11 +896,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -957,7 +942,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -980,11 +965,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -1035,7 +1015,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1058,11 +1038,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -1113,7 +1088,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1127,7 +1102,7 @@ end
 
 List the caller's effective permissions
 
-GET /api/v1/authz/permissions
+GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
 ### Examples
 
@@ -1207,11 +1182,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -1264,7 +1234,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1287,11 +1257,6 @@ require 'time'
 require 'lumoauth_api_client'
 # setup authorization
 LumoAuthApiClient.configure do |config|
-  # Configure API key authorization: ApiKeyAuth
-  config.api_key['X-API-Key'] = 'YOUR API KEY'
-  # Uncomment the following line to set a prefix for the API key, e.g. 'Bearer' (defaults to nil)
-  # config.api_key_prefix['X-API-Key'] = 'Bearer'
-
   # Configure Bearer authorization (JWT): BearerAuth
   config.access_token = 'YOUR_BEARER_TOKEN'
 end
@@ -1342,7 +1307,7 @@ end
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 

@@ -28,7 +28,7 @@ Authentication settings (entity defaults merged with the stored values). Any oth
 |**sessionTimeout** | **Integer** | Seconds. |  [optional] |
 |**encryptClientSecrets** | **Boolean** |  |  [optional] |
 |**dynamicClientRegistrationEnabled** | **Boolean** |  |  [optional] |
-|**cimdEnabled** | **Boolean** |  |  [optional] |
+|**cimdEnabled** | **Boolean** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. |  [optional] |
 |**cimdAllowedDomains** | **List&lt;String&gt;** |  |  [optional] |
 |**cimdLocalhostRedirectPolicy** | [**CimdLocalhostRedirectPolicyEnum**](#CimdLocalhostRedirectPolicyEnum) |  |  [optional] |
 |**xaaIdpEnabled** | **Boolean** |  |  [optional] |

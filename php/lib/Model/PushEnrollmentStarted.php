@@ -62,6 +62,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         'state' => 'string',
         'qrDataUri' => 'string',
         'deepLink' => 'string',
+        'deepLinkAndroid' => 'string',
         'activationCode' => 'string',
         'expiresAt' => '\DateTime'
     ];
@@ -78,6 +79,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         'state' => null,
         'qrDataUri' => null,
         'deepLink' => null,
+        'deepLinkAndroid' => null,
         'activationCode' => null,
         'expiresAt' => 'date-time'
     ];
@@ -92,6 +94,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         'state' => false,
         'qrDataUri' => false,
         'deepLink' => false,
+        'deepLinkAndroid' => true,
         'activationCode' => false,
         'expiresAt' => false
     ];
@@ -186,6 +189,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         'state' => 'state',
         'qrDataUri' => 'qr_data_uri',
         'deepLink' => 'deep_link',
+        'deepLinkAndroid' => 'deep_link_android',
         'activationCode' => 'activation_code',
         'expiresAt' => 'expires_at'
     ];
@@ -200,6 +204,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         'state' => 'setState',
         'qrDataUri' => 'setQrDataUri',
         'deepLink' => 'setDeepLink',
+        'deepLinkAndroid' => 'setDeepLinkAndroid',
         'activationCode' => 'setActivationCode',
         'expiresAt' => 'setExpiresAt'
     ];
@@ -214,6 +219,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         'state' => 'getState',
         'qrDataUri' => 'getQrDataUri',
         'deepLink' => 'getDeepLink',
+        'deepLinkAndroid' => 'getDeepLinkAndroid',
         'activationCode' => 'getActivationCode',
         'expiresAt' => 'getExpiresAt'
     ];
@@ -292,6 +298,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
         $this->setIfExists('state', $data ?? [], null);
         $this->setIfExists('qrDataUri', $data ?? [], null);
         $this->setIfExists('deepLink', $data ?? [], null);
+        $this->setIfExists('deepLinkAndroid', $data ?? [], null);
         $this->setIfExists('activationCode', $data ?? [], null);
         $this->setIfExists('expiresAt', $data ?? [], null);
     }
@@ -451,7 +458,7 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
     /**
      * Sets deepLink
      *
-     * @param string|null $deepLink deepLink
+     * @param string|null $deepLink https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
      *
      * @return self
      */
@@ -461,6 +468,40 @@ class PushEnrollmentStarted implements ModelInterface, ArrayAccess, \JsonSeriali
             throw new \InvalidArgumentException('non-nullable deepLink cannot be null');
         }
         $this->container['deepLink'] = $deepLink;
+
+        return $this;
+    }
+
+    /**
+     * Gets deepLinkAndroid
+     *
+     * @return string|null
+     */
+    public function getDeepLinkAndroid()
+    {
+        return $this->container['deepLinkAndroid'];
+    }
+
+    /**
+     * Sets deepLinkAndroid
+     *
+     * @param string|null $deepLinkAndroid Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+     *
+     * @return self
+     */
+    public function setDeepLinkAndroid($deepLinkAndroid)
+    {
+        if (is_null($deepLinkAndroid)) {
+            array_push($this->openAPINullablesSetToNull, 'deepLinkAndroid');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('deepLinkAndroid', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['deepLinkAndroid'] = $deepLinkAndroid;
 
         return $this;
     }

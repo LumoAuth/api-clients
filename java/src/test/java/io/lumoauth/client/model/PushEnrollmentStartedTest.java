@@ -21,6 +21,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -68,6 +69,14 @@ public class PushEnrollmentStartedTest {
     @Test
     public void deepLinkTest() {
         // TODO: test deepLink
+    }
+
+    /**
+     * Test the property 'deepLinkAndroid'
+     */
+    @Test
+    public void deepLinkAndroidTest() {
+        // TODO: test deepLinkAndroid
     }
 
     /**

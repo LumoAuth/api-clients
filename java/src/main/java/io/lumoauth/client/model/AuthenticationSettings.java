@@ -58,7 +58,7 @@ import io.lumoauth.client.JSON;
 /**
  * Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted.
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-08T10:39:00.868661198-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class AuthenticationSettings {
   public static final String SERIALIZED_NAME_PASSKEY_ENABLED = "passkey_enabled";
   @SerializedName(SERIALIZED_NAME_PASSKEY_ENABLED)
@@ -163,7 +163,7 @@ public class AuthenticationSettings {
   public static final String SERIALIZED_NAME_CIMD_ENABLED = "cimd_enabled";
   @SerializedName(SERIALIZED_NAME_CIMD_ENABLED)
   @javax.annotation.Nullable
-  private Boolean cimdEnabled;
+  private Boolean cimdEnabled = true;
 
   public static final String SERIALIZED_NAME_CIMD_ALLOWED_DOMAINS = "cimd_allowed_domains";
   @SerializedName(SERIALIZED_NAME_CIMD_ALLOWED_DOMAINS)
@@ -655,7 +655,7 @@ public class AuthenticationSettings {
   }
 
   /**
-   * Get cimdEnabled
+   * Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
    * @return cimdEnabled
    */
   @javax.annotation.Nullable

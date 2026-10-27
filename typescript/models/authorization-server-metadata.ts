@@ -225,7 +225,7 @@ export interface AuthorizationServerMetadata {
      */
     'entity_profiles_supported'?: Array<string>;
     /**
-     * Only when CIMD is enabled for the organization.
+     * Present (true) unless the organization switched Client ID Metadata Documents off.
      * @type {boolean}
      * @memberof AuthorizationServerMetadata
      */

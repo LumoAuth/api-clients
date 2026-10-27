@@ -58,15 +58,17 @@ namespace LumoAuth.ApiClient.Model
         /// <param name="id">id.</param>
         /// <param name="state">state.</param>
         /// <param name="qrDataUri">qrDataUri.</param>
-        /// <param name="deepLink">deepLink.</param>
+        /// <param name="deepLink">https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it)..</param>
+        /// <param name="deepLinkAndroid">Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package..</param>
         /// <param name="activationCode">activationCode.</param>
         /// <param name="expiresAt">expiresAt.</param>
-        public PushEnrollmentStarted(string id = default, StateEnum? state = default, string qrDataUri = default, string deepLink = default, string activationCode = default, DateTime expiresAt = default)
+        public PushEnrollmentStarted(string id = default, StateEnum? state = default, string qrDataUri = default, string deepLink = default, string deepLinkAndroid = default, string activationCode = default, DateTime expiresAt = default)
         {
             this.Id = id;
             this.State = state;
             this.QrDataUri = qrDataUri;
             this.DeepLink = deepLink;
+            this.DeepLinkAndroid = deepLinkAndroid;
             this.ActivationCode = activationCode;
             this.ExpiresAt = expiresAt;
         }
@@ -87,10 +89,18 @@ namespace LumoAuth.ApiClient.Model
         public string QrDataUri { get; set; }
 
         /// <summary>
-        /// Gets or Sets DeepLink
+        /// https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
         /// </summary>
+        /// <value>https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).</value>
         [DataMember(Name = "deep_link", EmitDefaultValue = false)]
         public string DeepLink { get; set; }
+
+        /// <summary>
+        /// Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+        /// </summary>
+        /// <value>Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.</value>
+        [DataMember(Name = "deep_link_android", EmitDefaultValue = true)]
+        public string DeepLinkAndroid { get; set; }
 
         /// <summary>
         /// Gets or Sets ActivationCode
@@ -116,6 +126,7 @@ namespace LumoAuth.ApiClient.Model
             sb.Append("  State: ").Append(State).Append("\n");
             sb.Append("  QrDataUri: ").Append(QrDataUri).Append("\n");
             sb.Append("  DeepLink: ").Append(DeepLink).Append("\n");
+            sb.Append("  DeepLinkAndroid: ").Append(DeepLinkAndroid).Append("\n");
             sb.Append("  ActivationCode: ").Append(ActivationCode).Append("\n");
             sb.Append("  ExpiresAt: ").Append(ExpiresAt).Append("\n");
             sb.Append("}\n");

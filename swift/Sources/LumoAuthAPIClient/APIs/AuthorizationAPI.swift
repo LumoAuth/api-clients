@@ -27,9 +27,6 @@ open class AuthorizationAPI {
      Evaluate an ABAC policy decision for the caller
      - POST /orgs/{orgId}/api/v1/abac/check
      - POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   resourceId?: string,   environment?: { ip?: string, userAgent?: string, ... } }  Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth
@@ -72,9 +69,6 @@ open class AuthorizationAPI {
      Evaluate up to 100 ABAC checks for the caller in one call
      - POST /orgs/{orgId}/api/v1/abac/check-bulk
      - POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, action: string, resourceId?: string },     ...   ],   environment?: { ... } }
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth
@@ -530,9 +524,6 @@ open class AuthorizationAPI {
      The caller's ABAC subject attributes
      - GET /orgs/{orgId}/api/v1/abac/my-attributes
      - GET /api/v1/abac/my-attributes
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth
@@ -577,9 +568,6 @@ open class AuthorizationAPI {
      Attributes stored for a resource
      - GET /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes
      - GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth
@@ -640,9 +628,6 @@ open class AuthorizationAPI {
      Attribute definitions available to the organization
      - GET /orgs/{orgId}/api/v1/abac/attribute-definitions
      - GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environment)
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth
@@ -687,7 +672,7 @@ open class AuthorizationAPI {
     /**
      List the caller's effective permissions
      - GET /api/v1/authz/permissions
-     - GET /api/v1/authz/permissions
+     - GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
      - API Key:
        - type: apiKey X-API-Key (HEADER)
        - name: ApiKeyAuth
@@ -732,9 +717,6 @@ open class AuthorizationAPI {
      Set a resource attribute
      - PUT /orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}
      - PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug} Body: { value: any }
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth
@@ -791,9 +773,6 @@ open class AuthorizationAPI {
      Set a user attribute
      - PUT /orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}
      - PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
-     - API Key:
-       - type: apiKey X-API-Key (HEADER)
-       - name: ApiKeyAuth
      - Bearer Token:
        - type: http
        - name: BearerAuth

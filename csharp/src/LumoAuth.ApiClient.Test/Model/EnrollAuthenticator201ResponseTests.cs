@@ -155,6 +155,15 @@ namespace LumoAuth.ApiClient.Test.Model
         }
 
         /// <summary>
+        /// Test the property 'DeepLinkAndroid'
+        /// </summary>
+        [Fact]
+        public void DeepLinkAndroidTest()
+        {
+            // TODO unit test for the property 'DeepLinkAndroid'
+        }
+
+        /// <summary>
         /// Test the property 'ActivationCode'
         /// </summary>
         [Fact]

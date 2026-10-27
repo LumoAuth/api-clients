@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,10 +31,11 @@ class PushEnrollmentStarted(BaseModel):
     id: Optional[StrictStr] = None
     state: Optional[StrictStr] = None
     qr_data_uri: Optional[StrictStr] = None
-    deep_link: Optional[StrictStr] = None
+    deep_link: Optional[StrictStr] = Field(default=None, description="https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).")
+    deep_link_android: Optional[StrictStr] = Field(default=None, description="Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.")
     activation_code: Optional[StrictStr] = None
     expires_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["id", "state", "qr_data_uri", "deep_link", "activation_code", "expires_at"]
+    __properties: ClassVar[List[str]] = ["id", "state", "qr_data_uri", "deep_link", "deep_link_android", "activation_code", "expires_at"]
 
     @field_validator('state')
     def state_validate_enum(cls, value):
@@ -85,6 +86,11 @@ class PushEnrollmentStarted(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if deep_link_android (nullable) is None
+        # and model_fields_set contains the field
+        if self.deep_link_android is None and "deep_link_android" in self.model_fields_set:
+            _dict['deep_link_android'] = None
+
         return _dict
 
     @classmethod
@@ -101,6 +107,7 @@ class PushEnrollmentStarted(BaseModel):
             "state": obj.get("state"),
             "qr_data_uri": obj.get("qr_data_uri"),
             "deep_link": obj.get("deep_link"),
+            "deep_link_android": obj.get("deep_link_android"),
             "activation_code": obj.get("activation_code"),
             "expires_at": obj.get("expires_at")
         })

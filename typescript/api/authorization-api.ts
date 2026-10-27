@@ -84,9 +84,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
-
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
@@ -124,9 +121,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
 
             // authentication BearerAuth required
             // http bearer authentication required
@@ -556,9 +550,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
-
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
@@ -605,9 +596,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
-
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
@@ -647,9 +635,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
-
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
@@ -670,7 +655,7 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             };
         },
         /**
-         * GET /api/v1/authz/permissions
+         * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
          * @summary List the caller\'s effective permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -741,9 +726,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
-
             // authentication BearerAuth required
             // http bearer authentication required
             await setBearerAuthToObject(localVarHeaderParameter, configuration)
@@ -789,9 +771,6 @@ export const AuthorizationApiAxiosParamCreator = function (configuration?: Confi
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "X-API-Key", configuration)
 
             // authentication BearerAuth required
             // http bearer authentication required
@@ -1011,7 +990,7 @@ export const AuthorizationApiFp = function(configuration?: Configuration) {
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
-         * GET /api/v1/authz/permissions
+         * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
          * @summary List the caller\'s effective permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1207,7 +1186,7 @@ export const AuthorizationApiFactory = function (configuration?: Configuration, 
             return localVarFp.listAttributeDefinitions(requestParameters.orgId, requestParameters.type, options).then((request) => request(axios, basePath));
         },
         /**
-         * GET /api/v1/authz/permissions
+         * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
          * @summary List the caller\'s effective permissions
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1388,7 +1367,7 @@ export interface AuthorizationApiInterface {
     listAttributeDefinitions(requestParameters: AuthorizationApiListAttributeDefinitionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ListAttributeDefinitionsResponse>;
 
     /**
-     * GET /api/v1/authz/permissions
+     * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
      * @summary List the caller\'s effective permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1802,7 +1781,7 @@ export class AuthorizationApi extends BaseAPI implements AuthorizationApiInterfa
     }
 
     /**
-     * GET /api/v1/authz/permissions
+     * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
      * @summary List the caller\'s effective permissions
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

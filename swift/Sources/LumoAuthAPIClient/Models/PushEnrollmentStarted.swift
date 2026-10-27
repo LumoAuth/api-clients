@@ -18,15 +18,19 @@ public struct PushEnrollmentStarted: Codable, JSONEncodable, Hashable {
     public var id: String?
     public var state: State?
     public var qrDataUri: String?
+    /** https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). */
     public var deepLink: String?
+    /** Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package. */
+    public var deepLinkAndroid: String?
     public var activationCode: String?
     public var expiresAt: Date?
 
-    public init(id: String? = nil, state: State? = nil, qrDataUri: String? = nil, deepLink: String? = nil, activationCode: String? = nil, expiresAt: Date? = nil) {
+    public init(id: String? = nil, state: State? = nil, qrDataUri: String? = nil, deepLink: String? = nil, deepLinkAndroid: String? = nil, activationCode: String? = nil, expiresAt: Date? = nil) {
         self.id = id
         self.state = state
         self.qrDataUri = qrDataUri
         self.deepLink = deepLink
+        self.deepLinkAndroid = deepLinkAndroid
         self.activationCode = activationCode
         self.expiresAt = expiresAt
     }
@@ -36,6 +40,7 @@ public struct PushEnrollmentStarted: Codable, JSONEncodable, Hashable {
         case state
         case qrDataUri = "qr_data_uri"
         case deepLink = "deep_link"
+        case deepLinkAndroid = "deep_link_android"
         case activationCode = "activation_code"
         case expiresAt = "expires_at"
     }
@@ -48,6 +53,7 @@ public struct PushEnrollmentStarted: Codable, JSONEncodable, Hashable {
         try container.encodeIfPresent(state, forKey: .state)
         try container.encodeIfPresent(qrDataUri, forKey: .qrDataUri)
         try container.encodeIfPresent(deepLink, forKey: .deepLink)
+        try container.encodeIfPresent(deepLinkAndroid, forKey: .deepLinkAndroid)
         try container.encodeIfPresent(activationCode, forKey: .activationCode)
         try container.encodeIfPresent(expiresAt, forKey: .expiresAt)
     }

@@ -51,7 +51,7 @@ import io.lumoauth.client.JSON;
 /**
  * OpenIdConfiguration
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-08T10:39:00.868661198-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class OpenIdConfiguration {
   public static final String SERIALIZED_NAME_ISSUER = "issuer";
   @SerializedName(SERIALIZED_NAME_ISSUER)
@@ -1394,7 +1394,7 @@ public class OpenIdConfiguration {
   }
 
   /**
-   * Only when CIMD is enabled for the organization.
+   * Present (true) unless the organization switched Client ID Metadata Documents off.
    * @return clientIdMetadataDocumentSupported
    */
   @javax.annotation.Nullable

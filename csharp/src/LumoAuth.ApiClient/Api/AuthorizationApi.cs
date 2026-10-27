@@ -338,7 +338,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the caller&#39;s effective permissions
         /// </summary>
         /// <remarks>
-        /// GET /api/v1/authz/permissions
+        /// GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ListPermissionsResponse</returns>
@@ -348,7 +348,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the caller&#39;s effective permissions
         /// </summary>
         /// <remarks>
-        /// GET /api/v1/authz/permissions
+        /// GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of ListPermissionsResponse</returns>
@@ -757,7 +757,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the caller&#39;s effective permissions
         /// </summary>
         /// <remarks>
-        /// GET /api/v1/authz/permissions
+        /// GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -768,7 +768,7 @@ namespace LumoAuth.ApiClient.Api
         /// List the caller&#39;s effective permissions
         /// </summary>
         /// <remarks>
-        /// GET /api/v1/authz/permissions
+        /// GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </remarks>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -1085,11 +1085,6 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -1155,11 +1150,6 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -1222,11 +1212,6 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -1292,11 +1277,6 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -2649,11 +2629,6 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -2719,11 +2694,6 @@ namespace LumoAuth.ApiClient.Api
 
             localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -2800,11 +2770,6 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("resourceType", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceType)); // path parameter
             localVarRequestOptions.PathParameters.Add("resourceId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -2884,11 +2849,6 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("resourceType", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceType)); // path parameter
             localVarRequestOptions.PathParameters.Add("resourceId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceId)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -2957,11 +2917,6 @@ namespace LumoAuth.ApiClient.Api
                 localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "type", type));
             }
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -3033,11 +2988,6 @@ namespace LumoAuth.ApiClient.Api
                 localVarRequestOptions.QueryParameters.Add(LumoAuth.ApiClient.Client.ClientUtils.ParameterToMultiMap("", "type", type));
             }
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -3059,7 +3009,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions
+        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ListPermissionsResponse</returns>
@@ -3070,7 +3020,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions
+        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of ListPermissionsResponse</returns>
@@ -3118,7 +3068,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions
+        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -3130,7 +3080,7 @@ namespace LumoAuth.ApiClient.Api
         }
 
         /// <summary>
-        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions
+        /// List the caller&#39;s effective permissions GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -3244,11 +3194,6 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("resourceId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -3335,11 +3280,6 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("resourceId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(resourceId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -3416,11 +3356,6 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
@@ -3500,11 +3435,6 @@ namespace LumoAuth.ApiClient.Api
             localVarRequestOptions.PathParameters.Add("userId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(userId)); // path parameter
             localVarRequestOptions.PathParameters.Add("attributeSlug", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(attributeSlug)); // path parameter
 
-            // authentication (ApiKeyAuth) required
-            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
-            {
-                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
-            }
             // authentication (BearerAuth) required
             // bearer authentication required
             if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))

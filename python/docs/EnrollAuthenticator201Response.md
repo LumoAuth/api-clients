@@ -15,7 +15,8 @@ Name | Type | Description | Notes
 **masked_phone** | **str** |  | [optional] 
 **resend_after** | **int** | Seconds until a new code may be requested | [optional] 
 **masked_email** | **str** |  | [optional] 
-**deep_link** | **str** |  | [optional] 
+**deep_link** | **str** | https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it). | [optional] 
+**deep_link_android** | **str** | Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package. | [optional] 
 **activation_code** | **str** |  | [optional] 
 **public_key** | **object** | WebAuthn PublicKeyCredentialCreationOptions | [optional] 
 

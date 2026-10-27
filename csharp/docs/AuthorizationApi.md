@@ -48,10 +48,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -110,7 +106,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -150,10 +146,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -212,7 +204,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1241,10 +1233,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -1303,7 +1291,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1343,10 +1331,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -1409,7 +1393,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1449,10 +1433,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -1513,7 +1493,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1534,7 +1514,7 @@ catch (ApiException e)
 
 List the caller's effective permissions
 
-GET /api/v1/authz/permissions
+GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
 ### Example
 ```csharp
@@ -1650,10 +1630,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -1718,7 +1694,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1758,10 +1734,6 @@ namespace Example
         {
             Configuration config = new Configuration();
             config.BasePath = "https://app.lumoauth.dev";
-            // Configure API key authorization: ApiKeyAuth
-            config.AddApiKey("X-API-Key", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // config.AddApiKeyPrefix("X-API-Key", "Bearer");
             // Configure Bearer token for authorization: BearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -1824,7 +1796,7 @@ catch (ApiException e)
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 

@@ -21,7 +21,11 @@ module LumoAuthApiClient
 
     attr_accessor :qr_data_uri
 
+    # https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
     attr_accessor :deep_link
+
+    # Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+    attr_accessor :deep_link_android
 
     attr_accessor :activation_code
 
@@ -56,6 +60,7 @@ module LumoAuthApiClient
         :'state' => :'state',
         :'qr_data_uri' => :'qr_data_uri',
         :'deep_link' => :'deep_link',
+        :'deep_link_android' => :'deep_link_android',
         :'activation_code' => :'activation_code',
         :'expires_at' => :'expires_at'
       }
@@ -78,6 +83,7 @@ module LumoAuthApiClient
         :'state' => :'String',
         :'qr_data_uri' => :'String',
         :'deep_link' => :'String',
+        :'deep_link_android' => :'String',
         :'activation_code' => :'String',
         :'expires_at' => :'Time'
       }
@@ -86,6 +92,7 @@ module LumoAuthApiClient
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'deep_link_android',
       ])
     end
 
@@ -119,6 +126,10 @@ module LumoAuthApiClient
 
       if attributes.key?(:'deep_link')
         self.deep_link = attributes[:'deep_link']
+      end
+
+      if attributes.key?(:'deep_link_android')
+        self.deep_link_android = attributes[:'deep_link_android']
       end
 
       if attributes.key?(:'activation_code')
@@ -166,6 +177,7 @@ module LumoAuthApiClient
           state == o.state &&
           qr_data_uri == o.qr_data_uri &&
           deep_link == o.deep_link &&
+          deep_link_android == o.deep_link_android &&
           activation_code == o.activation_code &&
           expires_at == o.expires_at
     end
@@ -179,7 +191,7 @@ module LumoAuthApiClient
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, state, qr_data_uri, deep_link, activation_code, expires_at].hash
+      [id, state, qr_data_uri, deep_link, deep_link_android, activation_code, expires_at].hash
     end
 
     # Builds the object from hash

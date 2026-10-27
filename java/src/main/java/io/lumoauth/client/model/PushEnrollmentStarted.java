@@ -22,6 +22,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,7 +50,7 @@ import io.lumoauth.client.JSON;
 /**
  * PushEnrollmentStarted
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-08T10:39:00.868661198-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class PushEnrollmentStarted {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -120,6 +121,11 @@ public class PushEnrollmentStarted {
   @SerializedName(SERIALIZED_NAME_DEEP_LINK)
   @javax.annotation.Nullable
   private String deepLink;
+
+  public static final String SERIALIZED_NAME_DEEP_LINK_ANDROID = "deep_link_android";
+  @SerializedName(SERIALIZED_NAME_DEEP_LINK_ANDROID)
+  @javax.annotation.Nullable
+  private String deepLinkAndroid;
 
   public static final String SERIALIZED_NAME_ACTIVATION_CODE = "activation_code";
   @SerializedName(SERIALIZED_NAME_ACTIVATION_CODE)
@@ -197,7 +203,7 @@ public class PushEnrollmentStarted {
   }
 
   /**
-   * Get deepLink
+   * https://&lt;server&gt;/push-auth/enroll?d&#x3D;… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
    * @return deepLink
    */
   @javax.annotation.Nullable
@@ -207,6 +213,25 @@ public class PushEnrollmentStarted {
 
   public void setDeepLink(@javax.annotation.Nullable String deepLink) {
     this.deepLink = deepLink;
+  }
+
+
+  public PushEnrollmentStarted deepLinkAndroid(@javax.annotation.Nullable String deepLinkAndroid) {
+    this.deepLinkAndroid = deepLinkAndroid;
+    return this;
+  }
+
+  /**
+   * Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+   * @return deepLinkAndroid
+   */
+  @javax.annotation.Nullable
+  public String getDeepLinkAndroid() {
+    return deepLinkAndroid;
+  }
+
+  public void setDeepLinkAndroid(@javax.annotation.Nullable String deepLinkAndroid) {
+    this.deepLinkAndroid = deepLinkAndroid;
   }
 
 
@@ -262,13 +287,25 @@ public class PushEnrollmentStarted {
         Objects.equals(this.state, pushEnrollmentStarted.state) &&
         Objects.equals(this.qrDataUri, pushEnrollmentStarted.qrDataUri) &&
         Objects.equals(this.deepLink, pushEnrollmentStarted.deepLink) &&
+        Objects.equals(this.deepLinkAndroid, pushEnrollmentStarted.deepLinkAndroid) &&
         Objects.equals(this.activationCode, pushEnrollmentStarted.activationCode) &&
         Objects.equals(this.expiresAt, pushEnrollmentStarted.expiresAt);
   }
 
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+  }
+
   @Override
   public int hashCode() {
-    return Objects.hash(id, state, qrDataUri, deepLink, activationCode, expiresAt);
+    return Objects.hash(id, state, qrDataUri, deepLink, deepLinkAndroid, activationCode, expiresAt);
+  }
+
+  private static <T> int hashCodeNullable(JsonNullable<T> a) {
+    if (a == null) {
+      return 1;
+    }
+    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
   }
 
   @Override
@@ -279,6 +316,7 @@ public class PushEnrollmentStarted {
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    qrDataUri: ").append(toIndentedString(qrDataUri)).append("\n");
     sb.append("    deepLink: ").append(toIndentedString(deepLink)).append("\n");
+    sb.append("    deepLinkAndroid: ").append(toIndentedString(deepLinkAndroid)).append("\n");
     sb.append("    activationCode: ").append(toIndentedString(activationCode)).append("\n");
     sb.append("    expiresAt: ").append(toIndentedString(expiresAt)).append("\n");
     sb.append("}");
@@ -302,7 +340,7 @@ public class PushEnrollmentStarted {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("id", "state", "qr_data_uri", "deep_link", "activation_code", "expires_at"));
+    openapiFields = new HashSet<String>(Arrays.asList("id", "state", "qr_data_uri", "deep_link", "deep_link_android", "activation_code", "expires_at"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(0);
@@ -344,6 +382,9 @@ public class PushEnrollmentStarted {
       }
       if ((jsonObj.get("deep_link") != null && !jsonObj.get("deep_link").isJsonNull()) && !jsonObj.get("deep_link").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `deep_link` to be a primitive type in the JSON string but got `%s`", jsonObj.get("deep_link").toString()));
+      }
+      if ((jsonObj.get("deep_link_android") != null && !jsonObj.get("deep_link_android").isJsonNull()) && !jsonObj.get("deep_link_android").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `deep_link_android` to be a primitive type in the JSON string but got `%s`", jsonObj.get("deep_link_android").toString()));
       }
       if ((jsonObj.get("activation_code") != null && !jsonObj.get("activation_code").isJsonNull()) && !jsonObj.get("activation_code").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `activation_code` to be a primitive type in the JSON string but got `%s`", jsonObj.get("activation_code").toString()));

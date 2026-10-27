@@ -799,7 +799,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/check-bulk": {
@@ -831,7 +836,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/my-attributes": {
@@ -863,7 +873,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes": {
@@ -911,7 +926,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug}": {
@@ -967,7 +987,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/users/{userId}/attributes/{attributeSlug}": {
@@ -1015,7 +1040,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/attribute-definitions": {
@@ -1060,7 +1090,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ]
             }
         },
         "/orgs/{orgId}/api/v1/abac/attributes": {
@@ -2640,6 +2675,51 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/orgs/{orgId}/api/v1/admin/clients/cimd/check": {
+            "post": {
+                "tags": [
+                    "Admin: OAuth Clients"
+                ],
+                "summary": "Check a Client ID Metadata Document",
+                "description": "Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.",
+                "operationId": "adminClientsCimdCheck",
+                "parameters": [
+                    {
+                        "name": "orgId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AdminClientsCimdCheckRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Check result (ok=false is still 200: the document was reachable for inspection but rejected)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AdminClientsCimdCheckResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "validation_error: client_id missing"
                     }
                 }
             }
@@ -10723,7 +10803,7 @@
                     "Authorization"
                 ],
                 "summary": "List the caller's effective permissions",
-                "description": "GET /api/v1/authz/permissions",
+                "description": "GET /api/v1/authz/permissions\n\nInventory endpoint: a bearer access token needs the `authz:read` scope\n(the check endpoints stay open to any authenticated token).",
                 "operationId": "listPermissions",
                 "responses": {
                     "200": {
@@ -13270,7 +13350,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings).",
+                        "description": "OpenID Provider metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri and a tenant acr_values_supported override (organization settings).",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13306,7 +13386,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD opted in), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings).",
+                        "description": "Authorization server metadata. Conditional members: client_id_metadata_document_supported (CIMD on, the default), authorization_grant_profiles_supported and the jwt-bearer grant (Cross App Access resource role), op_policy_uri / op_tos_uri (organization settings).",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -13940,6 +14020,134 @@
                 },
                 "type": "object"
             },
+            "CimdCheckResult": {
+                "description": "Result of POST /admin/clients/cimd/check — how the authorization server sees a Client ID Metadata Document.",
+                "properties": {
+                    "ok": {
+                        "description": "true when the document is valid and would be accepted (subject to `enabled`).",
+                        "type": "boolean"
+                    },
+                    "client_id": {
+                        "type": "string"
+                    },
+                    "enabled": {
+                        "description": "Whether CIMD is currently on for this organization (switch + plan).",
+                        "type": "boolean"
+                    },
+                    "reason": {
+                        "description": "Stable failure code when ok is false (client_id_mismatch, invalid_redirect_uri, domain_not_allowed, http_status_404, …).",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "message": {
+                        "description": "Developer-facing explanation of `reason`.",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "warnings": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "document": {
+                        "description": "The metadata document as fetched.",
+                        "type": "object",
+                        "nullable": true,
+                        "additionalProperties": true
+                    },
+                    "effective": {
+                        "description": "The client LumoAuth derives from the document after organization policy.",
+                        "properties": {
+                            "client_name": {
+                                "type": "string"
+                            },
+                            "application_type": {
+                                "type": "string",
+                                "enum": [
+                                    "web",
+                                    "native"
+                                ]
+                            },
+                            "token_endpoint_auth_method": {
+                                "type": "string",
+                                "enum": [
+                                    "none",
+                                    "private_key_jwt"
+                                ]
+                            },
+                            "public_client": {
+                                "type": "boolean"
+                            },
+                            "pkce_required": {
+                                "type": "boolean"
+                            },
+                            "redirect_uris": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "dropped_redirect_uris": {
+                                "description": "Loopback URIs removed by the organization's localhost policy.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "grant_types": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "dropped_scopes": {
+                                "description": "Scopes the document asked for that are neither identity scopes nor on the organization's cimd_allowed_scopes list.",
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "logo_uri": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "client_uri": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "has_loopback_redirect": {
+                                "type": "boolean"
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    },
+                    "shadow_client": {
+                        "description": "Present when this organization has already resolved the client at least once.",
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "nullable": true
+                            },
+                            "last_fetched_at": {
+                                "type": "string",
+                                "format": "date-time",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "AuthenticationSettings": {
                 "description": "Authentication settings (entity defaults merged with the stored values). Any other stored key is returned as-is; secret-looking keys (e.g. initial_access_tokens) are redacted.",
                 "properties": {
@@ -14162,7 +14370,9 @@
                         "type": "boolean"
                     },
                     "cimd_enabled": {
-                        "type": "boolean"
+                        "description": "Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.",
+                        "type": "boolean",
+                        "default": true
                     },
                     "cimd_allowed_domains": {
                         "type": "array",
@@ -17253,6 +17463,33 @@
                     },
                     "meta": {
                         "$ref": "#/components/schemas/AdminAuditLogsExportResponseMeta"
+                    }
+                },
+                "type": "object"
+            },
+            "AdminClientsCimdCheckRequest": {
+                "required": [
+                    "client_id"
+                ],
+                "properties": {
+                    "client_id": {
+                        "description": "The Client Identifier URL (https, with a path).",
+                        "type": "string",
+                        "format": "uri",
+                        "example": "https://client.example.com/oauth/metadata.json"
+                    },
+                    "refresh": {
+                        "description": "Ignore the cached document and fetch it again.",
+                        "type": "boolean",
+                        "default": false
+                    }
+                },
+                "type": "object"
+            },
+            "AdminClientsCimdCheckResponse": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/CimdCheckResult"
                     }
                 },
                 "type": "object"
@@ -21205,7 +21442,13 @@
                         "type": "string"
                     },
                     "deep_link": {
+                        "description": "https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).",
                         "type": "string"
+                    },
+                    "deep_link_android": {
+                        "description": "Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.",
+                        "type": "string",
+                        "nullable": true
                     },
                     "activation_code": {
                         "type": "string"
@@ -22342,7 +22585,7 @@
                         ]
                     },
                     "client_id_metadata_document_supported": {
-                        "description": "Only when CIMD is enabled for the organization.",
+                        "description": "Present (true) unless the organization switched Client ID Metadata Documents off.",
                         "type": "boolean"
                     },
                     "authorization_grant_profiles_supported": {
@@ -22564,7 +22807,7 @@
                         ]
                     },
                     "client_id_metadata_document_supported": {
-                        "description": "Only when CIMD is enabled for the organization.",
+                        "description": "Present (true) unless the organization switched Client ID Metadata Documents off.",
                         "type": "boolean"
                     },
                     "authorization_grant_profiles_supported": {

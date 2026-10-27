@@ -29,6 +29,29 @@ namespace LumoAuth.ApiClient.Api
     {
         #region Synchronous Operations
         /// <summary>
+        /// Check a Client ID Metadata Document
+        /// </summary>
+        /// <remarks>
+        /// Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <returns>AdminClientsCimdCheckResponse</returns>
+        AdminClientsCimdCheckResponse AdminClientsCimdCheck(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest);
+
+        /// <summary>
+        /// Check a Client ID Metadata Document
+        /// </summary>
+        /// <remarks>
+        /// Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <returns>ApiResponse of AdminClientsCimdCheckResponse</returns>
+        ApiResponse<AdminClientsCimdCheckResponse> AdminClientsCimdCheckWithHttpInfo(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest);
+        /// <summary>
         /// Create an OAuth client
         /// </summary>
         /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
@@ -253,6 +276,31 @@ namespace LumoAuth.ApiClient.Api
     public interface IAdminOAuthClientsApiAsync : IApiAccessor
     {
         #region Asynchronous Operations
+        /// <summary>
+        /// Check a Client ID Metadata Document
+        /// </summary>
+        /// <remarks>
+        /// Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminClientsCimdCheckResponse</returns>
+        System.Threading.Tasks.Task<AdminClientsCimdCheckResponse> AdminClientsCimdCheckAsync(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Check a Client ID Metadata Document
+        /// </summary>
+        /// <remarks>
+        /// Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </remarks>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminClientsCimdCheckResponse)</returns>
+        System.Threading.Tasks.Task<ApiResponse<AdminClientsCimdCheckResponse>> AdminClientsCimdCheckWithHttpInfoAsync(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Create an OAuth client
         /// </summary>
@@ -735,6 +783,159 @@ namespace LumoAuth.ApiClient.Api
                 return _exceptionFactory;
             }
             set { _exceptionFactory = value; }
+        }
+
+        /// <summary>
+        /// Check a Client ID Metadata Document Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <returns>AdminClientsCimdCheckResponse</returns>
+        public AdminClientsCimdCheckResponse AdminClientsCimdCheck(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminClientsCimdCheckResponse> localVarResponse = AdminClientsCimdCheckWithHttpInfo(orgId, adminClientsCimdCheckRequest);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Check a Client ID Metadata Document Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <returns>ApiResponse of AdminClientsCimdCheckResponse</returns>
+        public LumoAuth.ApiClient.Client.ApiResponse<AdminClientsCimdCheckResponse> AdminClientsCimdCheckWithHttpInfo(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->AdminClientsCimdCheck");
+
+            // verify the required parameter 'adminClientsCimdCheckRequest' is set
+            if (adminClientsCimdCheckRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminClientsCimdCheckRequest' when calling AdminOAuthClientsApi->AdminClientsCimdCheck");
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminClientsCimdCheckRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+            var localVarResponse = this.Client.Post<AdminClientsCimdCheckResponse>("/orgs/{orgId}/api/v1/admin/clients/cimd/check", localVarRequestOptions, this.Configuration);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminClientsCimdCheck", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
+        }
+
+        /// <summary>
+        /// Check a Client ID Metadata Document Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of AdminClientsCimdCheckResponse</returns>
+        public async System.Threading.Tasks.Task<AdminClientsCimdCheckResponse> AdminClientsCimdCheckAsync(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            LumoAuth.ApiClient.Client.ApiResponse<AdminClientsCimdCheckResponse> localVarResponse = await AdminClientsCimdCheckWithHttpInfoAsync(orgId, adminClientsCimdCheckRequest, cancellationToken).ConfigureAwait(false);
+            return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Check a Client ID Metadata Document Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+        /// </summary>
+        /// <exception cref="LumoAuth.ApiClient.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="orgId"></param>
+        /// <param name="adminClientsCimdCheckRequest"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns>Task of ApiResponse (AdminClientsCimdCheckResponse)</returns>
+        public async System.Threading.Tasks.Task<LumoAuth.ApiClient.Client.ApiResponse<AdminClientsCimdCheckResponse>> AdminClientsCimdCheckWithHttpInfoAsync(string orgId, AdminClientsCimdCheckRequest adminClientsCimdCheckRequest, System.Threading.CancellationToken cancellationToken = default)
+        {
+            // verify the required parameter 'orgId' is set
+            if (orgId == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'orgId' when calling AdminOAuthClientsApi->AdminClientsCimdCheck");
+
+            // verify the required parameter 'adminClientsCimdCheckRequest' is set
+            if (adminClientsCimdCheckRequest == null)
+                throw new LumoAuth.ApiClient.Client.ApiException(400, "Missing required parameter 'adminClientsCimdCheckRequest' when calling AdminOAuthClientsApi->AdminClientsCimdCheck");
+
+
+            LumoAuth.ApiClient.Client.RequestOptions localVarRequestOptions = new LumoAuth.ApiClient.Client.RequestOptions();
+
+            string[] _contentTypes = new string[] {
+                "application/json"
+            };
+
+            // to determine the Accept header
+            string[] _accepts = new string[] {
+                "application/json"
+            };
+
+
+            var localVarContentType = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
+            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
+
+            var localVarAccept = LumoAuth.ApiClient.Client.ClientUtils.SelectHeaderAccept(_accepts);
+            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
+
+            localVarRequestOptions.PathParameters.Add("orgId", LumoAuth.ApiClient.Client.ClientUtils.ParameterToString(orgId)); // path parameter
+            localVarRequestOptions.Data = adminClientsCimdCheckRequest;
+
+            // authentication (ApiKeyAuth) required
+            if (!string.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("X-API-Key")))
+            {
+                localVarRequestOptions.HeaderParameters.Add("X-API-Key", this.Configuration.GetApiKeyWithPrefix("X-API-Key"));
+            }
+            // authentication (BearerAuth) required
+            // bearer authentication required
+            if (!string.IsNullOrEmpty(this.Configuration.AccessToken) && !localVarRequestOptions.HeaderParameters.ContainsKey("Authorization"))
+            {
+                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
+            }
+
+            // make the HTTP request
+
+            var localVarResponse = await this.AsynchronousClient.PostAsync<AdminClientsCimdCheckResponse>("/orgs/{orgId}/api/v1/admin/clients/cimd/check", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+
+            if (this.ExceptionFactory != null)
+            {
+                Exception _exception = this.ExceptionFactory("AdminClientsCimdCheck", localVarResponse);
+                if (_exception != null) throw _exception;
+            }
+
+            return localVarResponse;
         }
 
         /// <summary>

@@ -24,7 +24,10 @@ type PushEnrollmentStarted struct {
 	Id *string `json:"id,omitempty"`
 	State *string `json:"state,omitempty"`
 	QrDataUri *string `json:"qr_data_uri,omitempty"`
+	// https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
 	DeepLink *string `json:"deep_link,omitempty"`
+	// Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+	DeepLinkAndroid NullableString `json:"deep_link_android,omitempty"`
 	ActivationCode *string `json:"activation_code,omitempty"`
 	ExpiresAt *time.Time `json:"expires_at,omitempty"`
 }
@@ -174,6 +177,48 @@ func (o *PushEnrollmentStarted) SetDeepLink(v string) {
 	o.DeepLink = &v
 }
 
+// GetDeepLinkAndroid returns the DeepLinkAndroid field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *PushEnrollmentStarted) GetDeepLinkAndroid() string {
+	if o == nil || IsNil(o.DeepLinkAndroid.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.DeepLinkAndroid.Get()
+}
+
+// GetDeepLinkAndroidOk returns a tuple with the DeepLinkAndroid field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *PushEnrollmentStarted) GetDeepLinkAndroidOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.DeepLinkAndroid.Get(), o.DeepLinkAndroid.IsSet()
+}
+
+// HasDeepLinkAndroid returns a boolean if a field has been set.
+func (o *PushEnrollmentStarted) HasDeepLinkAndroid() bool {
+	if o != nil && o.DeepLinkAndroid.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetDeepLinkAndroid gets a reference to the given NullableString and assigns it to the DeepLinkAndroid field.
+func (o *PushEnrollmentStarted) SetDeepLinkAndroid(v string) {
+	o.DeepLinkAndroid.Set(&v)
+}
+// SetDeepLinkAndroidNil sets the value for DeepLinkAndroid to be an explicit nil
+func (o *PushEnrollmentStarted) SetDeepLinkAndroidNil() {
+	o.DeepLinkAndroid.Set(nil)
+}
+
+// UnsetDeepLinkAndroid ensures that no value is present for DeepLinkAndroid, not even an explicit nil
+func (o *PushEnrollmentStarted) UnsetDeepLinkAndroid() {
+	o.DeepLinkAndroid.Unset()
+}
+
 // GetActivationCode returns the ActivationCode field value if set, zero value otherwise.
 func (o *PushEnrollmentStarted) GetActivationCode() string {
 	if o == nil || IsNil(o.ActivationCode) {
@@ -259,6 +304,9 @@ func (o PushEnrollmentStarted) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DeepLink) {
 		toSerialize["deep_link"] = o.DeepLink
+	}
+	if o.DeepLinkAndroid.IsSet() {
+		toSerialize["deep_link_android"] = o.DeepLinkAndroid.Get()
 	}
 	if !IsNil(o.ActivationCode) {
 		toSerialize["activation_code"] = o.ActivationCode

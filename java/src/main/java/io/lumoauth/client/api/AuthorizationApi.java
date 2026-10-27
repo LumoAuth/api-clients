@@ -142,7 +142,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -269,7 +269,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -1622,7 +1622,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -1753,7 +1753,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -1901,7 +1901,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -2041,7 +2041,7 @@ public class AuthorizationApi {
 
     /**
      * List the caller&#39;s effective permissions
-     * GET /api/v1/authz/permissions
+     * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
      * @return ListPermissionsResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2058,7 +2058,7 @@ public class AuthorizationApi {
 
     /**
      * List the caller&#39;s effective permissions
-     * GET /api/v1/authz/permissions
+     * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
      * @return ApiResponse&lt;ListPermissionsResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -2076,7 +2076,7 @@ public class AuthorizationApi {
 
     /**
      * List the caller&#39;s effective permissions (asynchronously)
-     * GET /api/v1/authz/permissions
+     * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2154,7 +2154,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
@@ -2309,7 +2309,7 @@ public class AuthorizationApi {
             localVarHeaderParams.put("Content-Type", localVarContentType);
         }
 
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BearerAuth" };
+        String[] localVarAuthNames = new String[] { "BearerAuth" };
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 

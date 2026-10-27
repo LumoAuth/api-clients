@@ -41,11 +41,6 @@ POST /api/v1/abac/check Body: {   resourceType: string,   action: string,   reso
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
-
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
@@ -78,7 +73,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -105,11 +100,6 @@ POST /api/v1/abac/check-bulk Body: {   checks: [     { resourceType: string, act
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
 
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
@@ -143,7 +133,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -800,11 +790,6 @@ GET /api/v1/abac/my-attributes
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
-
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
@@ -837,7 +822,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -864,11 +849,6 @@ GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
 
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
@@ -906,7 +886,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -933,11 +913,6 @@ GET /api/v1/abac/attribute-definitions Query params: type (user|resource|environ
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
 
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
@@ -973,7 +948,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -992,7 +967,7 @@ listPermissions(): \LumoAuth\ApiClient\Model\ListPermissionsResponse
 
 List the caller's effective permissions
 
-GET /api/v1/authz/permissions
+GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
 
 ### Example
 
@@ -1063,11 +1038,6 @@ PUT /api/v1/abac/resources/{resourceType}/{resourceId}/attributes/{attributeSlug
 require_once(__DIR__ . '/vendor/autoload.php');
 
 
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
-
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
@@ -1106,7 +1076,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1133,11 +1103,6 @@ PUT /api/v1/abac/users/{userId}/attributes/{attributeSlug} Body: { value: any }
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-
-// Configure API key authorization: ApiKeyAuth
-$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
-// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
 
 // Configure Bearer (JWT) authorization: BearerAuth
 $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
@@ -1175,7 +1140,7 @@ try {
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+[BearerAuth](../../README.md#BearerAuth)
 
 ### HTTP request headers
 

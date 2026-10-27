@@ -4,6 +4,7 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
+| [**adminClientsCimdCheck()**](AdminOAuthClientsApi.md#adminClientsCimdCheck) | **POST** /orgs/{orgId}/api/v1/admin/clients/cimd/check | Check a Client ID Metadata Document |
 | [**createClient()**](AdminOAuthClientsApi.md#createClient) | **POST** /orgs/{orgId}/api/v1/admin/clients | Create an OAuth client |
 | [**deleteClient()**](AdminOAuthClientsApi.md#deleteClient) | **DELETE** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Delete an OAuth client |
 | [**disableClient()**](AdminOAuthClientsApi.md#disableClient) | **POST** /orgs/{orgId}/api/v1/admin/clients/{clientId}/disable | Disable an OAuth client |
@@ -16,6 +17,73 @@ All URIs are relative to https://app.lumoauth.dev, except if the operation defin
 | [**setClientScopes()**](AdminOAuthClientsApi.md#setClientScopes) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes | Replace the scopes granted to an OAuth client |
 | [**updateClient()**](AdminOAuthClientsApi.md#updateClient) | **PUT** /orgs/{orgId}/api/v1/admin/clients/{clientId} | Replace an OAuth client |
 
+
+## `adminClientsCimdCheck()`
+
+```php
+adminClientsCimdCheck($orgId, $adminClientsCimdCheckRequest): \LumoAuth\ApiClient\Model\AdminClientsCimdCheckResponse
+```
+
+Check a Client ID Metadata Document
+
+Fetches and validates the metadata document at `client_id` exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (`enabled: false`), so a document can be validated before the switch is flipped. Nothing is registered or stored. `refresh: true` discards the cached copy first.
+
+### Example
+
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+// Configure API key authorization: ApiKeyAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKey('X-API-Key', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-API-Key', 'Bearer');
+
+// Configure Bearer (JWT) authorization: BearerAuth
+$config = LumoAuth\ApiClient\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+
+
+$apiInstance = new LumoAuth\ApiClient\Api\AdminOAuthClientsApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$orgId = 'orgId_example'; // string
+$adminClientsCimdCheckRequest = new \LumoAuth\ApiClient\Model\AdminClientsCimdCheckRequest(); // \LumoAuth\ApiClient\Model\AdminClientsCimdCheckRequest
+
+try {
+    $result = $apiInstance->adminClientsCimdCheck($orgId, $adminClientsCimdCheckRequest);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling AdminOAuthClientsApi->adminClientsCimdCheck: ', $e->getMessage(), PHP_EOL;
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+| ------------- | ------------- | ------------- | ------------- |
+| **orgId** | **string**|  | |
+| **adminClientsCimdCheckRequest** | [**\LumoAuth\ApiClient\Model\AdminClientsCimdCheckRequest**](../Model/AdminClientsCimdCheckRequest.md)|  | |
+
+### Return type
+
+[**\LumoAuth\ApiClient\Model\AdminClientsCimdCheckResponse**](../Model/AdminClientsCimdCheckResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth), [BearerAuth](../../README.md#BearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: `application/json`
+- **Accept**: `application/json`
+
+[[Back to top]](#) [[Back to API list]](../../README.md#endpoints)
+[[Back to Model list]](../../README.md#models)
+[[Back to README]](../../README.md)
 
 ## `createClient()`
 

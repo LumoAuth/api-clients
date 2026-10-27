@@ -63,7 +63,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'CheckAbacResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.check_abac",
@@ -126,7 +126,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'CheckAbacBulkResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.check_abac_bulk",
@@ -791,7 +791,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'GetMyAttributesResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.get_my_attributes",
@@ -866,7 +866,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'GetResourceAttributesResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.get_resource_attributes",
@@ -936,7 +936,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'ListAttributeDefinitionsResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.list_attribute_definitions",
@@ -956,7 +956,7 @@ module LumoAuthApiClient
     end
 
     # List the caller's effective permissions
-    # GET /api/v1/authz/permissions
+    # GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the `authz:read` scope (the check endpoints stay open to any authenticated token).
     # @param [Hash] opts the optional parameters
     # @return [ListPermissionsResponse]
     def list_permissions(opts = {})
@@ -965,7 +965,7 @@ module LumoAuthApiClient
     end
 
     # List the caller&#39;s effective permissions
-    # GET /api/v1/authz/permissions
+    # GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
     # @param [Hash] opts the optional parameters
     # @return [Array<(ListPermissionsResponse, Integer, Hash)>] ListPermissionsResponse data, response status code and response headers
     def list_permissions_with_http_info(opts = {})
@@ -1074,7 +1074,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'SetResourceAttributeResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.set_resource_attribute",
@@ -1149,7 +1149,7 @@ module LumoAuthApiClient
       return_type = opts[:debug_return_type] || 'SetUserAttributeResponse'
 
       # auth_names
-      auth_names = opts[:debug_auth_names] || ['ApiKeyAuth', 'BearerAuth']
+      auth_names = opts[:debug_auth_names] || ['BearerAuth']
 
       new_options = opts.merge(
         :operation => :"AuthorizationApi.set_user_attribute",

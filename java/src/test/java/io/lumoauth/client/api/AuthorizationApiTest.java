@@ -255,7 +255,7 @@ public class AuthorizationApiTest {
     /**
      * List the caller&#39;s effective permissions
      *
-     * GET /api/v1/authz/permissions
+     * GET /api/v1/authz/permissions  Inventory endpoint: a bearer access token needs the &#x60;authz:read&#x60; scope (the check endpoints stay open to any authenticated token).
      *
      * @throws ApiException if the Api call fails
      */

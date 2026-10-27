@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **sessionTimeout** | **Int** | Seconds. | [optional] 
 **encryptClientSecrets** | **Bool** |  | [optional] 
 **dynamicClientRegistrationEnabled** | **Bool** |  | [optional] 
-**cimdEnabled** | **Bool** |  | [optional] 
+**cimdEnabled** | **Bool** | Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out. | [optional] [default to true]
 **cimdAllowedDomains** | **[String]** |  | [optional] 
 **cimdLocalhostRedirectPolicy** | **String** |  | [optional] 
 **xaaIdpEnabled** | **Bool** |  | [optional] 

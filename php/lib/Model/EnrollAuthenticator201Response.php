@@ -69,6 +69,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         'resendAfter' => 'int',
         'maskedEmail' => 'string',
         'deepLink' => 'string',
+        'deepLinkAndroid' => 'string',
         'activationCode' => 'string',
         'publicKey' => 'object'
     ];
@@ -92,6 +93,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         'resendAfter' => null,
         'maskedEmail' => null,
         'deepLink' => null,
+        'deepLinkAndroid' => null,
         'activationCode' => null,
         'publicKey' => null
     ];
@@ -113,6 +115,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         'resendAfter' => false,
         'maskedEmail' => false,
         'deepLink' => false,
+        'deepLinkAndroid' => true,
         'activationCode' => false,
         'publicKey' => false
     ];
@@ -214,6 +217,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         'resendAfter' => 'resend_after',
         'maskedEmail' => 'masked_email',
         'deepLink' => 'deep_link',
+        'deepLinkAndroid' => 'deep_link_android',
         'activationCode' => 'activation_code',
         'publicKey' => 'public_key'
     ];
@@ -235,6 +239,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         'resendAfter' => 'setResendAfter',
         'maskedEmail' => 'setMaskedEmail',
         'deepLink' => 'setDeepLink',
+        'deepLinkAndroid' => 'setDeepLinkAndroid',
         'activationCode' => 'setActivationCode',
         'publicKey' => 'setPublicKey'
     ];
@@ -256,6 +261,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         'resendAfter' => 'getResendAfter',
         'maskedEmail' => 'getMaskedEmail',
         'deepLink' => 'getDeepLink',
+        'deepLinkAndroid' => 'getDeepLinkAndroid',
         'activationCode' => 'getActivationCode',
         'publicKey' => 'getPublicKey'
     ];
@@ -354,6 +360,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
         $this->setIfExists('resendAfter', $data ?? [], null);
         $this->setIfExists('maskedEmail', $data ?? [], null);
         $this->setIfExists('deepLink', $data ?? [], null);
+        $this->setIfExists('deepLinkAndroid', $data ?? [], null);
         $this->setIfExists('activationCode', $data ?? [], null);
         $this->setIfExists('publicKey', $data ?? [], null);
     }
@@ -721,7 +728,7 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
     /**
      * Sets deepLink
      *
-     * @param string|null $deepLink deepLink
+     * @param string|null $deepLink https://<server>/push-auth/enroll?d=… — an Android App Link / iOS Universal Link that opens the authenticator app on a phone (falls back to a help page without it).
      *
      * @return self
      */
@@ -731,6 +738,40 @@ class EnrollAuthenticator201Response implements ModelInterface, ArrayAccess, \Js
             throw new \InvalidArgumentException('non-nullable deepLink cannot be null');
         }
         $this->container['deepLink'] = $deepLink;
+
+        return $this;
+    }
+
+    /**
+     * Gets deepLinkAndroid
+     *
+     * @return string|null
+     */
+    public function getDeepLinkAndroid()
+    {
+        return $this->container['deepLinkAndroid'];
+    }
+
+    /**
+     * Sets deepLinkAndroid
+     *
+     * @param string|null $deepLinkAndroid Same link as an intent:// URL pinned to the Android app package, for pages served from this host (Chrome keeps same-site App Links in the browser). Null when the deployment has not configured the package.
+     *
+     * @return self
+     */
+    public function setDeepLinkAndroid($deepLinkAndroid)
+    {
+        if (is_null($deepLinkAndroid)) {
+            array_push($this->openAPINullablesSetToNull, 'deepLinkAndroid');
+        } else {
+            $nullablesSetToNull = $this->getOpenAPINullablesSetToNull();
+            $index = array_search('deepLinkAndroid', $nullablesSetToNull);
+            if ($index !== FALSE) {
+                unset($nullablesSetToNull[$index]);
+                $this->setOpenAPINullablesSetToNull($nullablesSetToNull);
+            }
+        }
+        $this->container['deepLinkAndroid'] = $deepLinkAndroid;
 
         return $this;
     }

@@ -60,6 +60,7 @@ module LumoAuthApiClient
 
     attr_accessor :dynamic_client_registration_enabled
 
+    # Accept Client ID Metadata Documents (an https URL as client_id). On by default on every plan; set false to opt the organization out.
     attr_accessor :cimd_enabled
 
     attr_accessor :cimd_allowed_domains
@@ -279,6 +280,8 @@ module LumoAuthApiClient
 
       if attributes.key?(:'cimd_enabled')
         self.cimd_enabled = attributes[:'cimd_enabled']
+      else
+        self.cimd_enabled = true
       end
 
       if attributes.key?(:'cimd_allowed_domains')

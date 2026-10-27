@@ -14,6 +14,8 @@
 package io.lumoauth.client.api;
 
 import io.lumoauth.client.ApiException;
+import io.lumoauth.client.model.AdminClientsCimdCheckRequest;
+import io.lumoauth.client.model.AdminClientsCimdCheckResponse;
 import io.lumoauth.client.model.CreateClientResponse;
 import io.lumoauth.client.model.GetClientResponse;
 import io.lumoauth.client.model.ListClientScopesResponse;
@@ -37,6 +39,21 @@ import java.util.Map;
 public class AdminOAuthClientsApiTest {
 
     private final AdminOAuthClientsApi api = new AdminOAuthClientsApi();
+
+    /**
+     * Check a Client ID Metadata Document
+     *
+     * Fetches and validates the metadata document at &#x60;client_id&#x60; exactly as the authorization server does (SSRF guard, domain allow-list, size and content-type limits, schema rules) and returns the effective client: redirect URIs, grant types and scopes after the organization policy is applied, plus what the document asked for that was dropped. Works even while CIMD is switched off for the organization (&#x60;enabled: false&#x60;), so a document can be validated before the switch is flipped. Nothing is registered or stored. &#x60;refresh: true&#x60; discards the cached copy first.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void adminClientsCimdCheckTest() throws ApiException {
+        String orgId = null;
+        AdminClientsCimdCheckRequest adminClientsCimdCheckRequest = null;
+        AdminClientsCimdCheckResponse response = api.adminClientsCimdCheck(orgId, adminClientsCimdCheckRequest);
+        // TODO: test validations
+    }
 
     /**
      * Create an OAuth client

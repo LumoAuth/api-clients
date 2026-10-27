@@ -41,7 +41,6 @@ Returns: { allowed: boolean, reason: string, matchedPolicies: [...] }
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -60,12 +59,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -102,7 +95,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -133,7 +126,6 @@ Body: {
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -152,12 +144,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -194,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1109,7 +1095,6 @@ GET /api/v1/abac/my-attributes
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -1128,12 +1113,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -1170,7 +1149,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1194,7 +1173,6 @@ GET /api/v1/abac/resources/{resourceType}/{resourceId}/attributes
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -1213,12 +1191,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -1259,7 +1231,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1284,7 +1256,6 @@ Query params: type (user|resource|environment)
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -1303,12 +1274,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -1347,7 +1312,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1368,6 +1333,9 @@ Name | Type | Description  | Notes
 List the caller's effective permissions
 
 GET /api/v1/authz/permissions
+
+Inventory endpoint: a bearer access token needs the `authz:read` scope
+(the check endpoints stay open to any authenticated token).
 
 ### Example
 
@@ -1453,7 +1421,6 @@ Body: { value: any }
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -1472,12 +1439,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -1520,7 +1481,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
@@ -1545,7 +1506,6 @@ Body: { value: any }
 
 ### Example
 
-* Api Key Authentication (ApiKeyAuth):
 * Bearer (JWT) Authentication (BearerAuth):
 
 ```python
@@ -1564,12 +1524,6 @@ configuration = lumoauth_api_client.Configuration(
 # in accordance with the API server security policy.
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = os.environ["API_KEY"]
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
 
 # Configure Bearer authorization (JWT): BearerAuth
 configuration = lumoauth_api_client.Configuration(
@@ -1610,7 +1564,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BearerAuth](../README.md#BearerAuth)
+[BearerAuth](../README.md#BearerAuth)
 
 ### HTTP request headers
 
