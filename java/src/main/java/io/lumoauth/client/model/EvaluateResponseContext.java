@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * Only present on a deny, and only for callers holding policies.view
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:43:32.464871046Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class EvaluateResponseContext {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

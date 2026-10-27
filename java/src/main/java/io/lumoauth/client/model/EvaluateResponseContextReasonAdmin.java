@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * EvaluateResponseContextReasonAdmin
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:43:32.464871046Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class EvaluateResponseContextReasonAdmin {
   public static final String SERIALIZED_NAME_EN = "en";
   @SerializedName(SERIALIZED_NAME_EN)

@@ -74,6 +74,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "aauth_agent_token",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -115,6 +116,7 @@
                         "description": "Missing request_token query parameter."
                     }
                 },
+                "x-symfony-route": "aauth_agent_auth",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -171,6 +173,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "aauth_agent_issue",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -226,6 +229,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "aauth_token_revoke",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -262,6 +266,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "aauth_issuer_metadata",
                 "security": []
             }
         },
@@ -294,6 +299,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "aauth_issuer_jwks",
                 "security": []
             }
         },
@@ -329,6 +335,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "aauth_agent_metadata",
                 "security": []
             }
         },
@@ -372,6 +379,7 @@
                         "description": "Agent not found."
                     }
                 },
+                "x-symfony-route": "aauth_agent_metadata_single",
                 "security": []
             }
         },
@@ -415,6 +423,7 @@
                         "description": "Agent not found."
                     }
                 },
+                "x-symfony-route": "aauth_agent_jwks",
                 "security": []
             }
         },
@@ -450,6 +459,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "aauth_resource_metadata",
                 "security": []
             }
         },
@@ -493,6 +503,7 @@
                         "description": "Resource not found."
                     }
                 },
+                "x-symfony-route": "aauth_resource_metadata_single",
                 "security": []
             }
         },
@@ -536,6 +547,7 @@
                         "description": "Resource not found."
                     }
                 },
+                "x-symfony-route": "aauth_resource_jwks",
                 "security": []
             }
         },
@@ -589,6 +601,7 @@
                         "description": "Rate limit exceeded (per IP or per agent)."
                     }
                 },
+                "x-symfony-route": "aauth_agent_platform_token",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -645,6 +658,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "aauth_resource_token",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -704,6 +718,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "aauth_resource_token_verify",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -763,6 +778,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "aauth_auth_token_verify",
                 "security": [
                     {
                         "AAuthSigned": []
@@ -800,6 +816,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_check",
                 "security": [
                     {
                         "BearerAuth": []
@@ -837,6 +854,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_check_bulk",
                 "security": [
                     {
                         "BearerAuth": []
@@ -874,6 +892,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_my_attributes",
                 "security": [
                     {
                         "BearerAuth": []
@@ -927,6 +946,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_resource_attributes",
                 "security": [
                     {
                         "BearerAuth": []
@@ -988,6 +1008,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_set_resource_attribute",
                 "security": [
                     {
                         "BearerAuth": []
@@ -1041,6 +1062,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_set_user_attribute",
                 "security": [
                     {
                         "BearerAuth": []
@@ -1091,6 +1113,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "api_abac_attribute_definitions",
                 "security": [
                     {
                         "BearerAuth": []
@@ -1126,7 +1149,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_attributes_list"
             },
             "post": {
                 "tags": [
@@ -1158,7 +1182,8 @@
                     "409": {
                         "description": "An attribute with this slug already exists"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_attributes_create"
             }
         },
         "/orgs/{orgId}/api/v1/abac/attributes/{id}": {
@@ -1200,7 +1225,8 @@
                     "404": {
                         "description": "Attribute definition not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_attributes_get"
             },
             "put": {
                 "tags": [
@@ -1243,7 +1269,8 @@
                     "404": {
                         "description": "Attribute definition not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_attributes_update"
             },
             "delete": {
                 "tags": [
@@ -1286,7 +1313,8 @@
                     "404": {
                         "description": "Attribute definition not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_attributes_delete"
             },
             "patch": {
                 "tags": [
@@ -1329,7 +1357,8 @@
                     "404": {
                         "description": "Attribute definition not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_attributes_update"
             }
         },
         "/orgs/{orgId}/api/v1/abac/policies": {
@@ -1360,7 +1389,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_list"
             },
             "post": {
                 "tags": [
@@ -1395,7 +1425,8 @@
                     "409": {
                         "description": "A policy with this slug already exists"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_create"
             }
         },
         "/orgs/{orgId}/api/v1/abac/policies/{id}": {
@@ -1437,7 +1468,8 @@
                     "404": {
                         "description": "Policy not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_get"
             },
             "put": {
                 "tags": [
@@ -1480,7 +1512,8 @@
                     "404": {
                         "description": "Policy not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_update"
             },
             "delete": {
                 "tags": [
@@ -1523,7 +1556,8 @@
                     "404": {
                         "description": "Policy not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_delete"
             },
             "patch": {
                 "tags": [
@@ -1566,7 +1600,8 @@
                     "404": {
                         "description": "Policy not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_update"
             }
         },
         "/orgs/{orgId}/api/v1/abac/policies/{id}/toggle": {
@@ -1611,7 +1646,8 @@
                     "404": {
                         "description": "Policy not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_abac_policies_toggle"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents": {
@@ -1651,7 +1687,8 @@
                     "404": {
                         "description": "Tenant not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_list"
             },
             "post": {
                 "tags": [
@@ -1702,7 +1739,8 @@
                     "404": {
                         "description": "Tenant not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}": {
@@ -1750,7 +1788,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_get"
             },
             "put": {
                 "tags": [
@@ -1806,7 +1845,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_update"
             },
             "delete": {
                 "tags": [
@@ -1852,7 +1892,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_delete"
             },
             "patch": {
                 "tags": [
@@ -1908,7 +1949,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-key": {
@@ -1956,7 +1998,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_agents_rotate_key"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/enable": {
@@ -2004,7 +2047,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_agents_enable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/disable": {
@@ -2052,7 +2096,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_agents_disable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/revoke-key": {
@@ -2100,7 +2145,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_revoke_key"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/scopes": {
@@ -2148,7 +2194,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_get_scopes"
             },
             "put": {
                 "tags": [
@@ -2207,7 +2254,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_set_scopes"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/rotate-credentials": {
@@ -2258,7 +2306,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_rotate_credentials"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/activate": {
@@ -2306,7 +2355,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_activate"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/deactivate": {
@@ -2354,7 +2404,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_deactivate"
             }
         },
         "/orgs/{orgId}/api/v1/admin/agents/{agentId}/token": {
@@ -2415,7 +2466,8 @@
                     "404": {
                         "description": "Tenant or agent not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_agents_generate_token"
             }
         },
         "/orgs/{orgId}/api/v1/admin/audit-logs": {
@@ -2446,7 +2498,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/audit-logs/{logId}": {
@@ -2489,7 +2542,8 @@
                     "404": {
                         "description": "Audit log not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_get"
             }
         },
         "/orgs/{orgId}/api/v1/admin/audit-logs/stats": {
@@ -2520,7 +2574,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_stats"
             }
         },
         "/orgs/{orgId}/api/v1/admin/audit-logs/actions": {
@@ -2551,7 +2606,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_actions"
             }
         },
         "/orgs/{orgId}/api/v1/admin/audit-logs/retention": {
@@ -2582,7 +2638,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_retention"
             },
             "put": {
                 "tags": [
@@ -2611,7 +2668,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_retention_update"
             },
             "patch": {
                 "tags": [
@@ -2640,7 +2698,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_retention_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/audit-logs/export": {
@@ -2676,7 +2735,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_audit_logs_export"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/cimd/check": {
@@ -2721,7 +2781,8 @@
                     "422": {
                         "description": "validation_error: client_id missing"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_cimd_check"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients": {
@@ -2752,7 +2813,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_list"
             },
             "post": {
                 "tags": [
@@ -2781,7 +2843,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}": {
@@ -2823,7 +2886,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_get"
             },
             "put": {
                 "tags": [
@@ -2863,7 +2927,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_update"
             },
             "delete": {
                 "tags": [
@@ -2903,7 +2968,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_delete"
             },
             "patch": {
                 "tags": [
@@ -2943,7 +3009,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}/enable": {
@@ -2985,7 +3052,8 @@
                     "404": {
                         "description": "Client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_clients_enable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}/disable": {
@@ -3027,7 +3095,8 @@
                     "404": {
                         "description": "Client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_clients_disable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}/scopes": {
@@ -3069,7 +3138,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_get_scopes"
             },
             "put": {
                 "tags": [
@@ -3109,7 +3179,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_set_scopes"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}/rotate-secret": {
@@ -3151,7 +3222,8 @@
                     "404": {
                         "description": "OAuth client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_clients_rotate_secret"
             }
         },
         "/orgs/{orgId}/api/v1/admin/email-templates": {
@@ -3182,7 +3254,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_email_templates_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/email-templates/{type}": {
@@ -3224,7 +3297,8 @@
                     "404": {
                         "description": "Unknown template type"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_email_templates_get"
             },
             "put": {
                 "tags": [
@@ -3267,7 +3341,8 @@
                     "422": {
                         "description": "Validation failed"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_email_templates_upsert"
             },
             "delete": {
                 "tags": [
@@ -3307,7 +3382,8 @@
                     "404": {
                         "description": "Unknown template type, or no custom template exists"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_email_templates_delete"
             }
         },
         "/orgs/{orgId}/api/v1/admin/email-templates/{type}/preview": {
@@ -3349,7 +3425,8 @@
                     "404": {
                         "description": "Unknown template type"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_email_templates_preview"
             }
         },
         "/orgs/{orgId}/api/v1/admin/email-templates/{type}/variables": {
@@ -3391,7 +3468,8 @@
                     "404": {
                         "description": "Unknown template type"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_email_templates_variables"
             }
         },
         "/orgs/{orgId}/api/v1/admin/groups": {
@@ -3422,7 +3500,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_list"
             },
             "post": {
                 "tags": [
@@ -3451,7 +3530,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/groups/{groupId}": {
@@ -3490,7 +3570,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_get"
             },
             "put": {
                 "tags": [
@@ -3527,7 +3608,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_update"
             },
             "delete": {
                 "tags": [
@@ -3564,7 +3646,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_delete"
             },
             "patch": {
                 "tags": [
@@ -3601,7 +3684,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members": {
@@ -3640,7 +3724,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_get_members"
             },
             "post": {
                 "tags": [
@@ -3677,7 +3762,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_add_members"
             }
         },
         "/orgs/{orgId}/api/v1/admin/groups/{groupId}/members/{userId}": {
@@ -3724,7 +3810,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_remove_member"
             }
         },
         "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles": {
@@ -3763,7 +3850,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_groups_get_roles"
             },
             "put": {
                 "tags": [
@@ -3800,7 +3888,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_update_roles"
             },
             "post": {
                 "tags": [
@@ -3837,7 +3926,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_add_role"
             }
         },
         "/orgs/{orgId}/api/v1/admin/groups/{groupId}/roles/{roleId}": {
@@ -3884,7 +3974,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_groups_remove_role"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/identities": {
@@ -3927,7 +4018,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_identities_list"
             },
             "post": {
                 "tags": [
@@ -3987,7 +4079,8 @@
                     "422": {
                         "description": "invalid_identity / directory_lookup_failed"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_identities_link"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/identities/{type}": {
@@ -4049,7 +4142,8 @@
                     "422": {
                         "description": "Unknown type"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_identities_unlink"
             }
         },
         "/orgs/{orgId}/api/v1/admin/identities/legacy-saml": {
@@ -4092,7 +4186,8 @@
                     "404": {
                         "description": "IdP not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_identities_legacy_saml_report"
             },
             "post": {
                 "tags": [
@@ -4141,7 +4236,8 @@
                     "422": {
                         "description": "Neither user_ids nor all_matching_domains given, or the IdP has no allowed email domains"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_identities_legacy_saml_relink"
             }
         },
         "/orgs/{orgId}/api/v1/admin/mcp/servers": {
@@ -4172,7 +4268,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mcp_servers_list"
             },
             "post": {
                 "tags": [
@@ -4208,7 +4305,8 @@
                     "422": {
                         "description": "validation_error"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mcp_servers_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/mcp/servers/{serverId}": {
@@ -4250,7 +4348,8 @@
                     "404": {
                         "description": "MCP server not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mcp_servers_get"
             },
             "delete": {
                 "tags": [
@@ -4290,7 +4389,8 @@
                     "404": {
                         "description": "MCP server not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mcp_servers_delete"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/authenticators": {
@@ -4333,7 +4433,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mfa_user_authenticators_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/authenticators/{authenticatorId}": {
@@ -4385,7 +4486,8 @@
                     "404": {
                         "description": "User or authenticator not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mfa_user_authenticators_delete"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/temporary-access-code": {
@@ -4441,7 +4543,8 @@
                     "422": {
                         "description": "Reason missing"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mfa_user_tap_issue"
             }
         },
         "/orgs/{orgId}/api/v1/admin/policies/mfa": {
@@ -4472,7 +4575,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mfa_policy_get"
             },
             "put": {
                 "tags": [
@@ -4512,7 +4616,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mfa_policy_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/reports/mfa-coverage": {
@@ -4544,7 +4649,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_mfa_coverage"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations": {
@@ -4575,7 +4681,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organizations_list"
             },
             "post": {
                 "tags": [
@@ -4607,7 +4714,8 @@
                     "409": {
                         "description": "Organization already exists or data invalid"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organizations_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}": {
@@ -4649,7 +4757,8 @@
                     "404": {
                         "description": "Organization not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organizations_get"
             },
             "put": {
                 "tags": [
@@ -4692,7 +4801,8 @@
                     "409": {
                         "description": "Data invalid or conflicts with an existing record"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organizations_update"
             },
             "delete": {
                 "tags": [
@@ -4732,7 +4842,8 @@
                     "404": {
                         "description": "Organization not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organizations_delete"
             },
             "patch": {
                 "tags": [
@@ -4775,7 +4886,8 @@
                     "409": {
                         "description": "Data invalid or conflicts with an existing record"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organizations_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members": {
@@ -4817,7 +4929,8 @@
                     "404": {
                         "description": "Organization not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_members_list"
             },
             "post": {
                 "tags": [
@@ -4860,7 +4973,8 @@
                     "409": {
                         "description": "User is already a member"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_members_add"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/members/{userId}": {
@@ -4913,7 +5027,8 @@
                     "422": {
                         "description": "Unable to update member role"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_members_update"
             },
             "delete": {
                 "tags": [
@@ -4964,7 +5079,8 @@
                     "422": {
                         "description": "Unable to remove member"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_members_remove"
             },
             "patch": {
                 "tags": [
@@ -5015,7 +5131,8 @@
                     "422": {
                         "description": "Unable to update member role"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_members_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles": {
@@ -5057,7 +5174,8 @@
                     "404": {
                         "description": "Organization not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_roles_list"
             },
             "post": {
                 "tags": [
@@ -5100,7 +5218,8 @@
                     "409": {
                         "description": "A role with this name or slug already exists"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_roles_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/roles/{roleId}": {
@@ -5153,7 +5272,8 @@
                     "422": {
                         "description": "Unable to update role"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_roles_update"
             },
             "delete": {
                 "tags": [
@@ -5204,7 +5324,8 @@
                     "422": {
                         "description": "Role still in use"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_roles_delete"
             },
             "patch": {
                 "tags": [
@@ -5255,7 +5376,8 @@
                     "422": {
                         "description": "Unable to update role"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_roles_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations": {
@@ -5297,7 +5419,8 @@
                     "404": {
                         "description": "Organization not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_invitations_list"
             },
             "post": {
                 "tags": [
@@ -5340,7 +5463,8 @@
                     "404": {
                         "description": "Organization not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_invitations_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}": {
@@ -5390,7 +5514,8 @@
                     "404": {
                         "description": "Organization or invitation not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_invitations_revoke"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organizations/{organizationId}/invitations/{invId}/resend": {
@@ -5443,7 +5568,8 @@
                     "422": {
                         "description": "Unable to resend invitation"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_org_invitations_resend"
             }
         },
         "/orgs/{orgId}/api/v1/admin/permissions": {
@@ -5474,7 +5600,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_permissions_list"
             },
             "post": {
                 "tags": [
@@ -5503,7 +5630,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_permissions_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}": {
@@ -5542,7 +5670,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_permissions_get"
             },
             "delete": {
                 "tags": [
@@ -5579,7 +5708,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_permissions_delete"
             },
             "patch": {
                 "tags": [
@@ -5616,7 +5746,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_permissions_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/permissions/{permissionId}/usage": {
@@ -5655,7 +5786,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_permissions_usage"
             }
         },
         "/orgs/{orgId}/api/v1/admin/scopes": {
@@ -5686,7 +5818,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_scopes_list"
             },
             "post": {
                 "tags": [
@@ -5715,7 +5848,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_scopes_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/scopes/{scopeId}": {
@@ -5754,7 +5888,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_scopes_delete"
             }
         },
         "/orgs/{orgId}/api/v1/admin/roles": {
@@ -5785,7 +5920,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_list"
             },
             "post": {
                 "tags": [
@@ -5814,7 +5950,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/roles/{roleId}": {
@@ -5853,7 +5990,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_get"
             },
             "put": {
                 "tags": [
@@ -5890,7 +6028,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_update"
             },
             "delete": {
                 "tags": [
@@ -5927,7 +6066,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_delete"
             },
             "patch": {
                 "tags": [
@@ -5964,7 +6104,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions": {
@@ -6003,7 +6144,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_get_permissions"
             },
             "put": {
                 "tags": [
@@ -6040,7 +6182,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_update_permissions"
             },
             "post": {
                 "tags": [
@@ -6077,7 +6220,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_add_permissions"
             }
         },
         "/orgs/{orgId}/api/v1/admin/roles/{roleId}/permissions/{permissionId}": {
@@ -6124,7 +6268,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_remove_permission"
             }
         },
         "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users": {
@@ -6163,7 +6308,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_get_users"
             },
             "post": {
                 "tags": [
@@ -6200,7 +6346,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_add_user"
             }
         },
         "/orgs/{orgId}/api/v1/admin/roles/{roleId}/users/{userId}": {
@@ -6247,7 +6394,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_roles_remove_user"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sandbox/spawn": {
@@ -6291,7 +6439,8 @@
                     "429": {
                         "description": "Per-owner active-sandbox cap reached"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sandbox_spawn"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sandbox": {
@@ -6322,7 +6471,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sandbox_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sandbox/{sandboxSlug}/destroy": {
@@ -6364,7 +6514,8 @@
                     "404": {
                         "description": "Sandbox not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sandbox_destroy"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sessions": {
@@ -6396,7 +6547,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sessions_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions": {
@@ -6439,7 +6591,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_user_sessions_list"
             },
             "delete": {
                 "tags": [
@@ -6482,7 +6635,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_user_sessions_revoke_all"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sessions/{sessionId}": {
@@ -6527,7 +6681,8 @@
                     "404": {
                         "description": "Session not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sessions_revoke"
             }
         },
         "/orgs/{orgId}/api/v1/admin/tokens": {
@@ -6559,7 +6714,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_tokens_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/tokens/{tokenId}": {
@@ -6604,7 +6760,8 @@
                     "404": {
                         "description": "Token not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_tokens_revoke"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/tokens": {
@@ -6649,7 +6806,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_user_tokens_revoke_all"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/sessions/revoke": {
@@ -6694,7 +6852,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_user_sessions_revoke_post"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sessions/revoke-all": {
@@ -6739,7 +6898,8 @@
                     "400": {
                         "description": "confirm: true is required"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sessions_revoke_all"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/tokens/revoke": {
@@ -6784,7 +6944,8 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_user_tokens_revoke_post"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens/revoke": {
@@ -6826,7 +6987,8 @@
                     "404": {
                         "description": "Client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_client_tokens_revoke_post"
             }
         },
         "/orgs/{orgId}/api/v1/admin/clients/{clientId}/tokens": {
@@ -6868,7 +7030,8 @@
                     "404": {
                         "description": "Client not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_client_tokens_revoke_all"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sessions/stats": {
@@ -6899,7 +7062,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sessions_stats"
             }
         },
         "/orgs/{orgId}/api/v1/admin/sessions/count": {
@@ -6930,7 +7094,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_sessions_count"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings": {
@@ -6961,7 +7126,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_all"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/general": {
@@ -6992,7 +7158,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_general_get"
             },
             "put": {
                 "tags": [
@@ -7021,7 +7188,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_general_update"
             },
             "patch": {
                 "tags": [
@@ -7050,7 +7218,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_general_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/authentication": {
@@ -7081,7 +7250,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_authentication_get"
             },
             "put": {
                 "tags": [
@@ -7110,7 +7280,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_authentication_update"
             },
             "patch": {
                 "tags": [
@@ -7139,7 +7310,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_authentication_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/security": {
@@ -7170,7 +7342,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_security_get"
             },
             "put": {
                 "tags": [
@@ -7199,7 +7372,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_security_update"
             },
             "patch": {
                 "tags": [
@@ -7228,7 +7402,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_security_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/email": {
@@ -7259,7 +7434,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_email_get"
             },
             "put": {
                 "tags": [
@@ -7288,7 +7464,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_email_update"
             },
             "patch": {
                 "tags": [
@@ -7317,7 +7494,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_email_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/tenant": {
@@ -7348,7 +7526,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_tenant_get"
             },
             "put": {
                 "tags": [
@@ -7377,7 +7556,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_tenant_update"
             },
             "patch": {
                 "tags": [
@@ -7406,7 +7586,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_tenant_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/organization": {
@@ -7437,7 +7618,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organization_get"
             },
             "put": {
                 "tags": [
@@ -7466,7 +7648,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organization_update"
             },
             "patch": {
                 "tags": [
@@ -7495,7 +7678,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_organization_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/auth": {
@@ -7526,7 +7710,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_auth_get"
             },
             "put": {
                 "tags": [
@@ -7555,7 +7740,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_auth_update"
             },
             "patch": {
                 "tags": [
@@ -7584,7 +7770,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_auth_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/branding": {
@@ -7615,7 +7802,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_branding_get"
             },
             "put": {
                 "tags": [
@@ -7644,7 +7832,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_branding_update"
             },
             "patch": {
                 "tags": [
@@ -7673,7 +7862,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_branding_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/settings/scim": {
@@ -7704,7 +7894,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_scim_get"
             },
             "put": {
                 "tags": [
@@ -7733,7 +7924,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_scim_update"
             },
             "patch": {
                 "tags": [
@@ -7762,7 +7954,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_settings_scim_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/analytics/dashboard": {
@@ -7793,7 +7986,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_analytics_dashboard"
             }
         },
         "/orgs/{orgId}/api/v1/admin/analytics/logins": {
@@ -7836,7 +8030,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_analytics_logins"
             }
         },
         "/orgs/{orgId}/api/v1/admin/analytics/users": {
@@ -7879,7 +8074,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_analytics_users"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers": {
@@ -7910,7 +8106,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_list"
             },
             "post": {
                 "tags": [
@@ -7942,7 +8139,8 @@
                     "409": {
                         "description": "Provider already configured"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers/available": {
@@ -7973,7 +8171,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_available"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers/types": {
@@ -8004,7 +8203,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_types"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers/callback-urls": {
@@ -8035,7 +8235,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_callback_urls"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}": {
@@ -8077,7 +8278,8 @@
                     "404": {
                         "description": "Social login provider not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_get"
             },
             "put": {
                 "tags": [
@@ -8124,7 +8326,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_update"
             },
             "delete": {
                 "tags": [
@@ -8164,7 +8367,8 @@
                     "404": {
                         "description": "Social login provider not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_delete"
             },
             "patch": {
                 "tags": [
@@ -8204,7 +8408,8 @@
                     "404": {
                         "description": "Social login provider not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/enable": {
@@ -8246,7 +8451,8 @@
                     "404": {
                         "description": "Social login provider not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_enable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/social-providers/{providerId}/disable": {
@@ -8288,7 +8494,8 @@
                     "404": {
                         "description": "Social login provider not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_social_providers_disable"
             }
         },
         "/orgs/{orgId}/api/v1/ssf/stream": {
@@ -8337,7 +8544,8 @@
                     "404": {
                         "description": "Stream not found"
                     }
-                }
+                },
+                "x-symfony-route": "ssf_stream_config_read"
             },
             "post": {
                 "tags": [
@@ -8369,7 +8577,8 @@
                     "400": {
                         "description": "Unsupported delivery method or missing field"
                     }
-                }
+                },
+                "x-symfony-route": "ssf_stream_config"
             },
             "delete": {
                 "tags": [
@@ -8405,7 +8614,8 @@
                     "404": {
                         "description": "Stream not found"
                     }
-                }
+                },
+                "x-symfony-route": "ssf_stream_config_delete"
             }
         },
         "/orgs/{orgId}/api/v1/ssf/verify": {
@@ -8438,7 +8648,8 @@
                     "409": {
                         "description": "Stream is not enabled"
                     }
-                }
+                },
+                "x-symfony-route": "ssf_stream_verify"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users": {
@@ -8469,7 +8680,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_list"
             },
             "post": {
                 "tags": [
@@ -8498,7 +8710,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}": {
@@ -8537,7 +8750,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_get"
             },
             "put": {
                 "tags": [
@@ -8574,7 +8788,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_update"
             },
             "delete": {
                 "tags": [
@@ -8611,7 +8826,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_delete"
             },
             "patch": {
                 "tags": [
@@ -8648,7 +8864,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/block": {
@@ -8687,7 +8904,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_block"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/unblock": {
@@ -8726,7 +8944,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_unblock"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/mfa/reset": {
@@ -8760,7 +8979,8 @@
                         "description": "Gone — use temporary-access-code"
                     }
                 },
-                "deprecated": true
+                "deprecated": true,
+                "x-symfony-route": "api_admin_users_mfa_reset"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/roles": {
@@ -8799,7 +9019,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_get_roles"
             },
             "put": {
                 "tags": [
@@ -8836,7 +9057,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_update_roles"
             },
             "post": {
                 "tags": [
@@ -8873,7 +9095,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_add_role"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/roles/{roleId}": {
@@ -8920,7 +9143,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_remove_role"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/groups": {
@@ -8959,7 +9183,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_get_groups"
             },
             "put": {
                 "tags": [
@@ -8996,7 +9221,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_update_groups"
             },
             "post": {
                 "tags": [
@@ -9033,7 +9259,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_add_group"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/groups/{groupId}": {
@@ -9080,7 +9307,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_remove_group"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/permissions": {
@@ -9119,7 +9347,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_get_permissions"
             },
             "post": {
                 "tags": [
@@ -9156,7 +9385,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_add_permission"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/permissions/{permissionId}": {
@@ -9203,7 +9433,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_remove_permission"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/verify-email": {
@@ -9242,7 +9473,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_send_verify_email"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/mark-verified": {
@@ -9281,7 +9513,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_mark_verified"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/password-reset": {
@@ -9320,7 +9553,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_password_reset"
             }
         },
         "/orgs/{orgId}/api/v1/admin/users/{userId}/password": {
@@ -9359,7 +9593,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_set_password"
             },
             "post": {
                 "tags": [
@@ -9396,7 +9631,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_users_set_password"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks": {
@@ -9428,7 +9664,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_list"
             },
             "post": {
                 "tags": [
@@ -9458,7 +9695,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_create"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/events": {
@@ -9489,7 +9727,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_events"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}": {
@@ -9531,7 +9770,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_get"
             },
             "put": {
                 "tags": [
@@ -9571,7 +9811,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_update"
             },
             "delete": {
                 "tags": [
@@ -9611,7 +9852,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_delete"
             },
             "patch": {
                 "tags": [
@@ -9651,7 +9893,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_update"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/enable": {
@@ -9693,7 +9936,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_webhooks_enable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/disable": {
@@ -9735,7 +9979,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_webhooks_disable"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/test": {
@@ -9781,7 +10026,8 @@
                     "502": {
                         "description": "Failed to deliver test webhook"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_test"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/rotate-secret": {
@@ -9824,7 +10070,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_rotate_secret"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries": {
@@ -9867,7 +10114,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_deliveries_list"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}": {
@@ -9918,7 +10166,8 @@
                     "404": {
                         "description": "Webhook or delivery not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_delivery_show"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/{webhookId}/deliveries/{deliveryId}/replay": {
@@ -9969,7 +10218,8 @@
                     "404": {
                         "description": "Webhook or delivery not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_delivery_replay"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/tunnel/start": {
@@ -10001,7 +10251,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_tunnel_start"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stop": {
@@ -10047,7 +10298,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_tunnel_stop"
             }
         },
         "/orgs/{orgId}/api/v1/admin/webhooks/tunnel/{webhookId}/stream": {
@@ -10094,7 +10346,8 @@
                     "404": {
                         "description": "Webhook not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_admin_webhooks_tunnel_stream"
             }
         },
         "/orgs/{orgId}/api/v1/agents/me": {
@@ -10129,7 +10382,8 @@
                     "401": {
                         "description": "Unauthorized — no authenticated principal."
                     }
-                }
+                },
+                "x-symfony-route": "api_agents_me"
             }
         },
         "/orgs/{orgId}/api/v1/agents/me/mcp/authorize": {
@@ -10177,7 +10431,8 @@
                     "400": {
                         "description": "server_id and tool are required, or contain forbidden characters."
                     }
-                }
+                },
+                "x-symfony-route": "api_agents_mcp_authorize"
             }
         },
         "/orgs/{orgId}/api/v1/agents/ask": {
@@ -10225,7 +10480,8 @@
                     "429": {
                         "description": "Agent budget exceeded."
                     }
-                }
+                },
+                "x-symfony-route": "api_agents_ask"
             }
         },
         "/orgs/{orgId}/api/v1/agents/me/approvals": {
@@ -10290,7 +10546,8 @@
                     "429": {
                         "description": "Rate limited (per tenant/agent/user)."
                     }
-                }
+                },
+                "x-symfony-route": "agent_approval_create"
             }
         },
         "/orgs/{orgId}/api/v1/agents/me/approvals/{token}/status": {
@@ -10334,7 +10591,8 @@
                     "404": {
                         "description": "Tenant or approval request not found."
                     }
-                }
+                },
+                "x-symfony-route": "agent_approval_status"
             }
         },
         "/orgs/{orgId}/api/v1/agents/{agentId}/attest": {
@@ -10399,7 +10657,8 @@
                     "429": {
                         "description": "rate_limit_exceeded (Retry-After: 60)."
                     }
-                }
+                },
+                "x-symfony-route": "agent_attest"
             }
         },
         "/orgs/{orgId}/api/v1/agents/{agentId}/agent-card": {
@@ -10443,6 +10702,7 @@
                         "description": "not_found — unknown organization, or the agent is unknown, inactive or has no published A2A card."
                     }
                 },
+                "x-symfony-route": "api_agent_card",
                 "security": []
             }
         },
@@ -10496,7 +10756,8 @@
                     "404": {
                         "description": "Unknown organization."
                     }
-                }
+                },
+                "x-symfony-route": "api_agent_card_verify"
             }
         },
         "/orgs/{orgId}/api/v1/agents/me/connections": {
@@ -10534,7 +10795,8 @@
                     "404": {
                         "description": "tenant_not_found."
                     }
-                }
+                },
+                "x-symfony-route": "agent_connections_list"
             }
         },
         "/orgs/{orgId}/api/v1/agents/me/connections/{connectionId}/token": {
@@ -10602,7 +10864,8 @@
                     "503": {
                         "description": "refresh_in_progress (Retry-After: 2) or provider_unavailable."
                     }
-                }
+                },
+                "x-symfony-route": "agent_connection_token"
             }
         },
         "/api/v1/authz/v1/evaluation": {
@@ -10624,7 +10887,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authzen_evaluation"
             }
         },
         "/api/v1/authz/v1/evaluations": {
@@ -10646,7 +10910,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authzen_evaluations"
             }
         },
         "/api/v1/authz/check": {
@@ -10668,7 +10933,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_check"
             }
         },
         "/api/v1/authz/check-bulk": {
@@ -10690,7 +10956,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_check_bulk"
             }
         },
         "/api/v1/authz/check-any": {
@@ -10712,7 +10979,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_check_any"
             }
         },
         "/api/v1/authz/check-all": {
@@ -10734,7 +11002,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_check_all"
             }
         },
         "/api/v1/authz/zanzibar/check": {
@@ -10756,7 +11025,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_zanzibar_check"
             }
         },
         "/api/v1/authz/zanzibar/expand": {
@@ -10794,7 +11064,8 @@
                     "403": {
                         "description": "insufficient_permissions — expand requires the authz.check permission or the authz:check scope."
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_zanzibar_expand"
             }
         },
         "/api/v1/authz/permissions": {
@@ -10816,7 +11087,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_authz_list_permissions"
             }
         },
         "/orgs/{orgId}/api/v1/jit/task": {
@@ -10874,6 +11146,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "jit_create_task",
                 "security": [
                     {
                         "BearerAuth": []
@@ -10936,6 +11209,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "jit_request_permission",
                 "security": [
                     {
                         "BearerAuth": []
@@ -10993,6 +11267,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "jit_request_status",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11050,6 +11325,7 @@
                         "description": "Rate limit or agent budget exceeded."
                     }
                 },
+                "x-symfony-route": "jit_get_token",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11106,6 +11382,7 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "jit_complete_task",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11172,6 +11449,7 @@
                         "description": "Tenant or request not found."
                     }
                 },
+                "x-symfony-route": "jit_approve",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11238,6 +11516,7 @@
                         "description": "Tenant or request not found."
                     }
                 },
+                "x-symfony-route": "jit_deny",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11283,6 +11562,7 @@
                         "description": "Tenant not found."
                     }
                 },
+                "x-symfony-route": "jit_pending_requests",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11336,6 +11616,7 @@
                         "description": "Tenant or task not found."
                     }
                 },
+                "x-symfony-route": "jit_evaluate_task",
                 "security": [
                     {
                         "BearerAuth": []
@@ -11387,6 +11668,7 @@
                         "description": "not_found — unknown organization, or unknown / inactive MCP server."
                     }
                 },
+                "x-symfony-route": "mcp_protected_resource_metadata",
                 "security": []
             }
         },
@@ -11430,6 +11712,7 @@
                         "description": "not_found — unknown organization, or no protected MCP servers configured."
                     }
                 },
+                "x-symfony-route": "mcp_protected_resource_metadata_root",
                 "security": []
             }
         },
@@ -11497,11 +11780,12 @@
                         "description": "too_many_requests (Retry-After header)."
                     }
                 },
+                "x-symfony-route": "mcp_server_challenge",
                 "security": [
                     {
                         "BearerAuth": []
                     },
-                    []
+                    {}
                 ]
             },
             "post": {
@@ -11567,11 +11851,12 @@
                         "description": "too_many_requests (Retry-After header)."
                     }
                 },
+                "x-symfony-route": "mcp_server_challenge",
                 "security": [
                     {
                         "BearerAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -11610,7 +11895,8 @@
                     "404": {
                         "description": "Tenant not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_mcp_servers_list"
             }
         },
         "/orgs/{orgId}/api/v1/mcp/servers/{serverId}": {
@@ -11656,7 +11942,8 @@
                     "404": {
                         "description": "Tenant or MCP server not found."
                     }
-                }
+                },
+                "x-symfony-route": "api_mcp_server_get"
             }
         },
         "/orgs/{orgId}/api/v1/me": {
@@ -11694,7 +11981,8 @@
                     "404": {
                         "description": "Tenant not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_me_get"
             }
         },
         "/orgs/{orgId}/api/v1/mfa/challenges": {
@@ -11742,7 +12030,8 @@
                     "429": {
                         "description": "mfa_locked / rate_limited / push_suspended"
                     }
-                }
+                },
+                "x-symfony-route": "api_mfa_challenges_create"
             }
         },
         "/orgs/{orgId}/api/v1/mfa/challenges/{id}": {
@@ -11782,7 +12071,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_mfa_challenges_get"
             }
         },
         "/orgs/{orgId}/api/v1/mfa/challenges/{id}/verify": {
@@ -11844,7 +12134,8 @@
                     "429": {
                         "description": "mfa_locked"
                     }
-                }
+                },
+                "x-symfony-route": "api_mfa_challenges_verify"
             }
         },
         "/orgs/{orgId}/api/v1/me/authenticators": {
@@ -11876,7 +12167,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_authenticators_list"
             }
         },
         "/orgs/{orgId}/api/v1/me/authenticators/{type}/enroll": {
@@ -11959,7 +12251,8 @@
                     "429": {
                         "description": "rate_limited"
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_authenticators_enroll"
             }
         },
         "/orgs/{orgId}/api/v1/me/authenticators/{id}/verify": {
@@ -12016,7 +12309,8 @@
                     "410": {
                         "description": "Enrollment expired"
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_authenticators_verify"
             }
         },
         "/orgs/{orgId}/api/v1/me/authenticators/{id}": {
@@ -12065,7 +12359,8 @@
                     "409": {
                         "description": "last_factor_required"
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_authenticators_delete"
             },
             "patch": {
                 "tags": [
@@ -12113,7 +12408,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_authenticators_update"
             }
         },
         "/orgs/{orgId}/api/v1/me/recovery-codes": {
@@ -12144,7 +12440,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_recovery_codes_get"
             },
             "post": {
                 "tags": [
@@ -12177,7 +12474,8 @@
                     "403": {
                         "description": "step_up_required"
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_recovery_codes_generate"
             }
         },
         "/orgs/{orgId}/api/v1/me/trusted-devices": {
@@ -12208,7 +12506,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_trusted_devices_list"
             }
         },
         "/orgs/{orgId}/api/v1/me/trusted-devices/{id}": {
@@ -12243,7 +12542,8 @@
                     "404": {
                         "description": "Not found"
                     }
-                }
+                },
+                "x-symfony-route": "api_me_mfa_trusted_devices_delete"
             }
         },
         "/orgs/{orgId}/api/v1/.well-known/ssf-configuration": {
@@ -12278,6 +12578,7 @@
                         "description": "Tenant not found"
                     }
                 },
+                "x-symfony-route": "ssf_configuration",
                 "security": []
             }
         },
@@ -12319,6 +12620,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oauth_social_login",
                 "security": []
             }
         },
@@ -12360,6 +12662,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oauth_social_callback",
                 "security": []
             },
             "post": {
@@ -12399,6 +12702,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oauth_social_callback",
                 "security": []
             }
         },
@@ -12465,6 +12769,7 @@
                         "description": "too_many_requests (JSON)."
                     }
                 },
+                "x-symfony-route": "oauth_authorize",
                 "security": []
             },
             "post": {
@@ -12529,6 +12834,7 @@
                         "description": "too_many_requests (JSON)."
                     }
                 },
+                "x-symfony-route": "oauth_authorize",
                 "security": []
             }
         },
@@ -12562,6 +12868,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oauth_passkey_login",
                 "security": []
             }
         },
@@ -12610,6 +12917,7 @@
                         "description": "{\"status\":\"rate_limited\"}."
                     }
                 },
+                "x-symfony-route": "api_auth_login_json",
                 "security": []
             }
         },
@@ -12646,6 +12954,7 @@
                         "description": "Unknown or inactive organization."
                     }
                 },
+                "x-symfony-route": "oauth_login_submit",
                 "security": []
             }
         },
@@ -12692,6 +13001,7 @@
                         "description": "Unknown organization."
                     }
                 },
+                "x-symfony-route": "oauth_org_select",
                 "security": []
             },
             "post": {
@@ -12736,6 +13046,7 @@
                         "description": "Unknown organization."
                     }
                 },
+                "x-symfony-route": "oauth_org_select",
                 "security": []
             }
         },
@@ -12781,11 +13092,12 @@
                         "description": "too_many_requests, or slow_down when the target user already has too many pending requests."
                     }
                 },
+                "x-symfony-route": "oauth_bc_authorize",
                 "security": [
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -12828,11 +13140,12 @@
                         "description": "too_many_requests — rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "oauth_device_authorization",
                 "security": [
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -12886,6 +13199,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oauth_device_verify",
                 "security": []
             },
             "post": {
@@ -12937,6 +13251,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oauth_device_verify",
                 "security": []
             }
         },
@@ -12979,11 +13294,12 @@
                         "description": "Rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "oauth_introspect",
                 "security": [
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13026,11 +13342,12 @@
                         "description": "too_many_requests — rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "oauth_par",
                 "security": [
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13074,11 +13391,12 @@
                         "description": "too_many_requests — rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "oauth_revoke",
                 "security": [
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13129,11 +13447,12 @@
                         "description": "too_many_requests — rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "oauth_token",
                 "security": [
                     {
                         "ClientAuth": []
                     },
-                    []
+                    {}
                 ]
             }
         },
@@ -13176,6 +13495,7 @@
                         "description": "insufficient_scope — the openid scope is required."
                     }
                 },
+                "x-symfony-route": "oauth_userinfo",
                 "security": [
                     {
                         "BearerAuth": []
@@ -13220,6 +13540,7 @@
                         "description": "insufficient_scope — the openid scope is required."
                     }
                 },
+                "x-symfony-route": "oauth_userinfo",
                 "security": [
                     {
                         "BearerAuth": []
@@ -13269,6 +13590,7 @@
                         "description": "too_many_requests — rate limit exceeded."
                     }
                 },
+                "x-symfony-route": "oidc_register",
                 "security": [
                     {
                         "BearerAuth": []
@@ -13320,6 +13642,7 @@
                         "description": "invalid_token — registration access token missing, invalid, for another client, or presented at a different issuer than the registration (WWW-Authenticate: Bearer)."
                     }
                 },
+                "x-symfony-route": "oidc_client_configuration",
                 "security": [
                     {
                         "BearerAuth": []
@@ -13363,6 +13686,7 @@
                         "description": "invalid_tenant — unknown or inactive organization."
                     }
                 },
+                "x-symfony-route": "oidc_discovery",
                 "security": []
             }
         },
@@ -13399,6 +13723,7 @@
                         "description": "invalid_tenant — unknown or inactive organization."
                     }
                 },
+                "x-symfony-route": "oauth_metadata",
                 "security": []
             }
         },
@@ -13435,6 +13760,7 @@
                         "description": "invalid_tenant — unknown or inactive organization."
                     }
                 },
+                "x-symfony-route": "oidc_jwks",
                 "security": []
             }
         },
@@ -13468,6 +13794,7 @@
                         }
                     }
                 },
+                "x-symfony-route": "oidc_check_session",
                 "security": []
             }
         },
@@ -13514,6 +13841,7 @@
                         "description": "invalid_tenant — unknown or inactive organization (JSON)."
                     }
                 },
+                "x-symfony-route": "oidc_logout",
                 "security": []
             },
             "post": {
@@ -13558,6 +13886,7 @@
                         "description": "invalid_tenant — unknown or inactive organization (JSON)."
                     }
                 },
+                "x-symfony-route": "oidc_logout",
                 "security": []
             }
         },
@@ -13589,7 +13918,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_agent_register"
             }
         },
         "/orgs/{orgId}/api/v1/zanzibar/check": {
@@ -13620,7 +13950,8 @@
                             }
                         }
                     }
-                }
+                },
+                "x-symfony-route": "api_zanzibar_check_scoped"
             }
         },
         "/orgs/{orgId}/api/v1/zanzibar/expand": {
@@ -13668,7 +13999,8 @@
                     "403": {
                         "description": "insufficient_permissions — expand requires the authz.check permission or the authz:check scope; or the token is for another organization."
                     }
-                }
+                },
+                "x-symfony-route": "api_zanzibar_expand_scoped"
             }
         }
     },

@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 VisualStudioVersion = 12.0.0.0
 MinimumVisualStudioVersion = 10.0.0.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LumoAuth.ApiClient", "src\LumoAuth.ApiClient\LumoAuth.ApiClient.csproj", "{16A73B1A-3A85-4DDB-94B2-8ADEC2778435}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LumoAuth.ApiClient", "src\LumoAuth.ApiClient\LumoAuth.ApiClient.csproj", "{D222E4DC-FA46-4FE8-AEA7-D25282011E84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LumoAuth.ApiClient.Test", "src\LumoAuth.ApiClient.Test\LumoAuth.ApiClient.Test.csproj", "{19F1DEBC-DE5E-4517-8062-F000CD499087}"
 EndProject
@@ -12,10 +12,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{16A73B1A-3A85-4DDB-94B2-8ADEC2778435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{16A73B1A-3A85-4DDB-94B2-8ADEC2778435}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{16A73B1A-3A85-4DDB-94B2-8ADEC2778435}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{16A73B1A-3A85-4DDB-94B2-8ADEC2778435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D222E4DC-FA46-4FE8-AEA7-D25282011E84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D222E4DC-FA46-4FE8-AEA7-D25282011E84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D222E4DC-FA46-4FE8-AEA7-D25282011E84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D222E4DC-FA46-4FE8-AEA7-D25282011E84}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F1DEBC-DE5E-4517-8062-F000CD499087}.Release|Any CPU.ActiveCfg = Release|Any CPU
