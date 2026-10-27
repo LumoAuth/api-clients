@@ -49,7 +49,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetAgentCardResponseProvider
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-26T22:02:21.062318292-07:00[America/Los_Angeles]", comments = "Generator version: 7.14.0")
 public class GetAgentCardResponseProvider {
   public static final String SERIALIZED_NAME_ORGANIZATION = "organization";
   @SerializedName(SERIALIZED_NAME_ORGANIZATION)
