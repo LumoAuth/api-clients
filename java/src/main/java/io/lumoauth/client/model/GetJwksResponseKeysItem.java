@@ -48,7 +48,7 @@ import io.lumoauth.client.JSON;
 /**
  * GetJwksResponseKeysItem
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:14:50.752332309Z[Etc/UTC]", comments = "Generator version: 7.14.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-27T00:52:54.705455278Z[Etc/UTC]", comments = "Generator version: 7.14.0")
 public class GetJwksResponseKeysItem {
   /**
    * Gets or Sets kty
